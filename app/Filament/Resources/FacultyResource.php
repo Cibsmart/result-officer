@@ -22,8 +22,8 @@ class FacultyResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('code'),
-                TextInput::make('name'),
+                TextInput::make('name')->required(),
+                TextInput::make('code')->required(),
             ]);
     }
 
@@ -31,8 +31,8 @@ class FacultyResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('code'),
-                TextColumn::make('name'),
+                TextColumn::make('name')->sortable()->searchable(),
+                TextColumn::make('code')->sortable()->searchable(),
             ])
             ->filters([
                 //
@@ -41,16 +41,14 @@ class FacultyResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                //
             ]);
     }
 
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\DepartmentsRelationManager::class
         ];
     }
 
