@@ -25,7 +25,7 @@ class DepartmentSeeder extends Seeder
     {
         foreach ($this->departments as $code => $name) {
             Department::query()->create([
-                'faculty_id' => Faculty::query()->where('code', 'FPS')->first()->id,
+                'faculty_id' => Faculty::query()->where('code', 'FPS')->first()?->id,
                 'code' => $code,
                 'name' => $name,
             ]);
