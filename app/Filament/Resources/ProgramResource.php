@@ -28,6 +28,8 @@ class ProgramResource extends Resource
                 Select::make('department_id')
                     ->relationship('department', 'name')
                     ->label('Department')
+                    ->searchable()
+                    ->preload()
                     ->required()
             ]);
     }

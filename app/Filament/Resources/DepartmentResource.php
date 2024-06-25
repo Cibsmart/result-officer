@@ -28,6 +28,8 @@ class DepartmentResource extends Resource
                 Select::make('faculty_id')
                     ->relationship('faculty', 'name')
                     ->label('Faculty')
+                    ->searchable()
+                    ->preload()
                     ->required()
             ]);
     }
