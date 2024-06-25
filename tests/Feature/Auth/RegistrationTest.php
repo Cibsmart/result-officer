@@ -9,7 +9,6 @@ test('registration screen can be rendered', function () {
 });
 
 test('new users can register', function () {
-    $this->withoutExceptionHandling();
     $response = $this->post('/register', [
         'name' => 'Test User',
         'email' => 'test@example.com',
