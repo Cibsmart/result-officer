@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProgramResource\Pages;
-use App\Filament\Resources\ProgramResource\RelationManagers;
 use App\Models\Program;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -18,6 +17,10 @@ class ProgramResource extends Resource
     protected static ?string $model = Program::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $navigationGroup = 'Departments';
+
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
