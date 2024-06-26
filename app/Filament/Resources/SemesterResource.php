@@ -42,7 +42,7 @@ final class SemesterResource extends Resource
             ]);
     }
 
-    /** @return array<string, string> */
+    /** @return array<string, \Filament\Resources\Pages\PageRegistration> */
     public static function getPages(): array
     {
         return [

@@ -11,7 +11,7 @@ final class EditSession extends EditRecord
 
     protected static string $resource = SessionResource::class;
 
-    /** @return array<int, \Filament\Actions\ViewAction> */
+    /** @return array<int, \Filament\Actions\DeleteAction> */
     protected function getHeaderActions(): array
     {
         return [

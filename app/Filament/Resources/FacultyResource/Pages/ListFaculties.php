@@ -11,7 +11,7 @@ final class ListFaculties extends ListRecords
 
     protected static string $resource = FacultyResource::class;
 
-    /** @return array<int, \Filament\Actions\ViewAction> */
+    /** @return array<int, \Filament\Actions\CreateAction> */
     protected function getHeaderActions(): array
     {
         return [

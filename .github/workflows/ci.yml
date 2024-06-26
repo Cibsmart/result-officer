@@ -38,10 +38,10 @@ jobs:
           php-version: '8.3'
 
       - name: Install PHPCS
-        run: composer global require squizlabs/php_codesniffer
+        run: composer require slevomat/coding-standard --dev
 
       - name: Run PHPCS
-        run: phpcs --standard=PSR12 app/
+        run: vendor/bin/phpcs app
 
   build:
     name: Build Code
