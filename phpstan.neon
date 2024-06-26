@@ -16,6 +16,5 @@ parameters:
 #    excludePaths:
 #        - ./*/*/FileToBeExcluded.php
 #
-#    checkMissingIterableValueType: false
 
     editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
