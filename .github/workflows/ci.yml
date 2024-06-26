@@ -23,12 +23,12 @@ jobs:
         run: composer global require laravel/pint
 
       - name: Run Pint
-        run: pint
+        run: pint --test
 
-      - name: Commit linted files
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "Fixes coding style"
+  #      - name: Commit linted files
+  #        uses: stefanzweifel/git-auto-commit-action@v5
+  #        with:
+  #          commit_message: "Fixes coding style"
 
   phpstan:
     name: Analysis Code
@@ -49,6 +49,7 @@ jobs:
         with:
           path: vendor
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
 
       - name: Install Composer Dependencies
         if: steps.cache-vendor.outputs.cache-hit != 'true' # Skip if cache hit
@@ -78,6 +79,7 @@ jobs:
         with:
           path: vendor
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
 
       - name: Install Composer Dependencies
         if: steps.cache-vendor.outputs.cache-hit != 'true' # Skip if cache hit
