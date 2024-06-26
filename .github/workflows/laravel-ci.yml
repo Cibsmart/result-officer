@@ -43,7 +43,7 @@ jobs:
       - name: Extraction
         run: tar -xvf setup.tar
       - name: Running Phpstan
-        run: ./vendor/bin/phpstan analyse
+        run: ./vendor/bin/phpstan analyse --error-format=github
 
   tests:
     name: Feature and Unit tests
