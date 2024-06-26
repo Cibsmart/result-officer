@@ -13,7 +13,7 @@ class Faculty extends Model
     protected $fillable = ['code', 'name'];
 
     /**
-     * @return HasMany<Department>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Department>
      */
     public function departments(): HasMany
     {

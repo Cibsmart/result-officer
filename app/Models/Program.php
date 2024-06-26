@@ -13,7 +13,7 @@ class Program extends Model
     protected $fillable = ['department_id', 'code', 'name'];
 
     /**
-     * @return BelongsTo<Department, Program>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Department, \App\Models\Program>
      */
     public function department(): BelongsTo
     {

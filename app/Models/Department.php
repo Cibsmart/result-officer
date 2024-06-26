@@ -14,7 +14,7 @@ class Department extends Model
     protected $fillable = ['faculty_id', 'code', 'name'];
 
     /**
-     * @return BelongsTo<Faculty, Department>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Faculty, \App\Models\Department>
      */
     public function faculty(): BelongsTo
     {
@@ -22,7 +22,8 @@ class Department extends Model
     }
 
     /**
-     * @return HasMany<Program>
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Program>
      */
     public function programs(): HasMany
     {
