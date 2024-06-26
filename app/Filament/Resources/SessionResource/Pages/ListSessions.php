@@ -11,7 +11,7 @@ final class ListSessions extends ListRecords
 
     protected static string $resource = SessionResource::class;
 
-    /** @return array<int, Actions\ViewAction> */
+    /** @return array<int, \Filament\Actions\ViewAction> */
     protected function getHeaderActions(): array
     {
         return [

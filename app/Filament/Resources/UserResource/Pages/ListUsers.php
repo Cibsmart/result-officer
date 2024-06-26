@@ -11,7 +11,7 @@ final class ListUsers extends ListRecords
 
     protected static string $resource = UserResource::class;
 
-    /** @return array<int, Actions\ViewAction> */
+    /** @return array<int, \Filament\Actions\ViewAction> */
     protected function getHeaderActions(): array
     {
         return [
