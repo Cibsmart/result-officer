@@ -39,15 +39,12 @@ final class FacultyResource extends Resource
                 TextColumn::make('name')->sortable()->searchable(),
                 TextColumn::make('code')->sortable()->searchable(),
             ])
-            ->filters([
-            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
             ]);
     }
 
+    /** @return array<int, string> */
     public static function getRelations(): array
     {
         return [
@@ -55,6 +52,7 @@ final class FacultyResource extends Resource
         ];
     }
 
+    /** @return array<string, string> */
     public static function getPages(): array
     {
         return [

@@ -11,6 +11,7 @@ final class EditDepartment extends EditRecord
 
     protected static string $resource = DepartmentResource::class;
 
+    /** @return array<int, Actions\ViewAction> */
     protected function getHeaderActions(): array
     {
         return [

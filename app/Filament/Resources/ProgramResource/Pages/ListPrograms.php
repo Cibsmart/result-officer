@@ -11,6 +11,7 @@ final class ListPrograms extends ListRecords
 
     protected static string $resource = ProgramResource::class;
 
+    /** @return array<int, Actions\ViewAction> */
     protected function getHeaderActions(): array
     {
         return [

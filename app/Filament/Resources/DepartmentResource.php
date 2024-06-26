@@ -47,12 +47,8 @@ final class DepartmentResource extends Resource
                 TextColumn::make('code')->sortable()->searchable(),
                 TextColumn::make('faculty.name')->sortable()->searchable(),
             ])
-            ->filters([
-            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
             ]);
     }
 
@@ -63,6 +59,7 @@ final class DepartmentResource extends Resource
         ];
     }
 
+    /** @return array<string, string> */
     public static function getPages(): array
     {
         return [

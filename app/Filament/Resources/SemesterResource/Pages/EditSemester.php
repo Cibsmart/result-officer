@@ -11,6 +11,7 @@ final class EditSemester extends EditRecord
 
     protected static string $resource = SemesterResource::class;
 
+    /** @return array<int, Actions\ViewAction> */
     protected function getHeaderActions(): array
     {
         return [

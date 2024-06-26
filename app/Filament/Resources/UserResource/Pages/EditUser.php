@@ -11,6 +11,7 @@ final class EditUser extends EditRecord
 
     protected static string $resource = UserResource::class;
 
+    /** @return array<int, Actions\ViewAction> */
     protected function getHeaderActions(): array
     {
         return [

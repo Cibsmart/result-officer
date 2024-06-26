@@ -11,6 +11,7 @@ final class EditFaculty extends EditRecord
 
     protected static string $resource = FacultyResource::class;
 
+    /** @return array<int, Actions\ViewAction> */
     protected function getHeaderActions(): array
     {
         return [

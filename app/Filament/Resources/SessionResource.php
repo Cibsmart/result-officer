@@ -43,12 +43,7 @@ final class SessionResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-        ];
-    }
-
+    /** @return array<string, string> */
     public static function getPages(): array
     {
         return [

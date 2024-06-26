@@ -46,21 +46,12 @@ final class ProgramResource extends Resource
                 TextColumn::make('code')->sortable()->searchable(),
                 TextColumn::make('department.name')->sortable()->searchable(),
             ])
-            ->filters([
-            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-        ];
-    }
-
+    /** @return array<string, string> */
     public static function getPages(): array
     {
         return [
