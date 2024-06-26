@@ -147,6 +147,7 @@
 
     <rule ref="SlevomatCodingStandard.Strings.DisallowVariableParsing"/>
 
+    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes"/>
     <rule ref="SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax"/>
     <rule ref="SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint"/>
     <rule ref="SlevomatCodingStandard.TypeHints.LongTypeHints"/>
