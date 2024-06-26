@@ -29,6 +29,23 @@ jobs:
   #        uses: stefanzweifel/git-auto-commit-action@v5
   #        with:
   #          commit_message: "Fixes coding style"
+  phpcs:
+    name: Fix Code Standards
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      - name: Install PHPCS
+        run: composer global require squizlabs/php_codesniffer
+
+      - name: Run PHPCS
+        run: phpcs --standard=PSR12 app/
 
   phpstan:
     name: Analysis Code
