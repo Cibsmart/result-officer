@@ -1,0 +1,7 @@
+{
+    "preset": "laravel",
+    "rules": {
+        "concat_space": false,
+        "single_line_empty_body": false
+    }
+}
