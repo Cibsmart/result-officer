@@ -89,11 +89,8 @@
     <rule ref="SlevomatCodingStandard.Exceptions.RequireNonCapturingCatch"/>
     <rule ref="SlevomatCodingStandard.Files.FileLength"/>
     <rule ref="SlevomatCodingStandard.Files.LineLength"/>
-    <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName"/>
     <rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration"/>
     <rule ref="SlevomatCodingStandard.Functions.DisallowArrowFunction"/>
-    <rule ref="SlevomatCodingStandard.Functions.DisallowEmptyFunction"/>
-    <rule ref="SlevomatCodingStandard.Functions.DisallowNamedArguments"/>
     <rule ref="SlevomatCodingStandard.Functions.DisallowTrailingCommaInCall"/>
     <rule ref="SlevomatCodingStandard.Functions.DisallowTrailingCommaInClosureUse"/>
     <rule ref="SlevomatCodingStandard.Functions.DisallowTrailingCommaInDeclaration"/>
@@ -122,7 +119,6 @@
     <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses"/>
     <rule ref="SlevomatCodingStandard.Namespaces.UseDoesNotStartWithBackslash"/>
     <rule ref="SlevomatCodingStandard.Namespaces.UseFromSameNamespace"/>
-    <rule ref="SlevomatCodingStandard.Namespaces.UseOnlyWhitelistedNamespaces"/>
     <rule ref="SlevomatCodingStandard.Namespaces.UseSpacing"/>
     <rule ref="SlevomatCodingStandard.Namespaces.UselessAlias"/>
     <rule ref="SlevomatCodingStandard.Numbers.DisallowNumericLiteralSeparator"/>
