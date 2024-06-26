@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<ruleset name="ResultOfficer">
+    <config name="installed_paths"
+            value="../../slevomat/coding-standard"/><!-- relative path from PHPCS source location -->
+    <rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
+    <rule ref="SlevomatCodingStandard.Classes.ClassStructure"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameInAnnotation"/>
+    <!-- other sniffs to include -->
+</ruleset>
