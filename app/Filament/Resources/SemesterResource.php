@@ -10,8 +10,9 @@ use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class SemesterResource extends Resource
+final class SemesterResource extends Resource
 {
+
     protected static ?string $model = Semester::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
@@ -38,23 +39,22 @@ class SemesterResource extends Resource
                 TextColumn::make('name')->label('Semester'),
             ])
             ->filters([
-                //
             ]);
     }
 
     public static function getRelations(): array
     {
         return [
-            //
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSemesters::route('/'),
             'create' => Pages\CreateSemester::route('/create'),
             'edit' => Pages\EditSemester::route('/{record}/edit'),
+            'index' => Pages\ListSemesters::route('/'),
         ];
     }
+
 }

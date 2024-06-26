@@ -6,8 +6,9 @@ use App\Filament\Resources\SessionResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListSessions extends ListRecords
+final class ListSessions extends ListRecords
 {
+
     protected static string $resource = SessionResource::class;
 
     protected function getHeaderActions(): array
@@ -16,4 +17,5 @@ class ListSessions extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+
 }

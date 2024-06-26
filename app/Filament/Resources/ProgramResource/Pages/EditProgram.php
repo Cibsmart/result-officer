@@ -6,8 +6,9 @@ use App\Filament\Resources\ProgramResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditProgram extends EditRecord
+final class EditProgram extends EditRecord
 {
+
     protected static string $resource = ProgramResource::class;
 
     protected function getHeaderActions(): array
@@ -16,4 +17,5 @@ class EditProgram extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
 }

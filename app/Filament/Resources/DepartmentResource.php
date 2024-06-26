@@ -13,8 +13,9 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class DepartmentResource extends Resource
+final class DepartmentResource extends Resource
 {
+
     protected static ?string $model = Department::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
@@ -47,13 +48,11 @@ class DepartmentResource extends Resource
                 TextColumn::make('faculty.name')->sortable()->searchable(),
             ])
             ->filters([
-                //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                //
             ]);
     }
 
@@ -67,9 +66,10 @@ class DepartmentResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDepartments::route('/'),
             'create' => Pages\CreateDepartment::route('/create'),
             'edit' => Pages\EditDepartment::route('/{record}/edit'),
+            'index' => Pages\ListDepartments::route('/'),
         ];
     }
+
 }

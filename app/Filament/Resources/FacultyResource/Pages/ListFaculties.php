@@ -6,8 +6,9 @@ use App\Filament\Resources\FacultyResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListFaculties extends ListRecords
+final class ListFaculties extends ListRecords
 {
+
     protected static string $resource = FacultyResource::class;
 
     protected function getHeaderActions(): array
@@ -16,4 +17,5 @@ class ListFaculties extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+
 }

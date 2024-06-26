@@ -6,8 +6,9 @@ use App\Filament\Resources\DepartmentResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListDepartments extends ListRecords
+final class ListDepartments extends ListRecords
 {
+
     protected static string $resource = DepartmentResource::class;
 
     protected function getHeaderActions(): array
@@ -16,4 +17,5 @@ class ListDepartments extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+
 }

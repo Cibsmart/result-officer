@@ -12,8 +12,9 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class ProgramResource extends Resource
+final class ProgramResource extends Resource
 {
+
     protected static ?string $model = Program::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
@@ -46,29 +47,27 @@ class ProgramResource extends Resource
                 TextColumn::make('department.name')->sortable()->searchable(),
             ])
             ->filters([
-                //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                //
             ]);
     }
 
     public static function getRelations(): array
     {
         return [
-            //
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPrograms::route('/'),
             'create' => Pages\CreateProgram::route('/create'),
             'edit' => Pages\EditProgram::route('/{record}/edit'),
+            'index' => Pages\ListPrograms::route('/'),
         ];
     }
+
 }

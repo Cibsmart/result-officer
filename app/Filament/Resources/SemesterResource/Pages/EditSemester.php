@@ -6,8 +6,9 @@ use App\Filament\Resources\SemesterResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditSemester extends EditRecord
+final class EditSemester extends EditRecord
 {
+
     protected static string $resource = SemesterResource::class;
 
     protected function getHeaderActions(): array
@@ -16,4 +17,5 @@ class EditSemester extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
 }

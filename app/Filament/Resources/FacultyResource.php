@@ -12,8 +12,9 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class FacultyResource extends Resource
+final class FacultyResource extends Resource
 {
+
     protected static ?string $model = Faculty::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
@@ -39,13 +40,11 @@ class FacultyResource extends Resource
                 TextColumn::make('code')->sortable()->searchable(),
             ])
             ->filters([
-                //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                //
             ]);
     }
 
@@ -59,9 +58,10 @@ class FacultyResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListFaculties::route('/'),
             'create' => Pages\CreateFaculty::route('/create'),
             'edit' => Pages\EditFaculty::route('/{record}/edit'),
+            'index' => Pages\ListFaculties::route('/'),
         ];
     }
+
 }

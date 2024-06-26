@@ -10,8 +10,9 @@ use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class SessionResource extends Resource
+final class SessionResource extends Resource
 {
+
     protected static ?string $model = Session::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
@@ -39,23 +40,22 @@ class SessionResource extends Resource
                 TextColumn::make('name')->label('Session'),
             ])
             ->filters([
-                //
             ]);
     }
 
     public static function getRelations(): array
     {
         return [
-            //
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSessions::route('/'),
             'create' => Pages\CreateSession::route('/create'),
             'edit' => Pages\EditSession::route('/{record}/edit'),
+            'index' => Pages\ListSessions::route('/'),
         ];
     }
+
 }

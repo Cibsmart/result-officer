@@ -12,11 +12,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
-use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
-class RegisteredUserController extends Controller
+final class RegisteredUserController extends Controller
 {
+
     /**
      * Handle an incoming registration request.
      *
@@ -25,15 +25,15 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'name' => ['required', 'string', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role' => ['required', Rule::in(Role::cases())],
         ]);
 
         $user = User::query()->create([
-            'name' => $request->name,
             'email' => $request->email,
+            'name' => $request->name,
             'password' => Hash::make($request->password),
             'role' => $request->role,
         ]);
@@ -52,4 +52,5 @@ class RegisteredUserController extends Controller
     {
         return view('auth.register');
     }
+
 }

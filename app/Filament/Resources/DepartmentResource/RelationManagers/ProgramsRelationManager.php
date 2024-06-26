@@ -8,8 +8,9 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class ProgramsRelationManager extends RelationManager
+final class ProgramsRelationManager extends RelationManager
 {
+
     protected static string $relationship = 'programs';
 
     public function form(Form $form): Form
@@ -30,7 +31,6 @@ class ProgramsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('code'),
             ])
             ->filters([
-                //
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make(),
@@ -39,7 +39,7 @@ class ProgramsRelationManager extends RelationManager
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                //
             ]);
     }
+
 }
