@@ -33,7 +33,7 @@ class ProgramResource extends Resource
                     ->label('Department')
                     ->searchable()
                     ->preload()
-                    ->required()
+                    ->required(),
             ]);
     }
 

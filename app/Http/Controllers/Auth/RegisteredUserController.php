@@ -31,7 +31,6 @@ class RegisteredUserController extends Controller
             'role' => ['required', Rule::in(Role::cases())],
         ]);
 
-
         $user = User::query()->create([
             'name' => $request->name,
             'email' => $request->email,

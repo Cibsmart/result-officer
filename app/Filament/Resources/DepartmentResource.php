@@ -34,7 +34,7 @@ class DepartmentResource extends Resource
                     ->label('Faculty')
                     ->searchable()
                     ->preload()
-                    ->required()
+                    ->required(),
             ]);
     }
 

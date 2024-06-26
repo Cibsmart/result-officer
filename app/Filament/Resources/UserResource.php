@@ -15,7 +15,6 @@ use Filament\Tables\Table;
 
 class UserResource extends Resource
 {
-
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
@@ -31,7 +30,7 @@ class UserResource extends Resource
                     ->visibleOn('create'),
                 Select::make('role')
                     ->options(Role::class)
-                    ->required()
+                    ->required(),
             ]);
     }
 

@@ -19,7 +19,7 @@ class ProgramSeeder extends Seeder
         'MTHSTA' => [
             'MTH' => 'MATHEMATICS',
             'STA' => 'STATICS',
-        ]
+        ],
     ];
 
     /**

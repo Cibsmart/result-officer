@@ -52,7 +52,7 @@ class FacultyResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\DepartmentsRelationManager::class
+            RelationManagers\DepartmentsRelationManager::class,
         ];
     }
 
