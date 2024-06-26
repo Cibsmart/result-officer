@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Database\Seeders;
 
 use App\Models\Session;
 use Illuminate\Database\Seeder;
 
-class SessionSeeder extends Seeder
+final class SessionSeeder extends Seeder
 {
+
     /**
      * Run the database seeds.
      */
@@ -19,4 +22,5 @@ class SessionSeeder extends Seeder
             ]);
         }
     }
+
 }

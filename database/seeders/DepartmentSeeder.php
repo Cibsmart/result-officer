@@ -1,20 +1,21 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Database\Seeders;
 
 use App\Models\Department;
 use App\Models\Faculty;
 use Illuminate\Database\Seeder;
 
-class DepartmentSeeder extends Seeder
+final class DepartmentSeeder extends Seeder
 {
-    /**
-     * @var array<string, string>
-     */
+
+    /** @var array<string, string> */
     private array $departments = [
+        'CHEM' => 'CHEMISTRY',
         'CSCI' => 'COMPUTER SCIENCE/INFORMATICS',
         'MTHSTA' => 'MATHEMATICS/STATICS',
-        'CHEM' => 'CHEMISTRY',
         'PHYGEOP' => 'PHYSIC/APPLIED GEOPHYSICS',
     ];
 
@@ -25,10 +26,11 @@ class DepartmentSeeder extends Seeder
     {
         foreach ($this->departments as $code => $name) {
             Department::query()->create([
-                'faculty_id' => Faculty::query()->where('code', 'FPS')->first()?->id,
                 'code' => $code,
+                'faculty_id' => Faculty::query()->where('code', 'FPS')->first()?->id,
                 'name' => $name,
             ]);
         }
     }
+
 }

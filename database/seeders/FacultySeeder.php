@@ -1,22 +1,23 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Database\Seeders;
 
 use App\Models\Faculty;
 use Illuminate\Database\Seeder;
 
-class FacultySeeder extends Seeder
+final class FacultySeeder extends Seeder
 {
-    /**
-     * @var array<string, string>
-     */
+
+    /** @var array<string, string> */
     private array $faculties = [
-        'FPS' => 'PHYSICAL SCIENCES',
+        'FBMS' => 'BASIC MEDICAL SCIENCES',
         'FBS' => 'BIOLOGICAL SCIENCES',
         'FEDU' => 'EDUCATION',
         'FMS' => 'MANAGEMENT SCIENCES',
+        'FPS' => 'PHYSICAL SCIENCES',
         'FSS' => 'SOCIAL SCIENCES',
-        'FBMS' => 'BASIC MEDICAL SCIENCES',
     ];
 
     /**
@@ -32,4 +33,5 @@ class FacultySeeder extends Seeder
                 ]);
         }
     }
+
 }

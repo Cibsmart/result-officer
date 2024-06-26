@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Database\Seeders;
 
 use App\Models\Department;
 use App\Models\Program;
 use Illuminate\Database\Seeder;
 
-class ProgramSeeder extends Seeder
+final class ProgramSeeder extends Seeder
 {
-    /**
-     * @var array<string, array<string, string>>
-     */
+
+    /** @var array<string, array<string, string>> */
     private array $departmentPrograms = [
         'CSCI' => [
             'CSC' => 'COMPUTER SCIENCE',
@@ -30,11 +31,12 @@ class ProgramSeeder extends Seeder
         foreach ($this->departmentPrograms as $department => $programs) {
             foreach ($programs as $code => $name) {
                 Program::query()->create([
-                    'department_id' => Department::query()->where('code', $department)->first()->id,
                     'code' => $code,
+                    'department_id' => Department::query()->where('code', $department)->first()->id,
                     'name' => $name,
                 ]);
             }
         }
     }
+
 }

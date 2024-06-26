@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Database\Seeders;
 
 use App\Models\Semester;
 use Illuminate\Database\Seeder;
 
-class SemesterSeeder extends Seeder
+final class SemesterSeeder extends Seeder
 {
+
     /**
      * Run the database seeds.
      */
@@ -20,4 +23,5 @@ class SemesterSeeder extends Seeder
             'name' => 'SECOND',
         ]);
     }
+
 }
