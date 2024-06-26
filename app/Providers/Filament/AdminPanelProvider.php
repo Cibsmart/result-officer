@@ -20,6 +20,19 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 final class AdminPanelProvider extends PanelProvider
 {
 
+    /** @var array<class-string> */
+    private array $middlewares = [
+        EncryptCookies::class,
+        AddQueuedCookiesToResponse::class,
+        StartSession::class,
+        AuthenticateSession::class,
+        ShareErrorsFromSession::class,
+        VerifyCsrfToken::class,
+        SubstituteBindings::class,
+        DisableBladeIconComponents::class,
+        DispatchServingFilamentEvent::class,
+    ];
+
     public function panel(Panel $panel): Panel
     {
         return $panel
@@ -33,17 +46,7 @@ final class AdminPanelProvider extends PanelProvider
             ->pages([Pages\Dashboard::class,])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([])
-            ->middleware([
-                EncryptCookies::class,
-                AddQueuedCookiesToResponse::class,
-                StartSession::class,
-                AuthenticateSession::class,
-                ShareErrorsFromSession::class,
-                VerifyCsrfToken::class,
-                SubstituteBindings::class,
-                DisableBladeIconComponents::class,
-                DispatchServingFilamentEvent::class,
-            ])
+            ->middleware($this->middlewares)
             ->authMiddleware([Authenticate::class,]);
     }
 
