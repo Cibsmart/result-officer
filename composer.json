@@ -1,75 +1,79 @@
 {
-    "name": "laravel/laravel",
-    "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": [
-        "laravel",
-        "framework"
+  "name": "laravel/laravel",
+  "type": "project",
+  "description": "The skeleton application for the Laravel framework.",
+  "keywords": [
+    "laravel",
+    "framework"
+  ],
+  "license": "MIT",
+  "require": {
+    "php": "^8.2",
+    "filament/filament": "^3.2",
+    "laravel/framework": "^11.9",
+    "laravel/tinker": "^2.9"
+  },
+  "require-dev": {
+    "barryvdh/laravel-ide-helper": "^3.0",
+    "fakerphp/faker": "^1.23",
+    "larastan/larastan": "^2.9",
+    "laravel/breeze": "^2.1",
+    "laravel/pint": "^1.16",
+    "laravel/sail": "^1.26",
+    "mockery/mockery": "^1.6",
+    "nunomaduro/collision": "^8.0",
+    "pestphp/pest": "^2.0",
+    "pestphp/pest-plugin-laravel": "^2.0",
+    "slevomat/coding-standard": "^8.15"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/",
+      "Database\\Seeders\\": "database/seeders/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/",
+      "Tests\\Factories\\": "tests/factories"
+    }
+  },
+  "scripts": {
+    "post-autoload-dump": [
+      "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+      "@php artisan package:discover --ansi",
+      "@php artisan filament:upgrade"
     ],
-    "license": "MIT",
-    "require": {
-        "php": "^8.2",
-        "filament/filament": "^3.2",
-        "laravel/framework": "^11.9",
-        "laravel/tinker": "^2.9"
-    },
-    "require-dev": {
-        "fakerphp/faker": "^1.23",
-        "larastan/larastan": "^2.9",
-        "laravel/breeze": "^2.1",
-        "laravel/pint": "^1.16",
-        "laravel/sail": "^1.26",
-        "mockery/mockery": "^1.6",
-        "nunomaduro/collision": "^8.0",
-        "pestphp/pest": "^2.0",
-        "pestphp/pest-plugin-laravel": "^2.0",
-        "slevomat/coding-standard": "^8.15"
-    },
-    "autoload": {
-        "psr-4": {
-            "App\\": "app/",
-            "Database\\Seeders\\": "database/seeders/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/",
-            "Tests\\Factories\\": "tests/factories"
-        }
-    },
-    "scripts": {
-        "post-autoload-dump": [
-            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi",
-            "@php artisan filament:upgrade"
-        ],
-        "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
-        ],
-        "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ],
-        "post-create-project-cmd": [
-            "@php artisan key:generate --ansi",
-            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
-            "@php artisan migrate --graceful --ansi"
-        ]
-    },
-    "extra": {
-        "laravel": {
-            "dont-discover": []
-        }
-    },
-    "config": {
-        "optimize-autoloader": true,
-        "preferred-install": "dist",
-        "sort-packages": true,
-        "allow-plugins": {
-            "pestphp/pest-plugin": true,
-            "php-http/discovery": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true
-        }
-    },
-    "minimum-stability": "stable",
-    "prefer-stable": true
+    "post-update-cmd": [
+      "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+    ],
+    "post-root-package-install": [
+      "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+    ],
+    "post-create-project-cmd": [
+      "@php artisan key:generate --ansi",
+      "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
+      "@php artisan migrate --graceful --ansi"
+    ],
+    "ide-helper": [
+      "@php artisan ide-helper:models"
+    ]
+  },
+  "extra": {
+    "laravel": {
+      "dont-discover": []
+    }
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true,
+      "php-http/discovery": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
 }
