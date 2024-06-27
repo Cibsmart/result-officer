@@ -11,11 +11,7 @@ use Illuminate\Validation\Rule;
 final class ProfileUpdateRequest extends FormRequest
 {
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array<int, string|\Illuminate\Validation\Rules\Unique>|string>
-     */
+    /** @return array<string, string|array<int, string|\Illuminate\Validation\Rules\Unique>> */
     public function rules(): array
     {
         return [
