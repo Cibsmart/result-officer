@@ -26,6 +26,11 @@ final class CountrySeeder extends Seeder
             'demonym' => 'INTERNATIONAL',
             'name' => 'FORIEGNER',
         ]);
+
+        $this->call([
+            StateSeeder::class,
+            LocalGovernmentSeeder::class,
+        ]);
     }
 
 }

@@ -32,6 +32,11 @@ final class FacultySeeder extends Seeder
                     'name' => $faculty,
                 ]);
         }
+
+        $this->call([
+            DepartmentSeeder::class,
+            ProgramSeeder::class,
+        ]);
     }
 
 }
