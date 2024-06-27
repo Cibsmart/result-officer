@@ -14,10 +14,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('academic_sessions', static function (Blueprint $table): void {
+        Schema::create('countries', static function (Blueprint $table): void {
             $table->id();
+            $table->string('code')->unique();
             $table->string('name');
-            $table->boolean('active')->default(false);
+            $table->string('demonym');
             $table->timestamps();
         });
     }
@@ -27,7 +28,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sessions');
+        Schema::dropIfExists('countries');
     }
 
 };

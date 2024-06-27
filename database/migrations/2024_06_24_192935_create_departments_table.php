@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('departments', static function (Blueprint $table): void {
             $table->id();
-            $table->foreignId('faculty_id')->constrained();
+            $table->foreignId('faculty_id')->constrained('faculties');
             $table->string('code')->unique();
             $table->string('name');
             $table->timestamps();
