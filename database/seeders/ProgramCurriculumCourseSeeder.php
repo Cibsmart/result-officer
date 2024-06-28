@@ -19,7 +19,7 @@ final class ProgramCurriculumCourseSeeder extends Seeder
             'course_id' => 1,
             'course_type_id' => 1,
             'credit_unit_id' => 3,
-            'program_course_id' => 1,
+            'program_curriculum_id' => 1,
         ]);
     }
 

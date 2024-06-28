@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('program_curriculum_courses', static function (Blueprint $table): void {
             $table->id();
-            $table->foreignId('program_course_id')->constrained('program_curricula');
+            $table->foreignId('program_curriculum_id')->constrained('program_curricula');
             $table->foreignId('course_id')->constrained('courses');
             $table->foreignId('credit_unit_id')->constrained('credit_units');
             $table->foreignId('course_type_id')->constrained('course_types');

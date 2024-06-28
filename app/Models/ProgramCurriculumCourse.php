@@ -11,7 +11,7 @@ final class ProgramCurriculumCourse extends Model
 {
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculum,\App\Models\ProgramCurriculumCourse> */
-    public function program(): BelongsTo
+    public function programCurriculum(): BelongsTo
     {
         return $this->belongsTo(ProgramCurriculum::class);
     }
