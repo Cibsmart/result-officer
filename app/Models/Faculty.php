@@ -19,5 +19,4 @@ final class Faculty extends Model
     {
         return $this->hasMany(Department::class);
     }
-
 }

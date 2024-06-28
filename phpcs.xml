@@ -50,7 +50,11 @@
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming"/>
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousTraitNaming"/>
     <rule ref="SlevomatCodingStandard.Classes.TraitUseDeclaration"/>
-    <rule ref="SlevomatCodingStandard.Classes.TraitUseSpacing"/>
+    <rule ref="SlevomatCodingStandard.Classes.TraitUseSpacing">
+        <properties>
+            <property name="linesCountBeforeFirstUse" value="0"/>
+        </properties>
+    </rule>
     <rule ref="SlevomatCodingStandard.Classes.UselessLateStaticBinding"/>
 
     <rule ref="SlevomatCodingStandard.Commenting.AnnotationName"/>
@@ -104,7 +108,11 @@
     </rule>
 
     <rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration"/>
-    <rule ref="SlevomatCodingStandard.Functions.FunctionLength"/>
+    <rule ref="SlevomatCodingStandard.Functions.FunctionLength">
+        <properties>
+            <property name="maxLinesLength" value="30"/>
+        </properties>
+    </rule>
     <rule ref="SlevomatCodingStandard.Functions.NamedArgumentSpacing"/>
     <rule ref="SlevomatCodingStandard.Functions.RequireArrowFunction"/>
     <rule ref="SlevomatCodingStandard.Functions.RequireMultiLineCall"/>
@@ -133,10 +141,8 @@
     <rule ref="SlevomatCodingStandard.Namespaces.UselessAlias"/>
 
     <rule ref="SlevomatCodingStandard.Numbers.DisallowNumericLiteralSeparator"/>
-    <rule ref="SlevomatCodingStandard.Numbers.RequireNumericLiteralSeparator"/>
 
     <rule ref="SlevomatCodingStandard.Operators.DisallowEqualOperators"/>
-    <rule ref="SlevomatCodingStandard.Operators.DisallowIncrementAndDecrementOperators"/>
     <rule ref="SlevomatCodingStandard.Operators.NegationOperatorSpacing">
         <properties>
             <property name="spacesCount" value="1"/>

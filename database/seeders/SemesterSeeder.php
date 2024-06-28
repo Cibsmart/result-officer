@@ -22,5 +22,4 @@ final class SemesterSeeder extends Seeder
             'name' => 'SECOND',
         ]);
     }
-
 }

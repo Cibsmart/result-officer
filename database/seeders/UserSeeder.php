@@ -9,10 +9,6 @@ use Illuminate\Database\Seeder;
 
 final class UserSeeder extends Seeder
 {
-
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         User::query()->create([
@@ -22,5 +18,4 @@ final class UserSeeder extends Seeder
             'role' => 'admin',
         ]);
     }
-
 }
