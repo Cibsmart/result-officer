@@ -10,7 +10,6 @@ use Illuminate\Database\Seeder;
 
 final class DepartmentSeeder extends Seeder
 {
-
     /** @var array<string, string> */
     private array $departments = [
         'CHEM' => 'CHEMISTRY',

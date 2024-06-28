@@ -15,7 +15,6 @@ use Filament\Resources\Pages\CreateRecord;
 
 final class CreateProgramCurriculum extends CreateRecord
 {
-
     protected static string $resource = ProgramCurriculumResource::class;
 
     /**

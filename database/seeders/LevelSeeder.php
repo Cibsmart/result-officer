@@ -9,7 +9,6 @@ use Illuminate\Database\Seeder;
 
 final class LevelSeeder extends Seeder
 {
-
     /** @var array<int, string> */
     private array $levels = [
         '100', '200', '300', '400', '500', '600', 'EXTRA YEAR',

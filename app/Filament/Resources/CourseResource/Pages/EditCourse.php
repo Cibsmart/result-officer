@@ -9,7 +9,6 @@ use Filament\Resources\Pages\EditRecord;
 
 final class EditCourse extends EditRecord
 {
-
     protected static string $resource = CourseResource::class;
 
     /** @return array<int, \Filament\Actions\Action|\Filament\Actions\ActionGroup> */

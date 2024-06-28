@@ -14,7 +14,6 @@ use Filament\Tables\Table;
 
 final class SessionResource extends Resource
 {
-
     protected static ?string $model = Session::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

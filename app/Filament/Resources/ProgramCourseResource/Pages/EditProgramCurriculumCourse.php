@@ -10,7 +10,6 @@ use Filament\Resources\Pages\EditRecord;
 
 final class EditProgramCurriculumCourse extends EditRecord
 {
-
     protected static string $resource = ProgramCourseResource::class;
 
     /** @return array<int, \Filament\Actions\Action> */

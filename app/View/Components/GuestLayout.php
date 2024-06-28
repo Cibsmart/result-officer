@@ -9,7 +9,6 @@ use Illuminate\View\View;
 
 final class GuestLayout extends Component
 {
-
     /**
      * Get the view / contents that represents the component.
      */

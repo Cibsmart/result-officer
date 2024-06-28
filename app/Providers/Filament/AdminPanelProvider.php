@@ -21,7 +21,6 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 final class AdminPanelProvider extends PanelProvider
 {
-
     /** @var array<class-string> */
     private array $middlewares = [
         EncryptCookies::class,

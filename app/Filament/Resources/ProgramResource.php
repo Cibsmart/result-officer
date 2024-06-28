@@ -16,7 +16,6 @@ use Filament\Tables\Table;
 
 final class ProgramResource extends Resource
 {
-
     protected static ?string $model = Program::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

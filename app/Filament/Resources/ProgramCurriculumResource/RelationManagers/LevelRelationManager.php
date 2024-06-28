@@ -12,7 +12,6 @@ use Filament\Tables\Table;
 
 final class LevelRelationManager extends RelationManager
 {
-
     protected static string $relationship = 'level';
 
     public function form(Form $form): Form

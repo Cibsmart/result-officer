@@ -10,7 +10,6 @@ use Filament\Tables\Table;
 
 final class CreditUnitRelationManager extends RelationManager
 {
-
     protected static string $relationship = 'creditUnit';
 
     public function table(Table $table): Table

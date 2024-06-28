@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 
 final class LocalGovernment extends Model
 {
-
     protected $fillable = ['state_id', 'name'];
 
 }

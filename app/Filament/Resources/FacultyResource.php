@@ -16,7 +16,6 @@ use Filament\Tables\Table;
 
 final class FacultyResource extends Resource
 {
-
     protected static ?string $model = Faculty::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

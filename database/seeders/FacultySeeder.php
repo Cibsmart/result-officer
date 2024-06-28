@@ -9,7 +9,6 @@ use Illuminate\Database\Seeder;
 
 final class FacultySeeder extends Seeder
 {
-
     /** @var array<string, string> */
     private array $faculties = [
         'FBMS' => 'BASIC MEDICAL SCIENCES',

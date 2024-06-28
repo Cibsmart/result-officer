@@ -10,7 +10,6 @@ use Filament\Resources\Pages\EditRecord;
 
 final class EditUser extends EditRecord
 {
-
     protected static string $resource = UserResource::class;
 
     /** @return array<int, \Filament\Actions\DeleteAction> */

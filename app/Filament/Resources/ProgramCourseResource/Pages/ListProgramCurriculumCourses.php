@@ -10,7 +10,6 @@ use Filament\Resources\Pages\ListRecords;
 
 final class ListProgramCurriculumCourses extends ListRecords
 {
-
     protected static string $resource = ProgramCourseResource::class;
 
     /** @return array<int, \Filament\Actions\Action> */

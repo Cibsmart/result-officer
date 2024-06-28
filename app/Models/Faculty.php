@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class Faculty extends Model
 {
-
     use SoftDeletes;
 
     protected $fillable = ['code', 'name'];

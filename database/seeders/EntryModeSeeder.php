@@ -9,7 +9,6 @@ use Illuminate\Database\Seeder;
 
 final class EntryModeSeeder extends Seeder
 {
-
     /**
      * Run the database seeds.
      */

@@ -8,7 +8,6 @@ use Illuminate\Support\ServiceProvider;
 
 final class AppServiceProvider extends ServiceProvider
 {
-
     /**
      * Register any application services.
      */

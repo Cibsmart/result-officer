@@ -9,7 +9,6 @@ use Illuminate\Database\Seeder;
 
 final class StateSeeder extends Seeder
 {
-
     /** @var array<int, string> */
     private array $states = [
         'ABIA', 'ANAMBRA', 'EBONYI', 'ENUGU', 'IMO',

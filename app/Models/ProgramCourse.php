@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 final class ProgramCourse extends Model
 {
-
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculum,\App\Models\ProgramCourse> */
     public function programCurriculum(): BelongsTo
     {

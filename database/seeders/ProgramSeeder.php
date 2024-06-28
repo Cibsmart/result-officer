@@ -10,7 +10,6 @@ use Illuminate\Database\Seeder;
 
 final class ProgramSeeder extends Seeder
 {
-
     /** @var array<string, array<string, string>> */
     private array $departmentPrograms = [
         'CSCI' => [

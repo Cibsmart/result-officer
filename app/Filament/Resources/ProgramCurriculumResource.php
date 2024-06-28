@@ -22,7 +22,6 @@ use Filament\Tables\Table;
 
 final class ProgramCurriculumResource extends Resource
 {
-
     protected static ?string $model = ProgramCurriculum::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

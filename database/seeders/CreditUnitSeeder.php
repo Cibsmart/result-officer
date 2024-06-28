@@ -9,7 +9,6 @@ use Illuminate\Database\Seeder;
 
 final class CreditUnitSeeder extends Seeder
 {
-
     /**
      * Run the database seeds.
      */

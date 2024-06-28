@@ -9,7 +9,6 @@ use Illuminate\Database\Seeder;
 
 final class CourseTypeSeeder extends Seeder
 {
-
     /** @var array<int, string> */
     private array $courseTypes = [
         'C' => 'COMPULSORY',

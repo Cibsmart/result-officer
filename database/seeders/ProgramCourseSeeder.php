@@ -9,7 +9,6 @@ use Illuminate\Database\Seeder;
 
 final class ProgramCourseSeeder extends Seeder
 {
-
     /**
      * Run the database seeds.
      */

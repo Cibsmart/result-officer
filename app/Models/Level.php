@@ -8,5 +8,4 @@ use Illuminate\Database\Eloquent\Model;
 
 final class Level extends Model
 {
-
 }

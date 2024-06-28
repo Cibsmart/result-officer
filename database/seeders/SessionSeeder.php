@@ -9,7 +9,6 @@ use Illuminate\Database\Seeder;
 
 final class SessionSeeder extends Seeder
 {
-
     /**
      * Run the database seeds.
      */

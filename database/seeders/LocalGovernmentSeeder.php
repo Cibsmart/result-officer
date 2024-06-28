@@ -9,7 +9,6 @@ use Illuminate\Database\Seeder;
 
 final class LocalGovernmentSeeder extends Seeder
 {
-
     /** @var array<int, string> */
     private array $lgas = [
         'ABA NORTH',

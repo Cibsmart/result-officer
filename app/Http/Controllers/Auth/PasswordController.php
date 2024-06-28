@@ -12,7 +12,6 @@ use Illuminate\Validation\Rules\Password;
 
 final class PasswordController extends Controller
 {
-
     /**
      * Update the user's password.
      */

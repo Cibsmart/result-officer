@@ -13,7 +13,6 @@ use Illuminate\View\View;
 
 final class ConfirmablePasswordController extends Controller
 {
-
     /**
      * Show the confirm password view.
      */

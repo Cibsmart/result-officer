@@ -9,7 +9,6 @@ use Illuminate\Database\Seeder;
 
 final class CourseSeeder extends Seeder
 {
-
     /** @var array<string, string> */
     private array $courses = [
         'CSC 101' => 'INTRODUCTION TO COMPUTER SCIENCE I',

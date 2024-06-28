@@ -10,7 +10,6 @@ use Filament\Resources\Pages\ListRecords;
 
 final class ListUsers extends ListRecords
 {
-
     protected static string $resource = UserResource::class;
 
     /** @return array<int, \Filament\Actions\CreateAction> */

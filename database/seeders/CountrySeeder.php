@@ -9,7 +9,6 @@ use Illuminate\Database\Seeder;
 
 final class CountrySeeder extends Seeder
 {
-
     /**
      * Run the database seeds.
      */

@@ -9,7 +9,6 @@ use Illuminate\Database\Seeder;
 
 final class ProgramTypeSeeder extends Seeder
 {
-
     /** @var array<string, string> */
     private array $programTypes = [
         'B.A.' => 'BACHELOR OF ART',

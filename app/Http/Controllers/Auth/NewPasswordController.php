@@ -16,7 +16,6 @@ use Illuminate\View\View;
 
 final class NewPasswordController extends Controller
 {
-
     /**
      * Display the password reset view.
      */

@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class ProgramCurriculum extends Model
 {
-
     protected $fillable = [
         'program_id',
         'curriculum_id',
