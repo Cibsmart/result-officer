@@ -32,5 +32,4 @@ final class LevelRelationManager extends RelationManager
             ->filters([
             ]);
     }
-
 }

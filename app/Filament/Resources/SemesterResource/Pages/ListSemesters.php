@@ -19,5 +19,4 @@ final class ListSemesters extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
-
 }

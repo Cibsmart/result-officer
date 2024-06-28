@@ -22,5 +22,4 @@ final class CreditUnitRelationManager extends RelationManager
             ->filters([
             ]);
     }
-
 }

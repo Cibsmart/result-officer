@@ -19,5 +19,4 @@ final class EditProgramCurriculumCourse extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
-
 }

@@ -10,5 +10,4 @@ use Filament\Resources\Pages\CreateRecord;
 final class CreateSemester extends CreateRecord
 {
     protected static string $resource = SemesterResource::class;
-
 }

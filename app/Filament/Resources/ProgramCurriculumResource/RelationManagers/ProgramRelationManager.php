@@ -23,5 +23,4 @@ final class ProgramRelationManager extends RelationManager
             ->filters([
             ]);
     }
-
 }

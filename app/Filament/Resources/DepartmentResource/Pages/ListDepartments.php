@@ -19,5 +19,4 @@ final class ListDepartments extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
-
 }

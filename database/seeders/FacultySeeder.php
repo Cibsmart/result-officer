@@ -37,5 +37,4 @@ final class FacultySeeder extends Seeder
             ProgramSeeder::class,
         ]);
     }
-
 }

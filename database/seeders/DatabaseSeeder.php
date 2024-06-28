@@ -33,5 +33,4 @@ final class DatabaseSeeder extends Seeder
             ProgramDurationSeeder::class,
         ]);
     }
-
 }

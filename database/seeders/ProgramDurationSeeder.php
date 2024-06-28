@@ -26,5 +26,4 @@ final class ProgramDurationSeeder extends Seeder
             'value' => 3,
         ]);
     }
-
 }

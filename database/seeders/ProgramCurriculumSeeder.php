@@ -32,5 +32,4 @@ final class ProgramCurriculumSeeder extends Seeder
             'slug' => 'CSC-BMAS-100-SECOND',
         ]);
     }
-
 }

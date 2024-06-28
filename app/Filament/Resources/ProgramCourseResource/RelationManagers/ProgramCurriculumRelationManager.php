@@ -32,5 +32,4 @@ final class ProgramCurriculumRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('slug'),
             ]);
     }
-
 }

@@ -24,5 +24,4 @@ final class EntryModeSeeder extends Seeder
             'name' => 'DIRECT ENTRY',
         ]);
     }
-
 }

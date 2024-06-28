@@ -44,5 +44,4 @@ final class CreateProgramCurriculum extends CreateRecord
 
         return $data;
     }
-
 }

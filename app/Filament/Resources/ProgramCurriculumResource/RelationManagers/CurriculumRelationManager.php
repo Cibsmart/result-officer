@@ -31,5 +31,4 @@ final class CurriculumRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('name'),
             ]);
     }
-
 }

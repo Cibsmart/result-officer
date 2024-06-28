@@ -62,5 +62,4 @@ final class FacultyResource extends Resource
             'index' => Pages\ListFaculties::route('/'),
         ];
     }
-
 }

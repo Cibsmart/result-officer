@@ -20,5 +20,4 @@ final class EmailVerificationPromptController extends Controller
                     ? redirect()->intended(route('dashboard', absolute: false))
                     : view('auth.verify-email');
     }
-
 }

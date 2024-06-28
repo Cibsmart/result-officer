@@ -31,5 +31,4 @@ final class CountrySeeder extends Seeder
             LocalGovernmentSeeder::class,
         ]);
     }
-
 }

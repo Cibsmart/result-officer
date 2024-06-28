@@ -82,5 +82,4 @@ final class ProgramCourseResource extends Resource
             'index' => Pages\ListProgramCurriculumCourses::route('/'),
         ];
     }
-
 }

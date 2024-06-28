@@ -20,5 +20,4 @@ final class CreditUnitSeeder extends Seeder
             ]);
         }
     }
-
 }

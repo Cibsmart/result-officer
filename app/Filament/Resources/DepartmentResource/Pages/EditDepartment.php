@@ -19,5 +19,4 @@ final class EditDepartment extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
-
 }

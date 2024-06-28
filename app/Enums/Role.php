@@ -24,5 +24,4 @@ enum Role: string implements HasLabel
             self::USER => 'USER',
         };
     }
-
 }

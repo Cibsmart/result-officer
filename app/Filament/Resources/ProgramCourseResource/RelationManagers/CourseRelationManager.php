@@ -23,5 +23,4 @@ final class CourseRelationManager extends RelationManager
             ->filters([
             ]);
     }
-
 }

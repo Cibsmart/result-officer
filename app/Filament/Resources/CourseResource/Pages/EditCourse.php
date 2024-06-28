@@ -18,5 +18,4 @@ final class EditCourse extends EditRecord
 
         ];
     }
-
 }

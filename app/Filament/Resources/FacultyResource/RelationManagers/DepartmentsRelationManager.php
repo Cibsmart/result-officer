@@ -42,5 +42,4 @@ final class DepartmentsRelationManager extends RelationManager
             ->bulkActions([
             ]);
     }
-
 }

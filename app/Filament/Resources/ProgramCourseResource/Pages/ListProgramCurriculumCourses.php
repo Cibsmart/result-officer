@@ -19,5 +19,4 @@ final class ListProgramCurriculumCourses extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
-
 }

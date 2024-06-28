@@ -30,5 +30,4 @@ final class ProgramTypeSeeder extends Seeder
             ]);
         }
     }
-
 }

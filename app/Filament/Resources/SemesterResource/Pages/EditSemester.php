@@ -19,5 +19,4 @@ final class EditSemester extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
-
 }

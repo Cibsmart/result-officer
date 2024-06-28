@@ -10,5 +10,4 @@ use Filament\Resources\Pages\CreateRecord;
 final class CreateProgram extends CreateRecord
 {
     protected static string $resource = ProgramResource::class;
-
 }

@@ -54,5 +54,4 @@ final class CourseResource extends Resource
             'index' => Pages\ListCourses::route('/'),
         ];
     }
-
 }

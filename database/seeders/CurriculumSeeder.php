@@ -24,5 +24,4 @@ final class CurriculumSeeder extends Seeder
             'name' => 'CORE CURRICULUM MINIMUM ACADEMIC STANDARD',
         ]);
     }
-
 }

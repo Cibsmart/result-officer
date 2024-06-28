@@ -52,5 +52,4 @@ final class SemesterResource extends Resource
             'index' => Pages\ListSemesters::route('/'),
         ];
     }
-
 }

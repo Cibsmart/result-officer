@@ -60,5 +60,4 @@ final class NewPasswordController extends Controller
             : back()->withInput($request->only('email'))
                 ->withErrors(['email' => __($status)]);
     }
-
 }

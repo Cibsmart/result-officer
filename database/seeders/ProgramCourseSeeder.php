@@ -21,5 +21,4 @@ final class ProgramCourseSeeder extends Seeder
             'program_curriculum_id' => 1,
         ]);
     }
-
 }

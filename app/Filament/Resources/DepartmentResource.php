@@ -70,5 +70,4 @@ final class DepartmentResource extends Resource
             'index' => Pages\ListDepartments::route('/'),
         ];
     }
-
 }

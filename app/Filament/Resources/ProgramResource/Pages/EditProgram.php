@@ -19,5 +19,4 @@ final class EditProgram extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
-
 }

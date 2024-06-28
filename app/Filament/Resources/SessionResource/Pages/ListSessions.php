@@ -19,5 +19,4 @@ final class ListSessions extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
-
 }

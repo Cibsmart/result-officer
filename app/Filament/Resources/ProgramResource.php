@@ -61,5 +61,4 @@ final class ProgramResource extends Resource
             'index' => Pages\ListPrograms::route('/'),
         ];
     }
-
 }

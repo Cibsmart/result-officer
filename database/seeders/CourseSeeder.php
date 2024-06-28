@@ -29,5 +29,4 @@ final class CourseSeeder extends Seeder
             ]);
         }
     }
-
 }

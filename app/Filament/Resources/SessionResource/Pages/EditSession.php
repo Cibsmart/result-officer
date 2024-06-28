@@ -19,5 +19,4 @@ final class EditSession extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
-
 }

@@ -19,5 +19,4 @@ final class EditUser extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
-
 }

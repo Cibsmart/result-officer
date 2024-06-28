@@ -9,5 +9,4 @@ use Illuminate\Database\Eloquent\Model;
 final class Session extends Model
 {
     protected $table = 'academic_sessions';
-
 }

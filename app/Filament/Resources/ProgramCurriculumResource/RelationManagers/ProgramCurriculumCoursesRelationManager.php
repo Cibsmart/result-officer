@@ -46,5 +46,4 @@ final class ProgramCurriculumCoursesRelationManager extends RelationManager
                 Tables\Actions\DeleteAction::make(),
             ]);
     }
-
 }

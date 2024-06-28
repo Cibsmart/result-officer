@@ -23,5 +23,4 @@ final class EmailVerificationNotificationController extends Controller
 
         return back()->with('status', 'verification-link-sent');
     }
-
 }

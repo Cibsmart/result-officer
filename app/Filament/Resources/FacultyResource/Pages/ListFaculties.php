@@ -19,5 +19,4 @@ final class ListFaculties extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
-
 }

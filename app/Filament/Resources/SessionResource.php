@@ -53,5 +53,4 @@ final class SessionResource extends Resource
             'index' => Pages\ListSessions::route('/'),
         ];
     }
-
 }

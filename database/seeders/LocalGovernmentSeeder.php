@@ -30,5 +30,4 @@ final class LocalGovernmentSeeder extends Seeder
             ]);
         }
     }
-
 }

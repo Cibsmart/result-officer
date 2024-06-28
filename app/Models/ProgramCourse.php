@@ -32,5 +32,4 @@ final class ProgramCourse extends Model
     {
         return $this->belongsTo(CourseType::class);
     }
-
 }

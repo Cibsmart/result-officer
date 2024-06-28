@@ -50,5 +50,4 @@ final class AdminPanelProvider extends PanelProvider
             ->middleware($this->middlewares)
             ->authMiddleware([Authenticate::class]);
     }
-
 }

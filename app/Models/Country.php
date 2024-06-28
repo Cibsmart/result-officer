@@ -9,5 +9,4 @@ use Illuminate\Database\Eloquent\Model;
 final class Country extends Model
 {
     protected $fillable = ['code', 'name', 'denonym'];
-
 }

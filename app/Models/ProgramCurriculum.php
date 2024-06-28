@@ -48,5 +48,4 @@ final class ProgramCurriculum extends Model
     {
         return $this->HasMany(ProgramCourse::class);
     }
-
 }
