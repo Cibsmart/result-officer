@@ -8,6 +8,7 @@ use App\Filament\Resources\ProgramCurriculumCourseResource\Pages;
 use App\Filament\Resources\ProgramCurriculumCourseResource\RelationManagers\CourseRelationManager;
 use App\Filament\Resources\ProgramCurriculumCourseResource\RelationManagers\CourseTypeRelationManager;
 use App\Filament\Resources\ProgramCurriculumCourseResource\RelationManagers\CreditUnitRelationManager;
+use App\Filament\Resources\ProgramCurriculumCourseResource\RelationManagers\ProgramCurriculumRelationManager;
 use App\Models\ProgramCurriculumCourse;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -71,7 +72,7 @@ final class ProgramCurriculumCourseResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //            ProgramCurriculumRelationManager::class,
+            ProgramCurriculumRelationManager::class,
             CourseRelationManager::class,
             CreditUnitRelationManager::class,
             CourseTypeRelationManager::class,

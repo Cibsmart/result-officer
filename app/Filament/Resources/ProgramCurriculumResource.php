@@ -7,12 +7,14 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ProgramCurriculumResource\Pages;
 use App\Filament\Resources\ProgramCurriculumResource\RelationManagers\CurriculumRelationManager;
 use App\Filament\Resources\ProgramCurriculumResource\RelationManagers\LevelRelationManager;
+use App\Filament\Resources\ProgramCurriculumResource\RelationManagers\ProgramCurriculumCoursesRelationManager;
 use App\Filament\Resources\ProgramCurriculumResource\RelationManagers\ProgramRelationManager;
 use App\Filament\Resources\ProgramCurriculumResource\RelationManagers\SemesterRelationManager;
 use App\Models\ProgramCurriculum;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Resources\RelationManagers\RelationGroup;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -67,10 +69,13 @@ final class ProgramCurriculumResource extends Resource
     public static function getRelations(): array
     {
         return [
-            ProgramRelationManager::class,
-            CurriculumRelationManager::class,
-            LevelRelationManager::class,
-            SemesterRelationManager::class,
+            ProgramCurriculumCoursesRelationManager::class,
+            RelationGroup::make('Setup', [
+                ProgramRelationManager::class,
+                CurriculumRelationManager::class,
+                LevelRelationManager::class,
+                SemesterRelationManager::class,
+            ]),
         ];
     }
 

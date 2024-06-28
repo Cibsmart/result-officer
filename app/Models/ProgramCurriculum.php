@@ -36,7 +36,7 @@ final class ProgramCurriculum extends Model
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumCourse> */
-    public function courses(): HasMany
+    public function programCurriculumCourses(): HasMany
     {
         return $this->HasMany(ProgramCurriculumCourse::class);
     }
