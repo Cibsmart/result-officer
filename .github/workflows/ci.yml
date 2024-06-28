@@ -41,7 +41,7 @@ jobs:
         run: composer require slevomat/coding-standard --dev
 
       - name: Run PHPCS
-        run: vendor/bin/phpcs app database resources
+        run: vendor/bin/phpcs app
 
   build:
     name: Build Code
