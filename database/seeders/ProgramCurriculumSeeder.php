@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use App\Models\ProgramCourse;
+use App\Models\ProgramCurriculum;
 use Illuminate\Database\Seeder;
 
-final class ProgramCourseSeeder extends Seeder
+final class ProgramCurriculumSeeder extends Seeder
 {
 
     /**
@@ -15,7 +15,7 @@ final class ProgramCourseSeeder extends Seeder
      */
     public function run(): void
     {
-        ProgramCourse::query()->create([
+        ProgramCurriculum::query()->create([
             'curriculum_id' => 1,
             'level_id' => 1,
             'minimum_elective_units' => 2,
@@ -23,7 +23,7 @@ final class ProgramCourseSeeder extends Seeder
             'semester_id' => 1,
         ]);
 
-        ProgramCourse::query()->create([
+        ProgramCurriculum::query()->create([
             'curriculum_id' => 1,
             'level_id' => 1,
             'minimum_elective_units' => 3,

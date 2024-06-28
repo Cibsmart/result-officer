@@ -29,8 +29,8 @@ final class DatabaseSeeder extends Seeder
             CourseTypeSeeder::class,
             CurriculumSeeder::class,
             CreditUnitSeeder::class,
-            ProgramCourseSeeder::class,
-            CourseDetailSeeder::class,
+            ProgramCurriculumSeeder::class,
+            ProgramCurriculumCourseSeeder::class,
             ProgramDurationSeeder::class,
         ]);
     }
