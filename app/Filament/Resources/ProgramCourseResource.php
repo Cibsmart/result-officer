@@ -9,19 +9,18 @@ use App\Filament\Resources\ProgramCurriculumCourseResource\RelationManagers\Cour
 use App\Filament\Resources\ProgramCurriculumCourseResource\RelationManagers\CourseTypeRelationManager;
 use App\Filament\Resources\ProgramCurriculumCourseResource\RelationManagers\CreditUnitRelationManager;
 use App\Filament\Resources\ProgramCurriculumCourseResource\RelationManagers\ProgramCurriculumRelationManager;
-use App\Models\ProgramCurriculumCourse;
+use App\Models\ProgramCourse;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-final class ProgramCurriculumCourseResource extends Resource
+final class ProgramCourseResource extends Resource
 {
 
-    protected static ?string $model = ProgramCurriculumCourse::class;
+    protected static ?string $model = ProgramCourse::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -33,22 +32,18 @@ final class ProgramCurriculumCourseResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('program_curriculum_id')->required()->numeric(),
+                Select::make('program_curriculum_id')
+                    ->searchable()->preload()->required()
+                    ->relationship('programCurriculum', 'slug'),
                 Select::make('course_id')
-                    ->relationship('course', 'code')
-                    ->searchable()
-                    ->preload()
-                    ->required(),
+                    ->searchable()->preload()->required()
+                    ->relationship('course', 'code'),
                 Select::make('credit_unit_id')
-                    ->relationship('creditUnit', 'value')
-                    ->searchable()
-                    ->preload()
-                    ->required(),
+                    ->searchable()->preload()->required()
+                    ->relationship('creditUnit', 'value'),
                 Select::make('course_type_id')
-                    ->relationship('courseType', 'name')
-                    ->searchable()
-                    ->preload()
-                    ->required(),
+                    ->searchable()->preload()->required()
+                    ->relationship('courseType', 'name'),
             ]);
     }
 
@@ -56,7 +51,7 @@ final class ProgramCurriculumCourseResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('program_curriculum_id')->numeric()->sortable(),
+                TextColumn::make('programCurriculum.slug')->numeric()->sortable(),
                 TextColumn::make('course.code')->sortable(),
                 TextColumn::make('creditUnit.value')->numeric()->sortable(),
                 TextColumn::make('courseType.name')->numeric()->sortable(),

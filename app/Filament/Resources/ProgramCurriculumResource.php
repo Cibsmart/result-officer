@@ -17,6 +17,7 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationGroup;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 final class ProgramCurriculumResource extends Resource
@@ -50,22 +51,18 @@ final class ProgramCurriculumResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('program.name')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('curriculum.code')->sortable(),
-                Tables\Columns\TextColumn::make('level.name')->sortable(),
-                Tables\Columns\TextColumn::make('semester.name')->sortable(),
-                Tables\Columns\TextColumn::make('minimum_elective_units')
-                    ->numeric(),
-            ])
-            ->filters([
-
+                TextColumn::make('program.name')->sortable()->searchable(),
+                TextColumn::make('curriculum.code')->sortable(),
+                TextColumn::make('level.name')->sortable(),
+                TextColumn::make('semester.name')->sortable(),
+                TextColumn::make('minimum_elective_units')->numeric(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ]);
     }
 
-    /** @return array<int, string> */
+    /** @return array<int, class-string|\Filament\Resources\RelationManagers\RelationGroup> */
     public static function getRelations(): array
     {
         return [

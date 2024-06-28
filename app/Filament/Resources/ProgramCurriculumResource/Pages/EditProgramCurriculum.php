@@ -13,6 +13,7 @@ final class EditProgramCurriculum extends EditRecord
 
     protected static string $resource = ProgramCurriculumResource::class;
 
+    /** @return array<int, \Filament\Actions\Action> */
     protected function getHeaderActions(): array
     {
         return [

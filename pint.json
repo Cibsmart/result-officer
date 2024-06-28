@@ -1,9 +1,11 @@
 {
-    "preset": "laravel",
-    "rules": {
-        "concat_space": false,
-        "single_line_empty_body": false,
-        "class_attributes_separation": false,
-        "no_blank_lines_after_class_opening": false
-    }
+  "preset": "laravel",
+  "rules": {
+    "concat_space": false,
+    "single_line_empty_body": false,
+    "class_attributes_separation": false,
+    "no_blank_lines_after_class_opening": false,
+    "phpdoc_separation": false,
+    "phpdoc_align": false
+  }
 }

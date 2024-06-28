@@ -30,7 +30,7 @@ final class DatabaseSeeder extends Seeder
             CurriculumSeeder::class,
             CreditUnitSeeder::class,
             ProgramCurriculumSeeder::class,
-            ProgramCurriculumCourseSeeder::class,
+            ProgramCourseSeeder::class,
             ProgramDurationSeeder::class,
         ]);
     }
