@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Resources\ProgramCurriculumCourseResource\Pages;
+namespace App\Filament\Resources\ProgramCourseResource\Pages;
 
 use App\Filament\Resources\ProgramCourseResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
+use Filament\Resources\Pages\ListRecords;
 
-final class EditProgramCurriculumCourse extends EditRecord
+final class ListProgramCourses extends ListRecords
 {
     protected static string $resource = ProgramCourseResource::class;
 
@@ -16,7 +16,7 @@ final class EditProgramCurriculumCourse extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            Actions\CreateAction ::make(),
         ];
     }
 }

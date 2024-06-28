@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ProgramCurriculumCourseResource\Pages;
-use App\Filament\Resources\ProgramCurriculumCourseResource\RelationManagers\CourseRelationManager;
-use App\Filament\Resources\ProgramCurriculumCourseResource\RelationManagers\CourseTypeRelationManager;
-use App\Filament\Resources\ProgramCurriculumCourseResource\RelationManagers\CreditUnitRelationManager;
-use App\Filament\Resources\ProgramCurriculumCourseResource\RelationManagers\ProgramCurriculumRelationManager;
+use App\Filament\Resources\ProgramCourseResource\Pages;
+use App\Filament\Resources\ProgramCourseResource\RelationManagers\CourseRelationManager;
+use App\Filament\Resources\ProgramCourseResource\RelationManagers\CourseTypeRelationManager;
+use App\Filament\Resources\ProgramCourseResource\RelationManagers\CreditUnitRelationManager;
+use App\Filament\Resources\ProgramCourseResource\RelationManagers\ProgramCurriculumRelationManager;
 use App\Models\ProgramCourse;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
@@ -77,9 +77,9 @@ final class ProgramCourseResource extends Resource
     public static function getPages(): array
     {
         return [
-            'create' => Pages\CreateProgramCurriculumCourse::route('/create'),
-            'edit' => Pages\EditProgramCurriculumCourse::route('/{record}/edit'),
-            'index' => Pages\ListProgramCurriculumCourses::route('/'),
+            'create' => Pages\CreateProgramCourse::route('/create'),
+            'edit' => Pages\EditProgramCourse::route('/{record}/edit'),
+            'index' => Pages\ListProgramCourses::route('/'),
         ];
     }
 }
