@@ -20,6 +20,8 @@ return new class extends Migration
             $table->foreignId('credit_unit_id')->constrained('credit_units');
             $table->foreignId('course_type_id')->constrained('course_types');
             $table->timestamps();
+
+            $table->unique(['program_curriculum_id', 'course_id']);
         });
     }
 

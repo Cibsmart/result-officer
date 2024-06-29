@@ -38,10 +38,10 @@ final class ProgramCourseResource extends Resource
                     ->searchable()->preload()->required()
                     ->relationship('course', 'code'),
                 Select::make('credit_unit_id')
-                    ->searchable()->preload()->required()
+                    ->required()
                     ->relationship('creditUnit', 'value'),
                 Select::make('course_type_id')
-                    ->searchable()->preload()->required()
+                    ->required()
                     ->relationship('courseType', 'name'),
             ]);
     }

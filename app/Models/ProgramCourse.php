@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 final class ProgramCourse extends Model
 {
+    protected $fillable = [
+        'program_curriculum_id',
+        'course_id',
+        'credit_unit_id',
+        'course_type_id',
+    ];
+
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculum,\App\Models\ProgramCourse> */
     public function programCurriculum(): BelongsTo
     {
