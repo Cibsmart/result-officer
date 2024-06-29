@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\ProgramCurriculumResource\RelationManagers;
 
-use App\Filament\Resources\ProgramCourseResource\RelationManagers\CourseRelationManager;
-use App\Filament\Resources\ProgramCourseResource\RelationManagers\CourseTypeRelationManager;
-use App\Filament\Resources\ProgramCourseResource\RelationManagers\CreditUnitRelationManager;
-use App\Filament\Resources\ProgramCourseResource\RelationManagers\ProgramCurriculumRelationManager;
 use App\Models\Course;
 use App\Models\CourseType;
 use App\Models\CreditUnit;
@@ -21,17 +17,6 @@ use Filament\Tables\Table;
 final class ProgramCurriculumCoursesRelationManager extends RelationManager
 {
     protected static string $relationship = 'programCurriculumCourses';
-
-    /** @return array<int, string> */
-    public static function getRelations(): array
-    {
-        return [
-            ProgramCurriculumRelationManager::class,
-            CourseRelationManager::class,
-            CreditUnitRelationManager::class,
-            CourseTypeRelationManager::class,
-        ];
-    }
 
     public function form(Form $form): Form
     {
@@ -56,10 +41,10 @@ final class ProgramCurriculumCoursesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('program_curriculum_id')
             ->columns([
-                TextColumn::make('program_curriculum_id'),
-                TextColumn::make('course_id'),
-                TextColumn::make('credit_unit_id'),
-                TextColumn::make('course_type_id'),
+                TextColumn::make('programCurriculum.slug'),
+                TextColumn::make('course.code'),
+                TextColumn::make('creditUnit.value'),
+                TextColumn::make('courseType.name'),
             ])
             ->filters([
             ])
