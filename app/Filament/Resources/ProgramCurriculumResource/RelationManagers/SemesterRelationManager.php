@@ -30,9 +30,6 @@ final class SemesterRelationManager extends RelationManager
             ->recordTitleAttribute('name')
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
-            ])
-            ->filters([
-
-            ]);
+            ])->paginated(false);
     }
 }

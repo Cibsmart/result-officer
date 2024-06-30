@@ -29,6 +29,7 @@ final class CurriculumRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('code'),
                 Tables\Columns\TextColumn::make('name'),
-            ]);
+            ])
+            ->paginated(false);
     }
 }

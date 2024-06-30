@@ -29,7 +29,6 @@ final class LevelRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
             ])
-            ->filters([
-            ]);
+            ->paginated(false);
     }
 }

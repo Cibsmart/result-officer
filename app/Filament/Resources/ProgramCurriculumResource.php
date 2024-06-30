@@ -7,7 +7,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ProgramCurriculumResource\Pages;
 use App\Filament\Resources\ProgramCurriculumResource\RelationManagers\CurriculumRelationManager;
 use App\Filament\Resources\ProgramCurriculumResource\RelationManagers\LevelRelationManager;
-use App\Filament\Resources\ProgramCurriculumResource\RelationManagers\ProgramCurriculumCoursesRelationManager;
+use App\Filament\Resources\ProgramCurriculumResource\RelationManagers\ProgramCoursesRelationManager;
 use App\Filament\Resources\ProgramCurriculumResource\RelationManagers\ProgramRelationManager;
 use App\Filament\Resources\ProgramCurriculumResource\RelationManagers\SemesterRelationManager;
 use App\Models\ProgramCurriculum;
@@ -65,8 +65,8 @@ final class ProgramCurriculumResource extends Resource
     public static function getRelations(): array
     {
         return [
-            ProgramCurriculumCoursesRelationManager::class,
-            RelationGroup::make('Setup', [
+            ProgramCoursesRelationManager::class,
+            RelationGroup::make('Details', [
                 ProgramRelationManager::class,
                 CurriculumRelationManager::class,
                 LevelRelationManager::class,

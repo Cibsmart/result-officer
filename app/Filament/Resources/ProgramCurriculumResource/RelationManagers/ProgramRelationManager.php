@@ -19,8 +19,6 @@ final class ProgramRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('code'),
                 Tables\Columns\TextColumn::make('name'),
-            ])
-            ->filters([
-            ]);
+            ])->paginated(false);
     }
 }

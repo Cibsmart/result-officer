@@ -14,7 +14,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-final class ProgramCurriculumCoursesRelationManager extends RelationManager
+final class ProgramCoursesRelationManager extends RelationManager
 {
     protected static string $relationship = 'programCurriculumCourses';
 
@@ -36,17 +36,19 @@ final class ProgramCurriculumCoursesRelationManager extends RelationManager
             ]);
     }
 
+    /** @throws \Exception */
     public function table(Table $table): Table
     {
         return $table
             ->recordTitleAttribute('program_curriculum_id')
             ->columns([
-                TextColumn::make('programCurriculum.slug'),
-                TextColumn::make('course.code'),
+                TextColumn::make('course.code')->sortable(),
                 TextColumn::make('creditUnit.value'),
-                TextColumn::make('courseType.name'),
+                TextColumn::make('courseType.name')->sortable(),
             ])
             ->filters([
+                Tables\Filters\SelectFilter::make('course_type')
+                    ->relationship('courseType', 'name'),
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make(),
@@ -54,6 +56,6 @@ final class ProgramCurriculumCoursesRelationManager extends RelationManager
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
-            ]);
+            ])->paginated(false);
     }
 }
