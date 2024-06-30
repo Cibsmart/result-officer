@@ -14,7 +14,7 @@ final class SessionSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($year = 2017; $year < 2024; $year++) {
+        for ($year = 2014; $year < 2024; $year++) {
             $next = $year + 1;
             Session::query()->create([
                 'name' => "$year/$next",
