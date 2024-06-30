@@ -26,11 +26,11 @@ final class DatabaseSeeder extends Seeder
             EntryModeSeeder::class,
             LevelSeeder::class,
             CourseTypeSeeder::class,
-            CurriculumSeeder::class,
             CreditUnitSeeder::class,
-            ProgramCurriculumSeeder::class,
-            ProgramCourseSeeder::class,
+            CurriculumSeeder::class,
             ProgramDurationSeeder::class,
+            StudentStatusSeeder::class,
+            StudentSeeder::class,
         ]);
     }
 }
