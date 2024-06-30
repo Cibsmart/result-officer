@@ -6,7 +6,7 @@ namespace App\Enums;
 
 use Filament\Support\Contracts\HasLabel;
 
-enum Role: string implements HasLabel
+enum RoleEnum: string implements HasLabel
 {
     case SUPER_ADMIN = 'super-admin';
     case ADMIN = 'admin';

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
-use App\Enums\Role;
+use App\Enums\RoleEnum;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -25,7 +25,7 @@ final class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'name' => ['required', 'string', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', Rule::in(Role::cases())],
+            'role' => ['required', Rule::in(RoleEnum::cases())],
         ]);
 
         $user = User::query()->create([
