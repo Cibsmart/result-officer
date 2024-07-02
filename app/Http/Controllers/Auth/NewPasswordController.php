@@ -18,9 +18,6 @@ use Inertia\Response;
 
 final class NewPasswordController extends Controller
 {
-    /**
-     * Display the password reset view.
-     */
     public function create(Request $request): Response
     {
         return Inertia::render('Auth/ResetPassword', [
@@ -29,10 +26,7 @@ final class NewPasswordController extends Controller
         ]);
     }
 
-    /**
-     * Handle an incoming new password request.
-     * @throws \Illuminate\Validation\ValidationException
-     */
+    /** @throws \Illuminate\Validation\ValidationException */
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
