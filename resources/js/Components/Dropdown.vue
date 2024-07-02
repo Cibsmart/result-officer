@@ -50,9 +50,9 @@ const open = ref(false);
 
     <!-- Full Screen Dropdown Overlay -->
     <div
-      class="fixed inset-0 z-40"
       v-show="open"
-      @click="open = false"></div>
+      class="fixed inset-0 z-40"
+      @click="open = false" />
 
     <Transition
       enter-active-class="transition ease-out duration-200"
@@ -62,8 +62,8 @@ const open = ref(false);
       leave-from-class="opacity-100 scale-100"
       leave-to-class="opacity-0 scale-95">
       <div
-        class="absolute z-50 mt-2 rounded-md shadow-lg"
         v-show="open"
+        class="absolute z-50 mt-2 rounded-md shadow-lg"
         :class="[widthClass, alignmentClasses]"
         style="display: none"
         @click="open = false">

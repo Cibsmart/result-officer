@@ -6,8 +6,8 @@ import TextInput from "@/Components/TextInput.vue";
 import { Link, useForm, usePage } from "@inertiajs/vue3";
 
 defineProps<{
-  mustVerifyEmail?: Boolean;
-  status?: String;
+  mustVerifyEmail?: boolean;
+  status?: string;
 }>();
 
 const user = usePage().props.auth.user;
@@ -37,9 +37,9 @@ const form = useForm({
           value="Name" />
 
         <TextInput
-          class="mt-1 block w-full"
           id="name"
           v-model="form.name"
+          class="mt-1 block w-full"
           autocomplete="name"
           autofocus
           required
@@ -56,9 +56,9 @@ const form = useForm({
           value="Email" />
 
         <TextInput
-          class="mt-1 block w-full"
           id="email"
           v-model="form.email"
+          class="mt-1 block w-full"
           autocomplete="username"
           required
           type="email" />
@@ -81,14 +81,14 @@ const form = useForm({
         </p>
 
         <div
-          class="mt-2 text-sm font-medium text-green-600 dark:text-green-400"
-          v-show="status === 'verification-link-sent'">
+          v-show="status === 'verification-link-sent'"
+          class="mt-2 text-sm font-medium text-green-600 dark:text-green-400">
           A new verification link has been sent to your email address.
         </div>
       </div>
 
       <div class="flex items-center gap-4">
-        <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
+        <PrimaryButton :disabled="form.processing"> Save </PrimaryButton>
 
         <Transition
           enter-active-class="transition ease-in-out"
@@ -96,8 +96,8 @@ const form = useForm({
           leave-active-class="transition ease-in-out"
           leave-to-class="opacity-0">
           <p
-            class="text-sm text-gray-600 dark:text-gray-400"
-            v-if="form.recentlySuccessful">
+            v-if="form.recentlySuccessful"
+            class="text-sm text-gray-600 dark:text-gray-400">
             Saved.
           </p>
         </Transition>

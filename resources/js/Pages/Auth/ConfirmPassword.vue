@@ -33,9 +33,9 @@ const submit = () => {
           for="password"
           value="Password" />
         <TextInput
-          class="mt-1 block w-full"
           id="password"
           v-model="form.password"
+          class="mt-1 block w-full"
           autocomplete="current-password"
           autofocus
           required

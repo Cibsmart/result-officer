@@ -54,10 +54,10 @@ const updatePassword = () => {
           value="Current Password" />
 
         <TextInput
-          class="mt-1 block w-full"
           id="current_password"
-          v-model="form.current_password"
           ref="currentPasswordInput"
+          v-model="form.current_password"
+          class="mt-1 block w-full"
           autocomplete="current-password"
           type="password" />
 
@@ -72,10 +72,10 @@ const updatePassword = () => {
           value="New Password" />
 
         <TextInput
-          class="mt-1 block w-full"
           id="password"
-          v-model="form.password"
           ref="passwordInput"
+          v-model="form.password"
+          class="mt-1 block w-full"
           autocomplete="new-password"
           type="password" />
 
@@ -90,9 +90,9 @@ const updatePassword = () => {
           value="Confirm Password" />
 
         <TextInput
-          class="mt-1 block w-full"
           id="password_confirmation"
           v-model="form.password_confirmation"
+          class="mt-1 block w-full"
           autocomplete="new-password"
           type="password" />
 
@@ -102,7 +102,7 @@ const updatePassword = () => {
       </div>
 
       <div class="flex items-center gap-4">
-        <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
+        <PrimaryButton :disabled="form.processing"> Save </PrimaryButton>
 
         <Transition
           enter-active-class="transition ease-in-out"
@@ -110,8 +110,8 @@ const updatePassword = () => {
           leave-active-class="transition ease-in-out"
           leave-to-class="opacity-0">
           <p
-            class="text-sm text-gray-600 dark:text-gray-400"
-            v-if="form.recentlySuccessful">
+            v-if="form.recentlySuccessful"
+            class="text-sm text-gray-600 dark:text-gray-400">
             Saved.
           </p>
         </Transition>
