@@ -30,8 +30,17 @@ jobs:
       - name: Install Node Dependencies
         run: npm install --force
 
-      - name: Run Prettier, ESLint, Type Check and Build
-        run: npm run check-build
+      - name: Run Prettier
+        run: npm run format-check
+
+      - name: Run ESLint
+        run: npm run lint-check
+
+      - name: Run Type Check
+        run: npm run type-check
+
+      - name: Run Build
+        run: npm run build
 
 #  pint:
 #    name: Fix Backend Code Style
