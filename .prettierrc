@@ -2,5 +2,6 @@
     "semi": true,
     "bracketSameLine": true,
     "printWidth": 120,
-    "singleAttributePerLine": true
+    "singleAttributePerLine": true,
+    "tabWidth": 2
 }
