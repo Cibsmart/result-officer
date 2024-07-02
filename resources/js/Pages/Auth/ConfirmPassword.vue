@@ -1,17 +1,17 @@
 <script lang="ts" setup>
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import {Head, useForm} from '@inertiajs/vue3';
+import GuestLayout from "@/Layouts/GuestLayout.vue";
+import InputError from "@/Components/InputError.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TextInput from "@/Components/TextInput.vue";
+import {Head, useForm} from "@inertiajs/vue3";
 
 const form = useForm({
-  password: '',
+  password: "",
 });
 
 const submit = () => {
-  form.post(route('password.confirm'), {
+  form.post(route("password.confirm"), {
     onFinish: () => {
       form.reset();
     },
@@ -29,7 +29,9 @@ const submit = () => {
 
     <form @submit.prevent="submit">
       <div>
-        <InputLabel for="password" value="Password"/>
+        <InputLabel
+            for="password"
+            value="Password"/>
         <TextInput
             id="password"
             v-model="form.password"
@@ -37,13 +39,17 @@ const submit = () => {
             autofocus
             class="mt-1 block w-full"
             required
-            type="password"
-        />
-        <InputError :message="form.errors.password" class="mt-2"/>
+            type="password"/>
+        <InputError
+            :message="form.errors.password"
+            class="mt-2"/>
       </div>
 
       <div class="flex justify-end mt-4">
-        <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing" class="ms-4">
+        <PrimaryButton
+            :class="{ 'opacity-25': form.processing }"
+            :disabled="form.processing"
+            class="ms-4">
           Confirm
         </PrimaryButton>
       </div>
