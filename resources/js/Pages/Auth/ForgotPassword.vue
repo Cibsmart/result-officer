@@ -29,8 +29,8 @@ const submit = () => {
     </div>
 
     <div
-      class="mb-4 text-sm font-medium text-green-600 dark:text-green-400"
-      v-if="status">
+      v-if="status"
+      class="mb-4 text-sm font-medium text-green-600 dark:text-green-400">
       {{ status }}
     </div>
 
@@ -41,9 +41,9 @@ const submit = () => {
           value="Email" />
 
         <TextInput
-          class="mt-1 block w-full"
           id="email"
           v-model="form.email"
+          class="mt-1 block w-full"
           autocomplete="username"
           autofocus
           required

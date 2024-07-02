@@ -63,7 +63,7 @@ const showingNavigationDropdown = ref(false);
                   </template>
 
                   <template #content>
-                    <DropdownLink :href="route('profile.edit')"> Profile</DropdownLink>
+                    <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
                     <DropdownLink
                       :href="route('logout')"
                       as="button"
@@ -127,11 +127,13 @@ const showingNavigationDropdown = ref(false);
               <div class="text-base font-medium text-gray-800 dark:text-gray-200">
                 {{ $page.props.auth.user.name }}
               </div>
-              <div class="text-sm font-medium text-gray-500">{{ $page.props.auth.user.email }}</div>
+              <div class="text-sm font-medium text-gray-500">
+                {{ $page.props.auth.user.email }}
+              </div>
             </div>
 
             <div class="mt-3 space-y-1">
-              <ResponsiveNavLink :href="route('profile.edit')"> Profile</ResponsiveNavLink>
+              <ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
               <ResponsiveNavLink
                 :href="route('logout')"
                 as="button"
@@ -145,8 +147,8 @@ const showingNavigationDropdown = ref(false);
 
       <!-- Page Heading -->
       <header
-        class="bg-white shadow dark:bg-gray-800"
-        v-if="$slots.header">
+        v-if="$slots.header"
+        class="bg-white shadow dark:bg-gray-800">
         <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
           <slot name="header" />
         </div>
