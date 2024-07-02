@@ -1,33 +1,33 @@
 <script lang="ts" setup>
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import {useForm} from '@inertiajs/vue3';
-import {ref} from 'vue';
+import InputError from "@/Components/InputError.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TextInput from "@/Components/TextInput.vue";
+import {useForm} from "@inertiajs/vue3";
+import {ref} from "vue";
 
 const passwordInput = ref<HTMLInputElement | null>(null);
 const currentPasswordInput = ref<HTMLInputElement | null>(null);
 
 const form = useForm({
-  current_password: '',
-  password: '',
-  password_confirmation: '',
+  current_password: "",
+  password: "",
+  password_confirmation: "",
 });
 
 const updatePassword = () => {
-  form.put(route('password.update'), {
+  form.put(route("password.update"), {
     preserveScroll: true,
     onSuccess: () => {
       form.reset();
     },
     onError: () => {
       if (form.errors.password) {
-        form.reset('password', 'password_confirmation');
+        form.reset("password", "password_confirmation");
         passwordInput.value?.focus();
       }
       if (form.errors.current_password) {
-        form.reset('current_password');
+        form.reset("current_password");
         currentPasswordInput.value?.focus();
       }
     },
@@ -45,9 +45,13 @@ const updatePassword = () => {
       </p>
     </header>
 
-    <form class="mt-6 space-y-6" @submit.prevent="updatePassword">
+    <form
+        class="mt-6 space-y-6"
+        @submit.prevent="updatePassword">
       <div>
-        <InputLabel for="current_password" value="Current Password"/>
+        <InputLabel
+            for="current_password"
+            value="Current Password"/>
 
         <TextInput
             id="current_password"
@@ -55,14 +59,17 @@ const updatePassword = () => {
             v-model="form.current_password"
             autocomplete="current-password"
             class="mt-1 block w-full"
-            type="password"
-        />
+            type="password"/>
 
-        <InputError :message="form.errors.current_password" class="mt-2"/>
+        <InputError
+            :message="form.errors.current_password"
+            class="mt-2"/>
       </div>
 
       <div>
-        <InputLabel for="password" value="New Password"/>
+        <InputLabel
+            for="password"
+            value="New Password"/>
 
         <TextInput
             id="password"
@@ -70,24 +77,28 @@ const updatePassword = () => {
             v-model="form.password"
             autocomplete="new-password"
             class="mt-1 block w-full"
-            type="password"
-        />
+            type="password"/>
 
-        <InputError :message="form.errors.password" class="mt-2"/>
+        <InputError
+            :message="form.errors.password"
+            class="mt-2"/>
       </div>
 
       <div>
-        <InputLabel for="password_confirmation" value="Confirm Password"/>
+        <InputLabel
+            for="password_confirmation"
+            value="Confirm Password"/>
 
         <TextInput
             id="password_confirmation"
             v-model="form.password_confirmation"
             autocomplete="new-password"
             class="mt-1 block w-full"
-            type="password"
-        />
+            type="password"/>
 
-        <InputError :message="form.errors.password_confirmation" class="mt-2"/>
+        <InputError
+            :message="form.errors.password_confirmation"
+            class="mt-2"/>
       </div>
 
       <div class="flex items-center gap-4">
@@ -97,9 +108,12 @@ const updatePassword = () => {
             enter-active-class="transition ease-in-out"
             enter-from-class="opacity-0"
             leave-active-class="transition ease-in-out"
-            leave-to-class="opacity-0"
-        >
-          <p v-if="form.recentlySuccessful" class="text-sm text-gray-600 dark:text-gray-400">Saved.</p>
+            leave-to-class="opacity-0">
+          <p
+              v-if="form.recentlySuccessful"
+              class="text-sm text-gray-600 dark:text-gray-400">
+            Saved.
+          </p>
         </Transition>
       </div>
     </form>
