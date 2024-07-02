@@ -14,17 +14,21 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      - name: Install Ziggy
+        run: composer require tightenco/ziggy
+
       - name: Setup Node
         uses: shivammathur/node
         with:
           node-version: '20'
-          php-version: '8.3'
 
       - name: Install Node Dependencies
         run: npm install --force
-
-      - name: Install Composer Dependencies
-        run: composer require tightenco/ziggy
 
       - name: Run Prettier, ESLint, Type Check and Build
         run: npm run check-build
