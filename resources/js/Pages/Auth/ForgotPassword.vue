@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import GuestLayout from "@/Layouts/GuestLayout.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
+import GuestLayout from "@/Layouts/GuestLayout.vue";
 import { Head, useForm } from "@inertiajs/vue3";
 
 defineProps<{
@@ -29,8 +29,8 @@ const submit = () => {
     </div>
 
     <div
-      v-if="status"
-      class="mb-4 text-sm font-medium text-green-600 dark:text-green-400">
+      class="mb-4 text-sm font-medium text-green-600 dark:text-green-400"
+      v-if="status">
       {{ status }}
     </div>
 
@@ -41,17 +41,17 @@ const submit = () => {
           value="Email" />
 
         <TextInput
+          class="mt-1 block w-full"
           id="email"
           v-model="form.email"
           autocomplete="username"
           autofocus
-          class="mt-1 block w-full"
           required
           type="email" />
 
         <InputError
-          :message="form.errors.email"
-          class="mt-2" />
+          class="mt-2"
+          :message="form.errors.email" />
       </div>
 
       <div class="mt-4 flex items-center justify-end">
