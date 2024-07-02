@@ -14,7 +14,7 @@ const props = withDefaults(
   },
 );
 
-const emit = defineEmits(["close"]);
+const emit = defineEmits<(e: "close") => void>();
 
 watch(
   () => props.show,
@@ -88,8 +88,8 @@ const maxWidthClass = computed(() => {
           leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
           <div
             v-show="show"
-            class="mb-6 transform overflow-hidden rounded-lg bg-white shadow-xl transition-all sm:mx-auto sm:w-full dark:bg-gray-800"
-            :class="maxWidthClass">
+            :class="maxWidthClass"
+            class="mb-6 transform overflow-hidden rounded-lg bg-white shadow-xl transition-all sm:mx-auto sm:w-full dark:bg-gray-800">
             <slot v-if="show" />
           </div>
         </Transition>

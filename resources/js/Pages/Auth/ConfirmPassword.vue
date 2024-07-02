@@ -32,6 +32,7 @@ const submit = () => {
         <InputLabel
           for="password"
           value="Password" />
+
         <TextInput
           id="password"
           v-model="form.password"
@@ -40,6 +41,7 @@ const submit = () => {
           autofocus
           required
           type="password" />
+
         <InputError
           class="mt-2"
           :message="form.errors.password" />

@@ -64,6 +64,7 @@ const showingNavigationDropdown = ref(false);
 
                   <template #content>
                     <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
+
                     <DropdownLink
                       :href="route('logout')"
                       as="button"
@@ -94,6 +95,7 @@ const showingNavigationDropdown = ref(false);
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2" />
+
                   <path
                     :class="{
                       hidden: !showingNavigationDropdown,
@@ -127,6 +129,7 @@ const showingNavigationDropdown = ref(false);
               <div class="text-base font-medium text-gray-800 dark:text-gray-200">
                 {{ $page.props.auth.user.name }}
               </div>
+
               <div class="text-sm font-medium text-gray-500">
                 {{ $page.props.auth.user.email }}
               </div>
@@ -134,6 +137,7 @@ const showingNavigationDropdown = ref(false);
 
             <div class="mt-3 space-y-1">
               <ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
+
               <ResponsiveNavLink
                 :href="route('logout')"
                 as="button"
