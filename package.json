@@ -3,8 +3,9 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vue-tsc && vite build",
-        "format": "prettier \"resources/**/*.{js,ts,vue}\" --write"
+        "type-check": "vue-tsc --noEmit",
+        "format": "prettier \"resources/**/*.{js,ts,vue}\" --write",
+        "build": "run-p format type-check && vite build"
     },
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.0",
@@ -14,6 +15,7 @@
         "autoprefixer": "^10.4.2",
         "axios": "^1.6.4",
         "laravel-vite-plugin": "^1.0",
+        "npm-run-all": "^4.1.5",
         "postcss": "^8.4.31",
         "prettier": "^3.3.2",
         "tailwindcss": "^3.1.0",
