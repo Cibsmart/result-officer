@@ -61,10 +61,10 @@ jobs:
       - name: Run PHPCS
         run: vendor/bin/phpcs app
 
-  build-b:
+  build:
     name: Build Backend Code
     runs-on: ubuntu-latest
-    needs: [ pint, phpcs ]
+    needs: [ pint, phpcs, frontend ]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
