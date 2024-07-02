@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  prettier:
+  frontend:
     name: Fix Frontend Code Style
     runs-on: ubuntu-latest
     steps:
@@ -20,47 +20,10 @@ jobs:
           node-version: '20'
 
       - name: Install Node Dependencies
-        run: npm install
+        run: npm install --force
 
-      - name: Run Prettier
-        run: npx prettier resources --check
-
-  eslint:
-    name: Fix Frontend Code Quality
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install Node Dependencies
-        run: npm install
-
-      - name: Run ESLint
-        run: npx eslint resources
-
-  build-f:
-    name: Build Frontend Code Style
-    runs-on: ubuntu-latest
-    needs: [ prettier, eslint ]
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install Node Dependencies
-        run: npm install
-
-      - name: Build Frontend
-        run: npm run build
+      - name: Run Prettier, ESLint, Type Check and Build
+        run: npm run check-build
 
   pint:
     name: Fix Backend Code Style
@@ -127,7 +90,7 @@ jobs:
   phpstan:
     name: Analysis Code
     runs-on: ubuntu-latest
-    needs: [ build-f ]
+    needs: [ build ]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -156,7 +119,7 @@ jobs:
   tests:
     name: Run Tests
     runs-on: ubuntu-latest
-    needs: [ build-f ]
+    needs: [ build ]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
