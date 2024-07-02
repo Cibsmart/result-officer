@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import Checkbox from "@/Components/Checkbox.vue";
-import GuestLayout from "@/Layouts/GuestLayout.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
+import GuestLayout from "@/Layouts/GuestLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 
 defineProps<{
@@ -32,8 +32,8 @@ const submit = () => {
     <Head title="Log in" />
 
     <div
-      v-if="status"
-      class="mb-4 text-sm font-medium text-green-600">
+      class="mb-4 text-sm font-medium text-green-600"
+      v-if="status">
       {{ status }}
     </div>
 
@@ -44,17 +44,17 @@ const submit = () => {
           value="Email" />
 
         <TextInput
+          class="mt-1 block w-full"
           id="email"
           v-model="form.email"
           autocomplete="username"
           autofocus
-          class="mt-1 block w-full"
           required
           type="email" />
 
         <InputError
-          :message="form.errors.email"
-          class="mt-2" />
+          class="mt-2"
+          :message="form.errors.email" />
       </div>
 
       <div class="mt-4">
@@ -63,16 +63,16 @@ const submit = () => {
           value="Password" />
 
         <TextInput
+          class="mt-1 block w-full"
           id="password"
           v-model="form.password"
           autocomplete="current-password"
-          class="mt-1 block w-full"
           required
           type="password" />
 
         <InputError
-          :message="form.errors.password"
-          class="mt-2" />
+          class="mt-2"
+          :message="form.errors.password" />
       </div>
 
       <div class="mt-4 block">
@@ -86,16 +86,16 @@ const submit = () => {
 
       <div class="mt-4 flex items-center justify-end">
         <Link
+          class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
           v-if="canResetPassword"
-          :href="route('password.request')"
-          class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800">
+          :href="route('password.request')">
           Forgot your password?
         </Link>
 
         <PrimaryButton
+          class="ms-4"
           :class="{ 'opacity-25': form.processing }"
-          :disabled="form.processing"
-          class="ms-4">
+          :disabled="form.processing">
           Log in
         </PrimaryButton>
       </div>

@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { ref } from "vue";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
 import NavLink from "@/Components/NavLink.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 import { Link } from "@inertiajs/vue3";
+import { ref } from "vue";
 
 const showingNavigationDropdown = ref(false);
 </script>
@@ -111,8 +111,8 @@ const showingNavigationDropdown = ref(false);
 
         <!-- Responsive Navigation Menu -->
         <div
-          :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }"
-          class="sm:hidden">
+          class="sm:hidden"
+          :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }">
           <div class="space-y-1 pb-3 pt-2">
             <ResponsiveNavLink
               :active="route().current('dashboard')"
@@ -145,8 +145,8 @@ const showingNavigationDropdown = ref(false);
 
       <!-- Page Heading -->
       <header
-        v-if="$slots.header"
-        class="bg-white shadow dark:bg-gray-800">
+        class="bg-white shadow dark:bg-gray-800"
+        v-if="$slots.header">
         <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
           <slot name="header" />
         </div>

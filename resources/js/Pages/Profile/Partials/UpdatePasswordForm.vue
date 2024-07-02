@@ -54,16 +54,16 @@ const updatePassword = () => {
           value="Current Password" />
 
         <TextInput
-          id="current_password"
-          ref="currentPasswordInput"
-          v-model="form.current_password"
-          autocomplete="current-password"
           class="mt-1 block w-full"
+          id="current_password"
+          v-model="form.current_password"
+          ref="currentPasswordInput"
+          autocomplete="current-password"
           type="password" />
 
         <InputError
-          :message="form.errors.current_password"
-          class="mt-2" />
+          class="mt-2"
+          :message="form.errors.current_password" />
       </div>
 
       <div>
@@ -72,16 +72,16 @@ const updatePassword = () => {
           value="New Password" />
 
         <TextInput
-          id="password"
-          ref="passwordInput"
-          v-model="form.password"
-          autocomplete="new-password"
           class="mt-1 block w-full"
+          id="password"
+          v-model="form.password"
+          ref="passwordInput"
+          autocomplete="new-password"
           type="password" />
 
         <InputError
-          :message="form.errors.password"
-          class="mt-2" />
+          class="mt-2"
+          :message="form.errors.password" />
       </div>
 
       <div>
@@ -90,15 +90,15 @@ const updatePassword = () => {
           value="Confirm Password" />
 
         <TextInput
+          class="mt-1 block w-full"
           id="password_confirmation"
           v-model="form.password_confirmation"
           autocomplete="new-password"
-          class="mt-1 block w-full"
           type="password" />
 
         <InputError
-          :message="form.errors.password_confirmation"
-          class="mt-2" />
+          class="mt-2"
+          :message="form.errors.password_confirmation" />
       </div>
 
       <div class="flex items-center gap-4">
@@ -110,8 +110,8 @@ const updatePassword = () => {
           leave-active-class="transition ease-in-out"
           leave-to-class="opacity-0">
           <p
-            v-if="form.recentlySuccessful"
-            class="text-sm text-gray-600 dark:text-gray-400">
+            class="text-sm text-gray-600 dark:text-gray-400"
+            v-if="form.recentlySuccessful">
             Saved.
           </p>
         </Transition>

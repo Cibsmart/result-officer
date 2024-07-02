@@ -37,17 +37,17 @@ const form = useForm({
           value="Name" />
 
         <TextInput
+          class="mt-1 block w-full"
           id="name"
           v-model="form.name"
           autocomplete="name"
           autofocus
-          class="mt-1 block w-full"
           required
           type="text" />
 
         <InputError
-          :message="form.errors.name"
-          class="mt-2" />
+          class="mt-2"
+          :message="form.errors.name" />
       </div>
 
       <div>
@@ -56,33 +56,33 @@ const form = useForm({
           value="Email" />
 
         <TextInput
+          class="mt-1 block w-full"
           id="email"
           v-model="form.email"
           autocomplete="username"
-          class="mt-1 block w-full"
           required
           type="email" />
 
         <InputError
-          :message="form.errors.email"
-          class="mt-2" />
+          class="mt-2"
+          :message="form.errors.email" />
       </div>
 
       <div v-if="mustVerifyEmail && user.email_verified_at === null">
         <p class="mt-2 text-sm text-gray-800 dark:text-gray-200">
           Your email address is unverified.
           <Link
+            class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
             :href="route('verification.send')"
             as="button"
-            class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
             method="post">
             Click here to re-send the verification email.
           </Link>
         </p>
 
         <div
-          v-show="status === 'verification-link-sent'"
-          class="mt-2 text-sm font-medium text-green-600 dark:text-green-400">
+          class="mt-2 text-sm font-medium text-green-600 dark:text-green-400"
+          v-show="status === 'verification-link-sent'">
           A new verification link has been sent to your email address.
         </div>
       </div>
@@ -96,8 +96,8 @@ const form = useForm({
           leave-active-class="transition ease-in-out"
           leave-to-class="opacity-0">
           <p
-            v-if="form.recentlySuccessful"
-            class="text-sm text-gray-600 dark:text-gray-400">
+            class="text-sm text-gray-600 dark:text-gray-400"
+            v-if="form.recentlySuccessful">
             Saved.
           </p>
         </Transition>
