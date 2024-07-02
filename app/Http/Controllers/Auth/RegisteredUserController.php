@@ -17,10 +17,7 @@ use Inertia\Response;
 
 final class RegisteredUserController extends Controller
 {
-    /**
-     * Handle an incoming registration request.
-     * @throws \Illuminate\Validation\ValidationException
-     */
+    /** @throws \Illuminate\Validation\ValidationException */
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
@@ -42,9 +39,6 @@ final class RegisteredUserController extends Controller
         return redirect(route('dashboard', absolute: false));
     }
 
-    /**
-     * Display the registration view.
-     */
     public function create(): Response
     {
         return Inertia::render('Auth/Register');

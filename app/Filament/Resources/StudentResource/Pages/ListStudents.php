@@ -12,6 +12,7 @@ final class ListStudents extends ListRecords
 {
     protected static string $resource = StudentResource::class;
 
+    /** @return array<int, \Filament\Actions\CreateAction> */
     protected function getHeaderActions(): array
     {
         return [

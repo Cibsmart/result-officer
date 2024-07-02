@@ -3,7 +3,6 @@
   "rules": {
     "concat_space": false,
     "unary_operator_spaces": false,
-    "not_operator_with_successor_space": false,
     "single_line_empty_body": false,
     "class_attributes_separation": false,
     "phpdoc_separation": false,
