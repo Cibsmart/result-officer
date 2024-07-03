@@ -6,7 +6,6 @@ import { watch } from "vite-plugin-watch";
 
 export default defineConfig({
   plugins: [
-    // eslingPlugin(),
     laravel({
       input: "resources/js/app.ts",
       refresh: true,
@@ -18,7 +17,11 @@ export default defineConfig({
           includeAbsolute: false,
         },
       },
+      script: {
+        globalTypeFiles: ["./resources/js/types/generated.d.ts"],
+      },
     }),
+    // eslingPlugin(),
     watch({
       pattern: "app/{Data,Enums}/**/*.php",
       command: "php artisan typescript:transform --format",

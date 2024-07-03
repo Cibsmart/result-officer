@@ -3,8 +3,7 @@ import "../css/app.css";
 import { createInertiaApp } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { createApp, DefineComponent, h } from "vue";
-import { trail } from "momentum-trail";
-import routes from "./scripts/routes.json";
+import { ZiggyVue } from "../../vendor/tightenco/ziggy";
 
 const appName = import.meta.env.VITE_APP_NAME || "ResultPro";
 
@@ -14,7 +13,7 @@ createInertiaApp({
   setup({ el, App, props, plugin }) {
     createApp({ render: () => h(App, props) })
       .use(plugin)
-      .use(trail, { routes, absolute: false })
+      .use(ZiggyVue)
       .mount(el);
   },
   progress: {
