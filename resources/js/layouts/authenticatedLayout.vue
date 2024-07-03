@@ -6,7 +6,6 @@ import NavLink from "@/components/navLink.vue";
 import ResponsiveNavLink from "@/components/responsiveNavLink.vue";
 import { Link } from "@inertiajs/vue3";
 import { ref } from "vue";
-import { route, current } from "momentum-trail";
 
 const showingNavigationDropdown = ref(false);
 </script>
@@ -29,7 +28,7 @@ const showingNavigationDropdown = ref(false);
               <!-- Navigation Links -->
               <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                 <NavLink
-                  :active="current('dashboard')"
+                  :active="route().current('dashboard')"
                   :href="route('dashboard')">
                   Dashboard
                 </NavLink>

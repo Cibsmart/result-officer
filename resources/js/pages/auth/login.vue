@@ -6,7 +6,6 @@ import PrimaryButton from "@/components/primaryButton.vue";
 import TextInput from "@/components/textInput.vue";
 import GuestLayout from "@/layouts/guestLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
-import { route } from "momentum-trail";
 
 defineProps<{
   canResetPassword?: boolean;
