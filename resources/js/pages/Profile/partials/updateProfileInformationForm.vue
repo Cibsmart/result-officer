@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import InputError from "@/Components/InputError.vue";
-import InputLabel from "@/Components/InputLabel.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import TextInput from "@/Components/TextInput.vue";
+import InputError from "@/components/inputError.vue";
+import InputLabel from "@/components/inputLabel.vue";
+import PrimaryButton from "@/components/primaryButton.vue";
+import TextInput from "@/components/textInput.vue";
 import { Link, useForm, usePage } from "@inertiajs/vue3";
 
 defineProps<{
@@ -39,15 +39,15 @@ const form = useForm({
         <TextInput
           id="name"
           v-model="form.name"
-          class="mt-1 block w-full"
           autocomplete="name"
           autofocus
+          class="mt-1 block w-full"
           required
           type="text" />
 
         <InputError
-          class="mt-2"
-          :message="form.errors.name" />
+          :message="form.errors.name"
+          class="mt-2" />
       </div>
 
       <div>
@@ -58,23 +58,23 @@ const form = useForm({
         <TextInput
           id="email"
           v-model="form.email"
-          class="mt-1 block w-full"
           autocomplete="username"
+          class="mt-1 block w-full"
           required
           type="email" />
 
         <InputError
-          class="mt-2"
-          :message="form.errors.email" />
+          :message="form.errors.email"
+          class="mt-2" />
       </div>
 
       <div v-if="mustVerifyEmail && user.email_verified_at === null">
         <p class="mt-2 text-sm text-gray-800 dark:text-gray-200">
           Your email address is unverified.
           <Link
-            class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
             :href="route('verification.send')"
             as="button"
+            class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
             method="post">
             Click here to re-send the verification email.
           </Link>
@@ -88,7 +88,7 @@ const form = useForm({
       </div>
 
       <div class="flex items-center gap-4">
-        <PrimaryButton :disabled="form.processing"> Save </PrimaryButton>
+        <PrimaryButton :disabled="form.processing"> Save</PrimaryButton>
 
         <Transition
           enter-active-class="transition ease-in-out"

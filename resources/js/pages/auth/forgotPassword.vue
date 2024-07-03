@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import InputError from "@/Components/InputError.vue";
-import InputLabel from "@/Components/InputLabel.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import TextInput from "@/Components/TextInput.vue";
-import GuestLayout from "@/Layouts/GuestLayout.vue";
+import InputError from "@/components/inputError.vue";
+import InputLabel from "@/components/inputLabel.vue";
+import PrimaryButton from "@/components/primaryButton.vue";
+import TextInput from "@/components/textInput.vue";
+import GuestLayout from "@/layouts/guestLayout.vue";
 import { Head, useForm } from "@inertiajs/vue3";
 
 defineProps<{
@@ -43,15 +43,15 @@ const submit = () => {
         <TextInput
           id="email"
           v-model="form.email"
-          class="mt-1 block w-full"
           autocomplete="username"
           autofocus
+          class="mt-1 block w-full"
           required
           type="email" />
 
         <InputError
-          class="mt-2"
-          :message="form.errors.email" />
+          :message="form.errors.email"
+          class="mt-2" />
       </div>
 
       <div class="mt-4 flex items-center justify-end">
