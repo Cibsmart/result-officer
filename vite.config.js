@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import laravel from "laravel-vite-plugin";
 import vue from "@vitejs/plugin-vue";
-import watch from "vite-plugin-watch";
+import { watch } from "vite-plugin-watch";
 // import eslingPlugin from "vite-plugin-eslint";
 
 export default defineConfig({

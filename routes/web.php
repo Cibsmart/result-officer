@@ -6,7 +6,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', static fn () => Inertia::render('Dashboard'))
+Route::get('/', static fn () => Inertia::render('dashboard'))
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
