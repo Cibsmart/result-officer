@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import InputError from "@/Components/InputError.vue";
-import InputLabel from "@/Components/InputLabel.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import TextInput from "@/Components/TextInput.vue";
+import InputError from "@/components/inputError.vue";
+import InputLabel from "@/components/inputLabel.vue";
+import PrimaryButton from "@/components/primaryButton.vue";
+import TextInput from "@/components/textInput.vue";
 import { useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
 
@@ -57,13 +57,13 @@ const updatePassword = () => {
           id="current_password"
           ref="currentPasswordInput"
           v-model="form.current_password"
-          class="mt-1 block w-full"
           autocomplete="current-password"
+          class="mt-1 block w-full"
           type="password" />
 
         <InputError
-          class="mt-2"
-          :message="form.errors.current_password" />
+          :message="form.errors.current_password"
+          class="mt-2" />
       </div>
 
       <div>
@@ -75,13 +75,13 @@ const updatePassword = () => {
           id="password"
           ref="passwordInput"
           v-model="form.password"
-          class="mt-1 block w-full"
           autocomplete="new-password"
+          class="mt-1 block w-full"
           type="password" />
 
         <InputError
-          class="mt-2"
-          :message="form.errors.password" />
+          :message="form.errors.password"
+          class="mt-2" />
       </div>
 
       <div>
@@ -92,17 +92,17 @@ const updatePassword = () => {
         <TextInput
           id="password_confirmation"
           v-model="form.password_confirmation"
-          class="mt-1 block w-full"
           autocomplete="new-password"
+          class="mt-1 block w-full"
           type="password" />
 
         <InputError
-          class="mt-2"
-          :message="form.errors.password_confirmation" />
+          :message="form.errors.password_confirmation"
+          class="mt-2" />
       </div>
 
       <div class="flex items-center gap-4">
-        <PrimaryButton :disabled="form.processing"> Save </PrimaryButton>
+        <PrimaryButton :disabled="form.processing"> Save</PrimaryButton>
 
         <Transition
           enter-active-class="transition ease-in-out"

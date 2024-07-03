@@ -14,19 +14,13 @@ use Inertia\Response;
 
 final class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
     public function edit(): Response
     {
-        return Inertia::render('Profile/Edit', [
+        return Inertia::render('profile/edit', [
             'status' => session('status'),
         ]);
     }
 
-    /**
-     * Update the user's profile information.
-     */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
