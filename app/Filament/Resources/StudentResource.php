@@ -37,13 +37,8 @@ final class StudentResource extends Resource
                 TextInput::make('last_name')->required(),
                 TextInput::make('first_name')->required(),
                 TextInput::make('other_names'),
-                Select::make('gender')
-                    ->options(GenderEnum::class)
-                    ->required(),
-                DatePicker::make('date_of_birth')
-                    ->maxDate(now()->subYears(15))
-                    ->format('Y-m-d')
-                    ->displayFormat('Y-m-d'),
+                Select::make('gender')->options(GenderEnum::class)->required(),
+                DatePicker::make('date_of_birth')->maxDate(now()->subYears(15)),
                 Select::make('program_id')
                     ->relationship('program', 'name')
                     ->searchable()->preload()
@@ -79,8 +74,6 @@ final class StudentResource extends Resource
                 TextColumn::make('entrySession.name')->searchable()->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('entryLevel.name')->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('entryMode.code')->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

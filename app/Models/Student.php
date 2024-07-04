@@ -65,7 +65,7 @@ final class Student extends Model
         return $this->belongsTo(Program::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Result, \App\Models\Enrollment> */
+    /** @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Result> */
     public function results(): HasManyThrough
     {
         return $this->hasManyThrough(Result::class, Enrollment::class);
