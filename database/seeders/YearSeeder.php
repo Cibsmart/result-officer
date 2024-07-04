@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\Year;
 use Illuminate\Database\Seeder;
 
-class YearSeeder extends Seeder
+final class YearSeeder extends Seeder
 {
     /** @var array<int, string> */
     private array $years = [

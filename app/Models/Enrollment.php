@@ -17,7 +17,7 @@ final class Enrollment extends Model
         'level_id',
     ];
 
-    /** @return BelongsTo<\App\Models\Level, \App\Models\Enrollment> */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, \App\Models\Enrollment> */
     public function level(): BelongsTo
     {
         return $this->belongsTo(Level::class);
@@ -29,19 +29,19 @@ final class Enrollment extends Model
         return $this->hasMany(Result::class);
     }
 
-    /** @return BelongsTo<\App\Models\Session, \App\Models\Enrollment> */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, \App\Models\Enrollment> */
     public function session(): BelongsTo
     {
         return $this->belongsTo(Session::class);
     }
 
-    /** @return BelongsTo<\App\Models\Student, \App\Models\Enrollment> */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, \App\Models\Enrollment> */
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class);
     }
 
-    /** @return BelongsTo<\App\Models\Year, \App\Models\Enrollment> */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Year, \App\Models\Enrollment> */
     public function year(): BelongsTo
     {
         return $this->belongsTo(Year::class);

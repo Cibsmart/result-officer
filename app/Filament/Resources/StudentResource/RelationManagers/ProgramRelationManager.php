@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\StudentResource\RelationManagers;
 
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class ProgramRelationManager extends RelationManager
+final class ProgramRelationManager extends RelationManager
 {
     protected static string $relationship = 'program';
 

@@ -32,31 +32,31 @@ final class Result extends Model
         'data',
     ];
 
-    /** @return BelongsTo<\App\Models\Course, \App\Models\Result> */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Course, \App\Models\Result> */
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);
     }
 
-    /** @return BelongsTo<\App\Models\CourseStatus, \App\Models\Result> */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\CourseStatus, \App\Models\Result> */
     public function courseStatus(): BelongsTo
     {
         return $this->belongsTo(CourseStatus::class);
     }
 
-    /** @return BelongsTo<\App\Models\CreditUnit, \App\Models\Result> */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\CreditUnit, \App\Models\Result> */
     public function creditUnit(): BelongsTo
     {
         return $this->belongsTo(CreditUnit::class);
     }
 
-    /** @return BelongsTo<\App\Models\Enrollment, \App\Models\Result> */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Enrollment, \App\Models\Result> */
     public function enrollment(): BelongsTo
     {
         return $this->belongsTo(Enrollment::class);
     }
 
-    /** @return BelongsTo<\App\Models\Semester, \App\Models\Result> */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Semester, \App\Models\Result> */
     public function semester(): BelongsTo
     {
         return $this->belongsTo(Semester::class);

@@ -29,7 +29,7 @@ final class Student extends Model
         'online_id',
     ];
 
-    /** @return BelongsTo<\App\Models\Country, \App\Models\Student> */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Country, \App\Models\Student> */
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);
@@ -41,19 +41,19 @@ final class Student extends Model
         return $this->hasMany(Enrollment::class);
     }
 
-    /** @return BelongsTo<\App\Models\Level, \App\Models\Student> */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, \App\Models\Student> */
     public function entryLevel(): BelongsTo
     {
         return $this->belongsTo(Level::class);
     }
 
-    /** @return BelongsTo<\App\Models\EntryMode, \App\Models\Student> */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\EntryMode, \App\Models\Student> */
     public function entryMode(): BelongsTo
     {
         return $this->belongsTo(EntryMode::class);
     }
 
-    /** @return BelongsTo<\App\Models\Session, \App\Models\Student> */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, \App\Models\Student> */
     public function entrySession(): BelongsTo
     {
         return $this->belongsTo(Session::class);

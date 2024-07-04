@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\StudentResource\RelationManagers;
 
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class ResultsRelationManager extends RelationManager
+final class ResultsRelationManager extends RelationManager
 {
     protected static string $relationship = 'results';
 
