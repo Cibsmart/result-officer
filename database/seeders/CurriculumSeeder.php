@@ -9,9 +9,6 @@ use Illuminate\Database\Seeder;
 
 final class CurriculumSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         Curriculum::query()->create([

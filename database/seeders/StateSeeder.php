@@ -14,9 +14,6 @@ final class StateSeeder extends Seeder
         'ABIA', 'ANAMBRA', 'EBONYI', 'ENUGU', 'IMO',
     ];
 
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         foreach ($this->states as $state) {

@@ -9,9 +9,6 @@ use Illuminate\Database\Seeder;
 
 final class ResultSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         //BIO 101

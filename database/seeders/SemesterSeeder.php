@@ -9,9 +9,6 @@ use Illuminate\Database\Seeder;
 
 final class SemesterSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         Semester::query()->create([

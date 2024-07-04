@@ -11,9 +11,6 @@ use Illuminate\Database\Seeder;
 
 final class StudentSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         Student::query()->create([

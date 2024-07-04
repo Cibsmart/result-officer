@@ -9,9 +9,6 @@ use Illuminate\Database\Seeder;
 
 final class CountrySeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         Country::query()->create([
@@ -23,7 +20,7 @@ final class CountrySeeder extends Seeder
         Country::query()->create([
             'code' => 'IT',
             'demonym' => 'INTERNATIONAL',
-            'name' => 'FORIEGNER',
+            'name' => 'FOREIGNER',
         ]);
 
         $this->call([

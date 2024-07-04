@@ -9,9 +9,6 @@ use Illuminate\Database\Seeder;
 
 final class ScoreTypeSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         ScoreType::query()->create([

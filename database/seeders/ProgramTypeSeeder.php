@@ -18,9 +18,6 @@ final class ProgramTypeSeeder extends Seeder
         'B.SC.' => 'BACHELOR OF SCIENCE',
     ];
 
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         foreach ($this->programTypes as $code => $name) {

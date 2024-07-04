@@ -18,9 +18,6 @@ final class LocalGovernmentSeeder extends Seeder
         'IKWUANO',
     ];
 
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         foreach ($this->lgas as $lga) {

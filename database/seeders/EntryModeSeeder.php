@@ -9,9 +9,6 @@ use Illuminate\Database\Seeder;
 
 final class EntryModeSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         EntryMode::query()->create([

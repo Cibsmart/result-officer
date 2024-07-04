@@ -16,9 +16,6 @@ final class CourseTypeSeeder extends Seeder
         'R' => 'REQUIRED',
     ];
 
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         foreach ($this->courseTypes as $code => $name) {

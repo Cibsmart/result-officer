@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('levels', static function (Blueprint $table): void {
             $table->id();
-            $table->string('name')->unique();
+            $table->unsignedSmallInteger('name')->unique();
             $table->timestamps();
         });
     }

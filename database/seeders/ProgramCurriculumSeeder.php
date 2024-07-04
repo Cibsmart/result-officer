@@ -20,7 +20,6 @@ final class ProgramCurriculumSeeder extends Seeder
             'minimum_elective_units' => 2,
             'program_id' => 1,
             'semester_id' => 1,
-            'slug' => 'CSC-BMAS-100-FIRST',
         ]);
 
         ProgramCurriculum::query()->create([
@@ -29,7 +28,6 @@ final class ProgramCurriculumSeeder extends Seeder
             'minimum_elective_units' => 3,
             'program_id' => 1,
             'semester_id' => 2,
-            'slug' => 'CSC-BMAS-100-SECOND',
         ]);
     }
 }

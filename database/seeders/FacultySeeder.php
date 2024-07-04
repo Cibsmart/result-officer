@@ -19,9 +19,6 @@ final class FacultySeeder extends Seeder
         'FSS' => 'SOCIAL SCIENCES',
     ];
 
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         foreach ($this->faculties as $code => $faculty) {

@@ -9,9 +9,6 @@ use Illuminate\Database\Seeder;
 
 final class SessionSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         for ($year = 2014; $year < 2024; $year++) {

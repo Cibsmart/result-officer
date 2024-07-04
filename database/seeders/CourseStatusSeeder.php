@@ -9,9 +9,6 @@ use Illuminate\Database\Seeder;
 
 final class CourseStatusSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         CourseStatus::query()->create([

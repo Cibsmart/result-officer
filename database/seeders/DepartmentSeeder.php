@@ -18,9 +18,6 @@ final class DepartmentSeeder extends Seeder
         'PHYGEOP' => 'PHYSIC/APPLIED GEOPHYSICS',
     ];
 
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         foreach ($this->departments as $code => $name) {

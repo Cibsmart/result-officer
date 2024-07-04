@@ -22,7 +22,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('minimum_elective_units')->default(0);
             $table->timestamps();
 
-            $table->unique(['program_id', 'curriculum_id', 'level_id', 'semester_id']);
+            $table->unique(['program_id', 'curriculum_id', 'level_id', 'semester_id'], 'program_curriculum_unique');
         });
     }
 

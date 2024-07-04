@@ -9,9 +9,6 @@ use Illuminate\Database\Seeder;
 
 final class ProgramDurationSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         ProgramDuration::query()->create([

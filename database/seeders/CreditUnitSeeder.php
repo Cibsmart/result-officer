@@ -9,9 +9,6 @@ use Illuminate\Database\Seeder;
 
 final class CreditUnitSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         foreach ([1, 2, 3, 6, 12, 15, 18] as $unit) {
