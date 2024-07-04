@@ -31,6 +31,9 @@ final class DatabaseSeeder extends Seeder
             ProgramDurationSeeder::class,
             StudentStatusSeeder::class,
             StudentSeeder::class,
+            CourseStatusSeeder::class,
+            ScoreTypeSeeder::class,
+            EnrollmentSeeder::class,
         ]);
     }
 }

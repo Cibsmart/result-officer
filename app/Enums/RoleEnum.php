@@ -12,6 +12,7 @@ enum RoleEnum: string implements HasLabel
     case ADMIN = 'admin';
     case DESK_OFFICER = 'desk-officer';
     case EXAM_OFFICER = 'exam-officer';
+    case DATABASE_OFFICER = 'database-officer';
     case USER = 'user';
 
     public function getLabel(): ?string
@@ -21,6 +22,7 @@ enum RoleEnum: string implements HasLabel
             self::ADMIN => 'ADMIN',
             self::DESK_OFFICER => 'DESK OFFICER',
             self::EXAM_OFFICER => 'EXAM OFFICER',
+            self::DATABASE_OFFICER => 'DATABASE OFFICER',
             self::USER => 'USER',
         };
     }
