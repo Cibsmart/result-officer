@@ -20,7 +20,7 @@ final class SessionResource extends Resource
 
     protected static ?string $navigationGroup = 'Setup';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
@@ -29,7 +29,7 @@ final class SessionResource extends Resource
                 TextInput::make('name')
                     ->label('Session')
                     ->required()
-                    ->required()->rules(['min:7', 'max:7']),
+                    ->required()->rules(['min:9', 'max:9']),
             ]);
     }
 

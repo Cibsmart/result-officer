@@ -26,6 +26,7 @@ return new class extends Migration
             $table->foreignId('entry_session_id')->constrained('academic_sessions');
             $table->foreignId('entry_level_id')->constrained('levels');
             $table->foreignId('entry_mode_id')->constrained('entry_modes');
+            $table->string('status')->default('new');
             $table->string('jamb_registration_number')->nullable();
             $table->string('online_id')->nullable();
             $table->timestamps();

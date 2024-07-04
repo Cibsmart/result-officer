@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 final class Result extends Model
 {
@@ -30,6 +31,36 @@ final class Result extends Model
     protected $hidden = [
         'data',
     ];
+
+    /** @return BelongsTo<\App\Models\Course, \App\Models\Result> */
+    public function course(): BelongsTo
+    {
+        return $this->belongsTo(Course::class);
+    }
+
+    /** @return BelongsTo<\App\Models\CourseStatus, \App\Models\Result> */
+    public function courseStatus(): BelongsTo
+    {
+        return $this->belongsTo(CourseStatus::class);
+    }
+
+    /** @return BelongsTo<\App\Models\CreditUnit, \App\Models\Result> */
+    public function creditUnit(): BelongsTo
+    {
+        return $this->belongsTo(CreditUnit::class);
+    }
+
+    /** @return BelongsTo<\App\Models\Enrollment, \App\Models\Result> */
+    public function enrollment(): BelongsTo
+    {
+        return $this->belongsTo(Enrollment::class);
+    }
+
+    /** @return BelongsTo<\App\Models\Semester, \App\Models\Result> */
+    public function semester(): BelongsTo
+    {
+        return $this->belongsTo(Semester::class);
+    }
 
     /** @return array<string, string> */
     protected function casts(): array

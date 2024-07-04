@@ -6,6 +6,9 @@ namespace App\Models;
 
 use App\Enums\GenderEnum;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 final class Student extends Model
 {
@@ -25,6 +28,48 @@ final class Student extends Model
         'jamb_registration_number',
         'online_id',
     ];
+
+    /** @return BelongsTo<\App\Models\Country, \App\Models\Student> */
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Enrollment> */
+    public function enrollments(): HasMany
+    {
+        return $this->hasMany(Enrollment::class);
+    }
+
+    /** @return BelongsTo<\App\Models\Level, \App\Models\Student> */
+    public function entryLevel(): BelongsTo
+    {
+        return $this->belongsTo(Level::class);
+    }
+
+    /** @return BelongsTo<\App\Models\EntryMode, \App\Models\Student> */
+    public function entryMode(): BelongsTo
+    {
+        return $this->belongsTo(EntryMode::class);
+    }
+
+    /** @return BelongsTo<\App\Models\Session, \App\Models\Student> */
+    public function entrySession(): BelongsTo
+    {
+        return $this->belongsTo(Session::class);
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Program, \App\Models\Student> */
+    public function program(): BelongsTo
+    {
+        return $this->belongsTo(Program::class);
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Result, \App\Models\Enrollment> */
+    public function results(): HasManyThrough
+    {
+        return $this->hasManyThrough(Result::class, Enrollment::class);
+    }
 
     /** @return array<string, string> */
     protected function casts(): array

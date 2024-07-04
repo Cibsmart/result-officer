@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('student_id')->constrained('students');
             $table->foreignId('session_id')->constrained('academic_sessions');
             $table->foreignId('level_id')->constrained('levels');
+            $table->foreignId('year_id')->constrained('years');
             $table->timestamps();
         });
     }
