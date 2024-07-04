@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import AuthenticatedLayout from "@/layouts/authenticatedLayout.vue";
+import AuthenticatedLayout from "@/layouts/authenticatedLayout/appLayout.vue";
 import DeleteUserForm from "@/pages/Profile/partials/deleteUserForm.vue";
 import UpdatePasswordForm from "@/pages/Profile/partials/updatePasswordForm.vue";
 import UpdateProfileInformationForm from "@/pages/Profile/partials/updateProfileInformationForm.vue";
