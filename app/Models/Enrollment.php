@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Enrollment extends Model
+final class Enrollment extends Model
 {
     /** @var array<int, string> */
     protected $fillable = [

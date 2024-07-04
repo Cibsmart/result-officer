@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Enums\ScoreTypeEnum;
 use Illuminate\Database\Eloquent\Model;
 
-class ScoreType extends Model
+final class ScoreType extends Model
 {
     /** @var array<int, string> */
     protected $fillable = [

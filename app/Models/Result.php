@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Result extends Model
+final class Result extends Model
 {
     /** @var array<int, string> */
     protected $fillable = [

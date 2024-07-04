@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\ScoreType;
 use Illuminate\Database\Seeder;
 
-class ScoreTypeSeeder extends Seeder
+final class ScoreTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,13 +15,13 @@ class ScoreTypeSeeder extends Seeder
     public function run(): void
     {
         ScoreType::query()->create([
-            'name' => 'course-work',
             'maximum_score' => 30,
+            'name' => 'course-work',
         ]);
 
         ScoreType::query()->create([
-            'name' => 'exam',
             'maximum_score' => 70,
+            'name' => 'exam',
         ]);
     }
 }
