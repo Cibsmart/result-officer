@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('years', static function (Blueprint $table): void {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }

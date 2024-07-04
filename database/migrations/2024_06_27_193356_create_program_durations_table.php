@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignId('entry_mode_id')->constrained('entry_modes');
             $table->unsignedSmallInteger('value');
             $table->timestamps();
+
+            $table->unique(['program_id', 'entry_mode_id']);
         });
     }
 

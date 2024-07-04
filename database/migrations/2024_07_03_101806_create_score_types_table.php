@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('score_types', static function (Blueprint $table): void {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->unsignedTinyInteger('maximum_score');
             $table->timestamps();
         });

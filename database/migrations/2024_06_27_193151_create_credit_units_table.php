@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('credit_units', static function (Blueprint $table): void {
             $table->id();
-            $table->unsignedSmallInteger('value');
+            $table->unsignedSmallInteger('value')->unique();
             $table->timestamps();
         });
     }

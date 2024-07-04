@@ -20,8 +20,9 @@ return new class extends Migration
             $table->foreignId('level_id')->constrained('levels');
             $table->foreignId('semester_id')->constrained('semesters');
             $table->unsignedSmallInteger('minimum_elective_units')->default(0);
-            $table->string('slug')->unique();
             $table->timestamps();
+
+            $table->unique(['program_id', 'curriculum_id', 'level_id', 'semester_id']);
         });
     }
 

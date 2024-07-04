@@ -20,6 +20,8 @@ return new class extends Migration
             $table->foreignId('level_id')->constrained('levels');
             $table->foreignId('year_id')->constrained('years');
             $table->timestamps();
+
+            $table->unique(['student_id', 'session_id', 'level_id', 'year_id']);
         });
     }
 

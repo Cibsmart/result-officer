@@ -5,16 +5,11 @@ declare(strict_types=1);
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProgramCurriculumResource\Pages;
-use App\Filament\Resources\ProgramCurriculumResource\RelationManagers\CurriculumRelationManager;
-use App\Filament\Resources\ProgramCurriculumResource\RelationManagers\LevelRelationManager;
 use App\Filament\Resources\ProgramCurriculumResource\RelationManagers\ProgramCoursesRelationManager;
-use App\Filament\Resources\ProgramCurriculumResource\RelationManagers\ProgramRelationManager;
-use App\Filament\Resources\ProgramCurriculumResource\RelationManagers\SemesterRelationManager;
 use App\Models\ProgramCurriculum;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
-use Filament\Resources\RelationManagers\RelationGroup;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -61,17 +56,11 @@ final class ProgramCurriculumResource extends Resource
             ]);
     }
 
-    /** @return array<int, class-string|\Filament\Resources\RelationManagers\RelationGroup> */
+    /** @return array<int, class-string> */
     public static function getRelations(): array
     {
         return [
             ProgramCoursesRelationManager::class,
-            RelationGroup::make('Details', [
-                ProgramRelationManager::class,
-                CurriculumRelationManager::class,
-                LevelRelationManager::class,
-                SemesterRelationManager::class,
-            ]),
         ];
     }
 

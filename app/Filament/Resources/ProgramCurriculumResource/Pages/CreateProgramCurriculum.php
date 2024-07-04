@@ -5,11 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources\ProgramCurriculumResource\Pages;
 
 use App\Filament\Resources\ProgramCurriculumResource;
-use App\Models\Curriculum;
-use App\Models\Level;
-use App\Models\Program;
 use App\Models\ProgramCurriculum;
-use App\Models\Semester;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 
@@ -24,14 +20,12 @@ final class CreateProgramCurriculum extends CreateRecord
      */
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        $programCode = Program::query()->findOrFail($data['program_id'])->code;
-        $curriculumCode = Curriculum::query()->findOrFail($data['curriculum_id'])->code;
-        $levelName = Level::query()->findOrFail($data['level_id'])->name;
-        $semesterName = Semester::query()->findOrFail($data['semester_id'])->name;
-
-        $slug = "$programCode-$curriculumCode-$levelName-$semesterName";
-
-        $curriculum = ProgramCurriculum::query()->where('slug', $slug)->first();
+        $curriculum = ProgramCurriculum::query()
+            ->where('program_id', $data['program_id'])
+            ->where('curriculum_id', $data['curriculum_id'])
+            ->where('level_id', $data['level_id'])
+            ->where('semester_id', $data['semester_id'])
+            ->first();
 
         if ($curriculum) {
             Notification::make()
