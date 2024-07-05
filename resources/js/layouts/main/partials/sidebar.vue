@@ -1,12 +1,5 @@
 <script lang="ts" setup>
-import {
-  ChartPieIcon,
-  Cog6ToothIcon,
-  DocumentDuplicateIcon,
-  FolderIcon,
-  HomeIcon,
-  UsersIcon,
-} from "@heroicons/vue/24/outline";
+import { Cog6ToothIcon } from "@heroicons/vue/24/outline";
 import ApplicationLogo from "@/components/applicationLogo.vue";
 import Navigation from "@/layouts/main/partials/navigation.vue";
 </script>

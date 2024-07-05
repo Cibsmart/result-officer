@@ -57,10 +57,8 @@ const navigation: NavigationItem[] = [
         v-slot="{ open }"
         as="div">
         <DisclosureButton
-          :class="[
-            item.current ? 'bg-gray-50 dark:bg-gray-800' : 'hover:bg-gray-50 dark:hover:bg-gray-800',
-            'flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm font-semibold leading-6 text-gray-700 dark:text-gray-400',
-          ]">
+          class="flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm font-semibold leading-6 text-gray-700 dark:text-gray-400"
+          :class="[item.current ? 'bg-gray-50 dark:bg-gray-800' : 'hover:bg-gray-50 dark:hover:bg-gray-800']">
           <component
             :is="item.icon"
             :class="[
@@ -72,9 +70,11 @@ const navigation: NavigationItem[] = [
             class="h-6 w-6 shrink-0 text-gray-400" />
           {{ item.name }}
           <ChevronRightIcon
-            :class="[open ? 'rotate-90 text-gray-500 dark:text-gray-300' : 'text-gray-400', 'ml-auto h-5 w-5 shrink-0']"
+            class="ml-auto h-5 w-5 shrink-0"
+            :class="[open ? 'rotate-90 text-gray-500 dark:text-gray-300' : 'text-gray-400']"
             aria-hidden="true" />
         </DisclosureButton>
+
         <DisclosurePanel
           as="ul"
           class="mt-1 px-2">
@@ -83,10 +83,8 @@ const navigation: NavigationItem[] = [
             :key="subItem.name">
             <!-- 44px -->
             <DisclosureButton
-              :class="[
-                subItem.current ? 'bg-gray-50 dark:bg-gray-800' : 'hover:bg-gray-50 dark:hover:bg-gray-800',
-                'block rounded-md py-2 pl-9 pr-2 text-sm leading-6 text-gray-700 dark:text-gray-300',
-              ]"
+              class="block rounded-md py-2 pl-9 pr-2 text-sm leading-6 text-gray-700 dark:text-gray-300"
+              :class="[subItem.current ? 'bg-gray-50 dark:bg-gray-800' : 'hover:bg-gray-50 dark:hover:bg-gray-800']"
               :href="subItem.href"
               as="a">
               {{ subItem.name }}

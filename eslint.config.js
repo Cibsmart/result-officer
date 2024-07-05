@@ -87,6 +87,8 @@ export default pluginTs.config(
       "vue/prefer-separate-static-class": "error",
       "vue/prefer-true-attribute-shorthand": "error",
       "vue/require-default-prop": "off",
+      "vue/v-on-event-hyphenation": "off",
+      "vue/attribute-hyphenation": "off",
     },
     ignores: ["*.d.ts"],
   },
