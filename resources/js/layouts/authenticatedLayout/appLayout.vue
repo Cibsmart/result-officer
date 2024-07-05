@@ -25,6 +25,7 @@ import {
 import { ChevronDownIcon, MagnifyingGlassIcon } from "@heroicons/vue/20/solid";
 import ResponsiveNavLink from "@/components/responsiveNavLink.vue";
 import { Link } from "@inertiajs/vue3";
+import ApplicationLogo from "@/components/applicationLogo.vue";
 
 const navigation = [
   { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
@@ -40,8 +41,8 @@ const teams = [
   { id: 3, name: "Workcation", href: "#", initial: "W", current: false },
 ];
 const userNavigation = [
-  { name: "Your profile", href: "#" },
-  { name: "Sign out", href: "#" },
+  { name: "Your profile", href: route("profile.edit") },
+  { name: "Sign out", href: route("logout"), method: "POST" },
 ];
 
 const sidebarOpen = ref(false);
@@ -90,6 +91,7 @@ const sidebarOpen = ref(false);
                     type="button"
                     @click="sidebarOpen = false">
                     <span class="sr-only">Close sidebar</span>
+
                     <XMarkIcon
                       aria-hidden="true"
                       class="h-6 w-6 text-white" />
@@ -100,11 +102,9 @@ const sidebarOpen = ref(false);
               <div
                 class="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4 dark:bg-gray-900 dark:ring-1 dark:ring-white/10">
                 <div class="flex h-16 shrink-0 items-center">
-                  <img
-                    alt="Your Company"
-                    class="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" />
+                  <ApplicationLogo />
                 </div>
+
                 <nav class="flex flex-1 flex-col">
                   <ul
                     class="flex flex-1 flex-col gap-y-7"
@@ -117,20 +117,18 @@ const sidebarOpen = ref(false);
                           v-for="item in navigation"
                           :key="item.name">
                           <a
-                            :class="[
+                            class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6" :class="[
                               item.current
                                 ? 'bg-gray-50 text-indigo-600 dark:bg-gray-800 dark:text-white'
                                 : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white',
-                              'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
                             ]"
                             :href="item.href">
                             <component
                               :is="item.icon"
-                              :class="[
+                              class="h-6 w-6 shrink-0" :class="[
                                 item.current
                                   ? 'text-indigo-600 dark:text-white'
                                   : 'text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-white',
-                                'h-6 w-6 shrink-0',
                               ]"
                               aria-hidden="true" />
                             {{ item.name }}
@@ -138,8 +136,10 @@ const sidebarOpen = ref(false);
                         </li>
                       </ul>
                     </li>
+
                     <li>
                       <div class="text-xs font-semibold leading-6 text-gray-400">Your teams</div>
+
                       <ul
                         class="-mx-2 mt-2 space-y-1"
                         role="list">
@@ -147,27 +147,27 @@ const sidebarOpen = ref(false);
                           v-for="team in teams"
                           :key="team.name">
                           <a
-                            :class="[
+                            class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6" :class="[
                               team.current
                                 ? 'bg-gray-50 text-indigo-600 dark:bg-gray-800 dark:text-white'
                                 : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white',
-                              'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
                             ]"
                             :href="team.href">
                             <span
-                              :class="[
+                              class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium" :class="[
                                 team.current
                                   ? 'border-indigo-600 text-indigo-600'
                                   : 'border-gray-200 text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:group-hover:border-gray-600 dark:group-hover:text-white',
-                                'flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium',
                               ]"
                               >{{ team.initial }}</span
                             >
+
                             <span class="truncate">{{ team.name }}</span>
                           </a>
                         </li>
                       </ul>
                     </li>
+
                     <li class="mt-auto">
                       <a
                         class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
@@ -194,11 +194,9 @@ const sidebarOpen = ref(false);
       <div
         class="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4 dark:bg-gray-900">
         <div class="flex h-16 shrink-0 items-center">
-          <img
-            alt="Your Company"
-            class="h-8 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" />
+          <ApplicationLogo />
         </div>
+
         <nav class="flex flex-1 flex-col">
           <ul
             class="flex flex-1 flex-col gap-y-7"
@@ -211,20 +209,18 @@ const sidebarOpen = ref(false);
                   v-for="item in navigation"
                   :key="item.name">
                   <a
-                    :class="[
+                    class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6" :class="[
                       item.current
                         ? 'bg-gray-50 text-indigo-600 dark:bg-gray-800 dark:text-white'
                         : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white',
-                      'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
                     ]"
                     :href="item.href">
                     <component
                       :is="item.icon"
-                      :class="[
+                      class="h-6 w-6 shrink-0" :class="[
                         item.current
                           ? 'text-indigo-600 dark:text-white'
                           : 'text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-white',
-                        'h-6 w-6 shrink-0',
                       ]"
                       aria-hidden="true" />
                     {{ item.name }}
@@ -232,8 +228,10 @@ const sidebarOpen = ref(false);
                 </li>
               </ul>
             </li>
+
             <li>
               <div class="text-xs font-semibold leading-6 text-gray-400">Your teams</div>
+
               <ul
                 class="-mx-2 mt-2 space-y-1"
                 role="list">
@@ -241,27 +239,27 @@ const sidebarOpen = ref(false);
                   v-for="team in teams"
                   :key="team.name">
                   <a
-                    :class="[
+                    class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6" :class="[
                       team.current
                         ? 'bg-gray-50 text-indigo-600 dark:bg-gray-800 dark:text-white'
                         : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white',
-                      'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
                     ]"
                     :href="team.href">
                     <span
-                      :class="[
+                      class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium" :class="[
                         team.current
                           ? 'border-indigo-600 text-indigo-600 dark:border-white dark:text-white'
                           : 'border-gray-200 text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600 dark:border-gray-700 dark:bg-gray-800 dark:group-hover:border-gray-600 dark:group-hover:text-white',
-                        'flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium',
                       ]"
                       >{{ team.initial }}</span
                     >
+
                     <span class="truncate">{{ team.name }}</span>
                   </a>
                 </li>
               </ul>
             </li>
+
             <li class="mt-auto">
               <a
                 class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
@@ -285,6 +283,7 @@ const sidebarOpen = ref(false);
           type="button"
           @click="sidebarOpen = true">
           <span class="sr-only">Open sidebar</span>
+
           <Bars3Icon
             aria-hidden="true"
             class="h-6 w-6" />
@@ -305,9 +304,11 @@ const sidebarOpen = ref(false);
               for="search-field"
               >Search</label
             >
+
             <MagnifyingGlassIcon
               aria-hidden="true"
               class="pointer-events-none absolute inset-y-0 left-0 h-full w-5 text-gray-400" />
+
             <input
               id="search-field"
               class="block h-full w-full border-0 py-0 pl-8 pr-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm dark:bg-gray-900 dark:text-white"
@@ -321,6 +322,7 @@ const sidebarOpen = ref(false);
               class="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
               type="button">
               <span class="sr-only">View notifications</span>
+
               <BellIcon
                 aria-hidden="true"
                 class="h-6 w-6" />
@@ -337,21 +339,25 @@ const sidebarOpen = ref(false);
               class="relative">
               <MenuButton class="-m-1.5 flex items-center p-1.5">
                 <span class="sr-only">Open user menu</span>
+
                 <img
                   alt=""
                   class="h-8 w-8 rounded-full bg-gray-50 dark:bg-gray-800 dark:text-white"
                   src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" />
+
                 <span class="hidden lg:flex lg:items-center">
                   <span
                     aria-hidden="true"
                     class="ml-4 text-sm font-semibold leading-6 text-gray-900 dark:text-white">
                     {{ $page.props.auth.user.name }}
                   </span>
+
                   <ChevronDownIcon
                     aria-hidden="true"
                     class="ml-2 h-5 w-5 text-gray-400" />
                 </span>
               </MenuButton>
+
               <Transition
                 enter-active-class="transition ease-out duration-100"
                 enter-from-class="transform opacity-0 scale-95"
@@ -366,11 +372,11 @@ const sidebarOpen = ref(false);
                     :key="item.name"
                     v-slot="{ active }">
                     <Link
-                      :class="[
+                      class="block px-3 py-1 text-sm leading-6 text-gray-900 dark:text-white" :class="[
                         active ? 'bg-gray-50 dark:bg-gray-800' : '',
-                        'block px-3 py-1 text-sm leading-6 text-gray-900 dark:text-white',
                       ]"
-                      :href="item.href">
+                      :href="item.href"
+                      :method="item.method ?? 'GET'">
                       {{ item.name }}
                     </Link>
                   </MenuItem>

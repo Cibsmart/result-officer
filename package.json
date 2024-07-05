@@ -9,6 +9,7 @@
     "lint-check": "eslint \"resources/**\" ",
     "lint": "eslint \"resources/**\" --fix",
     "build": "vue-tsc && vite build",
+    "fix": "run-p prettify lint && run-p build",
     "check-build": "run-p format-check lint-check type-check && run-p build"
   },
   "devDependencies": {
