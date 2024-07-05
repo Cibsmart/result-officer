@@ -1,8 +1,12 @@
 <script lang="ts" setup>
 import { ref } from "vue";
+import { ChevronRightIcon } from "@heroicons/vue/20/solid";
 import {
   Dialog,
   DialogPanel,
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
   Menu,
   MenuButton,
   MenuItem,
@@ -23,13 +27,23 @@ import {
   XMarkIcon,
 } from "@heroicons/vue/24/outline";
 import { ChevronDownIcon, MagnifyingGlassIcon } from "@heroicons/vue/20/solid";
-import ResponsiveNavLink from "@/components/responsiveNavLink.vue";
 import { Link } from "@inertiajs/vue3";
 import ApplicationLogo from "@/components/applicationLogo.vue";
 
 const navigation = [
   { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
-  { name: "Team", href: "#", icon: UsersIcon, current: false },
+  {
+    name: "Team",
+    href: "#",
+    icon: UsersIcon,
+    current: false,
+    children: [
+      { name: "GraphQL API", href: "#" },
+      { name: "iOS App", href: "#" },
+      { name: "Android App", href: "#" },
+      { name: "New Customer Portal", href: "#" },
+    ],
+  },
   { name: "Projects", href: "#", icon: FolderIcon, current: false },
   { name: "Calendar", href: "#", icon: CalendarIcon, current: false },
   { name: "Documents", href: "#", icon: DocumentDuplicateIcon, current: false },
@@ -117,22 +131,66 @@ const sidebarOpen = ref(false);
                           v-for="item in navigation"
                           :key="item.name">
                           <a
-                            class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6" :class="[
+                            v-if="!item.children"
+                            :class="[
                               item.current
                                 ? 'bg-gray-50 text-indigo-600 dark:bg-gray-800 dark:text-white'
                                 : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white',
                             ]"
-                            :href="item.href">
+                            :href="item.href"
+                            class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6">
                             <component
                               :is="item.icon"
-                              class="h-6 w-6 shrink-0" :class="[
+                              :class="[
                                 item.current
                                   ? 'text-indigo-600 dark:text-white'
                                   : 'text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-white',
                               ]"
-                              aria-hidden="true" />
+                              aria-hidden="true"
+                              class="h-6 w-6 shrink-0" />
                             {{ item.name }}
                           </a>
+
+                          <Disclosure
+                            v-else
+                            v-slot="{ open }"
+                            as="div">
+                            <DisclosureButton
+                              :class="[
+                                item.current ? 'bg-gray-50' : 'hover:bg-gray-50',
+                                'flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm font-semibold leading-6 text-gray-700',
+                              ]">
+                              <component
+                                :is="item.icon"
+                                aria-hidden="true"
+                                class="h-6 w-6 shrink-0 text-gray-400" />
+                              {{ item.name }}
+                              <ChevronRightIcon
+                                :class="[
+                                  open ? 'rotate-90 text-gray-500' : 'text-gray-400',
+                                  'ml-auto h-5 w-5 shrink-0',
+                                ]"
+                                aria-hidden="true" />
+                            </DisclosureButton>
+                            <DisclosurePanel
+                              as="ul"
+                              class="mt-1 px-2">
+                              <li
+                                v-for="subItem in item.children"
+                                :key="subItem.name">
+                                <!-- 44px -->
+                                <DisclosureButton
+                                  :class="[
+                                    subItem.current ? 'bg-gray-50' : 'hover:bg-gray-50',
+                                    'block rounded-md py-2 pl-9 pr-2 text-sm leading-6 text-gray-700',
+                                  ]"
+                                  :href="subItem.href"
+                                  as="a">
+                                  {{ subItem.name }}
+                                </DisclosureButton>
+                              </li>
+                            </DisclosurePanel>
+                          </Disclosure>
                         </li>
                       </ul>
                     </li>
@@ -147,18 +205,20 @@ const sidebarOpen = ref(false);
                           v-for="team in teams"
                           :key="team.name">
                           <a
-                            class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6" :class="[
+                            :class="[
                               team.current
                                 ? 'bg-gray-50 text-indigo-600 dark:bg-gray-800 dark:text-white'
                                 : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white',
                             ]"
-                            :href="team.href">
+                            :href="team.href"
+                            class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6">
                             <span
-                              class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium" :class="[
+                              :class="[
                                 team.current
                                   ? 'border-indigo-600 text-indigo-600'
                                   : 'border-gray-200 text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:group-hover:border-gray-600 dark:group-hover:text-white',
                               ]"
+                              class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium"
                               >{{ team.initial }}</span
                             >
 
@@ -209,20 +269,22 @@ const sidebarOpen = ref(false);
                   v-for="item in navigation"
                   :key="item.name">
                   <a
-                    class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6" :class="[
+                    :class="[
                       item.current
                         ? 'bg-gray-50 text-indigo-600 dark:bg-gray-800 dark:text-white'
                         : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white',
                     ]"
-                    :href="item.href">
+                    :href="item.href"
+                    class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6">
                     <component
                       :is="item.icon"
-                      class="h-6 w-6 shrink-0" :class="[
+                      :class="[
                         item.current
                           ? 'text-indigo-600 dark:text-white'
                           : 'text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-white',
                       ]"
-                      aria-hidden="true" />
+                      aria-hidden="true"
+                      class="h-6 w-6 shrink-0" />
                     {{ item.name }}
                   </a>
                 </li>
@@ -239,18 +301,20 @@ const sidebarOpen = ref(false);
                   v-for="team in teams"
                   :key="team.name">
                   <a
-                    class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6" :class="[
+                    :class="[
                       team.current
                         ? 'bg-gray-50 text-indigo-600 dark:bg-gray-800 dark:text-white'
                         : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white',
                     ]"
-                    :href="team.href">
+                    :href="team.href"
+                    class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6">
                     <span
-                      class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium" :class="[
+                      :class="[
                         team.current
                           ? 'border-indigo-600 text-indigo-600 dark:border-white dark:text-white'
                           : 'border-gray-200 text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600 dark:border-gray-700 dark:bg-gray-800 dark:group-hover:border-gray-600 dark:group-hover:text-white',
                       ]"
+                      class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium"
                       >{{ team.initial }}</span
                     >
 
@@ -372,11 +436,10 @@ const sidebarOpen = ref(false);
                     :key="item.name"
                     v-slot="{ active }">
                     <Link
-                      class="block px-3 py-1 text-sm leading-6 text-gray-900 dark:text-white" :class="[
-                        active ? 'bg-gray-50 dark:bg-gray-800' : '',
-                      ]"
+                      :class="[active ? 'bg-gray-50 dark:bg-gray-800' : '']"
                       :href="item.href"
-                      :method="item.method ?? 'GET'">
+                      :method="item.method ?? 'GET'"
+                      class="block px-3 py-1 text-sm leading-6 text-gray-900 dark:text-white">
                       {{ item.name }}
                     </Link>
                   </MenuItem>

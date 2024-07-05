@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import AuthenticatedLayout from "@/layouts/authenticatedLayout/appLayout.vue";
+import LayoutMain from "@/layouts/main/layoutMain.vue";
 import { Head } from "@inertiajs/vue3";
 </script>
 
 <template>
   <Head title="Dashboard" />
 
-  <AuthenticatedLayout>
+  <LayoutMain>
     <template #header>
       <h2 class="text-xl font-semibold leading-tight">Dashboard</h2>
     </template>
@@ -18,5 +18,5 @@ import { Head } from "@inertiajs/vue3";
         </div>
       </div>
     </div>
-  </AuthenticatedLayout>
+  </LayoutMain>
 </template>

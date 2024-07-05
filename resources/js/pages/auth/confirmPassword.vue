@@ -3,7 +3,7 @@ import InputError from "@/components/inputError.vue";
 import InputLabel from "@/components/inputLabel.vue";
 import PrimaryButton from "@/components/primaryButton.vue";
 import TextInput from "@/components/textInput.vue";
-import GuestLayout from "@/layouts/guestLayout.vue";
+import LayoutGuest from "@/layouts/guest/layoutGuest.vue";
 import { Head, useForm } from "@inertiajs/vue3";
 
 const form = useForm({
@@ -20,7 +20,7 @@ const submit = () => {
 </script>
 
 <template>
-  <GuestLayout>
+  <LayoutGuest>
     <Head title="Confirm Password" />
 
     <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
@@ -56,5 +56,5 @@ const submit = () => {
         </PrimaryButton>
       </div>
     </form>
-  </GuestLayout>
+  </LayoutGuest>
 </template>
