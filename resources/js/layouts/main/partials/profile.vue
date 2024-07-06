@@ -1,19 +1,11 @@
 <script lang="ts" setup>
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import { Link, usePage } from "@inertiajs/vue3";
-import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/vue/20/solid";
+import { ChevronRightIcon } from "@heroicons/vue/20/solid";
 import { UserNavigationItem } from "@/types";
-import { computed } from "vue";
 import ProfileImage from "@/layouts/main/partials/profileImage.vue";
 
 const pageProps = usePage();
-
-const initials = computed(() => {
-  return pageProps.props.auth.user.name
-    .split(" ")
-    .map((word) => word[0].toUpperCase())
-    .join("");
-});
 
 const userNavigation: UserNavigationItem[] = [
   { name: "Your profile", href: route("profile.edit"), method: "get" },
