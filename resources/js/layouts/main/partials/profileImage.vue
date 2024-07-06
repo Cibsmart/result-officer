@@ -1,12 +1,10 @@
 <script lang="ts" setup>
-import { usePage } from "@inertiajs/vue3";
 import { computed } from "vue";
-
-const pageProps = usePage();
+import { usePage } from "@inertiajs/vue3";
 
 const initials = computed(() => {
-  return pageProps.props.auth.user.name
-    .split(" ")
+  return usePage()
+    .props.auth.user.name.split(" ")
     .map((word) => word[0].toUpperCase())
     .join("");
 });
