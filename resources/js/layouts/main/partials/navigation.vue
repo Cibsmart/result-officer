@@ -3,6 +3,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import { ChevronRightIcon } from "@heroicons/vue/20/solid";
 import { NavigationItem } from "@/types";
 import { ChartPieIcon, DocumentDuplicateIcon, FolderIcon, HomeIcon, UsersIcon } from "@heroicons/vue/24/outline";
+import { Link } from "@inertiajs/vue3";
 
 const navigation: NavigationItem[] = [
   { name: "Dashboard", href: route("dashboard"), icon: HomeIcon, current: route().current("dashboard") },
@@ -103,13 +104,12 @@ const navigation: NavigationItem[] = [
             v-for="subItem in item.children"
             :key="subItem.name">
             <!-- 44px -->
-            <DisclosureButton
+            <Link
               :class="[subItem.current ? 'bg-gray-50 dark:bg-gray-800' : 'hover:bg-gray-50 dark:hover:bg-gray-800']"
               :href="subItem.href"
-              as="a"
               class="block rounded-md py-2 pl-9 pr-2 text-sm leading-6 text-gray-700 dark:text-gray-300">
               {{ subItem.name }}
-            </DisclosureButton>
+            </Link>
           </li>
         </DisclosurePanel>
       </Disclosure>
