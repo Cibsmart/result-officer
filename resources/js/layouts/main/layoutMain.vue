@@ -21,17 +21,7 @@ const sidebarOpen = ref(false);
       <Topbar @openSidebar="sidebarOpen = true" />
 
       <main class="pb-10">
-        <header
-          v-if="$slots.header"
-          class="bg-white text-gray-800 shadow dark:bg-gray-800 dark:text-white">
-          <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-            <slot name="header" />
-          </div>
-        </header>
-
-        <div class="px-4 text-gray-800 sm:px-6 lg:px-8 dark:text-white">
-          <slot />
-        </div>
+        <slot />
       </main>
     </div>
   </div>
