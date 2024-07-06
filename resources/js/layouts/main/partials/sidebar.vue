@@ -1,7 +1,26 @@
 <script lang="ts" setup>
-import { Cog6ToothIcon } from "@heroicons/vue/24/outline";
 import ApplicationLogo from "@/components/applicationLogo.vue";
 import Navigation from "@/layouts/main/partials/navigation.vue";
+import Profile from "@/layouts/main/partials/profile.vue";
+import { computed } from "vue";
+import { Link, usePage } from "@inertiajs/vue3";
+import { ChevronRightIcon } from "@heroicons/vue/20/solid";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
+import { UserNavigationItem } from "@/types";
+
+const pageProps = usePage();
+
+const initials = computed(() => {
+  return pageProps.props.auth.user.name
+    .split(" ")
+    .map((word) => word[0].toUpperCase())
+    .join("");
+});
+
+const userNavigation: UserNavigationItem[] = [
+  { name: "Profile", href: route("profile.edit"), method: "get" },
+  { name: "Sign out", href: route("logout"), method: "post" },
+];
 </script>
 
 <template>
@@ -21,14 +40,7 @@ import Navigation from "@/layouts/main/partials/navigation.vue";
 
         <!-- Footer          -->
         <li class="mt-auto">
-          <a
-            class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
-            href="#">
-            <Cog6ToothIcon
-              aria-hidden="true"
-              class="h-6 w-6 shrink-0 text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-white" />
-            Settings
-          </a>
+          <Profile />
         </li>
       </ul>
     </nav>
