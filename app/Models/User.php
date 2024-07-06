@@ -37,10 +37,13 @@ final class User extends Authenticatable
         ];
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string>
+     */
     protected function name(): Attribute
     {
         return Attribute::make(
-            set: fn (string $value) => strtoupper($value),
+            set: static fn (string $value): string => strtoupper($value),
         );
     }
 }
