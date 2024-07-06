@@ -1,3 +1,12 @@
+declare namespace App.Data.Shared {
+  export type SharedData = {
+    user: App.Data.Shared.UserData;
+  };
+  export type UserData = {
+    name: string;
+    email: string;
+  };
+}
 declare namespace App.Enums {
   export type CourseStatusEnum = "F" | "R";
   export type GenderEnum = "M" | "F";
