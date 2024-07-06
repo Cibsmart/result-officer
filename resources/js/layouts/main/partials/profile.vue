@@ -1,8 +1,19 @@
 <script lang="ts" setup>
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
-import { Link } from "@inertiajs/vue3";
-import { ChevronDownIcon } from "@heroicons/vue/20/solid";
+import { Link, usePage } from "@inertiajs/vue3";
+import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/vue/20/solid";
 import { UserNavigationItem } from "@/types";
+import { computed } from "vue";
+import ProfileImage from "@/layouts/main/partials/profileImage.vue";
+
+const pageProps = usePage();
+
+const initials = computed(() => {
+  return pageProps.props.auth.user.name
+    .split(" ")
+    .map((word) => word[0].toUpperCase())
+    .join("");
+});
 
 const userNavigation: UserNavigationItem[] = [
   { name: "Your profile", href: route("profile.edit"), method: "get" },
@@ -14,25 +25,19 @@ const userNavigation: UserNavigationItem[] = [
   <Menu
     as="div"
     class="relative">
-    <MenuButton class="-m-1.5 flex items-center p-1.5">
+    <MenuButton
+      v-slot="{ open }"
+      class="group -m-1.5 flex w-full items-center gap-x-4 p-1.5 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800">
       <span class="sr-only">Open user menu</span>
 
-      <img
-        alt=""
-        class="h-8 w-8 rounded-full bg-gray-50 dark:bg-gray-800 dark:text-white"
-        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" />
+      <ProfileImage />
+      <span class="sr-only">Your profile</span>
+      <span aria-hidden="true">{{ $page.props.auth.user.name }}</span>
 
-      <span class="hidden lg:flex lg:items-center">
-        <span
-          aria-hidden="true"
-          class="ml-4 text-sm font-semibold leading-6 text-gray-900 dark:text-white">
-          {{ $page.props.auth.user.name }}
-        </span>
-
-        <ChevronDownIcon
-          aria-hidden="true"
-          class="ml-2 h-5 w-5 text-gray-400" />
-      </span>
+      <ChevronRightIcon
+        :class="[open ? '-rotate-90 text-gray-500 dark:text-gray-300' : 'text-gray-400']"
+        aria-hidden="true"
+        class="ml-auto h-5 w-5 text-gray-400" />
     </MenuButton>
 
     <Transition
@@ -43,7 +48,7 @@ const userNavigation: UserNavigationItem[] = [
       leave-from-class="transform opacity-100 scale-100"
       leave-to-class="transform opacity-0 scale-95">
       <MenuItems
-        class="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none dark:bg-gray-900">
+        class="absolute bottom-12 right-0 z-10 mt-2.5 w-40 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none dark:bg-gray-900">
         <MenuItem
           v-for="item in userNavigation"
           :key="item.name"
@@ -53,7 +58,7 @@ const userNavigation: UserNavigationItem[] = [
             :href="item.href"
             :method="item.method"
             as="button"
-            class="block px-3 py-1 text-sm leading-6 text-gray-900 dark:text-white">
+            class="block w-full px-3 py-1 text-right text-sm leading-6 text-gray-900 dark:text-white">
             {{ item.name }}
           </Link>
         </MenuItem>
