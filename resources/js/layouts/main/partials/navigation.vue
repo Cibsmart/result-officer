@@ -53,7 +53,7 @@ const navigation: NavigationItem[] = [
     <li
       v-for="item in navigation"
       :key="item.name">
-      <a
+      <Link
         v-if="!item.children"
         :class="[
           item.current
@@ -72,7 +72,7 @@ const navigation: NavigationItem[] = [
           aria-hidden="true"
           class="h-6 w-6 shrink-0" />
         {{ item.name }}
-      </a>
+      </Link>
 
       <Disclosure
         v-else
