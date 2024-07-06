@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import LayoutMain from "@/layouts/main/layoutMain.vue";
 import DeleteUserForm from "@/pages/profile/partials/deleteUserForm.vue";
 import UpdatePasswordForm from "@/pages/profile/partials/updatePasswordForm.vue";
 import UpdateProfileInformationForm from "@/pages/profile/partials/updateProfileInformationForm.vue";
@@ -10,8 +9,6 @@ import BasePage from "@/layouts/main/partials/basePage.vue";
 defineProps<{
   status?: string;
 }>();
-
-defineOptions({ layout: LayoutMain });
 </script>
 
 <template>

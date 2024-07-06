@@ -1,10 +1,7 @@
 <script lang="ts" setup>
-import LayoutMain from "@/layouts/main/layoutMain.vue";
 import { Head } from "@inertiajs/vue3";
 import BaseHeader from "@/layouts/main/partials/baseHeader.vue";
 import BasePage from "@/layouts/main/partials/basePage.vue";
-
-defineOptions({ layout: LayoutMain });
 </script>
 
 <template>
