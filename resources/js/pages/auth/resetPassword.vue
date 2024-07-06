@@ -6,12 +6,12 @@ import TextInput from "@/components/textInput.vue";
 import LayoutGuest from "@/layouts/guest/layoutGuest.vue";
 import { Head, useForm } from "@inertiajs/vue3";
 
-defineOptions({ layout: LayoutGuest });
-
 const props = defineProps<{
   email: string;
   token: string;
 }>();
+
+defineOptions({ layout: LayoutGuest });
 
 const form = useForm({
   token: props.token,

@@ -4,11 +4,11 @@ import LayoutGuest from "@/layouts/guest/layoutGuest.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import { computed } from "vue";
 
-defineOptions({ layout: LayoutGuest });
-
 const props = defineProps<{
   status?: string;
 }>();
+
+defineOptions({ layout: LayoutGuest });
 
 const form = useForm({});
 

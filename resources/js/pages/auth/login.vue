@@ -7,12 +7,12 @@ import TextInput from "@/components/textInput.vue";
 import LayoutGuest from "@/layouts/guest/layoutGuest.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 
-defineOptions({ layout: LayoutGuest });
-
 defineProps<{
   canResetPassword?: boolean;
   status?: string;
 }>();
+
+defineOptions({ layout: LayoutGuest });
 
 const form = useForm({
   email: "",
