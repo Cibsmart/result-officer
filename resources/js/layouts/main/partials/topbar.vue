@@ -17,13 +17,17 @@ const openSidebar = () => {
       type="button"
       @click="openSidebar">
       <span class="sr-only">Open sidebar</span>
+
       <Bars3Icon
         aria-hidden="true"
         class="h-6 w-6" />
     </button>
+
     <div class="flex-1 text-sm font-semibold leading-6 text-gray-900 dark:text-white">ResultPro</div>
+
     <a href="#">
       <span class="sr-only">Your profile</span>
+
       <ProfileImage />
     </a>
   </div>
