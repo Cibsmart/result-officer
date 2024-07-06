@@ -27,7 +27,7 @@ const navigation: NavigationItem[] = [
     children: [
       { name: "Upload Result", href: "#", current: false },
       { name: "Download Result", href: "#", current: false },
-      { name: "View Result", href: "#", current: false },
+      { name: "View Result", href: route("result.view"), current: route().current("result.view") },
     ],
   },
   {
