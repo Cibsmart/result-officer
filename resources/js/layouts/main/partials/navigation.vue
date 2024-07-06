@@ -5,22 +5,43 @@ import { NavigationItem } from "@/types";
 import { ChartPieIcon, DocumentDuplicateIcon, FolderIcon, HomeIcon, UsersIcon } from "@heroicons/vue/24/outline";
 
 const navigation: NavigationItem[] = [
-  { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
+  { name: "Dashboard", href: route("dashboard"), icon: HomeIcon, current: route().current("dashboard") },
   {
     name: "Students",
     href: "#",
     icon: UsersIcon,
     current: false,
     children: [
-      { name: "GraphQL API", href: "#", current: false },
-      { name: "iOS App", href: "#", current: false },
-      { name: "Android App", href: "#", current: false },
-      { name: "New Customer Portal", href: "#", current: false },
+      { name: "Upload Record", href: "#", current: false },
+      { name: "Download Record", href: "#", current: false },
+      { name: "View Student", href: "#", current: false },
+      { name: "Student List", href: "#", current: false },
     ],
   },
-  { name: "Results", href: "#", icon: FolderIcon, current: false },
-  { name: "Documents", href: "#", icon: DocumentDuplicateIcon, current: false },
-  { name: "Reports", href: "#", icon: ChartPieIcon, current: false },
+  { name: "Courses", href: "#", icon: DocumentDuplicateIcon, current: false },
+  {
+    name: "Results",
+    href: "#",
+    icon: FolderIcon,
+    current: false,
+    children: [
+      { name: "Upload Result", href: "#", current: false },
+      { name: "Download Result", href: "#", current: false },
+      { name: "View Result", href: "#", current: false },
+    ],
+  },
+  {
+    name: "Reports",
+    href: "#",
+    icon: ChartPieIcon,
+    current: false,
+    children: [
+      { name: "Transcript", href: "#", current: false },
+      { name: "Composite Sheet", href: "#", current: false },
+      { name: "Result Summary", href: "#", current: false },
+      { name: "Graduation List", href: "#", current: false },
+    ],
+  },
 ];
 </script>
 
@@ -57,8 +78,8 @@ const navigation: NavigationItem[] = [
         v-slot="{ open }"
         as="div">
         <DisclosureButton
-          class="flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm font-semibold leading-6 text-gray-700 dark:text-gray-400"
-          :class="[item.current ? 'bg-gray-50 dark:bg-gray-800' : 'hover:bg-gray-50 dark:hover:bg-gray-800']">
+          :class="[item.current ? 'bg-gray-50 dark:bg-gray-800' : 'hover:bg-gray-50 dark:hover:bg-gray-800']"
+          class="flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm font-semibold leading-6 text-gray-700 dark:text-gray-400">
           <component
             :is="item.icon"
             :class="[
@@ -70,9 +91,9 @@ const navigation: NavigationItem[] = [
             class="h-6 w-6 shrink-0 text-gray-400" />
           {{ item.name }}
           <ChevronRightIcon
-            class="ml-auto h-5 w-5 shrink-0"
             :class="[open ? 'rotate-90 text-gray-500 dark:text-gray-300' : 'text-gray-400']"
-            aria-hidden="true" />
+            aria-hidden="true"
+            class="ml-auto h-5 w-5 shrink-0" />
         </DisclosureButton>
 
         <DisclosurePanel
@@ -83,10 +104,10 @@ const navigation: NavigationItem[] = [
             :key="subItem.name">
             <!-- 44px -->
             <DisclosureButton
-              class="block rounded-md py-2 pl-9 pr-2 text-sm leading-6 text-gray-700 dark:text-gray-300"
               :class="[subItem.current ? 'bg-gray-50 dark:bg-gray-800' : 'hover:bg-gray-50 dark:hover:bg-gray-800']"
               :href="subItem.href"
-              as="a">
+              as="a"
+              class="block rounded-md py-2 pl-9 pr-2 text-sm leading-6 text-gray-700 dark:text-gray-300">
               {{ subItem.name }}
             </DisclosureButton>
           </li>
