@@ -37,9 +37,7 @@ final class User extends Authenticatable
         ];
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string>
-     */
+    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
     protected function name(): Attribute
     {
         return Attribute::make(
