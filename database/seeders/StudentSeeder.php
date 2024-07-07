@@ -15,14 +15,27 @@ final class StudentSeeder extends Seeder
     {
         Student::query()->create([
             'country_id' => 1,
-            'date_of_birth' => Carbon::create(2004, 9, 1),
+            'date_of_birth' => Carbon::create(2004, 9, 10),
             'entry_level_id' => 1,
             'entry_mode_id' => 1,
-            'entry_session_id' => 1,
+            'entry_session_id' => 15,
             'first_name' => 'STUDENT',
             'gender' => GenderEnum::MALE,
             'last_name' => 'NEW',
             'matriculation_number' => 'EBSU/2023/54563',
+            'program_id' => 1,
+        ]);
+
+        Student::query()->create([
+            'country_id' => 1,
+            'date_of_birth' => Carbon::create(1988, 7, 27),
+            'entry_level_id' => 1,
+            'entry_mode_id' => 1,
+            'entry_session_id' => 1,
+            'first_name' => 'BARNABAS',
+            'gender' => GenderEnum::MALE,
+            'last_name' => 'IFEBUDE',
+            'matriculation_number' => 'EBSU/2009/51486',
             'program_id' => 1,
         ]);
     }

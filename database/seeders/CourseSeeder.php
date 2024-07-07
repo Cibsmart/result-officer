@@ -11,33 +11,41 @@ final class CourseSeeder extends Seeder
 {
     /** @var array<string, string> */
     private array $courses = [
-        'BIO 101' => 'PRACTICAL SKILLS IN COMPUTER SCIENCE',
-        'BIO 107' => 'PRACTICAL SKILLS IN COMPUTER SCIENCE',
-        'CHM 101' => 'PRACTICAL SKILLS IN COMPUTER SCIENCE',
-        'CHM 107' => 'PRACTICAL SKILLS IN COMPUTER SCIENCE',
-        'CSC 101' => 'INTRODUCTION TO COMPUTER SCIENCE I',
-        'CSC 102' => 'INTRODUCTION TO COMPUTER SCIENCE II',
-        'CSC 107' => 'PRACTICAL SKILLS IN COMPUTER SCIENCE',
-        'CSC 201' => 'INTRODUCTION TO PROGRAMMING I',
-        'CSC 202' => 'INTRODUCTION TO PROGRAMMING II',
-        'CSC 301' => 'STRUCTURED PROGRAMMING',
-        'CSC 302' => 'FUNCTIONAL PROGRAMMING',
-        'GST 101' => 'PRACTICAL SKILLS IN COMPUTER SCIENCE',
-        'GST 103' => 'PRACTICAL SKILLS IN COMPUTER SCIENCE',
-        'MTH 101' => 'PRACTICAL SKILLS IN COMPUTER SCIENCE',
-        'PHY 101' => 'PRACTICAL SKILLS IN COMPUTER SCIENCE',
-        'PHY 107' => 'PRACTICAL SKILLS IN COMPUTER SCIENCE',
-        'STA 131' => 'PRACTICAL SKILLS IN COMPUTER SCIENCE',
+        ['GST 101' => 'USE OF ENGLISH I'],
+        ['GST 103' => 'NIGERIA PEOPLE AND CULTURE'],
+        ['CSC 101' => 'INTRODUCTION TO COMPUTER SCIENCE I'],
+        ['MAT 101' => 'ALGEBRA AND TRIGONOMETRY'],
+        ['STA 101' => 'BASIC STATISTICS'],
+        ['PHY 101' => 'GENERAL PHYSICS FOR PHYSICAL SCIENCE I'],
+        ['BIO 191' => 'GENERAL PRACTICAL BIOLOGY I'],
+        ['PHY 191' => 'GENERAL PRACTICAL PHYSICS I'],
+        ['ICH 101' => 'GENERAL CHEMISTRY I'],
+        ['BIO 101' => 'GENERAL BIOLOGY I'],
+        ['ICH 191' => 'GENERAL PRACTICAL CHEMISTRY I'],
+
+        ['GST 106' => 'SOCIAL SCIENCE'],
+        ['GST 107' => 'USE OF ENGLISH II'],
+        ['PHY 102' => 'GENERAL PHYSICS II'],
+        ['PHY 192' => 'GENERAL PRACTICAL PHYSICS II'],
+        ['ICH 102' => 'GENERAL CHEMISTRY II'],
+        ['MAT 102' => 'CALCULUS AND COORDINATE GEOMETRY'],
+        ['CSC 102' => 'INTRODUCTION TO COMPUTER SYSTEM'],
+        ['CSC 104' => 'COMPUTER AND SOCIETY'],
+        ['MAT 104' => 'VECTOR AND COORDINATE GEOMETRY'],
+        ['ICH 192' => 'GENERAL PRACTICAL CHEMISTRY II'],
+        ['CSC 112' => 'INTRODUCTION TO COMPUTER PROGRAMMING'],
     ];
 
     public function run(): void
     {
-        foreach ($this->courses as $code => $title) {
-            Course::query()->create([
-                'active' => true,
-                'code' => $code,
-                'title' => $title,
-            ]);
+        foreach ($this->courses as $course) {
+            foreach ($course as $code => $title) {
+                Course::query()->create([
+                    'active' => true,
+                    'code' => $code,
+                    'title' => $title,
+                ]);
+            }
         }
     }
 }

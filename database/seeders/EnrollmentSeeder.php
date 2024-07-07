@@ -9,39 +9,34 @@ use Illuminate\Database\Seeder;
 
 final class EnrollmentSeeder extends Seeder
 {
+    private array $enrollments = [
+        1 => [
+            1 => ['level_id' => 1, 'session_id' => 14],
+        ],
+        2 => [
+            1 => ['level_id' => 1, 'session_id' => 1],
+            2 => ['level_id' => 2, 'session_id' => 2],
+            3 => ['level_id' => 3, 'session_id' => 3],
+            4 => ['level_id' => 4, 'session_id' => 4],
+        ],
+    ];
+
     public function run(): void
     {
         $this->call([
             YearSeeder::class,
         ]);
 
-        Enrollment::query()->create([
-            'level_id' => 1,
-            'session_id' => 1,
-            'student_id' => 1,
-            'year_id' => 1,
-        ]);
-
-        Enrollment::query()->create([
-            'level_id' => 2,
-            'session_id' => 2,
-            'student_id' => 1,
-            'year_id' => 2,
-        ]);
-
-        Enrollment::query()->create([
-            'level_id' => 3,
-            'session_id' => 3,
-            'student_id' => 1,
-            'year_id' => 3,
-        ]);
-
-        Enrollment::query()->create([
-            'level_id' => 4,
-            'session_id' => 4,
-            'student_id' => 1,
-            'year_id' => 4,
-        ]);
+        foreach ($this->enrollments as $student_id => $enrollments) {
+            foreach ($enrollments as $year_id => $enrollment) {
+                Enrollment::query()->create([
+                    'level_id' => $enrollment['level_id'],
+                    'session_id' => $enrollment['session_id'],
+                    'student_id' => $student_id,
+                    'year_id' => $year_id,
+                ]);
+            }
+        }
 
         $this->call([
             ResultSeeder::class,
