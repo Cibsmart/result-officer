@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 use App\Models\Result;
+use App\Values\ExamScore;
 use App\Values\Grader;
+use App\Values\InCourseScore;
 use App\Values\Score;
 use Illuminate\Database\Seeder;
 
@@ -24,7 +26,7 @@ final class ResultSeeder extends Seeder
                 [7, 1, 1, [25, 50]],
                 [8, 1, 1, [10, 49]],
                 [9, 1, 3, [30, 60]],
-                [10, 1, 3, [30, 100]],
+                [10, 1, 3, [30, 70]],
                 [11, 1, 1, [20, 20]],
             ],
         ],
@@ -63,7 +65,7 @@ final class ResultSeeder extends Seeder
         foreach ($this->results as $enrollment => $semesters) {
             foreach ($semesters as $semester => $results) {
                 foreach ($results as $course) {
-                    $score = new Score($course[3][0], $course[3][1]);
+                    $score = new Score(InCourseScore::new($course[3][0]), ExamScore::new($course[3][1]));
                     $grader = new Grader($score);
                     $gradePoint = $grader->grade()->value * $course[2];
                     $data = "$enrollment $semester {$score->value()} {$grader->grade()->name} $gradePoint";

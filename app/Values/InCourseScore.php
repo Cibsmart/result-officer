@@ -14,4 +14,9 @@ final readonly class InCourseScore
             throw new InvalidArgumentException('In-course score value must be between 0 and 30');
         }
     }
+
+    public static function new(int $value): self
+    {
+        return new self($value);
+    }
 }

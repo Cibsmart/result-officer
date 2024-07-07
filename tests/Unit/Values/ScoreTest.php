@@ -7,7 +7,7 @@ use App\Values\InCourseScore;
 use App\Values\Score;
 
 test('total score is correct', function (int $inCourse, int $exam, int $total) {
-    expect((new Score(new InCourseScore($inCourse), new ExamScore($exam)))->value())->toBe($total);
+    expect(Score::new(InCourseScore::new($inCourse), ExamScore::new($exam))->value())->toBe($total);
 })->with([
     [0, 0, 0],
     [10, 10, 20],
