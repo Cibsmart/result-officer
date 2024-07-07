@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Classes;
 
 use App\Enums\Grade;
 
-readonly class Grader
+readonly final class Grader
 {
     public function __construct(private Score $score)
     {
