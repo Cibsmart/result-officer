@@ -6,8 +6,15 @@ use App\Values\ExamScore;
 use App\Values\InCourseScore;
 use App\Values\Score;
 
-test('total score is correct', function () {
-    expect((new Score(new InCourseScore(10), new ExamScore(50)))->value())->toBe(60)
-        ->and((new Score(new InCourseScore(0), new ExamScore(0)))->value())->toBe(00)
-        ->and((new Score(new InCourseScore(30), new ExamScore(70)))->value())->toBe(100);
-});
+test('total score is correct', function (int $inCourse, int $exam, int $total) {
+    expect((new Score(new InCourseScore($inCourse), new ExamScore($exam)))->value())->toBe($total);
+})->with([
+    [0, 0, 0],
+    [10, 10, 20],
+    [10, 30, 40],
+    [20, 25, 45],
+    [15, 35, 50],
+    [20, 40, 60],
+    [10, 60, 70],
+    [30, 70, 100],
+]);
