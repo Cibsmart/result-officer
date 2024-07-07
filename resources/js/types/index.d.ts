@@ -2,12 +2,6 @@ import type { FunctionalComponent, HTMLAttributes, VNodeProps } from "vue";
 
 type IconType = FunctionalComponent<HTMLAttributes, VNodeProps>;
 
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-}
-
 export interface NavigationItem {
   name: string;
   href: string;
@@ -24,6 +18,6 @@ export interface UserNavigationItem {
 
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
   auth: {
-    user: User;
+    user: App.Data.Shared.UserData;
   };
 };
