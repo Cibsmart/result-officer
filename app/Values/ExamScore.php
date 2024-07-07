@@ -14,4 +14,9 @@ final readonly class ExamScore
             throw new InvalidArgumentException('Exam score value must be between 0 and 70');
         }
     }
+
+    public static function new(int $value): self
+    {
+        return new self($value);
+    }
 }

@@ -7,8 +7,8 @@ use App\Values\InCourseScore;
 use App\Values\Score;
 
 test('grade is correct', function (int $inCourse, int $exam, Grade $grade) {
-    $score = new Score(new InCourseScore($inCourse), new ExamScore($exam));
-    expect((new Grader($score))->grade())->toBe($grade);
+    $score = Score::new(InCourseScore::new($inCourse), ExamScore::new($exam));
+    expect((Grader::new($score))->grade())->toBe($grade);
 })->with([
     [0, 0, Grade::F],
     [10, 10, Grade::F],

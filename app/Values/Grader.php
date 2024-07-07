@@ -16,6 +16,11 @@ final readonly class Grader
         }
     }
 
+    public static function new(Score $score): self
+    {
+        return new self($score);
+    }
+
     public function grade(): Grade
     {
         return match (true) {

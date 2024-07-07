@@ -12,6 +12,11 @@ final readonly class Score
     ) {
     }
 
+    public static function new(InCourseScore $inCourseScore, ExamScore $examScore): self
+    {
+        return new self($inCourseScore, $examScore);
+    }
+
     public function value(): int
     {
         return $this->inCourseScore->value + $this->examScore->value;
