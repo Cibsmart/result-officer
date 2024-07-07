@@ -66,7 +66,7 @@ final class ResultSeeder extends Seeder
                     $score = new Score($course[3][0], $course[3][1]);
                     $grader = new Grader($score);
                     $gradePoint = $grader->grade()->value * $course[2];
-                    $data = "$enrollment $semester {$score->total()} {$grader->grade()->name} $gradePoint";
+                    $data = "$enrollment $semester {$score->value()} {$grader->grade()->name} $gradePoint";
 
                     Result::query()->create([
                         'course_id' => $course[0],
@@ -77,7 +77,7 @@ final class ResultSeeder extends Seeder
                         'grade_point' => $gradePoint,
                         'scores' => json_encode($course[3]),
                         'semester_id' => $semester,
-                        'total_score' => $score->total(),
+                        'total_score' => $score->value(),
                         'data' => $data,
                     ]);
                 }

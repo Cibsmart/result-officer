@@ -4,6 +4,7 @@ import BasePage from "@/layouts/main/partials/basePage.vue";
 import BaseHeader from "@/layouts/main/partials/baseHeader.vue";
 import StudentResultForm from "@/pages/result/view/partials/studentResultForm.vue";
 import StudentResults from "@/pages/result/view/partials/studentResults.vue";
+import BaseSection from "@/components/baseSection.vue";
 </script>
 
 <template>
@@ -12,16 +13,12 @@ import StudentResults from "@/pages/result/view/partials/studentResults.vue";
   <BaseHeader> View Student Results</BaseHeader>
 
   <BasePage>
-    <div class="py-12">
-      <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
-        <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
-          <StudentResultForm class="max-w-xl" />
-        </div>
+    <BaseSection>
+      <StudentResultForm class="max-w-xl" />
+    </BaseSection>
 
-        <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
-          <StudentResults class="max-w-xl" />
-        </div>
-      </div>
-    </div>
+    <BaseSection>
+      <StudentResults class="max-w-xl" />
+    </BaseSection>
   </BasePage>
 </template>
