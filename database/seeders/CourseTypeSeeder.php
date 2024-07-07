@@ -13,6 +13,7 @@ final class CourseTypeSeeder extends Seeder
     private array $courseTypes = [
         'C' => 'COMPULSORY',
         'E' => 'ELECTIVE',
+        'G' => 'GENERAL',
         'R' => 'REQUIRED',
     ];
 
