@@ -32,7 +32,7 @@ const form = useForm({
           autocomplete="matriculation_number"
           autofocus
           class="mt-1 block w-full"
-          placeholder="EBSU/2009/51486 or 51486"
+          placeholder="EBSU/2009/51486"
           required
           type="text" />
 
