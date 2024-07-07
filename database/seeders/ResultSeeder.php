@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use App\Classes\Grader;
-use App\Classes\Score;
 use App\Models\Result;
+use App\Values\Grader;
+use App\Values\Score;
 use Illuminate\Database\Seeder;
 
 final class ResultSeeder extends Seeder
