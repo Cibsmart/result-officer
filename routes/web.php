@@ -12,12 +12,12 @@ Route::get('/', static fn () => Inertia::render('dashboard'))
     ->name('dashboard');
 
 Route::middleware(['auth'])->group(static function (): void {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/result', [StudentResultController::class, 'page'])->name('result.page');
-    Route::post('/result', [StudentResultController::class, 'show'])->name('result.show');
+    Route::get('result', [StudentResultController::class, 'page'])->name('result.page');
+    Route::post('result', [StudentResultController::class, 'results'])->name('result.data');
 });
 
 require __DIR__ . '/auth.php';
