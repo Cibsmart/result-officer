@@ -6,7 +6,7 @@ import { ChartPieIcon, DocumentDuplicateIcon, FolderIcon, HomeIcon, UsersIcon } 
 import { Link, usePage } from "@inertiajs/vue3";
 import { computed } from "vue";
 
-const resultIsCurrent = computed<boolean>(() => usePage().component.startsWith("result/"));
+const resultIsCurrent = computed<boolean>(() => usePage().component.startsWith("results/"));
 
 const navigation: NavigationItem[] = [
   { name: "Dashboard", href: route("dashboard"), icon: HomeIcon, current: route().current("dashboard") },
@@ -31,7 +31,7 @@ const navigation: NavigationItem[] = [
     children: [
       { name: "Upload Result", href: "#", current: false },
       { name: "Download Result", href: "#", current: false },
-      { name: "View Result", href: route("result.page"), current: route().current("result.page") },
+      { name: "View Result", href: route("results.form"), current: route().current("results.form") },
     ],
   },
   {

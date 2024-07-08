@@ -16,8 +16,8 @@ Route::middleware(['auth'])->group(static function (): void {
     Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('result', [StudentResultController::class, 'page'])->name('result.page');
-    Route::post('result', [StudentResultController::class, 'results'])->name('result.data');
+    Route::get('results', [StudentResultController::class, 'form'])->name('results.form');
+    Route::get('results/view', [StudentResultController::class, 'view'])->name('results.view');
 });
 
 require __DIR__ . '/auth.php';

@@ -20,7 +20,7 @@ const form = useForm({
 
     <form
       class="mt-6 space-y-6"
-      @submit.prevent="form.post(route('result.data'))">
+      @submit.prevent="form.get(route('results.view'))">
       <div>
         <InputLabel
           for="matriculation_number"
