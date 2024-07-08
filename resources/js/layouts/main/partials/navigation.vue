@@ -24,11 +24,11 @@ const navigation: NavigationItem[] = [
     name: "Results",
     href: "#",
     icon: FolderIcon,
-    current: route().current("result.view"),
+    current: route().current("result.page"),
     children: [
       { name: "Upload Result", href: "#", current: false },
       { name: "Download Result", href: "#", current: false },
-      { name: "View Result", href: route("result.view"), current: route().current("result.view") },
+      { name: "View Result", href: route("result.page"), current: route().current("result.page") },
     ],
   },
   {
