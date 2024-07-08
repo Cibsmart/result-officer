@@ -6,14 +6,26 @@ import { Head } from "@inertiajs/vue3";
 import BaseHeader from "@/layouts/main/partials/baseHeader.vue";
 import BasePage from "@/layouts/main/partials/basePage.vue";
 import BaseSection from "@/components/baseSection.vue";
+import Breadcrumb from "@/components/breadcrumb.vue";
+import { BreadcrumbItem } from "@/types";
 
 defineProps<{
   status?: string;
 }>();
+
+const pages: BreadcrumbItem[] = [
+  {
+    name: "Profile",
+    href: route("profile.edit"),
+    current: route().current("profile.edit"),
+  },
+];
 </script>
 
 <template>
   <Head title="Profile" />
+
+  <Breadcrumb :pages="pages" />
 
   <BaseHeader>Profile</BaseHeader>
 

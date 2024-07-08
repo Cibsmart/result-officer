@@ -2,10 +2,13 @@
 import { Head } from "@inertiajs/vue3";
 import BaseHeader from "@/layouts/main/partials/baseHeader.vue";
 import BasePage from "@/layouts/main/partials/basePage.vue";
+import Breadcrumb from "@/components/breadcrumb.vue";
 </script>
 
 <template>
   <Head title="Dashboard" />
+
+  <Breadcrumb />
 
   <BaseHeader>Dashboard</BaseHeader>
 

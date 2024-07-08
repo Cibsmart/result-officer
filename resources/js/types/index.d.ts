@@ -16,6 +16,12 @@ export interface UserNavigationItem {
   method: "get" | "post" | "put" | "delete";
 }
 
+export interface BreadcrumbItem {
+  name: string;
+  href: string;
+  current: boolean;
+}
+
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
   auth: {
     user: App.Data.Shared.UserData;
