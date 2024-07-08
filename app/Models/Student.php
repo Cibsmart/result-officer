@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\GenderEnum;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -69,6 +70,13 @@ final class Student extends Model
     public function results(): HasManyThrough
     {
         return $this->hasManyThrough(Result::class, Enrollment::class);
+    }
+
+    public function name(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => "{$this->first_name} {$this->last_name} {$this->other_names}",
+        );
     }
 
     /** @return array<string, string> */
