@@ -14,9 +14,4 @@ final class StudentResultController extends Controller
     {
         return Inertia::render('result/view/page');
     }
-
-    public function show(): Response
-    {
-        return Inertia::render('result/view/page');
-    }
 }
