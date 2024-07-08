@@ -1,14 +1,11 @@
 <script lang="ts" setup>
 import PrimaryButton from "@/components/primaryButton.vue";
-import LayoutGuest from "@/layouts/guest/layoutGuest.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import { computed } from "vue";
 
 const props = defineProps<{
   status?: string;
 }>();
-
-defineOptions({ layout: LayoutGuest });
 
 const form = useForm({});
 

@@ -8,9 +8,14 @@ use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 use Inertia\Response;
 
-final class ResultController extends Controller
+final class StudentResultController extends Controller
 {
-    public function view(): Response
+    public function page(): Response
+    {
+        return Inertia::render('result/view/page');
+    }
+
+    public function show(): Response
     {
         return Inertia::render('result/view/page');
     }

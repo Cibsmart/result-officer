@@ -3,10 +3,7 @@ import InputError from "@/components/inputError.vue";
 import InputLabel from "@/components/inputLabel.vue";
 import PrimaryButton from "@/components/primaryButton.vue";
 import TextInput from "@/components/textInput.vue";
-import LayoutGuest from "@/layouts/guest/layoutGuest.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
-
-defineOptions({ layout: LayoutGuest });
 
 const form = useForm({
   name: "",
