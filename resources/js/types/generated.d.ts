@@ -1,3 +1,29 @@
+declare namespace App.Data.Results {
+  export type ResultData = {
+    courseCode: string;
+    courseTitle: string;
+    creditUnit: number;
+    totalScore: number;
+    grade: string;
+    gradePoint: number;
+  };
+  export type SemesterResultData = {
+    results: Array<App.Data.Results.ResultData>;
+    semester: string;
+    totalCreditUnit: number;
+    totalGradePoint: number;
+    gradePointAverage: number;
+  };
+  export type SessionResultData = {
+    semesterResults: Array<App.Data.Results.SemesterResultData>;
+    session: string;
+    cummulativeGradePointAverage: number;
+  };
+  export type StudentResultData = {
+    enrollments: Array<App.Data.Results.SessionResultData>;
+    finalCumulativeGradePointAverage: number;
+  };
+}
 declare namespace App.Data.Shared {
   export type SharedData = {
     user: App.Data.Shared.UserData;
@@ -7,8 +33,24 @@ declare namespace App.Data.Shared {
     email: string;
   };
 }
+declare namespace App.Data.Students {
+  export type StudentData = {
+    matriculationNumber: string;
+    name: string;
+    lastName: string;
+    firstName: string;
+    otherNames: string | null;
+    gender: App.Enums.GenderEnum;
+    birthDate: string;
+    program: string;
+    department: string;
+    faculty: string;
+    admissionYear: string;
+  };
+}
 declare namespace App.Enums {
   export type CourseStatusEnum = "F" | "R";
+  export type CreditUnitEnum = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 12 | 15 | 18;
   export type GenderEnum = "M" | "F";
   export type Grade = 5 | 4 | 3 | 2 | 1 | 0;
   export type LevelEnum = 100 | 200 | 300 | 400 | 500 | 600;
