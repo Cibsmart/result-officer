@@ -34,7 +34,7 @@ final class StudentData extends Data
             $student->last_name,
             $student->first_name,
             $student->other_names,
-            $student->gender,
+            GenderEnum::from($student->gender),
             $student->date_of_birth,
             $student->program->name,
             $student->program->department->name,

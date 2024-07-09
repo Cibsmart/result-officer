@@ -11,7 +11,7 @@ use Spatie\LaravelData\Data;
 final class SessionResultData extends Data
 {
     public function __construct(
-        /** @var \Illuminate\Support\Collection<\App\Data\Results\SemesterResultData> */
+        /** @var \Illuminate\Support\Collection<int, \App\Data\Results\SemesterResultData> */
         public Collection $semesterResults,
         public string $session,
         public float $cummulativeGradePointAverage,
