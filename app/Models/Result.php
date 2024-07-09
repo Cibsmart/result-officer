@@ -23,7 +23,7 @@ final class Result extends Model
     /** @var array<int, string> */
     protected $hidden = ['data'];
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Course, \App\Models\Result> */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\CourseRegistration, \App\Models\Result> */
     public function registration(): BelongsTo
     {
         return $this->belongsTo(CourseRegistration::class);
