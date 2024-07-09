@@ -6,9 +6,9 @@ namespace App\Filament\Resources;
 
 use App\Enums\GenderEnum;
 use App\Filament\Resources\StudentResource\Pages;
+use App\Filament\Resources\StudentResource\RelationManagers\CoursesRelationManager;
 use App\Filament\Resources\StudentResource\RelationManagers\EnrollmentsRelationManager;
 use App\Filament\Resources\StudentResource\RelationManagers\ProgramRelationManager;
-use App\Filament\Resources\StudentResource\RelationManagers\ResultsRelationManager;
 use App\Models\Student;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
@@ -85,7 +85,7 @@ final class StudentResource extends Resource
     {
         return [
             EnrollmentsRelationManager::class,
-            ResultsRelationManager::class,
+            CoursesRelationManager::class,
             ProgramRelationManager::class,
         ];
     }

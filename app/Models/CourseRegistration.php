@@ -12,14 +12,16 @@ final class CourseRegistration extends Model
 {
     /** @var array<int, string> */
     protected $fillable = [
-        'enrollment_id',
+        'semester_enrollment_id',
         'course_id',
         'credit_unit',
         'course_status_id',
     ];
 
+    protected $with = ['result'];
+
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\SemesterEnrollment, \App\Models\CourseRegistration> */
-    public function semester(): BelongsTo
+    public function semesterEnrollment(): BelongsTo
     {
         return $this->belongsTo(SemesterEnrollment::class);
     }

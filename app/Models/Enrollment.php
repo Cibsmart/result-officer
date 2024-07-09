@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 final class Enrollment extends Model
 {
@@ -23,10 +24,10 @@ final class Enrollment extends Model
         return $this->belongsTo(Level::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\CourseRegistration> */
-    public function courses(): HasMany
+    /** @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\CourseRegistration> */
+    public function courses(): HasManyThrough
     {
-        return $this->hasMany(CourseRegistration::class);
+        return $this->hasManyThrough(CourseRegistration::class, SemesterEnrollment::class);
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\SemesterEnrollment> */
