@@ -72,6 +72,7 @@ final class Student extends Model
         return $this->hasManyThrough(Result::class, Enrollment::class);
     }
 
+    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, null> */
     public function name(): Attribute
     {
         return Attribute::make(
