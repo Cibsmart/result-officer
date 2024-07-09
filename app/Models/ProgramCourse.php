@@ -12,7 +12,7 @@ final class ProgramCourse extends Model
     protected $fillable = [
         'program_curriculum_id',
         'course_id',
-        'credit_unit_id',
+        'credit_unit',
         'course_type_id',
     ];
 
@@ -26,12 +26,6 @@ final class ProgramCourse extends Model
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);
-    }
-
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\CreditUnit, \App\Models\ProgramCourse> */
-    public function creditUnit(): BelongsTo
-    {
-        return $this->belongsTo(CreditUnit::class);
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\CourseType, \App\Models\ProgramCourse> */

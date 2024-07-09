@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Data\Results;
 
-use App\Models\Enrollment;
-use App\Models\Semester;
-use App\Queries\InSemester;
+use App\Models\SemesterEnrollment;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
 
@@ -22,18 +20,23 @@ final class SemesterResultData extends Data
     ) {
     }
 
-    public static function fromModel(Semester $semester, Enrollment $enrollment): self
+    public static function fromModel(SemesterEnrollment $enrollment): self
     {
-        $resultData = ResultData::collect($enrollment->results()
-            ->tap(new InSemester($semester))
-            ->get());
+        $courses = ResultData::collect($enrollment->courses);
 
-        $totalCreditUnit = $resultData->sum('creditUnit');
+        $totalCreditUnit = $courses->sum('creditUnit');
 
-        $totalGradePoint = $resultData->sum('gradePoint');
+        $totalGradePoint = $courses->sum('gradePoint');
 
+        dump($courses, $enrollment, $totalGradePoint, $totalCreditUnit);
         $gradePointAverage = round($totalGradePoint / $totalCreditUnit, 3);
 
-        return new self($resultData, $semester->name, $totalCreditUnit, $totalGradePoint, $gradePointAverage);
+        return new self(
+            $courses,
+            $enrollment->semester->name,
+            $totalCreditUnit,
+            $totalGradePoint,
+            $gradePointAverage
+        );
     }
 }
