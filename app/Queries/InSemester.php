@@ -13,6 +13,7 @@ final readonly class InSemester
     {
     }
 
+    /** @param \Illuminate\Database\Eloquent\Builder<\App\Models\Result> $query */
     public function __invoke(Builder $query): void
     {
         $query->where('semester_id', $this->semester->id);
