@@ -30,7 +30,7 @@ final class Student extends Model
         'online_id',
     ];
 
-    /** @return HasManyThrough<\App\Models\CourseRegistration> */
+    /** @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\CourseRegistration> */
     public function courses(): HasManyThrough
     {
         return $this->through('enrollments')->has('courses');
