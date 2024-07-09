@@ -71,6 +71,11 @@ parameters:
 			path: app/Data/Students/StudentData.php
 
 		-
+			message: "#^Parameter \\#6 \\$gender of class App\\\\Data\\\\Students\\\\StudentData constructor expects App\\\\Enums\\\\GenderEnum, string given\\.$#"
+			count: 1
+			path: app/Data/Students/StudentData.php
+
+		-
 			message: "#^Parameter \\#7 \\$birthDate of class App\\\\Data\\\\Students\\\\StudentData constructor expects Carbon\\\\Carbon, string given\\.$#"
 			count: 1
 			path: app/Data/Students/StudentData.php

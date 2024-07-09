@@ -24,9 +24,9 @@ final class SemesterResultData extends Data
     {
         $courses = ResultData::collect($enrollment->courses);
 
-        $totalCreditUnit = (int) $courses->sum('creditUnit');
+        $totalCreditUnit = $courses->sum('creditUnit');
 
-        $totalGradePoint = (int) $courses->sum('gradePoint');
+        $totalGradePoint = $courses->sum('gradePoint');
 
         $gradePointAverage = round($totalGradePoint / $totalCreditUnit, 3);
 
