@@ -28,7 +28,7 @@ final class StudentResultController extends Controller
 
         return Inertia::render('results/view/page', new ResultViewPage(
             student: StudentData::from($studentModel),
-            results: StudentResultData::from($studentModel)
+            results: StudentResultData::from($studentModel),
         ));
     }
 }

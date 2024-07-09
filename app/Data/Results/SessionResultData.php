@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Data\Results;
 
 use App\Models\Enrollment;
@@ -7,13 +9,13 @@ use App\Models\Semester;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
 
-class SessionResultData extends Data
+final class SessionResultData extends Data
 {
     public function __construct(
         /** @var \Illuminate\Support\Collection<\App\Data\Results\SemesterResultData> */
         public Collection $semesterResults,
         public string $session,
-        public float $cummulativeGradePointAverage
+        public float $cummulativeGradePointAverage,
     ) {
     }
 
@@ -29,13 +31,9 @@ class SessionResultData extends Data
 
         $cumulativeGradePointAverage = round(
             $semesterResults->sum('gradePointAverage') / $semesterResults->count(),
-            3
+            3,
         );
 
-        return new self(
-            $semesterResults,
-            $enrollment->session->name,
-            $cumulativeGradePointAverage
-        );
+        return new self($semesterResults, $enrollment->session->name, $cumulativeGradePointAverage);
     }
 }

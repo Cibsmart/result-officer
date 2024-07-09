@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Data\Results;
 
 use App\Models\Enrollment;
@@ -8,15 +10,15 @@ use App\Queries\InSemester;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
 
-class SemesterResultData extends Data
+final class SemesterResultData extends Data
 {
     public function __construct(
-        /** @var Collection<int, \App\Data\Results\ResultData> */
+        /** @var \Illuminate\Support\Collection<int, \App\Data\Results\ResultData> */
         public readonly Collection $results,
         public readonly string $semester,
         public int $totalCreditUnit,
         public int $totalGradePoint,
-        public float $gradePointAverage
+        public float $gradePointAverage,
     ) {
     }
 
@@ -32,12 +34,6 @@ class SemesterResultData extends Data
 
         $gradePointAverage = round($totalGradePoint / $totalCreditUnit, 3);
 
-        return new self(
-            $resultData,
-            $semester->name,
-            $totalCreditUnit,
-            $totalGradePoint,
-            $gradePointAverage
-        );
+        return new self($resultData, $semester->name, $totalCreditUnit, $totalGradePoint, $gradePointAverage);
     }
 }

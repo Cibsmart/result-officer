@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Data\Students;
 
 use App\Enums\GenderEnum;
@@ -24,7 +26,7 @@ final class StudentData extends Data
     ) {
     }
 
-    public static function fromModel(Student $student): StudentData
+    public static function fromModel(Student $student): self
     {
         return new self(
             $student->matriculation_number,
@@ -37,7 +39,7 @@ final class StudentData extends Data
             $student->program->name,
             $student->program->department->name,
             $student->program->department->faculty->name,
-            $student->entrySession->name
+            $student->entrySession->name,
         );
     }
 }

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Values;
 
 use App\Enums\CreditUnitEnum;
 use InvalidArgumentException;
 
-class CreditUnit
+final class CreditUnit
 {
     public function __construct(public int $value)
     {
