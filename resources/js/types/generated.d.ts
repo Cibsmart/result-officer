@@ -67,3 +67,9 @@ declare namespace App.Enums {
     | "transferred"
     | "graduated";
 }
+declare namespace App.Pages.Results {
+  export type ResultViewPage = {
+    student: App.Data.Students.StudentData;
+    results: App.Data.Results.StudentResultData;
+  };
+}
