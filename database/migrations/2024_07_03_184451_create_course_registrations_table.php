@@ -13,15 +13,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('program_courses', static function (Blueprint $table): void {
+        Schema::create('course_registrations', static function (Blueprint $table): void {
             $table->id();
-            $table->foreignId('program_curriculum_id')->constrained('program_curricula');
+            $table->foreignId('semester_enrollment_id')->constrained('semester_enrollments');
             $table->foreignId('course_id')->constrained('courses');
-            $table->unsignedSmallInteger('credit_unit');
-            $table->foreignId('course_type_id')->constrained('course_types');
+            $table->unsignedTinyInteger('credit_unit');
+            $table->foreignId('course_status_id')->constrained('course_statuses');
+            $table->string('online_id')->nullable();
             $table->timestamps();
 
-            $table->unique(['program_curriculum_id', 'course_id']);
+            $table->unique(['semester_enrollment_id', 'course_id'], 'semester_enrollment_course_id');
         });
     }
 
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('program_curriculum_courses');
+        Schema::dropIfExists('results');
     }
 };
