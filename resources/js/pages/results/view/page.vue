@@ -51,14 +51,17 @@ const plans = [
         <div class="sm:flex sm:items-center">
           <div class="sm:flex-auto">
             <h1 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">Student Results</h1>
+
             <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">
               This page is shows all results for the selected student
             </p>
           </div>
+
           <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
             <ButtonIndigo> Print</ButtonIndigo>
           </div>
         </div>
+
         <div class="-mx-4 mt-10 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg dark:ring-gray-600">
           <table class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
             <thead>
@@ -68,16 +71,19 @@ const plans = [
                   scope="col">
                   Course Code
                 </th>
+
                 <th
                   class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell dark:text-white"
                   scope="col">
                   Course Title
                 </th>
+
                 <th
                   class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell dark:text-white"
                   scope="col">
                   Credit Unit
                 </th>
+
                 <th
                   class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white"
                   scope="col">
@@ -85,47 +91,48 @@ const plans = [
                 </th>
               </tr>
             </thead>
+
             <tbody>
               <tr
                 v-for="(plan, planIdx) in plans"
                 :key="plan.id">
                 <td
-                  :class="[
-                    planIdx === 0 ? '' : 'border-t border-transparent',
-                    'relative py-4 pl-4 pr-3 text-sm sm:pl-6',
-                  ]">
+                  class="relative py-4 pl-4 pr-3 text-sm sm:pl-6"
+                  :class="[planIdx === 0 ? '' : 'border-t border-transparent']">
                   <div class="font-medium text-gray-900 dark:text-white">
                     {{ plan.name }}
                   </div>
+
                   <div class="mt-1 flex flex-col text-gray-700 sm:block lg:hidden dark:text-gray-300">
                     <span>{{ plan.memory }} </span>
+
                     <span class="hidden sm:inline"> - </span>
+
                     <span>{{ plan.storage }}</span>
                   </div>
+
                   <div
                     v-if="planIdx !== 0"
                     class="absolute -top-px left-6 right-0 h-px bg-gray-200 dark:bg-gray-700" />
                 </td>
+
                 <td
-                  :class="[
-                    planIdx === 0 ? '' : 'border-t border-gray-200 dark:border-gray-700',
-                    'hidden px-3 py-3.5 text-sm text-gray-700 lg:table-cell dark:text-gray-300',
-                  ]">
+                  class="hidden px-3 py-3.5 text-sm text-gray-700 lg:table-cell dark:text-gray-300"
+                  :class="[planIdx === 0 ? '' : 'border-t border-gray-200 dark:border-gray-700']">
                   {{ plan.memory }}
                 </td>
+
                 <td
-                  :class="[
-                    planIdx === 0 ? '' : 'border-t border-gray-200 dark:border-gray-700',
-                    'hidden px-3 py-3.5 text-sm text-gray-700 lg:table-cell dark:text-gray-300',
-                  ]">
+                  class="hidden px-3 py-3.5 text-sm text-gray-700 lg:table-cell dark:text-gray-300"
+                  :class="[planIdx === 0 ? '' : 'border-t border-gray-200 dark:border-gray-700']">
                   {{ plan.storage }}
                 </td>
+
                 <td
-                  :class="[
-                    planIdx === 0 ? '' : 'border-t border-gray-200 dark:border-gray-700',
-                    'px-3 py-3.5 text-sm text-gray-700 dark:text-gray-300',
-                  ]">
+                  class="px-3 py-3.5 text-sm text-gray-700 dark:text-gray-300"
+                  :class="[planIdx === 0 ? '' : 'border-t border-gray-200 dark:border-gray-700']">
                   <div class="sm:hidden">{{ plan.price }}</div>
+
                   <div class="hidden sm:block">{{ plan.price }}</div>
                 </td>
               </tr>

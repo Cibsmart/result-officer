@@ -4,9 +4,6 @@ import { ChevronRightIcon } from "@heroicons/vue/20/solid";
 import { NavigationItem } from "@/types";
 import { ChartPieIcon, DocumentDuplicateIcon, FolderIcon, HomeIcon, UsersIcon } from "@heroicons/vue/24/outline";
 import { Link, usePage } from "@inertiajs/vue3";
-import { computed } from "vue";
-
-const resultIsCurrent = computed<boolean>(() => usePage().component.startsWith("results/"));
 
 const navigation: NavigationItem[] = [
   { name: "Dashboard", href: route("dashboard"), icon: HomeIcon, current: route().current("dashboard") },
@@ -27,7 +24,7 @@ const navigation: NavigationItem[] = [
     name: "Results",
     href: "#",
     icon: FolderIcon,
-    current: resultIsCurrent.value,
+    current: usePage().component.startsWith("results/"),
     children: [
       { name: "Upload Result", href: "#", current: false },
       { name: "Download Result", href: "#", current: false },

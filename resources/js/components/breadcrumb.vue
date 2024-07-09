@@ -23,10 +23,12 @@ defineProps<{
             <HomeIcon
               aria-hidden="true"
               class="h-5 w-5 flex-shrink-0" />
+
             <span class="sr-only">Home</span>
           </Link>
         </div>
       </li>
+
       <li
         v-for="page in pages"
         :key="page.name"
@@ -40,6 +42,7 @@ defineProps<{
             viewBox="0 0 24 44">
             <path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z" />
           </svg>
+
           <Link
             :aria-current="page.current ? 'page' : undefined"
             :href="page.href"
