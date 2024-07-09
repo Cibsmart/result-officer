@@ -30,6 +30,12 @@ final class Student extends Model
         'online_id',
     ];
 
+    /** @return HasManyThrough<\App\Models\CourseRegistration> */
+    public function courses(): HasManyThrough
+    {
+        return $this->through('enrollments')->has('courses');
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Country, \App\Models\Student> */
     public function country(): BelongsTo
     {
@@ -66,10 +72,10 @@ final class Student extends Model
         return $this->belongsTo(Program::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Result> */
-    public function results(): HasManyThrough
+    /** @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\SemesterEnrollment> */
+    public function semesters(): HasManyThrough
     {
-        return $this->hasManyThrough(Result::class, Enrollment::class);
+        return $this->hasManyThrough(SemesterEnrollment::class, Enrollment::class);
     }
 
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, null> */
