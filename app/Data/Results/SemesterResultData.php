@@ -31,12 +31,6 @@ final class SemesterResultData extends Data
         dump($courses, $enrollment, $totalGradePoint, $totalCreditUnit);
         $gradePointAverage = round($totalGradePoint / $totalCreditUnit, 3);
 
-        return new self(
-            $courses,
-            $enrollment->semester->name,
-            $totalCreditUnit,
-            $totalGradePoint,
-            $gradePointAverage
-        );
+        return new self($courses, $enrollment->semester->name, $totalCreditUnit, $totalGradePoint, $gradePointAverage);
     }
 }

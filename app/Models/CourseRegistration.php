@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class CourseRegistration extends Model
+final class CourseRegistration extends Model
 {
     /** @var array<int, string> */
     protected $fillable = [
@@ -18,13 +18,13 @@ class CourseRegistration extends Model
         'course_status_id',
     ];
 
-    /** @return BelongsTo<\App\Models\SemesterEnrollment, \App\Models\CourseRegistration> */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\SemesterEnrollment, \App\Models\CourseRegistration> */
     public function semester(): BelongsTo
     {
         return $this->belongsTo(SemesterEnrollment::class);
     }
 
-    /** @return BelongsTo<\App\Models\Course, \App\Models\CourseRegistration> */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Course, \App\Models\CourseRegistration> */
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);
@@ -36,7 +36,7 @@ class CourseRegistration extends Model
         return $this->belongsTo(CourseStatus::class);
     }
 
-    /** @return HasOne<\App\Models\Result> */
+    /** @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\Result> */
     public function result(): HasOne
     {
         return $this->hasOne(Result::class);

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class SemesterEnrollment extends Model
+final class SemesterEnrollment extends Model
 {
     protected $fillable = ['enrollment_id', 'semester_id'];
 
@@ -24,9 +24,7 @@ class SemesterEnrollment extends Model
         return $this->belongsTo(Semester::class);
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\CourseRegistration>
-     */
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\CourseRegistration> */
     public function courses(): HasMany
     {
         return $this->hasMany(CourseRegistration::class);
