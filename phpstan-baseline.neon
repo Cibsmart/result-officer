@@ -1,6 +1,81 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Cannot access property \\$code on App\\\\Models\\\\Course\\|null\\.$#"
+			count: 1
+			path: app/Data/Results/ResultData.php
+
+		-
+			message: "#^Cannot access property \\$grade on App\\\\Models\\\\Result\\|null\\.$#"
+			count: 1
+			path: app/Data/Results/ResultData.php
+
+		-
+			message: "#^Cannot access property \\$grade_point on App\\\\Models\\\\Result\\|null\\.$#"
+			count: 1
+			path: app/Data/Results/ResultData.php
+
+		-
+			message: "#^Cannot access property \\$title on App\\\\Models\\\\Course\\|null\\.$#"
+			count: 1
+			path: app/Data/Results/ResultData.php
+
+		-
+			message: "#^Cannot access property \\$total_score on App\\\\Models\\\\Result\\|null\\.$#"
+			count: 1
+			path: app/Data/Results/ResultData.php
+
+		-
+			message: "#^Cannot access property \\$name on App\\\\Models\\\\Semester\\|null\\.$#"
+			count: 1
+			path: app/Data/Results/SemesterResultData.php
+
+		-
+			message: "#^Cannot access property \\$name on App\\\\Models\\\\Session\\|null\\.$#"
+			count: 1
+			path: app/Data/Results/SessionResultData.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Student\\:\\:\\$name\\.$#"
+			count: 1
+			path: app/Data/Students/StudentData.php
+
+		-
+			message: "#^Cannot access property \\$department on App\\\\Models\\\\Program\\|null\\.$#"
+			count: 2
+			path: app/Data/Students/StudentData.php
+
+		-
+			message: "#^Cannot access property \\$faculty on App\\\\Models\\\\Department\\|null\\.$#"
+			count: 1
+			path: app/Data/Students/StudentData.php
+
+		-
+			message: "#^Cannot access property \\$name on App\\\\Models\\\\Department\\|null\\.$#"
+			count: 1
+			path: app/Data/Students/StudentData.php
+
+		-
+			message: "#^Cannot access property \\$name on App\\\\Models\\\\Faculty\\|null\\.$#"
+			count: 1
+			path: app/Data/Students/StudentData.php
+
+		-
+			message: "#^Cannot access property \\$name on App\\\\Models\\\\Program\\|null\\.$#"
+			count: 1
+			path: app/Data/Students/StudentData.php
+
+		-
+			message: "#^Cannot access property \\$name on App\\\\Models\\\\Session\\|null\\.$#"
+			count: 1
+			path: app/Data/Students/StudentData.php
+
+		-
+			message: "#^Parameter \\#7 \\$birthDate of class App\\\\Data\\\\Students\\\\StudentData constructor expects Carbon\\\\Carbon, string given\\.$#"
+			count: 1
+			path: app/Data/Students/StudentData.php
+
+		-
 			message: "#^Cannot access property \\$email on App\\\\Models\\\\User\\|null\\.$#"
 			count: 1
 			path: app/Http/Controllers/Auth/ConfirmablePasswordController.php
@@ -21,24 +96,9 @@ parameters:
 			path: app/Http/Controllers/Auth/EmailVerificationPromptController.php
 
 		-
-			message: "#^Parameter \\#1 \\$key of function __ expects string\\|null, mixed given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Auth/NewPasswordController.php
-
-		-
-			message: "#^Parameter \\#1 \\$value of static method Illuminate\\\\Support\\\\Facades\\\\Hash\\:\\:make\\(\\) expects string, mixed given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Auth/NewPasswordController.php
-
-		-
 			message: "#^Cannot call method update\\(\\) on App\\\\Models\\\\User\\|null\\.$#"
 			count: 1
 			path: app/Http/Controllers/Auth/PasswordController.php
-
-		-
-			message: "#^Parameter \\#1 \\$value of static method Illuminate\\\\Support\\\\Facades\\\\Hash\\:\\:make\\(\\) expects string, mixed given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Auth/RegisteredUserController.php
 
 		-
 			message: "#^Cannot call method hasVerifiedEmail\\(\\) on App\\\\Models\\\\User\\|null\\.$#"
