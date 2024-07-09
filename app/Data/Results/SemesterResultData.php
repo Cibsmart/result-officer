@@ -11,12 +11,13 @@ use Spatie\LaravelData\Data;
 final class SemesterResultData extends Data
 {
     public function __construct(
+        public readonly int $id,
         /** @var \Illuminate\Support\Collection<int, \App\Data\Results\ResultData> */
         public readonly Collection $results,
         public readonly string $semester,
-        public int $totalCreditUnit,
-        public int $totalGradePoint,
-        public float $gradePointAverage,
+        public readonly int $totalCreditUnit,
+        public readonly int $totalGradePoint,
+        public readonly float $gradePointAverage,
     ) {
     }
 
@@ -30,6 +31,7 @@ final class SemesterResultData extends Data
 
         $gradePointAverage = round($totalGradePoint / $totalCreditUnit, 3);
 
-        return new self($courses, $enrollment->semester->name, $totalCreditUnit, $totalGradePoint, $gradePointAverage);
+        return new self($enrollment->id, $courses, $enrollment->semester->name, $totalCreditUnit, $totalGradePoint,
+            $gradePointAverage);
     }
 }

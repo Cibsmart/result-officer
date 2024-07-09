@@ -11,10 +11,11 @@ use Spatie\LaravelData\Data;
 final class SessionResultData extends Data
 {
     public function __construct(
+        public readonly int $id,
         /** @var \Illuminate\Support\Collection<int, \App\Data\Results\SemesterResultData> */
-        public Collection $semesterResults,
-        public string $session,
-        public float $cummulativeGradePointAverage,
+        public readonly Collection $semesterResults,
+        public readonly string $session,
+        public readonly float $cummulativeGradePointAverage,
     ) {
     }
 
@@ -27,6 +28,6 @@ final class SessionResultData extends Data
             3,
         );
 
-        return new self($semesters, $enrollment->session->name, $cumulativeGradePointAverage);
+        return new self($enrollment->id, $semesters, $enrollment->session->name, $cumulativeGradePointAverage);
     }
 }

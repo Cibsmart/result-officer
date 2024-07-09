@@ -1,5 +1,6 @@
 declare namespace App.Data.Results {
   export type ResultData = {
+    id: number;
     courseCode: string;
     courseTitle: string;
     creditUnit: number;
@@ -8,6 +9,7 @@ declare namespace App.Data.Results {
     gradePoint: number;
   };
   export type SemesterResultData = {
+    id: number;
     results: Array<App.Data.Results.ResultData>;
     semester: string;
     totalCreditUnit: number;
@@ -15,6 +17,7 @@ declare namespace App.Data.Results {
     gradePointAverage: number;
   };
   export type SessionResultData = {
+    id: number;
     semesterResults: Array<App.Data.Results.SemesterResultData>;
     session: string;
     cummulativeGradePointAverage: number;

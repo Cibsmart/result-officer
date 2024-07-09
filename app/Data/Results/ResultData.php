@@ -10,6 +10,7 @@ use Spatie\LaravelData\Data;
 final class ResultData extends Data
 {
     public function __construct(
+        public readonly int $id,
         public readonly string $courseCode,
         public readonly string $courseTitle,
         public readonly int $creditUnit,
@@ -22,6 +23,7 @@ final class ResultData extends Data
     public static function fromModel(CourseRegistration $course): self
     {
         return new self(
+            $course->id,
             $course->course->code,
             $course->course->title,
             $course->credit_unit,
