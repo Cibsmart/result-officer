@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Data\Results;
 
 use App\Models\Result;
@@ -25,7 +27,7 @@ final class ResultData extends Data
             $result->creditUnit->value,
             $result->total_score,
             $result->grade,
-            $result->grade_point
+            $result->grade_point,
         );
     }
 }

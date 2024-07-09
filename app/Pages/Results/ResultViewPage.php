@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Pages\Results;
 
 use App\Data\Results\StudentResultData;
@@ -10,7 +12,7 @@ final class ResultViewPage extends Data
 {
     public function __construct(
         public readonly StudentData $student,
-        public StudentResultData $results
+        public StudentResultData $results,
     ) {
     }
 }
