@@ -76,10 +76,10 @@ final class Student extends Model
     public function name(): Attribute
     {
         return Attribute::make(
-            get: fn (
+            get: static fn (
                 mixed $value,
-                array $attributes
-            ) => "{$attributes['first_name']} {$attributes['last_name']} {$attributes['other_names']}"
+                array $attributes,
+            ) => "{$attributes['first_name']} {$attributes['last_name']} {$attributes['other_names']}",
         );
     }
 
