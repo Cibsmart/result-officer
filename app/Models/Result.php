@@ -11,16 +11,9 @@ final class Result extends Model
 {
     /** @var array<int, string> */
     protected $fillable = [
-        'enrollment_id',
-        'semester_id',
-        'course_id',
-        'credit_unit_id',
-        'course_status_id',
-        'course_work_score',
-        'assessment_score',
-        'final_exam_score',
+        'semester_enrollment_id',
         'scores',
-        'total_exam_score',
+        'total_score',
         'grade',
         'grade_point',
         'remark',
@@ -28,38 +21,12 @@ final class Result extends Model
     ];
 
     /** @var array<int, string> */
-    protected $hidden = [
-        'data',
-    ];
+    protected $hidden = ['data'];
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Course, \App\Models\Result> */
-    public function course(): BelongsTo
+    public function registration(): BelongsTo
     {
-        return $this->belongsTo(Course::class);
-    }
-
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\CourseStatus, \App\Models\Result> */
-    public function courseStatus(): BelongsTo
-    {
-        return $this->belongsTo(CourseStatus::class);
-    }
-
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\CreditUnit, \App\Models\Result> */
-    public function creditUnit(): BelongsTo
-    {
-        return $this->belongsTo(CreditUnit::class);
-    }
-
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Enrollment, \App\Models\Result> */
-    public function enrollment(): BelongsTo
-    {
-        return $this->belongsTo(Enrollment::class);
-    }
-
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Semester, \App\Models\Result> */
-    public function semester(): BelongsTo
-    {
-        return $this->belongsTo(Semester::class);
+        return $this->belongsTo(CourseRegistration::class);
     }
 
     /** @return array<string, string> */
