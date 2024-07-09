@@ -19,9 +19,7 @@ final class StudentResultData extends Data
 
     public static function fromModel(Student $student): self
     {
-        $enrollments = SessionResultData::collect(
-            $student->enrollments()->whereHas('results')->get(),
-        );
+        $enrollments = SessionResultData::collect($student->enrollments);
 
         $finalCGPA = round(
             $enrollments->sum('cummulativeGradePointAverage') / $enrollments->count(),

@@ -23,10 +23,16 @@ final class Enrollment extends Model
         return $this->belongsTo(Level::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Result> */
-    public function results(): HasMany
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\CourseRegistration> */
+    public function courses(): HasMany
     {
-        return $this->hasMany(Result::class);
+        return $this->hasMany(CourseRegistration::class);
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\SemesterEnrollment> */
+    public function semesters(): HasMany
+    {
+        return $this->hasMany(SemesterEnrollment::class);
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, \App\Models\Enrollment> */

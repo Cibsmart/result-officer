@@ -54,6 +54,7 @@ declare namespace App.Enums {
   export type GenderEnum = "M" | "F";
   export type Grade = 5 | 4 | 3 | 2 | 1 | 0;
   export type LevelEnum = 100 | 200 | 300 | 400 | 500 | 600;
+  export type ResultRemark = "PAS" | "FAL" | "ABS" | "MAL";
   export type RoleEnum = "super-admin" | "admin" | "desk-officer" | "exam-officer" | "database-officer" | "user";
   export type ScoreTypeEnum = "course-work" | "exam";
   export type StudentStatusEnum =

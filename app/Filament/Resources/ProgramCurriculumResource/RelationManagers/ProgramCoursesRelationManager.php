@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\ProgramCurriculumResource\RelationManagers;
 
+use App\Enums\CreditUnitEnum;
 use App\Models\Course;
 use App\Models\CourseType;
-use App\Models\CreditUnit;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -27,8 +27,8 @@ final class ProgramCoursesRelationManager extends RelationManager
                     ->required()
                     ->searchable()
                     ->preload(),
-                Select::make('credit_unit_id')->label('Credit Unit')
-                    ->options(CreditUnit::query()->pluck('value', 'id'))
+                Select::make('credit_unit')->label('Credit Unit')
+                    ->enum(CreditUnitEnum::class)
                     ->required(),
                 Select::make('course_type_id')->label('Course Type')
                     ->options(CourseType::query()->pluck('name', 'id'))
@@ -43,7 +43,7 @@ final class ProgramCoursesRelationManager extends RelationManager
             ->recordTitleAttribute('program_curriculum_id')
             ->columns([
                 TextColumn::make('course.code')->sortable(),
-                TextColumn::make('creditUnit.value'),
+                TextColumn::make('creditUnit'),
                 TextColumn::make('courseType.name')->sortable(),
             ])
             ->filters([

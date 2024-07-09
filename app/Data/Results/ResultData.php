@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Data\Results;
 
-use App\Models\Result;
+use App\Models\CourseRegistration;
 use Spatie\LaravelData\Data;
 
 final class ResultData extends Data
@@ -19,15 +19,15 @@ final class ResultData extends Data
     ) {
     }
 
-    public static function fromModel(Result $result): self
+    public static function fromModel(CourseRegistration $course): self
     {
         return new self(
-            $result->course->code,
-            $result->course->title,
-            $result->creditUnit->value,
-            $result->total_score,
-            $result->grade,
-            $result->grade_point,
+            $course->course->code,
+            $course->course->title,
+            $course->credit_unit,
+            $course->result->total_score,
+            $course->result->grade,
+            $course->result->grade_point,
         );
     }
 }

@@ -15,9 +15,9 @@ final class EnrollmentSeeder extends Seeder
         ],
         2 => [
             1 => ['level_id' => 1, 'session_id' => 1],
-            2 => ['level_id' => 2, 'session_id' => 2],
-            3 => ['level_id' => 3, 'session_id' => 3],
-            4 => ['level_id' => 4, 'session_id' => 4],
+            //            2 => ['level_id' => 2, 'session_id' => 2],
+            //            3 => ['level_id' => 3, 'session_id' => 3],
+            //            4 => ['level_id' => 4, 'session_id' => 4],
         ],
     ];
 
@@ -39,6 +39,7 @@ final class EnrollmentSeeder extends Seeder
         }
 
         $this->call([
+            SemesterEnrollmentSeeder::class,
             ResultSeeder::class,
         ]);
     }
