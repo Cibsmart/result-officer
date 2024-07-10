@@ -16,7 +16,7 @@ final class ResultRequest extends FormRequest
         return true;
     }
 
-    /** @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string> */
+    /** @return array<string, array<int, string>> */
     public function rules(): array
     {
         return [
