@@ -25,5 +25,35 @@ final class SemesterEnrollmentSeeder extends Seeder
             'enrollment_id' => 2,
             'semester_id' => 2,
         ]);
+
+        SemesterEnrollment::query()->create([
+            'enrollment_id' => 3,
+            'semester_id' => 1,
+        ]);
+
+        SemesterEnrollment::query()->create([
+            'enrollment_id' => 3,
+            'semester_id' => 2,
+        ]);
+
+        SemesterEnrollment::query()->create([
+            'enrollment_id' => 4,
+            'semester_id' => 1,
+        ]);
+
+        SemesterEnrollment::query()->create([
+            'enrollment_id' => 4,
+            'semester_id' => 2,
+        ]);
+
+        SemesterEnrollment::query()->create([
+            'enrollment_id' => 5,
+            'semester_id' => 1,
+        ]);
+
+        SemesterEnrollment::query()->create([
+            'enrollment_id' => 5,
+            'semester_id' => 2,
+        ]);
     }
 }
