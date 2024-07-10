@@ -75,14 +75,13 @@ final class ResultSeeder extends Seeder
 
                 Result::query()->create([
                     'course_registration_id' => $courseRegistration->id,
+                    'data' => $data,
                     'grade' => $grader->grade()->name,
                     'grade_point' => $gradePoint,
                     'scores' => json_encode(['in-course' => $result[3][0], 'exam' => $result[3][1]]),
                     'total_score' => $score->value(),
-                    'data' => $data,
                 ]);
             }
         }
-
     }
 }

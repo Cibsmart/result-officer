@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\SemesterEnrollment;
 use Illuminate\Database\Seeder;
 
-class SemesterEnrollmentSeeder extends Seeder
+final class SemesterEnrollmentSeeder extends Seeder
 {
     public function run(): void
     {
