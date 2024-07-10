@@ -33,9 +33,24 @@ final class StudentSeeder extends Seeder
             'entry_mode_id' => 1,
             'entry_session_id' => 1,
             'first_name' => 'BARNABAS',
+            'other_names' => 'CHUKWUDIKE',
             'gender' => GenderEnum::MALE,
             'last_name' => 'IFEBUDE',
             'matriculation_number' => 'EBSU/2009/51486',
+            'program_id' => 1,
+        ]);
+
+        Student::query()->create([
+            'country_id' => 1,
+            'date_of_birth' => Carbon::create(1987, 8, 19),
+            'entry_level_id' => 1,
+            'entry_mode_id' => 1,
+            'entry_session_id' => 1,
+            'first_name' => 'RUTH',
+            'other_names' => 'OGECHUKWU',
+            'gender' => GenderEnum::FEMALE,
+            'last_name' => 'NWEKE',
+            'matriculation_number' => 'EBSU/2009/51895',
             'program_id' => 1,
         ]);
     }
