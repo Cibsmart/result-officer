@@ -13,7 +13,6 @@ final class StudentData extends Data
 {
     public function __construct(
         public readonly string $matriculationNumber,
-        public readonly string $name,
         public readonly string $lastName,
         public readonly string $firstName,
         public readonly ?string $otherNames,
@@ -30,7 +29,6 @@ final class StudentData extends Data
     {
         return new self(
             $student->matriculation_number,
-            $student->name,
             $student->last_name,
             $student->first_name,
             $student->other_names,
