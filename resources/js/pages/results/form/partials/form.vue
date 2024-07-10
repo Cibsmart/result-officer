@@ -8,6 +8,10 @@ import { useForm } from "@inertiajs/vue3";
 const form = useForm({
   matriculation_number: "",
 });
+
+const submit = () => {
+  form.post(route("results.view"));
+};
 </script>
 
 <template>
@@ -20,7 +24,7 @@ const form = useForm({
 
     <form
       class="mt-6 space-y-6"
-      @submit.prevent="form.get(route('results.view'))">
+      @submit.prevent="submit">
       <div>
         <InputLabel
           for="matriculation_number"
