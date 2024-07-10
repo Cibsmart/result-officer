@@ -36,11 +36,6 @@ parameters:
 			path: app/Data/Results/SessionResultData.php
 
 		-
-			message: "#^Access to an undefined property App\\\\Models\\\\Student\\:\\:\\$name\\.$#"
-			count: 1
-			path: app/Data/Students/StudentData.php
-
-		-
 			message: "#^Cannot access property \\$department on App\\\\Models\\\\Program\\|null\\.$#"
 			count: 2
 			path: app/Data/Students/StudentData.php
@@ -71,12 +66,12 @@ parameters:
 			path: app/Data/Students/StudentData.php
 
 		-
-			message: "#^Parameter \\#6 \\$gender of class App\\\\Data\\\\Students\\\\StudentData constructor expects App\\\\Enums\\\\GenderEnum, string given\\.$#"
+			message: "#^Parameter \\#5 \\$gender of class App\\\\Data\\\\Students\\\\StudentData constructor expects App\\\\Enums\\\\GenderEnum, string given\\.$#"
 			count: 1
 			path: app/Data/Students/StudentData.php
 
 		-
-			message: "#^Parameter \\#7 \\$birthDate of class App\\\\Data\\\\Students\\\\StudentData constructor expects Carbon\\\\Carbon, string given\\.$#"
+			message: "#^Parameter \\#6 \\$birthDate of class App\\\\Data\\\\Students\\\\StudentData constructor expects Carbon\\\\Carbon, string given\\.$#"
 			count: 1
 			path: app/Data/Students/StudentData.php
 

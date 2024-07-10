@@ -8,7 +8,9 @@ use App\Values\TotalScore;
 
 test('total score is correct', function (int $inCourse, int $exam, int $total): void {
     expect(TotalScore::fromInCourseAndExam(InCourseScore::new($inCourse), ExamScore::new($exam))->value)->toBe($total)
-        ->and(TotalScore::new(InCourseScore::new($inCourse)->value + ExamScore::new($exam)->value)->value)->toBe($total);
+        ->and(TotalScore::new(InCourseScore::new($inCourse)->value + ExamScore::new($exam)->value)->value)->toBe(
+            $total,
+        );
 })->with([
     [0, 0, 0],
     [10, 10, 20],
@@ -27,7 +29,7 @@ test('throws no exception for valid total scores', function (): void {
 })->throwsNoExceptions();
 
 test('throws exception for negative total score', function (): void {
-    TotalScore::new(-1);
+    TotalScore::new(- 1);
 })->throws(InvalidArgumentException::class, 'Total score value must be between 0 and 100');
 
 test('throws exception for total score greater than 100', function (): void {

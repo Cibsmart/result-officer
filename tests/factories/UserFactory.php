@@ -13,16 +13,9 @@ use Illuminate\Support\Str;
 final class UserFactory extends Factory
 {
     protected $model = User::class;
-
-    /**
-     * The current password being used by the factory.
-     */
     protected static ?string $password;
 
-    /**
-     * Define the model's default state.
-     * @return array<string, mixed>
-     */
+    /** @return array<string, string> */
     public function definition(): array
     {
         return [
@@ -40,6 +33,7 @@ final class UserFactory extends Factory
      */
     public function unverified(): static
     {
+        // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);

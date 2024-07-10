@@ -20,7 +20,7 @@ final readonly class GradingSystem
 
     public function isEGradeAllowed(): bool
     {
-        return ! in_array($this->getMatriculationNumberYear(), [2013, 2014, 2015, 2016, 2017]);
+        return ! in_array($this->getMatriculationNumberYear(), [2013, 2014, 2015, 2016, 2017], true);
     }
 
     public function getMatriculationNumberYear(): int
