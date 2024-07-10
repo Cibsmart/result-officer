@@ -20,7 +20,10 @@ final class CourseRegistration extends Model
 
     protected $with = ['result'];
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\SemesterEnrollment, \App\Models\CourseRegistration> */
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\SemesterEnrollment, \App\Models\CourseRegistration>
+     */
     public function semesterEnrollment(): BelongsTo
     {
         return $this->belongsTo(SemesterEnrollment::class);
@@ -32,7 +35,10 @@ final class CourseRegistration extends Model
         return $this->belongsTo(Course::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\CourseStatus, \App\Models\CourseRegistration> */
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\CourseStatus, \App\Models\CourseRegistration>
+     */
     public function courseStatus(): BelongsTo
     {
         return $this->belongsTo(CourseStatus::class);

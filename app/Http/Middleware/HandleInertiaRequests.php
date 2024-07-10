@@ -18,8 +18,8 @@ final class HandleInertiaRequests extends Middleware
     }
 
     /**
+     * phpcs:ignore SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
      * @return array<string, mixed>
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
      * */
     public function share(Request $request): array
     {

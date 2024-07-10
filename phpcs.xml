@@ -1,5 +1,9 @@
 <?xml version="1.0"?>
-<ruleset name="ResultOfficer">
+<ruleset name="ResultOfficer PHPCS Rules">
+    <file>app</file>
+    <arg value="s"/>
+    <arg value="p"/>
+
     <config name="installed_paths"
             value="../../slevomat/coding-standard"/><!-- relative path from PHPCS source location -->
 
@@ -66,7 +70,11 @@
     <rule ref="SlevomatCodingStandard.Commenting.AnnotationName"/>
     <rule ref="SlevomatCodingStandard.Commenting.DeprecatedAnnotationDeclaration"/>
     <rule ref="SlevomatCodingStandard.Commenting.DisallowCommentAfterCode"/>
-    <rule ref="SlevomatCodingStandard.Commenting.DocCommentSpacing"/>
+    <rule ref="SlevomatCodingStandard.Commenting.DocCommentSpacing">
+        <properties>
+            <property name="linesCountBetweenDescriptionAndAnnotations" value="0"/>
+        </properties>
+    </rule>
     <rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
     <rule ref="SlevomatCodingStandard.Commenting.ForbiddenAnnotations"/>
     <rule ref="SlevomatCodingStandard.Commenting.ForbiddenComments"/>
