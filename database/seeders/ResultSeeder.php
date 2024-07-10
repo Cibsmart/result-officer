@@ -6,10 +6,10 @@ namespace Database\Seeders;
 
 use App\Models\CourseRegistration;
 use App\Models\Result;
+use App\Services\Grader;
 use App\Values\ExamScore;
-use App\Values\Grader;
 use App\Values\InCourseScore;
-use App\Values\Score;
+use App\Values\TotalScore;
 use Illuminate\Database\Seeder;
 
 final class ResultSeeder extends Seeder
@@ -140,10 +140,11 @@ final class ResultSeeder extends Seeder
                     'semester_enrollment_id' => $semester_enrollment,
                 ]);
 
-                $score = new Score(InCourseScore::new($result[3][0]), ExamScore::new($result[3][1]));
-                $grader = new Grader($score);
+                $score = TotalScore::fromInCourseAndExam(InCourseScore::new($result[3][0]),
+                    ExamScore::new($result[3][1]));
+                $grader = new Grader($score, true);
                 $gradePoint = $grader->grade()->value * $result[2];
-                $data = "$courseRegistration->id {$score->value()} {$grader->grade()->name} $gradePoint";
+                $data = "$courseRegistration->id {$score->value} {$grader->grade()->name} $gradePoint";
 
                 Result::query()->create([
                     'course_registration_id' => $courseRegistration->id,
@@ -151,7 +152,7 @@ final class ResultSeeder extends Seeder
                     'grade' => $grader->grade()->name,
                     'grade_point' => $gradePoint,
                     'scores' => json_encode(['in-course' => $result[3][0], 'exam' => $result[3][1]]),
-                    'total_score' => $score->value(),
+                    'total_score' => $score->value,
                 ]);
             }
         }

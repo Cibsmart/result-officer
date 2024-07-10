@@ -19,3 +19,17 @@ test('total score is correct', function (int $inCourse, int $exam, int $total): 
     [10, 60, 70],
     [30, 70, 100],
 ]);
+
+test('throws no exception for valid total scores', function (): void {
+    TotalScore::new(0);
+    TotalScore::new(50);
+    TotalScore::new(100);
+})->throwsNoExceptions();
+
+test('throws exception for negative total score', function (): void {
+    TotalScore::new(-1);
+})->throws(InvalidArgumentException::class, 'Total score value must be between 0 and 100');
+
+test('throws exception for total score greater than 100', function (): void {
+    TotalScore::new(101);
+})->throws(InvalidArgumentException::class, 'Total score value must be between 0 and 100');
