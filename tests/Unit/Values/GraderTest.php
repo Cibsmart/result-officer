@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Enums\Grade;
 use App\Values\ExamScore;
 use App\Values\Grader;
 use App\Values\InCourseScore;
 use App\Values\Score;
 
-test('grade is correct', function (int $inCourse, int $exam, Grade $grade) {
+test('grade is correct', function (int $inCourse, int $exam, Grade $grade): void {
     $score = Score::new(InCourseScore::new($inCourse), ExamScore::new($exam));
-    expect((Grader::new($score))->grade())->toBe($grade);
+    expect(Grader::new($score)->grade())->toBe($grade);
 })->with([
     [0, 0, Grade::F],
     [10, 10, Grade::F],
