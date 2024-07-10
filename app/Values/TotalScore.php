@@ -12,7 +12,7 @@ final readonly class TotalScore
         public int $value,
     ) {
         if ($this->value < 0 || $this->value > 100) {
-            throw new InvalidArgumentException('Score must be between 0 and 100');
+            throw new InvalidArgumentException('Total score value must be between 0 and 100');
         }
     }
 
