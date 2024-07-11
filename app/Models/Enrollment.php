@@ -18,6 +18,8 @@ final class Enrollment extends Model
         'level_id',
     ];
 
+    protected $with = ['semesters', 'session'];
+
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, \App\Models\Enrollment> */
     public function level(): BelongsTo
     {

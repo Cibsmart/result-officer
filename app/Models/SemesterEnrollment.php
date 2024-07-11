@@ -12,6 +12,8 @@ final class SemesterEnrollment extends Model
 {
     protected $fillable = ['enrollment_id', 'semester_id'];
 
+    protected $with = ['courses', 'semester'];
+
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Enrollment, \App\Models\SemesterEnrollment> */
     public function enrollment(): BelongsTo
     {

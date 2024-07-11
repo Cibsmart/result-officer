@@ -39,7 +39,6 @@ declare namespace App.Data.Shared {
 declare namespace App.Data.Students {
   export type StudentData = {
     matriculationNumber: string;
-    name: string;
     lastName: string;
     firstName: string;
     otherNames: string | null;
