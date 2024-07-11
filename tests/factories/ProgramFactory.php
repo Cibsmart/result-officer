@@ -20,8 +20,8 @@ class ProgramFactory extends Factory
     {
         return [
             'department_id' => DepartmentFactory::new(),
-            'code' => fake()->unique()->countryCode,
-            'name' => fake()->country,
+            'code' => fake()->unique()->countryCode(),
+            'name' => fake()->country(),
         ];
     }
 }

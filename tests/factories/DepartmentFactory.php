@@ -17,8 +17,8 @@ class DepartmentFactory extends Factory
     {
         return [
             'faculty_id' => FacultyFactory::new(),
-            'code' => fake()->unique()->countryCode,
-            'name' => fake()->country,
+            'code' => fake()->unique()->countryCode(),
+            'name' => fake()->country(),
         ];
     }
 }
