@@ -9,7 +9,7 @@ use App\Data\Students\StudentData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Results\ResultRequest;
 use App\Models\Student;
-use App\Pages\Results\ResultViewPage;
+use App\ViewModels\Results\ResultViewPage;
 use Inertia\Inertia;
 use Inertia\Response;
 
