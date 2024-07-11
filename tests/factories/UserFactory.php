@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 final class UserFactory extends Factory
 {
     protected $model = User::class;
+
     protected static ?string $password;
 
     /** @return array<string, string> */
