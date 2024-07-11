@@ -48,10 +48,10 @@ final class CourseRegistration extends Model
     public function result(): HasOne
     {
         return $this->hasOne(Result::class)->withDefault([
-            'total_score' => 0,
             'grade' => 'F',
             'grade_point' => 0,
             'remarks' => 'NR',
+            'total_score' => 0,
         ]);
     }
 }

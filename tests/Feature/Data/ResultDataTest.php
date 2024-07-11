@@ -9,11 +9,11 @@ use Tests\Factories\ResultFactory;
 
 use function Pest\Laravel\seed;
 
-beforeEach(function () {
+beforeEach(function (): void {
     seed(CourseStatusSeeder::class);
 });
 
-test('course result data is correct', function () {
+test('course result data is correct', function (): void {
 
     $course = CourseRegistrationFactory::new()->has(ResultFactory::new())->create();
 
@@ -29,7 +29,7 @@ test('course result data is correct', function () {
         ->and($resultData->gradePoint)->toBe($course->result->grade_point);
 });
 
-test('courses without result has default score', function () {
+test('courses without result has default score', function (): void {
     $course = CourseRegistrationFactory::new()->create();
 
     $resultData = ResultData::from($course);

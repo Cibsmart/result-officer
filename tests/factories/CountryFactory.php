@@ -1,14 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Factories;
 
 use App\Models\Country;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Country>
- */
-class CountryFactory extends Factory
+/** @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Country> */
+final class CountryFactory extends Factory
 {
     protected $model = Country::class;
 
@@ -17,8 +17,8 @@ class CountryFactory extends Factory
     {
         return [
             'code' => fake()->unique()->countryCode(),
-            'name' => fake()->country(),
             'demonym' => fake()->country(),
+            'name' => fake()->country(),
         ];
     }
 }

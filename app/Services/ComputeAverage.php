@@ -10,7 +10,7 @@ final readonly class ComputeAverage
     {
     }
 
-    public static function new(int|float $dividend, int $divisor): ComputeAverage
+    public static function new(int|float $dividend, int $divisor): self
     {
         return new self((int) ($dividend * 1000), $divisor * 1000);
     }

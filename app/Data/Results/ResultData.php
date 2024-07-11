@@ -17,13 +17,12 @@ final class ResultData extends Data
         public readonly int $totalScore,
         public readonly string $grade,
         public readonly int $gradePoint,
-        public readonly ?string $remark
+        public readonly ?string $remark,
     ) {
     }
 
     public static function fromModel(CourseRegistration $courseRegistration): self
     {
-
         return new self(
             id: $courseRegistration->id,
             courseCode: $courseRegistration->course->code,
