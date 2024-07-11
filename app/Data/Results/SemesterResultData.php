@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Data\Results;
 
 use App\Models\SemesterEnrollment;
+use App\Services\ComputeAverage;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
 
@@ -15,8 +16,8 @@ final class SemesterResultData extends Data
         /** @var \Illuminate\Support\Collection<int, \App\Data\Results\ResultData> */
         public readonly Collection $results,
         public readonly string $semester,
-        public readonly int $totalCreditUnit,
-        public readonly int $totalGradePoint,
+        public readonly int $creditUnitTotal,
+        public readonly int $gradePointTotal,
         public readonly float $gradePointAverage,
     ) {
     }
@@ -25,13 +26,17 @@ final class SemesterResultData extends Data
     {
         $courses = ResultData::collect($enrollment->courses);
 
-        $totalCreditUnit = $courses->sum('creditUnit');
+        $totalCreditUnit = (int) $courses->sum('creditUnit');
+        $totalGradePoint = (int) $courses->sum('gradePoint');
 
-        $totalGradePoint = $courses->sum('gradePoint');
+        $total = new ComputeAverage($totalGradePoint, $totalCreditUnit);
 
-        $gradePointAverage = round($totalGradePoint / $totalCreditUnit, 3);
-
-        return new self($enrollment->id, $courses, $enrollment->semester->name, $totalCreditUnit, $totalGradePoint,
-            $gradePointAverage);
+        return new self(
+            id: $enrollment->id,
+            results: $courses,
+            semester: $enrollment->semester->name,
+            creditUnitTotal: $totalCreditUnit,
+            gradePointTotal: $totalGradePoint,
+            gradePointAverage: $total->value());
     }
 }
