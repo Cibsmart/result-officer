@@ -17,6 +17,7 @@ final class ResultData extends Data
         public readonly int $totalScore,
         public readonly string $grade,
         public readonly int $gradePoint,
+        public readonly ?string $remark
     ) {
     }
 
@@ -30,6 +31,7 @@ final class ResultData extends Data
             $course->result->total_score,
             $course->result->grade,
             $course->result->grade_point,
+            $course->result->remarks,
         );
     }
 }

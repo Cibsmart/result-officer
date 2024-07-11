@@ -16,7 +16,7 @@ class CourseRegistrationFactory extends Factory
     public function definition(): array
     {
         return [
-            'credit_unit' => fake()->randomElement(CreditUnitEnum::cases()),
+            'credit_unit' => (fake()->randomElement(CreditUnitEnum::cases()))->value,
             'semester_enrollment_id' => SemesterEnrollmentFactory::new(),
             'course_id' => CourseFactory::new(),
             'course_status_id' => CourseStatusFactory::new(),
