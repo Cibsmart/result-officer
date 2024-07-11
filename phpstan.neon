@@ -8,11 +8,11 @@ parameters:
         - app/
 
     # Level 9 is the highest level
-    level: 9
+    level: 8
 
     ignoreErrors:
-        - '#^Cannot access property \$\w+ on App\\Models\\\w+\|null\.$#'
-        - '#^Cannot call method \w+\(\) on App\\Models\\\w+\|null\.$#'
+        -   '#^Cannot access property \$\w+ on App\\Models\\\w+\|null\.$#'
+        -   '#^Cannot call method \w+\(\) on App\\Models\\\w+\|null\.$#'
 
 
     editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
