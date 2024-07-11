@@ -1,41 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Cannot access property \\$code on App\\\\Models\\\\Course\\|null\\.$#"
-			count: 1
-			path: app/Data/Results/ResultData.php
-
-		-
-			message: "#^Cannot access property \\$grade on App\\\\Models\\\\Result\\|null\\.$#"
-			count: 1
-			path: app/Data/Results/ResultData.php
-
-		-
-			message: "#^Cannot access property \\$grade_point on App\\\\Models\\\\Result\\|null\\.$#"
-			count: 1
-			path: app/Data/Results/ResultData.php
-
-		-
-			message: "#^Cannot access property \\$title on App\\\\Models\\\\Course\\|null\\.$#"
-			count: 1
-			path: app/Data/Results/ResultData.php
-
-		-
-			message: "#^Cannot access property \\$total_score on App\\\\Models\\\\Result\\|null\\.$#"
-			count: 1
-			path: app/Data/Results/ResultData.php
-
-		-
-			message: "#^Cannot access property \\$name on App\\\\Models\\\\Semester\\|null\\.$#"
-			count: 1
-			path: app/Data/Results/SemesterResultData.php
-
-		-
-			message: "#^Cannot access property \\$name on App\\\\Models\\\\Session\\|null\\.$#"
-			count: 1
-			path: app/Data/Results/SessionResultData.php
-
-		-
 			message: "#^Cannot access property \\$department on App\\\\Models\\\\Program\\|null\\.$#"
 			count: 2
 			path: app/Data/Students/StudentData.php
