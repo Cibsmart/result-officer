@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Pages\Results;
+namespace App\ViewModels\Results;
 
 use App\Data\Results\StudentResultData;
 use App\Data\Students\StudentData;
