@@ -7,13 +7,14 @@ declare namespace App.Data.Results {
     totalScore: number;
     grade: string;
     gradePoint: number;
+    remark: string | null;
   };
   export type SemesterResultData = {
     id: number;
     results: Array<App.Data.Results.ResultData>;
     semester: string;
-    totalCreditUnit: number;
-    totalGradePoint: number;
+    creditUnitTotal: number;
+    gradePointTotal: number;
     gradePointAverage: number;
   };
   export type SessionResultData = {
@@ -70,7 +71,7 @@ declare namespace App.Enums {
     | "transferred"
     | "graduated";
 }
-declare namespace App.Pages.Results {
+declare namespace App.ViewModels.Results {
   export type ResultViewPage = {
     student: App.Data.Students.StudentData;
     results: App.Data.Results.StudentResultData;
