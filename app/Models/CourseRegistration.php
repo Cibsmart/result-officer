@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\CreditUnitEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -49,4 +50,13 @@ final class CourseRegistration extends Model
     {
         return $this->hasOne(Result::class);
     }
+
+    /** @return array<string, string> */
+    protected function casts(): array
+    {
+        return [
+            'credit_unit' => CreditUnitEnum::class,
+        ];
+    }
+
 }
