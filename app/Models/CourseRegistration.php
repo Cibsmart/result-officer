@@ -18,7 +18,7 @@ final class CourseRegistration extends Model
         'course_status_id',
     ];
 
-    protected $with = ['result'];
+    protected $with = ['result', 'course'];
 
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
