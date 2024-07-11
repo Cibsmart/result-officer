@@ -7,6 +7,9 @@ namespace App\Data\Students;
 use App\Enums\GenderEnum;
 use App\Models\Student;
 use Carbon\Carbon;
+use Spatie\LaravelData\Attributes\WithCast;
+use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
+use Spatie\LaravelData\Casts\EnumCast;
 use Spatie\LaravelData\Data;
 
 final class StudentData extends Data
@@ -16,7 +19,9 @@ final class StudentData extends Data
         public readonly string $lastName,
         public readonly string $firstName,
         public readonly ?string $otherNames,
+        #[WithCast(EnumCast::class)]
         public readonly GenderEnum $gender,
+        #[WithCast(DateTimeInterfaceCast::class)]
         public readonly Carbon $birthDate,
         public readonly string $program,
         public readonly string $department,
