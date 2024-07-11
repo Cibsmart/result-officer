@@ -10,7 +10,7 @@ use Tests\Factories\SemesterEnrollmentFactory;
 
 use function Pest\Laravel\seed;
 
-test('semester result data is correct', function () {
+test('semester result data is correct', function (): void {
 
     seed(CourseStatusSeeder::class);
 
@@ -37,7 +37,7 @@ test('semester result data is correct', function () {
 
 });
 
-test('semester enrollment without result data returns zeroes', function () {
+test('semester enrollment without result data returns zeroes', function (): void {
     $enrollment = SemesterEnrollmentFactory::new()->create();
 
     $semesterData = SemesterResultData::from($enrollment);

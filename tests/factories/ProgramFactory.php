@@ -1,26 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Factories;
 
 use App\Models\Program;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Program>
- */
-class ProgramFactory extends Factory
+/** @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Program> */
+final class ProgramFactory extends Factory
 {
     protected $model = Program::class;
 
-    /**
-     * Define the model's default state.
-     * @return array<string, mixed>
-     */
+    /** @return array<string, string> */
     public function definition(): array
     {
         return [
-            'department_id' => DepartmentFactory::new(),
             'code' => fake()->unique()->countryCode(),
+            'department_id' => DepartmentFactory::new(),
             'name' => fake()->country(),
         ];
     }

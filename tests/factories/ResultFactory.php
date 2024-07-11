@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Factories;
 
 use App\Models\Result;
@@ -7,13 +9,12 @@ use App\Services\Grader;
 use App\Values\TotalScore;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Result>
- */
-class ResultFactory extends Factory
+/** @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Result> */
+final class ResultFactory extends Factory
 {
     protected $model = Result::class;
 
+    /** @return array<string, string> */
     public function definition(): array
     {
         $inCourse = fake()->numberBetween(0, 30);
@@ -25,11 +26,11 @@ class ResultFactory extends Factory
 
         return [
             'course_registration_id' => CourseRegistrationFactory::new(),
-            'scores' => json_encode($scores),
-            'total_score' => $score->value,
+            'data' => $data,
             'grade' => $grade->name,
             'grade_point' => $grade->value,
-            'data' => $data,
+            'scores' => json_encode($scores),
+            'total_score' => $score->value,
         ];
     }
 }
