@@ -46,7 +46,7 @@ test('session result data is correct', function (): void {
         ->and($sessionData->id)->toBe($enrollment->id)
         ->and($sessionData->semesterResults->count())->toBe($semestersResults->count())
         ->and($sessionData->session)->toBe($enrollment->session->name)
-        ->and($sessionData->cummulativeGradePointAverage)->toBe($cgpa);
+        ->and($sessionData->cumulativeGradePointAverage)->toBe($cgpa);
 });
 
 test('session enrollment without result data returns zeroes', function (): void {
@@ -81,7 +81,7 @@ test('session enrollment without result data returns zeroes', function (): void 
         ->and($sessionData->id)->toBe($enrollment->id)
         ->and($sessionData->semesterResults->count())->toBe($semestersResults->count())
         ->and($sessionData->session)->toBe($enrollment->session->name)
-        ->and($sessionData->cummulativeGradePointAverage)->toBe(0.0);
+        ->and($sessionData->cumulativeGradePointAverage)->toBe(0.0);
 
 });
 
@@ -113,6 +113,6 @@ test('session enrollment without semester enrollments returns zeroes', function 
         ->and($sessionData->id)->toBe($enrollment->id)
         ->and($sessionData->semesterResults->count())->toBe($semestersResults->count())
         ->and($sessionData->session)->toBe($enrollment->session->name)
-        ->and($sessionData->cummulativeGradePointAverage)->toBe(0.0);
+        ->and($sessionData->cumulativeGradePointAverage)->toBe(0.0);
 
 });

@@ -16,7 +16,7 @@ final class SessionResultData extends Data
         /** @var \Illuminate\Support\Collection<int, \App\Data\Results\SemesterResultData> */
         public readonly Collection $semesterResults,
         public readonly string $session,
-        public readonly float $cummulativeGradePointAverage,
+        public readonly float $cumulativeGradePointAverage,
     ) {
     }
 
@@ -25,7 +25,7 @@ final class SessionResultData extends Data
         $semesters = SemesterResultData::collect($enrollment->semesters);
 
         $cumulativeGradePointAverage = ComputeAverage::new(
-            (int) $semesters->sum('gradePointAverage'),
+            $semesters->sum('gradePointAverage'),
             $semesters->count()
         )->value();
 
