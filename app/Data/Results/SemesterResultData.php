@@ -29,7 +29,7 @@ final class SemesterResultData extends Data
         $totalCreditUnit = (int) $courses->sum('creditUnit');
         $totalGradePoint = (int) $courses->sum('gradePoint');
 
-        $total = new ComputeAverage($totalGradePoint, $totalCreditUnit);
+        $gpa = ComputeAverage::new($totalGradePoint, $totalCreditUnit)->value();
 
         return new self(
             id: $enrollment->id,
@@ -37,6 +37,6 @@ final class SemesterResultData extends Data
             semester: $enrollment->semester->name,
             creditUnitTotal: $totalCreditUnit,
             gradePointTotal: $totalGradePoint,
-            gradePointAverage: $total->value());
+            gradePointAverage: $gpa);
     }
 }
