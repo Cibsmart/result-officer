@@ -23,10 +23,11 @@ final class StudentSeeder extends Seeder
             'last_name' => 'NEW',
             'matriculation_number' => 'EBSU/2023/54563',
             'program_id' => 1,
+            'other_names' => null,
         ],
         [
             'country_id' => 1,
-            'date_of_birth' => '1988, 7, 27',
+            'date_of_birth' => '1988-7-27',
             'entry_level_id' => 1,
             'entry_mode_id' => 1,
             'entry_session_id' => 1,
@@ -39,7 +40,7 @@ final class StudentSeeder extends Seeder
         ],
         [
             'country_id' => 1,
-            'date_of_birth' => '1987, 8, 19',
+            'date_of_birth' => '1987-8-19',
             'entry_level_id' => 1,
             'entry_mode_id' => 1,
             'entry_session_id' => 1,
