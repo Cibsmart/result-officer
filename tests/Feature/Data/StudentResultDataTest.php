@@ -29,9 +29,9 @@ test('session result data is correct', function (): void {
                     ->count(2)
                     ->state(new Sequence(
                         ['semester_id' => $firstSemester->id],
-                        ['semester_id' => $secondSemester->id])
+                        ['semester_id' => $secondSemester->id]),
                     ), 'semesters')
-                ->count(2)
+                ->count(2),
         )->create();
 
     $resultData = StudentResultData::from($student);
@@ -50,7 +50,7 @@ test('session result data is correct', function (): void {
 
             $gpaSum += ComputeAverage::new(
                 $courses->sum('result.grade_point'),
-                $courses->sum('credit_unit')
+                $courses->sum('credit_unit'),
             )->value();
         }
 

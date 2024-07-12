@@ -26,7 +26,7 @@ final class SessionResultData extends Data
 
         $cumulativeGradePointAverage = ComputeAverage::new(
             $semesters->sum('gradePointAverage'),
-            $semesters->count()
+            $semesters->count(),
         )->value();
 
         return new self($enrollment->id, $semesters, $enrollment->session->name, $cumulativeGradePointAverage);

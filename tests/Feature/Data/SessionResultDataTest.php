@@ -36,7 +36,7 @@ test('session result data is correct', function (): void {
         $gradePointAverageTotal +=
             ComputeAverage::new(
                 $courses->sum('result.grade_point'),
-                $courses->sum('credit_unit')
+                $courses->sum('credit_unit'),
             )->value();
     }
 
@@ -64,19 +64,6 @@ test('session enrollment without result data returns zeroes', function (): void 
 
     $semestersResults = $enrollment->semesters;
 
-    $gradePointAverageTotal = 0;
-
-    foreach ($semestersResults as $semesterResult) {
-        $courses = $semesterResult->courses;
-        $gradePointAverageTotal +=
-            ComputeAverage::new(
-                $courses->sum('result.grade_point'),
-                $courses->sum('credit_unit')
-            )->value();
-    }
-
-    $cgpa = ComputeAverage::new($gradePointAverageTotal, $semestersResults->count())->value();
-
     expect($sessionData)->toBeInstanceOf(SessionResultData::class)
         ->and($sessionData->id)->toBe($enrollment->id)
         ->and($sessionData->semesterResults->count())->toBe($semestersResults->count())
@@ -87,7 +74,6 @@ test('session enrollment without result data returns zeroes', function (): void 
 
 test('session enrollment without semester enrollments returns zeroes', function (): void {
     $student = StudentFactory::new()->create();
-    $courseStatus = CourseStatusFactory::new()->create();
 
     $enrollment = EnrollmentFactory::new(['student_id' => $student->id])
         ->create();
@@ -95,19 +81,6 @@ test('session enrollment without semester enrollments returns zeroes', function 
     $sessionData = SessionResultData::from($enrollment);
 
     $semestersResults = $enrollment->semesters;
-
-    $gradePointAverageTotal = 0;
-
-    foreach ($semestersResults as $semesterResult) {
-        $courses = $semesterResult->courses;
-        $gradePointAverageTotal +=
-            ComputeAverage::new(
-                $courses->sum('result.grade_point'),
-                $courses->sum('credit_unit')
-            )->value();
-    }
-
-    $cgpa = ComputeAverage::new($gradePointAverageTotal, $semestersResults->count())->value();
 
     expect($sessionData)->toBeInstanceOf(SessionResultData::class)
         ->and($sessionData->id)->toBe($enrollment->id)

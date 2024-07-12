@@ -22,8 +22,8 @@ final class StudentSeeder extends Seeder
             'gender' => GenderEnum::MALE,
             'last_name' => 'NEW',
             'matriculation_number' => 'EBSU/2023/54563',
-            'program_id' => 1,
             'other_names' => null,
+            'program_id' => 1,
         ],
         [
             'country_id' => 1,

@@ -26,7 +26,7 @@ final class StudentResultData extends Data
         $finalCGPA = round(
             ComputeAverage::new(
                 $enrollments->sum('cumulativeGradePointAverage'),
-                $enrollments->count()
+                $enrollments->count(),
             )->value(),
             2,
         );
