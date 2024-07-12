@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 use Tests\Factories\UserFactory;
 
+use function Pest\Laravel\assertGuest;
+use function Pest\Laravel\assertSoftDeleted;
+
 test('profile page is displayed', function (): void {
     $user = UserFactory::new()->create();
 
@@ -65,8 +68,8 @@ test('user can delete their account', function (): void {
         ->assertSessionHasNoErrors()
         ->assertRedirect('/');
 
-    $this->assertGuest();
-    $this->assertNull($user->fresh());
+    assertGuest();
+    assertSoftDeleted($user->fresh());
 });
 
 test('correct password must be provided to delete account', function (): void {
