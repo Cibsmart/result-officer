@@ -21,9 +21,10 @@ declare namespace App.Data.Results {
     id: number;
     semesterResults: Array<App.Data.Results.SemesterResultData>;
     session: string;
-    cummulativeGradePointAverage: number;
+    cumulativeGradePointAverage: number;
   };
   export type StudentResultData = {
+    id: number;
     enrollments: Array<App.Data.Results.SessionResultData>;
     finalCumulativeGradePointAverage: number;
   };
