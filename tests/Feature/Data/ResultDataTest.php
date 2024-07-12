@@ -3,19 +3,13 @@
 declare(strict_types=1);
 
 use App\Data\Results\ResultData;
-use Database\Seeders\CourseStatusSeeder;
 use Tests\Factories\CourseRegistrationFactory;
 use Tests\Factories\ResultFactory;
 
-use function Pest\Laravel\seed;
-
-beforeEach(function (): void {
-    seed(CourseStatusSeeder::class);
-});
-
 test('course result data is correct', function (): void {
 
-    $course = CourseRegistrationFactory::new()->has(ResultFactory::new())->create();
+    $course = CourseRegistrationFactory::new()
+        ->has(ResultFactory::new())->create();
 
     $resultData = ResultData::from($course);
 

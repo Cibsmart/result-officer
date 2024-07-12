@@ -3,19 +3,17 @@
 declare(strict_types=1);
 
 use App\Data\Results\SemesterResultData;
-use Database\Seeders\CourseStatusSeeder;
 use Tests\Factories\CourseRegistrationFactory;
+use Tests\Factories\CourseStatusFactory;
 use Tests\Factories\ResultFactory;
 use Tests\Factories\SemesterEnrollmentFactory;
 
-use function Pest\Laravel\seed;
-
 test('semester result data is correct', function (): void {
 
-    seed(CourseStatusSeeder::class);
+    $courseStatus = CourseStatusFactory::new()->create();
 
     $enrollment = SemesterEnrollmentFactory::new()
-        ->has(CourseRegistrationFactory::new()
+        ->has(CourseRegistrationFactory::new(['course_status_id' => $courseStatus->id])
             ->has(ResultFactory::new())
             ->count(5), 'courses')
         ->create();
