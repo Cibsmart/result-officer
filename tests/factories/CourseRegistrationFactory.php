@@ -18,7 +18,7 @@ final class CourseRegistrationFactory extends Factory
     {
         return [
             'course_id' => CourseFactory::new(),
-            'course_status_id' => fake()->randomElement([1, 2]),
+            'course_status_id' => CourseStatusFactory::new(),
             'credit_unit' => (fake()->randomElement(CreditUnitEnum::cases()))->value,
             'semester_enrollment_id' => SemesterEnrollmentFactory::new(),
         ];

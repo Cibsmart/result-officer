@@ -6,6 +6,11 @@ parameters:
 			path: app/Data/Results/SemesterResultData.php
 
 		-
+			message: "#^Cannot cast mixed to int\\.$#"
+			count: 1
+			path: app/Data/Results/SessionResultData.php
+
+		-
 			message: "#^Parameter \\#5 \\$gender of class App\\\\Data\\\\Students\\\\StudentData constructor expects App\\\\Enums\\\\GenderEnum, string given\\.$#"
 			count: 1
 			path: app/Data/Students/StudentData.php

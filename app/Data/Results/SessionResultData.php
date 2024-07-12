@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Data\Results;
 
 use App\Models\Enrollment;
+use App\Services\ComputeAverage;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
 
@@ -23,10 +24,10 @@ final class SessionResultData extends Data
     {
         $semesters = SemesterResultData::collect($enrollment->semesters);
 
-        $cumulativeGradePointAverage = round(
-            $semesters->sum('gradePointAverage') / $semesters->count(),
-            3,
-        );
+        $cumulativeGradePointAverage = ComputeAverage::new(
+            (int) $semesters->sum('gradePointAverage'),
+            $semesters->count()
+        )->value();
 
         return new self($enrollment->id, $semesters, $enrollment->session->name, $cumulativeGradePointAverage);
     }
