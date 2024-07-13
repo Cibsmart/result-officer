@@ -57,7 +57,7 @@ declare namespace App.Data.Students {
 declare namespace App.Enums {
   export type CourseStatusEnum = "F" | "R";
   export type CreditUnitEnum = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 12 | 15 | 18;
-  export type DegreeClass =
+  export type DegreeClassEnum =
     | "FIRST CLASS HONOURS"
     | "SECOND CLASS HONOURS (UPPER DIVISION)"
     | "SECOND CLASS HONOURS (LOWER DIVISION)"
