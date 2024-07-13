@@ -21,6 +21,7 @@ const pages: BreadcrumbItem[] = [
 ];
 
 const hasResults = computed(() => props.results.enrollments.length > 0);
+const studentName = computed(() => `${props.student.lastName} ${props.student.firstName} ${props.student.otherNames}`);
 </script>
 
 <template>
@@ -46,6 +47,22 @@ const hasResults = computed(() => props.results.enrollments.length > 0);
             v-show="hasResults"
             class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
             <ButtonIndigo>Print</ButtonIndigo>
+          </div>
+        </div>
+
+        <div
+          class="mt-5 divide-y divide-solid divide-gray-300 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg dark:divide-gray-600 dark:ring-gray-600">
+          <div class="p-2">
+            NAME: <span class="font-bold text-black dark:text-white">{{ studentName }}</span>
+          </div>
+
+          <div class="p-2">
+            REGISTRATION NUMBER:
+            <span class="font-bold text-black dark:text-white">{{ student.matriculationNumber }}</span>
+          </div>
+
+          <div class="p-2">
+            DEPARTMENT: <span class="font-bold text-black dark:text-white">{{ student.department }}</span>
           </div>
         </div>
 
