@@ -42,21 +42,38 @@ const hasResults = computed(() => props.results.enrollments.length > 0);
             </p>
           </div>
 
-          <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+          <div
+            v-show="hasResults"
+            class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
             <ButtonIndigo>Print</ButtonIndigo>
           </div>
         </div>
 
-        <template
-          v-for="session in results.enrollments"
-          v-if="hasResults"
-          :key="session.id">
-          <Session :session="session" />
-        </template>
+        <div>
+          <template
+            v-for="session in results.enrollments"
+            v-if="hasResults"
+            :key="session.id">
+            <Session :session="session" />
+          </template>
 
-        <template v-else>
-          <EmptyState />
-        </template>
+          <template v-else>
+            <EmptyState />
+          </template>
+        </div>
+
+        <div class="mt-2 flex flex-col p-2 text-center text-xl font-bold uppercase text-black lg:block dark:text-white">
+          <span>
+            Current Final CGPA:
+            <span>{{ results.finalCumulativeGradePointAverage }} </span>
+          </span>
+
+          <span class="hidden lg:inline"> (</span>
+
+          <span class=""> {{ results.classOfDegree }}</span>
+
+          <span class="hidden lg:inline">)</span>
+        </div>
       </div>
     </BaseSection>
   </BasePage>
