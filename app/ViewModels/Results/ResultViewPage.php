@@ -12,7 +12,7 @@ final class ResultViewPage extends Data
 {
     public function __construct(
         public readonly StudentData $student,
-        public StudentResultData $results,
+        public readonly StudentResultData $results,
     ) {
     }
 }

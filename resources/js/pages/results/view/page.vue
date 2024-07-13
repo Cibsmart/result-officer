@@ -7,16 +7,20 @@ import { BreadcrumbItem } from "@/types";
 import Breadcrumb from "@/components/breadcrumb.vue";
 import ButtonIndigo from "@/components/buttons/buttonIndigo.vue";
 import Session from "@/pages/results/view/partials/session.vue";
+import EmptyState from "@/components/emptyState.vue";
+import { computed } from "vue";
 
-defineProps<{
+const props = defineProps<{
   student: App.Data.Students.StudentData;
-  results?: App.Data.Results.StudentResultData;
+  results: App.Data.Results.StudentResultData;
 }>();
 
 const pages: BreadcrumbItem[] = [
   { name: "Result Form", href: route("results.form"), current: route().current("results.form") },
   { name: "Result View", href: route("results.view"), current: route().current("results.view") },
 ];
+
+const hasResults = computed(() => props.results.enrollments.length > 0);
 </script>
 
 <template>
@@ -44,9 +48,14 @@ const pages: BreadcrumbItem[] = [
         </div>
 
         <template
-          v-for="session in results?.enrollments"
+          v-for="session in results.enrollments"
+          v-if="hasResults"
           :key="session.id">
           <Session :session="session" />
+        </template>
+
+        <template v-else>
+          <EmptyState />
         </template>
       </div>
     </BaseSection>
