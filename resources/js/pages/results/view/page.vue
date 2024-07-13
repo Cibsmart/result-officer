@@ -79,7 +79,9 @@ const studentName = computed(() => `${props.student.lastName} ${props.student.fi
           </template>
         </div>
 
-        <div class="mt-2 flex flex-col p-2 text-center text-xl font-bold uppercase text-black lg:block dark:text-white">
+        <div
+          v-if="hasResults"
+          class="mt-2 flex flex-col p-2 text-center text-xl font-bold uppercase text-black lg:block dark:text-white">
           <span>
             Current Final CGPA:
             <span>{{ results.finalCumulativeGradePointAverage }} </span>
