@@ -27,6 +27,7 @@ declare namespace App.Data.Results {
     id: number;
     enrollments: Array<App.Data.Results.SessionResultData>;
     finalCumulativeGradePointAverage: number;
+    classOfDegree: string;
   };
 }
 declare namespace App.Data.Shared {
@@ -56,6 +57,13 @@ declare namespace App.Data.Students {
 declare namespace App.Enums {
   export type CourseStatusEnum = "F" | "R";
   export type CreditUnitEnum = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 12 | 15 | 18;
+  export type DegreeClass =
+    | "FIRST CLASS HONOURS"
+    | "SECOND CLASS HONOURS (UPPER DIVISION)"
+    | "SECOND CLASS HONOURS (LOWER DIVISION)"
+    | "THIRD CLASS HONOURS"
+    | "PASS"
+    | "FAIL";
   export type GenderEnum = "M" | "F";
   export type Grade = 5 | 4 | 3 | 2 | 1 | 0;
   export type LevelEnum = 100 | 200 | 300 | 400 | 500 | 600;
