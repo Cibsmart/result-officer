@@ -24,6 +24,6 @@ test('valid fcgpa return correct class of degree', function (float $fcgpa, Degre
 test('invalid fcgpa return fail of degree', function (float $fcgpa): void {
     expect(DegreeClass::for($fcgpa)->value()->value)->toBe(DegreeClassEnum::FAIL->value);
 })->with([
-    [-0.01, DegreeClassEnum::FAIL],
+    [- 0.01, DegreeClassEnum::FAIL],
     [5.01, DegreeClassEnum::FAIL],
 ]);

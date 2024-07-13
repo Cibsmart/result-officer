@@ -67,11 +67,11 @@ const studentName = computed(() => `${props.student.lastName} ${props.student.fi
         </div>
 
         <div>
-          <template
-            v-for="session in results.enrollments"
-            v-if="hasResults"
-            :key="session.id">
-            <Session :session="session" />
+          <template v-if="hasResults">
+            <Session
+              v-for="session in results.enrollments"
+              :key="session.id"
+              :session="session" />
           </template>
 
           <template v-else>
