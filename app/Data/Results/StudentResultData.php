@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Data\Results;
 
 use App\Models\Student;
-use App\Services\ClassOfDegree;
 use App\Services\ComputeAverage;
+use App\Services\DegreeClass;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
 
@@ -33,7 +33,7 @@ final class StudentResultData extends Data
             2,
         );
 
-        $degreeClass = ClassOfDegree::for($finalCGPA)->value();
+        $degreeClass = DegreeClass::for($finalCGPA)->value();
 
         return new self($student->id, $enrollments, $finalCGPA, $degreeClass->value);
     }
