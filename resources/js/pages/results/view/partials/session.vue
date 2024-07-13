@@ -16,7 +16,7 @@ defineProps<{
       <Semester :semester="semester" />
     </template>
 
-    <div class="p-2 text-center">
+    <div class="p-2 text-right">
       <span class="font-bold uppercase"> CGPA: {{ session.cumulativeGradePointAverage }} </span>
     </div>
   </div>
