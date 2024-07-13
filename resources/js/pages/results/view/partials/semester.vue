@@ -83,7 +83,7 @@ defineProps<{
               <span>
                 <span>Unit: {{ result.creditUnit }} |</span>
 
-                <span>| Score: {{ result.remark === "NR" ? "-" : result.totalScore }} </span>
+                <span>| Score: {{ result.totalScore }} </span>
               </span>
             </div>
 
@@ -104,14 +104,14 @@ defineProps<{
 
           <td
             class="hidden border-t border-gray-200 px-3 py-2 text-center text-sm text-gray-700 lg:table-cell dark:border-gray-700 dark:text-gray-300">
-            {{ result.remark === "NR" ? "-" : result.totalScore }}
+            {{ result.totalScore }}
           </td>
 
           <td
             class="border-t border-gray-200 px-3 py-2 text-center text-sm text-gray-700 dark:border-gray-700 dark:text-gray-300">
-            <div class="sm:hidden">{{ result.remark === "NR" ? "-" : result.grade }}</div>
+            <div class="sm:hidden">{{ result.grade }}</div>
 
-            <div class="hidden sm:block">{{ result.remark === "NR" ? "-" : result.grade }}</div>
+            <div class="hidden sm:block">{{ result.grade }}</div>
           </td>
 
           <td
