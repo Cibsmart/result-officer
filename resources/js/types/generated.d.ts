@@ -40,6 +40,7 @@ declare namespace App.Data.Shared {
 }
 declare namespace App.Data.Students {
   export type StudentData = {
+    id: number;
     matriculationNumber: string;
     lastName: string;
     firstName: string;
