@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
-enum DegreeClass: string
+enum DegreeClassEnum: string
 {
     case FIRST_CLASS = 'FIRST CLASS HONOURS';
     case SECOND_CLASS_UPPER = 'SECOND CLASS HONOURS (UPPER DIVISION)';
