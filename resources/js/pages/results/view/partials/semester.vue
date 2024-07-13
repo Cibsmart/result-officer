@@ -5,7 +5,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="-mx-4 mt-2 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg dark:ring-gray-600">
+  <div class="-mx-4 mt-2 overflow-auto ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg dark:ring-gray-600">
     <div class="min-w-full pt-2 text-center text-sm font-extrabold">{{ semester.semester }} SEMESTER</div>
 
     <table class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
