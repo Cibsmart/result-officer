@@ -1,11 +1,14 @@
 {
   "preset": "laravel",
   "rules": {
-    "concat_space": false,
+    "concat_space": {
+      "spacing": "one"
+    },
     "unary_operator_spaces": false,
     "single_line_empty_body": false,
     "class_attributes_separation": false,
     "phpdoc_separation": false,
-    "phpdoc_align": false
+    "phpdoc_align": false,
+    "psr_autoloading": true
   }
 }
