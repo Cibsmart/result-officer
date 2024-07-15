@@ -13,7 +13,7 @@ use App\ViewModels\Results\ResultViewPage;
 use Inertia\Inertia;
 use Inertia\Response;
 
-final class StudentResultController extends Controller
+final class ViewStudentResultController extends Controller
 {
     public function form(): Response
     {

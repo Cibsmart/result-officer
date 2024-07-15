@@ -3,7 +3,9 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Result\StudentResultController;
+use App\Http\Controllers\Result\DownloadStudentResultController;
+use App\Http\Controllers\Result\ViewStudentResultController;
+use App\Http\Controllers\TestStudentResultController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -18,6 +20,8 @@ Route::middleware(['auth'])->group(static function (): void {
 
     Route::get('results', [StudentResultController::class, 'form'])->name('results.form');
     Route::post('results', [StudentResultController::class, 'view'])->name('results.view');
+    Route::get('results', [ViewStudentResultController::class, 'form'])->name('results.form');
+    Route::post('results', [ViewStudentResultController::class, 'view'])->name('results.view');
 });
 
 require __DIR__ . '/auth.php';
