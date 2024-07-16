@@ -46,6 +46,7 @@ declare namespace App.Data.Students {
     lastName: string;
     firstName: string;
     otherNames: string | null;
+    name: string;
     gender: App.Enums.GenderEnum;
     birthDate: string;
     program: string;
