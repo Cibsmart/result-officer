@@ -5,7 +5,6 @@ import BaseHeader from "@/layouts/main/partials/baseHeader.vue";
 import BaseSection from "@/components/baseSection.vue";
 import { BreadcrumbItem } from "@/types";
 import Breadcrumb from "@/components/breadcrumb.vue";
-import ButtonIndigo from "@/components/buttons/buttonIndigo.vue";
 import Session from "@/pages/results/view/partials/session.vue";
 import EmptyState from "@/components/emptyState.vue";
 import { computed } from "vue";
@@ -46,7 +45,11 @@ const studentName = computed(() => `${props.student.lastName} ${props.student.fi
           <div
             v-show="hasResults"
             class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-            <ButtonIndigo>Print</ButtonIndigo>
+            <a
+              :href="route('results.print', { student: student.id })"
+              target="_blank">
+              Print
+            </a>
           </div>
         </div>
 

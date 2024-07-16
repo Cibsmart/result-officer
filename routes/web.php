@@ -3,9 +3,8 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Result\DownloadStudentResultController;
+use App\Http\Controllers\Result\PrintStudentResultController;
 use App\Http\Controllers\Result\ViewStudentResultController;
-use App\Http\Controllers\TestStudentResultController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -18,10 +17,11 @@ Route::middleware(['auth'])->group(static function (): void {
     Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('results', [StudentResultController::class, 'form'])->name('results.form');
-    Route::post('results', [StudentResultController::class, 'view'])->name('results.view');
     Route::get('results', [ViewStudentResultController::class, 'form'])->name('results.form');
     Route::post('results', [ViewStudentResultController::class, 'view'])->name('results.view');
+
+    Route::get('results/{student}/print', PrintStudentResultController::class)
+        ->name('results.print');
 });
 
 require __DIR__ . '/auth.php';
