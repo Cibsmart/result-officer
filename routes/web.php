@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Result\DownloadStudentTranscriptController;
 use App\Http\Controllers\Result\PrintStudentResultController;
 use App\Http\Controllers\Result\ViewStudentResultController;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,8 @@ Route::middleware(['auth'])->group(static function (): void {
 
     Route::get('results/{student}/print', PrintStudentResultController::class)
         ->name('results.print');
+    Route::get('results/{student}/transcript', DownloadStudentTranscriptController::class)
+        ->name('results.transcript');
 });
 
 require __DIR__ . '/auth.php';
