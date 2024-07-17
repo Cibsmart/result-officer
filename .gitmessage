@@ -1,4 +1,3 @@
-Subject: <type>(<scope>): <description>
+Subject
 
-Body:
-- <insert detailed description of changes made in the commit>
+- description
