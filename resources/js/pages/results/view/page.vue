@@ -8,6 +8,7 @@ import Breadcrumb from "@/components/breadcrumb.vue";
 import Session from "@/pages/results/view/partials/session.vue";
 import EmptyState from "@/components/emptyState.vue";
 import { computed } from "vue";
+import BaseLink from "@/components/links/baseLink.vue";
 
 const props = defineProps<{
   student: App.Data.Students.StudentData;
@@ -50,6 +51,7 @@ const studentName = computed(() => `${props.student.lastName} ${props.student.fi
               target="_blank">
               Print
             </a>
+            <BaseLink :href="route('results.print', { student: student.id })"> Print</BaseLink>
           </div>
         </div>
 
