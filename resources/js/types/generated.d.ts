@@ -21,6 +21,7 @@ declare namespace App.Data.Results {
     id: number;
     semesterResults: Array<App.Data.Results.SemesterResultData>;
     session: string;
+    year: string;
     cumulativeGradePointAverage: number;
   };
   export type StudentResultData = {
