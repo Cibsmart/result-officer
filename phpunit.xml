@@ -30,4 +30,12 @@
         <env name="SESSION_DRIVER" value="array"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
     </php>
+    <coverage>
+        <include>
+            <directory suffix=".php">app/</directory>
+        </include>
+        <exclude>
+            <directory suffix=".php">app/Filament/</directory>
+        </exclude>
+    </coverage>
 </phpunit>
