@@ -103,7 +103,7 @@
 
   {{-- FCGPA  --}}
   <div class="mt-2 p-2 text-center text-sm font-bold uppercase text-black">
-    Current Final CGPA: {{ $results->finalCumulativeGradePointAverage }} ({{ $results->classOfDegree }})
+    CURRENT FINAL CGPA: {{ $results->finalCumulativeGradePointAverage }} ({{ $results->classOfDegree }})
   </div>
 </div>
 
