@@ -45,12 +45,9 @@ const studentName = computed(() => `${props.student.lastName} ${props.student.fi
 
           <div
             v-show="hasResults"
-            class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-            <a
-              :href="route('results.print', { student: student.id })"
-              target="_blank">
-              Print
-            </a>
+            class="mt-4 flex space-x-4">
+            <BaseLink :href="route('results.transcript', { student: student.id })"> Transcript</BaseLink>
+
             <BaseLink :href="route('results.print', { student: student.id })"> Print</BaseLink>
           </div>
         </div>
