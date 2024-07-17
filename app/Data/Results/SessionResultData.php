@@ -16,6 +16,7 @@ final class SessionResultData extends Data
         /** @var \Illuminate\Support\Collection<int, \App\Data\Results\SemesterResultData> */
         public readonly Collection $semesterResults,
         public readonly string $session,
+        public readonly string $year,
         public readonly float $cumulativeGradePointAverage,
     ) {
     }
@@ -29,6 +30,11 @@ final class SessionResultData extends Data
             $semesters->count(),
         )->value();
 
-        return new self($enrollment->id, $semesters, $enrollment->session->name, $cumulativeGradePointAverage);
+        return new self(
+            id: $enrollment->id,
+            semesterResults: $semesters,
+            session: $enrollment->session->name,
+            year: $enrollment->year->name,
+            cumulativeGradePointAverage: $cumulativeGradePointAverage);
     }
 }
