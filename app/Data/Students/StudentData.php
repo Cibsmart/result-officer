@@ -6,7 +6,6 @@ namespace App\Data\Students;
 
 use App\Enums\GenderEnum;
 use App\Models\Student;
-use Carbon\Carbon;
 use Spatie\LaravelData\Data;
 
 final class StudentData extends Data
@@ -19,11 +18,12 @@ final class StudentData extends Data
         public readonly ?string $otherNames,
         public readonly string $name,
         public readonly GenderEnum $gender,
-        public readonly Carbon $birthDate,
+        public readonly string $birthDate,
         public readonly string $program,
         public readonly string $department,
         public readonly string $faculty,
         public readonly string $admissionYear,
+        public readonly string $nationality,
     ) {
     }
 
@@ -37,11 +37,12 @@ final class StudentData extends Data
             otherNames: $student->other_names,
             name: "$student->last_name $student->first_name $student->other_names",
             gender: $student->gender,
-            birthDate: $student->date_of_birth,
+            birthDate: $student->date_of_birth->format('d/m/Y'),
             program: $student->program->name,
             department: $student->program->department->name,
             faculty: $student->program->department->faculty->name,
             admissionYear: $student->entrySession->name,
+            nationality: $student->country->demonym,
         );
     }
 }

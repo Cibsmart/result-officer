@@ -54,6 +54,7 @@ declare namespace App.Data.Students {
     department: string;
     faculty: string;
     admissionYear: string;
+    nationality: string;
   };
 }
 declare namespace App.Enums {

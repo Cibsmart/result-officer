@@ -16,7 +16,7 @@ parameters:
 			path: app/Data/Results/StudentResultData.php
 
 		-
-			message: "#^Parameter \\$birthDate of class App\\\\Data\\\\Students\\\\StudentData constructor expects Carbon\\\\Carbon, string given\\.$#"
+			message: "#^Cannot call method format\\(\\) on string\\.$#"
 			count: 1
 			path: app/Data/Students/StudentData.php
 
