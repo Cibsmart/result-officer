@@ -6,6 +6,7 @@ namespace App\Data\Students;
 
 use App\Enums\GenderEnum;
 use App\Models\Student;
+use App\Services\RetrieveYear;
 use Spatie\LaravelData\Data;
 
 final class StudentData extends Data
@@ -22,7 +23,7 @@ final class StudentData extends Data
         public readonly string $program,
         public readonly string $department,
         public readonly string $faculty,
-        public readonly string $admissionYear,
+        public readonly int $admissionYear,
         public readonly string $nationality,
     ) {
     }
@@ -41,7 +42,7 @@ final class StudentData extends Data
             program: $student->program->name,
             department: $student->program->department->name,
             faculty: $student->program->department->faculty->name,
-            admissionYear: $student->entrySession->name,
+            admissionYear: RetrieveYear::fromSession($student->entrySession->name)->firstYear(),
             nationality: $student->country->demonym,
         );
     }
