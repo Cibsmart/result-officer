@@ -6,8 +6,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-
 final class DatabaseSeeder extends Seeder
 {
     public function run(): void
@@ -30,6 +28,7 @@ final class DatabaseSeeder extends Seeder
             CourseStatusSeeder::class,
             ScoreTypeSeeder::class,
             EnrollmentSeeder::class,
+            RecordsUnitHeadSeeder::class,
         ]);
     }
 }
