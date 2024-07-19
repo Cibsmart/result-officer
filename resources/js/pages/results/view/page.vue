@@ -91,7 +91,7 @@ const studentName = computed(() => `${props.student.lastName} ${props.student.fi
 
           <span class="hidden lg:inline"> (</span>
 
-          <span class=""> {{ results.classOfDegree }}</span>
+          <span class=""> {{ results.degreeClass }}</span>
 
           <span class="hidden lg:inline">)</span>
         </div>
