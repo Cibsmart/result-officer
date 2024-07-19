@@ -14,9 +14,17 @@ final class Program extends Model
 
     protected $fillable = ['department_id', 'code', 'name'];
 
+    protected $with = ['department', 'programType'];
+
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Department, \App\Models\Program> */
     public function department(): BelongsTo
     {
         return $this->belongsTo(Department::class);
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramType, \App\Models\Program> */
+    public function programType(): BelongsTo
+    {
+        return $this->belongsTo(ProgramType::class);
     }
 }
