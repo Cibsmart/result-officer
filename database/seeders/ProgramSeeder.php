@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Department;
 use App\Models\Program;
+use App\Models\ProgramType;
 use Illuminate\Database\Seeder;
 
 final class ProgramSeeder extends Seeder
@@ -30,6 +31,7 @@ final class ProgramSeeder extends Seeder
                     'code' => $code,
                     'department_id' => Department::query()->where('code', $department)->first()->id,
                     'name' => $name,
+                    'program_type_id' => ProgramType::query()->where('code', 'B.Sc.')->first()->id,
                 ]);
             }
         }

@@ -12,10 +12,10 @@ final class ProgramTypeSeeder extends Seeder
     /** @var array<string, string> */
     private array $programTypes = [
         'B.A.' => 'BACHELOR OF ART',
-        'B.ENG.' => 'BACHELOR OF ENGINEERING',
+        'B.Eng.' => 'BACHELOR OF ENGINEERING',
         'B.L.' => 'BACHELOR OF LAW',
-        'B.NSC.' => 'BACHELOR OF NURSING SCIENCE',
-        'B.SC.' => 'BACHELOR OF SCIENCE',
+        'B.NSc.' => 'BACHELOR OF NURSING SCIENCE',
+        'B.Sc.' => 'BACHELOR OF SCIENCE',
     ];
 
     public function run(): void
