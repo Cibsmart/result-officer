@@ -9,7 +9,7 @@ use Tests\Factories\ResultFactory;
 test('course result data is correct', function (): void {
 
     $course = CourseRegistrationFactory::new()
-        ->has(ResultFactory::new())->create();
+        ->has(ResultFactory::new())->createOne();
 
     $resultData = ResultData::from($course);
 
@@ -24,7 +24,7 @@ test('course result data is correct', function (): void {
 });
 
 test('courses without result has default score', function (): void {
-    $course = CourseRegistrationFactory::new()->create();
+    $course = CourseRegistrationFactory::new()->createOne();
 
     $resultData = ResultData::from($course);
 
