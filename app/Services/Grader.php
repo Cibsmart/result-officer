@@ -21,13 +21,18 @@ final readonly class Grader
     public function grade(): Grade
     {
         return match (true) {
-            $this->score->value >= Grade::A->min() && $this->score->value <= Grade::A->max() => Grade::A,
-            $this->score->value >= Grade::B->min() && $this->score->value < Grade::A->min() => Grade::B,
-            $this->score->value >= Grade::C->min() && $this->score->value < Grade::B->min() => Grade::C,
-            $this->score->value >= Grade::D->min() && $this->score->value < Grade::C->min() => Grade::D,
-            $this->isEGradeAllowed &&
-            ($this->score->value >= Grade::E->min() && $this->score->value < Grade::D->min()) => Grade::E,
+            $this->withinRangeOf(Grade::A) => Grade::A,
+            $this->withinRangeOf(Grade::B) => Grade::B,
+            $this->withinRangeOf(Grade::C) => Grade::C,
+            $this->withinRangeOf(Grade::D) => Grade::D,
+            $this->isEGradeAllowed && ($this->withinRangeOf(Grade::E)) => Grade::E,
             default => Grade::F,
         };
+    }
+
+    private function withinRangeOf(Grade $grade): bool
+    {
+        return $this->score->value >= $grade->min()
+            && $this->score->value <= $grade->max();
     }
 }
