@@ -24,6 +24,6 @@ final class RecordsUnitHeadFactory extends Factory
     /** @return \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\RecordsUnitHead> */
     public function active(): Factory
     {
-        return $this->state(state: fn (array $attributes) => ['is_current' => true]);
+        return $this->state(state: fn () => ['is_current' => true]);
     }
 }
