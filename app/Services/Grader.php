@@ -21,11 +21,12 @@ final readonly class Grader
     public function grade(): Grade
     {
         return match (true) {
-            $this->score->value >= 70 && $this->score->value <= 100 => Grade::A,
-            $this->score->value >= 60 && $this->score->value < 70 => Grade::B,
-            $this->score->value >= 50 && $this->score->value < 60 => Grade::C,
-            $this->score->value >= 45 && $this->score->value < 50 => Grade::D,
-            $this->score->value >= 40 && $this->score->value < 45 && $this->isEGradeAllowed => Grade::E,
+            $this->score->value >= Grade::A->min() && $this->score->value <= Grade::A->max() => Grade::A,
+            $this->score->value >= Grade::B->min() && $this->score->value < Grade::A->min() => Grade::B,
+            $this->score->value >= Grade::C->min() && $this->score->value < Grade::B->min() => Grade::C,
+            $this->score->value >= Grade::D->min() && $this->score->value < Grade::C->min() => Grade::D,
+            $this->isEGradeAllowed &&
+            ($this->score->value >= Grade::E->min() && $this->score->value < Grade::D->min()) => Grade::E,
             default => Grade::F,
         };
     }
