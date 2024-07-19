@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Data\Students\StudentData;
+use App\Services\RetrieveYear;
 use Tests\Factories\StudentFactory;
 
 test('student data object is correct', function (): void {
@@ -19,6 +20,6 @@ test('student data object is correct', function (): void {
         ->and($studentData->program)->toBe($student->program->name)
         ->and($studentData->department)->toBe($student->program->department->name)
         ->and($studentData->faculty)->toBe($student->program->department->faculty->name)
-        ->and($studentData->admissionYear)->toBe($student->entrySession->name)
+        ->and($studentData->admissionYear)->toBe(RetrieveYear::fromSession($student->entrySession->name)->firstYear())
         ->and($studentData->nationality)->toBe($student->country->demonym);
 });
