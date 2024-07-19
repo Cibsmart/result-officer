@@ -7,6 +7,7 @@ namespace App\Data\Results;
 use App\Models\Student;
 use App\Services\ComputeAverage;
 use App\Services\DegreeClass;
+use App\Services\RetrieveYear;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
 
@@ -17,7 +18,9 @@ final class StudentResultData extends Data
         /** @var \Illuminate\Support\Collection<int, \App\Data\Results\SessionResultData> */
         public readonly Collection $enrollments,
         public readonly float $finalCumulativeGradePointAverage,
-        public readonly string $classOfDegree,
+        public readonly string $degreeClass,
+        public readonly string $degreeAwarded,
+        public readonly int $graduationYear,
     ) {
     }
 
@@ -34,7 +37,16 @@ final class StudentResultData extends Data
         );
 
         $degreeClass = DegreeClass::for($finalCGPA)->value();
+        $programType = $student->program->programType;
+        $lastSession = $student->enrollments->last()->session->name;
 
-        return new self($student->id, $enrollments, $finalCGPA, $degreeClass->value);
+        return new self(
+            id: $student->id,
+            enrollments: $enrollments,
+            finalCumulativeGradePointAverage: $finalCGPA,
+            degreeClass: $degreeClass->value,
+            degreeAwarded: "$programType->name ($programType->code)",
+            graduationYear: RetrieveYear::fromSession($lastSession)->lastYear(),
+        );
     }
 }
