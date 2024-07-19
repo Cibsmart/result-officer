@@ -1,4 +1,10 @@
 declare namespace App.Data.Results {
+  export type GradingSchemeData = {
+    range: string;
+    interpretation: string;
+    grade: string;
+    gradePoint: number;
+  };
   export type ResultData = {
     id: number;
     courseCode: string;
@@ -28,7 +34,13 @@ declare namespace App.Data.Results {
     id: number;
     enrollments: Array<App.Data.Results.SessionResultData>;
     finalCumulativeGradePointAverage: number;
-    classOfDegree: string;
+    degreeClass: string;
+    degreeAwarded: string;
+    graduationYear: number;
+  };
+  export type TranscriptData = {
+    recordsUnitHead: string;
+    gradingSchemes: Array<App.Data.Results.GradingSchemeData>;
   };
 }
 declare namespace App.Data.Shared {
@@ -53,7 +65,7 @@ declare namespace App.Data.Students {
     program: string;
     department: string;
     faculty: string;
-    admissionYear: string;
+    admissionYear: number;
     nationality: string;
   };
 }

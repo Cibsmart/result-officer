@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\GenderEnum;
+use App\Services\GradingSystem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -75,6 +76,11 @@ final class Student extends Model
     public function semesters(): HasManyThrough
     {
         return $this->hasManyThrough(SemesterEnrollment::class, Enrollment::class);
+    }
+
+    public function applyEGrade(): bool
+    {
+        return GradingSystem::new($this->matriculation_number)->isEGradeAllowed();
     }
 
     /** @return array<string, string> */

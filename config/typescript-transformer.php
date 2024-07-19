@@ -1,12 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
+use Carbon\Carbon;
+use Carbon\CarbonImmutable;
+use Carbon\CarbonInterface;
 use Spatie\LaravelData\Support\TypeScriptTransformer\DataTypeScriptCollector;
 use Spatie\LaravelTypeScriptTransformer\Transformers\DtoTransformer;
 use Spatie\LaravelTypeScriptTransformer\Transformers\SpatieStateTransformer;
 use Spatie\TypeScriptTransformer\Collectors\DefaultCollector;
 use Spatie\TypeScriptTransformer\Collectors\EnumCollector;
 use Spatie\TypeScriptTransformer\Transformers\EnumTransformer;
-use Spatie\TypeScriptTransformer\Transformers\SpatieEnumTransformer;
+use Spatie\TypeScriptTransformer\Writers\TypeDefinitionWriter;
 
 return [
     /*
@@ -31,44 +36,18 @@ return [
     ],
 
     /*
-     * Transformers take PHP classes(e.g., enums) as an input and will output
-     * a TypeScript representation of the PHP class.
-     */
-
-    'transformers' => [
-        SpatieStateTransformer::class,
-        EnumTransformer::class,
-        SpatieEnumTransformer::class,
-        DtoTransformer::class,
-    ],
-
-    /*
      * In your classes, you sometimes have types that should always be replaced
      * by the same TypeScript representations. For example, you can replace a
      * Datetime always with a string. You define these replacements here.
      */
 
     'default_type_replacements' => [
+        Carbon::class => 'string',
+        CarbonImmutable::class => 'string',
+        CarbonInterface::class => 'string',
         DateTime::class => 'string',
         DateTimeImmutable::class => 'string',
-        Carbon\CarbonInterface::class => 'string',
-        Carbon\CarbonImmutable::class => 'string',
-        Carbon\Carbon::class => 'string',
     ],
-
-    /*
-     * The package will write the generated TypeScript to this file.
-     */
-
-    'output_file' => resource_path('js/types/generated.d.ts'),
-
-    /*
-     * When the package is writing types to the output file, a writer is used to
-     * determine the format. By default, this is the `TypeDefinitionWriter`.
-     * But you can also use the `ModuleWriter` or implement your own.
-     */
-
-    'writer' => Spatie\TypeScriptTransformer\Writers\TypeDefinitionWriter::class,
 
     /*
      * The generated TypeScript file can be formatted. We ship a Prettier formatter
@@ -79,9 +58,34 @@ return [
     'formatter' => null,
 
     /*
+     * The package will write the generated TypeScript to this file.
+     */
+
+    'output_file' => resource_path('js/types/generated.d.ts'),
+
+    /*
+     * Transformers take PHP classes(e.g., enums) as an input and will output
+     * a TypeScript representation of the PHP class.
+     */
+
+    'transformers' => [
+        SpatieStateTransformer::class,
+        EnumTransformer::class,
+        DtoTransformer::class,
+    ],
+
+    /*
      * Enums can be transformed into types or native TypeScript enums, by default
      * the package will transform them to types.
      */
 
     'transform_to_native_enums' => false,
+
+    /*
+     * When the package is writing types to the output file, a writer is used to
+     * determine the format. By default, this is the `TypeDefinitionWriter`.
+     * But you can also use the `ModuleWriter` or implement your own.
+     */
+
+    'writer' => TypeDefinitionWriter::class,
 ];
