@@ -19,4 +19,12 @@ final class Faculty extends Model
     {
         return $this->hasMany(Department::class);
     }
+
+    /** @return array<string, string> */
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'bool',
+        ];
+    }
 }

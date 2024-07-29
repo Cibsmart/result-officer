@@ -27,4 +27,12 @@ final class Program extends Model
     {
         return $this->belongsTo(ProgramType::class);
     }
+
+    /** @return array<string, string> */
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'bool',
+        ];
+    }
 }

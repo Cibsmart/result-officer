@@ -26,4 +26,12 @@ final class Department extends Model
     {
         return $this->hasMany(Program::class);
     }
+
+    /** @return array<string, string> */
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'bool',
+        ];
+    }
 }
