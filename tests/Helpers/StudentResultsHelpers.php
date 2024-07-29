@@ -6,13 +6,17 @@ use App\Models\Enrollment;
 use App\Models\SemesterEnrollment;
 use App\Models\Student;
 use App\Services\ComputeAverage;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Tests\Factories\CourseRegistrationFactory;
 use Tests\Factories\CourseStatusFactory;
 use Tests\Factories\EnrollmentFactory;
+use Tests\Factories\LevelFactory;
+use Tests\Factories\ProgramFactory;
 use Tests\Factories\ResultFactory;
 use Tests\Factories\SemesterEnrollmentFactory;
 use Tests\Factories\SemesterFactory;
+use Tests\Factories\SessionFactory;
 use Tests\Factories\StudentFactory;
 
 function createStudentWithResults(
@@ -39,6 +43,42 @@ function createStudentWithResults(
                     ), 'semesters')
                 ->count($numberOfSessions),
         )->createOne();
+}
+
+function createMultipleStudentsWithResults(
+    int $numberOfStudents = 2,
+    int $numberOfSessions = 4,
+    int $numberOfSemesters = 2,
+    int $numberOfCourses = 5,
+): Collection {
+    $courseStatus = CourseStatusFactory::new()->create();
+    $firstSemester = SemesterFactory::new(['name' => 'FIRST'])->create();
+    $secondSemester = SemesterFactory::new(['name' => 'SECOND'])->create();
+    $program = ProgramFactory::new()->createOne();
+    $session = SessionFactory::new()->createOne();
+    $level = LevelFactory::new()->createOne();
+
+    return
+        StudentFactory::new()->has(
+            EnrollmentFactory::new(['level_id' => $level->id, 'session_id' => $session->id])
+                ->has(SemesterEnrollmentFactory::new()
+                    ->has(CourseRegistrationFactory::new(['course_status_id' => $courseStatus->id])
+                        ->has(ResultFactory::new())
+                        ->count($numberOfCourses),
+                        'courses')
+                    ->count($numberOfSemesters)
+                    ->state(new Sequence(
+                        ['semester_id' => $firstSemester->id],
+                        ['semester_id' => $secondSemester->id]),
+                    ), 'semesters')
+                ->count($numberOfSessions),
+        )
+            ->count($numberOfStudents)
+            ->create([
+                'entry_level_id' => $level->id,
+                'entry_session_id' => $session->id,
+                'program_id' => $program->id,
+            ]);
 }
 
 function computeGPA(SemesterEnrollment $semesterEnrollment): float

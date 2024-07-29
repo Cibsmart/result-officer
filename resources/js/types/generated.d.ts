@@ -96,6 +96,18 @@ declare namespace App.Data.Students {
     nationality: string;
   };
 }
+declare namespace App.Data.Summary {
+  export type DepartmentResultSummaryData = {
+    department: App.Data.Department.DepartmentData;
+    session: App.Data.Session.SessionData;
+    level: App.Data.Level.LevelData;
+    students: Array<App.Data.Summary.StudentResultSummaryData>;
+  };
+  export type StudentResultSummaryData = {
+    student: App.Data.Students.StudentData;
+    fcgpa: number;
+  };
+}
 declare namespace App.Enums {
   export type CourseStatusEnum = "F" | "R";
   export type CreditUnitEnum = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 12 | 15 | 18;
@@ -130,9 +142,12 @@ declare namespace App.ViewModels.Results {
   };
 }
 declare namespace App.ViewModels.Summary {
-  export type SummaryViewPage = {
+  export type SummaryFormPage = {
     department: App.Data.Department.DepartmentListData;
     session: App.Data.Session.SessionListData;
     level: App.Data.Level.LevelListData;
+  };
+  export type SummaryViewPage = {
+    department: App.Data.Summary.DepartmentResultSummaryData;
   };
 }
