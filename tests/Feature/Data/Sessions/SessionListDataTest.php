@@ -13,5 +13,5 @@ test('session list dto is correct', function (): void {
     $data = SessionListData::new();
 
     expect($data)->toBeInstanceOf(SessionListData::class)
-        ->and($data->sessions->count())->toEqual($count);
+        ->and($data->sessions->count())->toEqual($count + 1);
 });

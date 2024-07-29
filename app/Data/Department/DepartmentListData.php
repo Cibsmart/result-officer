@@ -19,12 +19,15 @@ final class DepartmentListData extends Data
 
     public static function new(): self
     {
+        $default = new DepartmentData(id: 0, name: 'Select Department');
+
         return new self(
             departments: DepartmentData::collect(
                 Department::query()
                     ->tap(new ActiveScope())
+                    ->orderBy('name')
                     ->get(),
-            ),
+            )->prepend($default),
         );
     }
 }

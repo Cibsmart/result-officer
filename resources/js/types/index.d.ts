@@ -22,6 +22,11 @@ export interface BreadcrumbItem {
   current: boolean;
 }
 
+export interface SelectItem {
+  id: number;
+  name: string | number;
+}
+
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
   auth: {
     user: App.Data.Shared.UserData;
