@@ -144,7 +144,7 @@ final class ResultSeeder extends Seeder
                     ExamScore::new($result[3][1]));
                 $grader = new Grader($score, true);
                 $gradePoint = $grader->grade()->value * $result[2];
-                $data = "$courseRegistration->id {$score->value} {$grader->grade()->name} $gradePoint";
+                $data = "$courseRegistration->id $score->value {$grader->grade()->name} $gradePoint";
 
                 Result::query()->create([
                     'course_registration_id' => $courseRegistration->id,

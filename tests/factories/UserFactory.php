@@ -13,7 +13,6 @@ use Illuminate\Support\Str;
 final class UserFactory extends Factory
 {
     protected $model = User::class;
-
     protected static ?string $password;
 
     /** @return array<string, string> */
@@ -29,10 +28,7 @@ final class UserFactory extends Factory
         ];
     }
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
-    public function unverified(): static
+    public function unverified(): self
     {
         // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
         return $this->state(fn (array $attributes) => [
