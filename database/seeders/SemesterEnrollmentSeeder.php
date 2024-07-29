@@ -19,6 +19,14 @@ final class SemesterEnrollmentSeeder extends Seeder
         ['enrollment_id' => 4, 'semester_id' => 2],
         ['enrollment_id' => 5, 'semester_id' => 1],
         ['enrollment_id' => 5, 'semester_id' => 2],
+        ['enrollment_id' => 6, 'semester_id' => 1],
+        ['enrollment_id' => 6, 'semester_id' => 2],
+        ['enrollment_id' => 7, 'semester_id' => 1],
+        ['enrollment_id' => 7, 'semester_id' => 2],
+        ['enrollment_id' => 8, 'semester_id' => 1],
+        ['enrollment_id' => 8, 'semester_id' => 2],
+        ['enrollment_id' => 9, 'semester_id' => 1],
+        ['enrollment_id' => 9, 'semester_id' => 2],
     ];
 
     public function run(): void
