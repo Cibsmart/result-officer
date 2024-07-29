@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->string('name');
             $table->foreignId('program_type_id')->constrained('program_types');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
             $table->softDeletes();
 
