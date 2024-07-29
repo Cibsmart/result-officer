@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Result\DownloadStudentTranscriptController;
 use App\Http\Controllers\Result\PrintStudentResultController;
 use App\Http\Controllers\Result\ViewStudentResultController;
+use App\Http\Controllers\Summary\DepartmentResultSummaryController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -20,11 +21,13 @@ Route::middleware(['auth'])->group(static function (): void {
 
     Route::get('results', [ViewStudentResultController::class, 'form'])->name('results.form');
     Route::post('results', [ViewStudentResultController::class, 'view'])->name('results.view');
-
     Route::get('results/{student}/print', PrintStudentResultController::class)
         ->name('results.print');
     Route::get('results/{student}/transcript', DownloadStudentTranscriptController::class)
         ->name('results.transcript');
+
+    Route::get('summary', [DepartmentResultSummaryController::class, 'form'])->name('summary.form');
+    Route::post('summary', [DepartmentResultSummaryController::class, 'view'])->name('summary.view');
 });
 
 require __DIR__ . '/auth.php';

@@ -45,8 +45,8 @@ const navigation: NavigationItem[] = [
     current: false,
     children: [
       { name: "Transcript", href: route("results.form"), current: route().current("results.form") },
+      { name: "Result Summary", href: route("summary.form"), current: route().current("summary.form") },
       { name: "Composite Sheet", href: "#", current: false },
-      { name: "Result Summary", href: "#", current: false },
       { name: "Graduation List", href: "#", current: false },
     ],
   },
