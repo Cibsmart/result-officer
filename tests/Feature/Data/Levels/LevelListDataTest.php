@@ -13,5 +13,5 @@ test('level list dto is correct', function (): void {
     $data = LevelListData::new();
 
     expect($data)->toBeInstanceOf(LevelListData::class)
-        ->and($data->levels->count())->toEqual($count);
+        ->and($data->levels->count())->toEqual($count + 1);
 });

@@ -18,6 +18,8 @@ final class SessionListData extends Data
 
     public static function new(): self
     {
-        return new self(sessions: SessionData::collect(Session::all()));
+        $default = new SessionData(id: 0, name: 'Select Session');
+
+        return new self(sessions: SessionData::collect(Session::all())->prepend($default));
     }
 }

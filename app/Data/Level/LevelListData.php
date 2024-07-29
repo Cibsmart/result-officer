@@ -18,6 +18,8 @@ final class LevelListData extends Data
 
     public static function new(): self
     {
-        return new self(levels: LevelData::collect(Level::all()));
+        $default = new LevelData(id: 0, name: 'Select Level');
+
+        return new self(levels: LevelData::collect(Level::all())->prepend($default));
     }
 }

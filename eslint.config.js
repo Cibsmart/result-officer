@@ -79,6 +79,7 @@ export default pluginTs.config(
       "vue/match-component-import-name": "warn",
       "vue/multi-word-component-names": "off",
       "vue/no-ref-object-destructure": "error",
+      "vue/no-template-shadow": "off",
       "vue/no-undef-components": "error",
       "vue/no-unused-refs": "error",
       "vue/no-useless-v-bind": "error",

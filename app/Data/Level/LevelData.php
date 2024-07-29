@@ -12,7 +12,7 @@ final class LevelData extends Data
 {
     public function __construct(
         public readonly int $id,
-        public readonly LevelEnum $name,
+        public readonly LevelEnum|string $name,
     ) {
     }
 

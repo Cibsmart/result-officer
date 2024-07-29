@@ -10,7 +10,7 @@ declare namespace App.Data.Department {
 declare namespace App.Data.Level {
   export type LevelData = {
     id: number;
-    name: number;
+    name: App.Enums.LevelEnum | string;
   };
   export type LevelListData = {
     levels: Array<App.Data.Level.LevelData>;
