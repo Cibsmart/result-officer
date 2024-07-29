@@ -20,6 +20,10 @@ final class LevelListData extends Data
     {
         $default = new LevelData(id: 0, name: 'Select Level');
 
-        return new self(levels: LevelData::collect(Level::all())->prepend($default));
+        return new self(
+            levels: LevelData::collect(
+                Level::query()->orderBy('name')->get(),
+            )->prepend($default),
+        );
     }
 }

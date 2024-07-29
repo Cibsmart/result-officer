@@ -20,6 +20,10 @@ final class SessionListData extends Data
     {
         $default = new SessionData(id: 0, name: 'Select Session');
 
-        return new self(sessions: SessionData::collect(Session::all())->prepend($default));
+        return new self(
+            sessions: SessionData::collect(
+                Session::query()->orderBy('name', 'desc')->get(),
+            )->prepend($default),
+        );
     }
 }
