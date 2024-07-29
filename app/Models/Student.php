@@ -30,6 +30,8 @@ final class Student extends Model
         'online_id',
     ];
 
+    protected $with = ['program', 'entrySession', 'entryLevel', 'entryMode', 'country', 'enrollments'];
+
     /** @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\CourseRegistration> */
     public function courses(): HasManyThrough
     {
