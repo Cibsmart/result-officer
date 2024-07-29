@@ -1,3 +1,21 @@
+declare namespace App.Data.Department {
+  export type DepartmentData = {
+    id: number;
+    name: string;
+  };
+  export type DepartmentListData = {
+    departments: Array<App.Data.Department.DepartmentData>;
+  };
+}
+declare namespace App.Data.Level {
+  export type LevelData = {
+    id: number;
+    name: number;
+  };
+  export type LevelListData = {
+    levels: Array<App.Data.Level.LevelData>;
+  };
+}
 declare namespace App.Data.Results {
   export type GradingSchemeData = {
     range: string;
@@ -41,6 +59,15 @@ declare namespace App.Data.Results {
   export type TranscriptData = {
     recordsUnitHead: string;
     gradingSchemes: Array<App.Data.Results.GradingSchemeData>;
+  };
+}
+declare namespace App.Data.Session {
+  export type SessionData = {
+    id: number;
+    name: string;
+  };
+  export type SessionListData = {
+    sessions: Array<App.Data.Session.SessionData>;
   };
 }
 declare namespace App.Data.Shared {
@@ -100,5 +127,12 @@ declare namespace App.ViewModels.Results {
   export type ResultViewPage = {
     student: App.Data.Students.StudentData;
     results: App.Data.Results.StudentResultData;
+  };
+}
+declare namespace App.ViewModels.Summary {
+  export type SummaryViewPage = {
+    department: App.Data.Department.DepartmentListData;
+    session: App.Data.Session.SessionListData;
+    level: App.Data.Level.LevelListData;
   };
 }
