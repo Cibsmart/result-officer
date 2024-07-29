@@ -7,9 +7,11 @@ namespace App\Http\Controllers\Summary;
 use App\Data\Department\DepartmentListData;
 use App\Data\Level\LevelListData;
 use App\Data\Session\SessionListData;
+use App\Data\Summary\DepartmentResultSummaryData;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Summary\SummaryRequest;
+use App\ViewModels\Summary\SummaryFormPage;
 use App\ViewModels\Summary\SummaryViewPage;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -17,17 +19,21 @@ final class DepartmentResultSummaryController extends Controller
 {
     public function form(): Response
     {
-        return Inertia::render('summary/form/page', new SummaryViewPage(
+        return Inertia::render('summary/form/page', new SummaryFormPage(
             department: DepartmentListData::new(),
             session: SessionListData::new(),
             level: LevelListData::new(),
         ));
     }
 
-    public function view(Request $request): Response
+    public function view(SummaryRequest $request): Response
     {
-        dd($request->all());
-
-        return Inertia::render('summary/view/page');
+        return Inertia::render('summary/view/page', new SummaryViewPage(
+            department: DepartmentResultSummaryData::from(
+                $request->input('department'),
+                $request->input('session'),
+                $request->input('level'),
+            ),
+        ));
     }
 }

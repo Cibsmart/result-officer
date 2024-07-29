@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class Department extends Model
@@ -25,6 +26,12 @@ final class Department extends Model
     public function programs(): HasMany
     {
         return $this->hasMany(Program::class);
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Student> */
+    public function students(): HasManyThrough
+    {
+        return $this->hasManyThrough(Student::class, Program::class);
     }
 
     /** @return array<string, string> */
