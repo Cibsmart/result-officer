@@ -13,9 +13,9 @@ defineProps<{
 }>();
 
 const form = useForm({
-  department_id: "",
-  session_id: "",
-  level_id: "",
+  department: "",
+  session: "",
+  level: "",
 });
 
 const submit = () => {
@@ -42,49 +42,49 @@ const submit = () => {
       @submit.prevent="submit">
       <div>
         <InputLabel
-          for="department_id"
+          for="department"
           value="Department" />
 
         <SelectInput
-          id="department_id"
-          v-model="form.department_id"
+          id="department"
+          v-model="form.department"
           :items="departments"
           class="mt-1 block w-full" />
 
         <InputError
-          :message="form.errors.department_id"
+          :message="form.errors.department"
           class="mt-2" />
       </div>
 
       <div>
         <InputLabel
-          for="session_id"
+          for="session"
           value="Session" />
 
         <SelectInput
-          id="session_id"
-          v-model="form.session_id"
+          id="session"
+          v-model="form.session"
           :items="sessions"
           class="mt-1 block w-full" />
 
         <InputError
-          :message="form.errors.session_id"
+          :message="form.errors.session"
           class="mt-2" />
       </div>
 
       <div>
         <InputLabel
-          for="level_id"
+          for="level"
           value="Level" />
 
         <SelectInput
-          id="level_id"
-          v-model="form.level_id"
+          id="level"
+          v-model="form.level"
           :items="levels"
           class="mt-1 block w-full" />
 
         <InputError
-          :message="form.errors.level_id"
+          :message="form.errors.level"
           class="mt-2" />
       </div>
 
