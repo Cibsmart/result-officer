@@ -12,13 +12,22 @@ final class DepartmentFactory extends Factory
 {
     protected $model = Department::class;
 
-    /** @return array<string, string> */
+    /** @return array<string, string|false|\Tests\Factories\FacultyFactory> */
     public function definition(): array
     {
         return [
             'code' => fake()->unique()->countryCode(),
             'faculty_id' => FacultyFactory::new(),
+            'is_active' => false,
             'name' => fake()->country(),
         ];
+    }
+
+    public function active(): self
+    {
+        // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
+        return $this->state(fn (array $attributes) => [
+            'is_active' => true,
+        ]);
     }
 }

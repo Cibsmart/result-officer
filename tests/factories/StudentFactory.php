@@ -27,7 +27,7 @@ final class StudentFactory extends Factory
             'first_name' => fake()->firstName(),
             'gender' => fake()->randomElement(GenderEnum::cases()),
             'last_name' => fake()->lastName(),
-            'matriculation_number' => 'EBSU/2009/51486',
+            'matriculation_number' => 'EBSU/' . fake()->year() . '/' . fake()->unique()->randomNumber(5, true),
             'other_names' => fake()->firstName(),
             'program_id' => ProgramFactory::new(),
         ];
