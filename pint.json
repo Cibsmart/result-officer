@@ -9,6 +9,7 @@
     "class_attributes_separation": false,
     "phpdoc_separation": false,
     "phpdoc_align": false,
-    "psr_autoloading": true
+    "psr_autoloading": true,
+    "new_with_parentheses": false
   }
 }
