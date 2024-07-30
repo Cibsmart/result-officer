@@ -18,7 +18,7 @@ final class CountryFactory extends Factory
         return [
             'code' => fake()->unique()->countryCode(),
             'demonym' => fake()->country(),
-            'name' => fake()->country(),
+            'name' => fake()->unique()->country(),
         ];
     }
 }
