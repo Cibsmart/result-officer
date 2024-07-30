@@ -37,12 +37,38 @@ const hasSummary = computed(() => props.department.students.length > 0);
             <h1 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">Department Results Summary</h1>
 
             <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">
-              This page shows list of students in the selected department in a particular session and level
+              List of {{ department.level.name }} level {{ department.department.name }} students in
+              {{ department.session.name }} with their current CGPA sorted from highest to lowest
             </p>
           </div>
 
           <div class="mt-4 flex space-x-4">
-            <BaseLink href="#"> Print</BaseLink>
+            <BaseLink
+              :href="
+                route('summary.print', {
+                  department: department.department.id,
+                  session: department.session.id,
+                  level: department.level.id,
+                })
+              ">
+              Print
+            </BaseLink>
+          </div>
+        </div>
+
+        <div
+          class="mt-5 divide-y divide-solid divide-gray-300 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg dark:divide-gray-600 dark:ring-gray-600">
+          <div class="p-2">
+            DEPARTMENT: <span class="font-bold text-black dark:text-white">{{ department.department.name }}</span>
+          </div>
+
+          <div class="p-2">
+            SESSION:
+            <span class="font-bold text-black dark:text-white">{{ department.session.name }}</span>
+          </div>
+
+          <div class="p-2">
+            LEVEL: <span class="font-bold text-black dark:text-white">{{ department.level.name }}</span>
           </div>
         </div>
 
