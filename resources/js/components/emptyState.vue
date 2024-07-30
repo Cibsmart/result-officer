@@ -1,5 +1,10 @@
 <script lang="ts" setup>
 import { PlusIcon } from "@heroicons/vue/20/solid";
+
+defineProps<{
+  title: string;
+  description: string;
+}>();
 </script>
 
 <template>
@@ -19,10 +24,10 @@ import { PlusIcon } from "@heroicons/vue/20/solid";
           vector-effect="non-scaling-stroke" />
       </svg>
 
-      <h3 class="mt-2 text-sm font-semibold text-gray-900 dark:text-white">No Result</h3>
+      <h3 class="mt-2 text-sm font-semibold text-gray-900 dark:text-white">{{ title }}</h3>
 
       <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">
-        Get started by downloading student's results from the Portal
+        {{ description }}
       </p>
 
       <div class="mt-6">

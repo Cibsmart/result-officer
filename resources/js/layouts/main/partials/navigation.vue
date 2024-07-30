@@ -50,12 +50,6 @@ const navigation: NavigationItem[] = [
       { name: "Graduation List", href: "#", current: false },
     ],
   },
-  // {
-  //   name: "Admin",
-  //   href: route("admin"),
-  //   icon: AdjustmentsHorizontalIcon,
-  //   current: false,
-  // },
 ];
 </script>
 
