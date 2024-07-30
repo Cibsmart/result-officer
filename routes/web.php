@@ -3,8 +3,6 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Result\DownloadStudentTranscriptController;
-use App\Http\Controllers\Result\PrintStudentResultController;
 use App\Http\Controllers\Result\ViewStudentResultController;
 use App\Http\Controllers\Summary\DepartmentResultSummaryController;
 use Illuminate\Support\Facades\Route;
@@ -21,13 +19,15 @@ Route::middleware(['auth'])->group(static function (): void {
 
     Route::get('results', [ViewStudentResultController::class, 'form'])->name('results.form');
     Route::post('results', [ViewStudentResultController::class, 'view'])->name('results.view');
-    Route::get('results/{student}/print', PrintStudentResultController::class)
+    Route::get('results/{student}/print', [ViewStudentResultController::class, 'print'])
         ->name('results.print');
-    Route::get('results/{student}/transcript', DownloadStudentTranscriptController::class)
+    Route::get('results/{student}/transcript', [ViewStudentResultController::class, 'transcript'])
         ->name('results.transcript');
 
     Route::get('summary', [DepartmentResultSummaryController::class, 'form'])->name('summary.form');
     Route::post('summary', [DepartmentResultSummaryController::class, 'view'])->name('summary.view');
+    Route::get('summary/{department}/{session}/{level}', [DepartmentResultSummaryController::class, 'print'])
+        ->name('summary.print');
 });
 
 require __DIR__ . '/auth.php';

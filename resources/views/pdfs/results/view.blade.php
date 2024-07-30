@@ -107,5 +107,7 @@
   </div>
 </div>
 
+@include('pdfs.shared.signature')
+
 </body>
 </html>

@@ -78,7 +78,7 @@ const hasResults = computed(() => props.results.enrollments.length > 0);
           <EmptyState
             v-else
             description="Get started by downloading student's results from the Portal"
-            title="No Result"/>
+            title="No Result" />
         </div>
 
         <div
