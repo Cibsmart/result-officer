@@ -21,7 +21,6 @@ const pages: BreadcrumbItem[] = [
 ];
 
 const hasResults = computed(() => props.results.enrollments.length > 0);
-const studentName = computed(() => `${props.student.lastName} ${props.student.firstName} ${props.student.otherNames}`);
 </script>
 
 <template>
@@ -55,7 +54,7 @@ const studentName = computed(() => `${props.student.lastName} ${props.student.fi
         <div
           class="mt-5 divide-y divide-solid divide-gray-300 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg dark:divide-gray-600 dark:ring-gray-600">
           <div class="p-2">
-            NAME: <span class="font-bold text-black dark:text-white">{{ studentName }}</span>
+            NAME: <span class="font-bold text-black dark:text-white">{{ student.name }}</span>
           </div>
 
           <div class="p-2">
@@ -76,9 +75,10 @@ const studentName = computed(() => `${props.student.lastName} ${props.student.fi
               :session="session" />
           </template>
 
-          <template v-else>
-            <EmptyState />
-          </template>
+          <EmptyState
+            v-else
+            description="Get started by downloading student's results from the Portal"
+            title="No Result"/>
         </div>
 
         <div
