@@ -26,7 +26,9 @@ final class StudentResultData extends Data
 
     public static function fromModel(Student $student): self
     {
-        $enrollments = SessionResultData::collect($student->enrollments);
+        $enrollments = SessionResultData::collect($student->enrollments)
+            ->sortBy('session')
+            ->values();
 
         $finalCGPA = round(
             ComputeAverage::new(
@@ -38,7 +40,10 @@ final class StudentResultData extends Data
 
         $degreeClass = DegreeClass::for($finalCGPA)->value();
         $programType = $student->program->programType;
-        $lastSession = $student->enrollments->last()->session->name;
+        $lastSession = $student->enrollments->last();
+        $graduationYear = $lastSession
+            ? RetrieveYear::fromSession($lastSession->session->name)->lastYear()
+            : 0;
 
         return new self(
             id: $student->id,
@@ -46,7 +51,7 @@ final class StudentResultData extends Data
             finalCumulativeGradePointAverage: $finalCGPA,
             degreeClass: $degreeClass->value,
             degreeAwarded: "$programType->name ($programType->code)",
-            graduationYear: RetrieveYear::fromSession($lastSession)->lastYear(),
+            graduationYear: $graduationYear,
         );
     }
 }

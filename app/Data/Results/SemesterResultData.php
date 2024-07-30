@@ -24,7 +24,10 @@ final class SemesterResultData extends Data
 
     public static function fromModel(SemesterEnrollment $enrollment): self
     {
-        $courses = ResultData::collect($enrollment->courses);
+
+        $courses = ResultData::collect($enrollment->courses)
+            ->sortBy('courseCode')
+            ->values();
 
         $totalCreditUnit = (int) $courses->sum('creditUnit');
         $totalGradePoint = (int) $courses->sum('gradePoint');
