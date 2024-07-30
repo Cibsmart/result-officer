@@ -43,7 +43,9 @@ final class DepartmentResultSummaryData extends Data
                                 ->where('level_id', $level->id);
                         })
                     ->get(),
-            )->sortByDesc('fcgpa')->values(),
+            )
+                ->sortByDesc('fcgpa')
+                ->values(),
         );
     }
 }
