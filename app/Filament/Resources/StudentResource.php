@@ -33,7 +33,7 @@ final class StudentResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('matriculation_number')->required(),
+                TextInput::make('registration_number')->required(),
                 TextInput::make('last_name')->required(),
                 TextInput::make('first_name')->required(),
                 TextInput::make('other_names'),
@@ -63,7 +63,7 @@ final class StudentResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('matriculation_number')->searchable()->sortable(),
+                TextColumn::make('registration_number')->searchable()->sortable(),
                 TextColumn::make('last_name')->searchable()->sortable(),
                 TextColumn::make('first_name')->searchable()->sortable(),
                 TextColumn::make('other_names')->searchable()->toggleable(isToggledHiddenByDefault: true),

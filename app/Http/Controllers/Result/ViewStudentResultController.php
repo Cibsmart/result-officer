@@ -50,15 +50,15 @@ final class ViewStudentResultController extends Controller
             })
             ->format(Format::A4)
             ->margins(5, 5, 5, 5)
-            ->name("$studentData->matriculationNumber-results.pdf");
+            ->name("$studentData->registrationNumber-results.pdf");
     }
 
     public function view(ResultRequest $request): Response
     {
-        $matriculationNumber = $request->input('matriculation_number');
+        $registrationNumber = $request->input('registration_number');
 
         $studentModel = Student::query()
-            ->where('matriculation_number', $matriculationNumber)
+            ->where('registration_number', $registrationNumber)
             ->firstOrFail();
 
         return Inertia::render('results/view/page', new ResultViewPage(

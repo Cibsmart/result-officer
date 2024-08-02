@@ -80,9 +80,29 @@ declare namespace App.Data.Shared {
   };
 }
 declare namespace App.Data.Students {
+  export type IngestStudentData = {
+    registrationNumber: string;
+    lastName: string;
+    firstName: string;
+    otherNames: string | null;
+    gender: App.Enums.GenderEnum;
+    dateOfBirth: string | null;
+    programId: number;
+    entrySessionId: number;
+    entryModeId: number;
+    entryLevelId: number;
+    stateId: number;
+    localGovernment: string | null;
+    jambRegistrationNumber: string | null;
+    email: string | null;
+    phoneNumber: string | null;
+    status: App.Enums.StudentStatusEnum;
+    onlineId: string | null;
+    source: App.Enums.RecordSource;
+  };
   export type StudentData = {
     id: number;
-    matriculationNumber: string;
+    registrationNumber: string;
     lastName: string;
     firstName: string;
     otherNames: string | null;
@@ -121,12 +141,14 @@ declare namespace App.Enums {
   export type GenderEnum = "M" | "F";
   export type Grade = 5 | 4 | 3 | 2 | 1 | 0;
   export type LevelEnum = 100 | 200 | 300 | 400 | 500 | 600;
+  export type RecordSource = "portal" | "excel" | "legacy";
   export type ResultRemark = "PAS" | "FAL" | "ABS" | "MAL";
   export type RoleEnum = "super-admin" | "admin" | "desk-officer" | "exam-officer" | "database-officer" | "user";
   export type ScoreTypeEnum = "course-work" | "exam";
   export type StudentStatusEnum =
     | "new"
     | "active"
+    | "inactive"
     | "probation"
     | "withdrawn"
     | "expelled"

@@ -59,7 +59,7 @@ const hasResults = computed(() => props.results.enrollments.length > 0);
 
           <div class="p-2">
             REGISTRATION NUMBER:
-            <span class="font-bold text-black dark:text-white">{{ student.matriculationNumber }}</span>
+            <span class="font-bold text-black dark:text-white">{{ student.registrationNumber }}</span>
           </div>
 
           <div class="p-2">

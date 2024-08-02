@@ -1,6 +1,6 @@
 <html lang="en">
 <head>
-  <title>{{ "$student->matriculationNumber - OFFICIAL TRANSCRIPT"}}</title>
+  <title>{{ "$student->registrationNumber - OFFICIAL TRANSCRIPT"}}</title>
   @vite(['resources/css/app.css'])
 </head>
 <body>
@@ -27,7 +27,7 @@
         </td>
 
         <td colspan="2" class="p-1.5 text-left text-xs text-gray-900 uppercase">
-          Registration Number: <span class="font-semibold">{{ $student->matriculationNumber }}</span>
+          Registration Number: <span class="font-semibold">{{ $student->registrationNumber }}</span>
         </td>
       </tr>
 

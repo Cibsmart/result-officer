@@ -20,12 +20,12 @@ final class ResultRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'matriculation_number' => [
+            'registration_number' => [
                 'required',
                 'string',
                 'min:14',
                 'regex:/^EBSU\/\d{4}\/\d{4,6}[A-Z]?$/',
-                'exists:students,matriculation_number',
+                'exists:students,registration_number',
             ],
         ];
     }
@@ -34,7 +34,7 @@ final class ResultRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'exists' => 'The matriculation number does not exist.',
+            'exists' => 'The registration number does not exist.',
         ];
     }
 }

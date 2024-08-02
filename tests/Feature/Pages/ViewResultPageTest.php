@@ -24,7 +24,7 @@ test('student result view page loads', function (): void {
     actingAs($user)
         ->from(route('results.form'))
         ->post(route('results.view', [
-            'matriculation_number' => $student->matriculation_number,
+            'registration_number' => $student->registration_number,
         ]))
         ->assertStatus(200)
         ->assertInertia(fn (Assert $page) => $page
@@ -34,35 +34,35 @@ test('student result view page loads', function (): void {
         );
 });
 
-test('matriculation number is required', function (): void {
+test('registration number is required', function (): void {
     $user = UserFactory::new()->createOne();
 
     actingAs($user)
         ->from(route('results.form'))
         ->post(route('results.view'))
-        ->assertSessionHasErrors(['matriculation_number' => 'The matriculation number field is required.']);
+        ->assertSessionHasErrors(['registration_number' => 'The registration number field is required.']);
 });
 
-test('matriculation number length must be at 14 characters', function (): void {
+test('registration number length must be at 14 characters', function (): void {
     $user = UserFactory::new()->createOne();
 
     actingAs($user)
         ->from(route('results.form'))
         ->post(route('results.view', [
-            'matriculation_number' => '2009/51486',
+            'registration_number' => '2009/51486',
         ]))
         ->assertSessionHasErrors([
-            'matriculation_number' => 'The matriculation number field must be at least 14 characters.',
+            'registration_number' => 'The registration number field must be at least 14 characters.',
         ]);
 });
 
-test('matriculation number must be valid', function (): void {
+test('registration number must be valid', function (): void {
     $user = UserFactory::new()->createOne();
 
     actingAs($user)
         ->from(route('results.form'))
         ->post(route('results.view', [
-            'matriculation_number' => 'EBUS/2009/51486',
+            'registration_number' => 'EBUS/2009/51486',
         ]))
-        ->assertSessionHasErrors(['matriculation_number' => 'The matriculation number field format is invalid.']);
+        ->assertSessionHasErrors(['registration_number' => 'The registration number field format is invalid.']);
 });
