@@ -30,7 +30,11 @@ return new class extends Migration
             $table->foreignId('state_id')->constrained('states');
             $table->string('local_government')->nullable();
             $table->string('jamb_registration_number')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('status')->default(StudentStatusEnum::NEW->value);
             $table->string('online_id')->nullable();
+            $table->string('source')->default(RecordSource::LEGACY->value);
             $table->timestamps();
         });
     }

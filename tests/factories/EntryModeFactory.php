@@ -16,7 +16,7 @@ final class EntryModeFactory extends Factory
     public function definition(): array
     {
         return [
-            'code' => fake()->unique()->randomElement(['DE', 'UTME', 'TRANSFER']),
+            'code' => fake()->unique()->countryCode(),
             'name' => fake()->country(),
         ];
     }
