@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Enums\RecordSource;
+use App\Enums\StudentStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,18 +17,18 @@ return new class extends Migration
     {
         Schema::create('students', static function (Blueprint $table): void {
             $table->id();
-            $table->string('matriculation_number')->unique();
+            $table->string('registration_number')->unique();
             $table->string('last_name');
             $table->string('first_name');
             $table->string('other_names')->nullable();
             $table->enum('gender', ['M', 'F']);
-            $table->date('date_of_birth');
-            $table->foreignId('country_id')->constrained('countries');
+            $table->date('date_of_birth')->nullable();
             $table->foreignId('program_id')->constrained('programs');
             $table->foreignId('entry_session_id')->constrained('academic_sessions');
-            $table->foreignId('entry_level_id')->constrained('levels');
             $table->foreignId('entry_mode_id')->constrained('entry_modes');
-            $table->string('status')->default('new');
+            $table->foreignId('entry_level_id')->constrained('levels');
+            $table->foreignId('state_id')->constrained('states');
+            $table->string('local_government')->nullable();
             $table->string('jamb_registration_number')->nullable();
             $table->string('online_id')->nullable();
             $table->timestamps();

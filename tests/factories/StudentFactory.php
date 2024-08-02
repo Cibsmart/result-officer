@@ -19,7 +19,6 @@ final class StudentFactory extends Factory
         $maximumDateOfBirth = now()->subYears(15)->format('Y-m-d');
 
         return [
-            'country_id' => CountryFactory::new(),
             'date_of_birth' => fake()->date(max: $maximumDateOfBirth),
             'entry_level_id' => LevelFactory::new(),
             'entry_mode_id' => EntryModeFactory::new(),
@@ -27,9 +26,10 @@ final class StudentFactory extends Factory
             'first_name' => fake()->firstName(),
             'gender' => fake()->randomElement(GenderEnum::cases()),
             'last_name' => fake()->lastName(),
-            'matriculation_number' => 'EBSU/' . fake()->year() . '/' . fake()->unique()->randomNumber(5, true),
             'other_names' => fake()->firstName(),
             'program_id' => ProgramFactory::new(),
+            'registration_number' => 'EBSU/' . fake()->year() . '/' . fake()->unique()->randomNumber(5, true),
+            'state_id' => StateFactory::new(),
         ];
     }
 }

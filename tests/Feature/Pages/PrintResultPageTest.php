@@ -19,7 +19,7 @@ test('view result form loads', function (): void {
         ->get(route('results.print', ['student' => $student->id]))
         ->assertStatus(200)
         ->assertViewIs('pdfs.results.view')
-        ->assertSeeText($student->matriculation_number)
+        ->assertSeeText($student->registration_number)
         ->assertSeeText($student->last_name)
         ->assertSeeText($student->first_name)
         ->assertSeeText($student->program->department->name)

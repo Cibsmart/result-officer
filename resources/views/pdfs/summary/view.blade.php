@@ -51,7 +51,7 @@
       <tr class="divide-x divide-gray-400">
         <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900">{{ $index + 1 }}</td>
         <td class="whitespace-nowrap p-1 text-xs text-gray-900">{{ $student->student->name }}</td>
-        <td class="p-1 text-xs text-gray-900">{{ $student->student->matriculationNumber }}</td>
+        <td class="p-1 text-xs text-gray-900">{{ $student->student->registrationNumber }}</td>
         <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900">{{ $student->fcgpa }}</td>
       </tr>
     @endforeach

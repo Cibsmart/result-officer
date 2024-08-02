@@ -13,7 +13,7 @@ final class StudentData extends Data
 {
     public function __construct(
         public readonly int $id,
-        public readonly string $matriculationNumber,
+        public readonly string $registrationNumber,
         public readonly string $lastName,
         public readonly string $firstName,
         public readonly ?string $otherNames,
@@ -30,20 +30,24 @@ final class StudentData extends Data
 
     public static function fromModel(Student $student): self
     {
+        $birthDate = $student->date_of_birth
+            ? $student->date_of_birth->format('d/m/Y')
+            : '';
+
         return new self(
             id: $student->id,
-            matriculationNumber: $student->matriculation_number,
+            registrationNumber: $student->registration_number,
             lastName: $student->last_name,
             firstName: $student->first_name,
             otherNames: $student->other_names,
             name: "$student->last_name $student->first_name $student->other_names",
             gender: $student->gender,
-            birthDate: $student->date_of_birth->format('d/m/Y'),
+            birthDate: $birthDate,
             program: $student->program->name,
             department: $student->program->department->name,
             faculty: $student->program->department->faculty->name,
             admissionYear: RetrieveYear::fromSession($student->entrySession->name)->firstYear(),
-            nationality: $student->country->demonym,
+            nationality: $student->state->country->demonym,
         );
     }
 }

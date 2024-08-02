@@ -1,6 +1,6 @@
 <html lang="en">
 <head>
-  <title>{{ "$student->matriculationNumber - EBSU RESULT DATABASE OFFICE - " . auth()->id() }}</title>
+  <title>{{ "$student->registrationNumber - EBSU RESULT DATABASE OFFICE - " . auth()->id() }}</title>
   @vite(['resources/css/app.css'])
 </head>
 <body>
@@ -34,7 +34,7 @@
       <tbody class="divide-y divide-gray-400 bg-white">
       <tr class="divide-x divide-gray-400">
         <td class="whitespace-nowrap p-1.5 text-xs text-left text-gray-900 font-semibold uppercase">
-          Registration Number: {{ $student->matriculationNumber }}
+          Registration Number: {{ $student->registrationNumber }}
         </td>
       </tr>
 

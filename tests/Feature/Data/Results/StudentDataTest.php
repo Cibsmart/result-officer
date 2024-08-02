@@ -12,7 +12,7 @@ test('student data object is correct', function (): void {
     $studentData = StudentData::from($student);
 
     expect($studentData)->toBeInstanceOf(StudentData::class)
-        ->and($studentData->matriculationNumber)->toBe($student->matriculation_number)
+        ->and($studentData->registrationNumber)->toBe($student->registration_number)
         ->and($studentData->lastName)->toBe($student->last_name)
         ->and($studentData->firstName)->toBe($student->first_name)
         ->and($studentData->gender)->toBe($student->gender)
@@ -21,5 +21,5 @@ test('student data object is correct', function (): void {
         ->and($studentData->department)->toBe($student->program->department->name)
         ->and($studentData->faculty)->toBe($student->program->department->faculty->name)
         ->and($studentData->admissionYear)->toBe(RetrieveYear::fromSession($student->entrySession->name)->firstYear())
-        ->and($studentData->nationality)->toBe($student->country->demonym);
+        ->and($studentData->nationality)->toBe($student->state->country->demonym);
 });

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\GenderEnum;
+use App\Enums\StudentStatusEnum;
 use App\Services\GradingSystem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,13 +16,13 @@ final class Student extends Model
 {
     /** @var array<int, string> */
     protected $fillable = [
-        'matriculation_number',
+        'registration_number',
         'last_name',
         'first_name',
         'other_names',
         'gender',
         'date_of_birth',
-        'country_id',
+        'state_id',
         'program_id',
         'entry_session_id',
         'entry_level_id',
@@ -30,7 +31,7 @@ final class Student extends Model
         'online_id',
     ];
 
-    protected $with = ['program', 'entrySession', 'entryLevel', 'entryMode', 'country', 'enrollments'];
+    protected $with = ['program', 'entrySession', 'entryLevel', 'entryMode', 'state', 'enrollments'];
 
     /** @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\CourseRegistration> */
     public function courses(): HasManyThrough
@@ -38,10 +39,10 @@ final class Student extends Model
         return $this->through('enrollments')->has('courses');
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Country, \App\Models\Student> */
-    public function country(): BelongsTo
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\State, \App\Models\Student> */
+    public function state(): BelongsTo
     {
-        return $this->belongsTo(Country::class);
+        return $this->belongsTo(State::class);
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Enrollment> */
@@ -82,7 +83,7 @@ final class Student extends Model
 
     public function applyEGrade(): bool
     {
-        return GradingSystem::new($this->matriculation_number)->isEGradeAllowed();
+        return GradingSystem::new($this->registration_number)->isEGradeAllowed();
     }
 
     /** @return array<string, string> */
@@ -91,6 +92,7 @@ final class Student extends Model
         return [
             'date_of_birth' => 'date',
             'gender' => GenderEnum::class,
+            'status' => StudentStatusEnum::class,
         ];
     }
 }

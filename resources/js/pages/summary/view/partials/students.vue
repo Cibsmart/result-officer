@@ -49,7 +49,7 @@ defineProps<{
           </td>
 
           <td class="relative border-t border-gray-200 py-2 pl-4 pr-3 text-sm sm:pl-6 dark:border-gray-700">
-            {{ student.student.matriculationNumber }}
+            {{ student.student.registrationNumber }}
           </td>
 
           <td

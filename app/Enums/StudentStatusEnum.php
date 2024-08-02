@@ -8,6 +8,7 @@ enum StudentStatusEnum: string
 {
     case NEW = 'new';
     case ACTIVE = 'active';
+    case INACTIVE = 'inactive';
     case PROBATION = 'probation';
     case WITHDRAWN = 'withdrawn';
     case EXPELLED = 'expelled';

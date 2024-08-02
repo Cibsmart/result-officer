@@ -46,8 +46,8 @@ function createStudentWithResults(
 }
 
 function createMultipleStudentsWithResults(
-    int $numberOfStudents = 2,
-    int $numberOfSessions = 4,
+    int $numberOfStudents = 4,
+    int $numberOfSessions = 1,
     int $numberOfSemesters = 2,
     int $numberOfCourses = 5,
 ): Collection {
