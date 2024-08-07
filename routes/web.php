@@ -32,6 +32,12 @@ Route::middleware(['auth'])->group(static function (): void {
     Route::get('summary/{department}/{session}/{level}', [DepartmentResultSummaryController::class, 'print'])
         ->name('summary.print');
 
+    Route::get('download/student', [StudentRecordController::class, 'form'])->name('download.student.form');
+    Route::post('download/student', [StudentRecordController::class, 'view'])->name('download.student.view');
+
+    Route::get('departments', [DepartmentRecordController::class, 'getAndSaveDepartments']);
+    Route::get('departments/{departmentId}', [DepartmentRecordController::class, 'getAndSaveDepartment']);
+
     Route::get('courses', [CourseRecordController::class, 'getAndSaveCourses']);
     Route::get('courses/{courseId}', [CourseRecordController::class, 'getAndSaveCourse']);
 });
