@@ -14,7 +14,7 @@ final class Department extends Model
 {
     use softDeletes;
 
-    protected $fillable = ['faculty_id', 'code', 'name'];
+    protected $fillable = ['faculty_id', 'code', 'name', 'online_id'];
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Faculty, \App\Models\Department> */
     public function faculty(): BelongsTo
