@@ -6,8 +6,6 @@ namespace App\Providers;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\ServiceProvider;
 
 final class AppServiceProvider extends ServiceProvider
@@ -25,11 +23,5 @@ final class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Model::shouldBeStrict(App::isLocal());
-
-        Http::macro(
-            'portal',
-            fn () => Http::acceptJson()
-                ->baseUrl(Config::string('rp-http.base_url')),
-        );
     }
 }
