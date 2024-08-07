@@ -8,7 +8,9 @@ use App\Enums\GenderEnum;
 use App\Models\Student;
 use App\Services\RetrieveYear;
 use Spatie\LaravelData\Data;
+use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
+#[TypeScript]
 final class StudentData extends Data
 {
     public function __construct(

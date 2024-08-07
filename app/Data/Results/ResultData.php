@@ -6,7 +6,9 @@ namespace App\Data\Results;
 
 use App\Models\CourseRegistration;
 use Spatie\LaravelData\Data;
+use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
+#[TypeScript]
 final class ResultData extends Data
 {
     public function __construct(

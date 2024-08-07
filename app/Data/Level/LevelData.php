@@ -7,7 +7,9 @@ namespace App\Data\Level;
 use App\Enums\LevelEnum;
 use App\Models\Level;
 use Spatie\LaravelData\Data;
+use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
+#[TypeScript]
 final class LevelData extends Data
 {
     public function __construct(

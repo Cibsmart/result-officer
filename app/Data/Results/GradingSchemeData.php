@@ -6,7 +6,9 @@ namespace App\Data\Results;
 
 use App\Enums\Grade;
 use Spatie\LaravelData\Data;
+use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
+#[TypeScript]
 final class GradingSchemeData extends Data
 {
     public function __construct(

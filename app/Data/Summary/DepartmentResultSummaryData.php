@@ -13,7 +13,9 @@ use App\Models\Session;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
+use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
+#[TypeScript]
 final class DepartmentResultSummaryData extends Data
 {
     public function __construct(
