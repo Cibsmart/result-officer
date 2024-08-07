@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->string('name');
             $table->boolean('is_active')->default(true);
+            $table->string('online_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
