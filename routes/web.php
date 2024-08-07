@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Ingest\CourseRecordController;
+use App\Http\Controllers\Ingest\DepartmentRecordController;
+use App\Http\Controllers\Ingest\StudentRecordController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Result\ViewStudentResultController;
 use App\Http\Controllers\Summary\DepartmentResultSummaryController;
@@ -28,6 +31,9 @@ Route::middleware(['auth'])->group(static function (): void {
     Route::post('summary', [DepartmentResultSummaryController::class, 'view'])->name('summary.view');
     Route::get('summary/{department}/{session}/{level}', [DepartmentResultSummaryController::class, 'print'])
         ->name('summary.print');
+
+    Route::get('courses', [CourseRecordController::class, 'getAndSaveCourses']);
+    Route::get('courses/{courseId}', [CourseRecordController::class, 'getAndSaveCourse']);
 });
 
 require __DIR__ . '/auth.php';
