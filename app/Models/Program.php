@@ -12,7 +12,7 @@ final class Program extends Model
 {
     use softDeletes;
 
-    protected $fillable = ['department_id', 'code', 'name'];
+    protected $fillable = ['department_id', 'code', 'name', 'program_type_id', 'online_id'];
 
     protected $with = ['department', 'programType'];
 

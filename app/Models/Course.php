@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 
 final class Course extends Model
 {
+    protected $fillable = ['code', 'title', 'online_id', 'active'];
 }
