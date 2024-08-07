@@ -8,7 +8,9 @@ use App\Models\Department;
 use App\Scopes\ActiveScope;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
+use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
+#[TypeScript]
 final class DepartmentListData extends Data
 {
     public function __construct(

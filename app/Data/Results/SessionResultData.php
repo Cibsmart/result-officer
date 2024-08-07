@@ -8,7 +8,9 @@ use App\Models\Enrollment;
 use App\Services\ComputeAverage;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
+use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
+#[TypeScript]
 final class SessionResultData extends Data
 {
     public function __construct(
