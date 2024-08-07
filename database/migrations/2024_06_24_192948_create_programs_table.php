@@ -16,10 +16,11 @@ return new class extends Migration
         Schema::create('programs', static function (Blueprint $table): void {
             $table->id();
             $table->foreignId('department_id')->constrained('departments');
-            $table->string('code')->unique();
+            $table->string('code');
             $table->string('name');
             $table->foreignId('program_type_id')->constrained('program_types');
             $table->boolean('is_active')->default(true);
+            $table->string('online_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

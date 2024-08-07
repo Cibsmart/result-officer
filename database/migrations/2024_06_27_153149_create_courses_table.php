@@ -15,10 +15,13 @@ return new class extends Migration
     {
         Schema::create('courses', static function (Blueprint $table): void {
             $table->id();
-            $table->string('code')->unique();
+            $table->string('code');
             $table->string('title');
-            $table->boolean('active')->default(false);
+            $table->boolean('active')->default(true);
+            $table->string('online_id')->nullable();
             $table->timestamps();
+
+            $table->unique(['code', 'title']);
         });
     }
 
