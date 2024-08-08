@@ -4,7 +4,49 @@ declare namespace App.Data.Department {
     name: string;
   };
   export type DepartmentListData = {
-    departments: { [key: number]: App.Data.Department.DepartmentData } | Array<any>;
+    departments: Array<App.Data.Department.DepartmentData>;
+  };
+}
+declare namespace App.Data.Ingest {
+  export type PortalCourseData = {
+    onlineId: string;
+    code: string;
+    title: string;
+  };
+  export type PortalDateData = {
+    day: string;
+    month: string;
+    year: string;
+  };
+  export type PortalDepartmentData = {
+    onlineId: string;
+    departmentCode: string;
+    departmentName: string;
+    facultyName: string;
+    programs: Array<App.Data.Ingest.PortalProgramData>;
+  };
+  export type PortalProgramData = {
+    id: string;
+    name: string;
+  };
+  export type PortalStudentData = {
+    onlineId: string;
+    lastName: string;
+    firstName: string;
+    otherNames: string;
+    registrationNumber: string;
+    gender: string;
+    dateOfBirth: App.Data.Ingest.PortalDateData;
+    departmentId: string;
+    option: string;
+    state: string;
+    localGovernment: string;
+    entrySession: string;
+    entryMode: string;
+    entryLevel: string;
+    jambRegistrationNumber: string;
+    email: string;
+    phoneNumber: string;
   };
 }
 declare namespace App.Data.Level {
@@ -13,7 +55,7 @@ declare namespace App.Data.Level {
     name: App.Enums.LevelEnum | string;
   };
   export type LevelListData = {
-    levels: { [key: number]: App.Data.Level.LevelData } | Array<any>;
+    levels: Array<App.Data.Level.LevelData>;
   };
 }
 declare namespace App.Data.Results {
@@ -35,7 +77,7 @@ declare namespace App.Data.Results {
   };
   export type SemesterResultData = {
     id: number;
-    results: { [key: number]: App.Data.Results.ResultData } | Array<any>;
+    results: Array<App.Data.Results.ResultData>;
     semester: string;
     creditUnitTotal: number;
     gradePointTotal: number;
@@ -43,18 +85,22 @@ declare namespace App.Data.Results {
   };
   export type SessionResultData = {
     id: number;
-    semesterResults: { [key: number]: App.Data.Results.SemesterResultData } | Array<any>;
+    semesterResults: Array<App.Data.Results.SemesterResultData>;
     session: string;
     year: string;
     cumulativeGradePointAverage: number;
   };
   export type StudentResultData = {
     id: number;
-    enrollments: { [key: number]: App.Data.Results.SessionResultData } | Array<any>;
+    enrollments: Array<App.Data.Results.SessionResultData>;
     finalCumulativeGradePointAverage: number;
     degreeClass: string;
     degreeAwarded: string;
     graduationYear: number;
+  };
+  export type TranscriptData = {
+    recordsUnitHead: string;
+    gradingSchemes: Array<App.Data.Results.GradingSchemeData>;
   };
 }
 declare namespace App.Data.Session {
@@ -63,7 +109,16 @@ declare namespace App.Data.Session {
     name: string;
   };
   export type SessionListData = {
-    sessions: { [key: number]: App.Data.Session.SessionData } | Array<any>;
+    sessions: Array<App.Data.Session.SessionData>;
+  };
+}
+declare namespace App.Data.Shared {
+  export type SharedData = {
+    user: App.Data.Shared.UserData;
+  };
+  export type UserData = {
+    name: string;
+    email: string;
   };
 }
 declare namespace App.Data.Students {
@@ -88,7 +143,7 @@ declare namespace App.Data.Summary {
     department: App.Data.Department.DepartmentData;
     session: App.Data.Session.SessionData;
     level: App.Data.Level.LevelData;
-    students: { [key: number]: App.Data.Summary.StudentResultSummaryData } | Array<any>;
+    students: Array<App.Data.Summary.StudentResultSummaryData>;
   };
   export type StudentResultSummaryData = {
     student: App.Data.Students.StudentData;
@@ -123,4 +178,20 @@ declare namespace App.Enums {
     | "deceased"
     | "transferred"
     | "graduated";
+}
+declare namespace App.ViewModels.Results {
+  export type ResultViewPage = {
+    student: App.Data.Students.StudentData;
+    results: App.Data.Results.StudentResultData;
+  };
+}
+declare namespace App.ViewModels.Summary {
+  export type SummaryFormPage = {
+    department: App.Data.Department.DepartmentListData;
+    session: App.Data.Session.SessionListData;
+    level: App.Data.Level.LevelListData;
+  };
+  export type SummaryViewPage = {
+    department: App.Data.Summary.DepartmentResultSummaryData;
+  };
 }

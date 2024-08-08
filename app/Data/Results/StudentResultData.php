@@ -10,9 +10,7 @@ use App\Services\DegreeClass;
 use App\Services\RetrieveYear;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
-use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
-#[TypeScript]
 final class StudentResultData extends Data
 {
     public function __construct(

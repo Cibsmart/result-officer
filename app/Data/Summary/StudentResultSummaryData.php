@@ -8,9 +8,7 @@ use App\Data\Results\StudentResultData;
 use App\Data\Students\StudentData;
 use App\Models\Student;
 use Spatie\LaravelData\Data;
-use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
-#[TypeScript]
 final class StudentResultSummaryData extends Data
 {
     public function __construct(
