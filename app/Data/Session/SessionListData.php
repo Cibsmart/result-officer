@@ -7,9 +7,7 @@ namespace App\Data\Session;
 use App\Models\Session;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
-use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
-#[TypeScript]
 final class SessionListData extends Data
 {
     public function __construct(

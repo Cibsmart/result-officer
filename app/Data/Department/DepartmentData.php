@@ -6,9 +6,7 @@ namespace App\Data\Department;
 
 use App\Models\Department;
 use Spatie\LaravelData\Data;
-use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
-#[TypeScript]
 final class DepartmentData extends Data
 {
     public function __construct(

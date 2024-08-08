@@ -32,6 +32,7 @@ return [
     'collectors' => [
         DefaultCollector::class,
         EnumCollector::class,
+        DataTypeScriptCollector::class,
     ],
 
     /*
