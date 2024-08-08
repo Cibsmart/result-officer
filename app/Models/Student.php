@@ -29,6 +29,11 @@ final class Student extends Model
         'entry_mode_id',
         'jamb_registration_number',
         'online_id',
+        'email',
+        'local_government',
+        'phone_number',
+        'source',
+        'status',
     ];
 
     protected $with = ['program', 'entrySession', 'entryLevel', 'entryMode', 'state', 'enrollments'];
