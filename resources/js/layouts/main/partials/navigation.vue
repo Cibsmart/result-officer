@@ -20,9 +20,9 @@ const navigation: NavigationItem[] = [
     icon: UsersIcon,
     current: false,
     children: [
-      { name: "Upload Record", href: "#", current: false },
-      { name: "Download Record", href: "#", current: false },
-      { name: "View Student", href: "#", current: false },
+      { name: "Upload", href: "#", current: false },
+      { name: "Download", href: route("download.student.form"), current: route().current("download.student.form") },
+      { name: "View", href: "#", current: false },
       { name: "Student List", href: "#", current: false },
     ],
   },
