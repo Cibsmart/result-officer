@@ -7,9 +7,7 @@ namespace App\Data\Level;
 use App\Models\Level;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
-use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
-#[TypeScript]
 final class LevelListData extends Data
 {
     public function __construct(
