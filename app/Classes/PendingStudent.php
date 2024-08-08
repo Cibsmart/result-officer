@@ -1,0 +1,124 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Classes;
+
+use App\Data\Ingest\PortalDateData;
+use App\Data\Ingest\PortalStudentData;
+use App\Enums\GenderEnum;
+use App\Enums\RecordSource;
+use App\Enums\StudentStatusEnum;
+use App\Models\Department;
+use App\Models\EntryMode;
+use App\Models\Level;
+use App\Models\Session;
+use App\Models\State;
+use App\Models\Student;
+use App\Services\ExtractYear;
+use App\Values\RegistrationNumber;
+use Carbon\Carbon;
+use Exception;
+
+final readonly class PendingStudent
+{
+    public function __construct(public Student $student)
+    {
+    }
+
+    public static function new(PortalStudentData $data): self
+    {
+        $student = new Student([
+            'date_of_birth' => self::getDateOfBirth($data->dateOfBirth),
+            'email' => $data->email,
+            'entry_level_id' => self::getEntryLevelId($data->entryLevel),
+            'entry_mode_id' => self::getEntryModeId($data->entryMode),
+            'entry_session_id' => self::getSessionId($data->entrySession, $data->registrationNumber),
+            'first_name' => $data->firstName,
+            'gender' => GenderEnum::from($data->gender),
+            'jamb_registration_number' => $data->jambRegistrationNumber,
+            'last_name' => $data->lastName,
+            'local_government' => $data->localGovernment,
+            'online_id' => $data->onlineId,
+            'other_names' => $data->otherNames,
+            'phone_number' => $data->phoneNumber,
+            'program_id' => self::getProgramId($data->departmentId, $data->option),
+            'registration_number' => RegistrationNumber::new($data->registrationNumber)->value,
+            'source' => RecordSource::PORTAL,
+            'state_id' => self::getStateId($data->state),
+            'status' => StudentStatusEnum::NEW,
+        ]);
+
+        return new self($student);
+    }
+
+    /** @throws \Exception */
+    public function save(): bool
+    {
+        $studentExists = Student::query()->where('registration_number', $this->student->registration_number)->exists();
+
+        if ($studentExists) {
+            throw new Exception('Student already exists');
+        }
+
+        return $this->student->save();
+    }
+
+    private static function getDateOfBirth(PortalDateData $dateOfBirth): ?Carbon
+    {
+        if ($dateOfBirth->day === '' || $dateOfBirth->month === '' || $dateOfBirth->year === '') {
+            return null;
+        }
+
+        return Carbon::createFromDate((int) $dateOfBirth->year, (int) $dateOfBirth->month, (int) $dateOfBirth->day);
+    }
+
+    private static function getEntryLevelId(string $entryLevel): int
+    {
+        $level = Level::query()->where('name', $entryLevel)->first();
+
+        $level ??= Level::query()->where('name', '100')->firstOrFail();
+
+        return $level->id;
+    }
+
+    private static function getEntryModeId(string $entryMode): int
+    {
+        $mode = EntryMode::query()->where('code', $entryMode)->first();
+
+        $mode ??= EntryMode::query()->where('code', 'UTME')->firstOrFail();
+
+        return $mode->id;
+    }
+
+    private static function getSessionId(string $session, string $registrationNumber): int
+    {
+        $dbSession = Session::query()->where('name', $session)->first();
+
+        $dbSession ??= Session::query()
+            ->where('name', ExtractYear::fromRegistrationNumber($registrationNumber)->session())
+            ->firstOrFail();
+
+        return $dbSession->id;
+    }
+
+    private static function getProgramId(string $onlineDepartmentId, string $programName): int
+    {
+        $department = Department::query()->where('online_id', $onlineDepartmentId)->first();
+
+        $programName = $programName !== ''
+            ? $programName
+            : $department->name;
+
+        return $department->programs()->where('name', $programName)->firstOrFail()->id;
+    }
+
+    private static function getStateId(string $state): int
+    {
+        $dbState = State::query()->where('name', $state)->first();
+
+        $dbState ??= State::query()->where('name', 'EBONYI')->firstOrFail();
+
+        return $dbState->id;
+    }
+}
