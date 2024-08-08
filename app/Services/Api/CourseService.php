@@ -8,9 +8,9 @@ use App\Data\Ingest\PortalCourseData;
 use App\Http\Clients\CourseClient;
 use Illuminate\Support\Collection;
 
-final class CourseService
+final readonly class CourseService
 {
-    public function __construct(public CourseClient $client)
+    public function __construct(private CourseClient $client)
     {
     }
 

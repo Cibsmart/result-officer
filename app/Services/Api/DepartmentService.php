@@ -8,9 +8,9 @@ use App\Data\Ingest\PortalDepartmentData;
 use App\Http\Clients\DepartmentClient;
 use Illuminate\Support\Collection;
 
-final class DepartmentService
+final readonly class DepartmentService
 {
-    public function __construct(public DepartmentClient $client)
+    public function __construct(private DepartmentClient $client)
     {
     }
 
