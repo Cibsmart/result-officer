@@ -58,7 +58,7 @@ final readonly class PendingStudent
         $studentExists = Student::query()->where('registration_number', $this->student->registration_number)->exists();
 
         if ($studentExists) {
-            throw new Exception('Student already exists');
+            throw new Exception("Student's record already exists in the database");
         }
 
         return $this->student->save();
