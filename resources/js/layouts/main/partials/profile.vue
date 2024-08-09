@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
-import { Link } from "@inertiajs/vue3";
+import { Link, usePage } from "@inertiajs/vue3";
 import { ChevronRightIcon } from "@heroicons/vue/20/solid";
 import { UserNavigationItem } from "@/types";
 import ProfileImage from "@/layouts/main/partials/profileImage.vue";
+
+const user = usePage().props.user;
 
 const userNavigation: UserNavigationItem[] = [
   { name: "Your profile", href: route("profile.edit"), method: "get" },
@@ -24,7 +26,7 @@ const userNavigation: UserNavigationItem[] = [
 
       <span class="sr-only">Your profile</span>
 
-      <span aria-hidden="true">{{ $page.props.auth.user.name }}</span>
+      <span aria-hidden="true">{{ user.name }}</span>
 
       <ChevronRightIcon
         :class="[open ? '-rotate-90 text-gray-500 dark:text-gray-300' : 'text-gray-400']"

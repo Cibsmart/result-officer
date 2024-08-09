@@ -13,6 +13,20 @@ final class SharedData extends Data
     public function __construct(
         #[TypeScriptType(UserData::class)]
         public ?Closure $user = null,
+        public ?NotificationData $notification = null,
     ) {
+        $this->shareNotification();
+    }
+
+    private function shareNotification(): void
+    {
+        if (! session('notification')) {
+            return;
+        }
+
+        /** @var array{type: \App\Enums\NotificationType, body: string} $notification */
+        $notification = session('notification');
+
+        $this->notification = new NotificationData(...$notification);
     }
 }

@@ -8,7 +8,10 @@ use Spatie\LaravelData\Data;
 
 final class UserData extends Data
 {
-    public function __construct(public string $name, public string $email)
-    {
+    public function __construct(
+        public int $id,
+        public string $name,
+        public string $email,
+    ) {
     }
 }

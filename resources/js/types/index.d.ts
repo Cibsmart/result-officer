@@ -1,4 +1,5 @@
 import type { FunctionalComponent, HTMLAttributes, VNodeProps } from "vue";
+import SharedData = App.Data.Shared.SharedData;
 
 type IconType = FunctionalComponent<HTMLAttributes, VNodeProps>;
 
@@ -27,8 +28,4 @@ export interface SelectItem {
   name: string | number;
 }
 
-export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
-  auth: {
-    user: App.Data.Shared.UserData;
-  };
-};
+export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & SharedData;
