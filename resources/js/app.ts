@@ -6,6 +6,9 @@ import { createApp, DefineComponent, h } from "vue";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy";
 import LayoutMain from "@/layouts/main/layoutMain.vue";
 import LayoutGuest from "@/layouts/guest/layoutGuest.vue";
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
+import { notifications } from "@/plugins/notifications";
 
 const appName = import.meta.env.VITE_APP_NAME || "ResultPro";
 
@@ -27,9 +30,13 @@ createInertiaApp({
     createApp({ render: () => h(App, props) })
       .use(plugin)
       .use(ZiggyVue)
+      .use(Toast)
+      .use(notifications)
       .mount(el);
   },
   progress: {
-    color: "#4B5563",
+    color: "#6366f1",
+    includeCSS: true,
+    showSpinner: true,
   },
 });
