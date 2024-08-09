@@ -67,14 +67,9 @@ final class StudentRepository
      */
     public function saveStudent(PortalStudentData $studentData): Student
     {
-        $pendingStudent = '';
+        $pendingStudent = PendingStudent::new($studentData);
 
-        try {
-            $pendingStudent = PendingStudent::new($studentData);
-            $pendingStudent->save();
-        } catch (Exception $exception) {
-            throw $exception;
-        }
+        $pendingStudent->save();
 
         return $pendingStudent->student;
     }
