@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Ingest\CourseRecordController;
 use App\Http\Controllers\Ingest\DepartmentRecordController;
 use App\Http\Controllers\Ingest\StudentRecordController;
@@ -9,11 +10,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Result\ViewStudentResultController;
 use App\Http\Controllers\Summary\DepartmentResultSummaryController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-Route::get('/', static fn () => Inertia::render('dashboard'))
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::get('/', DashboardController::class)->middleware(['auth'])->name('dashboard');
 
 Route::middleware(['auth'])->group(static function (): void {
     Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
