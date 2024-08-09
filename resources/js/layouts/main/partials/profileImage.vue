@@ -4,7 +4,7 @@ import { usePage } from "@inertiajs/vue3";
 
 const initials = computed(() => {
   return usePage()
-    .props.auth.user.name.split(" ")
+    .props.user.name.split(" ")
     .map((word) => word[0].toUpperCase())
     .join("");
 });

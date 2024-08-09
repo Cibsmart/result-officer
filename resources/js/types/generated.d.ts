@@ -113,10 +113,16 @@ declare namespace App.Data.Session {
   };
 }
 declare namespace App.Data.Shared {
+  export type NotificationData = {
+    type: App.Enums.NotificationType;
+    body: string;
+  };
   export type SharedData = {
     user: App.Data.Shared.UserData;
+    notification: App.Data.Shared.NotificationData | null;
   };
   export type UserData = {
+    id: number;
     name: string;
     email: string;
   };
@@ -163,6 +169,7 @@ declare namespace App.Enums {
   export type GenderEnum = "M" | "F";
   export type Grade = 5 | 4 | 3 | 2 | 1 | 0;
   export type LevelEnum = 100 | 200 | 300 | 400 | 500 | 600;
+  export type NotificationType = "success" | "error" | "warning" | "info";
   export type RecordSource = "portal" | "excel" | "legacy";
   export type ResultRemark = "PAS" | "FAL" | "ABS" | "MAL";
   export type RoleEnum = "super-admin" | "admin" | "desk-officer" | "exam-officer" | "database-officer" | "user";
