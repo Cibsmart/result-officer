@@ -20,10 +20,14 @@ const navigation: NavigationItem[] = [
     icon: UsersIcon,
     current: false,
     children: [
-      { name: "Upload", href: "#", current: false },
-      { name: "Download", href: route("download.student.form"), current: route().current("download.student.form") },
+      { name: "Excel Upload", href: "#", current: false },
+      {
+        name: "API Download",
+        href: route("download.students.page"),
+        current: route().current("download.students.page"),
+      },
       { name: "View", href: "#", current: false },
-      { name: "Student List", href: "#", current: false },
+      { name: "Students List", href: "#", current: false },
     ],
   },
   { name: "Courses", href: "#", icon: DocumentDuplicateIcon, current: false },

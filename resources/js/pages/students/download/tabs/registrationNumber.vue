@@ -10,14 +10,14 @@ const form = useForm({
 });
 
 const submit = () => {
-  form.post(route("download.student.view"));
+  form.post(route("download.student.registration-number.store"));
 };
 </script>
 
 <template>
   <section>
     <header>
-      <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Student Information</h2>
+      <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Download Student Information</h2>
 
       <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
         Input student's registration number to download records
