@@ -23,6 +23,11 @@ export interface BreadcrumbItem {
   current: boolean;
 }
 
+export interface TabItem {
+  name: string;
+  component: any;
+}
+
 export interface SelectItem {
   id: number;
   name: string | number;
