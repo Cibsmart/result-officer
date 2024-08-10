@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Ingest;
+namespace App\Http\Controllers\Download\Students;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Students\DownloadRequest;
@@ -12,18 +12,18 @@ use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
-final class StudentRecordController extends Controller
+final class DownloadStudentRegistrationNumberController extends Controller
 {
     public function __construct(private readonly StudentRepository $repository)
     {
     }
 
-    public function form(): Response
+    public function create(): Response
     {
-        return Inertia::render('students/download/form/page');
+        return Inertia::render('students/download/page');
     }
 
-    public function view(DownloadRequest $request): RedirectResponse
+    public function store(DownloadRequest $request): RedirectResponse
     {
         try {
             $data = $this->repository->getStudentByRegistrationNumber(

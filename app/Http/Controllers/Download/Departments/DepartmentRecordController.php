@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Ingest;
+namespace App\Http\Controllers\Download\Departments;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\DepartmentRepository;
