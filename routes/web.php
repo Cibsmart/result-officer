@@ -3,9 +3,12 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Ingest\CourseRecordController;
-use App\Http\Controllers\Ingest\DepartmentRecordController;
-use App\Http\Controllers\Ingest\StudentRecordController;
+use App\Http\Controllers\Download\Courses\CourseRecordController;
+use App\Http\Controllers\Download\Departments\DepartmentRecordController;
+use App\Http\Controllers\Download\Students\DownloadStudentRegistrationNumberController;
+use App\Http\Controllers\Download\Students\DownloadStudentsDepartmentSessionController;
+use App\Http\Controllers\Download\Students\DownloadStudentsPageController;
+use App\Http\Controllers\Download\Students\DownloadStudentsSessionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Result\ViewStudentResultController;
 use App\Http\Controllers\Summary\DepartmentResultSummaryController;
@@ -30,8 +33,19 @@ Route::middleware(['auth'])->group(static function (): void {
     Route::get('summary/{department}/{session}/{level}', [DepartmentResultSummaryController::class, 'print'])
         ->name('summary.print');
 
-    Route::get('download/student', [StudentRecordController::class, 'form'])->name('download.student.form');
-    Route::post('download/student', [StudentRecordController::class, 'view'])->name('download.student.view');
+    Route::get('download/students/page', [DownloadStudentsPageController::class, 'index'])
+        ->name('download.students.page');
+
+    Route::get('download/student/registration-number', [DownloadStudentRegistrationNumberController::class, 'create'])
+        ->name('download.student.registration-number.form');
+    Route::post('download/student/registration-number', [DownloadStudentRegistrationNumberController::class, 'store'])
+        ->name('download.student.registration-number.store');
+
+    Route::post('download/students/department-session', [DownloadStudentsDepartmentSessionController::class, 'store'])
+        ->name('download.students.department-session.store');
+
+    Route::post('download/students/session', [DownloadStudentsSessionController::class, 'store'])
+        ->name('download.students.session.store');
 
     Route::get('departments', [DepartmentRecordController::class, 'getAndSaveDepartments']);
     Route::get('departments/{departmentId}', [DepartmentRecordController::class, 'getAndSaveDepartment']);

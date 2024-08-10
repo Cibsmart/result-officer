@@ -186,6 +186,12 @@ declare namespace App.Enums {
     | "transferred"
     | "graduated";
 }
+declare namespace App.ViewModels.Downloads {
+  export type DownloadStudentPage = {
+    department: App.Data.Department.DepartmentListData;
+    session: App.Data.Session.SessionListData;
+  };
+}
 declare namespace App.ViewModels.Results {
   export type ResultViewPage = {
     student: App.Data.Students.StudentData;
