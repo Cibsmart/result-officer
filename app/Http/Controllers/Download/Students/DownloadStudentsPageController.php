@@ -15,7 +15,7 @@ final class DownloadStudentsPageController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('students/download/page', new DownloadStudentPage(
+        return Inertia::render('download/students/page', new DownloadStudentPage(
             department: DepartmentListData::new(),
             session: SessionListData::new(),
         ));

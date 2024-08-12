@@ -5,19 +5,16 @@ import InputError from "@/components/inputError.vue";
 import { useForm } from "@inertiajs/vue3";
 import SelectInput from "@/components/inputs/selectInput.vue";
 import { SelectItem } from "@/types";
+import useSession from "@/composables/useSession.js";
 
-defineProps<{
-  departments: SelectItem[];
-  sessions: SelectItem[];
-}>();
+const sessions = useSession.getSessions() as SelectItem[];
 
 const form = useForm({
-  department: "",
   session: "",
 });
 
 const submit = () => {
-  form.post(route("download.students.department-session.store"));
+  form.post(route("download.students.session.store"));
 };
 </script>
 
@@ -26,30 +23,12 @@ const submit = () => {
     <header>
       <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Download Students Information</h2>
 
-      <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-        Select Department and Session to download students' records
-      </p>
+      <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Select Session to download their records</p>
     </header>
 
     <form
       class="mt-6 space-y-6"
       @submit.prevent="submit">
-      <div>
-        <InputLabel
-          for="department"
-          value="Department" />
-
-        <SelectInput
-          id="department"
-          v-model="form.department"
-          :items="departments"
-          class="mt-1 block w-full" />
-
-        <InputError
-          :message="form.errors.department"
-          class="mt-2" />
-      </div>
-
       <div>
         <InputLabel
           for="session"
