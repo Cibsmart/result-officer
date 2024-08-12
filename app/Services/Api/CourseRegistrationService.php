@@ -1,0 +1,67 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Services\Api;
+
+use App\Contracts\CourseRegistration;
+use App\Data\Download\PortalCourseRegistrationData;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
+
+final class CourseRegistrationService
+{
+    public function __construct(public CourseRegistration $client)
+    {
+    }
+
+    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> */
+    public function getCourseRegistrationsByRegistrationNumber(string $registrationNumber): Collection
+    {
+        $registrationNumber = Str::replace('/', '-', $registrationNumber);
+
+        $registrations = $this->client->fetchCourseRegistrationByRegistrationNumber($registrationNumber);
+
+        return PortalCourseRegistrationData::collect(collect($registrations));
+    }
+
+    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> */
+    public function getCourseRegistrationsByDepartmentSessionAndLevel(
+        string $departmentId,
+        string $session,
+        string $level,
+    ): Collection {
+        $session = Str::replace('/', '-', $session);
+
+        $registrations = $this->client->fetchCourseRegistrationByDepartmentSessionLevel(
+            $departmentId, $session, $level,
+        );
+
+        return PortalCourseRegistrationData::collect(collect($registrations));
+    }
+
+    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> */
+    public function getCourseRegistrationsByDepartmentSessionAndSemester(
+        string $departmentId,
+        string $session,
+        string $semester,
+    ): Collection {
+        $session = Str::replace('/', '-', $session);
+
+        $registrations = $this->client->fetchCourseRegistrationByDepartmentSessionSemester(
+            $departmentId, $session, $semester,
+        );
+
+        return PortalCourseRegistrationData::collect(collect($registrations));
+    }
+
+    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> */
+    public function getCourseRegistrationsBySessionAndCourse(string $session, string $courseId): Collection
+    {
+        $session = Str::replace('/', '-', $session);
+
+        $registrations = $this->client->fetchCourseRegistrationBySessionCourse($session, $courseId);
+
+        return PortalCourseRegistrationData::collect(collect($registrations));
+    }
+}
