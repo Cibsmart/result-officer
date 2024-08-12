@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Enums\RecordSource;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('credit_unit');
             $table->foreignId('course_status_id')->constrained('course_statuses');
             $table->string('online_id')->nullable();
+            $table->string('source')->default(RecordSource::LEGACY->value);
             $table->timestamps();
 
             $table->unique(['semester_enrollment_id', 'course_id'], 'semester_enrollment_course_id');
