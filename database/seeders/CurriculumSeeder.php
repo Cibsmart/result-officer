@@ -21,9 +21,9 @@ final class CurriculumSeeder extends Seeder
             'name' => 'CORE CURRICULUM MINIMUM ACADEMIC STANDARD',
         ]);
 
-        $this->call([
-            ProgramCurriculumSeeder::class,
-            ProgramCourseSeeder::class,
-        ]);
+        //        $this->call([
+        //            ProgramCurriculumSeeder::class,
+        //            ProgramCourseSeeder::class,
+        //        ]);
     }
 }

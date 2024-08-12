@@ -13,9 +13,8 @@ final class DepartmentSeeder extends Seeder
     /** @var array<string, string> */
     private array $departments = [
         'CHEM' => 'CHEMISTRY',
-        'CSCI' => 'COMPUTER SCIENCE/INFORMATICS',
+        'CSC' => 'COMPUTER SCIENCE',
         'MTHSTA' => 'MATHEMATICS/STATICS',
-        'PHYGEOP' => 'PHYSIC/APPLIED GEOPHYSICS',
     ];
 
     public function run(): void

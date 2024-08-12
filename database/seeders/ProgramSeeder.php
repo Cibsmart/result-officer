@@ -13,7 +13,7 @@ final class ProgramSeeder extends Seeder
 {
     /** @var array<string, array<string, string>> */
     private array $departmentPrograms = [
-        'CSCI' => [
+        'CSC' => [
             'CSC' => 'COMPUTER SCIENCE',
             'IFM' => 'INFORMATICS',
         ],
