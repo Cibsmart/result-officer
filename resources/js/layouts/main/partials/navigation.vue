@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
-import { ChevronRightIcon } from "@heroicons/vue/20/solid";
+import { ChevronRightIcon, ArrowDownTrayIcon } from "@heroicons/vue/20/solid";
 import { NavigationItem } from "@/types";
 import {
   ChartPieIcon,
@@ -15,17 +15,35 @@ import { Link, usePage } from "@inertiajs/vue3";
 const navigation: NavigationItem[] = [
   { name: "Dashboard", href: route("dashboard"), icon: HomeIcon, current: route().current("dashboard") },
   {
+    name: "Download",
+    href: "#",
+    icon: ArrowDownTrayIcon,
+    current: false,
+    children: [
+      {
+        name: "Students",
+        href: route("download.students.page"),
+        current: route().current("download.students.page"),
+      },
+      {
+        name: "Course Registrations",
+        href: route("download.course-registrations.page"),
+        current: route().current("download.course-registrations.page"),
+      },
+      {
+        name: "Results",
+        href: route("download.results.page"),
+        current: route().current("download.results.page"),
+      },
+    ],
+  },
+  {
     name: "Students",
     href: "#",
     icon: UsersIcon,
     current: false,
     children: [
       { name: "Excel Upload", href: "#", current: false },
-      {
-        name: "API Download",
-        href: route("download.students.page"),
-        current: route().current("download.students.page"),
-      },
       { name: "View", href: "#", current: false },
       { name: "Students List", href: "#", current: false },
     ],

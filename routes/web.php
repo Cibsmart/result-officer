@@ -36,8 +36,6 @@ Route::middleware(['auth'])->group(static function (): void {
     Route::get('download/students/page', [DownloadStudentsPageController::class, 'index'])
         ->name('download.students.page');
 
-    Route::get('download/student/registration-number', [DownloadStudentByRegistrationNumberController::class, 'create'])
-        ->name('download.student.registration-number.form');
     Route::post('download/student/registration-number', [DownloadStudentByRegistrationNumberController::class, 'store'])
         ->name('download.student.registration-number.store');
 
@@ -52,6 +50,12 @@ Route::middleware(['auth'])->group(static function (): void {
 
     Route::get('courses', [CourseRecordController::class, 'getAndSaveCourses']);
     Route::get('courses/{courseId}', [CourseRecordController::class, 'getAndSaveCourse']);
+
+    Route::get('download/course-registrations/page', [DownloadStudentsPageController::class, 'index'])
+        ->name('download.course-registrations.page');
+
+    Route::get('download/results/page', [DownloadStudentsPageController::class, 'index'])
+        ->name('download.results.page');
 });
 
 require __DIR__ . '/auth.php';
