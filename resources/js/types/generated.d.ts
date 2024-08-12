@@ -201,6 +201,7 @@ declare namespace App.Enums {
     | "deceased"
     | "transferred"
     | "graduated";
+  export type YearEnum = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 }
 declare namespace App.ViewModels.Downloads {
   export type DownloadStudentPage = {

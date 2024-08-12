@@ -29,9 +29,9 @@ final class FacultySeeder extends Seeder
                 ]);
         }
 
-        $this->call([
-            DepartmentSeeder::class,
-            ProgramSeeder::class,
-        ]);
+        //        $this->call([
+        //            DepartmentSeeder::class,
+        //            ProgramSeeder::class,
+        //        ]);
     }
 }

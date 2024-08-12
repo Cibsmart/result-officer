@@ -29,10 +29,6 @@ final class EnrollmentSeeder extends Seeder
 
     public function run(): void
     {
-        $this->call([
-            YearSeeder::class,
-        ]);
-
         foreach ($this->enrollments as $student_id => $enrollments) {
             foreach ($enrollments as $year_id => $enrollment) {
                 Enrollment::query()->create([
