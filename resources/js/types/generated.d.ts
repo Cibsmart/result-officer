@@ -7,7 +7,7 @@ declare namespace App.Data.Department {
     departments: Array<App.Data.Department.DepartmentData>;
   };
 }
-declare namespace App.Data.Ingest {
+declare namespace App.Data.Download {
   export type PortalCourseData = {
     onlineId: string;
     code: string;
@@ -23,7 +23,7 @@ declare namespace App.Data.Ingest {
     departmentCode: string;
     departmentName: string;
     facultyName: string;
-    programs: Array<App.Data.Ingest.PortalProgramData>;
+    programs: Array<App.Data.Download.PortalProgramData>;
   };
   export type PortalProgramData = {
     id: string;
@@ -36,7 +36,7 @@ declare namespace App.Data.Ingest {
     otherNames: string;
     registrationNumber: string;
     gender: string;
-    dateOfBirth: App.Data.Ingest.PortalDateData;
+    dateOfBirth: App.Data.Download.PortalDateData;
     departmentId: string;
     option: string;
     state: string;
@@ -56,6 +56,12 @@ declare namespace App.Data.Level {
   };
   export type LevelListData = {
     levels: Array<App.Data.Level.LevelData>;
+  };
+}
+declare namespace App.Data.Response {
+  export type ResponseData = {
+    key: string;
+    message: string;
   };
 }
 declare namespace App.Data.Results {
@@ -110,6 +116,9 @@ declare namespace App.Data.Session {
   };
   export type SessionListData = {
     sessions: Array<App.Data.Session.SessionData>;
+  };
+  export type SessionTestData = {
+    session: Array<any>;
   };
 }
 declare namespace App.Data.Shared {
