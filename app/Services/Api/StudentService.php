@@ -15,7 +15,7 @@ final readonly class StudentService
     {
     }
 
-    public function getStudentByRegistration(string $registrationNumber): PortalStudentData
+    public function getStudentByRegistrationNumber(string $registrationNumber): PortalStudentData
     {
         $registrationNumber = Str::replace('/', '-', $registrationNumber);
 

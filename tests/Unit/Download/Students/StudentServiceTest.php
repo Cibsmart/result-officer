@@ -14,7 +14,7 @@ beforeEach(function (): void {
 });
 
 it('can get student by registration number', function (): void {
-    $data = $this->service->getStudentByRegistration('EBSU/2009/51486');
+    $data = $this->service->getStudentByRegistrationNumber('EBSU/2009/51486');
 
     expect($data)->toBeInstanceOf(PortalStudentData::class)
         ->and($data->registrationNumber)->toBe('EBSU/2009/51486');
