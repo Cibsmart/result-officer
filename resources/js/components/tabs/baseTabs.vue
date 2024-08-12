@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Tab, TabGroup, TabList } from "@headlessui/vue";
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/vue";
 import { computed } from "vue";
 import { TabItem } from "@/types";
 
@@ -31,13 +31,13 @@ const width = computed(() => `w-1/${props.tabs.length}`);
       </Tab>
     </TabList>
 
-    <slot />
-
-    <!-- Sample Slot Content    -->
-    <!--        <TabPanels>-->
-    <!--          <TabPanel>-->
-    <!--            <RegistrationNumber />-->
-    <!--          </TabPanel>-->
-    <!--        <TabPanels/>-->
+    <TabPanels>
+      <TabPanel
+        v-for="(tab, index) in tabs"
+        :key="index"
+        class="mt-4">
+        <component :is="tab.component" />
+      </TabPanel>
+    </TabPanels>
   </TabGroup>
 </template>

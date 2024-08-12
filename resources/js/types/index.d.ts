@@ -25,6 +25,7 @@ export interface BreadcrumbItem {
 
 export interface TabItem {
   name: string;
+  component: any;
 }
 
 export interface SelectItem {
