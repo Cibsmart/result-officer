@@ -82,8 +82,6 @@ it('can save valid students', function (): void {
 
     $result = $this->repository->saveStudents($data);
 
-    dump($result);
-
     $studentsInSession = array_filter(
         FakeStudentClient::STUDENTS,
         fn ($student,
