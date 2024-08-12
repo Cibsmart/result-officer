@@ -13,6 +13,16 @@ declare namespace App.Data.Download {
     code: string;
     title: string;
   };
+  export type PortalCourseRegistrationData = {
+    onlineId: string;
+    registrationNumber: string;
+    session: string;
+    semester: string;
+    level: string;
+    courseId: string;
+    creditUnit: string;
+    registrationDate: App.Data.Download.PortalDateData;
+  };
   export type PortalDateData = {
     day: string;
     month: string;
@@ -116,9 +126,6 @@ declare namespace App.Data.Session {
   };
   export type SessionListData = {
     sessions: Array<App.Data.Session.SessionData>;
-  };
-  export type SessionTestData = {
-    session: Array<any>;
   };
 }
 declare namespace App.Data.Shared {
