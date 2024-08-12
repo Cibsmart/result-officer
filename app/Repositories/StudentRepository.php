@@ -21,7 +21,7 @@ final class StudentRepository
 
     public function getStudentByRegistrationNumber(string $registrationNumber): PortalStudentData
     {
-        return $this->service->getStudentByRegistration($registrationNumber);
+        return $this->service->getStudentByRegistrationNumber($registrationNumber);
     }
 
     /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalStudentData> */
