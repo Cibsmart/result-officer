@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Classes;
 
-use App\Data\Download\PortalDateData;
 use App\Data\Download\PortalStudentData;
 use App\Enums\GenderEnum;
 use App\Enums\RecordSource;
@@ -17,7 +16,6 @@ use App\Models\State;
 use App\Models\Student;
 use App\Services\ExtractYear;
 use App\Values\RegistrationNumber;
-use Carbon\Carbon;
 use Exception;
 
 final readonly class PendingStudent
@@ -29,7 +27,7 @@ final readonly class PendingStudent
     public static function new(PortalStudentData $data): self
     {
         $student = new Student([
-            'date_of_birth' => self::getDateOfBirth($data->dateOfBirth),
+            'date_of_birth' => $data->dateOfBirth->getCarbonDate(),
             'email' => $data->email,
             'entry_level_id' => self::getEntryLevelId($data->entryLevel),
             'entry_mode_id' => self::getEntryModeId($data->entryMode),
@@ -50,27 +48,6 @@ final readonly class PendingStudent
         ]);
 
         return new self($student);
-    }
-
-    /** @throws \Exception */
-    public function save(): bool
-    {
-        $studentExists = Student::query()->where('registration_number', $this->student->registration_number)->exists();
-
-        if ($studentExists) {
-            throw new Exception("Student's record already exists in the database");
-        }
-
-        return $this->student->save();
-    }
-
-    private static function getDateOfBirth(PortalDateData $dateOfBirth): ?Carbon
-    {
-        if ($dateOfBirth->day === '' || $dateOfBirth->month === '' || $dateOfBirth->year === '') {
-            return null;
-        }
-
-        return Carbon::createFromDate((int) $dateOfBirth->year, (int) $dateOfBirth->month, (int) $dateOfBirth->day);
     }
 
     private static function getEntryLevelId(string $entryLevel): int
@@ -120,5 +97,17 @@ final readonly class PendingStudent
         $dbState ??= State::query()->where('name', 'EBONYI')->firstOrFail();
 
         return $dbState->id;
+    }
+
+    /** @throws \Exception */
+    public function save(): bool
+    {
+        $studentExists = Student::query()->where('registration_number', $this->student->registration_number)->exists();
+
+        if ($studentExists) {
+            throw new Exception("Student's record already exists in the database");
+        }
+
+        return $this->student->save();
     }
 }
