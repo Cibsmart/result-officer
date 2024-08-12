@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Requests\Students;
+namespace App\Http\Requests\Download;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-final class DownloadRequest extends FormRequest
+final class DownloadStudentByRegistrationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
