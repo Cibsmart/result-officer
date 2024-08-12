@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Data\Ingest\PortalDateData;
-use App\Data\Ingest\PortalStudentData;
+use App\Data\Download\PortalDateData;
+use App\Data\Download\PortalStudentData;
 use App\Http\Clients\Fakes\FakeStudentClient;
 
 test('portal student data is correct', function (): void {

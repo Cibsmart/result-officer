@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Data\Ingest\PortalStudentData;
+use App\Data\Download\PortalStudentData;
 use App\Http\Clients\Fakes\FakeStudentClient;
 use App\Services\Api\StudentService;
 use Illuminate\Support\Collection;

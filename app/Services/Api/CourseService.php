@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Api;
 
-use App\Data\Ingest\PortalCourseData;
+use App\Data\Download\PortalCourseData;
 use App\Http\Clients\CourseClient;
 use Illuminate\Support\Collection;
 
@@ -15,7 +15,7 @@ final readonly class CourseService
     }
 
     /**
-     * @return \Illuminate\Support\Collection<int, \App\Data\Ingest\PortalCourseData>
+     * @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseData>
      * @throws \Exception
      */
     public function getAllCourses(): Collection

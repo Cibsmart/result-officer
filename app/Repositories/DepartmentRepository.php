@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
-use App\Data\Ingest\PortalDepartmentData;
+use App\Data\Download\PortalDepartmentData;
 use App\Models\Department;
 use App\Models\Faculty;
 use App\Models\Program;
@@ -19,7 +19,7 @@ final readonly class DepartmentRepository
     }
 
     /**
-     * @return \Illuminate\Support\Collection<int, \App\Data\Ingest\PortalDepartmentData>
+     * @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalDepartmentData>
      * @throws \Exception
      */
     public function getDepartments(): Collection
@@ -33,7 +33,7 @@ final readonly class DepartmentRepository
         return $this->service->getDepartmentDetail($departmentId);
     }
 
-    /** @param \Illuminate\Support\Collection<int, \App\Data\Ingest\PortalDepartmentData> $departments */
+    /** @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalDepartmentData> $departments */
     public function saveDepartments(Collection $departments): void
     {
         foreach ($departments as $department) {
@@ -78,7 +78,7 @@ final readonly class DepartmentRepository
         );
     }
 
-    /** @param \Illuminate\Support\Collection<int, \App\Data\Ingest\PortalProgramData> $programs */
+    /** @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalProgramData> $programs */
     private function createProgramsForDepartment(Department $dbDepartment, Collection $programs): void
     {
         if ($programs->count() === 0) {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Api;
 
 use App\Contracts\StudentClient;
-use App\Data\Ingest\PortalStudentData;
+use App\Data\Download\PortalStudentData;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -24,7 +24,7 @@ final readonly class StudentService
         return PortalStudentData::from($student);
     }
 
-    /** @return \Illuminate\Support\Collection<int, \App\Data\Ingest\PortalStudentData> */
+    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalStudentData> */
     public function getStudentsByDepartmentAndSession(string $departmentId, string $session): Collection
     {
         $session = Str::replace('/', '-', $session);
@@ -34,7 +34,7 @@ final readonly class StudentService
         return PortalStudentData::collect(collect($students));
     }
 
-    /** @return \Illuminate\Support\Collection<int, \App\Data\Ingest\PortalStudentData> */
+    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalStudentData> */
     public function getStudentsBySession(string $session): Collection
     {
         $session = Str::replace('/', '-', $session);
