@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
-use App\Data\Ingest\PortalCourseData;
+use App\Data\Download\PortalCourseData;
 use App\Models\Course;
 use App\Services\Api\CourseService;
 use Illuminate\Support\Collection;
@@ -16,7 +16,7 @@ final class CourseRepository
     }
 
     /**
-     * @return \Illuminate\Support\Collection<int, \App\Data\Ingest\PortalCourseData>
+     * @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseData>
      * @throws \Exception
      */
     public function getCourses(): Collection
@@ -30,7 +30,7 @@ final class CourseRepository
         return $this->service->getCourseDetail($courseId);
     }
 
-    /** @param \Illuminate\Support\Collection<int, \App\Data\Ingest\PortalCourseData> $courses */
+    /** @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseData> $courses */
     public function saveCourses(Collection $courses): void
     {
         foreach ($courses as $course) {

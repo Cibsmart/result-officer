@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Data\Ingest\PortalStudentData;
+use App\Data\Download\PortalStudentData;
 use App\Enums\LevelEnum;
 use App\Http\Clients\Fakes\FakeStudentClient;
 use App\Models\Student;

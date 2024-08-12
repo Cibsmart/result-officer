@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Api;
 
-use App\Data\Ingest\PortalDepartmentData;
+use App\Data\Download\PortalDepartmentData;
 use App\Http\Clients\DepartmentClient;
 use Illuminate\Support\Collection;
 
@@ -15,7 +15,7 @@ final readonly class DepartmentService
     }
 
     /**
-     * @return \Illuminate\Support\Collection<int, \App\Data\Ingest\PortalDepartmentData>
+     * @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalDepartmentData>
      * @throws \Exception
      */
     public function getAllDepartments(): Collection

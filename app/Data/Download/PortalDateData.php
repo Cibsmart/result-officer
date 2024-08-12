@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Data\Ingest;
+namespace App\Data\Download;
 
 use Spatie\LaravelData\Data;
 

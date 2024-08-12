@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Data\Ingest;
+namespace App\Data\Download;
 
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
@@ -14,7 +14,7 @@ final class PortalDepartmentData extends Data
         public string $departmentCode,
         public string $departmentName,
         public string $facultyName,
-        /** @var \Illuminate\Support\Collection<int, \App\Data\Ingest\PortalProgramData> */
+        /** @var \Illuminate\Support\Collection<int, \App\Data\Download\PortalProgramData> */
         public Collection $programs,
     ) {
     }

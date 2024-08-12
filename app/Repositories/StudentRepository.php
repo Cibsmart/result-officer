@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\Classes\PendingStudent;
-use App\Data\Ingest\PortalStudentData;
+use App\Data\Download\PortalStudentData;
+use App\Data\Response\ResponseData;
 use App\Models\Student;
 use App\Services\Api\StudentService;
 use Exception;
@@ -23,42 +24,42 @@ final class StudentRepository
         return $this->service->getStudentByRegistration($registrationNumber);
     }
 
-    /** @return \Illuminate\Support\Collection<int, \App\Data\Ingest\PortalStudentData> */
+    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalStudentData> */
     public function getStudentsByDepartmentAndSession(string $departmentId, string $session): Collection
     {
         return $this->service->getStudentsByDepartmentAndSession($departmentId, $session);
     }
 
-    /** @return \Illuminate\Support\Collection<int, \App\Data\Ingest\PortalStudentData> */
+    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalStudentData> */
     public function getStudentsBySession(string $session): Collection
     {
         return $this->service->getStudentsBySession($session);
     }
 
     /**
-     * @param \Illuminate\Support\Collection<int, \App\Data\Ingest\PortalStudentData> $students
-     * @return array<string, string|true>
+     * @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalStudentData> $students
+     * @return \Illuminate\Support\Collection<int, \App\Data\Response\ResponseData>
      */
-    public function saveStudents(Collection $students): array
+    public function saveStudents(Collection $students): Collection
     {
         $results = [];
 
         foreach ($students as $student) {
             try {
                 $this->saveStudent($student);
-                $results[$student->registrationNumber] = true;
+                $results[] = ResponseData::from($student->registrationNumber, true);
             } catch (ValueError $e) {
-                $results[$student->registrationNumber] = $e->getMessage();
+                $results[] = ResponseData::from($student->registrationNumber, $e->getMessage());
 
                 continue;
             } catch (Exception $e) {
-                $results[$student->registrationNumber] = $e->getMessage();
+                $results[] = ResponseData::from($student->registrationNumber, $e->getMessage());
 
                 continue;
             }
         }
 
-        return $results;
+        return ResponseData::collect(collect($results));
     }
 
     /**

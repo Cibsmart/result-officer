@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Classes;
 
-use App\Data\Ingest\PortalDateData;
-use App\Data\Ingest\PortalStudentData;
+use App\Data\Download\PortalDateData;
+use App\Data\Download\PortalStudentData;
 use App\Enums\GenderEnum;
 use App\Enums\RecordSource;
 use App\Enums\StudentStatusEnum;
@@ -50,18 +50,6 @@ final readonly class PendingStudent
         ]);
 
         return new self($student);
-    }
-
-    /** @throws \Exception */
-    public function save(): bool
-    {
-        $studentExists = Student::query()->where('registration_number', $this->student->registration_number)->exists();
-
-        if ($studentExists) {
-            throw new Exception("Student's record already exists in the database");
-        }
-
-        return $this->student->save();
     }
 
     private static function getDateOfBirth(PortalDateData $dateOfBirth): ?Carbon
@@ -120,5 +108,17 @@ final readonly class PendingStudent
         $dbState ??= State::query()->where('name', 'EBONYI')->firstOrFail();
 
         return $dbState->id;
+    }
+
+    /** @throws \Exception */
+    public function save(): bool
+    {
+        $studentExists = Student::query()->where('registration_number', $this->student->registration_number)->exists();
+
+        if ($studentExists) {
+            throw new Exception("Student's record already exists in the database");
+        }
+
+        return $this->student->save();
     }
 }
