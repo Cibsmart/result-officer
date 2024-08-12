@@ -9,8 +9,6 @@ use Illuminate\Support\Str;
 
 final class FakeStudentClient implements StudentClient
 {
-    public final const NUMBER_OF_STUDENTS = 6;
-
     public final const STUDENTS = [
         'EBSU-2009-51486' => [
             'date_of_birth' => ['day' => '27', 'month' => '08', 'year' => '1985'],
