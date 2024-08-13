@@ -1,3 +1,13 @@
+declare namespace App.Data.Course {
+  export type CourseData = {
+    id: number;
+    code: string;
+    name: string;
+  };
+  export type CourseListData = {
+    courses: Array<App.Data.Course.CourseData>;
+  };
+}
 declare namespace App.Data.Department {
   export type DepartmentData = {
     id: number;
@@ -119,6 +129,15 @@ declare namespace App.Data.Results {
     gradingSchemes: Array<App.Data.Results.GradingSchemeData>;
   };
 }
+declare namespace App.Data.Semester {
+  export type SemesterData = {
+    id: number;
+    name: string;
+  };
+  export type SemesterListData = {
+    semesters: Array<App.Data.Semester.SemesterData>;
+  };
+}
 declare namespace App.Data.Session {
   export type SessionData = {
     id: number;
@@ -204,6 +223,13 @@ declare namespace App.Enums {
   export type YearEnum = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 }
 declare namespace App.ViewModels.Downloads {
+  export type DownloadCourseRegistrationPage = {
+    departments: App.Data.Department.DepartmentListData;
+    sessions: App.Data.Session.SessionListData;
+    semesters: App.Data.Semester.SemesterListData;
+    courses: App.Data.Course.CourseListData;
+    levels: App.Data.Level.LevelListData;
+  };
   export type DownloadStudentPage = {
     department: App.Data.Department.DepartmentListData;
     session: App.Data.Session.SessionListData;
