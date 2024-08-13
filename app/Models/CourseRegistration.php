@@ -15,7 +15,7 @@ final class CourseRegistration extends Model
         'semester_enrollment_id',
         'course_id',
         'credit_unit',
-        'course_status_id',
+        'course_status',
     ];
 
     protected $with = ['result', 'course'];
@@ -35,15 +35,6 @@ final class CourseRegistration extends Model
         return $this->belongsTo(Course::class);
     }
 
-    /**
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\CourseStatus, \App\Models\CourseRegistration>
-     */
-    public function courseStatus(): BelongsTo
-    {
-        return $this->belongsTo(CourseStatus::class);
-    }
-
     /** @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\Result> */
     public function result(): HasOne
     {
@@ -53,5 +44,13 @@ final class CourseRegistration extends Model
             'remarks' => 'NR',
             'total_score' => 0,
         ]);
+    }
+
+    /** @return array<string, string> */
+    protected function casts(): array
+    {
+        return [
+            'registration_date' => 'date',
+        ];
     }
 }
