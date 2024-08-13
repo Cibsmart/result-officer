@@ -10,12 +10,13 @@ final class ResponseData extends Data
 {
     public function __construct(
         public readonly string $key,
-        public readonly string $message,
+        public readonly string|true $message,
     ) {
     }
 
-    public static function fromValue(string $key, string $message): self
+    /** @param array{string, string|true} $data */
+    public static function fromArray(array $data): self
     {
-        return new self($key, $message);
+        return new self($data[0], $data[1]);
     }
 }

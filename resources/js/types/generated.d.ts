@@ -71,7 +71,7 @@ declare namespace App.Data.Level {
 declare namespace App.Data.Response {
   export type ResponseData = {
     key: string;
-    message: string;
+    message: string | boolean;
   };
 }
 declare namespace App.Data.Results {
