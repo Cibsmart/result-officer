@@ -50,6 +50,18 @@ final readonly class PendingStudent
         return new self($student);
     }
 
+    /** @throws \Exception */
+    public function save(): bool
+    {
+        $studentExists = Student::query()->where('registration_number', $this->student->registration_number)->exists();
+
+        if ($studentExists) {
+            throw new Exception("Student's record already exists in the database");
+        }
+
+        return $this->student->save();
+    }
+
     private static function getEntryLevelId(string $entryLevel): int
     {
         $level = Level::query()->where('name', $entryLevel)->first();
@@ -97,17 +109,5 @@ final readonly class PendingStudent
         $dbState ??= State::query()->where('name', 'EBONYI')->firstOrFail();
 
         return $dbState->id;
-    }
-
-    /** @throws \Exception */
-    public function save(): bool
-    {
-        $studentExists = Student::query()->where('registration_number', $this->student->registration_number)->exists();
-
-        if ($studentExists) {
-            throw new Exception("Student's record already exists in the database");
-        }
-
-        return $this->student->save();
     }
 }

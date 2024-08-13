@@ -16,6 +16,7 @@ final class Enrollment extends Model
         'student_id',
         'session_id',
         'level_id',
+        'year_id',
     ];
 
     protected $with = ['semesters', 'session', 'year'];
