@@ -1,13 +1,13 @@
 import { reactive } from "vue";
 
 export default reactive({
-  session: [],
+  sessions: [],
 
-  setSessions(session) {
-    this.session = session;
+  setSessions(sessions) {
+    this.sessions = sessions;
   },
 
   getSessions() {
-    return this.session;
+    return this.sessions;
   },
 });
