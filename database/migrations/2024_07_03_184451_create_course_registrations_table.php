@@ -20,8 +20,8 @@ return new class extends Migration
             $table->foreignId('semester_enrollment_id')->constrained('semester_enrollments');
             $table->foreignId('course_id')->constrained('courses');
             $table->unsignedTinyInteger('credit_unit');
-            $table->foreignId('course_status_id')->constrained('course_statuses');
             $table->string('course_status', 1)->default(CourseStatusEnum::FRESH->value);
+            $table->date('registration_date')->nullable();
             $table->string('online_id')->nullable();
             $table->string('source')->default(RecordSource::LEGACY->value);
             $table->timestamps();

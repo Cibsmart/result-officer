@@ -35,6 +35,7 @@ final class Result extends Model
         return [
             'data' => 'hashed',
             'score' => 'array',
+            'upload_date' => 'date',
         ];
     }
 }
