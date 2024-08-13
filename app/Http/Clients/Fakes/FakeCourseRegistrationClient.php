@@ -55,6 +55,17 @@ final class FakeCourseRegistrationClient extends ApiClient implements CourseRegi
             'semester' => 'SECOND',
             'session' => '2010/2011',
         ],
+        [
+            'course_id' => '4',
+            'credit_unit' => '2',
+            'department_id' => 1,
+            'id' => '4',
+            'level' => '200',
+            'registration_date' => ['day' => '27', 'month' => '08', 'year' => '2011'],
+            'registration_number' => 'invalid/registration/number',
+            'semester' => 'SECOND',
+            'session' => '2010/2011',
+        ],
     ];
 
     /** {@inheritDoc} */
