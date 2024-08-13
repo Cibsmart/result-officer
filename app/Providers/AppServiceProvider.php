@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Contracts\CourseRegistrationClient;
 use App\Contracts\StudentClient;
+use App\Http\Clients\PortalCourseRegistrationClient;
 use App\Http\Clients\PortalStudentClient;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
@@ -18,6 +20,7 @@ final class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(StudentClient::class, PortalStudentClient::class);
+        $this->app->bind(CourseRegistrationClient::class, PortalCourseRegistrationClient::class);
     }
 
     /**
