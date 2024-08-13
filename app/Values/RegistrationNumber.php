@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Values;
 
+use App\Models\Student;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 
@@ -19,5 +20,10 @@ final readonly class RegistrationNumber
     public static function new(string $value): self
     {
         return new self($value);
+    }
+
+    public function student(): Student
+    {
+        return Student::query()->where('registration_number', $this->value)->firstOrFail();
     }
 }
