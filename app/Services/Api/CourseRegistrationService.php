@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Services\Api;
 
-use App\Contracts\CourseRegistration;
+use App\Contracts\CourseRegistrationClient;
 use App\Data\Download\PortalCourseRegistrationData;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 final class CourseRegistrationService
 {
-    public function __construct(public CourseRegistration $client)
+    public function __construct(public CourseRegistrationClient $client)
     {
     }
 
