@@ -7,8 +7,15 @@ namespace App\Repositories;
 use App\Classes\PendingCourseRegistration;
 use App\Data\Download\PortalCourseRegistrationData;
 use App\Data\Response\ResponseData;
-use App\Models\CourseRegistration;
+use App\Enums\YearEnum;
+use App\Models\Enrollment;
+use App\Models\Level;
+use App\Models\Semester;
+use App\Models\SemesterEnrollment;
+use App\Models\Session;
+use App\Models\Student;
 use App\Services\Api\CourseRegistrationService;
+use App\Values\RegistrationNumber;
 use Exception;
 use Illuminate\Support\Collection;
 
@@ -56,12 +63,14 @@ final class CourseRegistrationRepository
     {
         $results = [];
 
-        foreach ($registrations as $registration) {
+        $studentRegistrations = $registrations->groupBy('registrationNumber');
+
+        foreach ($studentRegistrations as $registrationNumber => $registrations) {
             try {
-                $this->saveCourseRegistration($registration);
-                $results[] = ResponseData::from($registration->registrationNumber, true);
+                $this->saveStudentCourseRegistrations($registrationNumber, $registrations);
+                $results[] = ResponseData::from([$registrationNumber, true]);
             } catch (Exception $e) {
-                $results[] = ResponseData::from($registration->registrationNumber, $e->getMessage());
+                $results[] = ResponseData::from([$registrationNumber, $e->getMessage()]);
 
                 continue;
             }
@@ -70,13 +79,90 @@ final class CourseRegistrationRepository
         return ResponseData::collect(collect($results));
     }
 
-    /** @throws \Exception */
-    public function saveCourseRegistration(PortalCourseRegistrationData $courseRegistrationData): CourseRegistration
+    /**
+     * @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> $registrations
+     * @throws \Exception
+     */
+    private function saveStudentCourseRegistrations(string $registrationNumber, Collection $registrations): void
     {
-        $pendingRegistration = PendingCourseRegistration::new($courseRegistrationData);
+        $student = RegistrationNumber::new($registrationNumber)->student();
+
+        $sessionRegistrations = $registrations->groupBy('session');
+
+        foreach ($sessionRegistrations as $session => $registrations) {
+            $session = $this->getSession($session);
+            $level = $this->getLevel($registrations->firstOrFail()->level);
+
+            $this->saveStudentSessionCourseRegistrations($student, $session, $level, $registrations);
+        }
+    }
+
+    /**
+     * @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> $registrations
+     * @throws \Exception
+     */
+    private function saveStudentSemesterCourseRegistrations(
+        Enrollment $sessionEnrollment,
+        string $semester,
+        Collection $registrations,
+    ): void {
+        $semester = $this->getSemester($semester);
+
+        $semesterEnrollment = (new SemesterEnrollment())->firstOrCreate(
+            ['enrollment_id' => $sessionEnrollment->id, 'semester_id' => $semester->id],
+        );
+
+        foreach ($registrations as $registration) {
+            $this->saveCourseRegistration($semesterEnrollment, $registration);
+        }
+    }
+
+    /**
+     * @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> $registrations
+     * @throws \Exception
+     */
+    private function saveStudentSessionCourseRegistrations(
+        Student $student,
+        Session $session,
+        Level $level,
+        Collection $registrations,
+    ): void {
+        $sessionEnrollment = (new Enrollment())->firstOrCreate(
+            ['student_id' => $student->id, 'session_id' => $session->id, 'level_id' => $level->id],
+            ['year_id' => YearEnum::FIRST->value],
+        );
+
+        $semesterRegistrations = $registrations->groupBy('semester');
+
+        foreach ($semesterRegistrations as $semester => $registrations) {
+
+            $this->saveStudentSemesterCourseRegistrations($sessionEnrollment, $semester, $registrations);
+        }
+    }
+
+    /** @throws \Exception */
+    private function saveCourseRegistration(
+        SemesterEnrollment $semesterEnrollment,
+        PortalCourseRegistrationData $courseRegistrationData,
+    ): void {
+
+        $pendingRegistration = PendingCourseRegistration::new($semesterEnrollment, $courseRegistrationData);
 
         $pendingRegistration->save();
+    }
 
-        return $pendingRegistration->registration;
+    private function getSession(string $session): Session
+    {
+        return Session::query()->where('name', $session)->firstOrFail();
+    }
+
+    private function getLevel(string $level): Level
+    {
+        return Level::query()->where('name', $level)->firstOrFail();
+    }
+
+    private function getSemester(string $semester): Semester
+    {
+        return Semester::query()->where('name', $semester)->firstOrFail();
     }
 }
