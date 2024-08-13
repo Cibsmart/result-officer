@@ -47,13 +47,13 @@ final class StudentRepository
         foreach ($students as $student) {
             try {
                 $this->saveStudent($student);
-                $results[] = ResponseData::from($student->registrationNumber, true);
+                $results[] = ResponseData::from([$student->registrationNumber, true]);
             } catch (ValueError $e) {
-                $results[] = ResponseData::from($student->registrationNumber, $e->getMessage());
+                $results[] = ResponseData::from([$student->registrationNumber, $e->getMessage()]);
 
                 continue;
             } catch (Exception $e) {
-                $results[] = ResponseData::from($student->registrationNumber, $e->getMessage());
+                $results[] = ResponseData::from([$student->registrationNumber, $e->getMessage()]);
 
                 continue;
             }

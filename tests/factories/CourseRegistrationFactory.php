@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Factories;
 
+use App\Enums\CourseStatusEnum;
 use App\Enums\CreditUnitEnum;
 use App\Models\CourseRegistration;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -18,7 +19,7 @@ final class CourseRegistrationFactory extends Factory
     {
         return [
             'course_id' => CourseFactory::new(),
-            'course_status_id' => CourseStatusFactory::new(),
+            'course_status' => fake()->randomElement(CourseStatusEnum::cases())->value,
             'credit_unit' => (fake()->randomElement(CreditUnitEnum::cases()))->value,
             'semester_enrollment_id' => SemesterEnrollmentFactory::new(),
         ];
