@@ -9,7 +9,6 @@ use App\Services\ComputeAverage;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Tests\Factories\CourseRegistrationFactory;
-use Tests\Factories\CourseStatusFactory;
 use Tests\Factories\EnrollmentFactory;
 use Tests\Factories\LevelFactory;
 use Tests\Factories\ProgramFactory;
@@ -24,7 +23,6 @@ function createStudentWithResults(
     int $numberOfSemesters = 2,
     int $numberOfCourses = 5,
 ): Student {
-    $courseStatus = CourseStatusFactory::new()->create();
     $firstSemester = SemesterFactory::new(['name' => 'FIRST'])->create();
     $secondSemester = SemesterFactory::new(['name' => 'SECOND'])->create();
 
@@ -32,7 +30,7 @@ function createStudentWithResults(
         StudentFactory::new()->has(
             EnrollmentFactory::new()
                 ->has(SemesterEnrollmentFactory::new()
-                    ->has(CourseRegistrationFactory::new(['course_status_id' => $courseStatus->id])
+                    ->has(CourseRegistrationFactory::new()
                         ->has(ResultFactory::new())
                         ->count($numberOfCourses),
                         'courses')
@@ -51,7 +49,6 @@ function createMultipleStudentsWithResults(
     int $numberOfSemesters = 2,
     int $numberOfCourses = 5,
 ): Collection {
-    $courseStatus = CourseStatusFactory::new()->create();
     $firstSemester = SemesterFactory::new(['name' => 'FIRST'])->create();
     $secondSemester = SemesterFactory::new(['name' => 'SECOND'])->create();
     $program = ProgramFactory::new()->createOne();
@@ -62,7 +59,7 @@ function createMultipleStudentsWithResults(
         StudentFactory::new()->has(
             EnrollmentFactory::new(['level_id' => $level->id, 'session_id' => $session->id])
                 ->has(SemesterEnrollmentFactory::new()
-                    ->has(CourseRegistrationFactory::new(['course_status_id' => $courseStatus->id])
+                    ->has(CourseRegistrationFactory::new()
                         ->has(ResultFactory::new())
                         ->count($numberOfCourses),
                         'courses')
