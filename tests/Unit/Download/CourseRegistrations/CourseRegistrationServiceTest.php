@@ -14,11 +14,16 @@ beforeEach(function (): void {
 });
 
 it('can get course registrations by registration number', function (): void {
-    $data = $this->service->getCourseRegistrationsByRegistrationNumber('EBSU/2009/51486');
+    $registrationNumber = 'EBSU/2009/51486';
+    $data = $this->service->getCourseRegistrationsByRegistrationNumber($registrationNumber);
+
+    $group = groupArrays(FakeCourseRegistrationClient::COURSE_REGISTRATIONS, [
+        'registration_number' => $registrationNumber,
+    ]);
 
     expect($data)->toBeInstanceOf(Collection::class)
         ->and($data[0])->toBeInstanceOf(PortalCourseRegistrationData::class)
-        ->and($data->count())->toBe(count(FakeCourseRegistrationClient::COURSE_REGISTRATIONS));
+        ->and($data->count())->toBe(count($group));
 });
 
 it('can get course registrations by department session and level', function (): void {
