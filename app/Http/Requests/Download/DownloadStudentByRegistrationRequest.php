@@ -29,13 +29,4 @@ final class DownloadStudentByRegistrationRequest extends FormRequest
             ],
         ];
     }
-
-    protected function passedValidation(): void
-    {
-        $this->replace([
-            'registration_number' => $this->string('registration_number')
-                ->replace('/', '-')
-                ->value(),
-        ]);
-    }
 }
