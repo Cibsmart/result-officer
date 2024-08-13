@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Clients\Fakes;
 
-use App\Contracts\CourseRegistration;
+use App\Contracts\CourseRegistrationClient;
 use App\Http\Clients\ApiClient;
 use Illuminate\Support\Str;
 
-final class FakeCourseRegistrationClient extends ApiClient implements CourseRegistration
+final class FakeCourseRegistrationClientClient extends ApiClient implements CourseRegistrationClient
 {
     public final const COURSE_REGISTRATIONS = [
         [

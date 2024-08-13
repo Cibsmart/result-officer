@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 use App\Data\Download\PortalCourseRegistrationData;
 use App\Data\Download\PortalDateData;
-use App\Http\Clients\Fakes\FakeCourseRegistrationClient;
+use App\Http\Clients\Fakes\FakeCourseRegistrationClientClient;
 
 test('portal student data is correct', function (): void {
-    $registration = FakeCourseRegistrationClient::COURSE_REGISTRATIONS[0];
+    $registration = FakeCourseRegistrationClientClient::COURSE_REGISTRATIONS[0];
     $data = PortalCourseRegistrationData::from($registration);
 
     expect($data)->toBeInstanceOf(PortalCourseRegistrationData::class)

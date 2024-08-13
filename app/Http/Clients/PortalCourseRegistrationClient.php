@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Clients;
 
-use App\Contracts\CourseRegistration;
+use App\Contracts\CourseRegistrationClient;
 
-final class PortalCourseRegistrationClient extends ApiClient implements CourseRegistration
+final class PortalCourseRegistrationClient extends ApiClient implements CourseRegistrationClient
 {
     /** {@inheritDoc}
      * @throws \Exception

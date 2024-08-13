@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Contracts;
 
-interface CourseRegistration
+interface CourseRegistrationClient
 {
     /** @return array<string, string|array{day: string, month:string, year:string}> */
     public function fetchCourseRegistrationByRegistrationNumber(string $registrationNumber): array;
