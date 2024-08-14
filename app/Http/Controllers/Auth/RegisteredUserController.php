@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -14,7 +13,7 @@ use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
 
-final class RegisteredUserController extends Controller
+final readonly class RegisteredUserController
 {
     /** @throws \Illuminate\Validation\ValidationException */
     public function store(Request $request): RedirectResponse

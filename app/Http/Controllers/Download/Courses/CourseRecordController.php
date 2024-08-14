@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Download\Courses;
 
-use App\Http\Controllers\Controller;
 use App\Repositories\CourseRepository;
 
-final class CourseRecordController extends Controller
+final readonly class CourseRecordController
 {
-    public function __construct(public CourseRepository $repository)
+    public function __construct(private CourseRepository $repository)
     {
     }
 

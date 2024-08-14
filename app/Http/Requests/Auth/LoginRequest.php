@@ -13,11 +13,6 @@ use Illuminate\Validation\ValidationException;
 
 final class LoginRequest extends FormRequest
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     /** @return array<string, \Illuminate\Contracts\Validation\Rule|array<int, string>|string> */
     public function rules(): array
     {

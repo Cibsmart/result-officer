@@ -5,19 +5,18 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Download\Students;
 
 use App\Helpers\GetResponse;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Download\DownloadStudentsByDepartmentSessionRequest;
 use App\Repositories\StudentRepository;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 
-final class DownloadStudentsByDepartmentSessionController extends Controller
+final readonly class DownloadStudentsByDepartmentSessionController
 {
-    public function __construct(public StudentRepository $repository)
+    public function __construct(private StudentRepository $repository)
     {
     }
 
-    public function store(DownloadStudentsByDepartmentSessionRequest $request): RedirectResponse
+    public function __invoke(DownloadStudentsByDepartmentSessionRequest $request): RedirectResponse
     {
         try {
             $data = $this->repository->getStudentsByDepartmentAndSession(

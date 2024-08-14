@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 
-final class ProfileController extends Controller
+final readonly class ProfileController
 {
     public function edit(): Response
     {

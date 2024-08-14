@@ -8,7 +8,6 @@ use App\Data\Department\DepartmentListData;
 use App\Data\Level\LevelListData;
 use App\Data\Session\SessionListData;
 use App\Data\Summary\DepartmentResultSummaryData;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Summary\SummaryRequest;
 use App\Models\Department;
 use App\Models\Level;
@@ -19,7 +18,7 @@ use Illuminate\View\View;
 use Inertia\Inertia;
 use Inertia\Response;
 
-final class DepartmentResultSummaryController extends Controller
+final readonly class DepartmentResultSummaryController
 {
     public function form(): Response
     {

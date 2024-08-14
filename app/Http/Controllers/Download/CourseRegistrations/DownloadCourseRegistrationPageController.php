@@ -13,7 +13,7 @@ use App\ViewModels\Downloads\DownloadCourseRegistrationPage;
 use Inertia\Inertia;
 use Inertia\Response;
 
-final class DownloadCourseRegistrationPageController
+final readonly class DownloadCourseRegistrationPageController
 {
     public function __invoke(): Response
     {
