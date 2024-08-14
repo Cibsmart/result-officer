@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Values;
 
 use App\Models\Student;
+use Exception;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 
@@ -22,8 +23,15 @@ final readonly class RegistrationNumber
         return new self($value);
     }
 
+    /** @throws \Exception */
     public function student(): Student
     {
-        return Student::query()->where('registration_number', $this->value)->firstOrFail();
+        $student = Student::query()->where('registration_number', $this->value)->first();
+
+        if (is_null($student)) {
+            throw new Exception('STUDENT NOT FOUND: Download Student Records and Try Again');
+        }
+
+        return $student;
     }
 }

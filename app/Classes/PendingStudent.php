@@ -91,9 +91,14 @@ final readonly class PendingStudent
         return $dbSession->id;
     }
 
+    /** @throws \Exception */
     private static function getProgramId(string $onlineDepartmentId, string $programName): int
     {
         $department = Department::query()->where('online_id', $onlineDepartmentId)->first();
+
+        if (is_null($department) && $programName === '') {
+            throw new Exception('NO DEPARTMENT DETAILS: Download Department Records and Try Again');
+        }
 
         $programName = $programName !== ''
             ? $programName
