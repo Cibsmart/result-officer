@@ -30,4 +30,13 @@ final class PortalDateData extends Data
 
         return Carbon::createFromDate((int) $this->year, (int) $this->month, (int) $this->day);
     }
+
+    public function getStringDate(string $format = 'Y-m-d'): ?string
+    {
+        $date = $this->getCarbonDate();
+
+        return $date
+            ? $date->format($format)
+            : $date;
+    }
 }

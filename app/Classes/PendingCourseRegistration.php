@@ -26,7 +26,7 @@ final readonly class PendingCourseRegistration
         $registration->credit_unit = CreditUnitEnum::from((int) $data->creditUnit)->value;
         $registration->course_status = CourseStatusEnum::FRESH->value;
         $registration->online_id = $data->onlineId;
-        $registration->registration_date = $data->registrationDate->getCarbonDate();
+        $registration->registration_date = $data->registrationDate->getStringDate();
         $registration->semester_enrollment_id = $semesterEnrollment->id;
         $registration->source = RecordSource::PORTAL->value;
 
