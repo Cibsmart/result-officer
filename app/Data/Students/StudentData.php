@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Data\Students;
 
-use App\Enums\GenderEnum;
 use App\Models\Student;
 use App\Services\RetrieveYear;
 use Spatie\LaravelData\Data;
@@ -18,7 +17,7 @@ final class StudentData extends Data
         public readonly string $firstName,
         public readonly ?string $otherNames,
         public readonly string $name,
-        public readonly GenderEnum $gender,
+        public readonly string $gender,
         public readonly string $birthDate,
         public readonly string $program,
         public readonly string $department,

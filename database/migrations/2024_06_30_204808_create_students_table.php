@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('first_name');
             $table->string('other_names')->nullable();
-            $table->enum('gender', ['M', 'F']);
+            $table->string('gender', 1);
             $table->date('date_of_birth')->nullable();
             $table->foreignId('program_id')->constrained('programs');
             $table->foreignId('entry_session_id')->constrained('academic_sessions');

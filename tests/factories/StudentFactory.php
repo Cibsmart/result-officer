@@ -18,13 +18,15 @@ final class StudentFactory extends Factory
     {
         $maximumDateOfBirth = now()->subYears(15)->format('Y-m-d');
 
+        $gender = fake()->randomElement(GenderEnum::cases());
+
         return [
             'date_of_birth' => fake()->date(max: $maximumDateOfBirth),
             'entry_level_id' => LevelFactory::new(),
             'entry_mode_id' => EntryModeFactory::new(),
             'entry_session_id' => SessionFactory::new(),
             'first_name' => fake()->firstName(),
-            'gender' => fake()->randomElement(GenderEnum::cases()),
+            'gender' => $gender->value,
             'last_name' => fake()->lastName(),
             'other_names' => fake()->firstName(),
             'program_id' => ProgramFactory::new(),
