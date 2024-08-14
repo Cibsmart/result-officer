@@ -1,7 +1,6 @@
 declare namespace App.Data.Course {
   export type CourseData = {
     id: number;
-    code: string;
     name: string;
   };
   export type CourseListData = {

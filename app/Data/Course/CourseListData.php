@@ -18,7 +18,7 @@ final class CourseListData extends Data
 
     public static function new(): self
     {
-        $default = new CourseData(id: 0, code: '', name: 'Select Course');
+        $default = new CourseData(id: 0, name: 'Select Course');
 
         return new self(
             courses: CourseData::collect(
