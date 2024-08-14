@@ -6,6 +6,7 @@ namespace App\Http\Clients;
 
 use App\Contracts\CourseRegistrationClient;
 
+/** @phpstan-import-type CourseRegistrationDetail from \App\Contracts\CourseRegistrationClient */
 final class PortalCourseRegistrationClient extends ApiClient implements CourseRegistrationClient
 {
     /** {@inheritDoc}
@@ -13,7 +14,7 @@ final class PortalCourseRegistrationClient extends ApiClient implements CourseRe
      */
     public function fetchCourseRegistrationByRegistrationNumber(string $registrationNumber): array
     {
-        /** @var array<string, string|array{day: string, month:string, year:string}> $courses */
+        /** @var array<CourseRegistrationDetail> $courses */
         $courses = $this->get("course-registrations/registration-number/{$registrationNumber}");
 
         return $courses;
@@ -27,7 +28,7 @@ final class PortalCourseRegistrationClient extends ApiClient implements CourseRe
         string $session,
         string $level,
     ): array {
-        /** @var array<string, string|array{day: string, month:string, year:string}> $courses */
+        /** @var array<CourseRegistrationDetail> $courses */
         $courses = $this->get("course-registrations/department/{$departmentId}/session/{$session}/level/{$level}");
 
         return $courses;
@@ -41,7 +42,7 @@ final class PortalCourseRegistrationClient extends ApiClient implements CourseRe
         string $session,
         string $semester,
     ): array {
-        /** @var array<string, string|array{day: string, month:string, year:string}> $courses */
+        /** @var array<CourseRegistrationDetail> $courses */
         $courses = $this->get(
             "course-registrations/department/{$departmentId}/session/{$session}/semester/{$semester}",
         );
@@ -54,7 +55,7 @@ final class PortalCourseRegistrationClient extends ApiClient implements CourseRe
      */
     public function fetchCourseRegistrationBySessionCourse(string $session, string $course): array
     {
-        /** @var array<string, string|array{day: string, month:string, year:string}> $courses */
+        /** @var array<CourseRegistrationDetail> $courses */
         $courses = $this->get("course-registrations/session/{$session}/course/{$course}");
 
         return $courses;
