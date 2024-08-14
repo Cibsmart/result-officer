@@ -4,13 +4,13 @@ import PrimaryButton from "@/components/primaryButton.vue";
 import InputError from "@/components/inputError.vue";
 import { useForm } from "@inertiajs/vue3";
 import SelectInput from "@/components/inputs/selectInput.vue";
-import useDepartment from "@/composables/useDepartment.js";
-import useSession from "@/composables/useSession.js";
-import useLevel from "@/composables/useLevel";
+import useDepartments from "@/composables/useDepartments";
+import useSessions from "@/composables/useSessions";
+import useLevels from "@/composables/useLevels";
 
-const departments = useDepartment.getDepartments();
-const sessions = useSession.getSessions();
-const levels = useLevel.getLevels();
+const departments = useDepartments.getDepartments();
+const sessions = useSessions.getSessions();
+const levels = useLevels.getLevels();
 
 const form = useForm({
   department: "",
