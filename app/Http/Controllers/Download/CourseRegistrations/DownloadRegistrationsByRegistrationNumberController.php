@@ -20,7 +20,7 @@ final readonly class DownloadRegistrationsByRegistrationNumberController
     {
         try {
             $data = $this->repository->getCourseRegistrationsByRegistrationNumber(
-                registrationNumber: $request->string('registrationNumber')->value(),
+                registrationNumber: $request->string('registration_number')->value(),
             );
 
             $results = $this->repository->saveCourseRegistrations($data);

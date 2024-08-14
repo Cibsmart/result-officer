@@ -33,8 +33,7 @@ final class DownloadRegistrationsByDepartmentSessionLevelRequest extends FormReq
             'levelName' => Level::query()
                 ->where('id', $this->input('level.id'))
                 ->firstOrFail()
-                ->name
-                ->value,
+                ->name,
 
             'onlineDepartmentId' => Department::query()
                 ->where('id', $this->input('department.id'))

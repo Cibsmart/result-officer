@@ -10,7 +10,7 @@ use App\Repositories\CourseRegistrationRepository;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 
-final class DownloadRegistrationsByDepartmentSessionSemesterController
+final readonly class DownloadRegistrationsByDepartmentSessionSemesterController
 {
     public function __construct(private CourseRegistrationRepository $repository)
     {

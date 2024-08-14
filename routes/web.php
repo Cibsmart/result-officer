@@ -38,16 +38,16 @@ Route::middleware(['auth'])->group(static function (): void {
     Route::get('summary/{department}/{session}/{level}', [DepartmentResultSummaryController::class, 'print'])
         ->name('summary.print');
 
-    Route::get('download/students/page', [DownloadStudentsPageController::class, 'index'])
+    Route::get('download/students/page', DownloadStudentsPageController::class)
         ->name('download.students.page');
 
-    Route::post('download/student/registration-number', [DownloadStudentByRegistrationNumberController::class, 'store'])
+    Route::post('download/student/registration-number', DownloadStudentByRegistrationNumberController::class)
         ->name('download.student.registration-number.store');
 
-    Route::post('download/students/department-session', [DownloadStudentsByDepartmentSessionController::class, 'store'])
+    Route::post('download/students/department-session', DownloadStudentsByDepartmentSessionController::class)
         ->name('download.students.department-session.store');
 
-    Route::post('download/students/session', [DownloadStudentsBySessionController::class, 'store'])
+    Route::post('download/students/session', DownloadStudentsBySessionController::class)
         ->name('download.students.session.store');
 
     Route::get('departments', [DepartmentRecordController::class, 'getAndSaveDepartments']);

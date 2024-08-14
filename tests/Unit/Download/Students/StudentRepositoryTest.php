@@ -80,7 +80,7 @@ it('can save valid students', function (): void {
 
     assertDatabaseCount('students', 0);
 
-    $result = $this->repository->saveStudents($data);
+    $this->repository->saveStudents($data);
 
     $studentsInSession = array_filter(
         FakeStudentClient::STUDENTS,
@@ -137,7 +137,7 @@ it('can apply defaults for students without level, entry mode and state', functi
     assertDatabaseCount('students', 1);
     expect($newStudent)->toBeInstanceOf(Student::class)
         ->and($newStudent->entryMode->code)->toBe($defaultEntryMode)
-        ->and($newStudent->entryLevel->name)->toBe($defaultLevel)
+        ->and($newStudent->entryLevel->name)->toBe($defaultLevel->value)
         ->and($newStudent->state->name)->toBe($defaultState);
 });
 

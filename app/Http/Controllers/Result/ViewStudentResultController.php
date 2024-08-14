@@ -7,7 +7,6 @@ namespace App\Http\Controllers\Result;
 use App\Data\Results\StudentResultData;
 use App\Data\Results\TranscriptData;
 use App\Data\Students\StudentData;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Results\ResultRequest;
 use App\Models\Student;
 use App\ViewModels\Results\ResultViewPage;
@@ -20,7 +19,7 @@ use Spatie\LaravelPdf\Enums\Format;
 use Spatie\LaravelPdf\Facades\Pdf;
 use Spatie\LaravelPdf\PdfBuilder;
 
-final class ViewStudentResultController extends Controller
+final readonly class ViewStudentResultController
 {
     public function form(): Response
     {
