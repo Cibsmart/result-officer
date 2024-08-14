@@ -19,6 +19,7 @@ final readonly class PendingCourseRegistration
     {
     }
 
+    /** @throws \Exception */
     public static function new(SemesterEnrollment $semesterEnrollment, PortalCourseRegistrationData $data): self
     {
         $registration = new CourseRegistration();
@@ -48,8 +49,15 @@ final readonly class PendingCourseRegistration
         return $this->registration->save();
     }
 
+    /** @throws \Exception */
     private static function getCourse(string $onlineCourseId): Course
     {
-        return Course::query()->where('online_id', $onlineCourseId)->firstOrFail();
+        $course = Course::query()->where('online_id', $onlineCourseId)->first();
+
+        if (is_null($course)) {
+            throw new Exception('COURSE NOT FOUND: Download Course Records and Try Again');
+        }
+
+        return $course;
     }
 }

@@ -18,6 +18,6 @@ final class PortalCourseData extends Data
     /** @param array{id: string, course_code: string, course_title: string} $data */
     public static function fromArray(array $data): self
     {
-        return new self(onlineId: (string) $data['id'], code: $data['course_code'], title: $data['course_code']);
+        return new self(onlineId: (string) $data['id'], code: $data['course_code'], title: $data['course_title']);
     }
 }
