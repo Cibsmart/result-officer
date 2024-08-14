@@ -6,11 +6,7 @@ namespace App\Data\Download;
 
 use Spatie\LaravelData\Data;
 
-/**
- * @phpstan-type CourseRegistrationType array{id:string, registration_number:string, session:string,semester:string,
- *     level:string, course_id:string, credit_unit:string, registration_date:array{day:string,month:string,
- *     year:string}
- */
+/** @phpstan-import-type CourseRegistrationDetail from \App\Contracts\CourseRegistrationClient */
 final class PortalCourseRegistrationData extends Data
 {
     public function __construct(
@@ -25,7 +21,7 @@ final class PortalCourseRegistrationData extends Data
     ) {
     }
 
-    /** @param CourseRegistrationType $data */
+    /** @param CourseRegistrationDetail $data */
     public static function fromArray(array $data): self
     {
         return new self(
