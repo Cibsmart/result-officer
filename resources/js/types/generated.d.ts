@@ -72,7 +72,7 @@ declare namespace App.Data.Download {
 declare namespace App.Data.Level {
   export type LevelData = {
     id: number;
-    name: App.Enums.LevelEnum | string;
+    name: string;
   };
   export type LevelListData = {
     levels: Array<App.Data.Level.LevelData>;
@@ -203,7 +203,7 @@ declare namespace App.Enums {
     | "FAIL";
   export type GenderEnum = "M" | "F";
   export type Grade = 5 | 4 | 3 | 2 | 1 | 0;
-  export type LevelEnum = 100 | 200 | 300 | 400 | 500 | 600;
+  export type LevelEnum = "100" | "200" | "300" | "400" | "500" | "600";
   export type NotificationType = "success" | "error" | "warning" | "info";
   export type RecordSource = "portal" | "excel" | "legacy";
   export type ResultRemark = "PAS" | "FAL" | "ABS" | "MAL";

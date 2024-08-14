@@ -16,8 +16,10 @@ final class LevelFactory extends Factory
     /** @return array<string, string> */
     public function definition(): array
     {
+        $level = fake()->unique()->randomElement(LevelEnum::cases());
+
         return [
-            'name' => fake()->unique()->randomElement(LevelEnum::cases()),
+            'name' => $level->value,
         ];
     }
 }

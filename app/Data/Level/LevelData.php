@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Data\Level;
 
-use App\Enums\LevelEnum;
 use App\Models\Level;
 use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
@@ -14,7 +13,7 @@ final class LevelData extends Data
 {
     public function __construct(
         public readonly int $id,
-        public readonly LevelEnum|string $name,
+        public readonly string $name,
     ) {
     }
 
