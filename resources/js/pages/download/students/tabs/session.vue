@@ -4,10 +4,9 @@ import PrimaryButton from "@/components/primaryButton.vue";
 import InputError from "@/components/inputError.vue";
 import { useForm } from "@inertiajs/vue3";
 import SelectInput from "@/components/inputs/selectInput.vue";
-import { SelectItem } from "@/types";
-import useSession from "@/composables/useSession.js";
+import useSessions from "@/composables/useSessions";
 
-const sessions = useSession.getSessions() as SelectItem[];
+const sessions = useSessions.getSessions();
 
 const form = useForm({
   session: "",

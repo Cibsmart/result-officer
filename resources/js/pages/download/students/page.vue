@@ -9,16 +9,16 @@ import Breadcrumb from "@/components/breadcrumb.vue";
 import BaseTabs from "@/components/tabs/baseTabs.vue";
 import DepartmentSession from "@/pages/download/students/tabs/departmentSession.vue";
 import Session from "@/pages/download/students/tabs/session.vue";
-import useDepartment from "@/composables/useDepartment.js";
-import useSession from "@/composables/useSession.js";
+import useDepartments from "@/composables/useDepartments";
+import useSessions from "@/composables/useSessions";
 
 const props = defineProps<{
   department: App.Data.Department.DepartmentListData;
   session: App.Data.Session.SessionListData;
 }>();
 
-useDepartment.setDepartments(props.department.departments);
-useSession.setSessions(props.session.sessions);
+useDepartments.setDepartments(props.department.departments);
+useSessions.setSessions(props.session.sessions);
 
 const pages: BreadcrumbItem[] = [
   {

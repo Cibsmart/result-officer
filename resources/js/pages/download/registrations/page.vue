@@ -6,29 +6,31 @@ import BaseSection from "@/components/baseSection.vue";
 import { BreadcrumbItem, TabItem } from "@/types";
 import Breadcrumb from "@/components/breadcrumb.vue";
 import BaseTabs from "@/components/tabs/baseTabs.vue";
-import useDepartment from "@/composables/useDepartment.js";
-import useSession from "@/composables/useSession.js";
-import useLevel from "@/composables/useLevel";
-import useCourse from "@/composables/useCourse";
+import useDepartments from "@/composables/useDepartments";
+import useSessions from "@/composables/useSessions";
+import useLevels from "@/composables/useLevels";
+import useCourses from "@/composables/useCourses";
+import useSemesters from "@/composables/useSemesters";
 import RegistrationNumber from "@/pages/download/registrations/tabs/registrationNumber.vue";
 import DepartmentSessionLevel from "@/pages/download/registrations/tabs/departmentSessionLevel.vue";
 import DepartmentSessionSemester from "@/pages/download/registrations/tabs/departmentSessionSemester.vue";
 import SessionCourse from "@/pages/download/registrations/tabs/sessionCourse.vue";
-import useSemester from "@/composables/useSemester";
 
 const props = defineProps<{
   departments: App.Data.Department.DepartmentListData;
   sessions: App.Data.Session.SessionListData;
-  semesters: App.Data.Semester.SemesterListDataa;
+  semesters: App.Data.Semester.SemesterListData;
   courses: App.Data.Course.CourseListData;
   levels: App.Data.Level.LevelListData;
 }>();
 
-useDepartment.setDepartments(props.departments.departments);
-useSession.setSessions(props.sessions.sessions);
-useSemester.setSemesters(props.semesters.semesters);
-useCourse.setCourses(props.courses.courses);
-useLevel.setLevels(props.levels.levels);
+useDepartments.setDepartments(props.departments.departments);
+useSessions.setSessions(props.sessions.sessions);
+useSemesters.setSemesters(props.semesters.semesters);
+useCourses.setCourses(props.courses.courses);
+useLevels.setLevels(props.levels.levels);
+
+useSessions.setSessions(props.sessions.sessions);
 
 const pages: BreadcrumbItem[] = [
   {
