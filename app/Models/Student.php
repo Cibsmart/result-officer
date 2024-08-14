@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Enums\GenderEnum;
 use App\Enums\StudentStatusEnum;
 use App\Services\GradingSystem;
 use Illuminate\Database\Eloquent\Model;
@@ -96,7 +95,6 @@ final class Student extends Model
     {
         return [
             'date_of_birth' => 'date',
-            'gender' => GenderEnum::class,
             'status' => StudentStatusEnum::class,
         ];
     }

@@ -170,7 +170,7 @@ declare namespace App.Data.Students {
     firstName: string;
     otherNames: string | null;
     name: string;
-    gender: App.Enums.GenderEnum;
+    gender: string;
     birthDate: string;
     program: string;
     department: string;
