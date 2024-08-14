@@ -3,12 +3,12 @@
 declare(strict_types=1);
 
 use App\Data\Download\PortalCourseRegistrationData;
-use App\Http\Clients\Fakes\FakeCourseRegistrationClientClient;
+use App\Http\Clients\Fakes\FakeCourseRegistrationClient;
 use App\Services\Api\CourseRegistrationService;
 use Illuminate\Support\Collection;
 
 beforeEach(function (): void {
-    $client = new FakeCourseRegistrationClientClient();
+    $client = new FakeCourseRegistrationClient();
 
     $this->service = new CourseRegistrationService($client);
 });
@@ -17,7 +17,7 @@ it('can get course registrations by registration number', function (): void {
     $registrationNumber = 'EBSU/2009/51486';
     $data = $this->service->getCourseRegistrationsByRegistrationNumber($registrationNumber);
 
-    $group = groupArrays(FakeCourseRegistrationClientClient::COURSE_REGISTRATIONS, [
+    $group = groupArrays(FakeCourseRegistrationClient::COURSE_REGISTRATIONS, [
         'registration_number' => $registrationNumber,
     ]);
 
@@ -37,7 +37,7 @@ it('can get course registrations by department session and level', function (): 
         $level,
     );
 
-    $group = groupArrays(FakeCourseRegistrationClientClient::COURSE_REGISTRATIONS, [
+    $group = groupArrays(FakeCourseRegistrationClient::COURSE_REGISTRATIONS, [
         'department_id' => $departmentId,
         'level' => $level,
         'session' => $session,
@@ -59,7 +59,7 @@ it('can get course registrations by department session and semester', function (
         $semester,
     );
 
-    $group = groupArrays(FakeCourseRegistrationClientClient::COURSE_REGISTRATIONS, [
+    $group = groupArrays(FakeCourseRegistrationClient::COURSE_REGISTRATIONS, [
         'department_id' => $departmentId,
         'semester' => $semester,
         'session' => $session,
@@ -76,7 +76,7 @@ it('can get course registrations by session and course', function (): void {
 
     $data = $this->service->getCourseRegistrationsBySessionAndCourse($session, $courseId);
 
-    $group = groupArrays(FakeCourseRegistrationClientClient::COURSE_REGISTRATIONS, [
+    $group = groupArrays(FakeCourseRegistrationClient::COURSE_REGISTRATIONS, [
         'course_id' => $courseId,
         'session' => $session,
     ]);
