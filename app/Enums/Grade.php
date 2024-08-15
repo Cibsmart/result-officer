@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
+use App\Values\TotalScore;
+
 enum Grade: int
 {
     case A = 5;
@@ -12,6 +14,18 @@ enum Grade: int
     case D = 2;
     case E = 1;
     case F = 0;
+
+    public static function for(TotalScore $score, bool $isEGradeAllowed = true): self
+    {
+        return match (true) {
+            self::scoreWithinRangeOf(self::A, $score) => self::A,
+            self::scoreWithinRangeOf(self::B, $score) => self::B,
+            self::scoreWithinRangeOf(self::C, $score) => self::C,
+            self::scoreWithinRangeOf(self::D, $score) => self::D,
+            $isEGradeAllowed && self::scoreWithinRangeOf(self::E, $score) => self::E,
+            default => self::F,
+        };
+    }
 
     public function min(): int
     {
@@ -47,5 +61,11 @@ enum Grade: int
             self::E => 'PASS',
             self::F => 'FAIL',
         };
+    }
+
+    private static function scoreWithinRangeOf(self $grade, TotalScore $score): bool
+    {
+        return $score->value >= $grade->min()
+            && $score->value <= $grade->max();
     }
 }
