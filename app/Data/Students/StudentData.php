@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Data\Students;
 
 use App\Models\Student;
-use App\Services\RetrieveYear;
 use Spatie\LaravelData\Data;
 
 final class StudentData extends Data
@@ -45,7 +44,7 @@ final class StudentData extends Data
             program: $student->program->name,
             department: $student->program->department->name,
             faculty: $student->program->department->faculty->name,
-            admissionYear: RetrieveYear::fromSession($student->entrySession->name)->firstYear(),
+            admissionYear: $student->entrySession->firstYear(),
             nationality: $student->state->country->demonym,
         );
     }

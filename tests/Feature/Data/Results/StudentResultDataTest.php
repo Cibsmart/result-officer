@@ -10,7 +10,7 @@ use Tests\Factories\StudentFactory;
 test('student result data is correct', function (): void {
     $student = createStudentWithResults();
 
-    $lastSession = $student->enrollments->last()->session->name;
+    $lastYear = $student->enrollments->last()->session->lastYear();
 
     $resultData = StudentResultData::from($student);
     $programType = $student->program->programType;

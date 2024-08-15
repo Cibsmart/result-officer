@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace App\Data\Results;
 
 use App\Models\Student;
-use App\Services\ComputeAverage;
-use App\Services\DegreeClass;
-use App\Services\RetrieveYear;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
 
@@ -42,7 +39,7 @@ final class StudentResultData extends Data
         $programType = $student->program->programType;
         $lastSession = $student->enrollments->last();
         $graduationYear = $lastSession
-            ? RetrieveYear::fromSession($lastSession->session->name)->lastYear()
+            ? $lastSession->session->lastYear()
             : 0;
 
         return new self(
