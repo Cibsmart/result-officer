@@ -3,8 +3,7 @@
 declare(strict_types=1);
 
 use App\Data\Results\StudentResultData;
-use App\Services\DegreeClass;
-use App\Services\RetrieveYear;
+use App\Enums\ClassOfDegree;
 use Tests\Factories\StudentFactory;
 
 test('student result data is correct', function (): void {
@@ -16,7 +15,7 @@ test('student result data is correct', function (): void {
     $programType = $student->program->programType;
 
     $fcgpa = computeFCGPA($student);
-    $degreeClass = DegreeClass::for($fcgpa)->value();
+    $degreeClass = ClassOfDegree::for($fcgpa);
 
     expect($resultData)->toBeInstanceOf(StudentResultData::class)
         ->and($resultData->id)->toBe($student->id)
@@ -24,7 +23,7 @@ test('student result data is correct', function (): void {
         ->and($resultData->finalCumulativeGradePointAverage)->toBe($fcgpa)
         ->and($resultData->degreeClass)->toBe($degreeClass->value)
         ->and($resultData->degreeAwarded)->toBe("$programType->name ($programType->code)")
-        ->and($resultData->graduationYear)->toBe(RetrieveYear::fromSession($lastSession)->lastYear());
+        ->and($resultData->graduationYear)->toBe($lastYear);
 });
 
 test('student without enrollment return an empty state with zero fcgpa', function (): void {

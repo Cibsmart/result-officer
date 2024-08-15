@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Services\DegreeClass;
+use App\Enums\ClassOfDegree;
 use Tests\Factories\UserFactory;
 
 use function Pest\Laravel\actingAs;
@@ -12,7 +12,7 @@ test('view result form loads', function (): void {
     $student = createStudentWithResults();
 
     $fcpga = computeFCGPA($student);
-    $degreeClass = DegreeClass::for($fcpga)->value();
+    $degreeClass = ClassOfDegree::for($fcpga);
     $summary = "CURRENT FINAL CGPA: $fcpga ($degreeClass->value)";
 
     actingAs($user)
