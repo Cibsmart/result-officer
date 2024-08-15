@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Data\Results;
 
+use App\Helpers\ComputeAverage;
 use App\Models\SemesterEnrollment;
-use App\Services\ComputeAverage;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
 

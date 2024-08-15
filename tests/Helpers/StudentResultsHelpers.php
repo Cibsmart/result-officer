@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
+use App\Helpers\ComputeAverage;
 use App\Models\Enrollment;
 use App\Models\SemesterEnrollment;
 use App\Models\Student;
-use App\Services\ComputeAverage;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Tests\Factories\CourseRegistrationFactory;
@@ -23,8 +23,8 @@ function createStudentWithResults(
     int $numberOfSemesters = 2,
     int $numberOfCourses = 5,
 ): Student {
-    $firstSemester = SemesterFactory::new(['name' => 'FIRST'])->create();
-    $secondSemester = SemesterFactory::new(['name' => 'SECOND'])->create();
+    $firstSemester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
+    $secondSemester = SemesterFactory::new(['name' => 'SECOND'])->createOne();
 
     return
         StudentFactory::new()->has(
@@ -49,8 +49,8 @@ function createMultipleStudentsWithResults(
     int $numberOfSemesters = 2,
     int $numberOfCourses = 5,
 ): Collection {
-    $firstSemester = SemesterFactory::new(['name' => 'FIRST'])->create();
-    $secondSemester = SemesterFactory::new(['name' => 'SECOND'])->create();
+    $firstSemester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
+    $secondSemester = SemesterFactory::new(['name' => 'SECOND'])->createOne();
     $program = ProgramFactory::new()->createOne();
     $session = SessionFactory::new()->createOne();
     $level = LevelFactory::new()->createOne();

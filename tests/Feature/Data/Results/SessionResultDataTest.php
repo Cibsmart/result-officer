@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Data\Results\SessionResultData;
-use App\Services\ComputeAverage;
+use App\Helpers\ComputeAverage;
 use Tests\Factories\CourseRegistrationFactory;
 use Tests\Factories\EnrollmentFactory;
 use Tests\Factories\ResultFactory;
