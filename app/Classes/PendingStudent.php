@@ -14,7 +14,6 @@ use App\Models\Level;
 use App\Models\Session;
 use App\Models\State;
 use App\Models\Student;
-use App\Services\ExtractYear;
 use App\Values\RegistrationNumber;
 use Exception;
 
@@ -26,26 +25,27 @@ final readonly class PendingStudent
 
     public static function new(PortalStudentData $data): self
     {
-        $student = new Student([
-            'date_of_birth' => $data->dateOfBirth->getCarbonDate(),
-            'email' => $data->email,
-            'entry_level_id' => self::getEntryLevelId($data->entryLevel),
-            'entry_mode_id' => self::getEntryModeId($data->entryMode),
-            'entry_session_id' => self::getSessionId($data->entrySession, $data->registrationNumber),
-            'first_name' => $data->firstName,
-            'gender' => GenderEnum::from($data->gender),
-            'jamb_registration_number' => $data->jambRegistrationNumber,
-            'last_name' => $data->lastName,
-            'local_government' => $data->localGovernment,
-            'online_id' => $data->onlineId,
-            'other_names' => $data->otherNames,
-            'phone_number' => $data->phoneNumber,
-            'program_id' => self::getProgramId($data->departmentId, $data->option),
-            'registration_number' => RegistrationNumber::new($data->registrationNumber)->value,
-            'source' => RecordSource::PORTAL,
-            'state_id' => self::getStateId($data->state),
-            'status' => StudentStatusEnum::NEW,
-        ]);
+        $registrationNumber = RegistrationNumber::new($data->registrationNumber);
+
+        $student = new Student();
+        $student->date_of_birth = $data->dateOfBirth->getCarbonDate();
+        $student->email = $data->email;
+        $student->entry_level_id = self::getEntryLevelId($data->entryLevel);
+        $student->entry_mode_id = self::getEntryModeId($data->entryMode);
+        $student->entry_session_id = self::getSessionId($data->entrySession, $registrationNumber);
+        $student->first_name = $data->firstName;
+        $student->gender = GenderEnum::from($data->gender)->value;
+        $student->jamb_registration_number = $data->jambRegistrationNumber;
+        $student->last_name = $data->lastName;
+        $student->local_government = $data->localGovernment;
+        $student->online_id = $data->onlineId;
+        $student->other_names = $data->otherNames;
+        $student->phone_number = $data->phoneNumber;
+        $student->program_id = self::getProgramId($data->departmentId, $data->option);
+        $student->registration_number = $registrationNumber->value;
+        $student->source = RecordSource::PORTAL->value;
+        $student->state_id = self::getStateId($data->state);
+        $student->status = StudentStatusEnum::NEW->value;
 
         return new self($student);
     }
@@ -80,12 +80,12 @@ final readonly class PendingStudent
         return $mode->id;
     }
 
-    private static function getSessionId(string $session, string $registrationNumber): int
+    private static function getSessionId(string $session, RegistrationNumber $registrationNumber): int
     {
         $dbSession = Session::query()->where('name', $session)->first();
 
         $dbSession ??= Session::query()
-            ->where('name', ExtractYear::fromRegistrationNumber($registrationNumber)->session())
+            ->where('name', $registrationNumber->session())
             ->firstOrFail();
 
         return $dbSession->id;
