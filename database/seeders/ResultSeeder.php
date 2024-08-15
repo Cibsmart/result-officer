@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 use App\Enums\CourseStatusEnum;
+use App\Enums\Grade;
 use App\Models\CourseRegistration;
 use App\Models\Result;
-use App\Services\Grader;
 use App\Values\ExamScore;
 use App\Values\InCourseScore;
 use App\Values\TotalScore;
@@ -171,14 +171,14 @@ final class ResultSeeder extends Seeder
 
                 $score = TotalScore::fromInCourseAndExam(InCourseScore::new($result[3][0]),
                     ExamScore::new($result[3][1]));
-                $grader = new Grader($score, true);
-                $gradePoint = $grader->grade()->value * $result[2];
-                $data = "$courseRegistration->id $score->value {$grader->grade()->name} $gradePoint";
+                $grade = Grade::for($score);
+                $gradePoint = $grade->value * $result[2];
+                $data = "$courseRegistration->id $score->value {$grade->name} $gradePoint";
 
                 Result::query()->create([
                     'course_registration_id' => $courseRegistration->id,
                     'data' => $data,
-                    'grade' => $grader->grade()->name,
+                    'grade' => $grade->name,
                     'grade_point' => $gradePoint,
                     'scores' => json_encode(['in-course' => $result[3][0], 'exam' => $result[3][1]]),
                     'total_score' => $score->value,
