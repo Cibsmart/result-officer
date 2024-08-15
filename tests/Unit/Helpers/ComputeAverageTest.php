@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Services\ComputeAverage;
+use App\Helpers\ComputeAverage;
 
 test('computed average value for integers are correct', function (int $dividend, int $divisor, float $quotient): void {
     expect(ComputeAverage::new($dividend, $divisor)->value())->toBe($quotient);
