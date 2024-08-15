@@ -28,7 +28,7 @@ it('throws exception for invalid matriculation number', function (): void {
 
 it('can get student associated with registration number', function (): void {
     $registrationNumber = 'EBSU/2009/00001';
-    $student = StudentFactory::new()->create(['registration_number' => $registrationNumber]);
+    $student = StudentFactory::new()->createOne(['registration_number' => $registrationNumber]);
 
     $registrationNumberValue = RegistrationNumber::new($registrationNumber);
 
