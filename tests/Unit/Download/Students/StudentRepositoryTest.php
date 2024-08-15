@@ -8,7 +8,7 @@ use App\Http\Clients\Fakes\FakeStudentClient;
 use App\Models\Student;
 use App\Repositories\StudentRepository;
 use App\Services\Api\StudentService;
-use App\Services\ExtractYear;
+use App\Values\RegistrationNumber;
 use Illuminate\Support\Collection;
 use Tests\Factories\DepartmentFactory;
 use Tests\Factories\EntryModeFactory;
@@ -93,9 +93,9 @@ it('can save valid students', function (): void {
     assertDatabaseCount('students', count($studentsInSession));
 });
 
-it('can extract session from student registration number', function (): void {
+it('uses session extracted from registration number as the default session', function (): void {
     $student = FakeStudentClient::STUDENTS['EBSU-2009-51487'];
-    $session = ExtractYear::fromRegistrationNumber($student['registration_number'])->session();
+    $session = RegistrationNumber::new($student['registration_number'])->session();
 
     LevelFactory::new()->create(['name' => $student['entry_level']]);
     EntryModeFactory::new()->create(['code' => $student['entry_mode']]);

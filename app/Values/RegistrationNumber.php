@@ -13,7 +13,7 @@ final readonly class RegistrationNumber
 {
     public function __construct(public string $value)
     {
-        if (! preg_match('/^EBSU\/\d{4}\/\d{4,6}[A-Z]?$/i', Str::trim($this->value))) {
+        if (! preg_match('/^ebsu\/\d{4}\/\d{4,6}[a-z]?$/i', Str::trim($this->value))) {
             throw new InvalidArgumentException('Invalid registration number');
         }
     }
@@ -33,5 +33,23 @@ final readonly class RegistrationNumber
         }
 
         return $student;
+    }
+
+    public function session(): string
+    {
+        $year = $this->year();
+        $next = $year + 1;
+
+        return Str::of((string) $year)
+            ->append('/')
+            ->append((string) $next)
+            ->value();
+    }
+
+    public function year(): int
+    {
+        $year = Str::of($this->value)->explode('/')[1];
+
+        return (int) $year;
     }
 }
