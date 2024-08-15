@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Data\Results;
 
+use App\Enums\ClassOfDegree;
+use App\Helpers\ComputeAverage;
 use App\Models\Student;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
@@ -35,7 +37,7 @@ final class StudentResultData extends Data
             2,
         );
 
-        $degreeClass = DegreeClass::for($finalCGPA)->value();
+        $degreeClass = ClassOfDegree::for($finalCGPA);
         $programType = $student->program->programType;
         $lastSession = $student->enrollments->last();
         $graduationYear = $lastSession
