@@ -41,7 +41,7 @@ final readonly class ViewStudentResultController
         return Pdf::view('pdfs.results.transcript', [
             'results' => StudentResultData::from($student),
             'student' => $studentData,
-            'transcript' => TranscriptData::from($student->applyEGrade()),
+            'transcript' => TranscriptData::from($student->allowEGrade()),
         ])
             ->withBrowsershot(static function (Browsershot $browsershot): void {
                 $browsershot->setChromePath(Config::string('rp-pdf.chromium.path'));
