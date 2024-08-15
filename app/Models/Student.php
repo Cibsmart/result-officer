@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\StudentStatusEnum;
-use App\Services\GradingSystem;
+use App\Values\RegistrationNumber;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -85,9 +85,12 @@ final class Student extends Model
         return $this->hasManyThrough(SemesterEnrollment::class, Enrollment::class);
     }
 
-    public function applyEGrade(): bool
+    public function allowEGrade(): bool
     {
-        return GradingSystem::new($this->registration_number)->isEGradeAllowed();
+        return ! in_array(
+            RegistrationNumber::new($this->registration_number)->year(),
+            [2013, 2014, 2015, 2016, 2017],
+            true);
     }
 
     /** @return array<string, string> */
