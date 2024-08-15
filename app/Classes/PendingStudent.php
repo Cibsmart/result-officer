@@ -23,12 +23,13 @@ final readonly class PendingStudent
     {
     }
 
+    /** @throws \Exception */
     public static function new(PortalStudentData $data): self
     {
         $registrationNumber = RegistrationNumber::new($data->registrationNumber);
 
         $student = new Student();
-        $student->date_of_birth = $data->dateOfBirth->getCarbonDate();
+        $student->date_of_birth = $data->dateOfBirth->getStringDate();
         $student->email = $data->email;
         $student->entry_level_id = self::getEntryLevelId($data->entryLevel);
         $student->entry_mode_id = self::getEntryModeId($data->entryMode);
