@@ -28,7 +28,7 @@ final class GradingSchemeData extends Data
             range: "$min - $max",
             interpretation: $grade->interpretation(),
             grade: $grade->name,
-            gradePoint: $grade->value,
+            gradePoint: $grade->point(),
         );
     }
 }

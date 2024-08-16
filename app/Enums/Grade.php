@@ -6,14 +6,14 @@ namespace App\Enums;
 
 use App\Values\TotalScore;
 
-enum Grade: int
+enum Grade: string
 {
-    case A = 5;
-    case B = 4;
-    case C = 3;
-    case D = 2;
-    case E = 1;
-    case F = 0;
+    case A = 'A';
+    case B = 'B';
+    case C = 'C';
+    case D = 'D';
+    case E = 'E';
+    case F = 'F';
 
     public static function for(TotalScore $score, bool $isEGradeAllowed = true): self
     {
@@ -60,6 +60,18 @@ enum Grade: int
             self::D => 'FAIR',
             self::E => 'PASS',
             self::F => 'FAIL',
+        };
+    }
+
+    public function point(): int
+    {
+        return match ($this) {
+            self::A => 5,
+            self::B => 4,
+            self::C => 3,
+            self::D => 2,
+            self::E => 1,
+            self::F => 0,
         };
     }
 
