@@ -87,10 +87,7 @@ final class Student extends Model
 
     public function allowEGrade(): bool
     {
-        return ! in_array(
-            RegistrationNumber::new($this->registration_number)->year(),
-            [2013, 2014, 2015, 2016, 2017],
-            true);
+        return RegistrationNumber::new($this->registration_number)->allowEGrade();
     }
 
     /** @return array<string, string> */

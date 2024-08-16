@@ -52,4 +52,9 @@ final readonly class RegistrationNumber
 
         return (int) $year;
     }
+
+    public function allowEGrade(): bool
+    {
+        return ! in_array($this->year(), [2013, 2014, 2015, 2016, 2017], true);
+    }
 }

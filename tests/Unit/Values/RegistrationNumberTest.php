@@ -55,3 +55,21 @@ it('can get the session associated with a registration number', function (): voi
 
     expect($session)->toBeString()->and($session)->toBe('2009/2010');
 });
+
+it('can check if E grade should allowed for registration number',
+    function (string $registrationNumber, bool $expected): void {
+        $allowEGrade = RegistrationNumber::new($registrationNumber)->allowEGrade();
+
+        expect($allowEGrade)->toBeBool()->toBe($expected);
+    })->with([
+        ['EBSU/2009/00001', true],
+        ['EBSU/2010/00001', true],
+        ['EBSU/2011/00001', true],
+        ['EBSU/2012/00001', true],
+        ['EBSU/2013/00001', false],
+        ['EBSU/2014/00001', false],
+        ['EBSU/2015/00001', false],
+        ['EBSU/2016/00001', false],
+        ['EBSU/2017/00001', false],
+        ['EBSU/2018/00001', true],
+    ]);
