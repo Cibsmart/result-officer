@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Contracts;
 
-/** @phpstan-type ResultDetail array{id:string, course_registration_id: string, registration_number:string,
+/**
+ * @phpstan-type ResultDetail array{id:string, course_registration_id: string, registration_number:string,
  *     in_course:string, exam_score:string, total_score:string, grade:string,
  *     upload_date:array{day:string,month:string, year:string}}
  */

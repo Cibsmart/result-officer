@@ -16,7 +16,13 @@ final class PortalResultClient extends ApiClient implements ResultClient
      */
     public function fetchResultByCourseRegistrationId(string $courseRegistrationId): array
     {
-        return $this->get("results/course-registration/{$courseRegistrationId}");
+        /**
+         * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+         * @var array{id:string, course_registration_id: string, registration_number:string, in_course:string, exam_score:string, total_score:string, grade:string, upload_date:array{day:string,month:string, year:string}} $result
+         */
+        $result = $this->get("results/course-registration/{$courseRegistrationId}");
+
+        return $result;
     }
 
     /**
