@@ -10,8 +10,8 @@ final readonly class InCourseScore
 {
     public function __construct(public int $value)
     {
-        if ($value < 0 || $value > 30) {
-            throw new InvalidArgumentException('In-course score value must be between 0 and 30');
+        if ($value < 0 || $value > 50) {
+            throw new InvalidArgumentException('In-course score value must be between 0 and 50');
         }
     }
 

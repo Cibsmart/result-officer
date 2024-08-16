@@ -40,8 +40,8 @@ it('throws invalid argument exception for invalid scores', function (string $key
     PortalResultData::from($result);
 })
     ->with([
-        ['in_course', '35'],
-        ['exam_score', '71'],
+        ['in_course', '51'],
+        ['exam_score', '101'],
     ])
     ->throws(InvalidArgumentException::class);
 
