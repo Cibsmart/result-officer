@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Values;
 
+use App\Enums\Grade;
 use InvalidArgumentException;
 
 final readonly class TotalScore
@@ -24,5 +25,10 @@ final readonly class TotalScore
     public static function new(int $value): self
     {
         return new self($value);
+    }
+
+    public function grade(bool $isEGradeAllowed): Grade
+    {
+        return Grade::for($this, $isEGradeAllowed);
     }
 }
