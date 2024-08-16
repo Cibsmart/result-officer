@@ -10,8 +10,8 @@ final readonly class ExamScore
 {
     public function __construct(public int $value)
     {
-        if ($value < 0 || $value > 70) {
-            throw new InvalidArgumentException('Exam score value must be between 0 and 70');
+        if ($value < 0 || $value > 100) {
+            throw new InvalidArgumentException('Exam score value must be between 0 and 100');
         }
     }
 
