@@ -13,7 +13,7 @@ test('grading scheme item data is correct for all grades', function (Grade $grad
 
     expect($gradingSchemeItemData)->toBeInstanceOf(GradingSchemeData::class)
         ->and($gradingSchemeItemData->grade)->toBe($grade->name)
-        ->and($gradingSchemeItemData->gradePoint)->toBe($grade->value)
+        ->and($gradingSchemeItemData->gradePoint)->toBe($grade->point())
         ->and($gradingSchemeItemData->range)->toBe("$min - $max")
         ->and($gradingSchemeItemData->interpretation)->toBe($grade->interpretation());
 })->with([Grade::A, Grade::B, Grade::C, Grade::D, Grade::E, Grade::F]);
@@ -26,7 +26,7 @@ test('grading scheme item data is correct for E and F grades without E Grading',
 
     expect($gradingSchemeItemData)->toBeInstanceOf(GradingSchemeData::class)
         ->and($gradingSchemeItemData->grade)->toBe($grade->name)
-        ->and($gradingSchemeItemData->gradePoint)->toBe($grade->value)
+        ->and($gradingSchemeItemData->gradePoint)->toBe($grade->point())
         ->and($gradingSchemeItemData->range)->toBe("$min - $max")
         ->and($gradingSchemeItemData->interpretation)->toBe($grade->interpretation());
 })->with([Grade::F]);
