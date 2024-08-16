@@ -12,17 +12,17 @@ beforeEach(function (): void {
             'message' => 'success',
             'status' => true,
         ]),
-        'results/registration-number/EBSU-2009-51486' => Http::response([
-            'data' => FakeResultClient::RESULTS,
-            'message' => 'success',
-            'status' => true,
-        ]),
         'results/department/1/session/2009-2010/level/100' => Http::response([
             'data' => FakeResultClient::RESULTS,
             'message' => 'success',
             'status' => true,
         ]),
         'results/department/1/session/2009-2010/semester/FIRST' => Http::response([
+            'data' => FakeResultClient::RESULTS,
+            'message' => 'success',
+            'status' => true,
+        ]),
+        'results/registration-number/EBSU-2009-51486' => Http::response([
             'data' => FakeResultClient::RESULTS,
             'message' => 'success',
             'status' => true,

@@ -83,18 +83,18 @@ final readonly class FakeResultClient implements ResultClient
             'upload_date' => ['day' => '27', 'month' => '08', 'year' => '2011'],
         ],
         [
+            'course_id' => '1',
             'course_registration_id' => '5',
             'exam_score' => '0',
             'grade' => 'F',
             'id' => '5',
             'in_course' => '0',
+            'level' => '100',
             'registration_number' => 'EBSU/2009/51487',
-            'total_score' => '0',
-            'upload_date' => ['day' => '27', 'month' => '08', 'year' => '2011'],
             'semester' => 'FIRST',
             'session' => '2009/2010',
-            'level' => '100',
-            'course_id' => '1',
+            'total_score' => '0',
+            'upload_date' => ['day' => '27', 'month' => '08', 'year' => '2011'],
         ],
     ];
 
