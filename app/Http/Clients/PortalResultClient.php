@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Clients;
 
 use App\Contracts\ResultClient;
+use Illuminate\Support\Str;
 
 /** @phpstan-import-type ResultDetail from \App\Contracts\ResultClient */
 final class PortalResultClient extends ApiClient implements ResultClient
@@ -13,11 +14,9 @@ final class PortalResultClient extends ApiClient implements ResultClient
      * {@inheritDoc}
      * @throws \Exception
      */
-    public function fetchResultByCourseRegistrationId(string $onlineCourseRegistrationId): array
+    public function fetchResultByCourseRegistrationId(string $courseRegistrationId): array
     {
-        $result = $this->get("results/course-registration/{$onlineCourseRegistrationId}");
-
-        return $result;
+        return $this->get("results/course-registration/{$courseRegistrationId}");
     }
 
     /**
@@ -26,6 +25,8 @@ final class PortalResultClient extends ApiClient implements ResultClient
      */
     public function fetchResultsByRegistrationNumber(string $registrationNumber): array
     {
+        $registrationNumber = Str::replace('/', '-', $registrationNumber);
+
         /** @var array<ResultDetail> $result */
         $result = $this->get("results/registration-number/{$registrationNumber}");
 
@@ -37,12 +38,14 @@ final class PortalResultClient extends ApiClient implements ResultClient
      * @throws \Exception
      */
     public function fetchResultsByDepartmentSessionLevel(
-        string $onlineDepartmentId,
-        string $sessionName,
-        string $levelName,
+        string $departmentId,
+        string $session,
+        string $level,
     ): array {
+        $session = Str::replace('/', '-', $session);
+
         /** @var array<ResultDetail> $result */
-        $result = $this->get("results/department/{$onlineDepartmentId}/session/{$sessionName}/level/{$levelName}");
+        $result = $this->get("results/department/{$departmentId}/session/{$session}/level/{$level}");
 
         return $result;
     }
@@ -52,14 +55,14 @@ final class PortalResultClient extends ApiClient implements ResultClient
      * @throws \Exception
      */
     public function fetchResultsByDepartmentSessionSemester(
-        string $onlineDepartmentId,
-        string $sessionName,
-        string $semesterName,
+        string $departmentId,
+        string $session,
+        string $semester,
     ): array {
+        $session = Str::replace('/', '-', $session);
+
         /** @var array<ResultDetail> $result */
-        $result = $this->get(
-            "results/department/{$onlineDepartmentId}/session/{$sessionName}/semester/{$semesterName}",
-        );
+        $result = $this->get("results/department/{$departmentId}/session/{$session}/semester/{$semester}");
 
         return $result;
     }
@@ -68,10 +71,12 @@ final class PortalResultClient extends ApiClient implements ResultClient
      * {@inheritDoc}
      * @throws \Exception
      */
-    public function fetchResultsBySessionCourse(string $sessionName, string $onlineCourseId): array
+    public function fetchResultsBySessionCourse(string $session, string $courseId): array
     {
+        $session = Str::replace('/', '-', $session);
+
         /** @var array<ResultDetail> $result */
-        $result = $this->get("results/session/{$sessionName}/course/{$onlineCourseId}");
+        $result = $this->get("results/session/{$session}/course/{$courseId}");
 
         return $result;
     }

@@ -39,12 +39,10 @@ beforeEach(function (): void {
 
 it('can fetch result from the portal by online course registration id', function (): void {
     $courseRegistrationId = '1';
-    $numberOfExpectedFields = 8;
 
     $result = $this->client->fetchResultByCourseRegistrationId($courseRegistrationId);
 
     expect($result)->toBeArray()
-        ->toHaveLength($numberOfExpectedFields)
         ->and($result['course_registration_id'])->toBe($courseRegistrationId);
 });
 

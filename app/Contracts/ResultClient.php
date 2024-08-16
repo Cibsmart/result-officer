@@ -11,28 +11,28 @@ namespace App\Contracts;
 interface ResultClient
 {
     /** @return ResultDetail */
-    public function fetchResultByCourseRegistrationId(string $onlineCourseRegistrationId): array;
+    public function fetchResultByCourseRegistrationId(string $courseRegistrationId): array;
 
     /** @return array<ResultDetail> */
     public function fetchResultsByRegistrationNumber(string $registrationNumber): array;
 
     /** @return array<ResultDetail> */
     public function fetchResultsByDepartmentSessionLevel(
-        string $onlineDepartmentId,
-        string $sessionName,
-        string $levelName,
+        string $departmentId,
+        string $session,
+        string $level,
     ): array;
 
     /** @return array<ResultDetail> */
     public function fetchResultsByDepartmentSessionSemester(
-        string $onlineDepartmentId,
-        string $sessionName,
-        string $semesterName,
+        string $departmentId,
+        string $session,
+        string $semester,
     ): array;
 
     /** @return array<ResultDetail> */
     public function fetchResultsBySessionCourse(
-        string $sessionName,
-        string $onlineCourseId,
+        string $session,
+        string $courseId,
     ): array;
 }
