@@ -48,6 +48,16 @@ declare namespace App.Data.Download {
     id: string;
     name: string;
   };
+  export type PortalResultData = {
+    onlineId: string;
+    courseRegistrationId: string;
+    registrationNumber: any;
+    inCourseScore: any;
+    examScore: any;
+    totalScore: any;
+    grade: App.Enums.Grade;
+    uploadDate: App.Data.Download.PortalDateData;
+  };
   export type PortalStudentData = {
     onlineId: string;
     lastName: string;
@@ -191,17 +201,17 @@ declare namespace App.Data.Summary {
   };
 }
 declare namespace App.Enums {
-  export type CourseStatusEnum = "F" | "R";
-  export type CreditUnitEnum = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 12 | 15 | 18;
-  export type DegreeClassEnum =
+  export type ClassOfDegree =
     | "FIRST CLASS HONOURS"
     | "SECOND CLASS HONOURS (UPPER DIVISION)"
     | "SECOND CLASS HONOURS (LOWER DIVISION)"
     | "THIRD CLASS HONOURS"
     | "PASS"
     | "FAIL";
+  export type CourseStatusEnum = "F" | "R";
+  export type CreditUnitEnum = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 12 | 15 | 18;
   export type GenderEnum = "M" | "F";
-  export type Grade = 5 | 4 | 3 | 2 | 1 | 0;
+  export type Grade = "A" | "B" | "C" | "D" | "E" | "F";
   export type LevelEnum = "100" | "200" | "300" | "400" | "500" | "600";
   export type NotificationType = "success" | "error" | "warning" | "info";
   export type RecordSource = "portal" | "excel" | "legacy";
