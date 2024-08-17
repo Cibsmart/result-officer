@@ -16,7 +16,7 @@ final class Result extends Model
         'total_score',
         'grade',
         'grade_point',
-        'remark',
+        'remarks',
         'data',
     ];
 

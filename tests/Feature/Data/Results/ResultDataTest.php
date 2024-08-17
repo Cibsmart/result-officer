@@ -29,7 +29,8 @@ test('courses without result has default score', function (): void {
     $resultData = ResultData::from($course);
 
     expect($resultData)->toBeInstanceOf(ResultData::class)
-        ->and($resultData->totalScore)->toBe($course->result->total_score)
-        ->and($resultData->grade)->toBe($course->result->grade)
-        ->and($resultData->gradePoint)->toBe($course->result->grade_point);
+        ->and($resultData->totalScore)->toBe(0)
+        ->and($resultData->grade)->toBe('F')
+        ->and($resultData->gradePoint)->toBe(0)
+        ->and($resultData->remark)->toBe('NR');
 });
