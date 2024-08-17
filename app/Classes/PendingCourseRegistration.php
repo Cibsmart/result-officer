@@ -7,7 +7,6 @@ namespace App\Classes;
 use App\Data\Download\PortalCourseRegistrationData;
 use App\Enums\CourseStatusEnum;
 use App\Enums\CreditUnitEnum;
-use App\Enums\RecordSource;
 use App\Models\Course;
 use App\Models\CourseRegistration;
 use App\Models\SemesterEnrollment;
@@ -29,7 +28,7 @@ final readonly class PendingCourseRegistration
         $registration->online_id = $data->onlineId;
         $registration->registration_date = $data->registrationDate->getStringDate();
         $registration->semester_enrollment_id = $semesterEnrollment->id;
-        $registration->source = RecordSource::PORTAL->value;
+        $registration->source = $data->source->value;
 
         return new self($registration);
     }

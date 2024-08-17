@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Data\Download;
 
+use App\Enums\RecordSource;
 use Spatie\LaravelData\Data;
 
 /** @phpstan-import-type CourseRegistrationDetail from \App\Contracts\CourseRegistrationClient */
@@ -18,6 +19,7 @@ final class PortalCourseRegistrationData extends Data
         public readonly string $courseId,
         public readonly string $creditUnit,
         public readonly PortalDateData $registrationDate,
+        public readonly RecordSource $source,
     ) {
     }
 
@@ -33,6 +35,7 @@ final class PortalCourseRegistrationData extends Data
             courseId: $data['course_id'],
             creditUnit: (string) $data['credit_unit'],
             registrationDate: PortalDateData::from($data['registration_date']),
+            source: RecordSource::PORTAL,
         );
     }
 }
