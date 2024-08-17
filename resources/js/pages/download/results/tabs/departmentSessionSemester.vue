@@ -19,7 +19,7 @@ const form = useForm({
 });
 
 const submit = () => {
-  form.post(route("download.registrations.department-session-semester.store"));
+  form.post(route("download.results.department-session-semester.store"));
 };
 </script>
 

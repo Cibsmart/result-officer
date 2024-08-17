@@ -10,7 +10,7 @@ const form = useForm({
 });
 
 const submit = () => {
-  form.post(route("download.registrations.registration-number.store"));
+  form.post(route("download.results.registration-number.store"));
 };
 </script>
 

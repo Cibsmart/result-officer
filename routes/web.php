@@ -75,13 +75,13 @@ Route::middleware(['auth'])->group(static function (): void {
         Route::get('page', DownloadResultsPageController::class)
             ->name('download.results.page');
         Route::post('registration-number', DownloadResultByRegistrationNumberController::class)
-            ->name('download.registrations.registration-number.store');
+            ->name('download.results.registration-number.store');
         Route::post('department-session-level', DownloadResultByDepartmentSessionLevelController::class)
-            ->name('download.registrations.department-session-level.store');
+            ->name('download.results.department-session-level.store');
         Route::post('department-session-semester', DownloadResultByDepartmentSessionLevelController::class)
-            ->name('download.registrations.department-session-semester.store');
+            ->name('download.results.department-session-semester.store');
         Route::post('session-course', DownloadResultByDepartmentSessionLevelController::class)
-            ->name('download.registrations.session-course.store');
+            ->name('download.results.session-course.store');
     });
 });
 
