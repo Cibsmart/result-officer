@@ -19,7 +19,7 @@ const form = useForm({
 });
 
 const submit = () => {
-  form.post(route("download.registrations.department-session-level.store"));
+  form.post(route("download.results.department-session-level.store"));
 };
 </script>
 
