@@ -29,6 +29,11 @@ final class Result extends Model
         return $this->belongsTo(CourseRegistration::class);
     }
 
+    public function getData(): string
+    {
+        return "{$this->course_registration_id}-{$this->total_score}-{$this->grade}-{$this->grade_point}";
+    }
+
     /** @return array<string, string> */
     protected function casts(): array
     {
