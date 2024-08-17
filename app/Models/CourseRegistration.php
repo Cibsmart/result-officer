@@ -38,12 +38,12 @@ final class CourseRegistration extends Model
     /** @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\Result> */
     public function result(): HasOne
     {
-        return $this->hasOne(Result::class)->withDefault([
-            'grade' => 'F',
-            'grade_point' => 0,
-            'remarks' => 'NR',
-            'total_score' => 0,
-        ]);
+        return $this->hasOne(Result::class);
+    }
+
+    public function student(): Student
+    {
+        return $this->semesterEnrollment->enrollment->student;
     }
 
     /** @return array<string, string> */

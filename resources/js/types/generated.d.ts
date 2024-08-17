@@ -31,6 +31,7 @@ declare namespace App.Data.Download {
     courseId: string;
     creditUnit: string;
     registrationDate: App.Data.Download.PortalDateData;
+    source: App.Enums.RecordSource;
   };
   export type PortalDateData = {
     day: string;
@@ -51,12 +52,13 @@ declare namespace App.Data.Download {
   export type PortalResultData = {
     onlineId: string;
     courseRegistrationId: string;
-    registrationNumber: any;
-    inCourseScore: any;
-    examScore: any;
-    totalScore: any;
-    grade: App.Enums.Grade;
+    registrationNumber: string;
+    inCourseScore: string;
+    examScore: string;
+    totalScore: string;
+    grade: string;
     uploadDate: App.Data.Download.PortalDateData;
+    source: App.Enums.RecordSource;
   };
   export type PortalStudentData = {
     onlineId: string;
