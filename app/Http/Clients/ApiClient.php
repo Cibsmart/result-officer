@@ -9,7 +9,6 @@ use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Str;
 
 abstract class ApiClient
 {
@@ -36,13 +35,9 @@ abstract class ApiClient
 
             return $response['data'];
         } catch (ConnectionException $e) {
-            $message = Str::of($e->getMessage())->before('(');
-
-            throw new Exception('ERROR CONNECTING TO API: ' . $message);
+            throw new Exception("ERROR CONNECTING TO API: {$e->getMessage()}");
         } catch (RequestException $e) {
-            $message = Str::of($e->getMessage())->before('{');
-
-            throw new Exception('ERROR FETCHING DATA FROM API: ' . $message);
+            throw new Exception("ERROR FETCHING DATA FROM API: {$e->getMessage()}");
         }
     }
 }

@@ -7,6 +7,7 @@ namespace App\Providers;
 use App\Enums\NotificationType;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 
 final class InertiaServiceProvider extends ServiceProvider
 {
@@ -17,6 +18,8 @@ final class InertiaServiceProvider extends ServiceProvider
     {
         RedirectResponse::macro(name: 'flash',
             macro: function (NotificationType $type, string $body) {
+                $body = Str::of($body)->limit(1000)->value();
+
                 session()->flash('notification', ['type' => $type, 'body' => $body]);
 
                 return $this;
