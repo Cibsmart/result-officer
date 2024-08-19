@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Factories;
 
 use App\Enums\Grade;
+use App\Models\CourseRegistration;
 use App\Models\Result;
 use App\Values\TotalScore;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -28,7 +29,8 @@ final class ResultFactory extends Factory
             'course_registration_id' => CourseRegistrationFactory::new(),
             'data' => $data,
             'grade' => $grade->name,
-            'grade_point' => $grade->point(),
+            'grade_point' => fn (array $attributes,
+            ) => $grade->point() * CourseRegistration::find($attributes['course_registration_id'])->credit_unit,
             'scores' => json_encode($scores),
             'total_score' => $score->value,
         ];
