@@ -7,26 +7,23 @@ namespace App\Classes;
 use App\Data\Download\PortalResultData;
 use App\Models\CourseRegistration;
 use App\Models\Result;
-use App\Values\ExamScore;
-use App\Values\InCourseScore;
 use App\Values\RegistrationNumber;
 use App\Values\TotalScore;
 
 final readonly class PendingResult
 {
-    public function __construct(public Result $result)
+    public function __construct(public CourseRegistration $courseRegistration, public Result $result)
     {
     }
 
     public static function new(CourseRegistration $courseRegistration, PortalResultData $resultData): self
     {
         $registrationNumber = RegistrationNumber::new($resultData->registrationNumber);
-        $inCourseScore = InCourseScore::new((int) $resultData->inCourseScore);
-        $examScore = ExamScore::new((int) $resultData->examScore);
-        $totalScore = TotalScore::fromInCourseAndExam($inCourseScore, $examScore);
+        $totalScore = TotalScore::new((int) $resultData->inCourseScore + (int) $resultData->examScore);
         $grade = $totalScore->grade($registrationNumber->allowEGrade());
 
         $scores = self::prepareScores($resultData->inCourseScore, $resultData->examScore, $resultData->totalScore);
+        $gradePoint = $grade->point() * $courseRegistration->credit_unit;
 
         $result = new Result();
 
@@ -34,20 +31,20 @@ final readonly class PendingResult
         $result->scores = $scores;
         $result->total_score = $totalScore->value;
         $result->grade = $grade->value;
-        $result->grade_point = $grade->point();
+        $result->grade_point = $gradePoint;
         $result->upload_date = $resultData->uploadDate->getStringDate();
         $result->data = $result->getData();
         $result->remarks = null;
         $result->source = $resultData->source->value;
 
-        return new self($result);
+        return new self($courseRegistration, $result);
     }
 
-    public function save(CourseRegistration $courseRegistration): bool
+    public function save(): bool
     {
-        $result = $courseRegistration->result;
+        $result = $this->courseRegistration->result;
 
-        if ($result->exists()) {
+        if (! is_null($result)) {
             return false;
         }
 
