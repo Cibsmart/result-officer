@@ -11,7 +11,9 @@ use App\Http\Controllers\Download\CourseRegistrations\DownloadRegistrationsBySes
 use App\Http\Controllers\Download\Courses\CourseRecordController;
 use App\Http\Controllers\Download\Departments\DepartmentRecordController;
 use App\Http\Controllers\Download\Results\DownloadResultByDepartmentSessionLevelController;
+use App\Http\Controllers\Download\Results\DownloadResultByDepartmentSessionSemesterController;
 use App\Http\Controllers\Download\Results\DownloadResultByRegistrationNumberController;
+use App\Http\Controllers\Download\Results\DownloadResultBySessionCourseController;
 use App\Http\Controllers\Download\Results\DownloadResultsPageController;
 use App\Http\Controllers\Download\Students\DownloadStudentByRegistrationNumberController;
 use App\Http\Controllers\Download\Students\DownloadStudentsByDepartmentSessionController;
@@ -78,9 +80,9 @@ Route::middleware(['auth'])->group(static function (): void {
             ->name('download.results.registration-number.store');
         Route::post('department-session-level', DownloadResultByDepartmentSessionLevelController::class)
             ->name('download.results.department-session-level.store');
-        Route::post('department-session-semester', DownloadResultByDepartmentSessionLevelController::class)
+        Route::post('department-session-semester', DownloadResultByDepartmentSessionSemesterController::class)
             ->name('download.results.department-session-semester.store');
-        Route::post('session-course', DownloadResultByDepartmentSessionLevelController::class)
+        Route::post('session-course', DownloadResultBySessionCourseController::class)
             ->name('download.results.session-course.store');
     });
 });
