@@ -4,11 +4,13 @@ import PrimaryButton from "@/components/primaryButton.vue";
 import InputError from "@/components/inputError.vue";
 import { useForm } from "@inertiajs/vue3";
 import SelectInput from "@/components/inputs/selectInput.vue";
-import useSessions from "@/composables/useSessions";
-import useCourses from "@/composables/useCourses";
+import SelectInputSearchable from "@/components/inputs/selectInputSearchable.vue";
+import { SelectItem } from "@/types";
 
-const sessions = useSessions.getSessions();
-const courses = useCourses.getCourses();
+defineProps<{
+  sessions: SelectItem[];
+  courses: SelectItem[];
+}>();
 
 const form = useForm({
   session: "",
@@ -50,13 +52,14 @@ const submit = () => {
       <div>
         <InputLabel
           for="course"
-          value="Session" />
+          value="Course" />
 
-        <SelectInput
+        <SelectInputSearchable
           id="course"
           v-model="form.course"
           :items="courses"
-          class="mt-1 block w-full" />
+          class="mt-1 block w-full"
+          name="courses" />
 
         <InputError
           :message="form.errors.course"
