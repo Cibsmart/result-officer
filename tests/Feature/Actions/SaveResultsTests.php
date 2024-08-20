@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 use App\Actions\SaveResults;
 use App\Data\Download\PortalResultData;
+use App\Data\Response\ResponseData;
 use App\Http\Clients\Fakes\FakeResultClient;
 use Illuminate\Database\Eloquent\Factories\Sequence;
+use Illuminate\Support\Collection;
 use Tests\Factories\CourseRegistrationFactory;
 use Tests\Factories\SemesterEnrollmentFactory;
 
@@ -28,7 +30,12 @@ it('can save results', function (): void {
     $saveAction = new SaveResults();
 
     assertDatabaseEmpty('results');
-    $saveAction->execute($resultData);
-    assertDatabaseCount('results', $numberOfResults);
 
+    $responses = $saveAction->execute($resultData);
+
+    expect($responses)->each(fn ($response) => $response->message->toBeTrue())
+        ->and($responses)->toBeInstanceOf(Collection::class)
+        ->and($responses->first())->toBeInstanceOf(ResponseData::class);
+
+    assertDatabaseCount('results', $numberOfResults);
 });
