@@ -43,7 +43,11 @@ final class CourseRegistration extends Model
 
     public function student(): Student
     {
-        return $this->semesterEnrollment->enrollment->student;
+        $student = $this->semesterEnrollment->enrollment->student;
+
+        assert($student instanceof Student);
+
+        return $student;
     }
 
     /** @return array<string, string> */
