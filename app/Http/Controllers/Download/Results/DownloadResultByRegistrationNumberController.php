@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Download\Results;
 
 use App\Actions\SaveResults;
+use App\Helpers\GetResponse;
+use App\Http\Requests\Results\ResultRequest;
 use App\Services\Api\ResultService;
+use Exception;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 final readonly class DownloadResultByRegistrationNumberController
 {
@@ -16,12 +18,18 @@ final readonly class DownloadResultByRegistrationNumberController
     }
 
     /** @throws \Exception */
-    public function __invoke(Request $request): RedirectResponse
+    public function __invoke(ResultRequest $request): RedirectResponse
     {
-        $results = $this->service->getResultsByRegistrationNumber($request->input('registration_number'));
+        try {
+            $results = $this->service->getResultsByRegistrationNumber($request->input('registration_number'));
 
-        $this->saveResult->execute($results);
+            $responses = $this->saveResult->execute($results);
 
-        return back()->success('Saved');
+            $response = GetResponse::fromArray($responses);
+
+            return back()->{$response->type->value}($response->message);
+        } catch (Exception $e) {
+            return back()->error($e->getMessage());
+        }
     }
 }
