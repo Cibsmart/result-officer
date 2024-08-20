@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Download\CourseRegistrations;
 
 use App\Helpers\GetResponse;
-use App\Http\Requests\Download\DownloadRegistrationsByRegistrationNumberRequest;
+use App\Http\Requests\Results\ResultRequest;
 use App\Repositories\CourseRegistrationRepository;
 use Exception;
 use Illuminate\Http\RedirectResponse;
@@ -16,7 +16,7 @@ final readonly class DownloadRegistrationsByRegistrationNumberController
     {
     }
 
-    public function __invoke(DownloadRegistrationsByRegistrationNumberRequest $request): RedirectResponse
+    public function __invoke(ResultRequest $request): RedirectResponse
     {
         try {
             $data = $this->repository->getCourseRegistrationsByRegistrationNumber(
