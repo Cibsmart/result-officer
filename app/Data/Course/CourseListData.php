@@ -16,14 +16,19 @@ final class CourseListData extends Data
     ) {
     }
 
-    public static function new(): self
+    public static function new(string $search = ''): self
     {
-        $default = new CourseData(id: 0, name: 'Select Course');
+        $default = new CourseData(id: 0, name: 'Type and Select course ...');
 
-        return new self(
-            courses: CourseData::collect(
-                Course::query()->orderBy('code')->get(),
-            )->prepend($default),
-        );
+        $courses = Course::query()
+            ->when($search !== '', function ($query) use ($search): void {
+                $query->whereAny(['title', 'code'], 'like', "$search%");
+            })
+            ->select(['id', 'code', 'title'])
+            ->orderBy('code')
+            ->limit(200)
+            ->get();
+
+        return new self(courses: CourseData::collect($courses)->prepend($default));
     }
 }
