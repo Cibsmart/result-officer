@@ -25,12 +25,11 @@ export interface BreadcrumbItem {
 
 export interface TabItem {
   name: string;
-  component: any;
 }
 
 export interface SelectItem {
   id: number;
-  name: string | number;
+  name: string;
 }
 
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & SharedData;
