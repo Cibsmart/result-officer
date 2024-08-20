@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions;
 
+use App\Data\Response\ResponseData;
 use App\Models\CourseRegistration;
 use Exception;
 use Illuminate\Support\Collection;
@@ -12,29 +13,34 @@ final class SaveResults
 {
     /**
      * @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalResultData> $results
+     * @return \Illuminate\Support\Collection<int, \App\Data\Response\ResponseData>
      * @throws \Exception
      */
-    public function execute(Collection $results): void
+    public function execute(Collection $results): Collection
     {
         $courseRegistrations = CourseRegistration::query()
             ->whereIn('online_id', $results->pluck('courseRegistrationId'))
             ->get();
 
-        foreach ($results as $i => $result) {
+        $saveResultAction = new SaveResult();
+
+        $responses = [];
+
+        foreach ($results as $result) {
 
             $courseRegistration = $courseRegistrations->where('online_id', $result->onlineId)->first();
 
-            if (is_null($courseRegistration)) {
-                throw new Exception(
-                    'COURSE REGISTRATION NOT FOUND: Download course registration records and try again',
-                );
+            try {
+                $saveResultAction->execute($courseRegistration, $result);
+
+                $responses[] = ResponseData::from([$result->registrationNumber, true]);
+            } catch (Exception $e) {
+                $responses[] = ResponseData::from([$result->registrationNumber, $e->getMessage()]);
+
+                continue;
             }
-
-            clock()->event('Saving results')->name("saving-result-{$i}")->begin();
-            $saveResultAction = new SaveResult();
-            clock()->event("saving-result-{$i}")->end();
-
-            $saveResultAction->execute($courseRegistration, $result);
         }
+
+        return ResponseData::collect(collect($responses));
     }
 }

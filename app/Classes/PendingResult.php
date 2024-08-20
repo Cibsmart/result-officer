@@ -9,6 +9,7 @@ use App\Models\CourseRegistration;
 use App\Models\Result;
 use App\Values\RegistrationNumber;
 use App\Values\TotalScore;
+use Exception;
 
 final readonly class PendingResult
 {
@@ -40,12 +41,13 @@ final readonly class PendingResult
         return new self($courseRegistration, $result);
     }
 
+    /** @throws \Exception */
     public function save(): bool
     {
         $result = $this->courseRegistration->result;
 
         if (! is_null($result)) {
-            return false;
+            throw new Exception('RESULT ALREADY EXISTS: Not Saved');
         }
 
         return $this->result->save();
