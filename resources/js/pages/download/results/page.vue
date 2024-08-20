@@ -4,33 +4,21 @@ import Breadcrumb from "@/components/breadcrumb.vue";
 import BaseHeader from "@/layouts/main/partials/baseHeader.vue";
 import BasePage from "@/layouts/main/partials/basePage.vue";
 import BaseSection from "@/components/baseSection.vue";
-import BaseTabs from "@/components/tabs/baseTabs.vue";
 import { BreadcrumbItem, TabItem } from "@/types";
-import useDepartments from "@/composables/useDepartments";
-import useSessions from "@/composables/useSessions";
-import useSemesters from "@/composables/useSemesters";
-import useCourses from "@/composables/useCourses";
-import useLevels from "@/composables/useLevels";
 import RegistrationNumber from "@/pages/download/results/tabs/registrationNumber.vue";
 import DepartmentSessionLevel from "@/pages/download/results/tabs/departmentSessionLevel.vue";
 import DepartmentSessionSemester from "@/pages/download/results/tabs/departmentSessionSemester.vue";
 import SessionCourse from "@/pages/download/results/tabs/sessionCourse.vue";
+import BaseTabs from "@/components/tabs/baseTabs.vue";
+import BaseTabPanel from "@/components/tabs/baseTabPanel.vue";
 
-const props = defineProps<{
+defineProps<{
   departments: App.Data.Department.DepartmentListData;
   sessions: App.Data.Session.SessionListData;
   semesters: App.Data.Semester.SemesterListData;
   courses: App.Data.Course.CourseListData;
   levels: App.Data.Level.LevelListData;
 }>();
-
-useDepartments.setDepartments(props.departments.departments);
-useSessions.setSessions(props.sessions.sessions);
-useSemesters.setSemesters(props.semesters.semesters);
-useCourses.setCourses(props.courses.courses);
-useLevels.setLevels(props.levels.levels);
-
-useSessions.setSessions(props.sessions.sessions);
 
 const pages: BreadcrumbItem[] = [
   {
@@ -41,10 +29,10 @@ const pages: BreadcrumbItem[] = [
 ];
 
 const tabs: TabItem[] = [
-  { name: "By Registration Number", component: RegistrationNumber },
-  { name: "By Department Session and Level", component: DepartmentSessionLevel },
-  { name: "By Department Session and Semester", component: DepartmentSessionSemester },
-  { name: "By Session and Course", component: SessionCourse },
+  { name: "By Registration Number" },
+  { name: "By Department Session and Level" },
+  { name: "By Department Session and Semester" },
+  { name: "By Session and Course" },
 ];
 </script>
 
@@ -57,7 +45,31 @@ const tabs: TabItem[] = [
 
   <BasePage>
     <BaseSection>
-      <BaseTabs :tabs="tabs" />
+      <BaseTabs :tabs="tabs">
+        <BaseTabPanel>
+          <RegistrationNumber />
+        </BaseTabPanel>
+
+        <BaseTabPanel>
+          <DepartmentSessionLevel
+            :departments="departments.departments"
+            :levels="levels.levels"
+            :sessions="sessions.sessions" />
+        </BaseTabPanel>
+
+        <BaseTabPanel>
+          <DepartmentSessionSemester
+            :departments="departments.departments"
+            :semesters="semesters.semesters"
+            :sessions="sessions.sessions" />
+        </BaseTabPanel>
+
+        <BaseTabPanel>
+          <SessionCourse
+            :courses="courses.courses"
+            :sessions="sessions.sessions" />
+        </BaseTabPanel>
+      </BaseTabs>
     </BaseSection>
   </BasePage>
 </template>

@@ -4,13 +4,13 @@ import PrimaryButton from "@/components/primaryButton.vue";
 import InputError from "@/components/inputError.vue";
 import { useForm } from "@inertiajs/vue3";
 import SelectInput from "@/components/inputs/selectInput.vue";
-import useDepartments from "@/composables/useDepartments";
-import useSessions from "@/composables/useSessions";
-import useSemesters from "@/composables/useSemesters";
+import { SelectItem } from "@/types";
 
-const departments = useDepartments.getDepartments();
-const sessions = useSessions.getSessions();
-const semesters = useSemesters.getSemesters();
+defineProps<{
+  departments: SelectItem[];
+  sessions: SelectItem[];
+  semesters: SelectItem[];
+}>();
 
 const form = useForm({
   department: "",

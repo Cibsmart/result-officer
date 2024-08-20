@@ -9,16 +9,12 @@ import Breadcrumb from "@/components/breadcrumb.vue";
 import BaseTabs from "@/components/tabs/baseTabs.vue";
 import DepartmentSession from "@/pages/download/students/tabs/departmentSession.vue";
 import Session from "@/pages/download/students/tabs/session.vue";
-import useDepartments from "@/composables/useDepartments";
-import useSessions from "@/composables/useSessions";
+import BaseTabPanel from "@/components/tabs/baseTabPanel.vue";
 
-const props = defineProps<{
+defineProps<{
   department: App.Data.Department.DepartmentListData;
   session: App.Data.Session.SessionListData;
 }>();
-
-useDepartments.setDepartments(props.department.departments);
-useSessions.setSessions(props.session.sessions);
 
 const pages: BreadcrumbItem[] = [
   {
@@ -29,9 +25,9 @@ const pages: BreadcrumbItem[] = [
 ];
 
 const tabs: TabItem[] = [
-  { name: "By Registration Number", component: RegistrationNumber },
-  { name: "By Department and Session", component: DepartmentSession },
-  { name: "By Session", component: Session },
+  { name: "By Registration Number" },
+  { name: "By Department and Session" },
+  { name: "By Session" },
 ];
 </script>
 
@@ -44,7 +40,21 @@ const tabs: TabItem[] = [
 
   <BasePage>
     <BaseSection>
-      <BaseTabs :tabs="tabs" />
+      <BaseTabs :tabs="tabs">
+        <BaseTabPanel>
+          <RegistrationNumber />
+        </BaseTabPanel>
+
+        <BaseTabPanel>
+          <DepartmentSession
+            :departments="department.departments"
+            :sessions="session.sessions" />
+        </BaseTabPanel>
+
+        <BaseTabPanel>
+          <Session :sessions="session.sessions" />
+        </BaseTabPanel>
+      </BaseTabs>
     </BaseSection>
   </BasePage>
 </template>
