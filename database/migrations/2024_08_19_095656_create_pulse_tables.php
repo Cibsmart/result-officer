@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Laravel\Pulse\Support\PulseMigration;
@@ -15,42 +17,26 @@ return new class extends PulseMigration
             return;
         }
 
-        Schema::create('pulse_values', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedInteger('timestamp');
-            $table->string('type');
-            $table->mediumText('key');
-            match ($this->driver()) {
-                'mariadb', 'mysql' => $table->char('key_hash', 16)->charset('binary')->virtualAs('unhex(md5(`key`))'),
-                'pgsql' => $table->uuid('key_hash')->storedAs('md5("key")::uuid'),
-                'sqlite' => $table->string('key_hash'),
-            };
-            $table->mediumText('value');
+        $this->createPulseValuesTable();
 
-            $table->index('timestamp'); // For trimming...
-            $table->index('type'); // For fast lookups and purging...
-            $table->unique(['type', 'key_hash']); // For data integrity and upserts...
-        });
+        $this->createPulseEntriesTable();
 
-        Schema::create('pulse_entries', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedInteger('timestamp');
-            $table->string('type');
-            $table->mediumText('key');
-            match ($this->driver()) {
-                'mariadb', 'mysql' => $table->char('key_hash', 16)->charset('binary')->virtualAs('unhex(md5(`key`))'),
-                'pgsql' => $table->uuid('key_hash')->storedAs('md5("key")::uuid'),
-                'sqlite' => $table->string('key_hash'),
-            };
-            $table->bigInteger('value')->nullable();
+        $this->createPulseAggregationTable();
+    }
 
-            $table->index('timestamp'); // For trimming...
-            $table->index('type'); // For purging...
-            $table->index('key_hash'); // For mapping...
-            $table->index(['timestamp', 'type', 'key_hash', 'value']); // For aggregate queries...
-        });
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('pulse_values');
+        Schema::dropIfExists('pulse_entries');
+        Schema::dropIfExists('pulse_aggregates');
+    }
 
-        Schema::create('pulse_aggregates', function (Blueprint $table) {
+    private function createPulseAggregationTable(): void
+    {
+        Schema::create('pulse_aggregates', function (Blueprint $table): void {
             $table->id();
             $table->unsignedInteger('bucket');
             $table->unsignedMediumInteger('period');
@@ -65,20 +51,62 @@ return new class extends PulseMigration
             $table->decimal('value', 20, 2);
             $table->unsignedInteger('count')->nullable();
 
-            $table->unique(['bucket', 'period', 'type', 'aggregate', 'key_hash']); // Force "on duplicate update"...
-            $table->index(['period', 'bucket']); // For trimming...
-            $table->index('type'); // For purging...
-            $table->index(['period', 'type', 'aggregate', 'bucket']); // For aggregate queries...
+            // Force "on duplicate update"...
+            $table->unique(['bucket', 'period', 'type', 'aggregate', 'key_hash']);
+            // For trimming...
+            $table->index(['period', 'bucket']);
+            // For purging...
+            $table->index('type');
+            // For aggregate queries...
+            $table->index(['period', 'type', 'aggregate', 'bucket']);
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    private function createPulseEntriesTable(): void
     {
-        Schema::dropIfExists('pulse_values');
-        Schema::dropIfExists('pulse_entries');
-        Schema::dropIfExists('pulse_aggregates');
+        Schema::create('pulse_entries', function (Blueprint $table): void {
+            $table->id();
+            $table->unsignedInteger('timestamp');
+            $table->string('type');
+            $table->mediumText('key');
+            match ($this->driver()) {
+                'mariadb', 'mysql' => $table->char('key_hash', 16)->charset('binary')->virtualAs('unhex(md5(`key`))'),
+                'pgsql' => $table->uuid('key_hash')->storedAs('md5("key")::uuid'),
+                'sqlite' => $table->string('key_hash'),
+            };
+            $table->bigInteger('value')->nullable();
+
+            // For trimming...
+            $table->index('timestamp');
+            // For purging...
+            $table->index('type');
+            // For mapping...
+            $table->index('key_hash');
+            // For aggregate queries...
+            $table->index(['timestamp', 'type', 'key_hash', 'value']);
+        });
+    }
+
+    private function createPulseValuesTable(): void
+    {
+        Schema::create('pulse_values', function (Blueprint $table): void {
+            $table->id();
+            $table->unsignedInteger('timestamp');
+            $table->string('type');
+            $table->mediumText('key');
+            match ($this->driver()) {
+                'mariadb', 'mysql' => $table->char('key_hash', 16)->charset('binary')->virtualAs('unhex(md5(`key`))'),
+                'pgsql' => $table->uuid('key_hash')->storedAs('md5("key")::uuid'),
+                'sqlite' => $table->string('key_hash'),
+            };
+            $table->mediumText('value');
+
+            // For trimming...
+            $table->index('timestamp');
+            // For fast lookups and purging...
+            $table->index('type');
+            // For data integrity and upserts...
+            $table->unique(['type', 'key_hash']);
+        });
     }
 };
