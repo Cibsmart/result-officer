@@ -21,13 +21,11 @@ const filtered = computed(() =>
       }),
 );
 
+const empty = computed(() => filtered.value.length === 0 && query.value !== "");
+
 watch(
-  () => filtered.value,
-  () => {
-    if (filtered.value.length === 0 && query.value !== "") {
-      router.reload({ data: { search: query.value }, only: [props.name], replace: true });
-    }
-  },
+  () => empty.value,
+  () => router.reload({ data: { search: query.value }, only: [props.name], replace: true }),
 );
 </script>
 
@@ -41,6 +39,7 @@ watch(
         class="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
         <ComboboxInput
           :displayValue="(item: any) => item.name"
+          autocomplete="off"
           class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600"
           @change="query = $event.target.value" />
 
@@ -58,6 +57,12 @@ watch(
         @after-leave="query = ''">
         <ComboboxOptions
           class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm dark:bg-gray-900 dark:ring-gray-700">
+          <div
+            v-if="empty"
+            class="relative cursor-default select-none px-4 py-2 text-gray-700">
+            Nothing found.
+          </div>
+
           <ComboboxOption
             v-for="item in filtered"
             :key="item.id"
