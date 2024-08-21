@@ -34,9 +34,7 @@ declare namespace App.Data.Download {
     source: App.Enums.RecordSource;
   };
   export type PortalDateData = {
-    day: string;
-    month: string;
-    year: string;
+    value: string | null;
   };
   export type PortalDepartmentData = {
     onlineId: string;
