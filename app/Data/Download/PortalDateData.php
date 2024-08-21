@@ -5,38 +5,34 @@ declare(strict_types=1);
 namespace App\Data\Download;
 
 use Carbon\Carbon;
+use Exception;
 use Spatie\LaravelData\Data;
 
 final class PortalDateData extends Data
 {
     public function __construct(
-        public readonly string $day,
-        public readonly string $month,
-        public readonly string $year,
+        public readonly ?Carbon $value,
     ) {
     }
 
-    /** @param array{day: string, month: string, year: string} $data */
-    public static function fromArray(array $data): self
+    public static function fromArray(string $date): self
     {
-        return new self(day: $data['day'], month: $data['month'], year: $data['year']);
-    }
+        $carbonDate = null;
 
-    public function getCarbonDate(): ?Carbon
-    {
-        if ($this->day === '' || $this->month === '' || $this->year === '') {
-            return null;
+        try {
+            $carbonDate = $date !== ''
+                ? Carbon::parse($date)
+                : $carbonDate;
+        } catch (Exception) {
         }
 
-        return Carbon::createFromDate((int) $this->year, (int) $this->month, (int) $this->day);
+        return new self($carbonDate);
     }
 
     public function getStringDate(string $format = 'Y-m-d'): ?string
     {
-        $date = $this->getCarbonDate();
-
-        return $date
-            ? $date->format($format)
-            : $date;
+        return $this->value
+            ? $this->value->format($format)
+            : $this->value;
     }
 }
