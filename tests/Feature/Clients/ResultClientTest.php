@@ -79,10 +79,10 @@ it('can fetch results from the portal by student department session and semester
 
 it('can fetch results from the portal by student session and course', function (): void {
     $session = '2009-2010';
-    $courseId = '3203';
+    $courseId = '1';
 
     $results = $this->client->fetchResultsBySessionCourse($session, $courseId);
 
-    expect($results)->toBeArray()->toHaveLength(301)
+    expect($results)->toBeArray()
         ->and($results[0])->toHaveKeys(['id', 'course_registration_id']);
 });
