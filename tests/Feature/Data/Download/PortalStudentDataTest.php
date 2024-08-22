@@ -7,7 +7,7 @@ use App\Data\Download\PortalStudentData;
 use App\Http\Clients\Fakes\FakeStudentClient;
 
 test('portal student data is correct', function (): void {
-    $student = FakeStudentClient::STUDENTS['EBSU-2009-51486'];
+    $student = FakeStudentClient::STUDENTS[0];
     $data = PortalStudentData::from($student);
 
     expect($data)->toBeInstanceOf(PortalStudentData::class)

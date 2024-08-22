@@ -29,7 +29,7 @@ beforeEach(function (): void {
 });
 
 it('can get a student by registration number', function (): void {
-    $data = $this->repository->getStudentByRegistrationNumber('EBSU-2009-51486');
+    $data = $this->repository->getStudentByRegistrationNumber('EBSU/2009/51486')[0];
 
     expect($data)->toBeInstanceOf(PortalStudentData::class);
 });
@@ -50,7 +50,7 @@ it('can get students by session', function (): void {
 });
 
 it('can save a valid student', function (): void {
-    $student = FakeStudentClient::STUDENTS['EBSU-2009-51486'];
+    $student = FakeStudentClient::STUDENTS[0];
     LevelFactory::new()->create(['name' => $student['entry_level']]);
     EntryModeFactory::new()->create(['code' => $student['entry_mode']]);
     SessionFactory::new()->create(['name' => $student['entry_session']]);
@@ -61,13 +61,13 @@ it('can save a valid student', function (): void {
     $data = $this->repository->getStudentByRegistrationNumber($student['registration_number']);
 
     assertDatabaseCount('students', 0);
-    $this->repository->saveStudent($data);
+    $this->repository->saveStudents($data);
     assertDatabaseCount('students', 1);
 });
 
 it('can save valid students', function (): void {
     $session = '2009/2010';
-    $student = FakeStudentClient::STUDENTS['EBSU-2009-51486'];
+    $student = FakeStudentClient::STUDENTS[0];
     LevelFactory::new()->create(['name' => $student['entry_level']]);
     EntryModeFactory::new()->create(['code' => $student['entry_mode']]);
     SessionFactory::new()->create(['name' => $session]);
@@ -94,7 +94,7 @@ it('can save valid students', function (): void {
 });
 
 it('uses session extracted from registration number as the default session', function (): void {
-    $student = FakeStudentClient::STUDENTS['EBSU-2009-51487'];
+    $student = FakeStudentClient::STUDENTS[1];
     $session = RegistrationNumber::new($student['registration_number'])->session();
 
     LevelFactory::new()->create(['name' => $student['entry_level']]);
@@ -108,7 +108,7 @@ it('uses session extracted from registration number as the default session', fun
 
     assertDatabaseCount('students', 0);
 
-    $newStudent = $this->repository->saveStudent($data);
+    $newStudent = $this->repository->saveStudent($data[0]);
 
     assertDatabaseCount('students', 1);
     expect($newStudent)->toBeInstanceOf(Student::class)
@@ -120,7 +120,7 @@ it('can apply defaults for students without level, entry mode and state', functi
     $defaultEntryMode = 'UTME';
     $defaultState = 'EBONYI';
 
-    $student = FakeStudentClient::STUDENTS['EBSU-2009-51488'];
+    $student = FakeStudentClient::STUDENTS[2];
     LevelFactory::new()->create(['name' => $defaultLevel]);
     EntryModeFactory::new()->create(['code' => $defaultEntryMode]);
     SessionFactory::new()->create(['name' => $student['entry_session']]);
@@ -132,7 +132,7 @@ it('can apply defaults for students without level, entry mode and state', functi
 
     assertDatabaseCount('students', 0);
 
-    $newStudent = $this->repository->saveStudent($data);
+    $newStudent = $this->repository->saveStudent($data[0]);
 
     assertDatabaseCount('students', 1);
     expect($newStudent)->toBeInstanceOf(Student::class)
@@ -142,7 +142,7 @@ it('can apply defaults for students without level, entry mode and state', functi
 });
 
 it('throws exception for invalid registration number', function (): void {
-    $student = FakeStudentClient::STUDENTS['invalidRegistrationNumber'];
+    $student = FakeStudentClient::STUDENTS[5];
     LevelFactory::new()->create(['name' => $student['entry_level']]);
     EntryModeFactory::new()->create(['code' => $student['entry_mode']]);
     SessionFactory::new()->create(['name' => $student['entry_session']]);
@@ -152,11 +152,11 @@ it('throws exception for invalid registration number', function (): void {
 
     $data = $this->repository->getStudentByRegistrationNumber($student['registration_number']);
 
-    $this->repository->saveStudent($data);
+    $this->repository->saveStudent($data[0]);
 })->throws(InvalidArgumentException::class, 'Invalid registration number');
 
 it('throws exception for invalid gender', function (): void {
-    $student = FakeStudentClient::STUDENTS['EBSU-2010-51895'];
+    $student = FakeStudentClient::STUDENTS[4];
     LevelFactory::new()->create(['name' => $student['entry_level']]);
     EntryModeFactory::new()->create(['code' => $student['entry_mode']]);
     SessionFactory::new()->create(['name' => $student['entry_session']]);
@@ -166,5 +166,5 @@ it('throws exception for invalid gender', function (): void {
 
     $data = $this->repository->getStudentByRegistrationNumber($student['registration_number']);
 
-    $this->repository->saveStudent($data);
+    $this->repository->saveStudent($data[0]);
 })->throws(ValueError::class, '"Z" is not a valid backing value for enum App\Enums\GenderEnum');

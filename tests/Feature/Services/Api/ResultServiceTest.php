@@ -16,7 +16,7 @@ beforeEach(function (): void {
 it('can get result by course registration id', function (): void {
     $courseRegistrationId = '1';
 
-    $data = $this->service->getResultByCourseRegistrationId($courseRegistrationId);
+    $data = $this->service->getResultByCourseRegistrationId($courseRegistrationId)[0];
 
     expect($data)->toBeInstanceOf(PortalResultData::class)
         ->and($data->onlineId)->toBe($courseRegistrationId);
