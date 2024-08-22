@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\Data\Download\PortalCourseData;
+use App\Data\Response\ResponseData;
 use App\Models\Course;
 use App\Services\Api\CourseService;
+use Exception;
 use Illuminate\Support\Collection;
 
 final class CourseRepository
@@ -34,12 +36,26 @@ final class CourseRepository
         return $course;
     }
 
-    /** @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseData> $courses */
-    public function saveCourses(Collection $courses): void
+    /**
+     * @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseData> $courses
+     * @return \Illuminate\Support\Collection<int, \App\Data\Response\ResponseData>
+     */
+    public function saveCourses(Collection $courses): Collection
     {
+        $results = [];
+
         foreach ($courses as $course) {
-            $this->saveCourse($course);
+            try {
+                $this->saveCourse($course);
+                $results[] = ResponseData::from([$course->code, true]);
+            } catch (Exception $e) {
+                $results[] = ResponseData::from([$course->code, $e->getMessage()]);
+
+                continue;
+            }
         }
+
+        return collect($results);
     }
 
     public function saveCourse(PortalCourseData $course): Course
