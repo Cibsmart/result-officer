@@ -7,7 +7,7 @@ namespace App\Http\Clients;
 use App\Contracts\CourseRegistrationClient;
 
 /** @phpstan-import-type CourseRegistrationDetail from \App\Contracts\CourseRegistrationClient */
-final class PortalCourseRegistrationClient extends ApiClient implements CourseRegistrationClient
+final readonly class PortalCourseRegistrationClient extends ApiClient implements CourseRegistrationClient
 {
     /** {@inheritDoc}
      * @throws \Exception

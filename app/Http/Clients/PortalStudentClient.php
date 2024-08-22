@@ -6,7 +6,7 @@ namespace App\Http\Clients;
 
 use App\Contracts\StudentClient;
 
-final class PortalStudentClient extends ApiClient implements StudentClient
+final readonly class PortalStudentClient extends ApiClient implements StudentClient
 {
     /**
      * @return array<string, string|array<string, string>>

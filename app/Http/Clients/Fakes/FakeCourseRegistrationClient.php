@@ -9,7 +9,7 @@ use App\Http\Clients\ApiClient;
 use Illuminate\Support\Str;
 
 /** @phpstan-import-type CourseRegistrationDetail from \App\Data\Download\PortalCourseRegistrationData */
-final class FakeCourseRegistrationClient extends ApiClient implements CourseRegistrationClient
+final readonly class FakeCourseRegistrationClient extends ApiClient implements CourseRegistrationClient
 {
     public final const COURSE_REGISTRATIONS = [
         [

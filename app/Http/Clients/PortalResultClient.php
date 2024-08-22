@@ -8,7 +8,7 @@ use App\Contracts\ResultClient;
 use Illuminate\Support\Str;
 
 /** @phpstan-import-type ResultDetail from \App\Contracts\ResultClient */
-final class PortalResultClient extends ApiClient implements ResultClient
+final readonly class PortalResultClient extends ApiClient implements ResultClient
 {
     /**
      * {@inheritDoc}
