@@ -44,7 +44,7 @@ final readonly class ViewStudentResultController
             'transcript' => TranscriptData::from($student->allowEGrade()),
         ])
             ->withBrowsershot(static function (Browsershot $browsershot): void {
-                $browsershot->setChromePath(Config::string('rp-pdf.chromium.path'));
+                $browsershot->setChromePath(Config::string('rp_pdf.chromium.path'));
                 $browsershot->scale(0.90);
             })
             ->format(Format::A4)

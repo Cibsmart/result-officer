@@ -42,7 +42,7 @@ it('throws an exception for invalid department id', function (): void {
     ->group('external');
 
 it('throws an exception when connection is available', function (): void {
-    Config::set('rp-http.base_url', '');
+    Config::set('rp_http.base_url', '');
 
     $client = new DepartmentClient();
 

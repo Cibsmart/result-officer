@@ -17,7 +17,7 @@ final readonly class DepartmentClient extends ApiClient
 
     public function __construct()
     {
-        $this->endpoint = Config::string('rp-http.endpoints.departments');
+        $this->endpoint = Config::string('rp_http.endpoints.departments');
     }
 
     /**
