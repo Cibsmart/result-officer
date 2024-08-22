@@ -14,7 +14,7 @@ beforeEach(function (): void {
 });
 
 it('can get student by registration number', function (): void {
-    $data = $this->service->getStudentByRegistrationNumber('EBSU/2009/51486');
+    $data = $this->service->getStudentByRegistrationNumber('EBSU/2009/51486')[0];
 
     expect($data)->toBeInstanceOf(PortalStudentData::class)
         ->and($data->registrationNumber)->toBe('EBSU/2009/51486');
@@ -25,24 +25,20 @@ it('can get students by department and session', function (): void {
     $session = '2009/2010';
     $data = $this->service->getStudentsByDepartmentAndSession($departmentId, $session);
 
-    $studentsInDepartmentAndSession = array_filter(
-        FakeStudentClient::STUDENTS,
-        fn ($student) => $student['department_id'] === $departmentId && $student['entry_session'] === $session,
-    );
+    $group = groupArrays(FakeStudentClient::STUDENTS, [
+        'department_id' => $departmentId, 'entry_session' => $session,
+    ]);
 
     expect($data)->toBeInstanceOf(Collection::class)
-        ->and($data->count())->toBe(count($studentsInDepartmentAndSession));
+        ->and($data->count())->toBe(count($group));
 });
 
 it('can get students by session', function (): void {
     $session = '2009/2010';
     $data = $this->service->getStudentsBySession($session);
 
-    $studentsInSession = array_filter(
-        FakeStudentClient::STUDENTS,
-        fn ($student) => $student['entry_session'] === $session,
-    );
+    $group = groupArrays(FakeStudentClient::STUDENTS, ['entry_session' => $session]);
 
     expect($data)->toBeInstanceOf(Collection::class)
-        ->and($data->count())->toBe(count($studentsInSession));
+        ->and($data->count())->toBe(count($group));
 });

@@ -15,13 +15,8 @@ beforeEach(function (): void {
             'message' => 'success',
             'status' => true,
         ]),
-        'students?session=2009-2010' => Http::response([
-            'data' => array_values(FakeStudentClient::STUDENTS),
-            'message' => 'success',
-            'status' => true,
-        ]),
         'students?registration_number=EBSU-2009-51486' => Http::response([
-            'data' => [FakeStudentClient::STUDENTS['EBSU-2009-51486']],
+            'data' => [FakeStudentClient::STUDENTS[0]],
             'message' => 'success',
             'status' => true,
         ]),
@@ -29,6 +24,11 @@ beforeEach(function (): void {
             'data' => [],
             'message' => 'Record Not Found',
             'status' => false,
+        ]),
+        'students?session=2009-2010' => Http::response([
+            'data' => array_values(FakeStudentClient::STUDENTS),
+            'message' => 'success',
+            'status' => true,
         ]),
     ]);
 

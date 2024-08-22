@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Clients\Fakes;
 
 use App\Contracts\StudentClient;
-use Illuminate\Support\Str;
 
+/** @phpstan-import-type StudentDetail from \App\Contracts\StudentClient */
 final class FakeStudentClient implements StudentClient
 {
     public final const STUDENTS = [
-        'EBSU-2009-51486' => [
+        [
             'date_of_birth' => '27-08-1985',
             'department_id' => '1',
             'email' => '',
@@ -29,7 +29,7 @@ final class FakeStudentClient implements StudentClient
             'registration_number' => 'EBSU/2009/51486',
             'state' => 'ANAMBRA',
         ],
-        'EBSU-2009-51487' => [
+        [
             'date_of_birth' => '27-08-1985',
             'department_id' => '1',
             'email' => '',
@@ -48,7 +48,7 @@ final class FakeStudentClient implements StudentClient
             'registration_number' => 'EBSU/2009/51487',
             'state' => 'ANAMBRA',
         ],
-        'EBSU-2009-51488' => [
+        [
             'date_of_birth' => '27-08-1985',
             'department_id' => '1',
             'email' => '',
@@ -67,7 +67,7 @@ final class FakeStudentClient implements StudentClient
             'registration_number' => 'EBSU/2009/51488',
             'state' => '',
         ],
-        'EBSU-2009-51895' => [
+        [
             'date_of_birth' => '',
             'department_id' => '1',
             'email' => '',
@@ -86,7 +86,7 @@ final class FakeStudentClient implements StudentClient
             'registration_number' => 'EBSU/2009/51895',
             'state' => 'EBONYI',
         ],
-        'EBSU-2010-51895' => [
+        [
             'date_of_birth' => '',
             'department_id' => '1',
             'email' => '',
@@ -105,7 +105,7 @@ final class FakeStudentClient implements StudentClient
             'registration_number' => 'EBSU/2010/51895',
             'state' => '',
         ],
-        'invalidRegistrationNumber' => [
+        [
             'date_of_birth' => '',
             'department_id' => '1',
             'email' => '',
@@ -126,34 +126,57 @@ final class FakeStudentClient implements StudentClient
         ],
     ];
 
-    /** @return array<string, string|array<string, string>> */
+    /** @return array<int, array<string, string>> */
     public function fetchStudentByRegistrationNumber(string $registrationNumber): array
     {
-        return self::STUDENTS[$registrationNumber] ?? [];
+        $groups = ['registration_number' => $registrationNumber];
+
+        return $this->groupStudentsBy(self::STUDENTS, $groups);
     }
 
-    /** @return array<int, array<string, string|array<string, string>>> */
+    /** @return array<int, array<string, string>> */
     public function fetchStudentsByDepartmentAndSession(string $departmentId, string $session): array
     {
-        $session = Str::replace('-', '/', $session);
+        $groups = ['department_id' => $departmentId, 'entry_session' => $session];
 
-        $students = array_filter(
-            self::STUDENTS,
-            fn (array $student,
-            ): bool => $student['department_id'] === $departmentId && $student['entry_session'] === $session,
-        );
-
-        return array_values($students);
+        return $this->groupStudentsBy(self::STUDENTS, $groups);
     }
 
-    /** @return array<int, array<string, string|array<string, string>>> */
+    /** @return array<int, array<string, string>> */
     public function fetchStudentsBySession(string $session): array
     {
-        $students = array_filter(
-            self::STUDENTS,
-            fn (array $student): bool => $student['entry_session'] === $session,
-        );
+        $groups = ['entry_session' => $session];
 
-        return array_values($students);
+        return $this->groupStudentsBy(self::STUDENTS, $groups);
+    }
+
+    /**
+     * @param array<int, StudentDetail> $data
+     * @param array<string, string> $groups
+     * @return array<int, StudentDetail>
+     */
+    private function groupStudentsBy(
+        array $data,
+        array $groups,
+        int $index = 0,
+    ): array {
+        if (count($data) === 0 || $index === count($groups)) {
+            return $data;
+        }
+
+        $keys = array_keys($groups);
+        $values = array_values($groups);
+
+        $grouped = collect($data)->groupBy($keys[$index]);
+
+        /** @var \Illuminate\Support\Collection<int, StudentDetail> $groupedStudents */
+        $groupedStudents = $grouped->has($values[$index])
+            ? $grouped[$values[$index]]
+            : collect([]);
+
+        /** @var array<StudentDetail> $students */
+        $students = $groupedStudents->all();
+
+        return $this->groupStudentsBy($students, $groups, $index + 1);
     }
 }
