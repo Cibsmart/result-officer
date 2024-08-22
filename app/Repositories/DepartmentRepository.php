@@ -30,7 +30,11 @@ final readonly class DepartmentRepository
     /** @throws \Exception */
     public function getDepartment(string $departmentId): PortalDepartmentData
     {
-        return $this->service->getDepartmentDetail($departmentId);
+        $department = $this->service->getDepartmentDetail($departmentId)->first();
+
+        assert($department instanceof PortalDepartmentData);
+
+        return $department;
     }
 
     /** @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalDepartmentData> $departments */

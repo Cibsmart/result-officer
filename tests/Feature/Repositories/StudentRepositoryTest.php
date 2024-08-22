@@ -29,7 +29,7 @@ beforeEach(function (): void {
 });
 
 it('can get a student by registration number', function (): void {
-    $data = $this->repository->getStudentByRegistrationNumber('EBSU/2009/51486')[0];
+    $data = $this->repository->getStudentByRegistrationNumber('EBSU/2009/51486');
 
     expect($data)->toBeInstanceOf(PortalStudentData::class);
 });
@@ -61,7 +61,7 @@ it('can save a valid student', function (): void {
     $data = $this->repository->getStudentByRegistrationNumber($student['registration_number']);
 
     assertDatabaseCount('students', 0);
-    $this->repository->saveStudents($data);
+    $this->repository->saveStudent($data);
     assertDatabaseCount('students', 1);
 });
 
@@ -108,7 +108,7 @@ it('uses session extracted from registration number as the default session', fun
 
     assertDatabaseCount('students', 0);
 
-    $newStudent = $this->repository->saveStudent($data[0]);
+    $newStudent = $this->repository->saveStudent($data);
 
     assertDatabaseCount('students', 1);
     expect($newStudent)->toBeInstanceOf(Student::class)
@@ -132,7 +132,7 @@ it('can apply defaults for students without level, entry mode and state', functi
 
     assertDatabaseCount('students', 0);
 
-    $newStudent = $this->repository->saveStudent($data[0]);
+    $newStudent = $this->repository->saveStudent($data);
 
     assertDatabaseCount('students', 1);
     expect($newStudent)->toBeInstanceOf(Student::class)
@@ -152,7 +152,7 @@ it('throws exception for invalid registration number', function (): void {
 
     $data = $this->repository->getStudentByRegistrationNumber($student['registration_number']);
 
-    $this->repository->saveStudent($data[0]);
+    $this->repository->saveStudent($data);
 })->throws(InvalidArgumentException::class, 'Invalid registration number');
 
 it('throws exception for invalid gender', function (): void {
@@ -166,5 +166,5 @@ it('throws exception for invalid gender', function (): void {
 
     $data = $this->repository->getStudentByRegistrationNumber($student['registration_number']);
 
-    $this->repository->saveStudent($data[0]);
+    $this->repository->saveStudent($data);
 })->throws(ValueError::class, '"Z" is not a valid backing value for enum App\Enums\GenderEnum');
