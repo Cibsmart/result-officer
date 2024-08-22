@@ -10,7 +10,7 @@ use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 
-abstract class ApiClient
+abstract readonly class ApiClient
 {
     /**
      * @param array<string, string> $parameters

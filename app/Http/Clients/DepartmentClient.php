@@ -11,7 +11,7 @@ use Config;
  * @phpstan-type DepartmentDetail array{id:string, code:string, name:string, faculty:string, options:array{id:string,
  *     name:string}}
  */
-final class DepartmentClient extends ApiClient
+final readonly class DepartmentClient extends ApiClient
 {
     private string $endpoint;
 

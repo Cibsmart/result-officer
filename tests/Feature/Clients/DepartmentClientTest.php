@@ -28,11 +28,7 @@ it('can fetch departments from the api', function (): void {
 it('throws an exception for non-existent department id', function (): void {
     $client = new DepartmentClient();
 
-    $department = $client->fetchDepartmentById('0');
-
-    expect($department)->toBeArray()
-        ->toHaveKeys(['id', 'code', 'name', 'faculty', 'options'])
-        ->and($department['options'])->toBeArray();
+    $client->fetchDepartmentById('0');
 })
     ->throws(Exception::class, 'ERROR FETCHING DATA FROM API:')
     ->group('external');
@@ -40,11 +36,17 @@ it('throws an exception for non-existent department id', function (): void {
 it('throws an exception for invalid department id', function (): void {
     $client = new DepartmentClient();
 
-    $department = $client->fetchDepartmentById('Z');
-
-    expect($department)->toBeArray()
-        ->toHaveKeys(['id', 'code', 'name', 'faculty', 'options'])
-        ->and($department['options'])->toBeArray();
+    $client->fetchDepartmentById('Z');
 })
     ->throws(Exception::class, 'ERROR FETCHING DATA FROM API:')
+    ->group('external');
+
+it('throws an exception when connection is available', function (): void {
+    Config::set('rp-http.base_url', '');
+
+    $client = new DepartmentClient();
+
+    $client->fetchDepartmentById('1');
+})
+    ->throws(Exception::class, 'ERROR CONNECTING TO API:')
     ->group('external');

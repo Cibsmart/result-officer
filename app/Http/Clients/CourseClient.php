@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Clients;
 
-final class CourseClient extends ApiClient
+final readonly class CourseClient extends ApiClient
 {
     /**
      * @return array<int, array{id: string, course_code: string, course_title: string}>
