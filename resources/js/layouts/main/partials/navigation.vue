@@ -21,12 +21,22 @@ const navigation: NavigationItem[] = [
     current: false,
     children: [
       {
+        name: "Courses",
+        href: route("download.courses.page"),
+        current: route().current("download.courses.page"),
+      },
+      {
+        name: "Departments",
+        href: route("download.departments.page"),
+        current: route().current("download.departments.page"),
+      },
+      {
         name: "Students",
         href: route("download.students.page"),
         current: route().current("download.students.page"),
       },
       {
-        name: "Course Registrations",
+        name: "Registrations",
         href: route("download.course-registrations.page"),
         current: route().current("download.course-registrations.page"),
       },
@@ -42,11 +52,6 @@ const navigation: NavigationItem[] = [
     href: "#",
     icon: UsersIcon,
     current: false,
-    children: [
-      { name: "Excel Upload", href: "#", current: false },
-      { name: "View", href: "#", current: false },
-      { name: "Students List", href: "#", current: false },
-    ],
   },
   { name: "Courses", href: "#", icon: DocumentDuplicateIcon, current: false },
   {
@@ -54,11 +59,6 @@ const navigation: NavigationItem[] = [
     href: "#",
     icon: FolderIcon,
     current: usePage().component.startsWith("results/"),
-    children: [
-      { name: "Upload Result", href: "#", current: false },
-      { name: "Download Result", href: "#", current: false },
-      { name: "View Result", href: route("results.form"), current: route().current("results.form") },
-    ],
   },
   {
     name: "Reports",
