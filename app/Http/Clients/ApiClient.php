@@ -13,10 +13,11 @@ use Illuminate\Support\Facades\Http;
 abstract class ApiClient
 {
     /**
+     * @param array<string, string> $parameters
      * @return array<int|string, string|array<string, string|array<string, string>>>
      * @throws \Exception
      */
-    public function get(string $endpoint): array
+    public function get(string $endpoint, array $parameters = []): array
     {
         try {
             /**
@@ -25,7 +26,7 @@ abstract class ApiClient
              */
             $response = Http::acceptJson()
                 ->baseUrl(Config::string('rp-http.base_url'))
-                ->get($endpoint)
+                ->get($endpoint, $parameters)
                 ->throw()
                 ->json();
 
