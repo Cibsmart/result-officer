@@ -5,17 +5,25 @@ declare(strict_types=1);
 namespace App\Http\Clients;
 
 use App\Contracts\CourseRegistrationClient;
+use Config;
 
 /** @phpstan-import-type CourseRegistrationDetail from \App\Contracts\CourseRegistrationClient */
 final readonly class PortalCourseRegistrationClient extends ApiClient implements CourseRegistrationClient
 {
+    private string $endpoint;
+
+    public function __construct()
+    {
+        $this->endpoint = Config::string('rp_http.endpoints.course_registrations');
+    }
+
     /** {@inheritDoc}
      * @throws \Exception
      */
     public function fetchCourseRegistrationByRegistrationNumber(string $registrationNumber): array
     {
         /** @var array<CourseRegistrationDetail> $courses */
-        $courses = $this->get("course-registrations/registration-number/{$registrationNumber}");
+        $courses = $this->get(endpoint: $this->endpoint, parameters: ['registration_number' => $registrationNumber]);
 
         return $courses;
     }
@@ -29,7 +37,10 @@ final readonly class PortalCourseRegistrationClient extends ApiClient implements
         string $level,
     ): array {
         /** @var array<CourseRegistrationDetail> $courses */
-        $courses = $this->get("course-registrations/department/{$departmentId}/session/{$session}/level/{$level}");
+        $courses = $this->get(
+            endpoint: $this->endpoint,
+            parameters: ['department_id' => $departmentId, 'session' => $session, 'level' => $level],
+        );
 
         return $courses;
     }
@@ -44,7 +55,8 @@ final readonly class PortalCourseRegistrationClient extends ApiClient implements
     ): array {
         /** @var array<CourseRegistrationDetail> $courses */
         $courses = $this->get(
-            "course-registrations/department/{$departmentId}/session/{$session}/semester/{$semester}",
+            endpoint: $this->endpoint,
+            parameters: ['department_id' => $departmentId, 'session' => $session, 'semester' => $semester],
         );
 
         return $courses;
@@ -56,7 +68,7 @@ final readonly class PortalCourseRegistrationClient extends ApiClient implements
     public function fetchCourseRegistrationBySessionCourse(string $session, string $course): array
     {
         /** @var array<CourseRegistrationDetail> $courses */
-        $courses = $this->get("course-registrations/session/{$session}/course/{$course}");
+        $courses = $this->get(endpoint: $this->endpoint, parameters: ['session' => $session, 'course_id' => $course]);
 
         return $courses;
     }
