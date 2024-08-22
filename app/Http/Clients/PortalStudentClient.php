@@ -7,6 +7,7 @@ namespace App\Http\Clients;
 use App\Contracts\StudentClient;
 use Config;
 
+/** @phpstan-import-type StudentDetail from \App\Contracts\StudentClient */
 final readonly class PortalStudentClient extends ApiClient implements StudentClient
 {
     private string $endpoint;
@@ -17,37 +18,36 @@ final readonly class PortalStudentClient extends ApiClient implements StudentCli
     }
 
     /**
-     * @return array<string, string|array<string, string>>
+     * {@inheritDoc}
      * @throws \Exception
      */
     public function fetchStudentByRegistrationNumber(string $registrationNumber): array
     {
-        /** @var array<string, string|array<string, string>> $student */
-        $student = $this->get(endpoint: $this->endpoint,
-            parameters: ['registration_number' => $registrationNumber]);
+        /** @var array<StudentDetail> $student */
+        $student = $this->get(endpoint: $this->endpoint, parameters: ['registration_number' => $registrationNumber]);
 
         return $student;
     }
 
     /**
-     * @return array<int, array<string, string|array<string, string>>>
+     * {@inheritDoc}
      * @throws \Exception
      */
     public function fetchStudentsBySession(string $session): array
     {
-        /** @var array<int, array<string, string|array<string, string>>> $students */
+        /** @var array<StudentDetail> $students */
         $students = $this->get(endpoint: $this->endpoint, parameters: ['session' => $session]);
 
         return $students;
     }
 
     /**
-     * @return array<int, array<string, string|array<string, string>>>
+     * {@inheritDoc}
      * @throws \Exception
      */
     public function fetchStudentsByDepartmentAndSession(string $departmentId, string $session): array
     {
-        /** @var array<int, array<string, string|array<string, string>>> $students */
+        /** @var array<StudentDetail> $students */
         $students = $this->get(
             endpoint: $this->endpoint,
             parameters: ['department_id' => $departmentId, 'session' => $session],
