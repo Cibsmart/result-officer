@@ -4,32 +4,45 @@ declare(strict_types=1);
 
 namespace App\Http\Clients;
 
+use Config;
+
+/**
+ * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+ * @phpstan-type DepartmentDetail array{id:string, code:string, name:string, faculty:string, options:array{id:string,
+ *     name:string}}
+ */
 final class DepartmentClient extends ApiClient
 {
+    private string $endpoint;
+
+    public function __construct()
+    {
+        $this->endpoint = Config::string('rp-http.endpoints.departments');
+    }
+
     /**
-     * @return array<int, array{id: string, code: string, name: string, faculty: string, options: array{id: string,
-     *     name: string}}>
+     * @return array<DepartmentDetail>
      * @throws \Exception
      */
     public function fetchDepartments(): array
     {
-        /**
-         * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-         * @var array<int, array{id: string, code: string, name: string, faculty: string, options: array{id: string, name: string}}> $departments
-         */
-        $departments = $this->get('departments');
+        /** @var array<DepartmentDetail> $departments */
+        $departments = $this->get($this->endpoint);
 
         return $departments;
     }
 
     /**
-     * @return array<int, array{id: string, name: string}>
+     * @return array<DepartmentDetail>
      * @throws \Exception
      */
     public function fetchDepartmentById(string $id): array
     {
-        /** @var array<int, array{id: string, name: string}> $department */
-        $department = $this->get("departments/$id");
+        /** @var array<DepartmentDetail> $department */
+        $department = $this->get(
+            endpoint: $this->endpoint,
+            parameters: ['department_id' => $id],
+        );
 
         return $department;
     }
