@@ -14,11 +14,12 @@ final readonly class ResultService
     {
     }
 
-    public function getResultByCourseRegistrationId(string $courseRegistrationId): PortalResultData
+    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalResultData> */
+    public function getResultByCourseRegistrationId(string $courseRegistrationId): Collection
     {
         $result = $this->client->fetchResultByCourseRegistrationId($courseRegistrationId);
 
-        return PortalResultData::from($result);
+        return PortalResultData::collect(collect($result));
     }
 
     /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalResultData> */

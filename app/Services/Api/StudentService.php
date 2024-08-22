@@ -7,7 +7,6 @@ namespace App\Services\Api;
 use App\Contracts\StudentClient;
 use App\Data\Download\PortalStudentData;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 
 final readonly class StudentService
 {
@@ -15,20 +14,17 @@ final readonly class StudentService
     {
     }
 
-    public function getStudentByRegistrationNumber(string $registrationNumber): PortalStudentData
+    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalStudentData> */
+    public function getStudentByRegistrationNumber(string $registrationNumber): Collection
     {
-        $registrationNumber = Str::replace('/', '-', $registrationNumber);
-
         $student = $this->client->fetchStudentByRegistrationNumber($registrationNumber);
 
-        return PortalStudentData::from($student);
+        return PortalStudentData::collect(collect($student));
     }
 
     /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalStudentData> */
     public function getStudentsByDepartmentAndSession(string $departmentId, string $session): Collection
     {
-        $session = Str::replace('/', '-', $session);
-
         $students = $this->client->fetchStudentsByDepartmentAndSession($departmentId, $session);
 
         return PortalStudentData::collect(collect($students));
@@ -37,8 +33,6 @@ final readonly class StudentService
     /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalStudentData> */
     public function getStudentsBySession(string $session): Collection
     {
-        $session = Str::replace('/', '-', $session);
-
         $student = $this->client->fetchStudentsBySession($session);
 
         return PortalStudentData::collect(collect($student));

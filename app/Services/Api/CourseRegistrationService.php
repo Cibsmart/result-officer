@@ -7,7 +7,6 @@ namespace App\Services\Api;
 use App\Contracts\CourseRegistrationClient;
 use App\Data\Download\PortalCourseRegistrationData;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 
 final class CourseRegistrationService
 {
@@ -18,8 +17,6 @@ final class CourseRegistrationService
     /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> */
     public function getCourseRegistrationsByRegistrationNumber(string $registrationNumber): Collection
     {
-        $registrationNumber = Str::replace('/', '-', $registrationNumber);
-
         $registrations = $this->client->fetchCourseRegistrationByRegistrationNumber($registrationNumber);
 
         return PortalCourseRegistrationData::collect(collect($registrations));
@@ -31,8 +28,6 @@ final class CourseRegistrationService
         string $session,
         string $level,
     ): Collection {
-        $session = Str::replace('/', '-', $session);
-
         $registrations = $this->client->fetchCourseRegistrationByDepartmentSessionLevel(
             $departmentId, $session, $level,
         );
@@ -46,8 +41,6 @@ final class CourseRegistrationService
         string $session,
         string $semester,
     ): Collection {
-        $session = Str::replace('/', '-', $session);
-
         $registrations = $this->client->fetchCourseRegistrationByDepartmentSessionSemester(
             $departmentId, $session, $semester,
         );
@@ -58,8 +51,6 @@ final class CourseRegistrationService
     /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> */
     public function getCourseRegistrationsBySessionAndCourse(string $session, string $courseId): Collection
     {
-        $session = Str::replace('/', '-', $session);
-
         $registrations = $this->client->fetchCourseRegistrationBySessionCourse($session, $courseId);
 
         return PortalCourseRegistrationData::collect(collect($registrations));

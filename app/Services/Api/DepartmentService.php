@@ -25,11 +25,14 @@ final readonly class DepartmentService
         return PortalDepartmentData::collect(collect($departments));
     }
 
-    /** @throws \Exception */
-    public function getDepartmentDetail(string $onlineId): PortalDepartmentData
+    /**
+     * @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalDepartmentData>
+     * @throws \Exception
+     */
+    public function getDepartmentDetail(string $onlineId): Collection
     {
         $department = $this->client->fetchDepartmentById($onlineId);
 
-        return PortalDepartmentData::from($department);
+        return PortalDepartmentData::collect(collect($department));
     }
 }
