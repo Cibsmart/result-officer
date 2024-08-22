@@ -22,7 +22,7 @@ final readonly class DownloadStudentByRegistrationNumberController
                 $request->string('registration_number')->value(),
             );
 
-            $result = $this->repository->saveStudent($data);
+            $result = $this->repository->saveStudent($data->first());
 
             return back()->success("$result->registration_number Record Downloaded and Saved Successfully");
         } catch (Exception $e) {
