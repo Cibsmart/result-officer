@@ -5,22 +5,29 @@ declare(strict_types=1);
 namespace App\Http\Clients;
 
 use App\Contracts\ResultClient;
-use Illuminate\Support\Str;
+use Config;
 
 /** @phpstan-import-type ResultDetail from \App\Contracts\ResultClient */
 final readonly class PortalResultClient extends ApiClient implements ResultClient
 {
+    private string $endpoint;
+
+    public function __construct()
+    {
+        $this->endpoint = Config::string('rp_http.endpoints.results');
+    }
+
     /**
      * {@inheritDoc}
      * @throws \Exception
      */
     public function fetchResultByCourseRegistrationId(string $courseRegistrationId): array
     {
-        /**
-         * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-         * @var array{id:string, course_registration_id: string, registration_number:string, in_course:string, exam_score:string, total_score:string, grade:string, upload_date:array{day:string,month:string, year:string}} $result
-         */
-        $result = $this->get("results/course-registration/{$courseRegistrationId}");
+        /** @var array<ResultDetail> $result */
+        $result = $this->get(
+            endpoint: $this->endpoint,
+            parameters: ['course_registration_id' => $courseRegistrationId],
+        );
 
         return $result;
     }
@@ -31,10 +38,9 @@ final readonly class PortalResultClient extends ApiClient implements ResultClien
      */
     public function fetchResultsByRegistrationNumber(string $registrationNumber): array
     {
-        $registrationNumber = Str::replace('/', '-', $registrationNumber);
-
         /** @var array<ResultDetail> $result */
-        $result = $this->get("results/registration-number/{$registrationNumber}");
+        $result = $this->get(endpoint: $this->endpoint,
+            parameters: ['registration_number' => $registrationNumber]);
 
         return $result;
     }
@@ -48,10 +54,11 @@ final readonly class PortalResultClient extends ApiClient implements ResultClien
         string $session,
         string $level,
     ): array {
-        $session = Str::replace('/', '-', $session);
-
         /** @var array<ResultDetail> $result */
-        $result = $this->get("results/department/{$departmentId}/session/{$session}/level/{$level}");
+        $result = $this->get(
+            endpoint: $this->endpoint,
+            parameters: ['department_id' => $departmentId, 'session' => $session, 'level' => $level],
+        );
 
         return $result;
     }
@@ -65,10 +72,11 @@ final readonly class PortalResultClient extends ApiClient implements ResultClien
         string $session,
         string $semester,
     ): array {
-        $session = Str::replace('/', '-', $session);
-
         /** @var array<ResultDetail> $result */
-        $result = $this->get("results/department/{$departmentId}/session/{$session}/semester/{$semester}");
+        $result = $this->get(
+            endpoint: $this->endpoint,
+            parameters: ['department_id' => $departmentId, 'session' => $session, 'semester' => $semester],
+        );
 
         return $result;
     }
@@ -79,10 +87,11 @@ final readonly class PortalResultClient extends ApiClient implements ResultClien
      */
     public function fetchResultsBySessionCourse(string $session, string $courseId): array
     {
-        $session = Str::replace('/', '-', $session);
-
         /** @var array<ResultDetail> $result */
-        $result = $this->get("results/session/{$session}/course/{$courseId}");
+        $result = $this->get(
+            endpoint: $this->endpoint,
+            parameters: ['session' => $session, 'course_id' => $courseId],
+        );
 
         return $result;
     }
