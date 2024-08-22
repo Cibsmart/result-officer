@@ -25,7 +25,7 @@ abstract readonly class ApiClient
              * @var array{status: bool, message: string, data: array<int|string, string|array<string, string|array<string, string>>>} $response
              */
             $response = Http::acceptJson()
-                ->baseUrl(Config::string('rp-http.base_url'))
+                ->baseUrl(Config::string('rp_http.base_url'))
                 ->get($endpoint, $parameters)
                 ->throw()
                 ->json();
