@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\Data\Download\PortalDepartmentData;
+use App\Data\Response\ResponseData;
 use App\Models\Department;
 use App\Models\Faculty;
 use App\Models\Program;
 use App\Services\Api\DepartmentService;
+use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -37,12 +39,27 @@ final readonly class DepartmentRepository
         return $department;
     }
 
-    /** @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalDepartmentData> $departments */
-    public function saveDepartments(Collection $departments): void
+    /**
+     * @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalDepartmentData> $departments
+     * @return \Illuminate\Support\Collection<int, \App\Data\Response\ResponseData>
+     */
+    public function saveDepartments(Collection $departments): Collection
     {
+
+        $results = [];
+
         foreach ($departments as $department) {
-            $this->saveDepartment($department);
+            try {
+                $this->saveDepartment($department);
+                $results[] = ResponseData::from([$department->departmentCode, true]);
+            } catch (Exception $e) {
+                $results[] = ResponseData::from([$department->departmentCode, $e->getMessage()]);
+
+                continue;
+            }
         }
+
+        return collect($results);
     }
 
     public function saveDepartment(PortalDepartmentData $department): Department
