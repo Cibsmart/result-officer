@@ -7,28 +7,30 @@ use App\Http\Clients\PortalCourseRegistrationClient;
 use Illuminate\Support\Facades\Http;
 
 beforeEach(function (): void {
+    Http::preventStrayRequests();
+
     Http::fake([
-        'course-registrations/department/1/session/2009-2010/level/100' => Http::response([
+        'course-registrations?department_id=1&session=2009-2010&level=100' => Http::response([
             'data' => FakeCourseRegistrationClient::COURSE_REGISTRATIONS,
             'message' => 'success',
             'status' => true,
         ]),
-        'course-registrations/department/1/session/2009-2010/semester/FIRST' => Http::response([
+        'course-registrations?department_id=1&session=2009-2010&semester=FIRST' => Http::response([
             'data' => FakeCourseRegistrationClient::COURSE_REGISTRATIONS,
             'message' => 'success',
             'status' => true,
         ]),
-        'course-registrations/registration-number/EBSU-2009-51486' => Http::response([
+        'course-registrations?registration_number=EBSU-2009-51486' => Http::response([
             'data' => FakeCourseRegistrationClient::COURSE_REGISTRATIONS,
             'message' => 'success',
             'status' => true,
         ]),
-        'course-registrations/registration-number/EBSU-2011-51486' => Http::response([
+        'course-registrations?registration_number=EBSU-2011-51486' => Http::response([
             'data' => [],
             'message' => 'Record Not Found',
             'status' => false,
         ]),
-        'course-registrations/session/2009-2010/course/1' => Http::response([
+        'course-registrations?session=2009-2010&course_id=1' => Http::response([
             'data' => FakeCourseRegistrationClient::COURSE_REGISTRATIONS,
             'message' => 'success',
             'status' => true,
@@ -38,7 +40,7 @@ beforeEach(function (): void {
     $this->client = new PortalCourseRegistrationClient();
 });
 
-it('can fetch course registration by registration number', function (): void {
+it('can fetch course registrations by registration number', function (): void {
     $registration = $this->client->fetchCourseRegistrationByRegistrationNumber('EBSU-2009-51486');
 
     expect($registration)->toBeArray()

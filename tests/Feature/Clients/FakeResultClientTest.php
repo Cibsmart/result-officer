@@ -6,28 +6,30 @@ use App\Http\Clients\Fakes\FakeResultClient;
 use App\Http\Clients\PortalResultClient;
 
 beforeEach(function (): void {
+    Http::preventStrayRequests();
+
     Http::fake([
-        'results/course-registration/1' => Http::response([
-            'data' => FakeResultClient::RESULTS[0],
+        'results?course_registration_id=1' => Http::response([
+            'data' => [FakeResultClient::RESULTS[0]],
             'message' => 'success',
             'status' => true,
         ]),
-        'results/department/1/session/2009-2010/level/100' => Http::response([
+        'results?department_id=1&session=2009-2010&level=100' => Http::response([
             'data' => FakeResultClient::RESULTS,
             'message' => 'success',
             'status' => true,
         ]),
-        'results/department/1/session/2009-2010/semester/FIRST' => Http::response([
+        'results?department_id=1&session=2009-2010&semester=FIRST' => Http::response([
             'data' => FakeResultClient::RESULTS,
             'message' => 'success',
             'status' => true,
         ]),
-        'results/registration-number/EBSU-2009-51486' => Http::response([
+        'results?registration_number=EBSU-2009-51486' => Http::response([
             'data' => FakeResultClient::RESULTS,
             'message' => 'success',
             'status' => true,
         ]),
-        'results/session/2009-2010/course/1' => Http::response([
+        'results?session=2009-2010&course_id=1' => Http::response([
             'data' => FakeResultClient::RESULTS,
             'message' => 'success',
             'status' => true,
@@ -40,7 +42,7 @@ beforeEach(function (): void {
 it('can fetch result from the portal by online course registration id', function (): void {
     $courseRegistrationId = '1';
 
-    $result = $this->client->fetchResultByCourseRegistrationId($courseRegistrationId);
+    $result = $this->client->fetchResultByCourseRegistrationId($courseRegistrationId)[0];
 
     expect($result)->toBeArray()
         ->and($result['course_registration_id'])->toBe($courseRegistrationId);
