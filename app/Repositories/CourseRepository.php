@@ -27,7 +27,11 @@ final class CourseRepository
     /** @throws \Exception */
     public function getCourse(string $courseId): PortalCourseData
     {
-        return $this->service->getCourseDetail($courseId);
+        $course = $this->service->getCourseDetail($courseId)->first();
+
+        assert($course instanceof PortalCourseData);
+
+        return $course;
     }
 
     /** @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseData> $courses */

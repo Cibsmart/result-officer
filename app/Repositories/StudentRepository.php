@@ -19,10 +19,13 @@ final class StudentRepository
     {
     }
 
-    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalStudentData> */
-    public function getStudentByRegistrationNumber(string $registrationNumber): Collection
+    public function getStudentByRegistrationNumber(string $registrationNumber): PortalStudentData
     {
-        return $this->service->getStudentByRegistrationNumber($registrationNumber);
+        $student = $this->service->getStudentByRegistrationNumber($registrationNumber)->first();
+
+        assert($student instanceof PortalStudentData);
+
+        return $student;
     }
 
     /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalStudentData> */
