@@ -25,11 +25,14 @@ final readonly class CourseService
         return PortalCourseData::collect(collect($courses));
     }
 
-    /** @throws \Exception */
-    public function getCourseDetail(string $onlineId): PortalCourseData
+    /**
+     * @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseData>
+     * @throws \Exception
+     */
+    public function getCourseDetail(string $onlineId): Collection
     {
         $course = $this->client->fetchCourseById($onlineId);
 
-        return PortalCourseData::from($course);
+        return PortalCourseData::collect(collect($course));
     }
 }
