@@ -19,10 +19,13 @@ return new class extends Migration
             $table->foreignId('course_registration_id')->constrained('course_registrations');
             $table->json('scores');
             $table->unsignedTinyInteger('total_score')->default(0);
-            $table->enum('grade', ['A', 'B', 'C', 'D', 'E', 'F'])->default('F');
+            $table->string('grade', 1)->default('F');
             $table->unsignedTinyInteger('grade_point')->default(0);
             $table->date('upload_date')->nullable();
             $table->string('remarks')->nullable();
+            $table->date('exam_date')->nullable();
+            $table->string('lecturer_name')->nullable();
+            $table->string('lecturer_department')->nullable();
             $table->string('data');
             $table->string('source')->default(RecordSource::LEGACY->value);
             $table->timestamps();
