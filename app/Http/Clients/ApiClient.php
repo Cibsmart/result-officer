@@ -9,6 +9,7 @@ use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 abstract readonly class ApiClient
 {
@@ -19,6 +20,8 @@ abstract readonly class ApiClient
      */
     public function get(string $endpoint, array $parameters = []): array
     {
+        $sanitizedParameters = array_map(fn ($value) => Str::replace('/', '-', $value), $parameters);
+
         try {
             /**
              * phpcs:ignore SlevomatCodingStandard.Files.LineLength
@@ -26,7 +29,7 @@ abstract readonly class ApiClient
              */
             $response = Http::acceptJson()
                 ->baseUrl(Config::string('rp_http.base_url'))
-                ->get($endpoint, $parameters)
+                ->get($endpoint, $sanitizedParameters)
                 ->throw()
                 ->json();
 
