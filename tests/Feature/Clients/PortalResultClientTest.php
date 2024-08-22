@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Clients\PortalResultClient;
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->client = new PortalResultClient();
 
     $this->expectedKeys = [

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Clients\PortalStudentClient;
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->client = new PortalStudentClient();
 
     $this->expectedKeys = [
