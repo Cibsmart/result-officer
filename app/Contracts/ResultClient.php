@@ -11,7 +11,7 @@ namespace App\Contracts;
  */
 interface ResultClient
 {
-    /** @return ResultDetail */
+    /** @return array<ResultDetail> */
     public function fetchResultByCourseRegistrationId(string $courseRegistrationId): array;
 
     /** @return array<ResultDetail> */

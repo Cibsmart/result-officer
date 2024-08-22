@@ -103,7 +103,7 @@ final readonly class FakeResultClient implements ResultClient
     {
         $groups = ['course_registration_id' => $courseRegistrationId];
 
-        return $this->groupResultBy(self::RESULTS, $groups)[0];
+        return $this->groupResultBy(self::RESULTS, $groups);
     }
 
     /** {@inheritDoc} */
