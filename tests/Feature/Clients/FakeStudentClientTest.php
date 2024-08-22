@@ -7,26 +7,28 @@ use App\Http\Clients\PortalStudentClient;
 use Illuminate\Support\Facades\Http;
 
 beforeEach(function (): void {
+    Http::preventStrayRequests();
+
     Http::fake([
-        'students/department/1/session/2009-2010' => Http::response([
+        'students?department_id=1&session=2009-2010' => Http::response([
             'data' => array_values(FakeStudentClient::STUDENTS),
             'message' => 'success',
             'status' => true,
         ]),
-        'students/registration-number/EBSU-2009-51486' => Http::response([
-            'data' => FakeStudentClient::STUDENTS['EBSU-2009-51486'],
+        'students?session=2009-2010' => Http::response([
+            'data' => array_values(FakeStudentClient::STUDENTS),
             'message' => 'success',
             'status' => true,
         ]),
-        'students/registration-number/EBSU-2011-51486' => Http::response([
+        'students?registration_number=EBSU-2009-51486' => Http::response([
+            'data' => [FakeStudentClient::STUDENTS['EBSU-2009-51486']],
+            'message' => 'success',
+            'status' => true,
+        ]),
+        'students?registration_number=EBSU-2011-51486' => Http::response([
             'data' => [],
             'message' => 'Record Not Found',
             'status' => false,
-        ]),
-        'students/session/2009-2010' => Http::response([
-            'data' => array_values(FakeStudentClient::STUDENTS),
-            'message' => 'success',
-            'status' => true,
         ]),
     ]);
 
@@ -34,7 +36,7 @@ beforeEach(function (): void {
 });
 
 it('can fetch student by registration number', function (): void {
-    $student = $this->client->fetchStudentByRegistrationNumber('EBSU-2009-51486');
+    $student = $this->client->fetchStudentByRegistrationNumber('EBSU-2009-51486')[0];
 
     expect($student)->toBeArray()
         ->and($student)->toMatchArray(['registration_number' => 'EBSU/2009/51486']);

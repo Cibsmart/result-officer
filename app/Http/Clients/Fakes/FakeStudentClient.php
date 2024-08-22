@@ -11,7 +11,7 @@ final class FakeStudentClient implements StudentClient
 {
     public final const STUDENTS = [
         'EBSU-2009-51486' => [
-            'date_of_birth' => ['day' => '27', 'month' => '08', 'year' => '1985'],
+            'date_of_birth' => '27-08-1985',
             'department_id' => '1',
             'email' => '',
             'entry_level' => '100',
@@ -30,7 +30,7 @@ final class FakeStudentClient implements StudentClient
             'state' => 'ANAMBRA',
         ],
         'EBSU-2009-51487' => [
-            'date_of_birth' => ['day' => '27', 'month' => '08', 'year' => '1985'],
+            'date_of_birth' => '27-08-1985',
             'department_id' => '1',
             'email' => '',
             'entry_level' => '100',
@@ -49,7 +49,7 @@ final class FakeStudentClient implements StudentClient
             'state' => 'ANAMBRA',
         ],
         'EBSU-2009-51488' => [
-            'date_of_birth' => ['day' => '27', 'month' => '08', 'year' => '1985'],
+            'date_of_birth' => '27-08-1985',
             'department_id' => '1',
             'email' => '',
             'entry_level' => '',
@@ -68,7 +68,7 @@ final class FakeStudentClient implements StudentClient
             'state' => '',
         ],
         'EBSU-2009-51895' => [
-            'date_of_birth' => ['day' => '', 'month' => '', 'year' => ''],
+            'date_of_birth' => '',
             'department_id' => '1',
             'email' => '',
             'entry_level' => '100',
@@ -87,7 +87,7 @@ final class FakeStudentClient implements StudentClient
             'state' => 'EBONYI',
         ],
         'EBSU-2010-51895' => [
-            'date_of_birth' => ['day' => '', 'month' => '', 'year' => ''],
+            'date_of_birth' => '',
             'department_id' => '1',
             'email' => '',
             'entry_level' => '100',
@@ -106,7 +106,7 @@ final class FakeStudentClient implements StudentClient
             'state' => '',
         ],
         'invalidRegistrationNumber' => [
-            'date_of_birth' => ['day' => '', 'month' => '', 'year' => ''],
+            'date_of_birth' => '',
             'department_id' => '1',
             'email' => '',
             'entry_level' => '100',
@@ -149,8 +149,6 @@ final class FakeStudentClient implements StudentClient
     /** @return array<int, array<string, string|array<string, string>>> */
     public function fetchStudentsBySession(string $session): array
     {
-        $session = Str::replace('-', '/', $session);
-
         $students = array_filter(
             self::STUDENTS,
             fn (array $student): bool => $student['entry_session'] === $session,
