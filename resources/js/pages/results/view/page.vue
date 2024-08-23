@@ -2,7 +2,7 @@
 import { Head } from "@inertiajs/vue3";
 import BasePage from "@/layouts/main/partials/basePage.vue";
 import BaseHeader from "@/layouts/main/partials/baseHeader.vue";
-import BaseSection from "@/components/baseSection.vue";
+import BaseSection from "@/layouts/main/partials/baseSection.vue";
 import { BreadcrumbItem } from "@/types";
 import Breadcrumb from "@/components/breadcrumb.vue";
 import Session from "@/pages/results/view/partials/session.vue";

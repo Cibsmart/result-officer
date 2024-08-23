@@ -4,7 +4,7 @@ import { Head } from "@inertiajs/vue3";
 import Breadcrumb from "@/components/breadcrumb.vue";
 import BaseLink from "@/components/links/baseLink.vue";
 import BaseHeader from "@/layouts/main/partials/baseHeader.vue";
-import BaseSection from "@/components/baseSection.vue";
+import BaseSection from "@/layouts/main/partials/baseSection.vue";
 import BasePage from "@/layouts/main/partials/basePage.vue";
 import { computed } from "vue";
 import Students from "@/pages/summary/view/partials/students.vue";

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import PrimaryButton from "@/components/primaryButton.vue";
+import PrimaryButton from "@/components/buttons/primaryButton.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import { computed } from "vue";
 
