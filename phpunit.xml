@@ -29,6 +29,11 @@
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
+        <env name="RP_HTTP_ENDPOINT_COURSE" value="courses"/>
+        <env name="RP_HTTP_ENDPOINT_DEPARTMENT" value="departments"/>
+        <env name="RP_HTTP_ENDPOINT_COURSE_REGISTRATION" value="course_registrations"/>
+        <env name="RP_HTTP_ENDPOINT_RESULT" value="results"/>
+        <env name="RP_HTTP_ENDPOINT_STUDENT" value="students"/>
     </php>
     <coverage>
         <include>
