@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Enums\Grade;
 use App\Values\ExamScore;
 use App\Values\InCourseScore;
 use App\Values\TotalScore;
@@ -20,6 +21,20 @@ test('total score is correct', function (int $inCourse, int $exam, int $total): 
     [20, 40, 60],
     [10, 60, 70],
     [30, 70, 100],
+]);
+
+it('returns correct grade', function (int $total, bool $allowsEGrade, Grade $grade): void {
+    expect(TotalScore::new($total)->grade($allowsEGrade))->toBe($grade);
+})->with([
+    [30, true, Grade::F],
+    [40, true, Grade::E],
+    [40, false, Grade::F],
+    [45, true, Grade::D],
+    [50, true, Grade::C],
+    [60, true, Grade::B],
+    [75, true, Grade::A],
+    [100, true, Grade::A],
+    [0, true, Grade::F],
 ]);
 
 test('throws no exception for valid total scores', function (): void {
