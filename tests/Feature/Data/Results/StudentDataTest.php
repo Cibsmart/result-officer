@@ -22,3 +22,12 @@ test('student data object is correct', function (): void {
         ->and($studentData->admissionYear)->toBe($student->entrySession->firstYear())
         ->and($studentData->nationality)->toBe($student->state->country->demonym);
 });
+
+it('returns blank date for student without date', function (): void {
+    $student = StudentFactory::new()->createOne(['date_of_birth' => null]);
+
+    $studentData = StudentData::from($student);
+
+    expect($studentData)->toBeInstanceOf(StudentData::class)
+        ->and($studentData->birthDate)->toBe('');
+});
