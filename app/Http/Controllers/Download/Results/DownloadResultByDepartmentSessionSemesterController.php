@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Download\Results;
 
-use App\Actions\SaveResults;
 use App\Helpers\GetResponse;
 use App\Models\Department;
-use App\Services\Api\ResultService;
+use App\Repositories\ResultRepository;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 final readonly class DownloadResultByDepartmentSessionSemesterController
 {
-    public function __construct(private ResultService $service, private SaveResults $saveResult)
+    public function __construct(private ResultRepository $repository)
     {
     }
 
@@ -30,13 +29,13 @@ final readonly class DownloadResultByDepartmentSessionSemesterController
         assert($departmentOnlineId !== null);
 
         try {
-            $results = $this->service->getResultsByDepartmentSessionAndSemester(
+            $results = $this->repository->getResultByDepartmentSessionAndSemester(
                 departmentId: $departmentOnlineId,
                 session: $session,
                 semester: $semester,
             );
 
-            $responses = $this->saveResult->execute($results);
+            $responses = $this->repository->saveResults($results);
 
             $response = GetResponse::fromArray($responses);
 
