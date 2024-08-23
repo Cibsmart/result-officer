@@ -2,10 +2,11 @@
 import { Head, useForm } from "@inertiajs/vue3";
 import BasePage from "@/layouts/main/partials/basePage.vue";
 import BaseHeader from "@/layouts/main/partials/baseHeader.vue";
-import BaseSection from "@/components/baseSection.vue";
+import BaseSection from "@/layouts/main/partials/baseSection.vue";
 import { BreadcrumbItem } from "@/types";
 import Breadcrumb from "@/components/breadcrumb.vue";
-import PrimaryButton from "@/components/primaryButton.vue";
+import PrimaryButton from "@/components/buttons/primaryButton.vue";
+import BaseFormSection from "@/components/baseFormSection.vue";
 
 const pages: BreadcrumbItem[] = [
   {
@@ -31,13 +32,9 @@ const submit = () => {
 
   <BasePage>
     <BaseSection>
-      <section>
-        <header>
-          <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Download Departments</h2>
-
-          <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Click to Download All Departments from the Portal</p>
-        </header>
-
+      <BaseFormSection
+        description="Click to Download All Departments from the Portal"
+        header="Download Departments">
         <form
           class="mt-6 space-y-6"
           @submit.prevent="submit">
@@ -45,7 +42,7 @@ const submit = () => {
             <PrimaryButton :disabled="form.processing">Download</PrimaryButton>
           </div>
         </form>
-      </section>
+      </BaseFormSection>
     </BaseSection>
   </BasePage>
 </template>

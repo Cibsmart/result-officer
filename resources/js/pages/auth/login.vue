@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import Checkbox from "@/components/checkbox.vue";
-import InputError from "@/components/inputError.vue";
-import InputLabel from "@/components/inputLabel.vue";
-import PrimaryButton from "@/components/primaryButton.vue";
-import TextInput from "@/components/textInput.vue";
+import Checkbox from "@/components/inputs/checkbox.vue";
+import InputError from "@/components/inputs/inputError.vue";
+import InputLabel from "@/components/inputs/inputLabel.vue";
+import PrimaryButton from "@/components/buttons/primaryButton.vue";
+import TextInput from "@/components/inputs/textInput.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 
 defineProps<{
