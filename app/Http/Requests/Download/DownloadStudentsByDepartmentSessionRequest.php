@@ -35,7 +35,7 @@ final class DownloadStudentsByDepartmentSessionRequest extends FormRequest
             'sessionName' => Session::query()
                 ->where('id', $this->input('session.id'))
                 ->firstOrFail()
-                ->id,
+                ->name,
         ]);
     }
 }
