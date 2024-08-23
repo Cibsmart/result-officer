@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Download\Results;
 
-use App\Actions\SaveResults;
 use App\Helpers\GetResponse;
 use App\Http\Requests\Results\ResultRequest;
-use App\Services\Api\ResultService;
+use App\Repositories\ResultRepository;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 
 final readonly class DownloadResultByRegistrationNumberController
 {
-    public function __construct(private ResultService $service, private SaveResults $saveResult)
+    public function __construct(private ResultRepository $repository)
     {
     }
 
@@ -21,9 +20,9 @@ final readonly class DownloadResultByRegistrationNumberController
     public function __invoke(ResultRequest $request): RedirectResponse
     {
         try {
-            $results = $this->service->getResultsByRegistrationNumber($request->input('registration_number'));
+            $results = $this->repository->getResultByRegistrationNumber($request->input('registration_number'));
 
-            $responses = $this->saveResult->execute($results);
+            $responses = $this->repository->saveResults($results);
 
             $response = GetResponse::fromArray($responses);
 
