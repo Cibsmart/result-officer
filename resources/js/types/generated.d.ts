@@ -255,7 +255,7 @@ declare namespace App.ViewModels.Downloads {
 }
 declare namespace App.ViewModels.Reports {
   export type CompositeFormPage = {
-    department: any;
+    program: App.Data.Program.ProgramListData;
     semester: App.Data.Semester.SemesterListData;
     session: App.Data.Session.SessionListData;
     level: App.Data.Level.LevelListData;
