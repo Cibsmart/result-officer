@@ -26,8 +26,10 @@ final class ProgramListData extends Data
                 Program::query()
                     ->tap(new ActiveScope())
                     ->orderBy('name')
-                    ->get(),
-            )->prepend($default),
+                    ->get())
+                ->sortBy('name')
+                ->prepend($default)
+                ->values(),
         );
     }
 }
