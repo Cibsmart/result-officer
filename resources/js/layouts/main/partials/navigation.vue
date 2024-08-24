@@ -59,6 +59,11 @@ const navigation: NavigationItem[] = [
     href: "#",
     icon: FolderIcon,
     current: usePage().component.startsWith("results/"),
+    children: [
+      { name: "View", href: route("results.form"), current: route().current("results.form") },
+      { name: "Summary", href: route("summary.form"), current: route().current("summary.form") },
+      { name: "Transcript", href: route("results.form"), current: route().current("results.form") },
+    ],
   },
   {
     name: "Reports",
@@ -66,10 +71,8 @@ const navigation: NavigationItem[] = [
     icon: ChartPieIcon,
     current: false,
     children: [
-      { name: "Transcript", href: route("results.form"), current: route().current("results.form") },
-      { name: "Result Summary", href: route("summary.form"), current: route().current("summary.form") },
-      { name: "Composite Sheet", href: "#", current: false },
-      { name: "Graduation List", href: "#", current: false },
+      { name: "Composite", href: route("composite.form"), current: false },
+      { name: "Graduation", href: "#", current: false },
     ],
   },
 ];
