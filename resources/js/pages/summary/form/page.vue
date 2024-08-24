@@ -14,12 +14,12 @@ defineProps<{
 }>();
 
 const pages: BreadcrumbItem[] = [
-  { name: "Summary", href: route("summary.form"), current: route().current("summary.form") },
+  { name: "Result Summary", href: route("summary.form"), current: route().current("summary.form") },
 ];
 </script>
 
 <template>
-  <Head title="View Student Result" />
+  <Head title="Department Result Summary" />
 
   <Breadcrumb :pages="pages" />
 
@@ -30,8 +30,7 @@ const pages: BreadcrumbItem[] = [
       <ResultSummaryForm
         :departments="department.departments"
         :levels="level.levels"
-        :sessions="session.sessions"
-        class="max-w-xl" />
+        :sessions="session.sessions" />
     </BaseSection>
   </BasePage>
 </template>

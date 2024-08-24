@@ -21,7 +21,7 @@ const pages: BreadcrumbItem[] = [
 
   <BasePage>
     <BaseSection>
-      <StudentResultForm class="max-w-xl" />
+      <StudentResultForm />
     </BaseSection>
   </BasePage>
 </template>

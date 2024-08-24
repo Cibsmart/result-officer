@@ -4,6 +4,7 @@ import TextInput from "@/components/inputs/textInput.vue";
 import InputLabel from "@/components/inputs/inputLabel.vue";
 import InputError from "@/components/inputs/inputError.vue";
 import { useForm } from "@inertiajs/vue3";
+import BaseFormSection from "@/components/baseFormSection.vue";
 
 const form = useForm({
   registration_number: "",
@@ -15,13 +16,9 @@ const submit = () => {
 </script>
 
 <template>
-  <section>
-    <header>
-      <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Result Information</h2>
-
-      <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Input student's registration number to view results</p>
-    </header>
-
+  <BaseFormSection
+    description="Input student's registration number to view results"
+    header="Result Information">
     <form
       class="mt-6 space-y-6"
       @submit.prevent="submit">
@@ -49,5 +46,5 @@ const submit = () => {
         <PrimaryButton :disabled="form.processing">View</PrimaryButton>
       </div>
     </form>
-  </section>
+  </BaseFormSection>
 </template>

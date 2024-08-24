@@ -5,6 +5,7 @@ import InputError from "@/components/inputs/inputError.vue";
 import { useForm } from "@inertiajs/vue3";
 import SelectInput from "@/components/inputs/selectInput.vue";
 import { SelectItem } from "@/types";
+import BaseFormSection from "@/components/baseFormSection.vue";
 
 defineProps<{
   departments: SelectItem[];
@@ -24,19 +25,9 @@ const submit = () => {
 </script>
 
 <template>
-  <section>
-    <header>
-      <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Departmental Result Summary Information</h2>
-
-      <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-        Select <span class="font-bold italic">Department</span>
-
-        , <span class="font-bold italic">Session</span>
-
-        and <span class="font-bold italic">Level</span> to view the departmental result summary
-      </p>
-    </header>
-
+  <BaseFormSection
+    description="Select Department, Session and Level to view the departmental result summary"
+    header="Departmental Result Summary Information">
     <form
       class="mt-6 space-y-6"
       @submit.prevent="submit">
@@ -92,5 +83,5 @@ const submit = () => {
         <PrimaryButton :disabled="form.processing">View</PrimaryButton>
       </div>
     </form>
-  </section>
+  </BaseFormSection>
 </template>
