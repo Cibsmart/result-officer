@@ -87,6 +87,15 @@ declare namespace App.Data.Level {
     levels: Array<App.Data.Level.LevelData>;
   };
 }
+declare namespace App.Data.Program {
+  export type ProgramData = {
+    id: number;
+    name: string;
+  };
+  export type ProgramListData = {
+    programs: Array<App.Data.Program.ProgramData>;
+  };
+}
 declare namespace App.Data.Response {
   export type ResponseData = {
     key: string;
@@ -242,6 +251,14 @@ declare namespace App.ViewModels.Downloads {
   export type DownloadStudentPage = {
     department: App.Data.Department.DepartmentListData;
     session: App.Data.Session.SessionListData;
+  };
+}
+declare namespace App.ViewModels.Reports {
+  export type CompositeFormPage = {
+    department: any;
+    semester: App.Data.Semester.SemesterListData;
+    session: App.Data.Session.SessionListData;
+    level: App.Data.Level.LevelListData;
   };
 }
 declare namespace App.ViewModels.Results {
