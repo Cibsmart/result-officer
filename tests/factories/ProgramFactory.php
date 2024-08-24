@@ -22,4 +22,12 @@ final class ProgramFactory extends Factory
             'program_type_id' => ProgramTypeFactory::new(),
         ];
     }
+
+    public function active(): self
+    {
+        // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
+        return $this->state(fn (array $attributes) => [
+            'is_active' => true,
+        ]);
+    }
 }
