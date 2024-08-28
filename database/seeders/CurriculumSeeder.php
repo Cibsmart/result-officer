@@ -20,10 +20,5 @@ final class CurriculumSeeder extends Seeder
             'code' => 'CCMAS',
             'name' => 'CORE CURRICULUM MINIMUM ACADEMIC STANDARD',
         ]);
-
-        //        $this->call([
-        //            ProgramCurriculumSeeder::class,
-        //            ProgramCourseSeeder::class,
-        //        ]);
     }
 }
