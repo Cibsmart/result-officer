@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('program_id')->constrained('programs');
             $table->foreignId('curriculum_id')->constrained('curricula');
+            $table->foreignId('session_id')->constrained('academic_sessions');
             $table->foreignId('level_id')->constrained('levels');
             $table->foreignId('semester_id')->constrained('semesters');
             $table->unsignedSmallInteger('minimum_elective_units')->default(0);
