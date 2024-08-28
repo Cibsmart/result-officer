@@ -15,8 +15,8 @@ final class ProgramCurriculum extends Model
         'curriculum_id',
         'level_id',
         'semester_id',
+        'session_id',
         'minimum_elective_units',
-        'slug',
     ];
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Program, \App\Models\ProgramCurriculum> */
@@ -43,8 +43,14 @@ final class ProgramCurriculum extends Model
         return $this->belongsTo(Semester::class);
     }
 
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session,\App\Models\ProgramCurriculum> */
+    public function session(): BelongsTo
+    {
+        return $this->belongsTo(Session::class);
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCourse> */
-    public function programCurriculumCourses(): HasMany
+    public function courses(): HasMany
     {
         return $this->HasMany(ProgramCourse::class);
     }

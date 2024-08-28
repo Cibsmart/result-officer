@@ -18,8 +18,6 @@ final class CourseRegistration extends Model
         'course_status',
     ];
 
-    protected $with = ['result', 'course'];
-
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\SemesterEnrollment, \App\Models\CourseRegistration>
