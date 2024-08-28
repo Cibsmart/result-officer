@@ -17,9 +17,10 @@ final class ProgramCurriculumSeeder extends Seeder
         ProgramCurriculum::query()->create([
             'curriculum_id' => 1,
             'level_id' => 1,
-            'minimum_elective_units' => 2,
+            'minimum_elective_units' => 4,
             'program_id' => 1,
             'semester_id' => 1,
+            'session_id' => 1,
         ]);
 
         ProgramCurriculum::query()->create([
@@ -28,6 +29,9 @@ final class ProgramCurriculumSeeder extends Seeder
             'minimum_elective_units' => 3,
             'program_id' => 1,
             'semester_id' => 2,
+            'session_id' => 1,
         ]);
+
+        $this->call([ProgramCourseSeeder::class]);
     }
 }
