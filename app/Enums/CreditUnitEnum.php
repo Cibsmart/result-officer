@@ -16,4 +16,9 @@ enum CreditUnitEnum: int
     case TWELVE = 12;
     case FIFTY = 15;
     case EIGHTEEN = 18;
+
+    public function getLabel(): ?string
+    {
+        return $this->name;
+    }
 }
