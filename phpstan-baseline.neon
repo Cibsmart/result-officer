@@ -6,6 +6,11 @@ parameters:
 			path: app/Data/Department/DepartmentListData.php
 
 		-
+			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Program\\>\\:\\:tap\\(\\) expects callable\\(Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Program\\>\\)\\: mixed, App\\\\Scopes\\\\ActiveScope given\\.$#"
+			count: 1
+			path: app/Data/Program/ProgramListData.php
+
+		-
 			message: "#^Cannot call method format\\(\\) on string\\.$#"
 			count: 1
 			path: app/Data/Students/StudentData.php
