@@ -43,8 +43,8 @@ final class StudentResource extends Resource
                     ->relationship('program', 'name')
                     ->searchable()->preload()
                     ->required(),
-                Select::make('country_id')
-                    ->relationship('country', 'name')
+                Select::make('state_id')
+                    ->relationship('state', 'name')
                     ->required(),
                 Select::make('entry_session_id')
                     ->relationship('entrySession', 'name')
@@ -70,7 +70,7 @@ final class StudentResource extends Resource
                 TextColumn::make('gender')->sortable(),
                 TextColumn::make('date_of_birth')->date(),
                 TextColumn::make('program.name')->searchable()->sortable(),
-                TextColumn::make('country.name')->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('state.name')->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('entrySession.name')->searchable()->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('entryLevel.name')->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('entryMode.code')->toggleable(isToggledHiddenByDefault: true),
