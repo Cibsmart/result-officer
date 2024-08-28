@@ -16,7 +16,7 @@ use Filament\Tables\Table;
 
 final class ProgramCoursesRelationManager extends RelationManager
 {
-    protected static string $relationship = 'programCurriculumCourses';
+    protected static string $relationship = 'courses';
 
     public function form(Form $form): Form
     {
