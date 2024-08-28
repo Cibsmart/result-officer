@@ -54,7 +54,7 @@ Route::middleware(['auth'])->group(static function (): void {
 
     Route::prefix('composite')->group(static function (): void {
         Route::get('', [CompositeSheetController::class, 'form'])->name('composite.form');
-        Route::get('view', [CompositeSheetController::class, 'view'])->name('composite.view');
+        Route::post('', [CompositeSheetController::class, 'view'])->name('composite.view');
     });
 
     Route::prefix('download/students')->group(static function (): void {
