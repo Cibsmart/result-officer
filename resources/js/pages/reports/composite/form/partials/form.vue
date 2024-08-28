@@ -22,7 +22,7 @@ const form = useForm({
 });
 
 const submit = () => {
-  form.post(route("summary.view"));
+  form.post(route("composite.view"));
 };
 </script>
 
