@@ -35,6 +35,7 @@ final class ProgramCurriculumResource extends Resource
                     ->preload()
                     ->required(),
                 Select::make('curriculum_id')->relationship('curriculum', 'code')->required(),
+                Select::make('session_id')->relationship('session', 'name')->required(),
                 Select::make('level_id')->relationship('level', 'name')->required(),
                 Select::make('semester_id')->relationship('semester', 'name')->required(),
                 TextInput::make('minimum_elective_units')->required()->numeric()->default(0),
@@ -47,6 +48,7 @@ final class ProgramCurriculumResource extends Resource
             ->columns([
                 TextColumn::make('program.name')->sortable()->searchable(),
                 TextColumn::make('curriculum.code')->sortable(),
+                TextColumn::make('session.name')->sortable(),
                 TextColumn::make('level.name')->sortable(),
                 TextColumn::make('semester.name')->sortable(),
                 TextColumn::make('minimum_elective_units')->numeric(),

@@ -28,7 +28,7 @@ final class ProgramCoursesRelationManager extends RelationManager
                     ->searchable()
                     ->preload(),
                 Select::make('credit_unit')->label('Credit Unit')
-                    ->enum(CreditUnitEnum::class)
+                    ->options(CreditUnitEnum::class)
                     ->required(),
                 Select::make('course_type_id')->label('Course Type')
                     ->options(CourseType::query()->pluck('name', 'id'))
@@ -43,7 +43,7 @@ final class ProgramCoursesRelationManager extends RelationManager
             ->recordTitleAttribute('program_curriculum_id')
             ->columns([
                 TextColumn::make('course.code')->sortable(),
-                TextColumn::make('creditUnit'),
+                TextColumn::make('credit_unit'),
                 TextColumn::make('courseType.name')->sortable(),
             ])
             ->filters([
