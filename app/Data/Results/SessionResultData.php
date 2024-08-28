@@ -23,9 +23,9 @@ final class SessionResultData extends Data
 
     public static function fromModel(Enrollment $enrollment): self
     {
-        $semesters = SemesterResultData::collect($enrollment->semesters)
-            ->sortBy('semester')
-            ->values();
+        $semesters = SemesterResultData::collect(
+            $enrollment->semesters()->with('semester')->get(),
+        );
 
         $cumulativeGradePointAverage = ComputeAverage::new(
             $semesters->sum('gradePointAverage'),

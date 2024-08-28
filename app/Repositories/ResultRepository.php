@@ -65,6 +65,7 @@ final readonly class ResultRepository
     public function saveResults(Collection $results): Collection
     {
         $courseRegistrations = CourseRegistration::query()
+            ->with('result')
             ->whereIn('online_id', $results->pluck('courseRegistrationId'))
             ->get();
 

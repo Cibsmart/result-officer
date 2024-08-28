@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Enums\StudentStatusEnum;
 use App\Values\RegistrationNumber;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -34,8 +35,6 @@ final class Student extends Model
         'source',
         'status',
     ];
-
-    protected $with = ['program', 'entrySession', 'entryLevel', 'entryMode', 'state', 'enrollments'];
 
     /** @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\CourseRegistration> */
     public function courses(): HasManyThrough
@@ -97,5 +96,17 @@ final class Student extends Model
             'date_of_birth' => 'date',
             'status' => StudentStatusEnum::class,
         ];
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
+    protected function name(): Attribute
+    {
+        return Attribute::make(
+            /** @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter */
+            get: fn (
+                ?string $value,
+                array $attributes,
+            ): string => "{$attributes['last_name']} {$attributes['first_name']} {$attributes['other_names']}",
+        );
     }
 }
