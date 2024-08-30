@@ -16,6 +16,8 @@ final class Program extends Model
 
     protected $fillable = ['department_id', 'code', 'name', 'program_type_id', 'online_id'];
 
+    protected $with = ['department'];
+
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Department, \App\Models\Program> */
     public function department(): BelongsTo
     {
@@ -39,13 +41,9 @@ final class Program extends Model
     {
         return Attribute::make(
             /** @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter */
-            get: function (?string $value, array $attributes): string {
-                $department = $this->with('department')->firstOrFail()->department;
-
-                return $department->name === $attributes['name']
+            get: fn (?string $value, array $attributes): string => $this->department->name === $attributes['name']
                     ? $attributes['name']
-                    : "$department->name ({$attributes['name']})";
-            });
+                    : "$this->department->name ({$attributes['name']})");
     }
 
     /** @return array<string, string> */
