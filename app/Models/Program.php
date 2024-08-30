@@ -42,8 +42,8 @@ final class Program extends Model
         return Attribute::make(
             /** @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter */
             get: fn (?string $value, array $attributes): string => $this->department->name === $attributes['name']
-                    ? $attributes['name']
-                    : "$this->department->name ({$attributes['name']})");
+                ? $attributes['name']
+                : "{$this->department->name} ({$attributes['name']})");
     }
 
     /** @return array<string, string> */
