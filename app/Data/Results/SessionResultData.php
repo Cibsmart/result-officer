@@ -18,6 +18,7 @@ final class SessionResultData extends Data
         public readonly string $session,
         public readonly string $year,
         public readonly float $cumulativeGradePointAverage,
+        public readonly string $formattedCGPA,
     ) {
     }
 
@@ -32,11 +33,15 @@ final class SessionResultData extends Data
             $semesters->count(),
         )->value();
 
+        $formattedCGPA = number_format($cumulativeGradePointAverage, 3);
+
         return new self(
             id: $enrollment->id,
             semesterResults: $semesters,
             session: $enrollment->session->name,
             year: $enrollment->year->name,
-            cumulativeGradePointAverage: $cumulativeGradePointAverage);
+            cumulativeGradePointAverage: $cumulativeGradePointAverage,
+            formattedCGPA: $formattedCGPA,
+        );
     }
 }

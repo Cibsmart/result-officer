@@ -19,6 +19,7 @@ final class SemesterResultData extends Data
         public readonly int $creditUnitTotal,
         public readonly int $gradePointTotal,
         public readonly float $gradePointAverage,
+        public readonly string $formattedGPA,
     ) {
     }
 
@@ -34,12 +35,16 @@ final class SemesterResultData extends Data
 
         $gpa = ComputeAverage::new($totalGradePoint, $totalCreditUnit)->value();
 
+        $formattedGPA = number_format($gpa, 3);
+
         return new self(
             id: $enrollment->id,
             results: $courses,
             semester: $enrollment->semester->name,
             creditUnitTotal: $totalCreditUnit,
             gradePointTotal: $totalGradePoint,
-            gradePointAverage: $gpa);
+            gradePointAverage: $gpa,
+            formattedGPA: $formattedGPA,
+        );
     }
 }

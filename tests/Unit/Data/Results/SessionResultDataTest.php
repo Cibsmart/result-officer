@@ -39,13 +39,15 @@ test('session result data is correct', function (): void {
     }
 
     $cgpa = ComputeAverage::new($gradePointAverageTotal, $semestersResults->count())->value();
+    $cgpaFormatted = number_format($cgpa, 3);
 
     expect($sessionData)->toBeInstanceOf(SessionResultData::class)
         ->and($sessionData->id)->toBe($enrollment->id)
         ->and($sessionData->semesterResults->count())->toBe($semestersResults->count())
         ->and($sessionData->session)->toBe($enrollment->session->name)
         ->and($sessionData->year)->toBe($enrollment->year->name)
-        ->and($sessionData->cumulativeGradePointAverage)->toBe($cgpa);
+        ->and($sessionData->cumulativeGradePointAverage)->toBe($cgpa)->toBeFloat()
+        ->and($sessionData->formattedCGPA)->toBe($cgpaFormatted)->toBeString();
 });
 
 test('session enrollment without result data returns zeroes', function (): void {
@@ -66,7 +68,8 @@ test('session enrollment without result data returns zeroes', function (): void 
         ->and($sessionData->id)->toBe($enrollment->id)
         ->and($sessionData->semesterResults->count())->toBe($semestersResults->count())
         ->and($sessionData->session)->toBe($enrollment->session->name)
-        ->and($sessionData->cumulativeGradePointAverage)->toBe(0.0);
+        ->and($sessionData->cumulativeGradePointAverage)->toBe(0.0)
+        ->and($sessionData->formattedCGPA)->toBe('0.000')->toBeString();
 
 });
 
@@ -84,6 +87,7 @@ test('session enrollment without semester enrollments returns zeroes', function 
         ->and($sessionData->id)->toBe($enrollment->id)
         ->and($sessionData->semesterResults->count())->toBe($semestersResults->count())
         ->and($sessionData->session)->toBe($enrollment->session->name)
-        ->and($sessionData->cumulativeGradePointAverage)->toBe(0.0);
+        ->and($sessionData->cumulativeGradePointAverage)->toBe(0.0)
+        ->and($sessionData->formattedCGPA)->toBe('0.000')->toBeString();
 
 });
