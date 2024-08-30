@@ -57,21 +57,21 @@ const hasOthers = computed(() => props.students.some((student) => student.otherC
         </div>
 
         <div class="mt-8 flow-root">
-          <div class="overflow-x-auto">
+          <div class="overflow-auto">
             <div
-              class="inline-block min-w-full divide-y divide-solid divide-gray-300 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg dark:divide-gray-600 dark:ring-gray-600">
+              class="inline-block max-h-[600px] min-w-full divide-y divide-solid divide-gray-300 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg dark:divide-gray-600 dark:ring-gray-600">
               <table class="divide min-w-full divide-y divide-gray-200 dark:divide-gray-600">
                 <thead>
                   <tr class="divide-x divide-gray-200 dark:divide-gray-600">
                     <th
-                      class="p-1 text-center text-xs font-semibold text-gray-900 dark:text-white"
+                      class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
                       rowspan="2"
                       scope="col">
                       SN
                     </th>
 
                     <th
-                      class="p-1 text-center text-xs font-semibold text-gray-900 dark:text-white"
+                      class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
                       colspan="2"
                       scope="col">
                       COURSE CODE
@@ -80,7 +80,7 @@ const hasOthers = computed(() => props.students.some((student) => student.otherC
                     <th
                       v-for="(course, index) in courses"
                       :key="index"
-                      class="p-1 text-center text-xs font-semibold text-gray-900 dark:text-white"
+                      class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
                       colspan="2"
                       scope="col">
                       {{ course.unit }}
@@ -89,7 +89,7 @@ const hasOthers = computed(() => props.students.some((student) => student.otherC
                     <th />
 
                     <th
-                      class="p-1 text-center text-xs font-semibold text-gray-900 dark:text-white"
+                      class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
                       colspan="4"
                       scope="col">
                       CURRENT TOTALS
@@ -99,14 +99,22 @@ const hasOthers = computed(() => props.students.some((student) => student.otherC
                   </tr>
 
                   <tr class="divide-x divide-gray-200 dark:divide-gray-600">
-                    <th class="p-1 text-center text-xs font-semibold">NAME</th>
+                    <th
+                      class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold backdrop-blur"
+                      scope="col">
+                      NAME
+                    </th>
 
-                    <th class="whitespace-nowrap p-1 text-center text-xs font-semibold">REGISTRATION NUMBER</th>
+                    <th
+                      class="sticky top-0 z-10 whitespace-nowrap bg-opacity-75 p-1 text-center text-xs font-semibold"
+                      scope="col">
+                      REGISTRATION NUMBER
+                    </th>
 
                     <th
                       v-for="(course, index) in courses"
                       :key="index"
-                      class="p-1 text-center text-xs font-semibold text-gray-900 dark:text-white"
+                      class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
                       colspan="2"
                       scope="col">
                       {{ course.code }}
@@ -114,31 +122,31 @@ const hasOthers = computed(() => props.students.some((student) => student.otherC
 
                     <th
                       v-if="hasOthers"
-                      class="whitespace-nowrap p-1 text-center text-xs font-semibold text-gray-900 dark:text-white"
+                      class="sticky top-0 z-10 whitespace-nowrap bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 dark:text-white"
                       scope="col">
                       Other Courses
                     </th>
 
                     <th
-                      class="p-1 text-center text-xs font-semibold text-gray-900 dark:text-white"
+                      class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
                       scope="col">
                       TCL
                     </th>
 
                     <th
-                      class="p-1 text-center text-xs font-semibold text-gray-900 dark:text-white"
+                      class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
                       scope="col">
                       GP
                     </th>
 
                     <th
-                      class="p-1 text-center text-xs font-semibold text-gray-900 dark:text-white"
+                      class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
                       scope="col">
                       GPA
                     </th>
 
                     <th
-                      class="p-1 text-center text-xs font-semibold text-gray-900 dark:text-white"
+                      class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
                       scope="col">
                       REMARK
                     </th>
