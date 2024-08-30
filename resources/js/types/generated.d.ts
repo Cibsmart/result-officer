@@ -1,3 +1,24 @@
+declare namespace App.Data.Composite {
+  export type CompositeCourseData = {
+    code: string;
+    grade: string;
+    score: string;
+  };
+  export type CompositeCourseListData = {
+    code: string;
+    unit: number;
+  };
+  export type CompositeRowData = {
+    studentId: number;
+    studentName: string;
+    registrationNumber: string;
+    creditUnitTotal: string;
+    gradePointTotal: string;
+    gradePointAverage: string;
+    levelCourses: Array<App.Data.Composite.CompositeCourseData>;
+    otherCourses: Array<App.Data.Composite.CompositeCourseData>;
+  };
+}
 declare namespace App.Data.Course {
   export type CourseData = {
     id: number;
@@ -126,6 +147,7 @@ declare namespace App.Data.Results {
     creditUnitTotal: number;
     gradePointTotal: number;
     gradePointAverage: number;
+    formattedGPA: string;
   };
   export type SessionResultData = {
     id: number;
@@ -133,6 +155,7 @@ declare namespace App.Data.Results {
     session: string;
     year: string;
     cumulativeGradePointAverage: number;
+    formattedCGPA: string;
   };
   export type StudentResultData = {
     id: number;
@@ -259,6 +282,10 @@ declare namespace App.ViewModels.Reports {
     semester: App.Data.Semester.SemesterListData;
     session: App.Data.Session.SessionListData;
     level: App.Data.Level.LevelListData;
+  };
+  export type CompositeViewPage = {
+    students: Array<App.Data.Composite.CompositeRowData>;
+    courses: Array<App.Data.Composite.CompositeCourseListData>;
   };
 }
 declare namespace App.ViewModels.Results {
