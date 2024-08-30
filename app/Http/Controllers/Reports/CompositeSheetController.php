@@ -15,6 +15,7 @@ use App\Data\Session\SessionListData;
 use App\Models\Program;
 use App\Models\ProgramCourse;
 use App\Models\ProgramCurriculum;
+use App\Models\Student;
 use App\ViewModels\Reports\CompositeFormPage;
 use App\ViewModels\Reports\CompositeViewPage;
 use Illuminate\Database\Eloquent\Builder;
@@ -46,7 +47,9 @@ final readonly class CompositeSheetController
 
         $courses = $this->getCourses($program->id, $sessionId, $levelId, $semesterId);
 
-        $students = $this->getStudentAndResults($program, $sessionId, $levelId, $semesterId, $courses);
+        $programStudents = $this->getProgramStudents($program, $sessionId, $levelId, $semesterId);
+
+        $students = $this->prepareCompositeRows($programStudents, $courses, $sessionId, $semesterId);
 
         return Inertia::render('reports/composite/view/page', new CompositeViewPage(
             students: $students, courses: CompositeCourseListData::collect($courses),
@@ -54,32 +57,39 @@ final readonly class CompositeSheetController
     }
 
     /**
+     * @param \Illuminate\Support\LazyCollection<int, \App\Models\Student> $students
      * @param \Illuminate\Support\Collection<int, array{code: string, unit: int}> $courses
      * @return \Illuminate\Support\Collection<int, \App\Data\Composite\CompositeRowData>
      */
-    public function getStudentAndResults(
-        Program $program,
-        int $sessionId,
-        int $levelId,
-        int $semesterId,
+    public function prepareCompositeRows(
+        LazyCollection $students,
         Collection $courses,
+        int $sessionId,
+        int $semesterId,
     ): Collection {
-        $students = $program->students()
-            ->with([
-                'enrollments.semesters.courses.course',
-                'enrollments.semesters.courses.result',
-                'enrollments.semesters.semester',
-            ])
-            ->whereHas('enrollments.semesters',
-                function (Builder $query) use ($sessionId, $levelId, $semesterId): void {
-                    $query->where('session_id', $sessionId)
-                        ->where('level_id', $levelId)
-                        ->where('semester_id', $semesterId);
-                })
-            ->orderBy('registration_number')
-            ->lazy();
+        $crossTab = [];
 
-        return $this->prepareCrossTab($students, $sessionId, $semesterId, $courses);
+        foreach ($students as $student) {
+            $courseList = $courses->pluck('unit', 'code')
+                ->map(fn () => ['code' => '', 'grade' => '-', 'score' => '-'])->all();
+
+            $semesterResultData = $this->getSemesterResultDataForStudent($student, $sessionId, $semesterId);
+
+            [$levelCourses, $otherCourses] = $this->prepareCompositeCourses($semesterResultData, $courseList);
+
+            $crossTab[] = [
+                'creditUnitTotal' => $semesterResultData->creditUnitTotal,
+                'gradePointAverage' => $semesterResultData->formattedGPA,
+                'gradePointTotal' => $semesterResultData->gradePointTotal,
+                'id' => $student->id,
+                'levelCourses' => $levelCourses,
+                'name' => $student->name,
+                'otherCourses' => $otherCourses,
+                'registrationNumber' => $student->registration_number,
+            ];
+        }
+
+        return CompositeRowData::collect(collect($crossTab));
     }
 
     /** @return \Illuminate\Support\Collection<int, array{code: string, unit: int}> */
@@ -108,71 +118,80 @@ final readonly class CompositeSheetController
             );
     }
 
-    /**
-     * @param \Illuminate\Support\LazyCollection<int, \App\Models\Student> $students
-     * @param \Illuminate\Support\Collection<int, array{code: string, unit: int}> $courses
-     * @return \Illuminate\Support\Collection<int, \App\Data\Composite\CompositeRowData>
-     */
-    private function prepareCrossTab(
-        LazyCollection $students,
+    /** @return \Illuminate\Support\LazyCollection<int, \App\Models\Student> */
+    private function getProgramStudents(
+        Program $program,
+        int $sessionId,
+        int $levelId,
+        int $semesterId,
+    ): LazyCollection {
+        return $program->students()
+            ->with([
+                'enrollments.semesters.courses.course',
+                'enrollments.semesters.courses.result',
+                'enrollments.semesters.semester',
+            ])
+            ->whereHas('enrollments.semesters',
+                function (Builder $query) use ($sessionId, $levelId, $semesterId): void {
+                    $query->where('session_id', $sessionId)
+                        ->where('level_id', $levelId)
+                        ->where('semester_id', $semesterId);
+                })
+            ->orderBy('registration_number')
+            ->lazy();
+    }
+
+    private function getSemesterResultDataForStudent(
+        Student $student,
         int $sessionId,
         int $semesterId,
-        Collection $courses,
-    ): Collection {
-        $crossTab = [];
+    ): SemesterResultData {
+        $sessionEnrollment = $student->enrollments
+            ->where('session_id', '===', $sessionId)
+            ->firstOrFail();
 
-        foreach ($students as $student) {
-            $row = [
-                'id' => $student->id, 'name' => $student->name, 'registrationNumber' => $student->registration_number,
-            ];
+        $semesterEnrollment = $sessionEnrollment
+            ->semesters
+            ->where('semester_id', '===', $semesterId)
+            ->firstOrFail();
 
-            $courseList = $courses->pluck('unit', 'code')->map(fn () => [
-                'code' => '', 'grade' => '-', 'score' => '-',
-            ])->all();
+        return SemesterResultData::fromModel($semesterEnrollment);
+    }
 
-            $sessionEnrollment = $student->enrollments
-                ->where('session_id', '===', $sessionId)
-                ->firstOrFail();
+    /**
+     * @param array<string, array<string, string>> $courseList
+     * @return array<int, \Illuminate\Support\Collection<int, \App\Data\Composite\CompositeCourseData>>
+     */
+    private function prepareCompositeCourses(SemesterResultData $semesterResultData, array $courseList): array
+    {
+        $levelCourses = [...$courseList];
 
-            $semesterEnrollment = $sessionEnrollment
-                ->semesters
-                ->where('semester_id', '===', $semesterId)
-                ->firstOrFail();
+        $otherCourses = [];
 
-            $otherCourses = [];
+        foreach ($semesterResultData->results as $result) {
 
-            $semesterEnrollmentData = SemesterResultData::fromModel($semesterEnrollment);
+            $grade = 'NR';
+            $score = 'NR';
 
-            $row['creditUnitTotal'] = $semesterEnrollmentData->creditUnitTotal;
-            $row['gradePointTotal'] = $semesterEnrollmentData->gradePointTotal;
-            $row['gradePointAverage'] = $semesterEnrollmentData->formattedGPA;
-
-            foreach ($semesterEnrollmentData->results as $result) {
-
-                $grade = $result->remark === 'NR'
-                    ? $result->remark
-                    : $result->grade;
-                $score = $result->remark === 'NR'
-                    ? $result->remark
-                    : (string) $result->totalScore;
-
-                if (array_key_exists($result->courseCode, $courseList)) {
-                    $courseList[$result->courseCode]['code'] = $result->courseCode;
-                    $courseList[$result->courseCode]['grade'] = $grade;
-                    $courseList[$result->courseCode]['score'] = $score;
-
-                    continue;
-                }
-
-                $otherCourses[] = ['code' => $result->courseCode, 'grade' => $grade, 'score' => $score];
+            if ($result->remark !== 'NR') {
+                $grade = $result->grade;
+                $score = (string) $result->totalScore;
             }
 
-            $row['levelCourses'] = CompositeCourseData::collect(collect($courseList));
-            $row['otherCourses'] = CompositeCourseData::collect(collect($otherCourses));
+            if (array_key_exists($result->courseCode, $levelCourses)) {
+                $levelCourses[$result->courseCode]['code'] = $result->courseCode;
+                $levelCourses[$result->courseCode]['grade'] = $grade;
+                $levelCourses[$result->courseCode]['score'] = $score;
 
-            $crossTab[] = $row;
+                continue;
+            }
+
+            $otherCourses[] = ['code' => $result->courseCode, 'grade' => $grade, 'score' => $score];
         }
 
-        return CompositeRowData::collect(collect($crossTab));
+        return [
+            CompositeCourseData::collect(collect($levelCourses)),
+            CompositeCourseData::collect(collect($otherCourses)),
+        ];
     }
 }
