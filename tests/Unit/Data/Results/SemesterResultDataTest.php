@@ -22,13 +22,15 @@ test('semester result data is correct', function (): void {
     $totalCU = $courses->sum('credit_unit');
     $totalGP = $courses->sum('result.grade_point');
     $gpa = round($totalGP / $totalCU, 3);
+    $gpaFormatted = number_format($gpa, 3);
 
     expect($semesterData)->toBeInstanceOf(SemesterResultData::class)
         ->and($semesterData->id)->toBe($enrollment->id)
         ->and($semesterData->results->count())->toBe($courses->count())
-        ->and($semesterData->creditUnitTotal)->toBe($totalCU)
-        ->and($semesterData->gradePointTotal)->toBe($totalGP)
-        ->and($semesterData->gradePointAverage)->toBe($gpa);
+        ->and($semesterData->creditUnitTotal)->toBe($totalCU)->toBeInt()
+        ->and($semesterData->gradePointTotal)->toBe($totalGP)->toBeInt()
+        ->and($semesterData->gradePointAverage)->toBe($gpa)->toBeFloat()
+        ->and($semesterData->formattedGPA)->toBe($gpaFormatted)->toBeString();
 
 });
 
@@ -38,8 +40,8 @@ test('semester enrollment without result data returns zeroes', function (): void
     $semesterData = SemesterResultData::from($enrollment);
 
     expect($semesterData)->toBeInstanceOf(SemesterResultData::class)
-        ->and($semesterData->gradePointTotal)->toBe(0)
-        ->and($semesterData->creditUnitTotal)->toBe(0)
-        ->and($semesterData->gradePointAverage)->toBe(0.00);
-
+        ->and($semesterData->gradePointTotal)->toBe(0)->toBeInt()
+        ->and($semesterData->creditUnitTotal)->toBe(0)->toBeInt()
+        ->and($semesterData->gradePointAverage)->toBe(0.000)->toBeFloat()
+        ->and($semesterData->formattedGPA)->toBeString('0.000');
 });
