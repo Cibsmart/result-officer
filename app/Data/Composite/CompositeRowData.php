@@ -18,16 +18,15 @@ final class CompositeRowData extends Data
         public readonly string $gradePointAverage,
         /** @var \Illuminate\Support\Collection<int, \App\Data\Composite\CompositeCourseData> */
         public readonly Collection $levelCourses,
-        /** @var \Illuminate\Support\Collection<int, \App\Data\Composite\CompositeCourseData> */
-        public readonly Collection $otherCourses,
+        public readonly string $otherCourses,
+        public readonly string $remark,
     ) {
     }
 
     /**
      * @param array{id: int, name: string, registrationNumber: string, creditUnitTotal: int, gradePointTotal:int,
      *     gradePointAverage: string, levelCourses: \Illuminate\Support\Collection<int,
-     *     \App\Data\Composite\CompositeCourseData>, otherCourses: \Illuminate\Support\Collection<int,
-     *     \App\Data\Composite\CompositeCourseData>} $data
+     *     \App\Data\Composite\CompositeCourseData>, otherCourses: string, remark: string} $data
      */
     public static function fromArray(array $data): self
     {
@@ -40,6 +39,7 @@ final class CompositeRowData extends Data
             gradePointAverage: $data['gradePointAverage'],
             levelCourses: $data['levelCourses'],
             otherCourses: $data['otherCourses'],
+            remark: $data['remark'],
         );
     }
 }
