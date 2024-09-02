@@ -7,6 +7,7 @@ namespace App\Data\Results;
 use App\Helpers\ComputeAverage;
 use App\Models\SemesterEnrollment;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Spatie\LaravelData\Data;
 
 final class SemesterResultData extends Data
@@ -19,6 +20,8 @@ final class SemesterResultData extends Data
         public readonly int $creditUnitTotal,
         public readonly int $gradePointTotal,
         public readonly float $gradePointAverage,
+        public readonly string $formattedCreditUnitTotal,
+        public readonly string $formattedGradePointTotal,
         public readonly string $formattedGPA,
     ) {
     }
@@ -27,15 +30,16 @@ final class SemesterResultData extends Data
     {
 
         $courses = ResultData::collect(
-            $enrollment->courses()->with(['course', 'result'])->orderBy('course_id')->get(),
+            $enrollment->courses()
+                ->with(['course', 'result'])
+                ->orderBy('course_id')
+                ->get(),
         );
 
         $totalCreditUnit = (int) $courses->sum('creditUnit');
         $totalGradePoint = (int) $courses->sum('gradePoint');
 
         $gpa = ComputeAverage::new($totalGradePoint, $totalCreditUnit)->value();
-
-        $formattedGPA = number_format($gpa, 3);
 
         return new self(
             id: $enrollment->id,
@@ -44,7 +48,9 @@ final class SemesterResultData extends Data
             creditUnitTotal: $totalCreditUnit,
             gradePointTotal: $totalGradePoint,
             gradePointAverage: $gpa,
-            formattedGPA: $formattedGPA,
+            formattedCreditUnitTotal: Str::of((string) $totalCreditUnit)->padLeft(2, '0')->value(),
+            formattedGradePointTotal: Str::of((string) $totalGradePoint)->padLeft(2, '0')->value(),
+            formattedGPA: number_format($gpa, 3),
         );
     }
 }
