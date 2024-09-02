@@ -14,8 +14,9 @@ test('composite row data is correct', function (): void {
         'id' => 1,
         'levelCourses' => CompositeCourseData::collect(collect([])),
         'name' => 'Student Name',
-        'otherCourses' => CompositeCourseData::collect(collect([])),
+        'otherCourses' => '',
         'registrationNumber' => 'RegistrationNumber',
+        'remark' => 'PASS',
     ];
 
     $data = CompositeRowData::fromArray($row);
@@ -29,6 +30,6 @@ test('composite row data is correct', function (): void {
         ->and($data->gradePointAverage)->toBeString()->toBe($row['gradePointAverage'])
         ->and($data->levelCourses)->toBeInstanceOf(Collection::class)
         ->toContainOnlyInstancesOf(CompositeCourseData::class)
-        ->and($data->otherCourses)->toBeInstanceOf(Collection::class)
-        ->toContainOnlyInstancesOf(CompositeCourseData::class);
+        ->and($data->otherCourses)->toBeString()->toBeEmpty()
+        ->and($data->remark)->toBeString()->toBe('PASS');
 });

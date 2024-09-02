@@ -17,10 +17,6 @@ const pages: BreadcrumbItem[] = [
   { name: "Composite Sheet View", href: route("composite.view"), current: route().current("composite.view") },
 ];
 
-const formatOtherCourses = (otherCourses: Array<App.Data.Composite.CompositeCourseData>) => {
-  return otherCourses.reduce((acc, curr) => `${acc} ${curr.code} (${curr.grade}),`, "");
-};
-
 const hasOthers = computed(() => props.students.some((student) => student.otherCourses.length > 0));
 </script>
 
@@ -122,7 +118,7 @@ const hasOthers = computed(() => props.students.some((student) => student.otherC
 
                     <th
                       v-if="hasOthers"
-                      class="sticky top-0 z-10 whitespace-nowrap bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 dark:text-white"
+                      class="sticky top-0 z-10 whitespace-nowrap bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
                       scope="col">
                       Other Courses
                     </th>
@@ -189,7 +185,7 @@ const hasOthers = computed(() => props.students.some((student) => student.otherC
                     <td
                       v-if="hasOthers"
                       class="border-t border-gray-200 p-1 text-center text-xs text-gray-700 dark:border-gray-700 dark:text-gray-300">
-                      {{ formatOtherCourses(student.otherCourses) }}
+                      {{ student.otherCourses }}
                     </td>
 
                     <td
@@ -209,7 +205,7 @@ const hasOthers = computed(() => props.students.some((student) => student.otherC
 
                     <td
                       class="border-t border-gray-200 p-1 text-center text-xs text-gray-700 dark:border-gray-700 dark:text-gray-300">
-                      PASS
+                      {{ student.remark }}
                     </td>
                   </tr>
                 </tbody>

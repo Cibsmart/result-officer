@@ -9,6 +9,7 @@ use App\Data\Composite\CompositeCourseListData;
 use App\Data\Composite\CompositeRowData;
 use App\Data\Level\LevelListData;
 use App\Data\Program\ProgramListData;
+use App\Data\Results\ResultData;
 use App\Data\Results\SemesterResultData;
 use App\Data\Semester\SemesterListData;
 use App\Data\Session\SessionListData;
@@ -22,6 +23,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\LazyCollection;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -75,17 +77,18 @@ final readonly class CompositeSheetController
 
             $semesterResultData = $this->getSemesterResultDataForStudent($student, $sessionId, $semesterId);
 
-            [$levelCourses, $otherCourses] = $this->prepareCompositeCourses($semesterResultData, $courseList);
+            [$levelCourses, $otherCourses, $failed] = $this->prepareCompositeCourses($semesterResultData, $courseList);
 
             $crossTab[] = [
-                'creditUnitTotal' => $semesterResultData->creditUnitTotal,
+                'creditUnitTotal' => $semesterResultData->formattedCreditUnitTotal,
                 'gradePointAverage' => $semesterResultData->formattedGPA,
-                'gradePointTotal' => $semesterResultData->gradePointTotal,
+                'gradePointTotal' => $semesterResultData->formattedGradePointTotal,
                 'id' => $student->id,
                 'levelCourses' => $levelCourses,
                 'name' => $student->name,
                 'otherCourses' => $otherCourses,
                 'registrationNumber' => $student->registration_number,
+                'remark' => $failed === '' ? 'PASS' : "FAIL: $failed",
             ];
         }
 
@@ -160,38 +163,53 @@ final readonly class CompositeSheetController
 
     /**
      * @param array<string, array<string, string>> $courseList
-     * @return array<int, \Illuminate\Support\Collection<int, \App\Data\Composite\CompositeCourseData>>
+     * @return array{\Illuminate\Support\Collection<int, \App\Data\Composite\CompositeCourseData>, string, string}
      */
     private function prepareCompositeCourses(SemesterResultData $semesterResultData, array $courseList): array
     {
         $levelCourses = [...$courseList];
 
-        $otherCourses = [];
+        $otherCourses = '';
+
+        $failed = '';
 
         foreach ($semesterResultData->results as $result) {
 
-            $grade = 'NR';
-            $score = 'NR';
+            [$grade, $score] = $this->getGradeScore($result);
 
-            if ($result->remark !== 'NR') {
-                $grade = $result->grade;
-                $score = (string) $result->totalScore;
+            if ($grade === 'F') {
+                $failed .= "{$result->courseCode}, ";
             }
 
             if (array_key_exists($result->courseCode, $levelCourses)) {
-                $levelCourses[$result->courseCode]['code'] = $result->courseCode;
-                $levelCourses[$result->courseCode]['grade'] = $grade;
-                $levelCourses[$result->courseCode]['score'] = $score;
+                $levelCourses[$result->courseCode] = [
+                    'code' => $result->courseCode, 'grade' => $grade, 'score' => $score,
+                ];
 
                 continue;
             }
 
-            $otherCourses[] = ['code' => $result->courseCode, 'grade' => $grade, 'score' => $score];
+            $otherCourses .= "{$result->courseCode}({$result->grade}), ";
         }
 
         return [
             CompositeCourseData::collect(collect($levelCourses)),
-            CompositeCourseData::collect(collect($otherCourses)),
+            Str::trim($otherCourses, ', '),
+            Str::trim($failed, ', '),
         ];
+    }
+
+    /** @return array<int, string> */
+    private function getGradeScore(ResultData $result): array
+    {
+        $grade = 'NR';
+        $score = 'NR';
+
+        if ($result->remark !== 'NR') {
+            $grade = $result->grade;
+            $score = (string) $result->totalScore;
+        }
+
+        return [$grade, $score];
     }
 }

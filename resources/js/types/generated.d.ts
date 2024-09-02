@@ -16,7 +16,8 @@ declare namespace App.Data.Composite {
     gradePointTotal: string;
     gradePointAverage: string;
     levelCourses: Array<App.Data.Composite.CompositeCourseData>;
-    otherCourses: Array<App.Data.Composite.CompositeCourseData>;
+    otherCourses: string;
+    remark: string;
   };
 }
 declare namespace App.Data.Course {
@@ -147,6 +148,8 @@ declare namespace App.Data.Results {
     creditUnitTotal: number;
     gradePointTotal: number;
     gradePointAverage: number;
+    formattedCreditUnitTotal: string;
+    formattedGradePointTotal: string;
     formattedGPA: string;
   };
   export type SessionResultData = {
