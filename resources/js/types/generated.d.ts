@@ -19,6 +19,15 @@ declare namespace App.Data.Composite {
     otherCourses: string;
     remark: string;
   };
+  export type CompositeSheetData = {
+    program: App.Data.Program.ProgramData;
+    faculty: App.Data.Faculty.FacultyData;
+    session: App.Data.Session.SessionData;
+    semester: App.Data.Semester.SemesterData;
+    level: App.Data.Level.LevelData;
+    courses: Array<App.Data.Composite.CompositeCourseListData>;
+    students: Array<App.Data.Composite.CompositeRowData>;
+  };
 }
 declare namespace App.Data.Course {
   export type CourseData = {
@@ -98,6 +107,12 @@ declare namespace App.Data.Download {
     jambRegistrationNumber: string;
     email: string;
     phoneNumber: string;
+  };
+}
+declare namespace App.Data.Faculty {
+  export type FacultyData = {
+    id: number;
+    name: string;
   };
 }
 declare namespace App.Data.Level {
@@ -287,8 +302,7 @@ declare namespace App.ViewModels.Reports {
     level: App.Data.Level.LevelListData;
   };
   export type CompositeViewPage = {
-    students: Array<App.Data.Composite.CompositeRowData>;
-    courses: Array<App.Data.Composite.CompositeCourseListData>;
+    data: App.Data.Composite.CompositeSheetData;
   };
 }
 declare namespace App.ViewModels.Results {
