@@ -36,6 +36,7 @@ final class CompositeSheetData extends Data
         public readonly Collection $courses,
         /** @var \Illuminate\Support\Collection<int, \App\Data\Composite\CompositeRowData> */
         public readonly Collection $students,
+        public readonly bool $hasOtherCourses,
     ) {
     }
 
@@ -59,6 +60,7 @@ final class CompositeSheetData extends Data
             level: LevelData::fromModel($level),
             courses: CompositeCourseListData::collect($courses),
             students: $students,
+            hasOtherCourses: $students->contains(fn (CompositeRowData $student): bool => $student->otherCourses !== ''),
         );
     }
 
@@ -195,7 +197,7 @@ final class CompositeSheetData extends Data
                 continue;
             }
 
-            $otherCourses .= "{$result->courseCode}({$result->grade}), ";
+            $otherCourses .= "{$result->courseCode}({$grade}), ";
         }
 
         return [

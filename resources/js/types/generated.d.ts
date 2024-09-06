@@ -27,6 +27,7 @@ declare namespace App.Data.Composite {
     level: App.Data.Level.LevelData;
     courses: Array<App.Data.Composite.CompositeCourseListData>;
     students: Array<App.Data.Composite.CompositeRowData>;
+    hasOtherCourses: boolean;
   };
 }
 declare namespace App.Data.Course {
