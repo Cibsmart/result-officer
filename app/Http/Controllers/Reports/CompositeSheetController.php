@@ -19,6 +19,8 @@ use App\ViewModels\Reports\CompositeViewPage;
 use Illuminate\View\View;
 use Inertia\Inertia;
 use Inertia\Response;
+use Spatie\LaravelPdf\Facades\Pdf;
+use Spatie\LaravelPdf\PdfBuilder;
 
 final readonly class CompositeSheetController
 {
@@ -49,9 +51,21 @@ final readonly class CompositeSheetController
         Session $session,
         Level $level,
         Semester $semester,
-    ): View {
+    ): View|Pdf|PdfBuilder {
+        $data = CompositeSheetData::fromModel($program, $session, $level, $semester);
+
         return view('pdfs.composite.view', [
-            'data' => new CompositeViewPage(data: CompositeSheetData::fromModel($program, $session, $level, $semester)),
+            'data' => $data,
         ]);
+
+        //        return Pdf::view('pdfs.composite.view', ['data' => $data])
+        //            ->withBrowsershot(static function (Browsershot $browsershot): void {
+        //                $browsershot->setChromePath(Config::string('rp_pdf.chromium.path'));
+        //                $browsershot->scale(0.80);
+        //            })
+        //            ->format(Format::Legal)
+        //            ->landscape()
+        //            ->margins(5, 5, 5, 5)
+        //            ->name("{$data->program->name}_CompositeSheet.pdf");
     }
 }

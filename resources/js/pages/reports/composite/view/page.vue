@@ -5,10 +5,9 @@ import BaseHeader from "@/layouts/main/partials/baseHeader.vue";
 import BaseSection from "@/layouts/main/partials/baseSection.vue";
 import { BreadcrumbItem } from "@/types";
 import Breadcrumb from "@/components/breadcrumb.vue";
-import { computed } from "vue";
 import BaseLink from "@/components/links/baseLink.vue";
 
-const props = defineProps<{
+defineProps<{
   data: App.Data.Composite.CompositeSheetData;
 }>();
 
@@ -16,8 +15,6 @@ const pages: BreadcrumbItem[] = [
   { name: "Composite Sheet Form", href: route("composite.form"), current: route().current("composite.form") },
   { name: "Composite Sheet View", href: route("composite.view"), current: route().current("composite.view") },
 ];
-
-const hasOthers = computed(() => props.data.students.some((student) => student.otherCourses.length > 0));
 </script>
 
 <template>
@@ -86,12 +83,7 @@ const hasOthers = computed(() => props.data.students.some((student) => student.o
               <table class="divide min-w-full divide-y divide-gray-200 dark:divide-gray-600">
                 <thead>
                   <tr class="divide-x divide-gray-200 dark:divide-gray-600">
-                    <th
-                      class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
-                      rowspan="2"
-                      scope="col">
-                      SN
-                    </th>
+                    <th />
 
                     <th
                       class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
@@ -109,32 +101,38 @@ const hasOthers = computed(() => props.data.students.some((student) => student.o
                       {{ course.unit }}
                     </th>
 
-                    <th />
+                    <th
+                      v-if="data.hasOtherCourses"
+                      class="sticky top-0 z-10 whitespace-nowrap bg-opacity-75 p-1 text-center align-bottom text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                      scope="col">
+                      OTHER
+                    </th>
 
                     <th
                       class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
                       colspan="3"
                       scope="col">
-                      CURRENT TOTALS
+                      TOTALS
                     </th>
 
-                    <th
-                      class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
-                      rowspan="2"
-                      scope="col">
-                      REMARKS
-                    </th>
+                    <th />
                   </tr>
 
                   <tr class="divide-x divide-gray-200 dark:divide-gray-600">
                     <th
-                      class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold backdrop-blur"
+                      class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                      scope="col">
+                      SN
+                    </th>
+
+                    <th
+                      class="sticky top-0 z-10 border-t bg-opacity-75 p-1 text-center text-xs font-semibold backdrop-blur"
                       scope="col">
                       NAME
                     </th>
 
                     <th
-                      class="sticky top-0 z-10 whitespace-nowrap bg-opacity-75 p-1 text-center text-xs font-semibold"
+                      class="sticky top-0 z-10 whitespace-nowrap border-t bg-opacity-75 p-1 text-center text-xs font-semibold"
                       scope="col">
                       REGISTRATION NUMBER
                     </th>
@@ -142,35 +140,41 @@ const hasOthers = computed(() => props.data.students.some((student) => student.o
                     <th
                       v-for="(course, index) in data.courses"
                       :key="index"
-                      class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                      class="sticky top-0 z-10 border-t p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
                       colspan="2"
                       scope="col">
                       {{ course.code }}
                     </th>
 
                     <th
-                      v-if="hasOthers"
+                      v-if="data.hasOtherCourses"
                       class="sticky top-0 z-10 whitespace-nowrap bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
                       scope="col">
-                      Other Courses
+                      COURSES
                     </th>
 
                     <th
-                      class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                      class="sticky top-0 z-10 border-t bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
                       scope="col">
                       TCL
                     </th>
 
                     <th
-                      class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                      class="sticky top-0 z-10 border-t bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
                       scope="col">
-                      GP
+                      TGP
+                    </th>
+
+                    <th
+                      class="sticky top-0 z-10 border-t bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                      scope="col">
+                      GPA
                     </th>
 
                     <th
                       class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
                       scope="col">
-                      GPA
+                      REMARKS
                     </th>
                   </tr>
                 </thead>
@@ -209,7 +213,7 @@ const hasOthers = computed(() => props.data.students.some((student) => student.o
                     </template>
 
                     <td
-                      v-if="hasOthers"
+                      v-if="data.hasOtherCourses"
                       class="border-t border-gray-200 p-1 text-center text-xs text-gray-700 dark:border-gray-700 dark:text-gray-300">
                       {{ student.otherCourses }}
                     </td>
