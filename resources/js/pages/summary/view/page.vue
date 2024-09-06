@@ -9,6 +9,7 @@ import BasePage from "@/layouts/main/partials/basePage.vue";
 import { computed } from "vue";
 import Students from "@/pages/summary/view/partials/students.vue";
 import EmptyState from "@/components/emptyState.vue";
+import IconLink from "@/components/links/iconLink.vue";
 
 const props = defineProps<{
   department: App.Data.Summary.DepartmentResultSummaryData;
@@ -78,8 +79,10 @@ const hasSummary = computed(() => props.department.students.length > 0);
 
         <EmptyState
           v-else
-          description="Get started by downloading student's results from the Portal"
-          title="No Summary" />
+          description="Get started by downloading students from the Portal"
+          title="No Summary">
+          <IconLink :href="route('download.students.page')">Download Students</IconLink>
+        </EmptyState>
       </div>
     </BaseSection>
   </BasePage>

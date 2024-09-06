@@ -9,6 +9,7 @@ import Session from "@/pages/results/view/partials/session.vue";
 import EmptyState from "@/components/emptyState.vue";
 import { computed } from "vue";
 import BaseLink from "@/components/links/baseLink.vue";
+import IconLink from "@/components/links/iconLink.vue";
 
 const props = defineProps<{
   student: App.Data.Students.StudentData;
@@ -78,7 +79,9 @@ const hasResults = computed(() => props.results.enrollments.length > 0);
           <EmptyState
             v-else
             description="Get started by downloading student's results from the Portal"
-            title="No Result" />
+            title="No Result">
+            <IconLink :href="route('download.results.page')">Download Results</IconLink>
+          </EmptyState>
         </div>
 
         <div
