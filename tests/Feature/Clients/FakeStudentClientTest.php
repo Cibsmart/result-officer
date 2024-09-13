@@ -10,22 +10,22 @@ beforeEach(function (): void {
     Http::preventStrayRequests();
 
     Http::fake([
-        'students?department_id=1&session=2009-2010' => Http::response([
+        'students.ashx?department=1&session=2009-2010' => Http::response([
             'data' => array_values(FakeStudentClient::STUDENTS),
             'message' => 'success',
             'status' => true,
         ]),
-        'students?registration_number=EBSU-2009-51486' => Http::response([
+        'students.ashx?registration_number=EBSU-2009-51486' => Http::response([
             'data' => [FakeStudentClient::STUDENTS[0]],
             'message' => 'success',
             'status' => true,
         ]),
-        'students?registration_number=EBSU-2011-51486' => Http::response([
+        'students.ashx?registration_number=EBSU-2011-51486' => Http::response([
             'data' => [],
             'message' => 'Record Not Found',
             'status' => false,
         ]),
-        'students?session=2009-2010' => Http::response([
+        'students.ashx?session=2009-2010' => Http::response([
             'data' => array_values(FakeStudentClient::STUDENTS),
             'message' => 'success',
             'status' => true,
@@ -43,7 +43,7 @@ it('can fetch student by registration number', function (): void {
 });
 
 it('can fetch students by department and session', function (): void {
-    $departmentId = '1';
+    $departmentId = 1;
     $session = '2009-2010';
     $students = $this->client->fetchStudentsByDepartmentAndSession($departmentId, $session);
 

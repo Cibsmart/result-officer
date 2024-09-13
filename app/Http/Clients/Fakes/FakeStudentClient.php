@@ -135,7 +135,7 @@ final class FakeStudentClient implements StudentClient
     }
 
     /** @return array<int, array<string, string>> */
-    public function fetchStudentsByDepartmentAndSession(string $departmentId, string $session): array
+    public function fetchStudentsByDepartmentAndSession(int $departmentId, string $session): array
     {
         $groups = ['department_id' => $departmentId, 'entry_session' => $session];
 

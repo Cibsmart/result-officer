@@ -7,11 +7,11 @@ use App\Http\Clients\DepartmentClient;
 it('can fetch a department by id from the api', function (): void {
     $client = new DepartmentClient();
 
-    $department = $client->fetchDepartmentById('1');
+    $department = $client->fetchDepartmentById(1);
 
-    expect($department)->toBeArray()
+    expect($department[0])->toBeArray()
         ->toHaveKeys(['id', 'code', 'name', 'faculty', 'options'])
-        ->and($department['options'])->toBeArray();
+        ->and($department[0]['options'])->toBeArray();
 })->group('external');
 
 it('can fetch departments from the api', function (): void {
@@ -19,7 +19,7 @@ it('can fetch departments from the api', function (): void {
 
     $departments = $client->fetchDepartments();
 
-    expect($departments)->toBeArray()
+    expect($departments[0])->toBeArray()
         ->and($departments[0])->toBeArray()
         ->toHaveKeys(['id', 'code', 'name', 'faculty', 'options'])
         ->and($departments[0]['options'])->toBeArray();
@@ -28,17 +28,9 @@ it('can fetch departments from the api', function (): void {
 it('throws an exception for non-existent department id', function (): void {
     $client = new DepartmentClient();
 
-    $client->fetchDepartmentById('0');
+    $client->fetchDepartmentById(0);
 })
-    ->throws(Exception::class, 'ERROR FETCHING DATA FROM API:')
-    ->group('external');
-
-it('throws an exception for invalid department id', function (): void {
-    $client = new DepartmentClient();
-
-    $client->fetchDepartmentById('Z');
-})
-    ->throws(Exception::class, 'ERROR FETCHING DATA FROM API:')
+    ->throws(Exception::class, 'API RETURNED EMPTY RESPONSE')
     ->group('external');
 
 it('throws an exception when connection is available', function (): void {
@@ -46,7 +38,7 @@ it('throws an exception when connection is available', function (): void {
 
     $client = new DepartmentClient();
 
-    $client->fetchDepartmentById('1');
+    $client->fetchDepartmentById(1);
 })
     ->throws(Exception::class, 'ERROR CONNECTING TO API:')
     ->group('external');

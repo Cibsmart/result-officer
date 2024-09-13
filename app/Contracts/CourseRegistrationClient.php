@@ -16,14 +16,14 @@ interface CourseRegistrationClient
 
     /** @return array<CourseRegistrationDetail> */
     public function fetchCourseRegistrationByDepartmentSessionLevel(
-        string $departmentId,
+        int $departmentId,
         string $session,
-        string $level,
+        int $level,
     ): array;
 
     /** @return array<CourseRegistrationDetail> */
     public function fetchCourseRegistrationByDepartmentSessionSemester(
-        string $departmentId,
+        int $departmentId,
         string $session,
         string $semester,
     ): array;
@@ -31,6 +31,6 @@ interface CourseRegistrationClient
     /** @return array<CourseRegistrationDetail> */
     public function fetchCourseRegistrationBySessionCourse(
         string $session,
-        string $course,
+        int $course,
     ): array;
 }

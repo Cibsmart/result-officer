@@ -29,8 +29,6 @@ final class PortalResultData extends Data
     /** @param ResultDetail $data */
     public static function fromArray(array $data): self
     {
-        dd($data);
-
         return new self(
             onlineId: $data['id'],
             courseRegistrationId: $data['course_registration_id'],

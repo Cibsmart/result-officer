@@ -32,14 +32,14 @@ final readonly class PortalCourseRegistrationClient extends ApiClient implements
      * @throws \Exception
      */
     public function fetchCourseRegistrationByDepartmentSessionLevel(
-        string $departmentId,
+        int $departmentId,
         string $session,
-        string $level,
+        int $level,
     ): array {
         /** @var array<CourseRegistrationDetail> $courses */
         $courses = $this->get(
             endpoint: $this->endpoint,
-            parameters: ['department_id' => $departmentId, 'session' => $session, 'level' => $level],
+            parameters: ['department' => $departmentId, 'session' => $session, 'level' => $level],
         );
 
         return $courses;
@@ -49,14 +49,14 @@ final readonly class PortalCourseRegistrationClient extends ApiClient implements
      * @throws \Exception
      */
     public function fetchCourseRegistrationByDepartmentSessionSemester(
-        string $departmentId,
+        int $departmentId,
         string $session,
         string $semester,
     ): array {
         /** @var array<CourseRegistrationDetail> $courses */
         $courses = $this->get(
             endpoint: $this->endpoint,
-            parameters: ['department_id' => $departmentId, 'session' => $session, 'semester' => $semester],
+            parameters: ['department' => $departmentId, 'session' => $session, 'semester' => $semester],
         );
 
         return $courses;
@@ -65,7 +65,7 @@ final readonly class PortalCourseRegistrationClient extends ApiClient implements
     /** {@inheritDoc}
      * @throws \Exception
      */
-    public function fetchCourseRegistrationBySessionCourse(string $session, string $course): array
+    public function fetchCourseRegistrationBySessionCourse(string $session, int $course): array
     {
         /** @var array<CourseRegistrationDetail> $courses */
         $courses = $this->get(endpoint: $this->endpoint, parameters: ['session' => $session, 'course_id' => $course]);

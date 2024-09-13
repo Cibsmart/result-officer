@@ -17,7 +17,7 @@ interface StudentClient
     public function fetchStudentByRegistrationNumber(string $registrationNumber): array;
 
     /** @return array<StudentDetail> */
-    public function fetchStudentsByDepartmentAndSession(string $departmentId, string $session): array;
+    public function fetchStudentsByDepartmentAndSession(int $departmentId, string $session): array;
 
     /** @return array<StudentDetail> */
     public function fetchStudentsBySession(string $session): array;

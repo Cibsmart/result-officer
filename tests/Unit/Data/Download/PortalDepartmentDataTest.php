@@ -23,3 +23,22 @@ test('portal program data is correct', function (): void {
         ->and($data->facultyName)->toBe($department['faculty'])
         ->and($data->programs)->toBeInstanceOf(Collection::class);
 });
+
+it('works with uppercase array keys', function (): void {
+    $department = [
+        'CODE' => 'CSC',
+        'FACULTY' => 'PHYSICAL SCIENCE',
+        'ID' => '1',
+        'NAME' => 'COMPUTER SCIENCE',
+        'OPTIONS' => ['Program 1', 'Program 2'],
+    ];
+
+    $data = PortalDepartmentData::from($department);
+
+    expect($data)->toBeInstanceOf(PortalDepartmentData::class)
+        ->and($data->onlineId)->toBe($department['ID'])
+        ->and($data->departmentCode)->toBe($department['CODE'])
+        ->and($data->departmentName)->toBe($department['NAME'])
+        ->and($data->facultyName)->toBe($department['FACULTY'])
+        ->and($data->programs)->toBeInstanceOf(Collection::class);
+});

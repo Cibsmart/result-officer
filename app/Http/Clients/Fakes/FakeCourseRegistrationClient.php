@@ -81,9 +81,9 @@ final readonly class FakeCourseRegistrationClient extends ApiClient implements C
 
     /** {@inheritDoc} */
     public function fetchCourseRegistrationByDepartmentSessionLevel(
-        string $departmentId,
+        int $departmentId,
         string $session,
-        string $level,
+        int $level,
     ): array {
         $session = Str::replace('-', '/', $session);
 
@@ -94,7 +94,7 @@ final readonly class FakeCourseRegistrationClient extends ApiClient implements C
 
     /** {@inheritDoc} */
     public function fetchCourseRegistrationByDepartmentSessionSemester(
-        string $departmentId,
+        int $departmentId,
         string $session,
         string $semester,
     ): array {
@@ -106,7 +106,7 @@ final readonly class FakeCourseRegistrationClient extends ApiClient implements C
     }
 
     /** {@inheritDoc} */
-    public function fetchCourseRegistrationBySessionCourse(string $session, string $course): array
+    public function fetchCourseRegistrationBySessionCourse(string $session, int $course): array
     {
         $session = Str::replace('-', '/', $session);
 
