@@ -87,8 +87,11 @@ declare namespace App.Data.Download {
     examScore: string;
     totalScore: string;
     grade: string;
-    uploadDate: App.Data.Download.PortalDateData;
+    uploadDate: string;
     source: App.Enums.RecordSource;
+    examDate: string;
+    lecturerName: string;
+    lecturerDepartment: string;
   };
   export type PortalStudentData = {
     onlineId: string;
@@ -263,8 +266,11 @@ declare namespace App.Enums {
   export type CreditUnitEnum = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 12 | 15 | 18;
   export type GenderEnum = "M" | "F";
   export type Grade = "A" | "B" | "C" | "D" | "E" | "F";
+  export type ImportEventType = "results" | "courses" | "departments" | "students" | "registrations";
+  export type ImportStatus = "new" | "started" | "processing" | "completed";
   export type LevelEnum = "100" | "200" | "300" | "400" | "500" | "600";
   export type NotificationType = "success" | "error" | "warning" | "info";
+  export type RawDataStatus = "pending" | "processed";
   export type RecordSource = "portal" | "excel" | "legacy";
   export type ResultRemark = "PAS" | "FAL" | "ABS" | "MAL";
   export type RoleEnum = "super-admin" | "admin" | "desk-officer" | "exam-officer" | "database-officer" | "user";
