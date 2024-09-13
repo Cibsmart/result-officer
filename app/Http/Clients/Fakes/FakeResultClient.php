@@ -23,7 +23,7 @@ final readonly class FakeResultClient implements ResultClient
             'semester' => 'FIRST',
             'session' => '2009/2010',
             'total_score' => '32',
-            'upload_date' => ['day' => '27', 'month' => '08', 'year' => '2009'],
+            'upload_date' => '2009-08-27',
         ],
         [
             'course_id' => '2',
@@ -37,7 +37,7 @@ final readonly class FakeResultClient implements ResultClient
             'semester' => 'SECOND',
             'session' => '2009/2010',
             'total_score' => '54',
-            'upload_date' => ['day' => '27', 'month' => '08', 'year' => '2009'],
+            'upload_date' => '2009-08-27',
         ],
         [
             'course_id' => '1',
@@ -51,7 +51,7 @@ final readonly class FakeResultClient implements ResultClient
             'semester' => 'FIRST',
             'session' => '2010/2011',
             'total_score' => '66',
-            'upload_date' => ['day' => '27', 'month' => '08', 'year' => '2011'],
+            'upload_date' => '2011-08-27',
         ],
         [
             'course_id' => '2',
@@ -65,7 +65,7 @@ final readonly class FakeResultClient implements ResultClient
             'semester' => 'SECOND',
             'session' => '2010/2011',
             'total_score' => '44',
-            'upload_date' => ['day' => '27', 'month' => '08', 'year' => '2011'],
+            'upload_date' => '2011-08-27',
         ],
         [
             'course_id' => '1',
@@ -79,7 +79,7 @@ final readonly class FakeResultClient implements ResultClient
             'semester' => 'FIRST',
             'session' => '2009/2010',
             'total_score' => '0',
-            'upload_date' => ['day' => '27', 'month' => '08', 'year' => '2011'],
+            'upload_date' => '2011-08-27',
         ],
         [
             'course_id' => '1',
@@ -94,7 +94,7 @@ final readonly class FakeResultClient implements ResultClient
             'semester' => 'FIRST',
             'session' => '2009/2010',
             'total_score' => '32',
-            'upload_date' => ['day' => '27', 'month' => '08', 'year' => '2009'],
+            'upload_date' => '2009-08-27',
         ],
     ];
 
@@ -157,7 +157,7 @@ final readonly class FakeResultClient implements ResultClient
 
     /**
      * @param array<int, ResultDetail> $data
-     * @param array<string, string> $groups
+     * @param array<string, int|string> $groups
      * @return array<int, ResultDetail>
      */
     private function groupResultBy(

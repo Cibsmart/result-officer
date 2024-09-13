@@ -19,11 +19,9 @@ final class PortalDepartmentData extends Data
     ) {
     }
 
-    /** @param array{id: string, code: string, name: string, faculty: string, options: array{string}} $data */
+    /** @param array{id: string, code: string, name: string, faculty: string, options: array<string>} $data */
     public static function fromArray(array $data): self
     {
-        $data = array_change_key_case($data);
-
         return new self(
             onlineId: $data['id'],
             departmentCode: $data['code'],
