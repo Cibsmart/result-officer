@@ -18,6 +18,8 @@ final class PortalCourseData extends Data
     /** @param array{id: string, course_code: string, course_title: string} $data */
     public static function fromArray(array $data): self
     {
+        $data = array_change_key_case($data);
+
         return new self(onlineId: (string) $data['id'], code: $data['course_code'], title: $data['course_title']);
     }
 }
