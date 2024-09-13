@@ -21,7 +21,7 @@ final readonly class DownloadRegistrationsBySessionCourseController
         try {
             $data = $this->repository->getCourseRegistrationsBySessionAndCourse(
                 session: $request->string('sessionName')->value(),
-                courseId: $request->string('onlineCourseId')->value(),
+                courseId: $request->integer('onlineCourseId'),
             );
 
             $results = $this->repository->saveCourseRegistrations($data);

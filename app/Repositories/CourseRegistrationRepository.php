@@ -33,16 +33,16 @@ final class CourseRegistrationRepository
 
     /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> */
     public function getCourseRegistrationsByDepartmentAndSessionLevel(
-        string $departmentId,
+        int $departmentId,
         string $session,
-        string $level,
+        int $level,
     ): Collection {
         return $this->service->getCourseRegistrationsByDepartmentSessionAndLevel($departmentId, $session, $level);
     }
 
     /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> */
     public function getCourseRegistrationsByDepartmentSessionAndSemester(
-        string $departmentId,
+        int $departmentId,
         string $session,
         string $semester,
     ): Collection {
@@ -50,7 +50,7 @@ final class CourseRegistrationRepository
     }
 
     /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> */
-    public function getCourseRegistrationsBySessionAndCourse(string $session, string $courseId): Collection
+    public function getCourseRegistrationsBySessionAndCourse(string $session, int $courseId): Collection
     {
         return $this->service->getCourseRegistrationsBySessionAndCourse($session, $courseId);
     }

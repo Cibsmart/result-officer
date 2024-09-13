@@ -23,7 +23,7 @@ final readonly class StudentService
     }
 
     /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalStudentData> */
-    public function getStudentsByDepartmentAndSession(string $departmentId, string $session): Collection
+    public function getStudentsByDepartmentAndSession(int $departmentId, string $session): Collection
     {
         $students = $this->client->fetchStudentsByDepartmentAndSession($departmentId, $session);
 

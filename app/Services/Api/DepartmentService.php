@@ -29,7 +29,7 @@ final readonly class DepartmentService
      * @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalDepartmentData>
      * @throws \Exception
      */
-    public function getDepartmentDetail(string $onlineId): Collection
+    public function getDepartmentDetail(int $onlineId): Collection
     {
         $department = $this->client->fetchDepartmentById($onlineId);
 

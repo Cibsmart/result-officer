@@ -25,12 +25,12 @@ beforeEach(function (): void {
 });
 
 it('can get result by course registration id', function (): void {
-    $courseRegistrationId = '1';
+    $courseRegistrationId = 1;
 
     $data = $this->repository->getResultByCourseRegistrationId($courseRegistrationId);
 
     expect($data)->toBeInstanceOf(PortalResultData::class)
-        ->and($data->courseRegistrationId)->toBe($courseRegistrationId);
+        ->and((int) $data->courseRegistrationId)->toBe($courseRegistrationId);
 });
 
 it('can get results by registration number', function (): void {
@@ -43,9 +43,9 @@ it('can get results by registration number', function (): void {
 });
 
 it('can get results by department session and level', function (): void {
-    $departmentId = '1';
+    $departmentId = 1;
     $session = '2009/2010';
-    $level = '100';
+    $level = 100;
 
     $data = $this->repository->getResultByDepartmentSessionAndLevel($departmentId, $session, $level);
 
@@ -54,7 +54,7 @@ it('can get results by department session and level', function (): void {
 });
 
 it('can get results by department session and semester', function (): void {
-    $departmentId = '1';
+    $departmentId = 1;
     $session = '2009/2010';
     $semester = 'FIRST';
 
@@ -66,7 +66,7 @@ it('can get results by department session and semester', function (): void {
 
 it('can get results by session and course', function (): void {
     $session = '2009/2010';
-    $course = '1';
+    $course = 1;
 
     $data = $this->repository->getResultBySessionAndCourse($session, $course);
 

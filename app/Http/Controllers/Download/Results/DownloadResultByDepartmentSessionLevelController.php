@@ -20,9 +20,9 @@ final readonly class DownloadResultByDepartmentSessionLevelController
     /** @throws \Exception */
     public function __invoke(Request $request): RedirectResponse
     {
-        $departmentId = $request->string('department.id')->value();
+        $departmentId = $request->integer('department.id');
         $session = $request->string('session.name')->value();
-        $level = $request->string('level.name')->value();
+        $level = $request->integer('level.name');
 
         $departmentOnlineId = Department::find($departmentId)->firstOrFail()->online_id;
 
@@ -30,7 +30,7 @@ final readonly class DownloadResultByDepartmentSessionLevelController
 
         try {
             $results = $this->repository->getResultByDepartmentSessionAndLevel(
-                departmentId: $departmentOnlineId,
+                departmentId: (int) $departmentOnlineId,
                 session: $session,
                 level: $level,
             );

@@ -20,7 +20,7 @@ final readonly class DownloadResultByDepartmentSessionSemesterController
     /** @throws \Exception */
     public function __invoke(Request $request): RedirectResponse
     {
-        $departmentId = $request->string('department.id')->value();
+        $departmentId = $request->integer('department.id');
         $session = $request->string('session.name')->value();
         $semester = $request->string('semester.name')->value();
 
@@ -30,7 +30,7 @@ final readonly class DownloadResultByDepartmentSessionSemesterController
 
         try {
             $results = $this->repository->getResultByDepartmentSessionAndSemester(
-                departmentId: $departmentOnlineId,
+                departmentId: (int) $departmentOnlineId,
                 session: $session,
                 semester: $semester,
             );

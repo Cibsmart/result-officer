@@ -35,7 +35,7 @@ it('can get a student by registration number', function (): void {
 });
 
 it('can get students by department and session', function (): void {
-    $departmentId = '1';
+    $departmentId = 1;
     $session = '2009/2010';
     $data = $this->repository->getStudentsByDepartmentAndSession($departmentId, $session);
 

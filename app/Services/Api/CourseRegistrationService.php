@@ -24,9 +24,9 @@ final class CourseRegistrationService
 
     /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> */
     public function getCourseRegistrationsByDepartmentSessionAndLevel(
-        string $departmentId,
+        int $departmentId,
         string $session,
-        string $level,
+        int $level,
     ): Collection {
         $registrations = $this->client->fetchCourseRegistrationByDepartmentSessionLevel(
             $departmentId, $session, $level,
@@ -37,7 +37,7 @@ final class CourseRegistrationService
 
     /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> */
     public function getCourseRegistrationsByDepartmentSessionAndSemester(
-        string $departmentId,
+        int $departmentId,
         string $session,
         string $semester,
     ): Collection {
@@ -49,7 +49,7 @@ final class CourseRegistrationService
     }
 
     /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> */
-    public function getCourseRegistrationsBySessionAndCourse(string $session, string $courseId): Collection
+    public function getCourseRegistrationsBySessionAndCourse(string $session, int $courseId): Collection
     {
         $registrations = $this->client->fetchCourseRegistrationBySessionCourse($session, $courseId);
 

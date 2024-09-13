@@ -117,7 +117,7 @@ final readonly class FakeCourseRegistrationClient extends ApiClient implements C
 
     /**
      * @param array<int, CourseRegistrationDetail> $data
-     * @param array<string, string> $groups
+     * @param array<string, int|string> $groups
      * @return array<int, CourseRegistrationDetail>
      */
     private function groupCourseRegistrationBy(

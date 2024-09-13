@@ -29,7 +29,7 @@ final class StudentRepository
     }
 
     /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalStudentData> */
-    public function getStudentsByDepartmentAndSession(string $departmentId, string $session): Collection
+    public function getStudentsByDepartmentAndSession(int $departmentId, string $session): Collection
     {
         return $this->service->getStudentsByDepartmentAndSession($departmentId, $session);
     }

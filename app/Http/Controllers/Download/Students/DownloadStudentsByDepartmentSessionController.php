@@ -20,7 +20,7 @@ final readonly class DownloadStudentsByDepartmentSessionController
     {
         try {
             $data = $this->repository->getStudentsByDepartmentAndSession(
-                departmentId: $request->string('onlineDepartmentId')->value(),
+                departmentId: $request->integer('onlineDepartmentId'),
                 session: $request->string('sessionName')->value(),
             );
 

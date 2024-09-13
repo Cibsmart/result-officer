@@ -29,7 +29,7 @@ final readonly class CourseService
      * @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseData>
      * @throws \Exception
      */
-    public function getCourseDetail(string $onlineId): Collection
+    public function getCourseDetail(int $onlineId): Collection
     {
         $course = $this->client->fetchCourseById($onlineId);
 
