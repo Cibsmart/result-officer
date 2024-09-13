@@ -27,7 +27,7 @@ final class CourseRepository
     }
 
     /** @throws \Exception */
-    public function getCourse(string $courseId): PortalCourseData
+    public function getCourse(int $courseId): PortalCourseData
     {
         $course = $this->service->getCourseDetail($courseId)->first();
 

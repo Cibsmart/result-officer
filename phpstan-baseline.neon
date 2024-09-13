@@ -16,6 +16,11 @@ parameters:
 			path: app/Data/Students/StudentData.php
 
 		-
+			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(array\\<string, array\\<string, string\\>\\|string\\>\\|string\\)\\: mixed\\)\\|null, 'array_change_key…' given\\.$#"
+			count: 1
+			path: app/Http/Clients/ApiClient.php
+
+		-
 			message: "#^Method App\\\\Models\\\\Student\\:\\:courses\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<App\\\\Models\\\\CourseRegistration\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<Illuminate\\\\Database\\\\Eloquent\\\\Model, Illuminate\\\\Database\\\\Eloquent\\\\Model, App\\\\Models\\\\Student\\>\\|Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasOneThrough\\<Illuminate\\\\Database\\\\Eloquent\\\\Model, Illuminate\\\\Database\\\\Eloquent\\\\Model, App\\\\Models\\\\Student\\>\\.$#"
 			count: 1
 			path: app/Models/Student.php

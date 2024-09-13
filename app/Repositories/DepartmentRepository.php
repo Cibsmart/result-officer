@@ -30,7 +30,7 @@ final readonly class DepartmentRepository
     }
 
     /** @throws \Exception */
-    public function getDepartment(string $departmentId): PortalDepartmentData
+    public function getDepartment(int $departmentId): PortalDepartmentData
     {
         $department = $this->service->getDepartmentDetail($departmentId)->first();
 
@@ -111,22 +111,18 @@ final readonly class DepartmentRepository
         foreach ($programs as $program) {
             $programCode = Str::of($program->name)->limit(3, '')->value();
 
-            $this->createProgram($program->name, $dbDepartment->id, $programCode,
-                ['online_id' => $program->id]);
+            $this->createProgram($program->name, $dbDepartment->id, $programCode);
         }
     }
 
-    /** @param array<string, int|string> $attributes */
     private function createProgram(
         string $programName,
         int $departmentId,
         string $programCode,
-        array $attributes = [],
     ): void {
         Program::firstOrCreate(
             ['name' => $programName],
             [
-                ...$attributes,
                 'code' => $programCode,
                 'department_id' => $departmentId,
                 'program_type_id' => 5,

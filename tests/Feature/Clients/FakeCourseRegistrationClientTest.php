@@ -77,7 +77,3 @@ it('can fetch course registration by session and course', function (): void {
     expect($registration)->toBeArray()
         ->and(count($registration))->toEqual(count(FakeCourseRegistrationClient::COURSE_REGISTRATIONS));
 });
-
-it('throws an exception for a non-existent student registration number', function (): void {
-    $this->client->fetchCourseRegistrationByRegistrationNumber('EBSU-2011-51486');
-})->throws(Exception::class, 'API RETURNED ERROR: Record Not Found');

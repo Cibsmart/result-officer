@@ -34,9 +34,9 @@ it('can get a course registration by registration number', function (): void {
 });
 
 it('can get course registrations by department session and level', function (): void {
-    $departmentId = '1';
+    $departmentId = 1;
     $session = '2009/2010';
-    $level = '100';
+    $level = 100;
     $data = $this->repository->getCourseRegistrationsByDepartmentAndSessionLevel(
         $departmentId, $session, $level,
     );
@@ -46,7 +46,7 @@ it('can get course registrations by department session and level', function (): 
 });
 
 it('can get course registrations by department session and semester', function (): void {
-    $departmentId = '1';
+    $departmentId = 1;
     $session = '2009/2010';
     $semester = 'FIRST';
     $data = $this->repository->getCourseRegistrationsByDepartmentSessionAndSemester(
@@ -59,7 +59,7 @@ it('can get course registrations by department session and semester', function (
 
 it('can get course registrations by session and course', function (): void {
     $session = '2009/2010';
-    $courseId = '1';
+    $courseId = 1;
     $data = $this->repository->getCourseRegistrationsBySessionAndCourse($session, $courseId);
 
     expect($data)->toBeInstanceOf(Collection::class)

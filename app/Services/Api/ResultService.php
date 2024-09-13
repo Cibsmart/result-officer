@@ -15,7 +15,7 @@ final readonly class ResultService
     }
 
     /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalResultData> */
-    public function getResultByCourseRegistrationId(string $courseRegistrationId): Collection
+    public function getResultByCourseRegistrationId(int $courseRegistrationId): Collection
     {
         $result = $this->client->fetchResultByCourseRegistrationId($courseRegistrationId);
 
@@ -32,9 +32,9 @@ final readonly class ResultService
 
     /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalResultData> */
     public function getResultsByDepartmentSessionAndLevel(
-        string $departmentId,
+        int $departmentId,
         string $session,
-        string $level,
+        int $level,
     ): Collection {
         $results = $this->client->fetchResultsByDepartmentSessionLevel($departmentId, $session, $level);
 
@@ -43,7 +43,7 @@ final readonly class ResultService
 
     /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalResultData> */
     public function getResultsByDepartmentSessionAndSemester(
-        string $departmentId,
+        int $departmentId,
         string $session,
         string $semester,
     ): Collection {
@@ -56,7 +56,7 @@ final readonly class ResultService
     /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalResultData> */
     public function getResultsBySessionAndCourse(
         string $session,
-        string $course,
+        int $course,
     ): Collection {
 
         $results = $this->client->fetchResultsBySessionCourse($session, $course);

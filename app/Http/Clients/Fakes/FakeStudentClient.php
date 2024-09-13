@@ -152,7 +152,7 @@ final class FakeStudentClient implements StudentClient
 
     /**
      * @param array<int, StudentDetail> $data
-     * @param array<string, string> $groups
+     * @param array<string, int|string> $groups
      * @return array<int, StudentDetail>
      */
     private function groupStudentsBy(

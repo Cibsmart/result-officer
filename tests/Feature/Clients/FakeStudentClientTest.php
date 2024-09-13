@@ -22,8 +22,6 @@ beforeEach(function (): void {
         ]),
         'students.ashx?registration_number=EBSU-2011-51486' => Http::response([
             'data' => [],
-            'message' => 'Record Not Found',
-            'status' => false,
         ]),
         'students.ashx?session=2009-2010' => Http::response([
             'data' => array_values(FakeStudentClient::STUDENTS),
@@ -58,7 +56,3 @@ it('can fetch students by session', function (): void {
     expect($students)->toBeArray()
         ->and(count($students))->toEqual(count(FakeStudentClient::STUDENTS));
 });
-
-it('throws an exception for a non-existent student registration number', function (): void {
-    $this->client->fetchStudentByRegistrationNumber('EBSU-2011-51486');
-})->throws(Exception::class, 'API RETURNED ERROR: Record Not Found');

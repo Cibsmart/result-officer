@@ -20,12 +20,14 @@ abstract readonly class ApiClient
      */
     public function get(string $endpoint, array $parameters = []): array
     {
-        $sanitizedParameters = array_map(fn ($value) => Str::replace('/', '-', $value), $parameters);
+        $sanitizedParameters = array_map(fn ($value) => is_int($value)
+            ? $value
+            : Str::replace('/', '-', $value), $parameters);
 
         try {
             /**
              * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-             * @var array{status?: bool, message?: string, data?: array<int|string, string|array<string, string|array<string, string>>>} $response
+             * @var ?array{status?: bool, message?: string, data?: array<int|string, string|array<string, string|array<string, string>>>} $response
              */
             $response = Http::acceptJson()
                 ->baseUrl(Config::string('rp_http.base_url'))
@@ -37,9 +39,7 @@ abstract readonly class ApiClient
                 throw new Exception('API RETURNED EMPTY RESPONSE');
             }
 
-            if (! $response['status']) {
-                throw new Exception('API RETURNED ERROR: ' . $response['message']);
-            }
+            assert(array_key_exists('data', $response));
 
             return array_map('array_change_key_case', $response['data']);
         } catch (ConnectionException $e) {

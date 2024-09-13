@@ -18,7 +18,7 @@ final readonly class ResultRepository
     {
     }
 
-    public function getResultByCourseRegistrationId(string $courseRegistrationId): PortalResultData
+    public function getResultByCourseRegistrationId(int $courseRegistrationId): PortalResultData
     {
         $results = $this->service->getResultByCourseRegistrationId($courseRegistrationId)->first();
 
@@ -35,16 +35,16 @@ final readonly class ResultRepository
 
     /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalResultData> */
     public function getResultByDepartmentSessionAndLevel(
-        string $departmentId,
+        int $departmentId,
         string $session,
-        string $level,
+        int $level,
     ): Collection {
         return $this->service->getResultsByDepartmentSessionAndLevel($departmentId, $session, $level);
     }
 
     /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalResultData> */
     public function getResultByDepartmentSessionAndSemester(
-        string $departmentId,
+        int $departmentId,
         string $session,
         string $semester,
     ): Collection {
@@ -52,7 +52,7 @@ final readonly class ResultRepository
     }
 
     /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalResultData> */
-    public function getResultBySessionAndCourse(string $session, string $course): Collection
+    public function getResultBySessionAndCourse(string $session, int $course): Collection
     {
         return $this->service->getResultsBySessionAndCourse($session, $course);
     }

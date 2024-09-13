@@ -20,9 +20,9 @@ final readonly class DownloadRegistrationsByDepartmentSessionLevelController
     {
         try {
             $data = $this->repository->getCourseRegistrationsByDepartmentAndSessionLevel(
-                departmentId: $request->string('onlineDepartmentId')->value(),
+                departmentId: $request->integer('onlineDepartmentId'),
                 session: $request->string('sessionName')->value(),
-                level: $request->string('levelName')->value(),
+                level: $request->integer('levelName'),
             );
 
             $results = $this->repository->saveCourseRegistrations($data);

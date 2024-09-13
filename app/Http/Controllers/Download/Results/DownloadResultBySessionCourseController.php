@@ -20,14 +20,14 @@ final readonly class DownloadResultBySessionCourseController
     public function __invoke(Request $request): RedirectResponse
     {
         $session = $request->string('session.name')->value();
-        $courseId = $request->string('course.id')->value();
+        $courseId = $request->integer('course.id');
 
         $courseOnlineId = Course::find($courseId)->firstOrFail()->online_id;
 
         assert($courseOnlineId !== null);
 
         try {
-            $results = $this->repository->getResultBySessionAndCourse(session: $session, course: $courseOnlineId);
+            $results = $this->repository->getResultBySessionAndCourse(session: $session, course: (int) $courseOnlineId);
 
             $responses = $this->repository->saveResults($results);
 
