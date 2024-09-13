@@ -86,7 +86,7 @@ declare namespace App.Data.Download {
     examScore: string;
     totalScore: string;
     grade: string;
-    uploadDate: string;
+    uploadDate: App.Data.Download.PortalDateData;
     source: App.Enums.RecordSource;
     examDate: string;
     lecturerName: string;
