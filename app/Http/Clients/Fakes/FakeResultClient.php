@@ -99,7 +99,7 @@ final readonly class FakeResultClient implements ResultClient
     ];
 
     /** {@inheritDoc} */
-    public function fetchResultByCourseRegistrationId(string $courseRegistrationId): array
+    public function fetchResultByCourseRegistrationId(int $courseRegistrationId): array
     {
         $groups = ['course_registration_id' => $courseRegistrationId];
 
@@ -115,10 +115,21 @@ final readonly class FakeResultClient implements ResultClient
     }
 
     /** {@inheritDoc} */
-    public function fetchResultsByDepartmentSessionLevel(
-        string $departmentId,
+    public function fetchResultsByRegistrationNumberSessionAndSemester(
+        string $registrationNumber,
         string $session,
-        string $level,
+        string $semester,
+    ): array {
+        $groups = ['registration_number' => $registrationNumber, 'session' => $session, 'semester' => $semester];
+
+        return $this->groupResultBy(self::RESULTS, $groups);
+    }
+
+    /** {@inheritDoc} */
+    public function fetchResultsByDepartmentSessionLevel(
+        int $departmentId,
+        string $session,
+        int $level,
     ): array {
         $groups = ['department_id' => $departmentId, 'session' => $session, 'level' => $level];
 
@@ -127,7 +138,7 @@ final readonly class FakeResultClient implements ResultClient
 
     /** {@inheritDoc} */
     public function fetchResultsByDepartmentSessionSemester(
-        string $departmentId,
+        int $departmentId,
         string $session,
         string $semester,
     ): array {
@@ -137,7 +148,7 @@ final readonly class FakeResultClient implements ResultClient
     }
 
     /** {@inheritDoc} */
-    public function fetchResultsBySessionCourse(string $session, string $courseId): array
+    public function fetchResultsBySessionCourse(string $session, int $courseId): array
     {
         $groups = ['session' => $session, 'course_id' => $courseId];
 

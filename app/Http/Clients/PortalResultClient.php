@@ -21,12 +21,12 @@ final readonly class PortalResultClient extends ApiClient implements ResultClien
      * {@inheritDoc}
      * @throws \Exception
      */
-    public function fetchResultByCourseRegistrationId(string $courseRegistrationId): array
+    public function fetchResultByCourseRegistrationId(int $courseRegistrationId): array
     {
         /** @var array<ResultDetail> $result */
         $result = $this->get(
             endpoint: $this->endpoint,
-            parameters: ['course_registration_id' => $courseRegistrationId],
+            parameters: ['courses_registered_id' => $courseRegistrationId],
         );
 
         return $result;
@@ -50,14 +50,14 @@ final readonly class PortalResultClient extends ApiClient implements ResultClien
      * @throws \Exception
      */
     public function fetchResultsByDepartmentSessionLevel(
-        string $departmentId,
+        int $departmentId,
         string $session,
-        string $level,
+        int $level,
     ): array {
         /** @var array<ResultDetail> $result */
         $result = $this->get(
             endpoint: $this->endpoint,
-            parameters: ['department_id' => $departmentId, 'session' => $session, 'level' => $level],
+            parameters: ['department' => $departmentId, 'session' => $session, 'level' => $level],
         );
 
         return $result;
@@ -68,14 +68,14 @@ final readonly class PortalResultClient extends ApiClient implements ResultClien
      * @throws \Exception
      */
     public function fetchResultsByDepartmentSessionSemester(
-        string $departmentId,
+        int $departmentId,
         string $session,
         string $semester,
     ): array {
         /** @var array<ResultDetail> $result */
         $result = $this->get(
             endpoint: $this->endpoint,
-            parameters: ['department_id' => $departmentId, 'session' => $session, 'semester' => $semester],
+            parameters: ['department' => $departmentId, 'session' => $session, 'semester' => $semester],
         );
 
         return $result;
@@ -85,13 +85,33 @@ final readonly class PortalResultClient extends ApiClient implements ResultClien
      * {@inheritDoc}
      * @throws \Exception
      */
-    public function fetchResultsBySessionCourse(string $session, string $courseId): array
+    public function fetchResultsBySessionCourse(string $session, int $courseId): array
     {
         /** @var array<ResultDetail> $result */
         $result = $this->get(
             endpoint: $this->endpoint,
             parameters: ['session' => $session, 'course_id' => $courseId],
         );
+
+        return $result;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @throws \Exception
+     */
+    public function fetchResultsByRegistrationNumberSessionAndSemester(
+        string $registrationNumber,
+        string $session,
+        string $semester,
+    ): array {
+        /** @var array<ResultDetail> $result */
+        $result = $this->get(endpoint: $this->endpoint,
+            parameters: [
+                'registration_number' => $registrationNumber,
+                'semester' => $semester,
+                'session' => $session,
+            ]);
 
         return $result;
     }

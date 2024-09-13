@@ -45,12 +45,12 @@ final readonly class PortalStudentClient extends ApiClient implements StudentCli
      * {@inheritDoc}
      * @throws \Exception
      */
-    public function fetchStudentsByDepartmentAndSession(string $departmentId, string $session): array
+    public function fetchStudentsByDepartmentAndSession(int $departmentId, string $session): array
     {
         /** @var array<StudentDetail> $students */
         $students = $this->get(
             endpoint: $this->endpoint,
-            parameters: ['department_id' => $departmentId, 'session' => $session],
+            parameters: ['department' => $departmentId, 'session' => $session],
         );
 
         return $students;

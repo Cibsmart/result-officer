@@ -76,7 +76,6 @@ declare namespace App.Data.Download {
     programs: Array<App.Data.Download.PortalProgramData>;
   };
   export type PortalProgramData = {
-    id: string;
     name: string;
   };
   export type PortalResultData = {

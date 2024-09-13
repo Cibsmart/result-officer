@@ -36,12 +36,12 @@ final readonly class DepartmentClient extends ApiClient
      * @return array<DepartmentDetail>
      * @throws \Exception
      */
-    public function fetchDepartmentById(string $id): array
+    public function fetchDepartmentById(int $id): array
     {
         /** @var array<DepartmentDetail> $department */
         $department = $this->get(
             endpoint: $this->endpoint,
-            parameters: ['department_id' => $id],
+            parameters: ['id' => $id],
         );
 
         return $department;

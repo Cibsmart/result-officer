@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 abstract readonly class ApiClient
 {
     /**
-     * @param array<string, string> $parameters
+     * @param array<string, string|int> $parameters
      * @return array<int|string, string|array<string, string|array<string, string>>>
      * @throws \Exception
      */
@@ -25,7 +25,7 @@ abstract readonly class ApiClient
         try {
             /**
              * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-             * @var array{status: bool, message: string, data: array<int|string, string|array<string, string|array<string, string>>>} $response
+             * @var array{status?: bool, message?: string, data?: array<int|string, string|array<string, string|array<string, string>>>} $response
              */
             $response = Http::acceptJson()
                 ->baseUrl(Config::string('rp_http.base_url'))
@@ -33,11 +33,15 @@ abstract readonly class ApiClient
                 ->throw()
                 ->json();
 
+            if (is_null($response) || count($response) === 0) {
+                throw new Exception('API RETURNED EMPTY RESPONSE');
+            }
+
             if (! $response['status']) {
                 throw new Exception('API RETURNED ERROR: ' . $response['message']);
             }
 
-            return $response['data'];
+            return array_map('array_change_key_case', $response['data']);
         } catch (ConnectionException $e) {
             throw new Exception("ERROR CONNECTING TO API: {$e->getMessage()}");
         } catch (RequestException $e) {

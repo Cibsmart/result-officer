@@ -34,7 +34,7 @@ final readonly class CourseClient extends ApiClient
      * @return array<int, array{id: string, course_code: string, course_title: string}>
      * @throws \Exception
      */
-    public function fetchCourseById(string $id): array
+    public function fetchCourseById(int $id): array
     {
         /** @var array<int, array{id: string, course_code: string, course_title: string}> $course */
         $course = $this->get(endpoint: $this->endpoint, parameters: ['course_id' => $id]);
