@@ -266,7 +266,7 @@ declare namespace App.Enums {
   export type GenderEnum = "M" | "F";
   export type Grade = "A" | "B" | "C" | "D" | "E" | "F";
   export type ImportEventType = "results" | "courses" | "departments" | "students" | "registrations";
-  export type ImportStatus = "new" | "started" | "processing" | "completed";
+  export type ImportStatus = "new" | "started" | "processing" | "failed" | "completed";
   export type LevelEnum = "100" | "200" | "300" | "400" | "500" | "600";
   export type NotificationType = "success" | "error" | "warning" | "info";
   export type RawDataStatus = "pending" | "processed";
