@@ -40,10 +40,12 @@ final class Program extends Model
     public function name(): Attribute
     {
         return Attribute::make(
-            /** @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter */
-            get: fn (?string $value, array $attributes): string => $this->department->name === $attributes['name']
-                ? $attributes['name']
-                : "{$this->department->name} ({$attributes['name']})");
+            get: fn (string $value): string => $this->department->name === $value
+                ? $value
+                : "{$this->department->name} ({$value})",
+
+            set: fn (string $value): string => strtoupper(trim($value)),
+        );
     }
 
     /** @return array<string, string> */
@@ -52,5 +54,13 @@ final class Program extends Model
         return [
             'is_active' => 'bool',
         ];
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
+    protected function code(): Attribute
+    {
+        return Attribute::make(
+            set: static fn (string $value): string => strtoupper(trim($value)),
+        );
     }
 }

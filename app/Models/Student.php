@@ -109,4 +109,44 @@ final class Student extends Model
             ): string => "{$attributes['last_name']} {$attributes['first_name']} {$attributes['other_names']}",
         );
     }
+
+    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
+    protected function lastName(): Attribute
+    {
+        return Attribute::make(
+            set: static fn (string $value): string => strtoupper($value),
+        );
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
+    protected function firstName(): Attribute
+    {
+        return Attribute::make(
+            set: static fn (string $value): string => strtoupper($value),
+        );
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
+    protected function otherNames(): Attribute
+    {
+        return Attribute::make(
+            set: static fn (string $value): string => strtoupper($value),
+        );
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
+    protected function email(): Attribute
+    {
+        return Attribute::make(
+            set: static fn (string $value): string => strtolower($value),
+        );
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
+    protected function localGovernment(): Attribute
+    {
+        return Attribute::make(
+            set: static fn (string $value): string => strtoupper($value),
+        );
+    }
 }

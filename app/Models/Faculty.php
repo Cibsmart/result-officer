@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -26,5 +27,21 @@ final class Faculty extends Model
         return [
             'is_active' => 'bool',
         ];
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
+    protected function name(): Attribute
+    {
+        return Attribute::make(
+            set: static fn (string $value): string => strtoupper(trim($value)),
+        );
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
+    protected function code(): Attribute
+    {
+        return Attribute::make(
+            set: static fn (string $value): string => strtoupper(trim($value)),
+        );
     }
 }
