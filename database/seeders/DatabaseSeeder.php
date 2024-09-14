@@ -13,7 +13,6 @@ final class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             ProgramTypeSeeder::class,
-            FacultySeeder::class,
             SessionSeeder::class,
             SemesterSeeder::class,
             CountrySeeder::class,
