@@ -10,7 +10,8 @@ use Spatie\LaravelData\Data;
  * @phpstan-type StudentDetail array{id: string, last_name: string, first_name: string, other_names: string,
  *     registration_number: string, gender: string, date_of_birth: array{day: string, month: string, year: string},
  *     department_id: string, option: string, state: string, local_government: string, entry_session: string,
- *     entry_mode: string, entry_level: string, jamb_registration_number: string, email: string, phone_number: string}
+ *     entry_mode: string, entry_level: string, jamb_registration_number: string, email: string, phone_number:string,
+ *     departmentid?: string, local_governemnt?: string}
  */
 final class PortalStudentData extends Data
 {
@@ -38,6 +39,14 @@ final class PortalStudentData extends Data
     /** @param StudentDetail $data */
     public static function fromArray(array $data): self
     {
+        $departmentId = array_key_exists('departmentid', $data)
+            ? $data['departmentid']
+            : $data['department_id'];
+
+        $localGovernment = array_key_exists('local_governemnt', $data)
+            ? $data['local_governemnt']
+            : $data['local_government'];
+
         return new self(
             onlineId: (string) $data['id'],
             lastName: $data['last_name'],
@@ -46,10 +55,10 @@ final class PortalStudentData extends Data
             registrationNumber: $data['registration_number'],
             gender: $data['gender'],
             dateOfBirth: PortalDateData::from($data['date_of_birth']),
-            departmentId: (string) $data['department_id'],
+            departmentId: (string) $departmentId,
             option: $data['option'],
             state: $data['state'],
-            localGovernment: $data['local_government'],
+            localGovernment: $localGovernment,
             entrySession: $data['entry_session'],
             entryMode: $data['entry_mode'],
             entryLevel: $data['entry_level'],
