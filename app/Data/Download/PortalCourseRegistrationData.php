@@ -32,7 +32,7 @@ final class PortalCourseRegistrationData extends Data
             session: $data['session'],
             semester: $data['semester'],
             level: $data['level'],
-            courseId: $data['course_id'],
+            courseId: (string) $data['course_id'],
             creditUnit: (string) $data['credit_unit'],
             registrationDate: PortalDateData::from($data['registration_date']),
             source: RecordSource::PORTAL,

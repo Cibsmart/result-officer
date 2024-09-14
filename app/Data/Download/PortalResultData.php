@@ -30,12 +30,12 @@ final class PortalResultData extends Data
     public static function fromArray(array $data): self
     {
         return new self(
-            onlineId: $data['id'],
-            courseRegistrationId: $data['course_registration_id'],
+            onlineId: (string) $data['id'],
+            courseRegistrationId: (string) $data['id'],
             registrationNumber: $data['registration_number'],
-            inCourseScore: $data['in_course'],
-            examScore: $data['exam_score'],
-            totalScore: $data['total_score'],
+            inCourseScore: (string) $data['in_course'],
+            examScore: (string) $data['exam_score'],
+            totalScore: (string) $data['total_score'],
             grade: $data['grade'],
             uploadDate: PortalDateData::from($data['upload_date']),
             source: RecordSource::PORTAL,
