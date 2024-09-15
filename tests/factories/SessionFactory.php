@@ -18,7 +18,7 @@ final class SessionFactory extends Factory
         $year = (int) fake()->unique()->year();
         $next = $year + 1;
 
-        $session = "$year/$next";
+        $session = "$year-$next";
 
         return [
             'name' => $session,
