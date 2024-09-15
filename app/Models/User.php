@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Enums\RoleEnum;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -28,6 +29,12 @@ final class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ImportEvent> */
+    public function imports(): HasMany
+    {
+        return $this->hasMany(ImportEvent::class);
+    }
 
     /** @return array<string, string> */
     protected function casts(): array
