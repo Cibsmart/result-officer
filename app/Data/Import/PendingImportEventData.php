@@ -16,7 +16,7 @@ final class PendingImportEventData extends Data
         public readonly string $content,
         public readonly string $date,
         public readonly float $width,
-        /** @var array<int, string> $elements */
+        /** @var array<int, \App\Enums\ImportEventStatus> $elements */
         public readonly array $elements,
     ) {
     }

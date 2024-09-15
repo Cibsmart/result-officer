@@ -6,6 +6,26 @@ parameters:
 			path: app/Data/Department/DepartmentListData.php
 
 		-
+			message: "#^Parameter \\$status of class App\\\\Data\\\\Import\\\\ImportEventData constructor expects App\\\\Enums\\\\ImportEventStatus, string given\\.$#"
+			count: 1
+			path: app/Data/Import/ImportEventData.php
+
+		-
+			message: "#^Parameter \\$type of class App\\\\Data\\\\Import\\\\ImportEventData constructor expects App\\\\Enums\\\\ImportEventType, string given\\.$#"
+			count: 1
+			path: app/Data/Import/ImportEventData.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between string and App\\\\Enums\\\\ImportEventStatus\\:\\:COMPLETED will always evaluate to false\\.$#"
+			count: 1
+			path: app/Data/Import/ImportEventData.php
+
+		-
+			message: "#^Cannot call method width\\(\\) on string\\.$#"
+			count: 1
+			path: app/Data/Import/PendingImportEventData.php
+
+		-
 			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Program\\>\\:\\:tap\\(\\) expects callable\\(Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Program\\>\\)\\: mixed, App\\\\Scopes\\\\ActiveScope given\\.$#"
 			count: 1
 			path: app/Data/Program/ProgramListData.php
@@ -19,6 +39,11 @@ parameters:
 			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(array\\<string, array\\<string, string\\>\\|string\\>\\|string\\)\\: mixed\\)\\|null, 'array_change_key…' given\\.$#"
 			count: 1
 			path: app/Http/Clients/ApiClient.php
+
+		-
+			message: "#^Property App\\\\Models\\\\ImportEvent\\:\\:\\$data \\(string\\) does not accept array\\<string, string\\>\\.$#"
+			count: 1
+			path: app/Http/Controllers/Download/Courses/DownloadCoursesController.php
 
 		-
 			message: "#^Method App\\\\Models\\\\Student\\:\\:courses\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<App\\\\Models\\\\CourseRegistration\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<Illuminate\\\\Database\\\\Eloquent\\\\Model, Illuminate\\\\Database\\\\Eloquent\\\\Model, App\\\\Models\\\\Student\\>\\|Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasOneThrough\\<Illuminate\\\\Database\\\\Eloquent\\\\Model, Illuminate\\\\Database\\\\Eloquent\\\\Model, App\\\\Models\\\\Student\\>\\.$#"
