@@ -132,7 +132,7 @@ declare namespace App.Data.Import {
     content: string;
     date: string;
     width: number;
-    elements: { [key: number]: string };
+    elements: { [key: number]: App.Enums.ImportEventStatus };
   };
 }
 declare namespace App.Data.Level {
@@ -321,7 +321,7 @@ declare namespace App.ViewModels.Downloads {
     levels: App.Data.Level.LevelListData;
   };
   export type DownloadCoursesPage = {
-    events: Array<App.Data.Import.ImportEventData>;
+    events: any;
     pending: App.Data.Import.PendingImportEventData;
   };
   export type DownloadStudentPage = {
