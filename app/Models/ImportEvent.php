@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\ImportEventStatus;
 use App\Enums\ImportEventType;
-use App\Enums\ImportStatus;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 final class ImportEvent extends Model
 {
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawResult> */
-    public function results(): HasMany
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\ImportEvent> */
+    public function user(): BelongsTo
     {
-        return $this->hasMany(RawResult::class);
+        return $this->belongsTo(User::class);
     }
 
     /** @return array<string, string> */
     protected function casts(): array
     {
         return [
-            'data' => 'array',
-            'status' => ImportStatus::class,
+            'data' => 'json',
+            'status' => ImportEventStatus::class,
             'type' => ImportEventType::class,
         ];
     }
