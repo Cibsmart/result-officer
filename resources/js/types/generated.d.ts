@@ -118,6 +118,23 @@ declare namespace App.Data.Faculty {
     name: string;
   };
 }
+declare namespace App.Data.Import {
+  export type ImportEventData = {
+    target: string;
+    type: App.Enums.ImportEventType;
+    content: string;
+    count: number;
+    status: App.Enums.ImportEventStatus;
+    date: string;
+    completed: boolean;
+  };
+  export type PendingImportEventData = {
+    content: string;
+    date: string;
+    width: number;
+    elements: { [key: number]: string };
+  };
+}
 declare namespace App.Data.Level {
   export type LevelData = {
     id: number;
@@ -265,8 +282,16 @@ declare namespace App.Enums {
   export type CreditUnitEnum = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 12 | 15 | 18;
   export type GenderEnum = "M" | "F";
   export type Grade = "A" | "B" | "C" | "D" | "E" | "F";
+  export type ImportEventStatus =
+    | "new"
+    | "started"
+    | "downloading"
+    | "downloaded"
+    | "saving"
+    | "processing"
+    | "failed"
+    | "completed";
   export type ImportEventType = "results" | "courses" | "departments" | "students" | "registrations";
-  export type ImportStatus = "new" | "started" | "processing" | "failed" | "completed";
   export type LevelEnum = "100" | "200" | "300" | "400" | "500" | "600";
   export type NotificationType = "success" | "error" | "warning" | "info";
   export type RawDataStatus = "pending" | "processed";
@@ -294,6 +319,10 @@ declare namespace App.ViewModels.Downloads {
     semesters: App.Data.Semester.SemesterListData;
     courses: App.Data.Course.CourseListData;
     levels: App.Data.Level.LevelListData;
+  };
+  export type DownloadCoursesPage = {
+    events: Array<App.Data.Import.ImportEventData>;
+    pending: App.Data.Import.PendingImportEventData;
   };
   export type DownloadStudentPage = {
     department: App.Data.Department.DepartmentListData;
