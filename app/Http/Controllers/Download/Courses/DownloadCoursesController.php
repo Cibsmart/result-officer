@@ -4,28 +4,32 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Download\Courses;
 
-use App\Helpers\GetResponse;
-use App\Repositories\CourseRepository;
+use App\Console\Commands\ImportCourses;
+use App\Enums\ImportEventStatus;
+use App\Enums\ImportEventType;
+use App\Models\ImportEvent;
 use Exception;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 final readonly class DownloadCoursesController
 {
-    public function __construct(private CourseRepository $repository)
-    {
-    }
-
     /** @throws \Exception */
-    public function __invoke(): RedirectResponse
+    public function __invoke(Request $request): RedirectResponse
     {
         try {
-            $courses = $this->repository->getCourses();
+            $event = new ImportEvent();
 
-            $saved = $this->repository->saveCourses($courses);
+            $event->user_id = $request->user()->id;
+            $event->type = ImportEventType::COURSES->value;
+            $event->data = ['courses' => 'all'];
+            $event->count = 0;
+            $event->status = ImportEventStatus::NEW->value;
+            $event->save();
 
-            $response = GetResponse::fromArray($saved);
+            defer(fn () => (new ImportCourses())->handle());
 
-            return back()->{$response->type->value}($response->message);
+            return back()->with(['events' => ImportEvent::all()])->success('Course Import Started');
         } catch (Exception $e) {
             return redirect()->back()->error($e->getMessage());
         }

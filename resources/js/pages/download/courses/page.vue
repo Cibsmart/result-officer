@@ -7,6 +7,37 @@ import { BreadcrumbItem } from "@/types";
 import Breadcrumb from "@/components/breadcrumb.vue";
 import PrimaryButton from "@/components/buttons/primaryButton.vue";
 import BaseFormSection from "@/components/baseFormSection.vue";
+import StaticFeeds from "@/components/feeds/staticFeeds.vue";
+import ActiveFeeds from "@/components/feeds/activeFeeds.vue";
+import { computed, onMounted, onBeforeUnmount, watch } from "vue";
+import { router } from "@inertiajs/vue3";
+
+const props = defineProps<{
+  events: Array<App.Data.Import.ImportEventData>;
+  pending: App.Data.Import.PendingImportEventData;
+}>();
+
+const checkPendingEvent = () => router.reload({ only: ["pending", "events"], replace: true });
+
+let interval: ReturnType<typeof setInterval>;
+
+const hasPendingEvent = computed(() => props.pending !== null);
+
+const startPolling = () => (interval = setInterval(() => checkPendingEvent(), 1000));
+
+const stopPolling = () => clearInterval(interval);
+
+onMounted(() => hasPendingEvent.value && startPolling());
+
+onBeforeUnmount(() => stopPolling());
+
+watch(hasPendingEvent, () => {
+  if (hasPendingEvent.value === true) {
+    startPolling();
+  } else {
+    stopPolling();
+  }
+});
 
 const pages: BreadcrumbItem[] = [
   {
@@ -15,6 +46,8 @@ const pages: BreadcrumbItem[] = [
     current: route().current("download.courses.page"),
   },
 ];
+
+const hasEvent = computed(() => props.events.length > 0);
 
 const form = useForm({});
 
@@ -44,5 +77,23 @@ const submit = () => {
         </form>
       </BaseFormSection>
     </BaseSection>
+
+    <template v-if="hasPendingEvent">
+      <BaseSection class="transition-2s transition-all ease-in-out">
+        <BaseFormSection description="Pending Course Download">
+          <ActiveFeeds :data="pending" />
+        </BaseFormSection>
+      </BaseSection>
+    </template>
+
+    <template v-if="hasEvent">
+      <BaseSection>
+        <BaseFormSection description="Course Download History">
+          <StaticFeeds
+            :events="events"
+            class="mt-6" />
+        </BaseFormSection>
+      </BaseSection>
+    </template>
   </BasePage>
 </template>
