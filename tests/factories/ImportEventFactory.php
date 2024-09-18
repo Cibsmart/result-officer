@@ -18,9 +18,11 @@ final class ImportEventFactory extends Factory
     public function definition(): array
     {
         return [
-            'count' => 0,
             'data' => ['courses' => 'all'],
-            'status' => ImportEventStatus::STARTED,
+            'download_count' => 0,
+            'failed_count' => 0,
+            'processed_count' => 0,
+            'status' => ImportEventStatus::NEW,
             'type' => fake()->randomElement(ImportEventType::cases()),
             'user_id' => UserFactory::new(),
         ];
