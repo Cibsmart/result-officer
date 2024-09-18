@@ -289,6 +289,7 @@ declare namespace App.Enums {
     | "saving"
     | "saved"
     | "processing"
+    | "cancelled"
     | "failed"
     | "completed";
   export type ImportEventType = "results" | "courses" | "departments" | "students" | "registrations";
