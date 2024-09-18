@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class);
             $table->string('type');
             $table->json('data');
-            $table->unsignedSmallInteger('download_count');
+            $table->unsignedSmallInteger('download_count')->default(0);
             $table->unsignedSmallInteger('processed_count')->default(0);
             $table->unsignedSmallInteger('failed_count')->default(0);
             $table->string('status');
