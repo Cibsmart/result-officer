@@ -1,9 +1,20 @@
 <script lang="ts" setup>
-import { CheckIcon, XMarkIcon } from "@heroicons/vue/20/solid";
+import { CheckIcon, XMarkIcon, ExclamationCircleIcon } from "@heroicons/vue/20/solid";
 
 defineProps<{
-  events: Array<any>;
+  events: Array<App.Data.Import.ImportEventData>;
 }>();
+
+const settings = (status: string) => {
+  if (status === "completed") {
+    return { class: "bg-green-400", icon: CheckIcon };
+  }
+  if (status === "failed") {
+    return { class: "bg-red-400", icon: XMarkIcon };
+  }
+
+  return { class: "bg-gray-400", icon: ExclamationCircleIcon };
+};
 </script>
 
 <template>
@@ -23,10 +34,10 @@ defineProps<{
           <div class="relative flex space-x-2">
             <div>
               <span
-                :class="[event.completed ? 'bg-green-500' : 'bg-red-400']"
+                :class="settings(event.status).class"
                 class="flex h-4 w-4 items-center justify-center rounded-full ring-4 ring-white dark:ring-gray-800">
                 <component
-                  :is="event.completed ? CheckIcon : XMarkIcon"
+                  :is="settings(event.status).icon"
                   aria-hidden="true"
                   class="h-3 w-3 text-white" />
               </span>
