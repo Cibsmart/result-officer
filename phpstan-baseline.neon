@@ -41,6 +41,16 @@ parameters:
 			path: app/Http/Clients/ApiClient.php
 
 		-
+			message: "#^Access to an undefined property object\\:\\:\\$failed_count\\.$#"
+			count: 1
+			path: app/Models/ImportEvent.php
+
+		-
+			message: "#^Access to an undefined property object\\:\\:\\$processed_count\\.$#"
+			count: 1
+			path: app/Models/ImportEvent.php
+
+		-
 			message: "#^Property App\\\\Models\\\\ImportEvent\\:\\:\\$data \\(string\\) does not accept array\\<string, string\\>\\.$#"
 			count: 1
 			path: app/Models/ImportEvent.php

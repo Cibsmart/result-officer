@@ -52,10 +52,8 @@ final class ImportEvent extends Model
     public function getCounts(): object
     {
         return $this->courses()->toBase()
-            ->selectRaw('count(*) as download_count')
             ->selectRaw("count(case when status = 'processed' then 1 end) as processed_count")
             ->selectRaw("count(case when status = 'failed' then 1 end) as failed_count")
-            ->selectRaw("count(case when status = 'pending' then 1 end) as unprocessed_count")
             ->firstOrFail();
     }
 
