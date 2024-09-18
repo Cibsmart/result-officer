@@ -32,6 +32,9 @@ final class ImportAndSaveCourses extends Command
             return;
         }
 
+        $event->download_count = $courses->count();
+        $event->save();
+
         $saveRawCoursesAction->execute($event, $courses);
 
         Artisan::call('courses:process', ['eventId' => $event->id]);
