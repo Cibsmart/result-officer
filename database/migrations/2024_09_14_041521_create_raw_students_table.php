@@ -32,6 +32,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('jamb_registration_number');
             $table->string('status');
+            $table->text('message')->nullable();
             $table->timestamps();
         });
     }

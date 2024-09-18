@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('lecturer_name')->nullable();
             $table->string('lecturer_department')->nullable();
             $table->string('status');
-
+            $table->text('message')->nullable();
             $table->timestamps();
         });
     }

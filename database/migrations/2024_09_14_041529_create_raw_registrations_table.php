@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('credit_unit');
             $table->string('registration_date');
             $table->string('status');
+            $table->text('message')->nullable();
             $table->timestamps();
         });
     }

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('faculty');
             $table->json('options');
             $table->string('status');
+            $table->text('message')->nullable();
             $table->timestamps();
         });
     }
