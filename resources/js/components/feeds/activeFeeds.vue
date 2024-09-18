@@ -15,7 +15,7 @@ const progressWidth = computed(() => `width: ${props.data.width}%`);
     <div
       aria-hidden="true"
       class="mt-6">
-      <div class="overflow-hidden rounded-full bg-gray-200 dark:bg-gray-600">
+      <div class="animate-pulse overflow-hidden rounded-full bg-gray-200 dark:bg-gray-600">
         <div
           :style="progressWidth"
           class="transition-2s h-2 rounded-full bg-indigo-600 transition-all ease-in-out dark:bg-indigo-300" />
