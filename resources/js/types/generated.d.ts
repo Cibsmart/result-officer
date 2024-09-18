@@ -129,6 +129,7 @@ declare namespace App.Data.Import {
     completed: boolean;
   };
   export type PendingImportEventData = {
+    id: number;
     content: string;
     date: string;
     width: number;
