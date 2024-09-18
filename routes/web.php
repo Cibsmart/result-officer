@@ -8,6 +8,8 @@ use App\Http\Controllers\Download\CourseRegistrations\DownloadRegistrationsByDep
 use App\Http\Controllers\Download\CourseRegistrations\DownloadRegistrationsByDepartmentSessionSemesterController;
 use App\Http\Controllers\Download\CourseRegistrations\DownloadRegistrationsByRegistrationNumberController;
 use App\Http\Controllers\Download\CourseRegistrations\DownloadRegistrationsBySessionCourseController;
+use App\Http\Controllers\Download\Courses\CancelDownloadCoursesController;
+use App\Http\Controllers\Download\Courses\ContinueDownloadCoursesController;
 use App\Http\Controllers\Download\Courses\DownloadCoursesController;
 use App\Http\Controllers\Download\Courses\DownloadCoursesPageController;
 use App\Http\Controllers\Download\Departments\DownloadDepartmentsController;
@@ -82,6 +84,10 @@ Route::middleware(['auth'])->group(static function (): void {
             ->name('download.courses.page');
         Route::post('', DownloadCoursesController::class)
             ->name('download.courses.store');
+        Route::get('cancel/{event}', CancelDownloadCoursesController::class)
+            ->name('download.courses.cancel');
+        Route::get('continue/{event}', ContinueDownloadCoursesController::class)
+            ->name('download.courses.continue');
     });
 
     Route::prefix('download/course-registrations')->group(static function (): void {
