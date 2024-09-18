@@ -37,6 +37,7 @@ defineProps<{
                 <p class="text-sm text-gray-500 dark:text-gray-400">
                   {{ event.content }}
                   <span class="font-medium text-gray-900 dark:text-gray-300">{{ event.target }}</span>
+                  (Statistics: {{ event.description }})
                 </p>
               </div>
 
