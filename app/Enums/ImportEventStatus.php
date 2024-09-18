@@ -12,6 +12,7 @@ enum ImportEventStatus: string
     case SAVING = 'saving';
     case SAVED = 'saved';
     case PROCESSING = 'processing';
+    case CANCELLED = 'cancelled';
     case FAILED = 'failed';
     case COMPLETED = 'completed';
 
@@ -28,7 +29,7 @@ enum ImportEventStatus: string
             self::DOWNLOADING => 25,
             self::SAVING, self::SAVED => 50,
             self::PROCESSING => 75,
-            self::FAILED, self::COMPLETED => 100,
+            self::CANCELLED, self::FAILED, self::COMPLETED => 100,
         };
     }
 }
