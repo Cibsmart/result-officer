@@ -38,6 +38,7 @@ const pages: BreadcrumbItem[] = [
 ];
 
 const hasEvent = computed(() => props.events.length > 0);
+const disableButton = computed(() => form.processing || hasPendingEvent);
 
 const form = useForm({});
 
@@ -62,14 +63,14 @@ const submit = () => {
           class="mt-6 space-y-6"
           @submit.prevent="submit">
           <div>
-            <PrimaryButton :disabled="form.processing">Download</PrimaryButton>
+            <PrimaryButton :disabled="disableButton">Download</PrimaryButton>
           </div>
         </form>
       </BaseFormSection>
     </BaseSection>
 
     <template v-if="hasPendingEvent">
-      <BaseSection class="transition-2s transition-all ease-in-out">
+      <BaseSection>
         <BaseFormSection description="Pending Course Download">
           <ActiveFeeds :data="pending" />
         </BaseFormSection>
