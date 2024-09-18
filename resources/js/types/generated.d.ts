@@ -286,15 +286,15 @@ declare namespace App.Enums {
     | "new"
     | "started"
     | "downloading"
-    | "downloaded"
     | "saving"
+    | "saved"
     | "processing"
     | "failed"
     | "completed";
   export type ImportEventType = "results" | "courses" | "departments" | "students" | "registrations";
   export type LevelEnum = "100" | "200" | "300" | "400" | "500" | "600";
   export type NotificationType = "success" | "error" | "warning" | "info";
-  export type RawDataStatus = "pending" | "processed";
+  export type RawDataStatus = "pending" | "duplicate" | "failed" | "processed";
   export type RecordSource = "portal" | "excel" | "legacy";
   export type ResultRemark = "PAS" | "FAL" | "ABS" | "MAL";
   export type RoleEnum = "super-admin" | "admin" | "desk-officer" | "exam-officer" | "database-officer" | "user";
