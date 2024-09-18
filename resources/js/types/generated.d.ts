@@ -133,6 +133,8 @@ declare namespace App.Data.Import {
     date: string;
     width: number;
     elements: { [key: number]: App.Enums.ImportEventStatus };
+    status: App.Enums.ImportEventStatus;
+    canBeContinued: boolean;
   };
 }
 declare namespace App.Data.Level {
