@@ -19,7 +19,6 @@ final class ImportEvent extends Model
         $event->user_id = $user->id;
         $event->type = ImportEventType::COURSES->value;
         $event->data = $data;
-        $event->count = 0;
         $event->status = ImportEventStatus::NEW->value;
         $event->save();
 
@@ -40,8 +39,24 @@ final class ImportEvent extends Model
 
     public function updateStatus(ImportEventStatus $status): void
     {
+        if ($status === ImportEventStatus::COMPLETED) {
+            $counts = $this->getCounts();
+            $this->processed_count = $counts->processed_count;
+            $this->failed_count = $counts->failed_count;
+        }
+
         $this->status = $status->value;
         $this->save();
+    }
+
+    public function getCounts(): object
+    {
+        return $this->courses()->toBase()
+            ->selectRaw('count(*) as download_count')
+            ->selectRaw("count(case when status = 'processed' then 1 end) as processed_count")
+            ->selectRaw("count(case when status = 'failed' then 1 end) as failed_count")
+            ->selectRaw("count(case when status = 'pending' then 1 end) as unprocessed_count")
+            ->firstOrFail();
     }
 
     /** @return array<string, string> */
