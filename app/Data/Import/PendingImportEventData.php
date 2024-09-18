@@ -34,7 +34,7 @@ final class PendingImportEventData extends Data
             content: "You initiated download for {$content}",
             date: $event->created_at ? $event->created_at->format('M d, Y') : '',
             width: $event->status->width(),
-            elements: collect(ImportEventStatus::cases())->except([0, 3, 6])->all(),
+            elements: ImportEventStatus::showOnProgressBar(),
         );
     }
 
