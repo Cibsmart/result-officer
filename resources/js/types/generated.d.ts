@@ -123,7 +123,7 @@ declare namespace App.Data.Import {
     target: string;
     type: App.Enums.ImportEventType;
     content: string;
-    count: number;
+    statistics: string;
     status: App.Enums.ImportEventStatus;
     date: string;
     completed: boolean;
