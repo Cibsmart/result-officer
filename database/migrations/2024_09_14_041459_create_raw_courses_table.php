@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('code');
             $table->string('title');
             $table->string('status');
+            $table->text('message')->nullable();
             $table->timestamps();
         });
     }
