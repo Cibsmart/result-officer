@@ -9,33 +9,23 @@ import PrimaryButton from "@/components/buttons/primaryButton.vue";
 import BaseFormSection from "@/components/baseFormSection.vue";
 import StaticFeeds from "@/components/feeds/staticFeeds.vue";
 import ActiveFeeds from "@/components/feeds/activeFeeds.vue";
-import { computed, onMounted, onBeforeUnmount, watch } from "vue";
-import { router } from "@inertiajs/vue3";
+import { computed, watch } from "vue";
+import { usePoll } from "@/composables/usePoll";
 
 const props = defineProps<{
   events: Array<App.Data.Import.ImportEventData>;
   pending: App.Data.Import.PendingImportEventData;
 }>();
 
-const checkPendingEvent = () => router.reload({ only: ["pending", "events"], replace: true });
-
-let interval: ReturnType<typeof setInterval>;
-
 const hasPendingEvent = computed(() => props.pending !== null);
 
-const startPolling = () => (interval = setInterval(() => checkPendingEvent(), 1000));
-
-const stopPolling = () => clearInterval(interval);
-
-onMounted(() => hasPendingEvent.value && startPolling());
-
-onBeforeUnmount(() => stopPolling());
+const { start, stop } = usePoll(hasPendingEvent, ["pending", "events"]);
 
 watch(hasPendingEvent, () => {
   if (hasPendingEvent.value === true) {
-    startPolling();
+    start();
   } else {
-    stopPolling();
+    stop();
   }
 });
 
