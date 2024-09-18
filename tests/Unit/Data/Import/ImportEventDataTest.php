@@ -16,7 +16,7 @@ test('import event data is correct', function (): void {
         ->and($data->target)->toBeString()->toBe($event->user->name)
         ->and($data->type)->toBeInstanceOf(ImportEventType::class)
         ->and($data->status)->toBeInstanceOf(ImportEventStatus::class)
-        ->and($data->count)->toBeInt()->toBe(0)
+        ->and($data->description)->toBeString()->toBe('Downloaded: 0, Processed: 0, Failed: 0, Duplicates: 0')
         ->and($data->content)->toBeString()->toBe('ALL COURSES, 2009-2010 SESSION, downloaded by')
         ->and($data->date)->toBeString()->toBe($event->created_at->diffForHumans());
 });
