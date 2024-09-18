@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class ImportEvent extends Model
 {
-    /** @param array $data <string, string> */
+    /** @param array<string, string> $data */
     public static function new(User $user, array $data): self
     {
         $event = new self();
