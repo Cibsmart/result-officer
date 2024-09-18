@@ -17,9 +17,7 @@ final class ImportEventData extends Data
         public readonly string $target,
         public readonly ImportEventType $type,
         public readonly string $content,
-        public readonly int $total,
-        public readonly int $processed,
-        public readonly int $failed,
+        public readonly string $statistics,
         public readonly ImportEventStatus $status,
         public readonly string $date,
         public readonly bool $completed,
@@ -35,13 +33,14 @@ final class ImportEventData extends Data
             ->map(fn (string $value, string $key) => strtoupper("$value $key"))
             ->join(', ');
 
+        $statistics = "(Statistics: Downloaded: {$event->download_count}, Processed: {$event->processed_count}, ";
+        $statistics .= "Failed: {$event->failed_count})";
+
         return new self(
             target: $event->user->name,
             type: $event->type,
             content: "{$content}, downloaded by",
-            total: $event->download_count,
-            processed: $event->processed_count,
-            failed: $event->failed_count,
+            statistics: $statistics,
             status: $event->status,
             date: $event->created_at ? $event->created_at->diffForHumans() : '',
             completed: $event->status === ImportEventStatus::COMPLETED,
