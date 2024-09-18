@@ -1,0 +1,23 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Console\Commands\Courses;
+
+use App\Actions\Courses\ProcessImportedRawCourses;
+use App\Models\ImportEvent;
+use Illuminate\Console\Command;
+
+final class ProcessImportedCourses extends Command
+{
+    protected $signature = 'courses:process {eventId}';
+
+    protected $description = 'Command description';
+
+    public function handle(ProcessImportedRawCourses $processRawCoursesAction): void
+    {
+        $event = ImportEvent::findOrFail($this->argument('eventId'));
+
+        $processRawCoursesAction->execute($event);
+    }
+}
