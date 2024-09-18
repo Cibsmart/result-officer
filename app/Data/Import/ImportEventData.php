@@ -41,9 +41,9 @@ final class ImportEventData extends Data
 
         return new self(
             id: $event->id,
-            target: $event->user->name,
+            target: 'You',
             type: $event->type,
-            content: "{$content}, downloaded by",
+            content: " downloaded {$content}.",
             description: $description,
             status: $event->status,
             date: $event->created_at ? $event->created_at->diffForHumans() : '',
