@@ -28,6 +28,7 @@ final class ImportAndSaveCourses extends Command
             $courses = $service->getAllCourses();
         } catch (Exception $e) {
             $event->message = $e->getMessage();
+            $event->updateStatus(ImportEventStatus::FAILED);
 
             return;
         }
