@@ -18,6 +18,8 @@ final class PendingImportEventData extends Data
         public readonly float $width,
         /** @var array<int, \App\Enums\ImportEventStatus> $elements */
         public readonly array $elements,
+        public readonly ImportEventStatus $status,
+        public readonly bool $canBeContinued,
     ) {
     }
 
@@ -35,6 +37,8 @@ final class PendingImportEventData extends Data
             date: $event->created_at ? $event->created_at->format('M d, Y') : '',
             width: $event->status->width(),
             elements: ImportEventStatus::showOnProgressBar(),
+            status: $event->status,
+            canBeContinued: in_array($event->status, [ImportEventStatus::SAVED, ImportEventStatus::PROCESSING]),
         );
     }
 
@@ -43,7 +47,8 @@ final class PendingImportEventData extends Data
         $event = $user->imports()
             ->with('user')
             ->where('type', ImportEventType::COURSES->value)
-            ->whereNotIn('status', [ImportEventStatus::FAILED, ImportEventStatus::COMPLETED])
+            ->whereNotIn('status',
+                [ImportEventStatus::CANCELLED, ImportEventStatus::FAILED, ImportEventStatus::COMPLETED])
             ->latest()
             ->first();
 
