@@ -56,7 +56,7 @@ final class ImportEventData extends Data
             ->with('user')
             ->where('type', ImportEventType::COURSES->value)
             ->whereIn('status',
-                [ImportEventStatus::FAILED, ImportEventStatus::COMPLETED])
+                [ImportEventStatus::CANCELLED, ImportEventStatus::FAILED, ImportEventStatus::COMPLETED])
             ->latest()
             ->limit(10)
             ->get(),
