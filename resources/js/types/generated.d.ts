@@ -120,6 +120,7 @@ declare namespace App.Data.Faculty {
 }
 declare namespace App.Data.Import {
   export type ImportEventData = {
+    id: number;
     target: string;
     type: App.Enums.ImportEventType;
     content: string;

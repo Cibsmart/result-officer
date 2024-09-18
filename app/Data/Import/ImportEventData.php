@@ -14,6 +14,7 @@ use Spatie\LaravelData\Data;
 final class ImportEventData extends Data
 {
     public function __construct(
+        public readonly int $id,
         public readonly string $target,
         public readonly ImportEventType $type,
         public readonly string $content,
@@ -39,6 +40,7 @@ final class ImportEventData extends Data
         $description .= "Failed: {$event->failed_count}, Duplicates: {$duplicates}";
 
         return new self(
+            id: $event->id,
             target: $event->user->name,
             type: $event->type,
             content: "{$content}, downloaded by",
