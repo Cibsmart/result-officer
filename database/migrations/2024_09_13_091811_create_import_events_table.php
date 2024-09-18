@@ -21,6 +21,7 @@ return new class extends Migration
             $table->json('data');
             $table->unsignedSmallInteger('count');
             $table->string('status');
+            $table->text('message')->nullable();
             $table->timestamps();
         });
     }
