@@ -12,6 +12,20 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class ImportEvent extends Model
 {
+    /** @param array $data <string, string> */
+    public static function new(User $user, array $data): self
+    {
+        $event = new self();
+        $event->user_id = $user->id;
+        $event->type = ImportEventType::COURSES->value;
+        $event->data = $data;
+        $event->count = 0;
+        $event->status = ImportEventStatus::NEW->value;
+        $event->save();
+
+        return $event;
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\ImportEvent> */
     public function user(): BelongsTo
     {
