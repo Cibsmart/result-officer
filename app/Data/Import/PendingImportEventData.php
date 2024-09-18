@@ -13,6 +13,7 @@ use Spatie\LaravelData\Data;
 final class PendingImportEventData extends Data
 {
     public function __construct(
+        public readonly int $id,
         public readonly string $content,
         public readonly string $date,
         public readonly float $width,
@@ -33,12 +34,13 @@ final class PendingImportEventData extends Data
             ->join(', ');
 
         return new self(
+            id: $event->id,
             content: "You initiated download for {$content}",
             date: $event->created_at ? $event->created_at->format('M d, Y') : '',
             width: $event->status->width(),
             elements: ImportEventStatus::showOnProgressBar(),
             status: $event->status,
-            canBeContinued: in_array($event->status, [ImportEventStatus::SAVED, ImportEventStatus::PROCESSING]),
+            canBeContinued: in_array($event->status, [ImportEventStatus::SAVED, ImportEventStatus::PROCESSING], true),
         );
     }
 
