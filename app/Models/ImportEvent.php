@@ -24,6 +24,12 @@ final class ImportEvent extends Model
         return $this->hasMany(RawCourse::class);
     }
 
+    public function updateStatus(ImportEventStatus $status): void
+    {
+        $this->status = $status->value;
+        $this->save();
+    }
+
     /** @return array<string, string> */
     protected function casts(): array
     {
