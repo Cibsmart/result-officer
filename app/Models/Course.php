@@ -11,6 +11,17 @@ final class Course extends Model
 {
     protected $fillable = ['code', 'title', 'online_id', 'active'];
 
+    public static function createFromRawCourse(RawCourse $rawCourse): void
+    {
+        $course = new self();
+
+        $course->code = $rawCourse->code;
+        $course->title = $rawCourse->title;
+        $course->online_id = $rawCourse->online_id;
+
+        $course->save();
+    }
+
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
     protected function name(): Attribute
     {
