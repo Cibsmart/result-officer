@@ -11,6 +11,8 @@ import StaticFeeds from "@/components/feeds/staticFeeds.vue";
 import ActiveFeeds from "@/components/feeds/activeFeeds.vue";
 import { computed, watch } from "vue";
 import { usePoll } from "@/composables/usePoll";
+import SecondaryLink from "@/components/links/secondaryLink.vue";
+import PrimaryLink from "@/components/links/primaryLink.vue";
 
 const props = defineProps<{
   events: Array<App.Data.Import.ImportEventData>;
@@ -38,7 +40,7 @@ const pages: BreadcrumbItem[] = [
 ];
 
 const hasEvent = computed(() => props.events.length > 0);
-const disableButton = computed(() => form.processing || hasPendingEvent);
+const disableButton = computed(() => form.processing || hasPendingEvent.value);
 
 const form = useForm({});
 
@@ -63,7 +65,11 @@ const submit = () => {
           class="mt-6 space-y-6"
           @submit.prevent="submit">
           <div>
-            <PrimaryButton :disabled="disableButton">Download</PrimaryButton>
+            <PrimaryButton
+              :disabled="disableButton"
+              tooltip
+              >Download</PrimaryButton
+            >
           </div>
         </form>
       </BaseFormSection>
@@ -73,6 +79,19 @@ const submit = () => {
       <BaseSection>
         <BaseFormSection description="Pending Course Download">
           <ActiveFeeds :data="pending" />
+
+          <SecondaryLink
+            :href="route('download.courses.cancel', { event: pending.id })"
+            class="mt-6">
+            Cancel
+          </SecondaryLink>
+
+          <PrimaryLink
+            v-if="pending.canBeContinued"
+            :href="route('download.courses.continue', { event: pending.id })"
+            class="ml-4 mt-4">
+            Continue
+          </PrimaryLink>
         </BaseFormSection>
       </BaseSection>
     </template>
@@ -82,7 +101,7 @@ const submit = () => {
         <BaseFormSection description="Course Download History">
           <StaticFeeds
             :events="events"
-            class="mt-6" />
+            class="my-4" />
         </BaseFormSection>
       </BaseSection>
     </template>
