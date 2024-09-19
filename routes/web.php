@@ -8,8 +8,6 @@ use App\Http\Controllers\Download\CourseRegistrations\DownloadRegistrationsByDep
 use App\Http\Controllers\Download\CourseRegistrations\DownloadRegistrationsByDepartmentSessionSemesterController;
 use App\Http\Controllers\Download\CourseRegistrations\DownloadRegistrationsByRegistrationNumberController;
 use App\Http\Controllers\Download\CourseRegistrations\DownloadRegistrationsBySessionCourseController;
-use App\Http\Controllers\Download\Courses\CancelDownloadCoursesController;
-use App\Http\Controllers\Download\Courses\ContinueDownloadCoursesController;
 use App\Http\Controllers\Download\Courses\DownloadCoursesController;
 use App\Http\Controllers\Download\Courses\DownloadCoursesPageController;
 use App\Http\Controllers\Download\Departments\DownloadDepartmentsController;
@@ -23,6 +21,8 @@ use App\Http\Controllers\Download\Students\DownloadStudentByRegistrationNumberCo
 use App\Http\Controllers\Download\Students\DownloadStudentsByDepartmentSessionController;
 use App\Http\Controllers\Download\Students\DownloadStudentsBySessionController;
 use App\Http\Controllers\Download\Students\DownloadStudentsPageController;
+use App\Http\Controllers\Imports\CancelImportEventController;
+use App\Http\Controllers\Imports\ContinueImportEventController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Reports\CompositeSheetController;
 use App\Http\Controllers\Result\ViewStudentResultController;
@@ -84,10 +84,13 @@ Route::middleware(['auth'])->group(static function (): void {
             ->name('download.courses.page');
         Route::post('', DownloadCoursesController::class)
             ->name('download.courses.store');
-        Route::get('cancel/{event}', CancelDownloadCoursesController::class)
-            ->name('download.courses.cancel');
-        Route::get('continue/{event}', ContinueDownloadCoursesController::class)
-            ->name('download.courses.continue');
+    });
+
+    Route::prefix('import-event')->group(static function (): void {
+        Route::get('cancel/{event}', CancelImportEventController::class)
+            ->name('import.event.cancel');
+        Route::get('continue/{event}', ContinueImportEventController::class)
+            ->name('import.event.continue');
     });
 
     Route::prefix('download/course-registrations')->group(static function (): void {
