@@ -127,7 +127,6 @@ declare namespace App.Data.Import {
     description: string;
     status: App.Enums.ImportEventStatus;
     date: string;
-    completed: boolean;
   };
   export type PendingImportEventData = {
     id: number;
@@ -326,6 +325,10 @@ declare namespace App.ViewModels.Downloads {
     levels: App.Data.Level.LevelListData;
   };
   export type DownloadCoursesPage = {
+    events: any;
+    pending: App.Data.Import.PendingImportEventData;
+  };
+  export type DownloadDepartmentPage = {
     events: any;
     pending: App.Data.Import.PendingImportEventData;
   };

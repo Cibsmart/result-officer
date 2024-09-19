@@ -44,11 +44,11 @@ final class PendingImportEventData extends Data
         );
     }
 
-    public static function new(User $user): ?self
+    public static function new(User $user, ImportEventType $type): ?self
     {
         $event = $user->imports()
             ->with('user')
-            ->where('type', ImportEventType::COURSES->value)
+            ->where('type', $type)
             ->whereNotIn('status',
                 [ImportEventStatus::CANCELLED, ImportEventStatus::FAILED, ImportEventStatus::COMPLETED])
             ->latest()
