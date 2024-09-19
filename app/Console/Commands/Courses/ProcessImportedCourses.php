@@ -12,7 +12,7 @@ final class ProcessImportedCourses extends Command
 {
     protected $signature = 'courses:process {eventId}';
 
-    protected $description = 'Command description';
+    protected $description = 'Process all Pending Raw Data associated with the event';
 
     public function handle(ProcessImportedRawCourses $processRawCoursesAction): void
     {
