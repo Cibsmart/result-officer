@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Download\Courses;
 
+use App\Enums\ImportEventType;
 use App\Models\ImportEvent;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -19,7 +20,7 @@ final readonly class DownloadCoursesController
 
         assert($user instanceof User);
 
-        $event = ImportEvent::new($user, ['course' => 'all']);
+        $event = ImportEvent::new($user, ImportEventType::COURSES, ['course' => 'all']);
 
         defer(fn () => Artisan::queue('courses:import', ['eventId' => $event->id]));
 

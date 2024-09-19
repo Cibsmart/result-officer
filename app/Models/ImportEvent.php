@@ -13,11 +13,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 final class ImportEvent extends Model
 {
     /** @param array<string, string> $data */
-    public static function new(User $user, array $data): self
-    {
+    public static function new(
+        User $user,
+        ImportEventType $type,
+        array $data,
+    ): self {
         $event = new self();
         $event->user_id = $user->id;
-        $event->type = ImportEventType::COURSES->value;
+        $event->type = $type->value;
         $event->data = $data;
         $event->status = ImportEventStatus::NEW->value;
         $event->save();
