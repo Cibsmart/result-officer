@@ -48,6 +48,10 @@ final class ImportEvent extends Model
 
     public function updateStatus(ImportEventStatus $status): void
     {
+        if ($this->status === ImportEventStatus::CANCELLED) {
+            return;
+        }
+
         if ($status === ImportEventStatus::COMPLETED) {
             $counts = $this->getCounts();
             $this->processed_count = $counts->processed_count;

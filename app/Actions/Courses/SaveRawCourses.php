@@ -17,6 +17,11 @@ final class SaveRawCourses
     /** @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseData> $courses */
     public function execute(ImportEvent $event, Collection $courses): void
     {
+        if ($event->status !== ImportEventStatus::DOWNLOADED) {
+            $event->updateStatus(ImportEventStatus::FAILED);
+
+            return;
+        }
 
         $event->updateStatus(ImportEventStatus::SAVING);
 
