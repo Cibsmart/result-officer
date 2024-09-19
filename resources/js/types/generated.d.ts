@@ -289,6 +289,7 @@ declare namespace App.Enums {
     | "new"
     | "started"
     | "downloading"
+    | "downloaded"
     | "saving"
     | "saved"
     | "processing"
@@ -325,10 +326,6 @@ declare namespace App.ViewModels.Downloads {
     levels: App.Data.Level.LevelListData;
   };
   export type DownloadCoursesPage = {
-    events: any;
-    pending: App.Data.Import.PendingImportEventData;
-  };
-  export type DownloadDepartmentPage = {
     events: any;
     pending: App.Data.Import.PendingImportEventData;
   };
