@@ -21,7 +21,6 @@ final class ImportEventData extends Data
         public readonly string $description,
         public readonly ImportEventStatus $status,
         public readonly string $date,
-        public readonly bool $completed,
     ) {
     }
 
@@ -47,16 +46,15 @@ final class ImportEventData extends Data
             description: $description,
             status: $event->status,
             date: $event->created_at ? $event->created_at->diffForHumans() : '',
-            completed: $event->status === ImportEventStatus::COMPLETED,
         );
     }
 
     /** @return \Illuminate\Support\Collection<int, \App\Data\Import\ImportEventData> */
-    public static function new(User $user): Collection
+    public static function new(User $user, ImportEventType $type): Collection
     {
         return self::collect($user->imports()
             ->with('user')
-            ->where('type', ImportEventType::COURSES->value)
+            ->where('type', $type)
             ->whereIn('status',
                 [ImportEventStatus::CANCELLED, ImportEventStatus::FAILED, ImportEventStatus::COMPLETED])
             ->latest()

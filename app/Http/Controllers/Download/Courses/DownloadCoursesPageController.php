@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Download\Courses;
 
 use App\Data\Import\ImportEventData;
 use App\Data\Import\PendingImportEventData;
+use App\Enums\ImportEventType;
 use App\Models\User;
 use App\ViewModels\Downloads\DownloadCoursesPage;
 use Illuminate\Http\Request;
@@ -21,8 +22,8 @@ final readonly class DownloadCoursesPageController
         assert($user instanceof User);
 
         return Inertia::render('download/courses/page', new DownloadCoursesPage(
-            events: fn () => ImportEventData::new($user),
-            pending: fn () => PendingImportEventData::new($user)),
+            events: fn () => ImportEventData::new($user, ImportEventType::COURSES),
+            pending: fn () => PendingImportEventData::new($user, ImportEventType::COURSES)),
         );
     }
 }
