@@ -17,6 +17,15 @@ final class Department extends Model
 
     protected $fillable = ['faculty_id', 'code', 'name', 'online_id'];
 
+    public static function createFromRawDepartment(RawDepartment $rawDepartment): void
+    {
+        $faculty = Faculty::getOrCreate($rawDepartment->faculty);
+
+        $department = self::getOrCreate($rawDepartment, $faculty);
+
+        Program::createForDepartment($department, $rawDepartment);
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Faculty, \App\Models\Department> */
     public function faculty(): BelongsTo
     {
@@ -33,6 +42,18 @@ final class Department extends Model
     public function students(): HasManyThrough
     {
         return $this->hasManyThrough(Student::class, Program::class);
+    }
+
+    private static function getOrCreate(RawDepartment $rawDepartment, Faculty $faculty): self
+    {
+        return self::firstOrCreate(
+            ['name' => $rawDepartment->name],
+            [
+                'code' => $rawDepartment->code,
+                'faculty_id' => $faculty->id,
+                'online_id' => $rawDepartment->online_id,
+            ],
+        );
     }
 
     /** @return array<string, string> */
