@@ -9,6 +9,7 @@ enum ImportEventStatus: string
     case NEW = 'new';
     case STARTED = 'started';
     case DOWNLOADING = 'downloading';
+    case DOWNLOADED = 'downloaded';
     case SAVING = 'saving';
     case SAVED = 'saved';
     case PROCESSING = 'processing';
@@ -20,6 +21,12 @@ enum ImportEventStatus: string
     public static function showOnProgressBar(): array
     {
         return [self::STARTED, self::DOWNLOADING, self::SAVING, self::PROCESSING, self::COMPLETED];
+    }
+
+    /** @return array<\App\Enums\ImportEventStatus> */
+    public static function unprocessableStates(): array
+    {
+        return [self::CANCELLED, self::FAILED, self::COMPLETED];
     }
 
     public function width(): int
