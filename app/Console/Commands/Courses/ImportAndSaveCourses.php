@@ -22,6 +22,12 @@ final class ImportAndSaveCourses extends Command
     {
         $event = ImportEvent::findOrFail($this->argument('eventId'));
 
+        if ($event->status !== ImportEventStatus::STARTED) {
+            $event->updateStatus(ImportEventStatus::FAILED);
+
+            return;
+        }
+
         $event->updateStatus(ImportEventStatus::DOWNLOADING);
 
         try {
@@ -32,6 +38,8 @@ final class ImportAndSaveCourses extends Command
 
             return;
         }
+
+        $event->updateStatus(ImportEventStatus::DOWNLOADED);
 
         $event->download_count = $courses->count();
         $event->save();

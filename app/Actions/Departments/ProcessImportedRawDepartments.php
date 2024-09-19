@@ -17,6 +17,12 @@ final class ProcessImportedRawDepartments
 
     public function execute(ImportEvent $event): void
     {
+        if ($event->status !== ImportEventStatus::SAVED) {
+            $event->updateStatus(ImportEventStatus::FAILED);
+
+            return;
+        }
+
         $event->updateStatus(ImportEventStatus::PROCESSING);
 
         $rawDepartments = $event->departments()->where('status', RawDataStatus::PENDING)->get();

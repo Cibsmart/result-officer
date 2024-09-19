@@ -17,6 +17,11 @@ final class SaveRawDepartments
     /** @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalDepartmentData> $departments */
     public function execute(ImportEvent $event, Collection $departments): void
     {
+        if ($event->status !== ImportEventStatus::DOWNLOADED) {
+            $event->updateStatus(ImportEventStatus::FAILED);
+
+            return;
+        }
 
         $event->updateStatus(ImportEventStatus::SAVING);
 
