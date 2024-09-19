@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Download\Courses;
+namespace App\Http\Controllers\Imports;
 
 use App\Models\ImportEvent;
 use Illuminate\Support\Facades\Artisan;
 
-final class ContinueDownloadCoursesController
+final class ContinueImportEventController
 {
     public function __invoke(ImportEvent $event): void
     {
-        Artisan::queue('courses:process', ['eventId' => $event->id]);
+        Artisan::queue("{$event->type}:process", ['eventId' => $event->id]);
     }
 }
