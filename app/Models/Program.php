@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Data\Download\PortalProgramData;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 final class Program extends Model
 {
@@ -17,6 +19,38 @@ final class Program extends Model
     protected $fillable = ['department_id', 'code', 'name', 'program_type_id', 'online_id'];
 
     protected $with = ['department'];
+
+    public static function createForDepartment(Department $department, RawDepartment $rawDepartment): void
+    {
+        $programs = PortalProgramData::collect($rawDepartment->options);
+
+        if (count($programs) === 0) {
+            self::new($department, $department->name, $department->code);
+
+            return;
+        }
+
+        foreach ($programs as $program) {
+            $programCode = Str::of($program->name)->limit(3, '')->value();
+
+            self::new($department, $program->name, $programCode);
+        }
+    }
+
+    public static function new(
+        Department $department,
+        string $programName,
+        string $programCode,
+    ): void {
+        self::firstOrCreate(
+            ['name' => $programName],
+            [
+                'code' => $programCode,
+                'department_id' => $department->id,
+                'program_type_id' => 5,
+            ],
+        );
+    }
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Department, \App\Models\Program> */
     public function department(): BelongsTo
