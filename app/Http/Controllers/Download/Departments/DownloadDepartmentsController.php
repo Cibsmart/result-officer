@@ -21,7 +21,7 @@ final readonly class DownloadDepartmentsController
 
         $event = ImportEvent::new($user, ImportEventType::DEPARTMENTS, ['department' => 'all']);
 
-        defer(fn () => Artisan::queue('department:import', ['eventId' => $event->id]));
+        defer(fn () => Artisan::queue('departments:import', ['eventId' => $event->id]));
 
         return redirect()->back()->success('Department Import Started...');
     }
