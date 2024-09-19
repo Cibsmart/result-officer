@@ -4,30 +4,25 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Download\Departments;
 
-use App\Helpers\GetResponse;
-use App\Repositories\DepartmentRepository;
-use Exception;
+use App\Enums\ImportEventType;
+use App\Models\ImportEvent;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 final readonly class DownloadDepartmentsController
 {
-    public function __construct(private DepartmentRepository $repository)
+    public function __invoke(Request $request): RedirectResponse
     {
-    }
+        $user = $request->user();
 
-    /** @throws \Exception */
-    public function __invoke(): RedirectResponse
-    {
-        try {
-            $departments = $this->repository->getDepartments();
+        assert($user instanceof User);
 
-            $saved = $this->repository->saveDepartments($departments);
+        $event = ImportEvent::new($user, ImportEventType::DEPARTMENTS, ['department' => 'all']);
 
-            $response = GetResponse::fromArray($saved);
+        defer(fn () => Artisan::queue('department:import', ['eventId' => $event->id]));
 
-            return back()->{$response->type->value}($response->message);
-        } catch (Exception $e) {
-            return redirect()->back()->error($e->getMessage());
-        }
+        return redirect()->back()->success('Department Import Started...');
     }
 }
