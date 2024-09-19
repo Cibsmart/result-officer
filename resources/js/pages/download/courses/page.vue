@@ -68,8 +68,8 @@ const submit = () => {
             <PrimaryButton
               :disabled="disableButton"
               tooltip
-              >Download</PrimaryButton
-            >
+              >Download
+            </PrimaryButton>
           </div>
         </form>
       </BaseFormSection>
@@ -81,14 +81,14 @@ const submit = () => {
           <ActiveFeeds :data="pending" />
 
           <SecondaryLink
-            :href="route('download.courses.cancel', { event: pending.id })"
+            :href="route('import.event.cancel', { event: pending.id })"
             class="mt-6">
             Cancel
           </SecondaryLink>
 
           <PrimaryLink
             v-if="pending.canBeContinued"
-            :href="route('download.courses.continue', { event: pending.id })"
+            :href="route('import.event.continue', { event: pending.id })"
             class="ml-4 mt-4">
             Continue
           </PrimaryLink>
