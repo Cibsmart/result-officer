@@ -18,7 +18,11 @@ final class ImportPortalData extends Command
 
     protected $description = 'Import Data from the Portal and Save in the Raw Data Table in the Database';
 
-    public function handle(PortalDataService $service): void
+    /**
+     * @template T of \App\Contracts\PortalDataService
+     * @param T $service
+     */
+    public function handle(PortalDataService $service): int
     {
         $event = ImportEvent::findOrFail($this->argument('eventId'));
 

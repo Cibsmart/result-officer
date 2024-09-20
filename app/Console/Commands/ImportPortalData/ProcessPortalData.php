@@ -15,6 +15,10 @@ final class ProcessPortalData extends Command
 
     protected $description = 'Process all Pending Raw Data associated with the event';
 
+    /**
+     * @template T of \App\Contracts\PortalDataService
+     * @param T $service
+     */
     public function handle(PortalDataService $service): void
     {
         $event = ImportEvent::findOrFail($this->argument('eventId'));
