@@ -33,10 +33,10 @@ final class ImportEventData extends Data
             ->map(fn (string $value, string $key) => strtoupper("$value $key"))
             ->join(', ');
 
-        $duplicates = $event->download_count - ($event->processed_count + $event->failed_count);
+        $unprocessed = $event->download_count - ($event->processed_count + $event->failed_count);
 
         $description = "Downloaded: {$event->download_count}, Processed: {$event->processed_count}, ";
-        $description .= "Failed: {$event->failed_count}, Duplicates: {$duplicates}";
+        $description .= "Failed: {$event->failed_count}, Unprocessed: {$unprocessed}";
 
         return new self(
             id: $event->id,
