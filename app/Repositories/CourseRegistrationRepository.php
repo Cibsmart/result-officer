@@ -14,14 +14,14 @@ use App\Models\Semester;
 use App\Models\SemesterEnrollment;
 use App\Models\Session;
 use App\Models\Student;
-use App\Services\Api\CourseRegistrationService;
+use App\Services\Api\RegistrationService;
 use App\Values\RegistrationNumber;
 use Exception;
 use Illuminate\Support\Collection;
 
 final class CourseRegistrationRepository
 {
-    public function __construct(public CourseRegistrationService $service)
+    public function __construct(public RegistrationService $service)
     {
     }
 

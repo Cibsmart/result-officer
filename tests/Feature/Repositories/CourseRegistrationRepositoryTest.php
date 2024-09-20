@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Data\Download\PortalCourseRegistrationData;
 use App\Http\Clients\Fakes\FakeCourseRegistrationClient;
 use App\Repositories\CourseRegistrationRepository;
-use App\Services\Api\CourseRegistrationService;
+use App\Services\Api\RegistrationService;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Support\Collection;
 use Tests\Factories\CourseFactory;
@@ -21,7 +21,7 @@ beforeEach(function (): void {
 
     $client = new FakeCourseRegistrationClient();
 
-    $service = new CourseRegistrationService($client);
+    $service = new RegistrationService($client);
 
     $this->repository = new CourseRegistrationRepository($service);
 });
