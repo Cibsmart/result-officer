@@ -8,7 +8,7 @@ use App\Contracts\CourseRegistrationClient;
 use App\Data\Download\PortalCourseRegistrationData;
 use Illuminate\Support\Collection;
 
-final class CourseRegistrationService
+final class RegistrationService
 {
     public function __construct(public CourseRegistrationClient $client)
     {

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 use App\Data\Download\PortalCourseRegistrationData;
 use App\Http\Clients\Fakes\FakeCourseRegistrationClient;
-use App\Services\Api\CourseRegistrationService;
+use App\Services\Api\RegistrationService;
 use Illuminate\Support\Collection;
 
 beforeEach(function (): void {
     $client = new FakeCourseRegistrationClient();
 
-    $this->service = new CourseRegistrationService($client);
+    $this->service = new RegistrationService($client);
 });
 
 it('can get course registrations by registration number', function (): void {
