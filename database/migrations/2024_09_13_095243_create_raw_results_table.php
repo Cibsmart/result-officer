@@ -28,6 +28,8 @@ return new class extends Migration
             $table->string('upload_date')->nullable();
             $table->string('exam_date')->nullable();
             $table->string('lecturer_name')->nullable();
+            $table->string('lecturer_phone')->nullable();
+            $table->string('lecturer_email')->nullable();
             $table->string('lecturer_department')->nullable();
             $table->string('status');
             $table->text('message')->nullable();
