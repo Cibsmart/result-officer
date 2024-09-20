@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Console\Commands\Departments;
+namespace App\Console\Commands\ImportPortalData;
 
-use App\Actions\Departments\ProcessImportedRawDepartments;
+use App\Contracts\PortalDataService;
 use App\Enums\ImportEventStatus;
 use App\Models\ImportEvent;
 use Illuminate\Console\Command;
 
-final class ProcessImportedDepartments extends Command
+final class ProcessPortalData extends Command
 {
-    protected $signature = 'departments:process {eventId}';
+    protected $signature = 'portal-data:process {eventId}';
 
     protected $description = 'Process all Pending Raw Data associated with the event';
 
-    public function handle(ProcessImportedRawDepartments $processRawDepartmentsAction): void
+    public function handle(PortalDataService $service): void
     {
         $event = ImportEvent::findOrFail($this->argument('eventId'));
 
@@ -23,6 +23,10 @@ final class ProcessImportedDepartments extends Command
             return;
         }
 
-        $processRawDepartmentsAction->execute($event);
+        $event->updateStatus(ImportEventStatus::PROCESSING);
+
+        $service->process($event);
+
+        $event->updateStatus(ImportEventStatus::COMPLETED);
     }
 }
