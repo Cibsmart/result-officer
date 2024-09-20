@@ -99,7 +99,7 @@ declare namespace App.Data.Download {
     otherNames: string;
     registrationNumber: string;
     gender: string;
-    dateOfBirth: App.Data.Download.PortalDateData;
+    dateOfBirth: string;
     departmentId: string;
     option: string;
     state: string;
