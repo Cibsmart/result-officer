@@ -9,7 +9,7 @@ use App\Enums\RawDataStatus;
 use App\Models\ImportEvent;
 use App\Models\RawDepartment;
 
-final class SaveRawDepartment
+final class SavePortalDepartment
 {
     public function execute(ImportEvent $event, PortalDepartmentData $data): void
     {

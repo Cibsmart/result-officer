@@ -8,7 +8,7 @@ use App\Enums\RawDataStatus;
 use App\Models\Course;
 use App\Models\RawCourse;
 
-final class SaveImportedRawCourse
+final class ProcessPortalCourse
 {
     public function execute(RawCourse $rawCourse): void
     {
