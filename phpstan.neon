@@ -14,5 +14,7 @@ parameters:
         -   '#^Cannot access property \$\w+ on App\\Models\\\w+\|null\.$#'
         -   '#^Cannot call method \w+\(\) on App\\Models\\\w+\|null\.$#'
 
+    treatPhpDocTypesAsCertain: false
+
 
     editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'

@@ -20,9 +20,9 @@ final class ImportEvent extends Model
     ): self {
         $event = new self();
         $event->user_id = $user->id;
-        $event->type = $type->value;
+        $event->type = $type;
         $event->data = $data;
-        $event->status = ImportEventStatus::NEW->value;
+        $event->status = ImportEventStatus::NEW;
         $event->save();
 
         return $event;
@@ -58,7 +58,7 @@ final class ImportEvent extends Model
             $this->failed_count = $counts->failed_count;
         }
 
-        $this->status = $status->value;
+        $this->status = $status;
         $this->save();
     }
 
@@ -76,7 +76,11 @@ final class ImportEvent extends Model
             ->firstOrFail();
     }
 
-    /** @return array<string, string> */
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Files.LineLength.LineTooLong
+     * @return array{data: 'json', status: 'App\Enums\ImportEventStatus',
+     *     type: 'App\Enums\ImportEventType'}
+     */
     protected function casts(): array
     {
         return [

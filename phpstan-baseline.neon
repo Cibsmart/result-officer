@@ -6,26 +6,6 @@ parameters:
 			path: app/Data/Department/DepartmentListData.php
 
 		-
-			message: "#^Parameter \\$status of class App\\\\Data\\\\Import\\\\ImportEventData constructor expects App\\\\Enums\\\\ImportEventStatus, string given\\.$#"
-			count: 1
-			path: app/Data/Import/ImportEventData.php
-
-		-
-			message: "#^Parameter \\$type of class App\\\\Data\\\\Import\\\\ImportEventData constructor expects App\\\\Enums\\\\ImportEventType, string given\\.$#"
-			count: 1
-			path: app/Data/Import/ImportEventData.php
-
-		-
-			message: "#^Strict comparison using \\=\\=\\= between string and App\\\\Enums\\\\ImportEventStatus\\:\\:COMPLETED will always evaluate to false\\.$#"
-			count: 1
-			path: app/Data/Import/ImportEventData.php
-
-		-
-			message: "#^Cannot call method width\\(\\) on string\\.$#"
-			count: 1
-			path: app/Data/Import/PendingImportEventData.php
-
-		-
 			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Program\\>\\:\\:tap\\(\\) expects callable\\(Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Program\\>\\)\\: mixed, App\\\\Scopes\\\\ActiveScope given\\.$#"
 			count: 1
 			path: app/Data/Program/ProgramListData.php
@@ -47,11 +27,6 @@ parameters:
 
 		-
 			message: "#^Access to an undefined property object\\:\\:\\$processed_count\\.$#"
-			count: 1
-			path: app/Models/ImportEvent.php
-
-		-
-			message: "#^Property App\\\\Models\\\\ImportEvent\\:\\:\\$data \\(string\\) does not accept array\\<string, string\\>\\.$#"
 			count: 1
 			path: app/Models/ImportEvent.php
 

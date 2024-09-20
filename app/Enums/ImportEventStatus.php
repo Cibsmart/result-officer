@@ -33,7 +33,7 @@ enum ImportEventStatus: string
     {
         return match ($this) {
             self::NEW, self::STARTED => 1,
-            self::DOWNLOADING => 25,
+            self::DOWNLOADING, self::DOWNLOADED => 25,
             self::SAVING, self::SAVED => 50,
             self::PROCESSING => 75,
             self::CANCELLED, self::FAILED, self::COMPLETED => 100,
