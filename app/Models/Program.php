@@ -23,7 +23,7 @@ final class Program extends Model
     {
         $programs = $rawDepartment->options;
 
-        if ($programs->count() === 0) {
+        if (count($programs) === 0) {
             self::new($department, $department->name, $department->code);
 
             return;
