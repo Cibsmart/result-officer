@@ -30,7 +30,7 @@ final class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(
             PortalDataService::class,
-            fn($app) => $app->make(ImportEventType::from(Context::pull('import-event'))->service()),
+            fn ($app) => $app->make(ImportEventType::from(Context::pull('import-event'))->service()),
         );
     }
 

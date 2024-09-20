@@ -6,21 +6,22 @@ namespace App\Models;
 
 use App\Data\Download\PortalDepartmentData;
 use App\Enums\RawDataStatus;
+use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Database\Eloquent\Model;
 
 final class RawDepartment extends Model
 {
     public static function createFromPortalDepartmentData(PortalDepartmentData $data, ImportEvent $event): void
     {
-        $rawCourse = new self();
-        $rawCourse->import_event_id = $event->id;
-        $rawCourse->status = RawDataStatus::PENDING->value;
-        $rawCourse->online_id = $data->onlineId;
-        $rawCourse->code = $data->departmentCode;
-        $rawCourse->name = $data->departmentName;
-        $rawCourse->faculty = $data->facultyName;
-        $rawCourse->options = $data->programs;
-        $rawCourse->save();
+        $rawDepartment = new self();
+        $rawDepartment->import_event_id = $event->id;
+        $rawDepartment->status = RawDataStatus::PENDING->value;
+        $rawDepartment->online_id = $data->onlineId;
+        $rawDepartment->code = $data->departmentCode;
+        $rawDepartment->name = $data->departmentName;
+        $rawDepartment->faculty = $data->facultyName;
+        $rawDepartment->options = $data->programs;
+        $rawDepartment->save();
     }
 
     public function updateStatus(RawDataStatus $status): void
@@ -35,11 +36,11 @@ final class RawDepartment extends Model
         $this->save();
     }
 
-    /** @return array<string, string> */
+    /** @return array{options: 'Illuminate\Database\Eloquent\Casts\Json'} */
     protected function casts(): array
     {
         return [
-            'options' => 'array',
+            'options' => Json::class,
         ];
     }
 }

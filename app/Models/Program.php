@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Data\Download\PortalProgramData;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,9 +21,9 @@ final class Program extends Model
 
     public static function createForDepartment(Department $department, RawDepartment $rawDepartment): void
     {
-        $programs = PortalProgramData::collect($rawDepartment->options);
+        $programs = $rawDepartment->options;
 
-        if (count($programs) === 0) {
+        if ($programs->count() === 0) {
             self::new($department, $department->name, $department->code);
 
             return;
