@@ -6,11 +6,13 @@ namespace App\Http\Controllers\Imports;
 
 use App\Models\ImportEvent;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Context;
 
 final class ContinueImportEventController
 {
     public function __invoke(ImportEvent $event): void
     {
-        Artisan::queue("{$event->type}:process", ['eventId' => $event->id]);
+        Context::add('event-type', $event->type->value);
+        Artisan::queue('portal-data:process', ['eventId' => $event->id]);
     }
 }
