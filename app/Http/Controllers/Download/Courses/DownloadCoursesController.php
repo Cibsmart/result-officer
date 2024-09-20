@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Download\Courses;
 
-use App\Enums\ImportEventStatus;
 use App\Enums\ImportEventType;
 use App\Models\ImportEvent;
 use App\Models\User;
@@ -23,8 +22,6 @@ final readonly class DownloadCoursesController
         assert($user instanceof User);
 
         $event = ImportEvent::new($user, ImportEventType::COURSES, ['course' => 'all']);
-
-        defer(fn () => $event->updateStatus(ImportEventStatus::STARTED));
 
         Context::add('import-event', ImportEventType::COURSES->value);
         defer(fn () => Artisan::queue('portal-data:import', ['eventId' => $event->id]));
