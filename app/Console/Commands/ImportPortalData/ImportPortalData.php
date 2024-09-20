@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands\ImportPortalData;
 
-use App\Contracts\PortalDataService;
+use App\Contracts\PortalService;
 use App\Enums\ImportEventStatus;
 use App\Models\ImportEvent;
 use Exception;
@@ -19,10 +19,10 @@ final class ImportPortalData extends Command
     protected $description = 'Import Data from the Portal and Save in the Raw Data Table in the Database';
 
     /**
-     * @template T of \App\Contracts\PortalDataService
+     * @template T of \App\Contracts\PortalService
      * @param T $service
      */
-    public function handle(PortalDataService $service): int
+    public function handle(PortalService $service): int
     {
         $event = ImportEvent::findOrFail($this->argument('eventId'));
 

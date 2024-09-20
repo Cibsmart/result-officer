@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Contracts\CourseRegistrationClient;
-use App\Contracts\PortalDataService;
+use App\Contracts\PortalService;
 use App\Contracts\ResultClient;
 use App\Contracts\StudentClient;
 use App\Enums\ImportEventType;
@@ -29,7 +29,7 @@ final class AppServiceProvider extends ServiceProvider
         $this->app->bind(CourseRegistrationClient::class, PortalCourseRegistrationClient::class);
 
         $this->app->bind(
-            PortalDataService::class,
+            PortalService::class,
             fn ($app) => $app->make(ImportEventType::from(Context::pull('import-event'))->service()),
         );
     }
