@@ -19,12 +19,12 @@ final class ProcessPortalData extends Command
      * @template T of \App\Contracts\PortalDataService
      * @param T $service
      */
-    public function handle(PortalDataService $service): void
+    public function handle(PortalDataService $service): int
     {
         $event = ImportEvent::findOrFail($this->argument('eventId'));
 
         if (in_array($event->status, ImportEventStatus::unprocessableStates(), true)) {
-            return;
+            return Command::FAILURE;
         }
 
         $event->updateStatus(ImportEventStatus::PROCESSING);
@@ -32,5 +32,7 @@ final class ProcessPortalData extends Command
         $service->process($event);
 
         $event->updateStatus(ImportEventStatus::COMPLETED);
+
+        return Command::SUCCESS;
     }
 }
