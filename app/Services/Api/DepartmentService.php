@@ -4,14 +4,24 @@ declare(strict_types=1);
 
 namespace App\Services\Api;
 
+use App\Actions\Departments\ProcessPortalDepartment;
+use App\Actions\Departments\SavePortalDepartment;
+use App\Contracts\PortalDataService;
 use App\Data\Download\PortalDepartmentData;
+use App\Enums\RawDataStatus;
 use App\Http\Clients\DepartmentClient;
+use App\Models\ImportEvent;
+use Exception;
 use Illuminate\Support\Collection;
 
-final readonly class DepartmentService
+/** @template-implements \App\Contracts\PortalDataService<\App\Data\Download\PortalDepartmentData> */
+final readonly class DepartmentService implements PortalDataService
 {
-    public function __construct(private DepartmentClient $client)
-    {
+    public function __construct(
+        private DepartmentClient $client,
+        private SavePortalDepartment $saveAction,
+        private ProcessPortalDepartment $processAction,
+    ) {
     }
 
     /**
@@ -34,5 +44,40 @@ final readonly class DepartmentService
         $department = $this->client->fetchDepartmentById($onlineId);
 
         return PortalDepartmentData::collect(collect($department));
+    }
+
+    /**
+     * {@inheritDoc}
+     * @throws \Exception
+     */
+    public function get(array $parameters): Collection
+    {
+        if (count($parameters) === 0) {
+            return $this->getAllDepartments();
+        }
+
+        return $this->getDepartmentDetail((int) $parameters['department_id']);
+    }
+
+    public function save(ImportEvent $event, Collection $data): void
+    {
+        foreach ($data as $department) {
+            $this->saveAction->execute($event, $department);
+        }
+    }
+
+    public function process(ImportEvent $event): void
+    {
+        $rawDepartments = $event->departments()->where('status', RawDataStatus::PENDING)->get();
+
+        foreach ($rawDepartments as $rawDepartment) {
+            try {
+                $this->processAction->execute($rawDepartment);
+            } catch (Exception $e) {
+                $rawDepartment->setMessage($e->getMessage());
+
+                $rawDepartment->updateStatus(RawDataStatus::FAILED);
+            }
+        }
     }
 }
