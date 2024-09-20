@@ -8,7 +8,7 @@ use App\Models\ImportEvent;
 use Illuminate\Support\Collection;
 
 /** @template T */
-interface PortalDataService
+interface PortalService
 {
     /**
      * @param array<string, int|string> $parameters

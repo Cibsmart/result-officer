@@ -6,7 +6,7 @@ namespace App\Services\Api;
 
 use App\Actions\Courses\ProcessPortalCourse;
 use App\Actions\Courses\SavePortalCourse;
-use App\Contracts\PortalDataService;
+use App\Contracts\PortalService;
 use App\Data\Download\PortalCourseData;
 use App\Enums\RawDataStatus;
 use App\Http\Clients\CourseClient;
@@ -14,8 +14,8 @@ use App\Models\ImportEvent;
 use Exception;
 use Illuminate\Support\Collection;
 
-/** @template-implements \App\Contracts\PortalDataService<\App\Data\Download\PortalCourseData> */
-final readonly class CourseService implements PortalDataService
+/** @template-implements \App\Contracts\PortalService<\App\Data\Download\PortalCourseData> */
+final readonly class CourseService implements PortalService
 {
     public function __construct(
         private CourseClient $client,

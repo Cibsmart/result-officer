@@ -6,7 +6,7 @@ namespace App\Services\Api;
 
 use App\Actions\Departments\ProcessPortalDepartment;
 use App\Actions\Departments\SavePortalDepartment;
-use App\Contracts\PortalDataService;
+use App\Contracts\PortalService;
 use App\Data\Download\PortalDepartmentData;
 use App\Enums\RawDataStatus;
 use App\Http\Clients\DepartmentClient;
@@ -14,8 +14,8 @@ use App\Models\ImportEvent;
 use Exception;
 use Illuminate\Support\Collection;
 
-/** @template-implements \App\Contracts\PortalDataService<\App\Data\Download\PortalDepartmentData> */
-final readonly class DepartmentService implements PortalDataService
+/** @template-implements \App\Contracts\PortalService<\App\Data\Download\PortalDepartmentData> */
+final readonly class DepartmentService implements PortalService
 {
     public function __construct(
         private DepartmentClient $client,
