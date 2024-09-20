@@ -29,7 +29,7 @@ final readonly class PendingStudent
         $registrationNumber = RegistrationNumber::new($data->registrationNumber);
 
         $student = new Student();
-        $student->date_of_birth = $data->dateOfBirth->getStringDate();
+        $student->date_of_birth = $data->dateOfBirth;
         $student->email = $data->email;
         $student->entry_level_id = self::getEntryLevelId($data->entryLevel);
         $student->entry_mode_id = self::getEntryModeId($data->entryMode);
