@@ -62,6 +62,12 @@ final class ImportEvent extends Model
         $this->save();
     }
 
+    public function updateDownloadCount(int $count): void
+    {
+        $this->download_count = $count;
+        $this->save();
+    }
+
     public function getCounts(): object
     {
         return $this->courses()->toBase()
