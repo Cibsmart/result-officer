@@ -70,14 +70,19 @@ final class ImportEvent extends Model
 
     public function getCounts(): object
     {
-        return $this->courses()->toBase()
+        return $this->{$this->type->value}()->toBase()
             ->selectRaw("count(case when status = 'processed' then 1 end) as processed_count")
             ->selectRaw("count(case when status = 'failed' then 1 end) as failed_count")
             ->firstOrFail();
     }
 
+    public function setMessage(string $message): void
+    {
+        $this->message = $message;
+        $this->save();
+    }
+
     /**
-     * @phpcsSuppress SlevomatCodingStandard.Files.LineLength.LineTooLong
      * @return array{data: 'json', status: 'App\Enums\ImportEventStatus',
      *     type: 'App\Enums\ImportEventType'}
      */
