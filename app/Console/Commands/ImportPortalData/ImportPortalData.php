@@ -29,7 +29,7 @@ final class ImportPortalData extends Command
         if ($event->status !== ImportEventStatus::STARTED) {
             $event->updateStatus(ImportEventStatus::FAILED);
 
-            return;
+            return Command::FAILURE;
         }
 
         $event->updateStatus(ImportEventStatus::DOWNLOADING);
@@ -40,7 +40,7 @@ final class ImportPortalData extends Command
             $event->message = $e->getMessage();
             $event->updateStatus(ImportEventStatus::FAILED);
 
-            return;
+            return Command::FAILURE;
         }
 
         $event->updateStatus(ImportEventStatus::DOWNLOADED);
@@ -55,5 +55,7 @@ final class ImportPortalData extends Command
 
         Context::add('import-event', $event->type->value);
         Artisan::call('portal-data:process', ['eventId' => $event->id]);
+
+        return Command::SUCCESS;
     }
 }
