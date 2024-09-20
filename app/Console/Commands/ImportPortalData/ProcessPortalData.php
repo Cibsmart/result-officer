@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Console\Commands\ImportPortalData;
 
-use App\Contracts\PortalService;
 use App\Enums\ImportEventStatus;
 use App\Models\ImportEvent;
+use App\Services\Api\PortalServiceFactory;
 use Illuminate\Console\Command;
 
 final class ProcessPortalData extends Command
@@ -15,13 +15,11 @@ final class ProcessPortalData extends Command
 
     protected $description = 'Process all Pending Raw Data associated with the event';
 
-    /**
-     * @template T of \App\Contracts\PortalService
-     * @param T $service
-     */
-    public function handle(PortalService $service): int
+    public function handle(PortalServiceFactory $factory): int
     {
         $event = ImportEvent::findOrFail($this->argument('eventId'));
+
+        $service = $factory->resolve($event->type);
 
         if (in_array($event->status, ImportEventStatus::unprocessableStates(), true)) {
             return Command::FAILURE;

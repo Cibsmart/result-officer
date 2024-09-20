@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Console\Commands\ImportPortalData;
 
-use App\Contracts\PortalService;
 use App\Enums\ImportEventStatus;
 use App\Models\ImportEvent;
+use App\Services\Api\PortalServiceFactory;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
@@ -18,13 +18,11 @@ final class ImportPortalData extends Command
 
     protected $description = 'Import Data from the Portal and Save in the Raw Data Table in the Database';
 
-    /**
-     * @template T of \App\Contracts\PortalService
-     * @param T $service
-     */
-    public function handle(PortalService $service): int
+    public function handle(PortalServiceFactory $factory): int
     {
         $event = ImportEvent::findOrFail($this->argument('eventId'));
+
+        $service = $factory->resolve($event->type);
 
         $event->updateStatus(ImportEventStatus::DOWNLOADING);
 
