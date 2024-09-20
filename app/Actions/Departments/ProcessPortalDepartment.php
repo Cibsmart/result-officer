@@ -8,7 +8,7 @@ use App\Enums\RawDataStatus;
 use App\Models\Department;
 use App\Models\RawDepartment;
 
-final class SaveProcessedDepartment
+final class ProcessPortalDepartment
 {
     public function execute(RawDepartment $rawDepartment): void
     {

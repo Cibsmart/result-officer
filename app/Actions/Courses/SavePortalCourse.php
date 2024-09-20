@@ -9,7 +9,7 @@ use App\Enums\RawDataStatus;
 use App\Models\ImportEvent;
 use App\Models\RawCourse;
 
-final class SaveRawCourse
+final class SavePortalCourse
 {
     public function execute(ImportEvent $event, PortalCourseData $data): void
     {
