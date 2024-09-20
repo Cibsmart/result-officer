@@ -18,6 +18,7 @@ enum ImportEventType: string
     case STUDENTS = 'students';
     case REGISTRATIONS = 'registrations';
 
+    /** @return class-string */
     public function service(): string
     {
         return match ($this) {

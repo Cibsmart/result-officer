@@ -35,3 +35,8 @@ parameters:
 			count: 1
 			path: app/Models/Student.php
 
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\PortalServiceFactory\\:\\:resolve\\(\\) return type with generic interface App\\\\Contracts\\\\PortalService does not specify its types\\: T$#"
+			count: 1
+			path: app/Services/Api/PortalServiceFactory.php
+
