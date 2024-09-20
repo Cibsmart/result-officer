@@ -19,7 +19,7 @@ final class RawDepartment extends Model
         $rawDepartment->code = $data->departmentCode;
         $rawDepartment->name = $data->departmentName;
         $rawDepartment->faculty = $data->facultyName;
-        $rawDepartment->options = $data->programs->map(fn($dept) => $dept->name)->all();
+        $rawDepartment->options = $data->programs->map(fn ($dept) => $dept->name)->all();
         $rawDepartment->save();
     }
 
