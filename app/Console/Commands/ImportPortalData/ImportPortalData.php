@@ -26,18 +26,12 @@ final class ImportPortalData extends Command
     {
         $event = ImportEvent::findOrFail($this->argument('eventId'));
 
-        if ($event->status !== ImportEventStatus::STARTED) {
-            $event->updateStatus(ImportEventStatus::FAILED);
-
-            return Command::FAILURE;
-        }
-
         $event->updateStatus(ImportEventStatus::DOWNLOADING);
 
         try {
             $courses = $service->get([]);
         } catch (Exception $e) {
-            $event->message = $e->getMessage();
+            $event->setMessage($e->getMessage());
             $event->updateStatus(ImportEventStatus::FAILED);
 
             return Command::FAILURE;
