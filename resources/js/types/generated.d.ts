@@ -90,6 +90,8 @@ declare namespace App.Data.Download {
     source: App.Enums.RecordSource;
     examDate: string;
     lecturerName: string;
+    lecturerEmail: string;
+    lecturerPhoneNumber: string;
     lecturerDepartment: string;
   };
   export type PortalStudentData = {

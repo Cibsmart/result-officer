@@ -11,7 +11,7 @@ use Spatie\LaravelData\Data;
  *     registration_number:string, gender:string, date_of_birth:string, department_id: string, option: string,
  *     state: string, local_government: string, entry_session: string, entry_mode: string, entry_level: string,
  *     jamb_registration_number: string, email: string, phone_number:string, departmentid?: string, local_governemnt?:
- *     string}
+ *     string, lecturer_name?: string, lecturer_phone?: string, lecturer_email?: string, lecturer_department?: string}
  */
 final class PortalStudentData extends Data
 {
@@ -39,13 +39,9 @@ final class PortalStudentData extends Data
     /** @param StudentDetail $data */
     public static function fromArray(array $data): self
     {
-        $departmentId = array_key_exists('departmentid', $data)
-            ? $data['departmentid']
-            : $data['department_id'];
+        $departmentId = self::getValueFromArray('departmentid', $data, 'department_id');
 
-        $localGovernment = array_key_exists('local_governemnt', $data)
-            ? $data['local_governemnt']
-            : $data['local_government'];
+        $localGovernment = self::getValueFromArray('local_governemnt', $data, 'local_government');
 
         return new self(
             onlineId: (string) $data['id'],
@@ -66,5 +62,20 @@ final class PortalStudentData extends Data
             email: $data['email'],
             phoneNumber: $data['phone_number'],
         );
+    }
+
+    /** @param StudentDetail $data */
+    private static function getValueFromArray(
+        string $key,
+        array $data,
+        ?string $alternateKey = null,
+    ): string {
+        if (array_key_exists($key, $data)) {
+            return $data[$key];
+        }
+
+        return $alternateKey !== null
+            ? $data[$alternateKey]
+            : '';
     }
 }
