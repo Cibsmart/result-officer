@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class);
             $table->string('type');
+            $table->string('method');
             $table->json('data');
             $table->unsignedSmallInteger('download_count')->default(0);
             $table->unsignedSmallInteger('saved_count')->default(0);
