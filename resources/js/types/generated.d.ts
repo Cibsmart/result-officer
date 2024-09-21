@@ -287,6 +287,15 @@ declare namespace App.Enums {
   export type CreditUnitEnum = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 12 | 15 | 18;
   export type GenderEnum = "M" | "F";
   export type Grade = "A" | "B" | "C" | "D" | "E" | "F";
+  export type ImportEventMethod =
+    | "all"
+    | "registration_number"
+    | "registration_number_session_semester"
+    | "department_session"
+    | "department_session_level"
+    | "department_session_semester"
+    | "session"
+    | "session_course";
   export type ImportEventStatus =
     | "new"
     | "started"
