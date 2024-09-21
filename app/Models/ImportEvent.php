@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\ImportEventMethod;
 use App\Enums\ImportEventStatus;
 use App\Enums\ImportEventType;
 use Illuminate\Database\Eloquent\Model;
@@ -12,15 +13,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class ImportEvent extends Model
 {
-    /** @param array<string, string> $data */
+    /** @param array<string, int|string> $data */
     public static function new(
         User $user,
         ImportEventType $type,
+        ImportEventMethod $method,
         array $data,
     ): self {
         $event = new self();
         $event->user_id = $user->id;
         $event->type = $type;
+        $event->method = $method;
         $event->data = $data;
         $event->status = ImportEventStatus::NEW;
         $event->save();
@@ -88,12 +91,13 @@ final class ImportEvent extends Model
 
     /**
      * @return array{data: 'json', status: 'App\Enums\ImportEventStatus',
-     *     type: 'App\Enums\ImportEventType'}
+     *     type: 'App\Enums\ImportEventType', method: 'App\Enums\ImportEventMethod', }
      */
     protected function casts(): array
     {
         return [
             'data' => 'json',
+            'method' => ImportEventMethod::class,
             'status' => ImportEventStatus::class,
             'type' => ImportEventType::class,
         ];
