@@ -20,8 +20,10 @@ return new class extends Migration
             $table->string('type');
             $table->json('data');
             $table->unsignedSmallInteger('download_count')->default(0);
+            $table->unsignedSmallInteger('saved_count')->default(0);
             $table->unsignedSmallInteger('processed_count')->default(0);
             $table->unsignedSmallInteger('failed_count')->default(0);
+            $table->unsignedSmallInteger('unprocessed_count')->default(0);
             $table->string('status');
             $table->text('message')->nullable();
             $table->timestamps();

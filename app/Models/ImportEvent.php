@@ -54,8 +54,10 @@ final class ImportEvent extends Model
 
         if ($status === ImportEventStatus::COMPLETED) {
             $counts = $this->getCounts();
+            $this->saved_count = $counts->saved_count;
             $this->processed_count = $counts->processed_count;
             $this->failed_count = $counts->failed_count;
+            $this->unprocessed_count = $counts->unprocessed_count;
         }
 
         $this->status = $status;
@@ -71,8 +73,10 @@ final class ImportEvent extends Model
     public function getCounts(): object
     {
         return $this->{$this->type->value}()->toBase()
+            ->selectRaw('count(*) as saved_count')
             ->selectRaw("count(case when status = 'processed' then 1 end) as processed_count")
             ->selectRaw("count(case when status = 'failed' then 1 end) as failed_count")
+            ->selectRaw("count(case when status = 'pending' then 1 end) as unprocessed_count")
             ->firstOrFail();
     }
 
