@@ -4,14 +4,25 @@ declare(strict_types=1);
 
 namespace App\Services\Api;
 
+use App\Actions\Students\ProcessPortalStudent;
+use App\Actions\Students\SavePortalStudent;
+use App\Contracts\PortalService;
 use App\Contracts\StudentClient;
 use App\Data\Download\PortalStudentData;
+use App\Enums\ImportEventMethod;
+use App\Enums\RawDataStatus;
+use App\Models\ImportEvent;
+use Exception;
 use Illuminate\Support\Collection;
 
-final readonly class StudentService
+/** @template-implements \App\Contracts\PortalService<\App\Data\Download\PortalStudentData> */
+final readonly class StudentService implements PortalService
 {
-    public function __construct(private StudentClient $client)
-    {
+    public function __construct(
+        private StudentClient $client,
+        private SavePortalStudent $saveAction,
+        private ProcessPortalStudent $processAction,
+    ) {
     }
 
     /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalStudentData> */
@@ -36,5 +47,45 @@ final readonly class StudentService
         $student = $this->client->fetchStudentsBySession($session);
 
         return PortalStudentData::collect(collect($student));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function get(ImportEventMethod $method, array $parameters): Collection
+    {
+        $session = (string) $parameters['session'];
+        $department = (int) $parameters['department_id'];
+        $registrationNumber = (string) $parameters['registration_number'];
+
+        return match ($method) {
+            ImportEventMethod::REGISTRATION_NUMBER => $this->getStudentByRegistrationNumber($registrationNumber),
+            ImportEventMethod::DEPARTMENT_SESSION => $this->getStudentsByDepartmentAndSession($department, $session),
+            ImportEventMethod::SESSION => $this->getStudentsBySession($session),
+            default => throw new Exception("Method {$method->value} not found")
+        };
+    }
+
+    /** {@inheritDoc} */
+    public function save(ImportEvent $event, Collection $data): void
+    {
+        foreach ($data as $student) {
+            $this->saveAction->execute($event, $student);
+        }
+    }
+
+    public function process(ImportEvent $event): void
+    {
+        $rawData = $event->students()->where('status', RawDataStatus::PENDING)->get();
+
+        foreach ($rawData as $student) {
+            try {
+                $this->processAction->execute($student);
+            } catch (Exception $e) {
+                $student->setMessage($e->getMessage());
+
+                $student->updateStatus(RawDataStatus::FAILED);
+            }
+        }
     }
 }
