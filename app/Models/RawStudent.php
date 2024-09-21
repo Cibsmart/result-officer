@@ -43,6 +43,12 @@ final class RawStudent extends Model
         $this->save();
     }
 
+    public function setMessage(string $message): void
+    {
+        $this->message = $message;
+        $this->save();
+    }
+
     /** @return array{status: 'App\Enums\RawDataStatus'} */
     protected function casts(): array
     {
