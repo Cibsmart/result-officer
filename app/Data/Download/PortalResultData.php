@@ -22,6 +22,8 @@ final class PortalResultData extends Data
         public readonly RecordSource $source,
         public readonly string $examDate,
         public readonly string $lecturerName,
+        public readonly string $lecturerEmail,
+        public readonly string $lecturerPhoneNumber,
         public readonly string $lecturerDepartment,
     ) {
     }
@@ -41,6 +43,8 @@ final class PortalResultData extends Data
             source: RecordSource::PORTAL,
             examDate: $data['exam_date'] ?? '',
             lecturerName: $data['lecturer_name'] ?? '',
+            lecturerEmail: $data['lecturer_email'] ?? '',
+            lecturerPhoneNumber: $data['lecturer_phone_number'] ?? '',
             lecturerDepartment: $data['lecturer_department'] ?? '',
         );
     }
