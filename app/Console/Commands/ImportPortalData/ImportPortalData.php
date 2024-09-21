@@ -27,7 +27,7 @@ final class ImportPortalData extends Command
         $event->updateStatus(ImportEventStatus::DOWNLOADING);
 
         try {
-            $courses = $service->get([]);
+            $data = $service->get($event->method, $event->data);
         } catch (Exception $e) {
             $event->setMessage($e->getMessage());
             $event->updateStatus(ImportEventStatus::FAILED);
@@ -37,11 +37,11 @@ final class ImportPortalData extends Command
 
         $event->updateStatus(ImportEventStatus::DOWNLOADED);
 
-        $event->updateDownloadCount($courses->count());
+        $event->updateDownloadCount($data->count());
 
         $event->updateStatus(ImportEventStatus::SAVING);
 
-        $service->save($event, $courses);
+        $service->save($event, $data);
 
         $event->updateStatus(ImportEventStatus::SAVED);
 
