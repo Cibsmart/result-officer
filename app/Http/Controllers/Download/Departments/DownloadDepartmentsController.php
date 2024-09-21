@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Download\Departments;
 
+use App\Enums\ImportEventMethod;
 use App\Enums\ImportEventType;
 use App\Models\ImportEvent;
 use App\Models\User;
@@ -19,9 +20,9 @@ final readonly class DownloadDepartmentsController
 
         assert($user instanceof User);
 
-        $event = ImportEvent::new($user, ImportEventType::DEPARTMENTS, ['department' => 'all']);
+        $event = ImportEvent::new($user, ImportEventType::DEPARTMENTS, ImportEventMethod::ALL, ['department' => 'all']);
 
-        defer(fn () => Artisan::queue('portal-data:import', ['eventId' => $event->id]));
+        Artisan::queue('portal-data:import', ['eventId' => $event->id]);
 
         return redirect()->back()->success('Department Import Started...');
     }
