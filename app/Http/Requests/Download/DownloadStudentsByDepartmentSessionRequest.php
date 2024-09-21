@@ -27,6 +27,8 @@ final class DownloadStudentsByDepartmentSessionRequest extends FormRequest
     protected function passedValidation(): void
     {
         $this->replace([
+            'departmentName' => $this->input('department.name'),
+
             'onlineDepartmentId' => Department::query()
                 ->where('id', $this->input('department.id'))
                 ->firstOrFail()

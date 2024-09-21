@@ -4,33 +4,30 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Download\Students;
 
-use App\Helpers\GetResponse;
+use App\Enums\ImportEventType;
 use App\Http\Requests\Download\DownloadStudentsByDepartmentSessionRequest;
-use App\Repositories\StudentRepository;
-use Exception;
+use App\Models\ImportEvent;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Artisan;
 
 final readonly class DownloadStudentsByDepartmentSessionController
 {
-    public function __construct(private StudentRepository $repository)
-    {
-    }
-
     public function __invoke(DownloadStudentsByDepartmentSessionRequest $request): RedirectResponse
     {
-        try {
-            $data = $this->repository->getStudentsByDepartmentAndSession(
-                departmentId: $request->integer('onlineDepartmentId'),
-                session: $request->string('sessionName')->value(),
-            );
+        $user = $request->user();
 
-            $results = $this->repository->saveStudents($data);
+        assert($user instanceof User);
 
-            $response = GetResponse::fromArray($results);
+        $event = ImportEvent::new($user, ImportEventType::STUDENTS,
+            [
+                'department' => $request->string('departmentName')->value(),
+                'entry_session' => $request->string('sessionName')->value(),
+                'online_department_id' => $request->integer('onlineDepartmentId'),
+            ]);
 
-            return back()->{$response->type->value}($response->message);
-        } catch (Exception $e) {
-            return back()->error($e->getMessage());
-        }
+        Artisan::queue('portal-data:import', ['eventId' => $event->id]);
+
+        return redirect()->back()->success('Students Import Started...');
     }
 }
