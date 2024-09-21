@@ -8,6 +8,7 @@ use App\Actions\Courses\ProcessPortalCourse;
 use App\Actions\Courses\SavePortalCourse;
 use App\Contracts\PortalService;
 use App\Data\Download\PortalCourseData;
+use App\Enums\ImportEventMethod;
 use App\Enums\RawDataStatus;
 use App\Http\Clients\CourseClient;
 use App\Models\ImportEvent;
@@ -46,7 +47,20 @@ final readonly class CourseService implements PortalService
         return PortalCourseData::collect(collect($course));
     }
 
-    /** @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseData> $data */
+    /**
+     * {@inheritDoc}
+     * @throws \Exception
+     */
+    public function get(ImportEventMethod $method, array $parameters): Collection
+    {
+        if ($method === ImportEventMethod::COURSE) {
+            return $this->getCourseDetail((int) $parameters['course_id']);
+        }
+
+        return $this->getAllCourses();
+    }
+
+    /** {@inheritDoc} */
     public function save(ImportEvent $event, Collection $data): void
     {
         foreach ($data as $course) {
@@ -67,18 +81,5 @@ final readonly class CourseService implements PortalService
                 $rawCourse->updateStatus(RawDataStatus::FAILED);
             }
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     * @throws \Exception
-     */
-    public function get(array $parameters): Collection
-    {
-        if (count($parameters) === 0) {
-            return $this->getAllCourses();
-        }
-
-        return $this->getCourseDetail((int) $parameters['course_id']);
     }
 }

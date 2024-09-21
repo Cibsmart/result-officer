@@ -8,6 +8,7 @@ use App\Actions\Departments\ProcessPortalDepartment;
 use App\Actions\Departments\SavePortalDepartment;
 use App\Contracts\PortalService;
 use App\Data\Download\PortalDepartmentData;
+use App\Enums\ImportEventMethod;
 use App\Enums\RawDataStatus;
 use App\Http\Clients\DepartmentClient;
 use App\Models\ImportEvent;
@@ -50,15 +51,16 @@ final readonly class DepartmentService implements PortalService
      * {@inheritDoc}
      * @throws \Exception
      */
-    public function get(array $parameters): Collection
+    public function get(ImportEventMethod $method, array $parameters): Collection
     {
-        if (count($parameters) === 0) {
-            return $this->getAllDepartments();
+        if ($method === ImportEventMethod::DEPARTMENT) {
+            return $this->getDepartmentDetail((int) $parameters['department_id']);
         }
 
-        return $this->getDepartmentDetail((int) $parameters['department_id']);
+        return $this->getAllDepartments();
     }
 
+    /** {@inheritDoc} */
     public function save(ImportEvent $event, Collection $data): void
     {
         foreach ($data as $department) {
