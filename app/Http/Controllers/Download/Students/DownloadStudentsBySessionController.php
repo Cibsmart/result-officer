@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Download\Students;
 
+use App\Enums\ImportEventMethod;
 use App\Enums\ImportEventType;
 use App\Http\Requests\Download\DownloadStudentsBySessionRequest;
 use App\Models\ImportEvent;
@@ -19,7 +20,7 @@ final readonly class DownloadStudentsBySessionController
 
         assert($user instanceof User);
 
-        $event = ImportEvent::new($user, ImportEventType::STUDENTS,
+        $event = ImportEvent::new($user, ImportEventType::STUDENTS, ImportEventMethod::SESSION,
             ['entry_session' => $request->string('sessionName')->value()]);
 
         Artisan::queue('portal-data:import', ['eventId' => $event->id]);
