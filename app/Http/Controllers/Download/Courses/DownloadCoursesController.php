@@ -10,7 +10,6 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Context;
 
 final readonly class DownloadCoursesController
 {
@@ -23,7 +22,6 @@ final readonly class DownloadCoursesController
 
         $event = ImportEvent::new($user, ImportEventType::COURSES, ['course' => 'all']);
 
-        Context::add('import-event', ImportEventType::COURSES->value);
         defer(fn () => Artisan::queue('portal-data:import', ['eventId' => $event->id]));
 
         return redirect()->back()->success('Course Import Started...');
