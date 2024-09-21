@@ -49,6 +49,24 @@ final class ImportEvent extends Model
         return $this->hasMany(RawDepartment::class);
     }
 
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawStudent> */
+    public function students(): HasMany
+    {
+        return $this->hasMany(RawStudent::class);
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawRegistration> */
+    public function registrations(): HasMany
+    {
+        return $this->hasMany(RawRegistration::class);
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawResult> */
+    public function results(): HasMany
+    {
+        return $this->hasMany(RawResult::class);
+    }
+
     public function updateStatus(ImportEventStatus $status): void
     {
         if ($this->status === ImportEventStatus::CANCELLED) {
