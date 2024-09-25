@@ -10,6 +10,7 @@ use App\Models\Student;
 
 final class ProcessPortalStudent
 {
+    /** @throws \Exception */
     public function execute(RawStudent $rawStudent): void
     {
         $exists = Student::query()
