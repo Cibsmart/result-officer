@@ -132,6 +132,7 @@ declare namespace App.Data.Import {
   };
   export type PendingImportEventData = {
     id: number;
+    type: App.Enums.ImportEventType;
     content: string;
     date: string;
     width: number;
