@@ -10,11 +10,34 @@ import BaseTabs from "@/components/tabs/baseTabs.vue";
 import DepartmentSession from "@/pages/download/students/tabs/departmentSession.vue";
 import Session from "@/pages/download/students/tabs/session.vue";
 import BaseTabPanel from "@/components/tabs/baseTabPanel.vue";
+import BaseFormSection from "@/components/baseFormSection.vue";
+import SecondaryLink from "@/components/links/secondaryLink.vue";
+import StaticFeeds from "@/components/feeds/staticFeeds.vue";
+import ActiveFeeds from "@/components/feeds/activeFeeds.vue";
+import PrimaryLink from "@/components/links/primaryLink.vue";
+import { usePoll } from "@/composables/usePoll";
+import { computed, watch } from "vue";
 
-defineProps<{
+const props = defineProps<{
   department: App.Data.Department.DepartmentListData;
   session: App.Data.Session.SessionListData;
+  events: Array<App.Data.Import.ImportEventData>;
+  pending: App.Data.Import.PendingImportEventData;
 }>();
+
+const hasPendingEvent = computed(() => props.pending !== null);
+
+const { start, stop } = usePoll(hasPendingEvent, ["pending", "events"]);
+
+watch(hasPendingEvent, () => {
+  if (hasPendingEvent.value === true) {
+    start();
+  } else {
+    stop();
+  }
+});
+
+const hasEvent = computed(() => props.events.length > 0);
 
 const pages: BreadcrumbItem[] = [
   {
@@ -56,5 +79,36 @@ const tabs: TabItem[] = [
         </BaseTabPanel>
       </BaseTabs>
     </BaseSection>
+
+    <template v-if="hasPendingEvent">
+      <BaseSection>
+        <BaseFormSection description="Pending Department Download">
+          <ActiveFeeds :data="pending" />
+
+          <SecondaryLink
+            :href="route('import.event.cancel', { event: pending.id })"
+            class="mt-6">
+            Cancel
+          </SecondaryLink>
+
+          <PrimaryLink
+            v-if="pending.canBeContinued"
+            :href="route('import.event.continue', { event: pending.id })"
+            class="ml-4 mt-4">
+            Continue
+          </PrimaryLink>
+        </BaseFormSection>
+      </BaseSection>
+    </template>
+
+    <template v-if="hasEvent">
+      <BaseSection>
+        <BaseFormSection description="Department Download History">
+          <StaticFeeds
+            :events="events"
+            class="my-4" />
+        </BaseFormSection>
+      </BaseSection>
+    </template>
   </BasePage>
 </template>
