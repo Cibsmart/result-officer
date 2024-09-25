@@ -16,37 +16,33 @@ final class Program extends Model
     use softDeletes;
 
     private const CODES = [
-        'Economics Education' => 'ECO',
-        'English Language Education' => 'ENG',
-        'History & Inter Relation Edu' => 'HIR',
-        'Igbo Education' => 'IGB',
-        'Political Science Education' => 'POL',
-        'Religion Eduation ' => 'REL',
-        'Social Study Education' => 'SS',
-
         'Accounting Education' => 'ACC',
-        'Marketing Education' => 'MKT',
-        'Office Technology' => 'OT',
-        'Secrtarial Education' => 'SEC',
-
         'Admin and Planning' => 'AP',
-        'Guidance Councelling' => 'GC',
-
-        'Health Education' => 'HED',
-        'HUMAN KINETICS' => 'HKE',
-        'Physical Education' => 'PHY',
-
+        'Agric Science Education' => 'AGR',
         'APPLIED STATISTICS' => 'STA',
-        'INDUSTRIAL MATHEMATICS' => 'IMAT',
-        'NONE' => '',
-        'MATHEMATICS AND COMPUTER SCIENCE' => 'CSC',
-        'PURE MATHEMATICS' => 'PMAT',
-
+        'Biology Education' => 'BIO',
+        'Building  Education' => 'BLD',
+        'Chemistry Education' => 'CHM',
+        'Computer science Education' => 'CSC',
+        'Economics Education' => 'ECO',
+        'Education of Hearing Impairment' => 'EHI',
+        'Education of Learning Disabilities' => 'ELD',
+        'Education of the Gifted and Talented' => 'EGT',
+        'Education of Visually Impaired' => 'EVI',
+        'Electrical / Electronics Edu' => 'EEE',
         'English Language and Literary Studies' => 'ENG',
+        'English Language Education' => 'ENG',
+        'Film Production' => 'FP',
         'French Linguistics' => 'FRE',
-        'Language/Linguistics' => 'LIN',
+        'Guidance Councelling' => 'GC',
+        'Health Education' => 'HED',
+        'History & Inter Relation Edu' => 'HIR',
+        'HUMAN KINETICS' => 'HKE',
+        'Igbo Education' => 'IGB',
         'Igbo Linguistics' => 'IGB',
-
+        'INDUSTRIAL MATHEMATICS' => 'IMAT',
+        'Inter Science Education' => 'ISE',
+        'Language/Linguistics' => 'LIN',
         'LIS and Economics' => 'ECO',
         'LIS and English' => 'ENG',
         'LIS and French' => 'FRE',
@@ -56,34 +52,25 @@ final class Program extends Model
         'LIS and Political Science' => 'POL',
         'LIS and Psychology' => 'PSY',
         'LIS and Sociology/Anthropology' => 'SOC',
-
-        'PHILOSOPHY' => 'PHIL',
-        'RELIGION' => 'REL',
-
-        'Psychology' => 'PSY',
-        'Sociology' => 'SOC',
-
-        'Biology Education' => 'BIO',
-        'Chemistry Education' => 'CHM',
-        'Computer science Education' => 'CSC',
-        'Inter Science Education' => 'ISE',
+        'Marketing Education' => 'MKT',
+        'MATHEMATICS AND COMPUTER SCIENCE' => 'CSC',
         'Mathematics Education' => 'MAT',
         'Measurement And Evaluation' => 'MAE',
-        'Physics Education' => 'PHY',
-
-        'Education of the Gifted and Talented' => 'EGT',
-        'Education of Hearing Impairment' => 'EHI',
-        'Education of Learning Disabilities' => 'ELD',
-        'Education of Visually Impaired' => 'EVI',
-
-        'Film Production' => 'FP',
-        'Theatre Arts' => 'TA',
-        'Theatre and Film Production' => 'TFP',
-
-        'Agric Science Education' => 'AGR',
-        'Building  Education' => 'BLD',
-        'Electrical / Electronics Edu' => 'EEE',
         'Mechanical Engr Education' => 'MEE',
+        'Office Technology' => 'OT',
+        'PHILOSOPHY' => 'PHIL',
+        'Physical Education' => 'PHY',
+        'Physics Education' => 'PHY',
+        'Political Science Education' => 'POL',
+        'Psychology' => 'PSY',
+        'PURE MATHEMATICS' => 'PMAT',
+        'RELIGION' => 'REL',
+        'Religion Eduation ' => 'REL',
+        'Secrtarial Education' => 'SEC',
+        'Social Study Education' => 'SS',
+        'Sociology' => 'SOC',
+        'Theatre and Film Production' => 'TFP',
+        'Theatre Arts' => 'TA',
         'Vocational Education' => 'VE',
     ];
 
@@ -102,6 +89,9 @@ final class Program extends Model
         }
 
         foreach ($programs as $program) {
+            if (strtolower($program) === 'none') {
+                continue;
+            }
 
             $programCode = $department->code . '-' . self::getCode($program);
 
@@ -167,7 +157,7 @@ final class Program extends Model
             ->filter();
 
         if (count($words) === 1) {
-            return Str::of($words->first())->take(3)->value();
+            return str($words->first())->take(3)->value();
         }
 
         return $words
