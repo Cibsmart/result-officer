@@ -17,7 +17,7 @@ final class EntryModeSeeder extends Seeder
         ]);
 
         EntryMode::query()->create([
-            'code' => 'DE',
+            'code' => 'DENT',
             'name' => 'DIRECT ENTRY',
         ]);
     }
