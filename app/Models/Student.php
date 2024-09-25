@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Enums\Gender;
 use App\Enums\RecordSource;
 use App\Enums\StudentStatusEnum;
+use App\Values\DateValue;
 use App\Values\RegistrationNumber;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -37,6 +38,36 @@ final class Student extends Model
         'source',
         'status',
     ];
+
+    /** @throws \Exception */
+    public static function createFromRawStudent(RawStudent $rawStudent): void
+    {
+        $registrationNumber = RegistrationNumber::new($rawStudent->registration_number);
+        $department = Department::getUsingOnlineId($rawStudent->department_id);
+        $dateOfBirth = DateValue::fromString($rawStudent->date_of_birth);
+
+        $student = new self();
+        $student->date_of_birth = $dateOfBirth->value;
+        $student->email = $rawStudent->email;
+        $student->entry_level_id = Level::getUsingName($rawStudent->entry_level)->id;
+        $student->entry_mode_id = EntryMode::getUsingCode($rawStudent->entry_mode)->id;
+        $student->entry_session_id = Session::getUsingName($rawStudent->entry_session)->id;
+        $student->first_name = $rawStudent->first_name;
+        $student->gender = Gender::from($rawStudent->gender);
+        $student->jamb_registration_number = $rawStudent->jamb_registration_number;
+        $student->last_name = $rawStudent->last_name;
+        $student->local_government = $rawStudent->local_government;
+        $student->online_id = $rawStudent->online_id;
+        $student->other_names = $rawStudent->other_names;
+        $student->phone_number = $rawStudent->phone_number;
+        $student->program_id = Program::getFromDepartmentAndName($department, $rawStudent->option)->id;
+        $student->registration_number = $registrationNumber->value;
+        $student->source = RecordSource::PORTAL;
+        $student->state_id = State::getUsingName($rawStudent->state)->id;
+        $student->status = StudentStatusEnum::NEW;
+
+        $student->save();
+    }
 
     /** @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\CourseRegistration> */
     public function courses(): HasManyThrough
