@@ -13,6 +13,11 @@ final class Session extends Model
 
     protected $fillable = ['name'];
 
+    public static function getUsingName(string $sessionName): self
+    {
+        return self::query()->where('name', $sessionName)->firstOrFail();
+    }
+
     public function firstYear(): int
     {
         return SessionValue::new($this->name)->lastYear();

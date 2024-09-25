@@ -22,7 +22,7 @@ final class ProcessPortalStudent
             return;
         }
 
-        //TODO: Create new student
+        Student::createFromRawStudent($rawStudent);
 
         $rawStudent->updateStatus(RawDataStatus::PROCESSED);
     }
