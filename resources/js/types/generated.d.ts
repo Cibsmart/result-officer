@@ -289,11 +289,13 @@ declare namespace App.Enums {
   export type Grade = "A" | "B" | "C" | "D" | "E" | "F";
   export type ImportEventMethod =
     | "all"
-    | "registration_number"
-    | "registration_number_session_semester"
+    | "course"
+    | "department"
     | "department_session"
     | "department_session_level"
     | "department_session_semester"
+    | "registration_number"
+    | "registration_number_session_semester"
     | "session"
     | "session_course";
   export type ImportEventStatus =

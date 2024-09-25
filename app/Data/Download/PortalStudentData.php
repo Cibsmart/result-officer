@@ -31,8 +31,8 @@ final class PortalStudentData extends Data
         public readonly string $entryMode,
         public readonly string $entryLevel,
         public readonly string $jambRegistrationNumber,
-        public readonly string $email,
-        public readonly string $phoneNumber,
+        public readonly string $email = '',
+        public readonly string $phoneNumber = '',
     ) {
     }
 
@@ -71,11 +71,11 @@ final class PortalStudentData extends Data
         ?string $alternateKey = null,
     ): string {
         if (array_key_exists($key, $data)) {
-            return $data[$key];
+            return (string) $data[$key];
         }
 
         return $alternateKey !== null
-            ? $data[$alternateKey]
+            ? (string) $data[$alternateKey]
             : '';
     }
 }
