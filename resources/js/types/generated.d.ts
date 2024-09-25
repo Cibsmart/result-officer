@@ -254,7 +254,7 @@ declare namespace App.Data.Students {
     firstName: string;
     otherNames: string | null;
     name: string;
-    gender: string;
+    gender: App.Enums.Gender;
     birthDate: string;
     program: string;
     department: string;
@@ -285,7 +285,7 @@ declare namespace App.Enums {
     | "FAIL";
   export type CourseStatusEnum = "F" | "R";
   export type CreditUnitEnum = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 12 | 15 | 18;
-  export type GenderEnum = "M" | "F";
+  export type Gender = "M" | "F";
   export type Grade = "A" | "B" | "C" | "D" | "E" | "F";
   export type ImportEventMethod =
     | "all"
