@@ -10,7 +10,6 @@ use App\Services\Api\PortalServiceFactory;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Context;
 
 final class ImportPortalData extends Command
 {
@@ -45,7 +44,6 @@ final class ImportPortalData extends Command
 
         $event->updateStatus(ImportEventStatus::SAVED);
 
-        Context::add('import-event', $event->type->value);
         Artisan::call('portal-data:process', ['eventId' => $event->id]);
 
         return Command::SUCCESS;
