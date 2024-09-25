@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\Gender;
+use App\Enums\RecordSource;
 use App\Enums\StudentStatusEnum;
 use App\Values\RegistrationNumber;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -89,11 +91,16 @@ final class Student extends Model
         return RegistrationNumber::new($this->registration_number)->allowEGrade();
     }
 
-    /** @return array<string, string> */
+    /**
+     * @return array{date_of_birth: 'date', gender: 'App\Enums\Gender', source: 'App\Enums\RecordSource',
+     *     status: 'App\Enums\StudentStatusEnum'}
+     */
     protected function casts(): array
     {
         return [
             'date_of_birth' => 'date',
+            'gender' => Gender::class,
+            'source' => RecordSource::class,
             'status' => StudentStatusEnum::class,
         ];
     }
