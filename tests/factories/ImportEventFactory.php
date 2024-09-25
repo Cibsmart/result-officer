@@ -20,10 +20,12 @@ final class ImportEventFactory extends Factory
     {
         return [
             'data' => ['courses' => 'all'],
-            'download_count' => 0,
-            'failed_count' => 0,
+            'downloaded' => 0,
+            'duplicate' => 0,
+            'failed' => 0,
             'method' => ImportEventMethod::ALL,
-            'processed_count' => 0,
+            'processed' => 0,
+            'saved' => 0,
             'status' => ImportEventStatus::NEW,
             'type' => fake()->randomElement(ImportEventType::cases()),
             'user_id' => UserFactory::new(),

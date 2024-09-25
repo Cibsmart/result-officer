@@ -76,10 +76,11 @@ final class ImportEvent extends Model
         if ($status === ImportEventStatus::COMPLETED) {
             $counts = $this->getCounts();
 
-            $this->saved_count = $counts->saved_count;
-            $this->processed_count = $counts->processed_count;
-            $this->failed_count = $counts->failed_count;
-            $this->unprocessed_count = $counts->unprocessed_count;
+            $this->saved = $counts->saved;
+            $this->processed = $counts->processed;
+            $this->duplicate = $counts->duplicate;
+            $this->failed = $counts->failed;
+            $this->pending = $counts->pending;
         }
 
         $this->status = $status;
@@ -88,18 +89,19 @@ final class ImportEvent extends Model
 
     public function updateDownloadCount(int $count): void
     {
-        $this->download_count = $count;
+        $this->downloaded = $count;
         $this->save();
     }
 
-    /** @return object{saved_count: int, processed_count: int, failed_count: int, unprocessed_count: int} */
+    /** @return object{saved: int, processed: int, duplicate: int, failed: int, pending: int} */
     public function getCounts(): object
     {
         return $this->{$this->type->value}()->toBase()
-            ->selectRaw('count(*) as saved_count')
-            ->selectRaw("count(case when status = 'processed' then 1 end) as processed_count")
-            ->selectRaw("count(case when status = 'failed' then 1 end) as failed_count")
-            ->selectRaw("count(case when status = 'pending' then 1 end) as unprocessed_count")
+            ->selectRaw('count(*) as saved')
+            ->selectRaw("count(case when status = 'processed' then 1 end) as processed")
+            ->selectRaw("count(case when status = 'duplicate' then 1 end) as duplicate")
+            ->selectRaw("count(case when status = 'failed' then 1 end) as failed")
+            ->selectRaw("count(case when status = 'pending' then 1 end) as pending")
             ->firstOrFail();
     }
 

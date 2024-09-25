@@ -20,11 +20,12 @@ return new class extends Migration
             $table->string('type');
             $table->string('method');
             $table->json('data');
-            $table->unsignedSmallInteger('download_count')->default(0);
-            $table->unsignedSmallInteger('saved_count')->default(0);
-            $table->unsignedSmallInteger('processed_count')->default(0);
-            $table->unsignedSmallInteger('failed_count')->default(0);
-            $table->unsignedSmallInteger('unprocessed_count')->default(0);
+            $table->unsignedSmallInteger('downloaded')->default(0);
+            $table->unsignedSmallInteger('saved')->default(0);
+            $table->unsignedSmallInteger('duplicate')->default(0);
+            $table->unsignedSmallInteger('processed')->default(0);
+            $table->unsignedSmallInteger('failed')->default(0);
+            $table->unsignedSmallInteger('pending')->default(0);
             $table->string('status');
             $table->text('message')->nullable();
             $table->timestamps();
