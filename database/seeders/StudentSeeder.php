@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use App\Enums\GenderEnum;
+use App\Enums\Gender;
 use App\Models\Student;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -18,7 +18,7 @@ final class StudentSeeder extends Seeder
             'entry_mode_id' => 1,
             'entry_session_id' => 1,
             'first_name' => 'STUDENT',
-            'gender' => GenderEnum::MALE,
+            'gender' => Gender::MALE,
             'last_name' => 'FIRST',
             'other_names' => null,
             'program_id' => 1,
@@ -31,7 +31,7 @@ final class StudentSeeder extends Seeder
             'entry_mode_id' => 1,
             'entry_session_id' => 1,
             'first_name' => 'BARNABAS',
-            'gender' => GenderEnum::MALE,
+            'gender' => Gender::MALE,
             'last_name' => 'IFEBUDE',
             'other_names' => 'CHUKWUDIKE',
             'program_id' => 1,
@@ -44,7 +44,7 @@ final class StudentSeeder extends Seeder
             'entry_mode_id' => 1,
             'entry_session_id' => 1,
             'first_name' => 'RUTH',
-            'gender' => GenderEnum::FEMALE,
+            'gender' => Gender::FEMALE,
             'last_name' => 'NWEKE',
             'other_names' => 'OGECHUKWU',
             'program_id' => 1,
@@ -57,7 +57,7 @@ final class StudentSeeder extends Seeder
             'entry_mode_id' => 1,
             'entry_session_id' => 1,
             'first_name' => 'STUDENT',
-            'gender' => GenderEnum::FEMALE,
+            'gender' => Gender::FEMALE,
             'last_name' => 'EMPTY',
             'other_names' => null,
             'program_id' => 1,
