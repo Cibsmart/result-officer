@@ -345,6 +345,8 @@ declare namespace App.ViewModels.Downloads {
   export type DownloadStudentPage = {
     department: App.Data.Department.DepartmentListData;
     session: App.Data.Session.SessionListData;
+    events: any;
+    pending: App.Data.Import.PendingImportEventData;
   };
 }
 declare namespace App.ViewModels.Reports {
