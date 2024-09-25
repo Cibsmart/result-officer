@@ -44,7 +44,7 @@ const submit = () => {
       </div>
 
       <div>
-        <PrimaryButton :disabled="form.processing">View</PrimaryButton>
+        <PrimaryButton :disabled="form.processing">Download</PrimaryButton>
       </div>
     </form>
   </BaseFormSection>
