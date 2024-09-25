@@ -114,6 +114,15 @@ final class Program extends Model
         );
     }
 
+    public static function getFromDepartmentAndName(Department $department, string $programName): self
+    {
+        $programName = $programName !== ''
+            ? $programName
+            : $department->name;
+
+        return $department->programs()->where('name', $programName)->firstOrFail();
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Department, \App\Models\Program> */
     public function department(): BelongsTo
     {
