@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use App\Enums\GenderEnum;
+use App\Enums\Gender;
 use App\Filament\Resources\StudentResource\Pages;
 use App\Filament\Resources\StudentResource\RelationManagers\CoursesRelationManager;
 use App\Filament\Resources\StudentResource\RelationManagers\EnrollmentsRelationManager;
@@ -37,7 +37,7 @@ final class StudentResource extends Resource
                 TextInput::make('last_name')->required(),
                 TextInput::make('first_name')->required(),
                 TextInput::make('other_names'),
-                Select::make('gender')->options(GenderEnum::class)->required(),
+                Select::make('gender')->options(Gender::class)->required(),
                 DatePicker::make('date_of_birth')->maxDate(now()->subYears(15)),
                 Select::make('program_id')
                     ->relationship('program', 'name')

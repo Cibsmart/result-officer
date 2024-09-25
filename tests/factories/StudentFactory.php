@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Factories;
 
-use App\Enums\GenderEnum;
+use App\Enums\Gender;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,7 +18,7 @@ final class StudentFactory extends Factory
     {
         $maximumDateOfBirth = now()->subYears(15)->format('Y-m-d');
 
-        $gender = fake()->randomElement(GenderEnum::cases());
+        $gender = fake()->randomElement(Gender::cases());
 
         return [
             'date_of_birth' => fake()->date(max: $maximumDateOfBirth),
