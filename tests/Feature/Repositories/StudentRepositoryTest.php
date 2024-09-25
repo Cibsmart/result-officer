@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Actions\Students\ProcessPortalStudent;
+use App\Actions\Students\SavePortalStudent;
 use App\Data\Download\PortalStudentData;
 use App\Enums\LevelEnum;
 use App\Http\Clients\Fakes\FakeStudentClient;
@@ -23,7 +25,7 @@ beforeEach(function (): void {
 
     $client = new FakeStudentClient();
 
-    $service = new StudentService($client);
+    $service = new StudentService($client, new SavePortalStudent(), new ProcessPortalStudent());
 
     $this->repository = new StudentRepository($service);
 });
@@ -167,4 +169,4 @@ it('throws exception for invalid gender', function (): void {
     $data = $this->repository->getStudentByRegistrationNumber($student['registration_number']);
 
     $this->repository->saveStudent($data);
-})->throws(ValueError::class, '"Z" is not a valid backing value for enum App\Enums\GenderEnum');
+})->throws(ValueError::class, '"Z" is not a valid backing value for enum App\Enums\Gender');

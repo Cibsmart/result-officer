@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Actions\Students\ProcessPortalStudent;
+use App\Actions\Students\SavePortalStudent;
 use App\Data\Download\PortalStudentData;
 use App\Http\Clients\Fakes\FakeStudentClient;
 use App\Services\Api\StudentService;
@@ -10,7 +12,7 @@ use Illuminate\Support\Collection;
 beforeEach(function (): void {
     $client = new FakeStudentClient();
 
-    $this->service = new StudentService($client);
+    $this->service = new StudentService($client, new SavePortalStudent(), new ProcessPortalStudent());
 });
 
 it('can get student by registration number', function (): void {
