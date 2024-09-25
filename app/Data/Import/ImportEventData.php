@@ -33,10 +33,7 @@ final class ImportEventData extends Data
             ->map(fn (string $value, string $key) => strtoupper("$value $key"))
             ->join(', ');
 
-        $unprocessed = $event->download_count - ($event->processed_count + $event->failed_count);
-
-        $description = "Downloaded: {$event->download_count}, Processed: {$event->processed_count}, ";
-        $description .= "Failed: {$event->failed_count}, Unprocessed: {$unprocessed}";
+        $description = self::getDescription($event);
 
         return new self(
             id: $event->id,
@@ -61,5 +58,24 @@ final class ImportEventData extends Data
             ->limit(10)
             ->get(),
         );
+    }
+
+    public static function getDescription(ImportEvent $event): string
+    {
+        if ($event->status === ImportEventStatus::FAILED) {
+            return $event->message;
+        }
+
+        $description = "downloaded: {$event->downloaded}";
+
+        $keys = ['saved', 'processed', 'failed', 'pending', 'duplicate'];
+
+        foreach ($keys as $key) {
+            $description .= $event->{$key} > 0
+                ? ", {$key}:  {$event->{$key}}"
+                : '';
+        }
+
+        return $description;
     }
 }
