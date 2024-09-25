@@ -13,7 +13,7 @@ final readonly class RegistrationNumber
 {
     public function __construct(public string $value)
     {
-        if (! preg_match('/^ebsu\/\d{4}\/\d{4,6}[a-z]?$/i', Str::trim($this->value))) {
+        if (! preg_match('/^ebsu\/\d{4}\/\d{4,7}[a-z]?$/i', Str::trim($this->value))) {
             throw new InvalidArgumentException('Invalid registration number');
         }
     }
