@@ -26,6 +26,11 @@ final class Department extends Model
         Program::createForDepartment($department, $rawDepartment);
     }
 
+    public static function getUsingOnlineId(string $departmentOnlineId): self
+    {
+        return self::query()->where('online_id', $departmentOnlineId)->firstOrFail();
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Faculty, \App\Models\Department> */
     public function faculty(): BelongsTo
     {
