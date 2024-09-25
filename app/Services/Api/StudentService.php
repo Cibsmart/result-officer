@@ -54,9 +54,9 @@ final readonly class StudentService implements PortalService
      */
     public function get(ImportEventMethod $method, array $parameters): Collection
     {
-        $session = (string) $parameters['session'];
-        $department = (int) $parameters['department_id'];
-        $registrationNumber = (string) $parameters['registration_number'];
+        $session = $this->getValue('entry_session', $parameters);
+        $department = (int) $this->getValue('online_department_id', $parameters);
+        $registrationNumber = $this->getValue('registration_number', $parameters);
 
         return match ($method) {
             ImportEventMethod::REGISTRATION_NUMBER => $this->getStudentByRegistrationNumber($registrationNumber),
@@ -87,5 +87,13 @@ final readonly class StudentService implements PortalService
                 $student->updateStatus(RawDataStatus::FAILED);
             }
         }
+    }
+
+    /** @param array<string, int|string> $data */
+    private function getValue(string $key, array $data): string
+    {
+        return array_key_exists($key, $data)
+            ? (string) $data[$key]
+            : '';
     }
 }
