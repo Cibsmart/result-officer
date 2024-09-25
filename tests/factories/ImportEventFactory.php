@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Factories;
 
+use App\Enums\ImportEventMethod;
 use App\Enums\ImportEventStatus;
 use App\Enums\ImportEventType;
 use App\Models\ImportEvent;
@@ -21,6 +22,7 @@ final class ImportEventFactory extends Factory
             'data' => ['courses' => 'all'],
             'download_count' => 0,
             'failed_count' => 0,
+            'method' => ImportEventMethod::ALL,
             'processed_count' => 0,
             'status' => ImportEventStatus::NEW,
             'type' => fake()->randomElement(ImportEventType::cases()),
