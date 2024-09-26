@@ -10,6 +10,7 @@ use App\Data\Level\LevelListData;
 use App\Data\Semester\SemesterListData;
 use App\Data\Session\SessionListData;
 use App\ViewModels\Downloads\DownloadCourseRegistrationPage;
+use App\ViewModels\Downloads\DownloadRegistrationPage;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;

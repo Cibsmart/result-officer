@@ -6,14 +6,16 @@ namespace App\ViewModels\Downloads;
 
 use App\Data\Course\CourseListData;
 use App\Data\Department\DepartmentListData;
+use App\Data\Import\PendingImportEventData;
 use App\Data\Level\LevelListData;
 use App\Data\Semester\SemesterListData;
 use App\Data\Session\SessionListData;
 use Closure;
+use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScriptType;
 
-final class DownloadCourseRegistrationPage extends Data
+final class DownloadRegistrationPage extends Data
 {
     public function __construct(
         public readonly DepartmentListData $departments,
@@ -22,6 +24,10 @@ final class DownloadCourseRegistrationPage extends Data
         #[TypeScriptType(CourseListData::class)]
         public readonly Closure $courses,
         public readonly LevelListData $levels,
+        #[TypeScriptType(Collection::class)]
+        public readonly Closure $events,
+        #[TypeScriptType(PendingImportEventData::class)]
+        public readonly Closure $pending,
     ) {
     }
 }
