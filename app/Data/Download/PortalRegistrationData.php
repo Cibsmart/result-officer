@@ -18,7 +18,7 @@ final class PortalRegistrationData extends Data
         public readonly string $level,
         public readonly string $courseId,
         public readonly string $creditUnit,
-        public readonly string $registrationDate,
+        public readonly ?string $registrationDate,
         public readonly RecordSource $source,
     ) {
     }
