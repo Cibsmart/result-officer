@@ -3,15 +3,15 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Download\CourseRegistrations\DownloadCourseRegistrationPageController;
-use App\Http\Controllers\Download\CourseRegistrations\DownloadRegistrationsByDepartmentSessionLevelController;
-use App\Http\Controllers\Download\CourseRegistrations\DownloadRegistrationsByDepartmentSessionSemesterController;
-use App\Http\Controllers\Download\CourseRegistrations\DownloadRegistrationsByRegistrationNumberController;
-use App\Http\Controllers\Download\CourseRegistrations\DownloadRegistrationsBySessionCourseController;
 use App\Http\Controllers\Download\Courses\DownloadCoursesController;
 use App\Http\Controllers\Download\Courses\DownloadCoursesPageController;
 use App\Http\Controllers\Download\Departments\DownloadDepartmentsController;
 use App\Http\Controllers\Download\Departments\DownloadDepartmentsPageController;
+use App\Http\Controllers\Download\Registrations\DownloadRegistrationPageController;
+use App\Http\Controllers\Download\Registrations\DownloadRegistrationsByDepartmentSessionLevelController;
+use App\Http\Controllers\Download\Registrations\DownloadRegistrationsByDepartmentSessionSemesterController;
+use App\Http\Controllers\Download\Registrations\DownloadRegistrationsByRegistrationNumberController;
+use App\Http\Controllers\Download\Registrations\DownloadRegistrationsBySessionCourseController;
 use App\Http\Controllers\Download\Results\DownloadResultByDepartmentSessionLevelController;
 use App\Http\Controllers\Download\Results\DownloadResultByDepartmentSessionSemesterController;
 use App\Http\Controllers\Download\Results\DownloadResultByRegistrationNumberController;
@@ -94,7 +94,7 @@ Route::middleware(['auth'])->group(static function (): void {
     });
 
     Route::prefix('download/registrations')->group(static function (): void {
-        Route::get('page', DownloadCourseRegistrationPageController::class)
+        Route::get('page', DownloadRegistrationPageController::class)
             ->name('download.registrations.page');
         Route::post('registration-number', DownloadRegistrationsByRegistrationNumberController::class)
             ->name('download.registrations.registration-number.store');
