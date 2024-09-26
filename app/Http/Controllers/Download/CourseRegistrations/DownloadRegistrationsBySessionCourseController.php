@@ -20,8 +20,11 @@ final readonly class DownloadRegistrationsBySessionCourseController
 
         assert($user instanceof User);
 
-        $event = ImportEvent::new($user, ImportEventType::REGISTRATIONS, ImportEventMethod::REGISTRATION_NUMBER,
-            [
+        $event = ImportEvent::new(
+            user: $user,
+            type: ImportEventType::REGISTRATIONS,
+            method: ImportEventMethod::SESSION_COURSE,
+            data: [
                 'course' => $request->string('courseName')->value(),
                 'online_course_id' => $request->integer('onlineCourseId'),
                 'session' => $request->string('sessionName')->value(),
