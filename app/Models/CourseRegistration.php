@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\CourseStatusEnum;
+use App\Enums\CreditUnitEnum;
+use App\Enums\RecordSource;
+use App\Values\DateValue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -17,6 +21,25 @@ final class CourseRegistration extends Model
         'credit_unit',
         'course_status',
     ];
+
+    public static function createFromRawRegistration(
+        RawRegistration $rawRegistration,
+        SemesterEnrollment $semesterEnrollment,
+        Course $course,
+    ): void {
+        $registrationDate = DateValue::fromString($rawRegistration->registration_date);
+        $registration = new self();
+
+        $registration->course_id = $course->id;
+        $registration->credit_unit = CreditUnitEnum::from((int) $rawRegistration->credit_unit);
+        $registration->course_status = CourseStatusEnum::FRESH;
+        $registration->online_id = $rawRegistration->online_id;
+        $registration->registration_date = $registrationDate->value;
+        $registration->semester_enrollment_id = $semesterEnrollment->id;
+        $registration->source = RecordSource::PORTAL;
+
+        $registration->save();
+    }
 
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
@@ -48,11 +71,17 @@ final class CourseRegistration extends Model
         return $student;
     }
 
-    /** @return array<string, string> */
+    /**
+     * @return array{course_status: 'App\Enums\CourseStatusEnum', credit_unit: 'App\Enums\CreditUnitEnum',
+     *     registration_date: 'date', source: 'App\Enums\RecordSource' }
+     */
     protected function casts(): array
     {
         return [
+            'course_status' => CourseStatusEnum::class,
+            'credit_unit' => CreditUnitEnum::class,
             'registration_date' => 'date',
+            'source' => RecordSource::class,
         ];
     }
 }
