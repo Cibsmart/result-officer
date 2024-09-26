@@ -11,6 +11,7 @@ import DepartmentSessionLevel from "@/pages/download/registrations/tabs/departme
 import DepartmentSessionSemester from "@/pages/download/registrations/tabs/departmentSessionSemester.vue";
 import SessionCourse from "@/pages/download/registrations/tabs/sessionCourse.vue";
 import BaseTabPanel from "@/components/tabs/baseTabPanel.vue";
+import ImportEvents from "@/pages/download/components/importEvents.vue";
 
 defineProps<{
   departments: App.Data.Department.DepartmentListData;
@@ -18,6 +19,8 @@ defineProps<{
   semesters: App.Data.Semester.SemesterListData;
   courses: App.Data.Course.CourseListData;
   levels: App.Data.Level.LevelListData;
+  events: Array<App.Data.Import.ImportEventData>;
+  pending: App.Data.Import.PendingImportEventData;
 }>();
 
 const pages: BreadcrumbItem[] = [
@@ -71,5 +74,9 @@ const tabs: TabItem[] = [
         </BaseTabPanel>
       </BaseTabs>
     </BaseSection>
+
+    <ImportEvents
+      :events="events"
+      :pending="pending" />
   </BasePage>
 </template>
