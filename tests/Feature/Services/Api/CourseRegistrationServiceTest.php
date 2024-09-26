@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Data\Download\PortalCourseRegistrationData;
+use App\Data\Download\PortalRegistrationData;
 use App\Http\Clients\Fakes\FakeCourseRegistrationClient;
 use App\Services\Api\RegistrationService;
 use Illuminate\Support\Collection;
@@ -22,7 +22,7 @@ it('can get course registrations by registration number', function (): void {
     ]);
 
     expect($data)->toBeInstanceOf(Collection::class)
-        ->and($data[0])->toBeInstanceOf(PortalCourseRegistrationData::class)
+        ->and($data[0])->toBeInstanceOf(PortalRegistrationData::class)
         ->and($data->count())->toBe(count($group));
 });
 
@@ -44,7 +44,7 @@ it('can get course registrations by department session and level', function (): 
     ]);
 
     expect($data)->toBeInstanceOf(Collection::class)
-        ->and($data[0])->toBeInstanceOf(PortalCourseRegistrationData::class)
+        ->and($data[0])->toBeInstanceOf(PortalRegistrationData::class)
         ->and($data->count())->toBe(count($group));
 });
 
@@ -66,7 +66,7 @@ it('can get course registrations by department session and semester', function (
     ]);
 
     expect($data)->toBeInstanceOf(Collection::class)
-        ->and($data[0])->toBeInstanceOf(PortalCourseRegistrationData::class)
+        ->and($data[0])->toBeInstanceOf(PortalRegistrationData::class)
         ->and($data->count())->toBe(count($group));
 });
 
@@ -82,6 +82,6 @@ it('can get course registrations by session and course', function (): void {
     ]);
 
     expect($data)->toBeInstanceOf(Collection::class)
-        ->and($data[0])->toBeInstanceOf(PortalCourseRegistrationData::class)
+        ->and($data[0])->toBeInstanceOf(PortalRegistrationData::class)
         ->and($data->count())->toBe(count($group));
 });
