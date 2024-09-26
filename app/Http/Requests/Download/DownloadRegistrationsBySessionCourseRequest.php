@@ -18,7 +18,7 @@ final class DownloadRegistrationsBySessionCourseRequest extends FormRequest
     {
         return [
             'course' => ['required', 'array'],
-            'course.id' => ['required', 'integer', 'exists:course,id'],
+            'course.id' => ['required', 'integer', 'exists:courses,id'],
             'session' => ['required', 'array'],
             'session.id' => ['required', 'integer', 'exists:academic_sessions,id'],
         ];
@@ -27,6 +27,8 @@ final class DownloadRegistrationsBySessionCourseRequest extends FormRequest
     protected function passedValidation(): void
     {
         $this->replace([
+            'courseName' => $this->input('course.name'),
+
             'onlineCourseId' => Course::query()
                 ->where('id', $this->input('course.id'))
                 ->firstOrFail()
