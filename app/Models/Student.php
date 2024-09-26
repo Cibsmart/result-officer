@@ -69,6 +69,11 @@ final class Student extends Model
         $student->save();
     }
 
+    public static function getUsingRegistrationNumber(string $registrationNumber): self
+    {
+        return self::query()->where('registration_number', $registrationNumber)->firstOrFail();
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\CourseRegistration> */
     public function courses(): HasManyThrough
     {
