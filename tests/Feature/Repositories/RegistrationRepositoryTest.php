@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Actions\Registrations\ProcessPortalRegistration;
+use App\Actions\Registrations\SavePortalRegistration;
 use App\Data\Download\PortalRegistrationData;
 use App\Http\Clients\Fakes\FakeRegistrationClient;
 use App\Repositories\RegistrationRepository;
@@ -21,7 +23,8 @@ beforeEach(function (): void {
 
     $client = new FakeRegistrationClient();
 
-    $service = new RegistrationService($client);
+    $service = new RegistrationService($client, new SavePortalRegistration(),
+        new ProcessPortalRegistration());
 
     $this->repository = new RegistrationRepository($service);
 });
