@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Download\CourseRegistrations;
+namespace App\Http\Controllers\Download\Registrations;
 
 use App\Enums\ImportEventMethod;
 use App\Enums\ImportEventType;

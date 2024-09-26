@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Download\CourseRegistrations;
+namespace App\Http\Controllers\Download\Registrations;
 
 use App\Data\Course\CourseListData;
 use App\Data\Department\DepartmentListData;
@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
-final readonly class DownloadCourseRegistrationPageController
+final readonly class DownloadRegistrationPageController
 {
     public function __invoke(Request $request): Response
     {
