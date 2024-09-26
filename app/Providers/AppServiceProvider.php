@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Contracts\CourseRegistrationClient;
+use App\Contracts\RegistrationClient;
 use App\Contracts\ResultClient;
 use App\Contracts\StudentClient;
-use App\Http\Clients\PortalCourseRegistrationClient;
+use App\Http\Clients\PortalRegistrationClient;
 use App\Http\Clients\PortalResultClient;
 use App\Http\Clients\PortalStudentClient;
 use Illuminate\Database\Eloquent\Model;
@@ -23,7 +23,7 @@ final class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(ResultClient::class, PortalResultClient::class);
         $this->app->bind(StudentClient::class, PortalStudentClient::class);
-        $this->app->bind(CourseRegistrationClient::class, PortalCourseRegistrationClient::class);
+        $this->app->bind(RegistrationClient::class, PortalRegistrationClient::class);
     }
 
     /**

@@ -7,7 +7,7 @@ namespace App\Data\Download;
 use App\Enums\RecordSource;
 use Spatie\LaravelData\Data;
 
-/** @phpstan-import-type CourseRegistrationDetail from \App\Contracts\CourseRegistrationClient */
+/** @phpstan-import-type RegistrationDetail from \App\Contracts\RegistrationClient */
 final class PortalRegistrationData extends Data
 {
     public function __construct(
@@ -18,12 +18,12 @@ final class PortalRegistrationData extends Data
         public readonly string $level,
         public readonly string $courseId,
         public readonly string $creditUnit,
-        public readonly PortalDateData $registrationDate,
+        public readonly string $registrationDate,
         public readonly RecordSource $source,
     ) {
     }
 
-    /** @param CourseRegistrationDetail $data */
+    /** @param RegistrationDetail $data */
     public static function fromArray(array $data): self
     {
         return new self(
@@ -34,7 +34,7 @@ final class PortalRegistrationData extends Data
             level: $data['level'],
             courseId: (string) $data['course_id'],
             creditUnit: (string) $data['credit_unit'],
-            registrationDate: PortalDateData::from($data['registration_date']),
+            registrationDate: $data['registration_date'],
             source: RecordSource::PORTAL,
         );
     }
