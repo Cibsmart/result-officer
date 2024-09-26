@@ -75,7 +75,7 @@ declare namespace App.Data.Download {
     level: string;
     courseId: string;
     creditUnit: string;
-    registrationDate: string;
+    registrationDate: string | null;
     source: App.Enums.RecordSource;
   };
   export type PortalResultData = {
