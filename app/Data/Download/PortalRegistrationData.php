@@ -8,7 +8,7 @@ use App\Enums\RecordSource;
 use Spatie\LaravelData\Data;
 
 /** @phpstan-import-type CourseRegistrationDetail from \App\Contracts\CourseRegistrationClient */
-final class PortalCourseRegistrationData extends Data
+final class PortalRegistrationData extends Data
 {
     public function __construct(
         public readonly string $onlineId,

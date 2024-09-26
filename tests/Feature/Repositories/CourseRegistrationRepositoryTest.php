@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Data\Download\PortalCourseRegistrationData;
+use App\Data\Download\PortalRegistrationData;
 use App\Http\Clients\Fakes\FakeCourseRegistrationClient;
 use App\Repositories\CourseRegistrationRepository;
 use App\Services\Api\RegistrationService;
@@ -30,7 +30,7 @@ it('can get a course registration by registration number', function (): void {
     $data = $this->repository->getCourseRegistrationsByRegistrationNumber('EBSU-2009-51486');
 
     expect($data)->toBeInstanceOf(Collection::class)
-        ->and($data[0])->toBeInstanceOf(PortalCourseRegistrationData::class);
+        ->and($data[0])->toBeInstanceOf(PortalRegistrationData::class);
 });
 
 it('can get course registrations by department session and level', function (): void {
@@ -42,7 +42,7 @@ it('can get course registrations by department session and level', function (): 
     );
 
     expect($data)->toBeInstanceOf(Collection::class)
-        ->and($data[0])->toBeInstanceOf(PortalCourseRegistrationData::class);
+        ->and($data[0])->toBeInstanceOf(PortalRegistrationData::class);
 });
 
 it('can get course registrations by department session and semester', function (): void {
@@ -54,7 +54,7 @@ it('can get course registrations by department session and semester', function (
     );
 
     expect($data)->toBeInstanceOf(Collection::class)
-        ->and($data[0])->toBeInstanceOf(PortalCourseRegistrationData::class);
+        ->and($data[0])->toBeInstanceOf(PortalRegistrationData::class);
 });
 
 it('can get course registrations by session and course', function (): void {
@@ -63,7 +63,7 @@ it('can get course registrations by session and course', function (): void {
     $data = $this->repository->getCourseRegistrationsBySessionAndCourse($session, $courseId);
 
     expect($data)->toBeInstanceOf(Collection::class)
-        ->and($data[0])->toBeInstanceOf(PortalCourseRegistrationData::class);
+        ->and($data[0])->toBeInstanceOf(PortalRegistrationData::class);
 });
 
 it('can save a valid course registrations for a student', function (): void {

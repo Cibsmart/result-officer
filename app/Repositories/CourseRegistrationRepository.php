@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\Classes\PendingCourseRegistration;
-use App\Data\Download\PortalCourseRegistrationData;
+use App\Data\Download\PortalRegistrationData;
 use App\Data\Response\ResponseData;
 use App\Enums\YearEnum;
 use App\Models\Enrollment;
@@ -25,13 +25,13 @@ final class CourseRegistrationRepository
     {
     }
 
-    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> */
+    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalRegistrationData> */
     public function getCourseRegistrationsByRegistrationNumber(string $registrationNumber): Collection
     {
         return $this->service->getCourseRegistrationsByRegistrationNumber($registrationNumber);
     }
 
-    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> */
+    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalRegistrationData> */
     public function getCourseRegistrationsByDepartmentAndSessionLevel(
         int $departmentId,
         string $session,
@@ -40,7 +40,7 @@ final class CourseRegistrationRepository
         return $this->service->getCourseRegistrationsByDepartmentSessionAndLevel($departmentId, $session, $level);
     }
 
-    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> */
+    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalRegistrationData> */
     public function getCourseRegistrationsByDepartmentSessionAndSemester(
         int $departmentId,
         string $session,
@@ -49,14 +49,14 @@ final class CourseRegistrationRepository
         return $this->service->getCourseRegistrationsByDepartmentSessionAndSemester($departmentId, $session, $semester);
     }
 
-    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> */
+    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalRegistrationData> */
     public function getCourseRegistrationsBySessionAndCourse(string $session, int $courseId): Collection
     {
         return $this->service->getCourseRegistrationsBySessionAndCourse($session, $courseId);
     }
 
     /**
-     * @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> $registrations
+     * @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalRegistrationData> $registrations
      * @return \Illuminate\Support\Collection<int, \App\Data\Response\ResponseData>
      */
     public function saveCourseRegistrations(Collection $registrations): Collection
@@ -80,7 +80,7 @@ final class CourseRegistrationRepository
     }
 
     /**
-     * @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> $registrations
+     * @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalRegistrationData> $registrations
      * @throws \Exception
      */
     private function saveStudentCourseRegistrations(string $registrationNumber, Collection $registrations): void
@@ -98,7 +98,7 @@ final class CourseRegistrationRepository
     }
 
     /**
-     * @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> $registrations
+     * @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalRegistrationData> $registrations
      * @throws \Exception
      */
     private function saveStudentSemesterCourseRegistrations(
@@ -118,7 +118,7 @@ final class CourseRegistrationRepository
     }
 
     /**
-     * @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> $registrations
+     * @param \Illuminate\Support\Collection<int, \App\Data\Download\PortalRegistrationData> $registrations
      * @throws \Exception
      */
     private function saveStudentSessionCourseRegistrations(
@@ -143,7 +143,7 @@ final class CourseRegistrationRepository
     /** @throws \Exception */
     private function saveCourseRegistration(
         SemesterEnrollment $semesterEnrollment,
-        PortalCourseRegistrationData $courseRegistrationData,
+        PortalRegistrationData $courseRegistrationData,
     ): void {
 
         $pendingRegistration = PendingCourseRegistration::new($semesterEnrollment, $courseRegistrationData);

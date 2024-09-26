@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Classes;
 
-use App\Data\Download\PortalCourseRegistrationData;
+use App\Data\Download\PortalRegistrationData;
 use App\Enums\CourseStatusEnum;
 use App\Enums\CreditUnitEnum;
 use App\Models\Course;
@@ -19,7 +19,7 @@ final readonly class PendingCourseRegistration
     }
 
     /** @throws \Exception */
-    public static function new(SemesterEnrollment $semesterEnrollment, PortalCourseRegistrationData $data): self
+    public static function new(SemesterEnrollment $semesterEnrollment, PortalRegistrationData $data): self
     {
         $registration = new CourseRegistration();
         $registration->course_id = self::getCourse($data->courseId)->id;

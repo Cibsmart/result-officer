@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Api;
 
 use App\Contracts\CourseRegistrationClient;
-use App\Data\Download\PortalCourseRegistrationData;
+use App\Data\Download\PortalRegistrationData;
 use Illuminate\Support\Collection;
 
 final class RegistrationService
@@ -14,15 +14,15 @@ final class RegistrationService
     {
     }
 
-    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> */
+    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalRegistrationData> */
     public function getCourseRegistrationsByRegistrationNumber(string $registrationNumber): Collection
     {
         $registrations = $this->client->fetchCourseRegistrationByRegistrationNumber($registrationNumber);
 
-        return PortalCourseRegistrationData::collect(collect($registrations));
+        return PortalRegistrationData::collect(collect($registrations));
     }
 
-    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> */
+    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalRegistrationData> */
     public function getCourseRegistrationsByDepartmentSessionAndLevel(
         int $departmentId,
         string $session,
@@ -32,10 +32,10 @@ final class RegistrationService
             $departmentId, $session, $level,
         );
 
-        return PortalCourseRegistrationData::collect(collect($registrations));
+        return PortalRegistrationData::collect(collect($registrations));
     }
 
-    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> */
+    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalRegistrationData> */
     public function getCourseRegistrationsByDepartmentSessionAndSemester(
         int $departmentId,
         string $session,
@@ -45,14 +45,14 @@ final class RegistrationService
             $departmentId, $session, $semester,
         );
 
-        return PortalCourseRegistrationData::collect(collect($registrations));
+        return PortalRegistrationData::collect(collect($registrations));
     }
 
-    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalCourseRegistrationData> */
+    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalRegistrationData> */
     public function getCourseRegistrationsBySessionAndCourse(string $session, int $courseId): Collection
     {
         $registrations = $this->client->fetchCourseRegistrationBySessionCourse($session, $courseId);
 
-        return PortalCourseRegistrationData::collect(collect($registrations));
+        return PortalRegistrationData::collect(collect($registrations));
     }
 }
