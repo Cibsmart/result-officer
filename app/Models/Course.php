@@ -22,6 +22,11 @@ final class Course extends Model
         $course->save();
     }
 
+    public static function getUsingOnlineId(string $onlineId): self
+    {
+        return self::query()->where('online_id', $onlineId)->firstOrFail();
+    }
+
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
     protected function name(): Attribute
     {
