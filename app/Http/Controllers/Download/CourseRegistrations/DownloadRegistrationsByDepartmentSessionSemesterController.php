@@ -4,34 +4,33 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Download\CourseRegistrations;
 
-use App\Helpers\GetResponse;
+use App\Enums\ImportEventMethod;
+use App\Enums\ImportEventType;
 use App\Http\Requests\Download\DownloadRegistrationsByDepartmentSessionSemesterRequest;
-use App\Repositories\CourseRegistrationRepository;
-use Exception;
+use App\Models\ImportEvent;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Artisan;
 
 final readonly class DownloadRegistrationsByDepartmentSessionSemesterController
 {
-    public function __construct(private CourseRegistrationRepository $repository)
-    {
-    }
-
     public function __invoke(DownloadRegistrationsByDepartmentSessionSemesterRequest $request): RedirectResponse
     {
-        try {
-            $data = $this->repository->getCourseRegistrationsByDepartmentSessionAndSemester(
-                departmentId: $request->integer('onlineDepartmentId'),
-                session: $request->string('sessionName')->value(),
-                semester: $request->string('semesterName')->value(),
-            );
+        $user = $request->user();
 
-            $results = $this->repository->saveCourseRegistrations($data);
+        assert($user instanceof User);
 
-            $response = GetResponse::fromArray($results);
+        $event = ImportEvent::new($user, ImportEventType::REGISTRATIONS, ImportEventMethod::REGISTRATION_NUMBER,
+            [
+                'department' => $request->string('departmentName')->value(),
+                'online_department_id' => $request->integer('onlineDepartmentId'),
+                'semester' => $request->string('semesterName')->value(),
+                'session' => $request->string('sessionName')->value(),
+            ],
+        );
 
-            return back()->{$response->type->value}($response->message);
-        } catch (Exception $e) {
-            return back()->error($e->getMessage());
-        }
+        Artisan::queue('portal-data:import', ['eventId' => $event->id]);
+
+        return redirect()->back()->success('Course Registrations Import Started...');
     }
 }
