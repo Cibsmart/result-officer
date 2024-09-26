@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Clients;
 
-use App\Contracts\CourseRegistrationClient;
+use App\Contracts\RegistrationClient;
 use Config;
 
-/** @phpstan-import-type CourseRegistrationDetail from \App\Contracts\CourseRegistrationClient */
-final readonly class PortalCourseRegistrationClient extends ApiClient implements CourseRegistrationClient
+/** @phpstan-import-type RegistrationDetail from \App\Contracts\RegistrationClient */
+final readonly class PortalRegistrationClient extends ApiClient implements RegistrationClient
 {
     private string $endpoint;
 
@@ -20,9 +20,9 @@ final readonly class PortalCourseRegistrationClient extends ApiClient implements
     /** {@inheritDoc}
      * @throws \Exception
      */
-    public function fetchCourseRegistrationByRegistrationNumber(string $registrationNumber): array
+    public function fetchRegistrationByRegistrationNumber(string $registrationNumber): array
     {
-        /** @var array<CourseRegistrationDetail> $courses */
+        /** @var array<RegistrationDetail> $courses */
         $courses = $this->get(endpoint: $this->endpoint, parameters: ['registration_number' => $registrationNumber]);
 
         return $courses;
@@ -31,12 +31,12 @@ final readonly class PortalCourseRegistrationClient extends ApiClient implements
     /** {@inheritDoc}
      * @throws \Exception
      */
-    public function fetchCourseRegistrationByDepartmentSessionLevel(
+    public function fetchRegistrationByDepartmentSessionLevel(
         int $departmentId,
         string $session,
         int $level,
     ): array {
-        /** @var array<CourseRegistrationDetail> $courses */
+        /** @var array<RegistrationDetail> $courses */
         $courses = $this->get(
             endpoint: $this->endpoint,
             parameters: ['department' => $departmentId, 'session' => $session, 'level' => $level],
@@ -48,12 +48,12 @@ final readonly class PortalCourseRegistrationClient extends ApiClient implements
     /** {@inheritDoc}
      * @throws \Exception
      */
-    public function fetchCourseRegistrationByDepartmentSessionSemester(
+    public function fetchRegistrationByDepartmentSessionSemester(
         int $departmentId,
         string $session,
         string $semester,
     ): array {
-        /** @var array<CourseRegistrationDetail> $courses */
+        /** @var array<RegistrationDetail> $courses */
         $courses = $this->get(
             endpoint: $this->endpoint,
             parameters: ['department' => $departmentId, 'session' => $session, 'semester' => $semester],
@@ -65,9 +65,9 @@ final readonly class PortalCourseRegistrationClient extends ApiClient implements
     /** {@inheritDoc}
      * @throws \Exception
      */
-    public function fetchCourseRegistrationBySessionCourse(string $session, int $course): array
+    public function fetchRegistrationBySessionCourse(string $session, int $course): array
     {
-        /** @var array<CourseRegistrationDetail> $courses */
+        /** @var array<RegistrationDetail> $courses */
         $courses = $this->get(endpoint: $this->endpoint, parameters: ['session' => $session, 'course_id' => $course]);
 
         return $courses;

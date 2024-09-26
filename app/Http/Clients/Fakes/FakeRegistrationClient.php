@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace App\Http\Clients\Fakes;
 
-use App\Contracts\CourseRegistrationClient;
+use App\Contracts\RegistrationClient;
 use App\Http\Clients\ApiClient;
 use Illuminate\Support\Str;
 
-/** @phpstan-import-type CourseRegistrationDetail from \App\Data\Download\PortalRegistrationData */
-final readonly class FakeCourseRegistrationClient extends ApiClient implements CourseRegistrationClient
+/** @phpstan-import-type RegistrationDetail from \App\Data\Download\PortalRegistrationData */
+final readonly class FakeRegistrationClient extends ApiClient implements RegistrationClient
 {
-    public final const COURSE_REGISTRATIONS = [
+    public final const REGISTRATIONS = [
         [
             'course_id' => '1',
             'credit_unit' => '3',
             'department_id' => '1',
             'id' => '1',
             'level' => '100',
-            'registration_date' => ['day' => '27', 'month' => '08', 'year' => '2009'],
+            'registration_date' => '27-08-2009',
             'registration_number' => 'EBSU/2009/51486',
             'semester' => 'FIRST',
             'session' => '2009/2010',
@@ -29,7 +29,7 @@ final readonly class FakeCourseRegistrationClient extends ApiClient implements C
             'department_id' => '1',
             'id' => '2',
             'level' => '100',
-            'registration_date' => ['day' => '27', 'month' => '08', 'year' => '2009'],
+            'registration_date' => '27-08-2009',
             'registration_number' => 'EBSU/2009/51486',
             'semester' => 'SECOND',
             'session' => '2009/2010',
@@ -40,7 +40,7 @@ final readonly class FakeCourseRegistrationClient extends ApiClient implements C
             'department_id' => '1',
             'id' => '3',
             'level' => '200',
-            'registration_date' => ['day' => '27', 'month' => '08', 'year' => '2011'],
+            'registration_date' => '27-08-2011',
             'registration_number' => 'EBSU/2009/51486',
             'semester' => 'FIRST',
             'session' => '2010/2011',
@@ -51,7 +51,7 @@ final readonly class FakeCourseRegistrationClient extends ApiClient implements C
             'department_id' => '1',
             'id' => '4',
             'level' => '200',
-            'registration_date' => ['day' => '27', 'month' => '08', 'year' => '2011'],
+            'registration_date' => '27-08-2011',
             'registration_number' => 'EBSU/2009/51486',
             'semester' => 'SECOND',
             'session' => '2010/2011',
@@ -62,7 +62,7 @@ final readonly class FakeCourseRegistrationClient extends ApiClient implements C
             'department_id' => '1',
             'id' => '4',
             'level' => '200',
-            'registration_date' => ['day' => '27', 'month' => '08', 'year' => '2011'],
+            'registration_date' => '27-08-2011',
             'registration_number' => 'invalid/registration/number',
             'semester' => 'SECOND',
             'session' => '2010/2011',
@@ -70,17 +70,17 @@ final readonly class FakeCourseRegistrationClient extends ApiClient implements C
     ];
 
     /** {@inheritDoc} */
-    public function fetchCourseRegistrationByRegistrationNumber(string $registrationNumber): array
+    public function fetchRegistrationByRegistrationNumber(string $registrationNumber): array
     {
         $registrationNumber = Str::replace('-', '/', $registrationNumber);
 
         $groups = ['registration_number' => $registrationNumber];
 
-        return $this->groupCourseRegistrationBy(self::COURSE_REGISTRATIONS, $groups);
+        return $this->groupRegistrationBy(self::REGISTRATIONS, $groups);
     }
 
     /** {@inheritDoc} */
-    public function fetchCourseRegistrationByDepartmentSessionLevel(
+    public function fetchRegistrationByDepartmentSessionLevel(
         int $departmentId,
         string $session,
         int $level,
@@ -89,11 +89,11 @@ final readonly class FakeCourseRegistrationClient extends ApiClient implements C
 
         $groups = ['department_id' => $departmentId, 'session' => $session, 'level' => $level];
 
-        return $this->groupCourseRegistrationBy(self::COURSE_REGISTRATIONS, $groups);
+        return $this->groupRegistrationBy(self::REGISTRATIONS, $groups);
     }
 
     /** {@inheritDoc} */
-    public function fetchCourseRegistrationByDepartmentSessionSemester(
+    public function fetchRegistrationByDepartmentSessionSemester(
         int $departmentId,
         string $session,
         string $semester,
@@ -102,25 +102,25 @@ final readonly class FakeCourseRegistrationClient extends ApiClient implements C
 
         $groups = ['department_id' => $departmentId, 'session' => $session, 'semester' => $semester];
 
-        return $this->groupCourseRegistrationBy(self::COURSE_REGISTRATIONS, $groups);
+        return $this->groupRegistrationBy(self::REGISTRATIONS, $groups);
     }
 
     /** {@inheritDoc} */
-    public function fetchCourseRegistrationBySessionCourse(string $session, int $course): array
+    public function fetchRegistrationBySessionCourse(string $session, int $course): array
     {
         $session = Str::replace('-', '/', $session);
 
         $groups = ['session' => $session, 'course_id' => $course];
 
-        return $this->groupCourseRegistrationBy(self::COURSE_REGISTRATIONS, $groups);
+        return $this->groupRegistrationBy(self::REGISTRATIONS, $groups);
     }
 
     /**
-     * @param array<int, CourseRegistrationDetail> $data
+     * @param array<int, RegistrationDetail> $data
      * @param array<string, int|string> $groups
-     * @return array<int, CourseRegistrationDetail>
+     * @return array<int, RegistrationDetail>
      */
-    private function groupCourseRegistrationBy(
+    private function groupRegistrationBy(
         array $data,
         array $groups,
         int $index = 0,
@@ -134,12 +134,12 @@ final readonly class FakeCourseRegistrationClient extends ApiClient implements C
 
         $grouped = collect($data)->groupBy($keys[$index]);
 
-        /** @var \Illuminate\Support\Collection<int, CourseRegistrationDetail> $groupedRegistration */
+        /** @var \Illuminate\Support\Collection<int, RegistrationDetail> $groupedRegistration */
         $groupedRegistration = $grouped[$values[$index]];
 
-        /** @var array<CourseRegistrationDetail> $registrations */
+        /** @var array<RegistrationDetail> $registrations */
         $registrations = $groupedRegistration->all();
 
-        return $this->groupCourseRegistrationBy($registrations, $groups, $index + 1);
+        return $this->groupRegistrationBy($registrations, $groups, $index + 1);
     }
 }

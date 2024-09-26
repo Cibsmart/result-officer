@@ -3,21 +3,21 @@
 declare(strict_types=1);
 
 use App\Data\Download\PortalRegistrationData;
-use App\Http\Clients\Fakes\FakeCourseRegistrationClient;
+use App\Http\Clients\Fakes\FakeRegistrationClient;
 use App\Services\Api\RegistrationService;
 use Illuminate\Support\Collection;
 
 beforeEach(function (): void {
-    $client = new FakeCourseRegistrationClient();
+    $client = new FakeRegistrationClient();
 
     $this->service = new RegistrationService($client);
 });
 
 it('can get course registrations by registration number', function (): void {
     $registrationNumber = 'EBSU/2009/51486';
-    $data = $this->service->getCourseRegistrationsByRegistrationNumber($registrationNumber);
+    $data = $this->service->getRegistrationsByRegistrationNumber($registrationNumber);
 
-    $group = groupArrays(FakeCourseRegistrationClient::COURSE_REGISTRATIONS, [
+    $group = groupArrays(FakeRegistrationClient::REGISTRATIONS, [
         'registration_number' => $registrationNumber,
     ]);
 
@@ -31,13 +31,13 @@ it('can get course registrations by department session and level', function (): 
     $session = '2009/2010';
     $level = 100;
 
-    $data = $this->service->getCourseRegistrationsByDepartmentSessionAndLevel(
+    $data = $this->service->getRegistrationsByDepartmentSessionAndLevel(
         $departmentId,
         $session,
         $level,
     );
 
-    $group = groupArrays(FakeCourseRegistrationClient::COURSE_REGISTRATIONS, [
+    $group = groupArrays(FakeRegistrationClient::REGISTRATIONS, [
         'department_id' => $departmentId,
         'level' => $level,
         'session' => $session,
@@ -53,13 +53,13 @@ it('can get course registrations by department session and semester', function (
     $session = '2009/2010';
     $semester = 'FIRST';
 
-    $data = $this->service->getCourseRegistrationsByDepartmentSessionAndSemester(
+    $data = $this->service->getRegistrationsByDepartmentSessionAndSemester(
         $departmentId,
         $session,
         $semester,
     );
 
-    $group = groupArrays(FakeCourseRegistrationClient::COURSE_REGISTRATIONS, [
+    $group = groupArrays(FakeRegistrationClient::REGISTRATIONS, [
         'department_id' => $departmentId,
         'semester' => $semester,
         'session' => $session,
@@ -74,9 +74,9 @@ it('can get course registrations by session and course', function (): void {
     $session = '2009/2010';
     $courseId = 1;
 
-    $data = $this->service->getCourseRegistrationsBySessionAndCourse($session, $courseId);
+    $data = $this->service->getRegistrationsBySessionAndCourse($session, $courseId);
 
-    $group = groupArrays(FakeCourseRegistrationClient::COURSE_REGISTRATIONS, [
+    $group = groupArrays(FakeRegistrationClient::REGISTRATIONS, [
         'course_id' => $courseId,
         'session' => $session,
     ]);

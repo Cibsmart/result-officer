@@ -54,17 +54,6 @@ declare namespace App.Data.Download {
     code: string;
     title: string;
   };
-  export type PortalCourseRegistrationData = {
-    onlineId: string;
-    registrationNumber: string;
-    session: string;
-    semester: string;
-    level: string;
-    courseId: string;
-    creditUnit: string;
-    registrationDate: App.Data.Download.PortalDateData;
-    source: App.Enums.RecordSource;
-  };
   export type PortalDateData = {
     value: string | null;
   };
@@ -77,6 +66,17 @@ declare namespace App.Data.Download {
   };
   export type PortalProgramData = {
     name: string;
+  };
+  export type PortalRegistrationData = {
+    onlineId: string;
+    registrationNumber: string;
+    session: string;
+    semester: string;
+    level: string;
+    courseId: string;
+    creditUnit: string;
+    registrationDate: string;
+    source: App.Enums.RecordSource;
   };
   export type PortalResultData = {
     onlineId: string;

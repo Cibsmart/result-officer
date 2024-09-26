@@ -12,7 +12,7 @@ use App\Models\CourseRegistration;
 use App\Models\SemesterEnrollment;
 use Exception;
 
-final readonly class PendingCourseRegistration
+final readonly class PendingRegistration
 {
     public function __construct(public CourseRegistration $registration)
     {
@@ -26,7 +26,7 @@ final readonly class PendingCourseRegistration
         $registration->credit_unit = CreditUnitEnum::from((int) $data->creditUnit)->value;
         $registration->course_status = CourseStatusEnum::FRESH->value;
         $registration->online_id = $data->onlineId;
-        $registration->registration_date = $data->registrationDate->getStringDate();
+        $registration->registration_date = $data->registrationDate;
         $registration->semester_enrollment_id = $semesterEnrollment->id;
         $registration->source = $data->source->value;
 
