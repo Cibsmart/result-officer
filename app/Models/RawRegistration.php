@@ -4,8 +4,48 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Data\Download\PortalRegistrationData;
+use App\Enums\RawDataStatus;
 use Illuminate\Database\Eloquent\Model;
 
 final class RawRegistration extends Model
 {
+    public static function createFromPortalRegistrationData(PortalRegistrationData $data, ImportEvent $event): void
+    {
+        $rawRegistration = new self();
+
+        $rawRegistration->import_event_id = $event->id;
+        $rawRegistration->online_id = $data->onlineId;
+        $rawRegistration->registration_number = $data->registrationNumber;
+        $rawRegistration->session = $data->session;
+        $rawRegistration->semester = $data->semester;
+        $rawRegistration->level = $data->level;
+        $rawRegistration->course_id = $data->courseId;
+        $rawRegistration->course_title = '';
+        $rawRegistration->credit_unit = $data->creditUnit;
+        $rawRegistration->registration_date = $data->registrationDate;
+        $rawRegistration->status = RawDataStatus::PENDING;
+
+        $rawRegistration->save();
+    }
+
+    public function updateStatus(RawDataStatus $status): void
+    {
+        $this->status = $status;
+        $this->save();
+    }
+
+    public function setMessage(string $message): void
+    {
+        $this->message = $message;
+        $this->save();
+    }
+
+    /** @return array{status: 'App\Enums\RawDataStatus'} */
+    protected function casts(): array
+    {
+        return [
+            'status' => RawDataStatus::class,
+        ];
+    }
 }
