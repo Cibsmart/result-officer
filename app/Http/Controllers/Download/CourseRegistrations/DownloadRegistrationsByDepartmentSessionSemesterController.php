@@ -20,13 +20,17 @@ final readonly class DownloadRegistrationsByDepartmentSessionSemesterController
 
         assert($user instanceof User);
 
-        $event = ImportEvent::new($user, ImportEventType::REGISTRATIONS, ImportEventMethod::REGISTRATION_NUMBER,
-            [
+        $event = ImportEvent::new(
+            user: $user,
+            type: ImportEventType::REGISTRATIONS,
+            method: ImportEventMethod::DEPARTMENT_SESSION_SEMESTER,
+            data: [
                 'department' => $request->string('departmentName')->value(),
                 'online_department_id' => $request->integer('onlineDepartmentId'),
                 'semester' => $request->string('semesterName')->value(),
                 'session' => $request->string('sessionName')->value(),
             ],
+
         );
 
         Artisan::queue('portal-data:import', ['eventId' => $event->id]);

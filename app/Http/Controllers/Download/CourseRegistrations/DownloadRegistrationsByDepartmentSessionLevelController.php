@@ -20,8 +20,11 @@ final readonly class DownloadRegistrationsByDepartmentSessionLevelController
 
         assert($user instanceof User);
 
-        $event = ImportEvent::new($user, ImportEventType::REGISTRATIONS, ImportEventMethod::REGISTRATION_NUMBER,
-            [
+        $event = ImportEvent::new(
+            user: $user,
+            type: ImportEventType::REGISTRATIONS,
+            method: ImportEventMethod::DEPARTMENT_SESSION_LEVEL,
+            data: [
                 'department' => $request->string('departmentName')->value(),
                 'level' => $request->integer('levelName'),
                 'online_department_id' => $request->integer('onlineDepartmentId'),
