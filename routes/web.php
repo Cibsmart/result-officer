@@ -93,9 +93,9 @@ Route::middleware(['auth'])->group(static function (): void {
             ->name('import.event.continue');
     });
 
-    Route::prefix('download/course-registrations')->group(static function (): void {
+    Route::prefix('download/registrations')->group(static function (): void {
         Route::get('page', DownloadCourseRegistrationPageController::class)
-            ->name('download.course-registrations.page');
+            ->name('download.registrations.page');
         Route::post('registration-number', DownloadRegistrationsByRegistrationNumberController::class)
             ->name('download.registrations.registration-number.store');
         Route::post('department-session-level', DownloadRegistrationsByDepartmentSessionLevelController::class)

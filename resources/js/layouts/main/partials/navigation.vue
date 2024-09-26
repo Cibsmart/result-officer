@@ -37,8 +37,8 @@ const navigation: NavigationItem[] = [
       },
       {
         name: "Registrations",
-        href: route("download.course-registrations.page"),
-        current: route().current("download.course-registrations.page"),
+        href: route("download.registrations.page"),
+        current: route().current("download.registrations.page"),
       },
       {
         name: "Results",
