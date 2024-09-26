@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Actions\Registrations\ProcessPortalRegistration;
+use App\Actions\Registrations\SavePortalRegistration;
 use App\Data\Download\PortalRegistrationData;
 use App\Http\Clients\Fakes\FakeRegistrationClient;
 use App\Services\Api\RegistrationService;
@@ -10,7 +12,8 @@ use Illuminate\Support\Collection;
 beforeEach(function (): void {
     $client = new FakeRegistrationClient();
 
-    $this->service = new RegistrationService($client);
+    $this->service = new RegistrationService($client, new SavePortalRegistration(),
+        new ProcessPortalRegistration());
 });
 
 it('can get course registrations by registration number', function (): void {
