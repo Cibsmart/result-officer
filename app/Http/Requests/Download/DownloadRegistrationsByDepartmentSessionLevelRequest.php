@@ -30,6 +30,8 @@ final class DownloadRegistrationsByDepartmentSessionLevelRequest extends FormReq
     protected function passedValidation(): void
     {
         $this->replace([
+            'departmentName' => $this->input('department.name'),
+
             'levelName' => Level::query()
                 ->where('id', $this->input('level.id'))
                 ->firstOrFail()

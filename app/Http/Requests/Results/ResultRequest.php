@@ -16,7 +16,7 @@ final class ResultRequest extends FormRequest
                 'required',
                 'string',
                 'min:14',
-                'regex:/^EBSU\/\d{4}\/\d{4,6}[A-Z]?$/',
+                'regex:/^EBSU\/\d{4}\/\d{4,7}[A-Z]?$/',
                 'exists:students,registration_number',
             ],
         ];
