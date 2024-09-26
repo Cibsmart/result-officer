@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('raw_registrations', function (Blueprint $table): void {
             $table->id();
             $table->foreignIdFor(ImportEvent::class);
-            $table->string('online_id');
+            $table->string('online_id')->index();
             $table->string('registration_number');
             $table->string('session');
             $table->string('semester');
