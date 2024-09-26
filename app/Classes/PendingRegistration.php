@@ -10,6 +10,7 @@ use App\Enums\CreditUnitEnum;
 use App\Models\Course;
 use App\Models\CourseRegistration;
 use App\Models\SemesterEnrollment;
+use App\Values\DateValue;
 use Exception;
 
 final readonly class PendingRegistration
@@ -24,11 +25,11 @@ final readonly class PendingRegistration
         $registration = new CourseRegistration();
         $registration->course_id = self::getCourse($data->courseId)->id;
         $registration->credit_unit = CreditUnitEnum::from((int) $data->creditUnit)->value;
-        $registration->course_status = CourseStatusEnum::FRESH->value;
+        $registration->course_status = CourseStatusEnum::FRESH;
         $registration->online_id = $data->onlineId;
-        $registration->registration_date = $data->registrationDate;
+        $registration->registration_date = DateValue::fromString($data->registrationDate)->value;
         $registration->semester_enrollment_id = $semesterEnrollment->id;
-        $registration->source = $data->source->value;
+        $registration->source = $data->source;
 
         return new self($registration);
     }
