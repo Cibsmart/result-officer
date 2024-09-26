@@ -12,6 +12,13 @@ final class SemesterEnrollment extends Model
 {
     protected $fillable = ['enrollment_id', 'semester_id'];
 
+    public static function getOrCreate(Enrollment $sessionEnrollment, Semester $semester): self
+    {
+        return self::query()->firstOrCreate(
+            ['enrollment_id' => $sessionEnrollment->id, 'semester_id' => $semester->id],
+        );
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Enrollment, \App\Models\SemesterEnrollment> */
     public function enrollment(): BelongsTo
     {

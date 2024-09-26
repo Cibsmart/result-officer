@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\YearEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,6 +19,17 @@ final class Enrollment extends Model
         'level_id',
         'year_id',
     ];
+
+    public static function getOrCreate(
+        Student $student,
+        Session $session,
+        Level $level,
+    ): self {
+        return self::query()->firstOrCreate(
+            ['student_id' => $student->id, 'session_id' => $session->id, 'level_id' => $level->id],
+            ['year_id' => YearEnum::FIRST->value],
+        );
+    }
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, \App\Models\Enrollment> */
     public function level(): BelongsTo
