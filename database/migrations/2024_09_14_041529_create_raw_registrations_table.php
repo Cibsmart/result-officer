@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('course_id');
             $table->string('course_title');
             $table->string('credit_unit');
-            $table->string('registration_date');
+            $table->string('registration_date')->nullable();
             $table->string('status');
             $table->text('message')->nullable();
             $table->timestamps();
