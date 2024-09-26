@@ -73,7 +73,7 @@ it('can save a valid registrations for a student', function (): void {
     StudentFactory::new()->create(['entry_level_id' => 1, 'registration_number' => $registrationNumber]);
     SemesterFactory::new()->count(2)->sequence(['name' => 'FIRST'], ['name' => 'SECOND'])->create();
     CourseFactory::new()->count(4)->sequence(
-        fn(Sequence $sequence) => ['online_id' => $sequence->index + 1],
+        fn (Sequence $sequence) => ['online_id' => $sequence->index + 1],
     )->create();
     YearFactory::new()->create();
 
