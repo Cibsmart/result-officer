@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Enums\ImportEventMethod;
 use Illuminate\Foundation\Console\QueuedCommand;
 use Tests\Factories\CourseFactory;
 use Tests\Factories\DepartmentFactory;
@@ -39,7 +40,11 @@ it('can start download of registrations by registration number', function (): vo
     $response->assertRedirect(route('download.registrations.page'));
 
     assertDatabaseHas('import_events',
-        ['user_id' => $user->id, 'data' => json_encode(['registration_number' => $student->registration_number])]);
+        [
+            'data' => json_encode(['registration_number' => $student->registration_number]),
+            'method' => ImportEventMethod::REGISTRATION_NUMBER->value,
+            'user_id' => $user->id,
+        ]);
 
     Queue::assertPushed(QueuedCommand::class);
 });
@@ -68,6 +73,7 @@ it('can start download of registrations by department, session and level', funct
                 'online_department_id' => $department->online_id,
                 'session' => $session->name,
             ]),
+            'method' => ImportEventMethod::DEPARTMENT_SESSION_LEVEL->value,
             'user_id' => $user->id,
         ]);
 
@@ -98,6 +104,7 @@ it('can start download of registrations by department, session and semester', fu
                 'semester' => $semester->name,
                 'session' => $session->name,
             ]),
+            'method' => ImportEventMethod::DEPARTMENT_SESSION_SEMESTER->value,
             'user_id' => $user->id,
         ]);
 
@@ -127,6 +134,7 @@ it('can start download of registrations by session and course', function (): voi
                 'online_course_id' => $course->online_id,
                 'session' => $session->name,
             ]),
+            'method' => ImportEventMethod::SESSION_COURSE->value,
             'user_id' => $user->id,
         ]);
 
