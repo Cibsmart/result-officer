@@ -4,14 +4,25 @@ declare(strict_types=1);
 
 namespace App\Services\Api;
 
+use App\Actions\Registrations\ProcessPortalRegistration;
+use App\Actions\Registrations\SavePortalRegistration;
+use App\Contracts\PortalService;
 use App\Contracts\RegistrationClient;
 use App\Data\Download\PortalRegistrationData;
+use App\Enums\ImportEventMethod;
+use App\Enums\RawDataStatus;
+use App\Models\ImportEvent;
+use Exception;
 use Illuminate\Support\Collection;
 
-final class RegistrationService
+/** @implements \App\Contracts\PortalService<\App\Data\Download\PortalRegistrationData> */
+final readonly class RegistrationService implements PortalService
 {
-    public function __construct(public RegistrationClient $client)
-    {
+    public function __construct(
+        public RegistrationClient $client,
+        public SavePortalRegistration $saveAction,
+        public ProcessPortalRegistration $processAction,
+    ) {
     }
 
     /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalRegistrationData> */
@@ -52,5 +63,63 @@ final class RegistrationService
         $registrations = $this->client->fetchRegistrationBySessionCourse($session, $courseId);
 
         return PortalRegistrationData::collect(collect($registrations));
+    }
+
+    /** {@inheritDoc} */
+    public function get(ImportEventMethod $method, array $parameters): Collection
+    {
+        $course = (int) $this->getValue('online_course_id', $parameters);
+        $level = (int) $this->getValue('level', $parameters);
+        $semester = $this->getValue('semester', $parameters);
+        $session = $this->getValue('session', $parameters);
+        $department = (int) $this->getValue('online_department_id', $parameters);
+        $registrationNumber = $this->getValue('registration_number', $parameters);
+
+        return match ($method) {
+            ImportEventMethod::SESSION_COURSE => $this->getRegistrationsBySessionAndCourse($session, $course),
+            ImportEventMethod::REGISTRATION_NUMBER => $this->getRegistrationsByRegistrationNumber($registrationNumber),
+            ImportEventMethod::DEPARTMENT_SESSION_LEVEL => $this->getRegistrationsByDepartmentSessionAndLevel(
+                $department,
+                $session,
+                $level,
+            ),
+            ImportEventMethod::DEPARTMENT_SESSION_SEMESTER => $this->getRegistrationsByDepartmentSessionAndSemester(
+                $department,
+                $session,
+                $semester,
+            ),
+            default => throw new Exception("Method {$method->value} not found")
+        };
+    }
+
+    /** {@inheritDoc} */
+    public function save(ImportEvent $event, Collection $data): void
+    {
+        foreach ($data as $student) {
+            $this->saveAction->execute($event, $student);
+        }
+    }
+
+    public function process(ImportEvent $event): void
+    {
+        $rawData = $event->registrations()->where('status', RawDataStatus::PENDING)->get();
+
+        foreach ($rawData as $registration) {
+            try {
+                $this->processAction->execute($registration);
+            } catch (Exception $e) {
+                $registration->setMessage($e->getMessage());
+
+                $registration->updateStatus(RawDataStatus::FAILED);
+            }
+        }
+    }
+
+    /** @param array<string, int|string> $data */
+    private function getValue(string $key, array $data): string
+    {
+        return array_key_exists($key, $data)
+            ? (string) $data[$key]
+            : '';
     }
 }
