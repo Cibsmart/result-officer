@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Actions\Results\ProcessPortalResult;
+use App\Actions\Results\SavePortalResult;
 use App\Data\Download\PortalResultData;
 use App\Http\Clients\Fakes\FakeResultClient;
 use App\Services\Api\ResultService;
@@ -10,7 +12,7 @@ use Illuminate\Support\Collection;
 beforeEach(function (): void {
     $client = new FakeResultClient();
 
-    $this->service = new ResultService($client);
+    $this->service = new ResultService($client, new SavePortalResult(), new ProcessPortalResult());
 });
 
 it('can get result by course registration id', function (): void {
