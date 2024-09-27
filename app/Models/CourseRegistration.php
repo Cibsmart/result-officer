@@ -41,6 +41,11 @@ final class CourseRegistration extends Model
         $registration->save();
     }
 
+    public static function getUsingOnlineId(string $onlineId): self
+    {
+        return self::query()->where('online_id', $onlineId)->firstOrFail();
+    }
+
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\SemesterEnrollment, \App\Models\CourseRegistration>
