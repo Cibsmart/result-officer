@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('remarks')->nullable();
             $table->date('exam_date')->nullable();
             $table->string('lecturer_name')->nullable();
+            $table->string('lecturer_phone')->nullable();
+            $table->string('lecturer_email')->nullable();
             $table->string('lecturer_department')->nullable();
             $table->string('data');
             $table->string('source')->default(RecordSource::LEGACY->value);
