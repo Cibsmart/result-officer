@@ -86,7 +86,7 @@ declare namespace App.Data.Download {
     examScore: string;
     totalScore: string;
     grade: string;
-    uploadDate: App.Data.Download.PortalDateData;
+    uploadDate: string;
     source: App.Enums.RecordSource;
     examDate: string;
     lecturerName: string;
@@ -332,14 +332,16 @@ declare namespace App.Enums {
   export type YearEnum = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 }
 declare namespace App.ViewModels.Downloads {
-  export type DownloadCourseRegistrationPage = {
+  export type DownloadCoursesPage = {
+    events: any;
+    pending: App.Data.Import.PendingImportEventData;
+  };
+  export type DownloadRegistrationPage = {
     departments: App.Data.Department.DepartmentListData;
     sessions: App.Data.Session.SessionListData;
     semesters: App.Data.Semester.SemesterListData;
     courses: App.Data.Course.CourseListData;
     levels: App.Data.Level.LevelListData;
-  };
-  export type DownloadCoursesPage = {
     events: any;
     pending: App.Data.Import.PendingImportEventData;
   };
