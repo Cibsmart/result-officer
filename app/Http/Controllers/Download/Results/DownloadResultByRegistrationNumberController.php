@@ -4,31 +4,28 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Download\Results;
 
-use App\Helpers\GetResponse;
+use App\Enums\ImportEventMethod;
+use App\Enums\ImportEventType;
 use App\Http\Requests\Results\ResultRequest;
-use App\Repositories\ResultRepository;
-use Exception;
+use App\Models\ImportEvent;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Artisan;
 
 final readonly class DownloadResultByRegistrationNumberController
 {
-    public function __construct(private ResultRepository $repository)
-    {
-    }
-
     /** @throws \Exception */
     public function __invoke(ResultRequest $request): RedirectResponse
     {
-        try {
-            $results = $this->repository->getResultByRegistrationNumber($request->input('registration_number'));
+        $user = $request->user();
 
-            $responses = $this->repository->saveResults($results);
+        assert($user instanceof User);
 
-            $response = GetResponse::fromArray($responses);
+        $event = ImportEvent::new($user, ImportEventType::RESULTS, ImportEventMethod::REGISTRATION_NUMBER,
+            ['registration_number' => $request->string('registration_number')->value()]);
 
-            return back()->{$response->type->value}($response->message);
-        } catch (Exception $e) {
-            return back()->error($e->getMessage());
-        }
+        Artisan::queue('portal-data:import', ['eventId' => $event->id]);
+
+        return redirect()->back()->success('Results Import Started...');
     }
 }

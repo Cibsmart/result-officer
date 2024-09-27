@@ -4,44 +4,37 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Download\Results;
 
-use App\Helpers\GetResponse;
-use App\Models\Department;
-use App\Repositories\ResultRepository;
-use Exception;
+use App\Enums\ImportEventMethod;
+use App\Enums\ImportEventType;
+use App\Http\Requests\Download\DownloadRegistrationsByDepartmentSessionLevelRequest;
+use App\Models\ImportEvent;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 final readonly class DownloadResultByDepartmentSessionLevelController
 {
-    public function __construct(private ResultRepository $repository)
-    {
-    }
-
     /** @throws \Exception */
-    public function __invoke(Request $request): RedirectResponse
+    public function __invoke(DownloadRegistrationsByDepartmentSessionLevelRequest $request): RedirectResponse
     {
-        $departmentId = $request->integer('department.id');
-        $session = $request->string('session.name')->value();
-        $level = $request->integer('level.name');
+        $user = $request->user();
 
-        $departmentOnlineId = Department::find($departmentId)->firstOrFail()->online_id;
+        assert($user instanceof User);
 
-        assert($departmentOnlineId !== null);
+        $event = ImportEvent::new(
+            user: $user,
+            type: ImportEventType::RESULTS,
+            method: ImportEventMethod::DEPARTMENT_SESSION_LEVEL,
+            data: [
+                'department' => $request->string('departmentName')->value(),
+                'level' => $request->integer('levelName'),
+                'online_department_id' => $request->integer('onlineDepartmentId'),
+                'session' => $request->string('sessionName')->value(),
+            ],
+        );
 
-        try {
-            $results = $this->repository->getResultByDepartmentSessionAndLevel(
-                departmentId: (int) $departmentOnlineId,
-                session: $session,
-                level: $level,
-            );
+        Artisan::queue('portal-data:import', ['eventId' => $event->id]);
 
-            $responses = $this->repository->saveResults($results);
-
-            $response = GetResponse::fromArray($responses);
-
-            return back()->{$response->type->value}($response->message);
-        } catch (Exception $e) {
-            return back()->error($e->getMessage());
-        }
+        return redirect()->back()->success('Results Import Started...');
     }
 }
