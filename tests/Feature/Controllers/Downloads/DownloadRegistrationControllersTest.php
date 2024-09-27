@@ -14,7 +14,6 @@ use Tests\Factories\UserFactory;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseHas;
-use function Pest\Laravel\withoutExceptionHandling;
 
 beforeEach(function (): void {
     Queue::fake();
@@ -112,8 +111,6 @@ it('can start download of registrations by department, session and semester', fu
 });
 
 it('can start download of registrations by session and course', function (): void {
-
-    withoutExceptionHandling();
     $user = UserFactory::new()->createOne();
     $session = SessionFactory::new()->createOne();
     $course = CourseFactory::new()->createOne(['online_id' => 1]);
