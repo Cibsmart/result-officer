@@ -38,7 +38,7 @@ final class PortalResultData extends Data
             inCourseScore: (string) $data['in_course'],
             examScore: (string) $data['exam_score'],
             totalScore: (string) $data['total_score'],
-            grade: $data['grade'],
+            grade: $data['grade'] ?? '',
             uploadDate: $data['upload_date'],
             source: RecordSource::PORTAL,
             examDate: $data['exam_date'] ?? '',
