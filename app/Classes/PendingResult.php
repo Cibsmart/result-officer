@@ -25,7 +25,8 @@ final readonly class PendingResult
         $grade = $totalScore->grade($registrationNumber->allowEGrade());
 
         $scores = [
-            'in-course' => $resultData->inCourseScore, 'exam' => $resultData->examScore,
+            'exam' => $resultData->examScore,
+            'in-course' => $resultData->inCourseScore,
             'total' => $resultData->totalScore,
         ];
         $gradePoint = $grade->point() * $courseRegistration->credit_unit;
