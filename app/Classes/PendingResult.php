@@ -7,6 +7,7 @@ namespace App\Classes;
 use App\Data\Download\PortalResultData;
 use App\Models\CourseRegistration;
 use App\Models\Result;
+use App\Values\DateValue;
 use App\Values\RegistrationNumber;
 use App\Values\TotalScore;
 use Exception;
@@ -23,7 +24,10 @@ final readonly class PendingResult
         $totalScore = TotalScore::new((int) $resultData->inCourseScore + (int) $resultData->examScore);
         $grade = $totalScore->grade($registrationNumber->allowEGrade());
 
-        $scores = self::prepareScores($resultData->inCourseScore, $resultData->examScore, $resultData->totalScore);
+        $scores = [
+            'in-course' => $resultData->inCourseScore, 'exam' => $resultData->examScore,
+            'total' => $resultData->totalScore,
+        ];
         $gradePoint = $grade->point() * $courseRegistration->credit_unit;
 
         $result = new Result();
@@ -33,10 +37,10 @@ final readonly class PendingResult
         $result->total_score = $totalScore->value;
         $result->grade = $grade->value;
         $result->grade_point = $gradePoint;
-        $result->upload_date = $resultData->uploadDate->getStringDate();
+        $result->upload_date = DateValue::fromString($resultData->uploadDate)->value;
         $result->data = $result->getData();
         $result->remarks = null;
-        $result->source = $resultData->source->value;
+        $result->source = $resultData->source;
 
         return new self($courseRegistration, $result);
     }
@@ -51,16 +55,5 @@ final readonly class PendingResult
         }
 
         return $this->result->save();
-    }
-
-    private static function prepareScores(
-        string $inCourse,
-        string $exam,
-        string $total,
-    ): string {
-        $scores = json_encode(['in-course' => $inCourse, 'exam' => $exam, 'total' => $total]);
-        assert(is_string($scores));
-
-        return $scores;
     }
 }
