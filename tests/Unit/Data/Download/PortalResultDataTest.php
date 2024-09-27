@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Data\Download\PortalDateData;
 use App\Data\Download\PortalResultData;
 use App\Http\Clients\Fakes\FakeResultClient;
 
@@ -19,5 +18,5 @@ it('constructs a correct portal result data from result array', function (): voi
         ->and($data->examScore)->toBe($result['exam_score'])
         ->and($data->totalScore)->toBe($result['total_score'])
         ->and($data->grade)->toBe($result['grade'])
-        ->and($data->uploadDate)->toBeInstanceOf(PortalDateData::class);
+        ->and($data->uploadDate)->toBeString();
 });
