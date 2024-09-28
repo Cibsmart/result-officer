@@ -8,10 +8,10 @@ use App\Models\SemesterEnrollment;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Sequence;
-use Tests\Factories\CourseRegistrationFactory;
 use Tests\Factories\EnrollmentFactory;
 use Tests\Factories\LevelFactory;
 use Tests\Factories\ProgramFactory;
+use Tests\Factories\RegistrationFactory;
 use Tests\Factories\ResultFactory;
 use Tests\Factories\SemesterEnrollmentFactory;
 use Tests\Factories\SemesterFactory;
@@ -30,7 +30,7 @@ function createStudentWithResults(
         StudentFactory::new()->has(
             EnrollmentFactory::new()
                 ->has(SemesterEnrollmentFactory::new()
-                    ->has(CourseRegistrationFactory::new()
+                    ->has(RegistrationFactory::new()
                         ->has(ResultFactory::new())
                         ->count($numberOfCourses),
                         'courses')
@@ -59,7 +59,7 @@ function createMultipleStudentsWithResults(
         StudentFactory::new()->has(
             EnrollmentFactory::new(['level_id' => $level->id, 'session_id' => $session->id])
                 ->has(SemesterEnrollmentFactory::new()
-                    ->has(CourseRegistrationFactory::new()
+                    ->has(RegistrationFactory::new()
                         ->has(ResultFactory::new())
                         ->count($numberOfCourses),
                         'courses')

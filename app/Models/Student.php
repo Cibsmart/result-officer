@@ -74,7 +74,7 @@ final class Student extends Model
         return self::query()->where('registration_number', $registrationNumber)->firstOrFail();
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\CourseRegistration> */
+    /** @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Registration> */
     public function courses(): HasManyThrough
     {
         return $this->through('enrollments')->has('courses');

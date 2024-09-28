@@ -17,7 +17,7 @@ final class RawResult extends Model
 
         $rawResult->import_event_id = $event->id;
         $rawResult->online_id = $data->onlineId;
-        $rawResult->course_registration_id = $data->onlineId;
+        $rawResult->registration_id = $data->onlineId;
         $rawResult->registration_number = $data->registrationNumber;
         $rawResult->in_course = $data->inCourseScore;
         $rawResult->exam = $data->examScore;

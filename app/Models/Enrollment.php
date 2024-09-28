@@ -37,10 +37,10 @@ final class Enrollment extends Model
         return $this->belongsTo(Level::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\CourseRegistration> */
+    /** @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Registration> */
     public function courses(): HasManyThrough
     {
-        return $this->hasManyThrough(CourseRegistration::class, SemesterEnrollment::class);
+        return $this->hasManyThrough(Registration::class, SemesterEnrollment::class);
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\SemesterEnrollment> */

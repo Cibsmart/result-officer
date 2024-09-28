@@ -27,7 +27,7 @@ final class Result extends Model
     /** @var array<int, string> */
     protected $hidden = ['data'];
 
-    public static function createFromRawResult(RawResult $rawResult, CourseRegistration $registration): void
+    public static function createFromRawResult(RawResult $rawResult, Registration $registration): void
     {
         $registrationNumber = RegistrationNumber::new($rawResult->registration_number);
         $totalScore = TotalScore::new((int) $rawResult->in_course + (int) $rawResult->exam);
@@ -42,7 +42,7 @@ final class Result extends Model
         ];
 
         $result = new self();
-        $result->course_registration_id = $registration->id;
+        $result->registration_id = $registration->id;
         $result->scores = $scores;
         $result->total_score = $totalScore->value;
         $result->grade = $grade->value;
@@ -60,15 +60,15 @@ final class Result extends Model
         $result->save();
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\CourseRegistration, \App\Models\Result> */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Registration, \App\Models\Result> */
     public function registration(): BelongsTo
     {
-        return $this->belongsTo(CourseRegistration::class);
+        return $this->belongsTo(Registration::class);
     }
 
     public function getData(): string
     {
-        return "{$this->course_registration_id}-{$this->total_score}-{$this->grade}-{$this->grade_point}";
+        return "{$this->registration_id}-{$this->total_score}-{$this->grade}-{$this->grade_point}";
     }
 
     /** @return array{data: 'hashed', scores: 'array', source: 'App\Enums\RecordSource', upload_date: 'date'} */

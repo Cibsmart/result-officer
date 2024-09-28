@@ -3,14 +3,14 @@
 declare(strict_types=1);
 
 use App\Data\Results\SemesterResultData;
-use Tests\Factories\CourseRegistrationFactory;
+use Tests\Factories\RegistrationFactory;
 use Tests\Factories\ResultFactory;
 use Tests\Factories\SemesterEnrollmentFactory;
 
 test('semester result data is correct', function (): void {
 
     $enrollment = SemesterEnrollmentFactory::new()
-        ->has(CourseRegistrationFactory::new()
+        ->has(RegistrationFactory::new()
             ->has(ResultFactory::new())
             ->count(5), 'courses')
         ->create();

@@ -15,7 +15,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('course_registrations', static function (Blueprint $table): void {
+        Schema::create('registrations', static function (Blueprint $table): void {
             $table->id();
             $table->foreignId('semester_enrollment_id')->constrained('semester_enrollments');
             $table->foreignId('course_id')->constrained('courses');

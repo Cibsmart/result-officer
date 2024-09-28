@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(ImportEvent::class);
             $table->string('online_id');
-            $table->string('course_registration_id');
+            $table->string('registration_id');
             $table->string('registration_number');
             $table->string('in_course');
             $table->string('exam');

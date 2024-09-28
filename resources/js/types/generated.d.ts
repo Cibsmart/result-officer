@@ -54,9 +54,6 @@ declare namespace App.Data.Download {
     code: string;
     title: string;
   };
-  export type PortalDateData = {
-    value: string | null;
-  };
   export type PortalDepartmentData = {
     onlineId: string;
     departmentCode: string;

@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-final class CourseRegistration extends Model
+final class Registration extends Model
 {
     /** @var array<int, string> */
     protected $fillable = [
@@ -48,14 +48,14 @@ final class CourseRegistration extends Model
 
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\SemesterEnrollment, \App\Models\CourseRegistration>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\SemesterEnrollment, \App\Models\Registration>
      */
     public function semesterEnrollment(): BelongsTo
     {
         return $this->belongsTo(SemesterEnrollment::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Course, \App\Models\CourseRegistration> */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Course, \App\Models\Registration> */
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);
