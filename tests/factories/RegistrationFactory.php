@@ -6,13 +6,13 @@ namespace Tests\Factories;
 
 use App\Enums\CourseStatusEnum;
 use App\Enums\CreditUnitEnum;
-use App\Models\CourseRegistration;
+use App\Models\Registration;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/** @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CourseRegistration> */
-final class CourseRegistrationFactory extends Factory
+/** @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Registration> */
+final class RegistrationFactory extends Factory
 {
-    protected $model = CourseRegistration::class;
+    protected $model = Registration::class;
 
     /** @return array<string, string> */
     public function definition(): array

@@ -6,7 +6,7 @@ namespace Database\Seeders;
 
 use App\Enums\CourseStatusEnum;
 use App\Enums\Grade;
-use App\Models\CourseRegistration;
+use App\Models\Registration;
 use App\Models\Result;
 use App\Values\ExamScore;
 use App\Values\InCourseScore;
@@ -162,7 +162,7 @@ final class ResultSeeder extends Seeder
     {
         foreach ($this->results as $semester_enrollment => $results) {
             foreach ($results as $result) {
-                $courseRegistration = CourseRegistration::query()->create([
+                $registration = Registration::query()->create([
                     'course_id' => $result[0],
                     'course_status' => CourseStatusEnum::from($result[1])->value,
                     'credit_unit' => $result[2],
@@ -173,13 +173,13 @@ final class ResultSeeder extends Seeder
                     ExamScore::new($result[3][1]));
                 $grade = Grade::for($score);
                 $gradePoint = $grade->value * $result[2];
-                $data = "$courseRegistration->id $score->value {$grade->value} $gradePoint";
+                $data = "$registration->id $score->value {$grade->value} $gradePoint";
 
                 Result::query()->create([
-                    'course_registration_id' => $courseRegistration->id,
                     'data' => $data,
                     'grade' => $grade->name,
                     'grade_point' => $gradePoint,
+                    'registration_id' => $registration->id,
                     'scores' => json_encode(['in-course' => $result[3][0], 'exam' => $result[3][1]]),
                     'total_score' => $score->value,
                 ]);

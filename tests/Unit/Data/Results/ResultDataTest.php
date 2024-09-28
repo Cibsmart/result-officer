@@ -3,12 +3,12 @@
 declare(strict_types=1);
 
 use App\Data\Results\ResultData;
-use Tests\Factories\CourseRegistrationFactory;
+use Tests\Factories\RegistrationFactory;
 use Tests\Factories\ResultFactory;
 
 test('course result data is correct', function (): void {
 
-    $course = CourseRegistrationFactory::new()
+    $course = RegistrationFactory::new()
         ->has(ResultFactory::new())->createOne();
 
     $resultData = ResultData::from($course);
@@ -24,7 +24,7 @@ test('course result data is correct', function (): void {
 });
 
 test('courses without result has default score', function (): void {
-    $course = CourseRegistrationFactory::new()->createOne();
+    $course = RegistrationFactory::new()->createOne();
 
     $resultData = ResultData::from($course);
 

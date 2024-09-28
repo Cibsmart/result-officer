@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('results', static function (Blueprint $table): void {
             $table->id();
-            $table->foreignId('course_registration_id')->constrained('course_registrations');
+            $table->foreignId('registration_id')->constrained('registrations');
             $table->json('scores');
             $table->unsignedTinyInteger('total_score')->default(0);
             $table->string('grade', 1)->default('F');
@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('source')->default(RecordSource::LEGACY->value);
             $table->timestamps();
 
-            $table->unique(['course_registration_id']);
+            $table->unique(['registration_id']);
         });
     }
 
@@ -41,6 +41,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('course_registrations');
+        Schema::dropIfExists('registrations');
     }
 };

@@ -12,7 +12,7 @@ final readonly class FakeResultClient implements ResultClient
     public final const RESULTS = [
         [
             'course_id' => '1',
-            'course_registration_id' => '1',
+            'registration_id' => '1',
             'department_id' => '1',
             'exam_score' => '21',
             'grade' => 'F',
@@ -27,7 +27,7 @@ final readonly class FakeResultClient implements ResultClient
         ],
         [
             'course_id' => '2',
-            'course_registration_id' => '2',
+            'registration_id' => '2',
             'exam_score' => '42',
             'grade' => 'C',
             'id' => '2',
@@ -41,7 +41,7 @@ final readonly class FakeResultClient implements ResultClient
         ],
         [
             'course_id' => '1',
-            'course_registration_id' => '3',
+            'registration_id' => '3',
             'exam_score' => '53',
             'grade' => 'B',
             'id' => '3',
@@ -55,7 +55,7 @@ final readonly class FakeResultClient implements ResultClient
         ],
         [
             'course_id' => '2',
-            'course_registration_id' => '4',
+            'registration_id' => '4',
             'exam_score' => '34',
             'grade' => 'E',
             'id' => '4',
@@ -69,7 +69,7 @@ final readonly class FakeResultClient implements ResultClient
         ],
         [
             'course_id' => '1',
-            'course_registration_id' => '5',
+            'registration_id' => '5',
             'exam_score' => '0',
             'grade' => 'F',
             'id' => '5',
@@ -83,7 +83,7 @@ final readonly class FakeResultClient implements ResultClient
         ],
         [
             'course_id' => '1',
-            'course_registration_id' => '6',
+            'registration_id' => '6',
             'department_id' => '1',
             'exam_score' => '21',
             'grade' => 'F',
@@ -101,7 +101,7 @@ final readonly class FakeResultClient implements ResultClient
     /** {@inheritDoc} */
     public function fetchResultByCourseRegistrationId(int $courseRegistrationId): array
     {
-        $groups = ['course_registration_id' => $courseRegistrationId];
+        $groups = ['registration_id' => $courseRegistrationId];
 
         return $this->groupResultBy(self::RESULTS, $groups);
     }

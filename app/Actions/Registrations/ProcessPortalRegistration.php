@@ -6,10 +6,10 @@ namespace App\Actions\Registrations;
 
 use App\Enums\RawDataStatus;
 use App\Models\Course;
-use App\Models\CourseRegistration;
 use App\Models\Enrollment;
 use App\Models\Level;
 use App\Models\RawRegistration;
+use App\Models\Registration;
 use App\Models\Semester;
 use App\Models\SemesterEnrollment;
 use App\Models\Session;
@@ -29,7 +29,7 @@ final class ProcessPortalRegistration
         $sessionEnrollment = Enrollment::getOrCreate($student, $session, $level);
         $semesterEnrollment = SemesterEnrollment::getOrCreate($sessionEnrollment, $semester);
 
-        $exists = CourseRegistration::query()
+        $exists = Registration::query()
             ->where('semester_enrollment_id', $semesterEnrollment->id)
             ->where('course_id', $course->id)
             ->exists();
@@ -40,7 +40,7 @@ final class ProcessPortalRegistration
             return;
         }
 
-        CourseRegistration::createFromRawRegistration($rawRegistration, $semesterEnrollment, $course);
+        Registration::createFromRawRegistration($rawRegistration, $semesterEnrollment, $course);
 
         $rawRegistration->updateStatus(RawDataStatus::PROCESSED);
     }

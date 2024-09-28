@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use App\Data\Results\SessionResultData;
 use App\Helpers\ComputeAverage;
-use Tests\Factories\CourseRegistrationFactory;
 use Tests\Factories\EnrollmentFactory;
+use Tests\Factories\RegistrationFactory;
 use Tests\Factories\ResultFactory;
 use Tests\Factories\SemesterEnrollmentFactory;
 use Tests\Factories\StudentFactory;
@@ -15,7 +15,7 @@ test('session result data is correct', function (): void {
 
     $enrollment = EnrollmentFactory::new(['student_id' => $student->id])
         ->has(SemesterEnrollmentFactory::new()
-            ->has(CourseRegistrationFactory::new()
+            ->has(RegistrationFactory::new()
                 ->has(ResultFactory::new())
                 ->count(5),
                 'courses')
@@ -55,7 +55,7 @@ test('session enrollment without result data returns zeroes', function (): void 
 
     $enrollment = EnrollmentFactory::new(['student_id' => $student->id])
         ->has(SemesterEnrollmentFactory::new()
-            ->has(CourseRegistrationFactory::new(), 'courses')
+            ->has(RegistrationFactory::new(), 'courses')
             ->count(2),
             'semesters')
         ->createOne();

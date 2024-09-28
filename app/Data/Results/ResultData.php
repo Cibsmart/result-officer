@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Data\Results;
 
-use App\Models\CourseRegistration;
+use App\Models\Registration;
 use App\Models\Result;
 use Spatie\LaravelData\Data;
 
@@ -22,7 +22,7 @@ final class ResultData extends Data
     ) {
     }
 
-    public static function fromModel(CourseRegistration $courseRegistration): self
+    public static function fromModel(Registration $courseRegistration): self
     {
         $result = $courseRegistration->result
             ? $courseRegistration->result
