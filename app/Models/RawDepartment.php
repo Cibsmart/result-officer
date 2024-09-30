@@ -14,7 +14,7 @@ final class RawDepartment extends Model
     {
         $rawDepartment = new self();
         $rawDepartment->import_event_id = $event->id;
-        $rawDepartment->status = RawDataStatus::PENDING->value;
+        $rawDepartment->status = RawDataStatus::PENDING;
         $rawDepartment->online_id = $data->onlineId;
         $rawDepartment->code = $data->departmentCode;
         $rawDepartment->name = $data->departmentName;
@@ -35,11 +35,12 @@ final class RawDepartment extends Model
         $this->save();
     }
 
-    /** @return array{options: 'array'} */
+    /** @return array{options: 'array', status: 'App\Enums\RawDataStatus'} */
     protected function casts(): array
     {
         return [
             'options' => 'array',
+            'status' => RawDataStatus::class,
         ];
     }
 }
