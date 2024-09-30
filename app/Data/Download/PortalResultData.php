@@ -44,7 +44,7 @@ final class PortalResultData extends Data
             examDate: $data['exam_date'] ?? '',
             lecturerName: $data['lecturer_name'] ?? '',
             lecturerEmail: $data['lecturer_email'] ?? '',
-            lecturerPhoneNumber: $data['lecturer_phone_number'] ?? '',
+            lecturerPhoneNumber: $data['lecturer_mobile'] ?? '',
             lecturerDepartment: $data['lecturer_department'] ?? '',
         );
     }
