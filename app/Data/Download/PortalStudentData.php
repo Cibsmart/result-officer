@@ -10,9 +10,7 @@ use Spatie\LaravelData\Data;
  * @phpstan-type StudentDetail array{id:string, last_name:string, first_name:string, other_names:string,
  *     registration_number:string, gender:string, date_of_birth:string, department_id:int, option:string,
  *     state:string, local_government:string, entry_session:string, entry_mode:string, entry_level:string,
- *     jamb_registration_number:string, email:string, phone_number:string, departmentid?:string,
- *     local_governemnt?:string, lecturer_name?:string, lecturer_phone?:string, lecturer_email?:string,
- *     lecturer_department?:string}
+ *     jamb_registration_number:string, email:string, phone_number:string, departmentid?:string}
  */
 final class PortalStudentData extends Data
 {
