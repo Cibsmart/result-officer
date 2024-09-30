@@ -14,7 +14,7 @@ final class RawCourse extends Model
     {
         $rawCourse = new self();
         $rawCourse->import_event_id = $event->id;
-        $rawCourse->status = RawDataStatus::PENDING->value;
+        $rawCourse->status = RawDataStatus::PENDING;
         $rawCourse->online_id = $data->onlineId;
         $rawCourse->code = $data->code;
         $rawCourse->title = $data->title;
@@ -31,5 +31,13 @@ final class RawCourse extends Model
     {
         $this->message = $message;
         $this->save();
+    }
+
+    /** @return array{status: 'App\Enums\RawDataStatus'} */
+    protected function casts(): array
+    {
+        return [
+            'status' => RawDataStatus::class,
+        ];
     }
 }
