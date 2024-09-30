@@ -7,7 +7,7 @@ namespace App\Contracts;
 /**
  * @phpstan-type ResultDetail array{id:string, course_registration_id: string, registration_number:string,
  *     in_course:string, exam_score:string, total_score:string, grade:string, upload_date:string,
- *     exam_date?:string, lecturer_name?:string, lecturer_email?:string, lecturer_phone_number?:string,
+ *     exam_date?:string, lecturer_name?:string, lecturer_email?:string, lecturer_mobile?:string,
  *     lecturer_department?:string}
  */
 interface ResultClient
