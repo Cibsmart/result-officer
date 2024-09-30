@@ -23,13 +23,6 @@ final class DepartmentFactory extends Factory
         ];
     }
 
-    public function configure(): self
-    {
-        return $this->afterCreating(function (Department $department): void {
-            ProgramFactory::new()->createOne(['department_id' => $department->id, 'name' => $department->name]);
-        });
-    }
-
     public function active(): self
     {
         // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
