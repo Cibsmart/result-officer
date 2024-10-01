@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Factories;
 
+use App\Enums\CreditUnitEnum;
 use App\Enums\RawDataStatus;
 use App\Models\RawRegistration;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -16,19 +17,21 @@ final class RawRegistrationFactory extends Factory
     /** @return array<string, string> */
     public function definition(): array
     {
-        $level = LevelFactory::new()->createOne(['name' => fake()->randomElement(['100', '200'])]);
+        $level = LevelFactory::new()->createOne();
         $session = SessionFactory::new()->createOne();
+        $student = StudentFactory::new()->createOne(['entry_level_id' => $level->id]);
+        $semester = SemesterFactory::new()->createOne();
 
         return [
             'course_id' => CourseFactory::new(),
             'course_title' => fake()->name(),
-            'credit_unit' => fake()->randomDigitNotZero(),
+            'credit_unit' => fake()->randomElement(CreditUnitEnum::cases())->value,
             'import_event_id' => ImportEventFactory::new(),
             'level' => $level->name,
             'online_id' => '1',
             'registration_date' => '20-12-2009',
-            'registration_number' => 'EBSU/' . fake()->year() . '/' . fake()->unique()->randomNumber(5, true),
-            'semester' => fake()->randomElement(['FIRST', 'SECOND']),
+            'registration_number' => $student->registration_number,
+            'semester' => $semester->name,
             'session' => $session->name,
             'status' => RawDataStatus::PENDING,
         ];
