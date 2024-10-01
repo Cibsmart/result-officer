@@ -33,7 +33,7 @@ final class RawResultFactory extends Factory
             'lecturer_name' => fake()->name(),
             'lecturer_phone' => fake()->phoneNumber(),
             'online_id' => '1',
-            'registration_id' => '1',
+            'registration_id' => RegistrationFactory::new(),
             'registration_number' => 'EBSU/' . fake()->year() . '/' . fake()->unique()->randomNumber(5, true),
             'status' => RawDataStatus::PENDING,
             'total' => $total->value,
