@@ -65,7 +65,7 @@ it('can fetch results from the portal by student department session and level', 
     $results = $this->client->fetchResultsByDepartmentSessionLevel($departmentId, $session, $level);
 
     expect($results)->toBeArray()
-        ->and($results[0])->toHaveKeys(['id', 'registration_id']);
+        ->and($results[0])->toHaveKeys(['id', 'course_registration_id']);
 });
 
 it('can fetch results from the portal by student department session and semester', function (): void {
@@ -76,7 +76,7 @@ it('can fetch results from the portal by student department session and semester
     $results = $this->client->fetchResultsByDepartmentSessionSemester($departmentId, $session, $semester);
 
     expect($results)->toBeArray()
-        ->and($results[0])->toHaveKeys(['id', 'registration_id']);
+        ->and($results[0])->toHaveKeys(['id', 'course_registration_id']);
 });
 
 it('can fetch results from the portal by student session and course', function (): void {
@@ -86,5 +86,5 @@ it('can fetch results from the portal by student session and course', function (
     $results = $this->client->fetchResultsBySessionCourse($session, $courseId);
 
     expect($results)->toBeArray()
-        ->and($results[0])->toHaveKeys(['id', 'registration_id']);
+        ->and($results[0])->toHaveKeys(['id', 'course_registration_id']);
 });

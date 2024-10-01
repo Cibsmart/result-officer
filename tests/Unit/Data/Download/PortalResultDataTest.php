@@ -12,7 +12,7 @@ it('constructs a correct portal result data from result array', function (): voi
 
     expect($data)->toBeInstanceOf(PortalResultData::class)
         ->and($data->onlineId)->toBe($result['id'])
-        ->and($data->courseRegistrationId)->toBe($result['registration_id'])
+        ->and($data->courseRegistrationId)->toBe($result['course_registration_id'])
         ->and($data->registrationNumber)->toBe($result['registration_number'])
         ->and($data->inCourseScore)->toBe($result['in_course'])
         ->and($data->examScore)->toBe($result['exam_score'])
