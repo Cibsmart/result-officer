@@ -9,6 +9,8 @@ use Tests\Factories\RawCourseFactory;
 
 use function Pest\Laravel\assertDatabaseHas;
 
+covers(ProcessPortalCourse::class);
+
 it('can process raw course and save into the courses table', function (): void {
     $rawCourse = RawCourseFactory::new()->createOne();
 

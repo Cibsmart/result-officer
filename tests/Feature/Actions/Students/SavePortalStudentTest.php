@@ -12,6 +12,8 @@ use Tests\Factories\RawStudentFactory;
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseHas;
 
+covers(SavePortalStudent::class);
+
 it('can save portal student into raw students table', function (): void {
     $student = [
         'date_of_birth' => '27-07-1985',

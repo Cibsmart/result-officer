@@ -10,6 +10,8 @@ use Tests\Factories\RawDepartmentFactory;
 
 use function Pest\Laravel\assertDatabaseHas;
 
+covers(ProcessPortalDepartment::class);
+
 it('can process raw department and save into the departments table', function (): void {
     $rawDepartment = RawDepartmentFactory::new()->createOne();
     ProgramTypeFactory::new()->createOne(['id' => '5']);
