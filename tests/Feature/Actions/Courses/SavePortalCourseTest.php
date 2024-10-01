@@ -12,6 +12,8 @@ use Tests\Factories\RawCourseFactory;
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseHas;
 
+covers(SavePortalCourse::class);
+
 it('can save portal course into raw courses table', function (): void {
     $course = ['id' => '1', 'course_code' => 'CSC 101', 'course_title' => 'Introduction to Computer Science'];
     $event = ImportEventFactory::new()->createOne(['type' => ImportEventType::COURSES]);

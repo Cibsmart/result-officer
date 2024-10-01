@@ -16,6 +16,8 @@ use Tests\Factories\StudentFactory;
 
 use function Pest\Laravel\assertDatabaseHas;
 
+covers(ProcessPortalStudent::class);
+
 it('can process raw student and save into the students table', function (): void {
     $department = DepartmentFactory::new()->createOne(['online_id' => 1]);
     ProgramFactory::new()->createOne(['department_id' => $department->id, 'name' => $department->name]);

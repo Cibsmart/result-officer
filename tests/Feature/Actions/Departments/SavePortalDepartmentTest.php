@@ -12,6 +12,8 @@ use Tests\Factories\RawDepartmentFactory;
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseHas;
 
+covers(SavePortalDepartment::class);
+
 it('can save portal department into raw departments table', function (): void {
     $department = ['id' => '1', 'code' => 'CSC', 'name' => 'Computer Science', 'faculty' => 'Science', 'options' => []];
     $event = ImportEventFactory::new()->createOne(['type' => ImportEventType::DEPARTMENTS]);
