@@ -90,7 +90,7 @@ final readonly class StudentService implements PortalService
     }
 
     /** @param array<string, int|string> $data */
-    private function getValue(string $key, array $data): string
+    public function getValue(string $key, array $data): string
     {
         return array_key_exists($key, $data)
             ? (string) $data[$key]
