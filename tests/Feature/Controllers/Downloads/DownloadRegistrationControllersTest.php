@@ -3,6 +3,12 @@
 declare(strict_types=1);
 
 use App\Enums\ImportEventMethod;
+use App\Http\Controllers\Download\Registrations\DownloadRegistrationPageController;
+use App\Http\Controllers\Download\Registrations\DownloadRegistrationsByDepartmentSessionLevelController;
+use App\Http\Controllers\Download\Registrations\DownloadRegistrationsByDepartmentSessionSemesterController;
+use App\Http\Controllers\Download\Registrations\DownloadRegistrationsByRegistrationNumberController;
+use App\Http\Controllers\Download\Registrations\DownloadRegistrationsBySessionCourseController;
+use App\Models\ImportEvent;
 use Illuminate\Foundation\Console\QueuedCommand;
 use Tests\Factories\CourseFactory;
 use Tests\Factories\DepartmentFactory;
@@ -14,6 +20,14 @@ use Tests\Factories\UserFactory;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseHas;
+
+covers([
+    DownloadRegistrationPageController::class,
+    DownloadRegistrationsBySessionCourseController::class,
+    DownloadRegistrationsByRegistrationNumberController::class,
+    DownloadRegistrationsByDepartmentSessionLevelController::class,
+    DownloadRegistrationsByDepartmentSessionSemesterController::class,
+]);
 
 beforeEach(function (): void {
     Queue::fake();

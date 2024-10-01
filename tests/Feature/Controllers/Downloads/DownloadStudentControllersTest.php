@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Download\Students\DownloadStudentByRegistrationNumberController;
+use App\Http\Controllers\Download\Students\DownloadStudentsByDepartmentSessionController;
+use App\Http\Controllers\Download\Students\DownloadStudentsBySessionController;
+use App\Http\Controllers\Download\Students\DownloadStudentsPageController;
+use App\Models\ImportEvent;
 use Illuminate\Foundation\Console\QueuedCommand;
 use Tests\Factories\DepartmentFactory;
 use Tests\Factories\SessionFactory;
@@ -9,6 +14,13 @@ use Tests\Factories\UserFactory;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseHas;
+
+covers([
+    DownloadStudentsPageController::class,
+    DownloadStudentsBySessionController::class,
+    DownloadStudentByRegistrationNumberController::class,
+    DownloadStudentsByDepartmentSessionController::class,
+]);
 
 beforeEach(function (): void {
     Queue::fake();

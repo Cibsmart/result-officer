@@ -2,11 +2,16 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Download\Departments\DownloadDepartmentsController;
+use App\Http\Controllers\Download\Departments\DownloadDepartmentsPageController;
+use App\Models\ImportEvent;
 use Illuminate\Foundation\Console\QueuedCommand;
 use Tests\Factories\UserFactory;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseHas;
+
+covers([DownloadDepartmentsPageController::class, DownloadDepartmentsController::class]);
 
 beforeEach(function (): void {
     Queue::fake();
