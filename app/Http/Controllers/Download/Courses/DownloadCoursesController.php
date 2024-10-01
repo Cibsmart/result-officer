@@ -7,7 +7,6 @@ namespace App\Http\Controllers\Download\Courses;
 use App\Enums\ImportEventMethod;
 use App\Enums\ImportEventType;
 use App\Models\ImportEvent;
-use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -18,8 +17,6 @@ final readonly class DownloadCoursesController
     public function __invoke(Request $request): RedirectResponse
     {
         $user = $request->user();
-
-        assert($user instanceof User);
 
         $event = ImportEvent::new($user, ImportEventType::COURSES, ImportEventMethod::ALL, ['course' => 'all']);
 

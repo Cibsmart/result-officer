@@ -9,7 +9,6 @@ use App\Data\Import\ImportEventData;
 use App\Data\Import\PendingImportEventData;
 use App\Data\Session\SessionListData;
 use App\Enums\ImportEventType;
-use App\Models\User;
 use App\ViewModels\Downloads\DownloadStudentPage;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -20,8 +19,6 @@ final readonly class DownloadStudentsPageController
     public function __invoke(Request $request): Response
     {
         $user = $request->user();
-
-        assert($user instanceof User);
 
         return Inertia::render('download/students/page', new DownloadStudentPage(
             department: DepartmentListData::new(),
