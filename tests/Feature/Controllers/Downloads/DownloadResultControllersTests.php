@@ -61,7 +61,13 @@ it('can start download of results by registration number', function (): void {
             'user_id' => $user->id,
         ]);
 
-    Queue::assertPushed(QueuedCommand::class);
+    $event = ImportEvent::query()->where('user_id', $user->id)->firstOrFail();
+
+    Queue::assertPushed(function (QueuedCommand $command) use ($event): bool {
+        $data = getQueuedCommandProtectedDataProperty($command);
+
+        return $data[0] === 'portal-data:import' && $data[1]['eventId'] === $event->id;
+    });
 });
 
 it('can start download of results by department, session and level', function (): void {
@@ -93,7 +99,13 @@ it('can start download of results by department, session and level', function ()
             'user_id' => $user->id,
         ]);
 
-    Queue::assertPushed(QueuedCommand::class);
+    $event = ImportEvent::query()->where('user_id', $user->id)->firstOrFail();
+
+    Queue::assertPushed(function (QueuedCommand $command) use ($event): bool {
+        $data = getQueuedCommandProtectedDataProperty($command);
+
+        return $data[0] === 'portal-data:import' && $data[1]['eventId'] === $event->id;
+    });
 });
 
 it('can start download of results by department, session and semester', function (): void {
@@ -125,7 +137,13 @@ it('can start download of results by department, session and semester', function
             'user_id' => $user->id,
         ]);
 
-    Queue::assertPushed(QueuedCommand::class);
+    $event = ImportEvent::query()->where('user_id', $user->id)->firstOrFail();
+
+    Queue::assertPushed(function (QueuedCommand $command) use ($event): bool {
+        $data = getQueuedCommandProtectedDataProperty($command);
+
+        return $data[0] === 'portal-data:import' && $data[1]['eventId'] === $event->id;
+    });
 });
 
 it('can start download of results by session and course', function (): void {
@@ -154,5 +172,11 @@ it('can start download of results by session and course', function (): void {
             'user_id' => $user->id,
         ]);
 
-    Queue::assertPushed(QueuedCommand::class);
+    $event = ImportEvent::query()->where('user_id', $user->id)->firstOrFail();
+
+    Queue::assertPushed(function (QueuedCommand $command) use ($event): bool {
+        $data = getQueuedCommandProtectedDataProperty($command);
+
+        return $data[0] === 'portal-data:import' && $data[1]['eventId'] === $event->id;
+    });
 });
