@@ -33,3 +33,12 @@ it('returns null for an empty string date', function (): void {
     expect($data)->toBeInstanceOf(DateValue::class)
         ->and($data->value)->toBeNull();
 });
+
+it('returns null for an invalid date', function (): void {
+    $date = '2020-2020-2020';
+
+    $data = DateValue::fromString($date);
+
+    expect($data)->toBeInstanceOf(DateValue::class)
+        ->and($data->value)->toBeNull();
+});
