@@ -18,12 +18,12 @@ final class RawDepartmentFactory extends Factory
     {
         return [
             'code' => fake()->countryCode(),
-            'import_event_id' => ImportEventFactory::new(),
-            'online_id' => '1',
-            'status' => RawDataStatus::PENDING,
-            'name' => fake()->country(),
             'faculty' => fake()->country(),
+            'import_event_id' => ImportEventFactory::new(),
+            'name' => fake()->country(),
+            'online_id' => '1',
             'options' => [],
+            'status' => RawDataStatus::PENDING,
         ];
     }
 }
