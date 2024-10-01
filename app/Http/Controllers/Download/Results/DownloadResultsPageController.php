@@ -12,7 +12,6 @@ use App\Data\Level\LevelListData;
 use App\Data\Semester\SemesterListData;
 use App\Data\Session\SessionListData;
 use App\Enums\ImportEventType;
-use App\Models\User;
 use App\ViewModels\Downloads\DownloadRegistrationPage;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -23,8 +22,6 @@ final class DownloadResultsPageController
     public function __invoke(Request $request): Response
     {
         $user = $request->user();
-
-        assert($user instanceof User);
 
         $searchTerm = $request->string('search')->value();
 

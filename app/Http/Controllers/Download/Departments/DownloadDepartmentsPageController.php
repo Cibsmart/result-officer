@@ -7,7 +7,6 @@ namespace App\Http\Controllers\Download\Departments;
 use App\Data\Import\ImportEventData;
 use App\Data\Import\PendingImportEventData;
 use App\Enums\ImportEventType;
-use App\Models\User;
 use App\ViewModels\Downloads\DownloadCoursesPage;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -18,8 +17,6 @@ final readonly class DownloadDepartmentsPageController
     public function __invoke(Request $request): Response
     {
         $user = $request->user();
-
-        assert($user instanceof User);
 
         return Inertia::render('download/departments/page', new DownloadCoursesPage(
             events: fn () => ImportEventData::new($user, ImportEventType::DEPARTMENTS),

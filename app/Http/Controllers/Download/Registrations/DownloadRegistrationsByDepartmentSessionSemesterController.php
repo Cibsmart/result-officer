@@ -8,7 +8,6 @@ use App\Enums\ImportEventMethod;
 use App\Enums\ImportEventType;
 use App\Http\Requests\Download\DownloadRegistrationsByDepartmentSessionSemesterRequest;
 use App\Models\ImportEvent;
-use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Artisan;
 
@@ -17,8 +16,6 @@ final readonly class DownloadRegistrationsByDepartmentSessionSemesterController
     public function __invoke(DownloadRegistrationsByDepartmentSessionSemesterRequest $request): RedirectResponse
     {
         $user = $request->user();
-
-        assert($user instanceof User);
 
         $event = ImportEvent::new(
             user: $user,
