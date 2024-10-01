@@ -24,7 +24,7 @@ final class ProcessPortalRegistration
         $session = Session::getUsingName($rawRegistration->session);
         $level = Level::getUsingName($rawRegistration->level);
         $semester = Semester::getUsingName($rawRegistration->semester);
-        $course = Course::getUsingOnlineId($rawRegistration->course_id);
+        $course = Course::getUsingOnlineId((string) $rawRegistration->course_id);
 
         $sessionEnrollment = Enrollment::getOrCreate($student, $session, $level);
         $semesterEnrollment = SemesterEnrollment::getOrCreate($sessionEnrollment, $semester);
