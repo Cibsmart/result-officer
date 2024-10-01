@@ -155,7 +155,7 @@ test('the process method sets status and message for failed processing', functio
 
     assertDatabaseHas('raw_students', [
         'import_event_id' => $event->id,
-        'status' => RawDataStatus::FAILED,
         'message' => 'No query results for model [App\\Models\\Department].',
+        'status' => RawDataStatus::FAILED,
     ]);
 });
