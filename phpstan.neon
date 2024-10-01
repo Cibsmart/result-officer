@@ -13,6 +13,8 @@ parameters:
     ignoreErrors:
         -   '#^Cannot access property \$\w+ on App\\Models\\\w+\|null\.$#'
         -   '#^Cannot call method \w+\(\) on App\\Models\\\w+\|null\.$#'
+        -   '#^Parameter \#1 \$user of static method App\\Data\\Import\\\w+\:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+
 
     treatPhpDocTypesAsCertain: false
 
