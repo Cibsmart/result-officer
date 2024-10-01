@@ -25,7 +25,7 @@ final class RawDepartment extends Model
 
     public function updateStatus(RawDataStatus $status): void
     {
-        $this->status = $status->value;
+        $this->status = $status;
         $this->save();
     }
 
