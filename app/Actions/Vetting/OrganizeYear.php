@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\Vetting;
 
-use App\Enums\YearEnum;
+use App\Enums\Year;
 use App\Models\Student;
 use Illuminate\Support\Collection;
 
@@ -18,7 +18,7 @@ final class OrganizeYear
             return;
         }
 
-        $currentYear = YearEnum::FIRST;
+        $currentYear = Year::FIRST;
 
         foreach ($enrollments as $enrollment) {
             $enrollment->updateYear($currentYear);

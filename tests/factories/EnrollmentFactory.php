@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Factories;
 
-use App\Enums\YearEnum;
+use App\Enums\Year;
 use App\Models\Enrollment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,7 +20,7 @@ final class EnrollmentFactory extends Factory
             'level_id' => LevelFactory::new(),
             'session_id' => SessionFactory::new(),
             'student_id' => StudentFactory::new(),
-            'year' => YearEnum::FIRST,
+            'year' => Year::FIRST,
         ];
     }
 }

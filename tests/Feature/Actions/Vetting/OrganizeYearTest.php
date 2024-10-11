@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Actions\Vetting\OrganizeYear;
-use App\Enums\YearEnum;
+use App\Enums\Year;
 use Tests\Factories\EnrollmentFactory;
 use Tests\Factories\LevelFactory;
 use Tests\Factories\SessionFactory;
@@ -31,10 +31,10 @@ it('can correctly organize study year original set to all first', function (): v
     $enrollments = $student->fresh()->enrollments;
 
     expect($enrollments->count())->toBe(4)
-        ->and($enrollments->firstWhere('session_id', $session->id)->year)->toBe(YearEnum::FIRST)
-        ->and($enrollments->firstWhere('session_id', $session2->id)->year)->toBe(YearEnum::SECOND)
-        ->and($enrollments->firstWhere('session_id', $session3->id)->year)->toBe(YearEnum::THIRD)
-        ->and($enrollments->firstWhere('session_id', $session4->id)->year)->toBe(YearEnum::FOURTH);
+        ->and($enrollments->firstWhere('session_id', $session->id)->year)->toBe(Year::FIRST)
+        ->and($enrollments->firstWhere('session_id', $session2->id)->year)->toBe(Year::SECOND)
+        ->and($enrollments->firstWhere('session_id', $session3->id)->year)->toBe(Year::THIRD)
+        ->and($enrollments->firstWhere('session_id', $session4->id)->year)->toBe(Year::FOURTH);
 });
 
 it('can correctly organize study year original set in descending order', function (): void {
@@ -49,10 +49,10 @@ it('can correctly organize study year original set in descending order', functio
         EnrollmentFactory::new()
             ->count(4)
             ->sequence(
-                ['session_id' => $session->id, 'level_id' => $level->id, 'year' => YearEnum::FOURTH],
-                ['session_id' => $session2->id, 'year' => YearEnum::THIRD],
-                ['session_id' => $session3->id, 'year' => YearEnum::SECOND],
-                ['session_id' => $session4->id, 'year' => YearEnum::FIRST],
+                ['session_id' => $session->id, 'level_id' => $level->id, 'year' => Year::FOURTH],
+                ['session_id' => $session2->id, 'year' => Year::THIRD],
+                ['session_id' => $session3->id, 'year' => Year::SECOND],
+                ['session_id' => $session4->id, 'year' => Year::FIRST],
             ),
     )->createOne(['entry_session_id' => $session->id, 'entry_level_id' => $level->id]);
 
@@ -61,8 +61,8 @@ it('can correctly organize study year original set in descending order', functio
     $enrollments = $student->fresh()->enrollments;
 
     expect($enrollments->count())->toBe(4)
-        ->and($enrollments->firstWhere('session_id', $session->id)->year)->toBe(YearEnum::FIRST)
-        ->and($enrollments->firstWhere('session_id', $session2->id)->year)->toBe(YearEnum::SECOND)
-        ->and($enrollments->firstWhere('session_id', $session3->id)->year)->toBe(YearEnum::THIRD)
-        ->and($enrollments->firstWhere('session_id', $session4->id)->year)->toBe(YearEnum::FOURTH);
+        ->and($enrollments->firstWhere('session_id', $session->id)->year)->toBe(Year::FIRST)
+        ->and($enrollments->firstWhere('session_id', $session2->id)->year)->toBe(Year::SECOND)
+        ->and($enrollments->firstWhere('session_id', $session3->id)->year)->toBe(Year::THIRD)
+        ->and($enrollments->firstWhere('session_id', $session4->id)->year)->toBe(Year::FOURTH);
 });
