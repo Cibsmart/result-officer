@@ -1,6 +1,11 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Parameter \\#2 \\$session of method App\\\\Actions\\\\Vetting\\\\ValidateResults\\:\\:validate\\(\\) expects App\\\\Models\\\\Session, App\\\\Models\\\\Session\\|null given\\.$#"
+			count: 1
+			path: app/Actions/Vetting/ValidateResults.php
+
+		-
 			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Department\\>\\:\\:tap\\(\\) expects callable\\(Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Department\\>\\)\\: mixed, App\\\\Scopes\\\\ActiveScope given\\.$#"
 			count: 1
 			path: app/Data/Department/DepartmentListData.php
