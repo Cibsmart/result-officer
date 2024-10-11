@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\CourseStatusEnum;
-use App\Enums\CreditUnitEnum;
+use App\Enums\CreditUnit;
 use App\Enums\RecordSource;
 use App\Values\DateValue;
 use Illuminate\Database\Eloquent\Model;
@@ -31,7 +31,7 @@ final class Registration extends Model
         $registration = new self();
 
         $registration->course_id = $course->id;
-        $registration->credit_unit = CreditUnitEnum::from((int) $rawRegistration->credit_unit)->value;
+        $registration->credit_unit = CreditUnit::from((int) $rawRegistration->credit_unit)->value;
         $registration->course_status = CourseStatusEnum::FRESH;
         $registration->online_id = $rawRegistration->online_id;
         $registration->registration_date = $registrationDate->value;

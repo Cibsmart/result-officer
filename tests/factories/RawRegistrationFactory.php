@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Factories;
 
-use App\Enums\CreditUnitEnum;
+use App\Enums\CreditUnit;
 use App\Enums\RawDataStatus;
 use App\Models\RawRegistration;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -25,7 +25,7 @@ final class RawRegistrationFactory extends Factory
         return [
             'course_id' => CourseFactory::new(),
             'course_title' => fake()->name(),
-            'credit_unit' => fake()->randomElement(CreditUnitEnum::cases())->value,
+            'credit_unit' => fake()->randomElement(CreditUnit::cases())->value,
             'import_event_id' => ImportEventFactory::new(),
             'level' => $level->name,
             'online_id' => '1',
