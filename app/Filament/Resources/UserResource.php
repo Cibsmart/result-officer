@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use App\Enums\RoleEnum;
+use App\Enums\Role;
 use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
 use Filament\Forms\Components\Select;
@@ -31,7 +31,7 @@ final class UserResource extends Resource
                     ->password()
                     ->visibleOn('create'),
                 Select::make('role')
-                    ->options(RoleEnum::class)
+                    ->options(Role::class)
                     ->required(),
             ]);
     }
