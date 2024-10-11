@@ -17,7 +17,7 @@ final class Enrollment extends Model
         'student_id',
         'session_id',
         'level_id',
-        'year_id',
+        'year',
     ];
 
     public static function getOrCreate(
@@ -27,7 +27,7 @@ final class Enrollment extends Model
     ): self {
         return self::query()->firstOrCreate(
             ['student_id' => $student->id, 'session_id' => $session->id, 'level_id' => $level->id],
-            ['year_id' => YearEnum::FIRST->value],
+            ['year' => YearEnum::FIRST],
         );
     }
 
@@ -61,9 +61,11 @@ final class Enrollment extends Model
         return $this->belongsTo(Student::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Year, \App\Models\Enrollment> */
-    public function year(): BelongsTo
+    /** @return array{year: 'App\Enums\YearEnum'} */
+    protected function casts(): array
     {
-        return $this->belongsTo(Year::class);
+        return [
+            'year' => YearEnum::class,
+        ];
     }
 }

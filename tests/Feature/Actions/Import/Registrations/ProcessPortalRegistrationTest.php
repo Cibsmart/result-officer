@@ -14,7 +14,6 @@ use Tests\Factories\SemesterEnrollmentFactory;
 use Tests\Factories\SemesterFactory;
 use Tests\Factories\SessionFactory;
 use Tests\Factories\StudentFactory;
-use Tests\Factories\YearFactory;
 
 use function Pest\Laravel\assertDatabaseHas;
 
@@ -22,7 +21,6 @@ covers(ProcessPortalRegistration::class);
 
 it('can process raw registration and save into the registrations table', function (): void {
     $course = CourseFactory::new()->createOne(['online_id' => 1]);
-    YearFactory::new()->createOne();
 
     $rawRegistration = RawRegistrationFactory::new()->createOne(['course_id' => $course->id]);
 
