@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Actions\Results\ProcessPortalResult;
-use App\Actions\Results\SavePortalResult;
+use App\Actions\Import\Results\ProcessPortalResult;
+use App\Actions\Import\Results\SavePortalResult;
 use App\Data\Download\PortalResultData;
 use App\Http\Clients\Fakes\FakeResultClient;
 use App\Services\Api\ResultService;

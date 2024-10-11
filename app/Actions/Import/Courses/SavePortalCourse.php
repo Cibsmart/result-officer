@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Actions\Courses;
+namespace App\Actions\Import\Courses;
 
 use App\Data\Download\PortalCourseData;
 use App\Enums\RawDataStatus;

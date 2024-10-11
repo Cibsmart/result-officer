@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services\Api;
 
-use App\Actions\Results\ProcessPortalResult;
-use App\Actions\Results\SavePortalResult;
+use App\Actions\Import\Results\ProcessPortalResult;
+use App\Actions\Import\Results\SavePortalResult;
 use App\Contracts\PortalService;
 use App\Contracts\ResultClient;
 use App\Data\Download\PortalResultData;

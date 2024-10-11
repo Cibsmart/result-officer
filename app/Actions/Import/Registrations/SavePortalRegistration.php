@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Actions\Registrations;
+namespace App\Actions\Import\Registrations;
 
 use App\Data\Download\PortalRegistrationData;
 use App\Enums\RawDataStatus;
