@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Actions\Departments\ProcessPortalDepartment;
+use App\Actions\Import\Departments\ProcessPortalDepartment;
 use App\Enums\RawDataStatus;
 use Tests\Factories\DepartmentFactory;
 use Tests\Factories\ProgramTypeFactory;

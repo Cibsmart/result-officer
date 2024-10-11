@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Actions\Registrations\ProcessPortalRegistration;
+use App\Actions\Import\Registrations\ProcessPortalRegistration;
 use App\Enums\RawDataStatus;
 use App\Enums\RecordSource;
 use Tests\Factories\CourseFactory;
