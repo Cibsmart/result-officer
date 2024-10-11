@@ -314,7 +314,7 @@ declare namespace App.Enums {
   export type RecordSource = "portal" | "excel" | "legacy";
   export type ResultRemark = "PAS" | "FAL" | "ABS" | "MAL";
   export type Role = "super-admin" | "admin" | "desk-officer" | "exam-officer" | "database-officer" | "user";
-  export type ScoreTypeEnum = "course-work" | "exam";
+  export type ScoreType = "course-work" | "exam";
   export type StudentStatusEnum =
     | "new"
     | "active"
