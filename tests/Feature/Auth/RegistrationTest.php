@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Enums\RoleEnum;
+use App\Enums\Role;
 
 test('registration screen can be rendered', function (): void {
     $response = $this->get('/register');
@@ -16,7 +16,7 @@ test('new users can register', function (): void {
         'name' => 'Test User',
         'password' => 'password',
         'password_confirmation' => 'password',
-        'role' => RoleEnum::USER->value,
+        'role' => Role::USER->value,
     ]);
 
     $this->assertAuthenticated();
