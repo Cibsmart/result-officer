@@ -67,7 +67,7 @@ final class Enrollment extends Model
         return $this->belongsTo(Student::class);
     }
 
-    /** @return array{year: 'App\Enums\YearEnum'} */
+    /** @return array{year: 'App\Enums\Year'} */
     protected function casts(): array
     {
         return [
