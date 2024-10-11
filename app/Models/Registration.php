@@ -77,7 +77,7 @@ final class Registration extends Model
     }
 
     /**
-     * @return array{course_status: 'App\Enums\CourseStatusEnum', registration_date: 'date',
+     * @return array{course_status: 'App\Enums\CourseStatus', registration_date: 'date',
      *     source: 'App\Enums\RecordSource' }
      */
     protected function casts(): array
