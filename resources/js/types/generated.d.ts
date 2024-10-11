@@ -282,7 +282,7 @@ declare namespace App.Enums {
     | "PASS"
     | "FAIL";
   export type CourseStatusEnum = "F" | "R";
-  export type CreditUnitEnum = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 12 | 15 | 18;
+  export type CreditUnit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 12 | 15 | 18;
   export type Gender = "M" | "F";
   export type Grade = "A" | "B" | "C" | "D" | "E" | "F";
   export type ImportEventMethod =
@@ -313,7 +313,7 @@ declare namespace App.Enums {
   export type RawDataStatus = "pending" | "duplicate" | "failed" | "processed";
   export type RecordSource = "portal" | "excel" | "legacy";
   export type ResultRemark = "PAS" | "FAL" | "ABS" | "MAL";
-  export type RoleEnum = "super-admin" | "admin" | "desk-officer" | "exam-officer" | "database-officer" | "user";
+  export type Role = "super-admin" | "admin" | "desk-officer" | "exam-officer" | "database-officer" | "user";
   export type ScoreTypeEnum = "course-work" | "exam";
   export type StudentStatusEnum =
     | "new"
@@ -326,7 +326,7 @@ declare namespace App.Enums {
     | "deceased"
     | "transferred"
     | "graduated";
-  export type YearEnum = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+  export type Year = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 }
 declare namespace App.ViewModels.Downloads {
   export type DownloadCoursesPage = {
