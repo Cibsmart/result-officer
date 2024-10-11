@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
-enum YearEnum: int
+enum Year: int
 {
     case FIRST = 1;
     case SECOND = 2;
@@ -32,7 +32,7 @@ enum YearEnum: int
             self::EIGHT => self::NINTH,
             self::NINTH => self::TENTH,
             self::TENTH => self::ELEVENTH,
-            self::ELEVENTH, self::TWENTH => self::TWENTH,
+            self::ELEVENTH, self::TWELFTH => self::TWELFTH,
         };
     }
 }

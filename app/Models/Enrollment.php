@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Enums\YearEnum;
+use App\Enums\Year;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -27,11 +27,11 @@ final class Enrollment extends Model
     ): self {
         return self::query()->firstOrCreate(
             ['student_id' => $student->id, 'session_id' => $session->id, 'level_id' => $level->id],
-            ['year' => YearEnum::FIRST],
+            ['year' => Year::FIRST],
         );
     }
 
-    public function updateYear(YearEnum $year): void
+    public function updateYear(Year $year): void
     {
         $this->year = $year;
         $this->save();
@@ -71,7 +71,7 @@ final class Enrollment extends Model
     protected function casts(): array
     {
         return [
-            'year' => YearEnum::class,
+            'year' => Year::class,
         ];
     }
 }
