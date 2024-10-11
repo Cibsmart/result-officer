@@ -31,6 +31,12 @@ final class Enrollment extends Model
         );
     }
 
+    public function updateYear(YearEnum $year): void
+    {
+        $this->year = $year;
+        $this->save();
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, \App\Models\Enrollment> */
     public function level(): BelongsTo
     {
