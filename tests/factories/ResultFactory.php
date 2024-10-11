@@ -23,7 +23,7 @@ final class ResultFactory extends Factory
         $scores = ['in-course' => $inCourse, 'exam' => $exam];
         $score = TotalScore::new($inCourse + $exam);
         $grade = Grade::for($score, fake()->randomElement([true, false]));
-        $data = "$score->value, $grade->name $grade->value";
+        $data = '';
 
         return [
             'data' => $data,
@@ -34,5 +34,13 @@ final class ResultFactory extends Factory
             'scores' => json_encode($scores),
             'total_score' => $score->value,
         ];
+    }
+
+    public function configure(): self
+    {
+        return $this->afterCreating(function (Result $result): void {
+            $result->data = $result->getData();
+            $result->save();
+        });
     }
 }
