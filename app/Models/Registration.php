@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Enums\CourseStatusEnum;
+use App\Enums\CourseStatus;
 use App\Enums\CreditUnit;
 use App\Enums\RecordSource;
 use App\Values\DateValue;
@@ -32,7 +32,7 @@ final class Registration extends Model
 
         $registration->course_id = $course->id;
         $registration->credit_unit = CreditUnit::from((int) $rawRegistration->credit_unit)->value;
-        $registration->course_status = CourseStatusEnum::FRESH;
+        $registration->course_status = CourseStatus::FRESH;
         $registration->online_id = $rawRegistration->online_id;
         $registration->registration_date = $registrationDate->value;
         $registration->semester_enrollment_id = $semesterEnrollment->id;
@@ -83,7 +83,7 @@ final class Registration extends Model
     protected function casts(): array
     {
         return [
-            'course_status' => CourseStatusEnum::class,
+            'course_status' => CourseStatus::class,
             'registration_date' => 'date',
             'source' => RecordSource::class,
         ];

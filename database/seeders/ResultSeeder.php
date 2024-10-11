@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use App\Enums\CourseStatusEnum;
+use App\Enums\CourseStatus;
 use App\Enums\Grade;
 use App\Models\Registration;
 use App\Models\Result;
@@ -164,7 +164,7 @@ final class ResultSeeder extends Seeder
             foreach ($results as $result) {
                 $registration = Registration::query()->create([
                     'course_id' => $result[0],
-                    'course_status' => CourseStatusEnum::from($result[1])->value,
+                    'course_status' => CourseStatus::from($result[1])->value,
                     'credit_unit' => $result[2],
                     'semester_enrollment_id' => $semester_enrollment,
                 ]);
