@@ -3,11 +3,10 @@ import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import { ChevronRightIcon, ArrowDownTrayIcon } from "@heroicons/vue/20/solid";
 import { NavigationItem } from "@/types";
 import {
-  ChartPieIcon,
-  DocumentDuplicateIcon,
-  FolderIcon,
   HomeIcon,
-  UsersIcon,
+  FolderIcon,
+  ChartPieIcon,
+  AcademicCapIcon,
   AdjustmentsHorizontalIcon,
 } from "@heroicons/vue/24/outline";
 import { Link, usePage } from "@inertiajs/vue3";
@@ -48,13 +47,6 @@ const navigation: NavigationItem[] = [
     ],
   },
   {
-    name: "Students",
-    href: "#",
-    icon: UsersIcon,
-    current: false,
-  },
-  { name: "Courses", href: "#", icon: DocumentDuplicateIcon, current: false },
-  {
     name: "Results",
     href: "#",
     icon: FolderIcon,
@@ -66,14 +58,18 @@ const navigation: NavigationItem[] = [
     ],
   },
   {
+    name: "Graduation",
+    href: "#",
+    icon: AcademicCapIcon,
+    current: false,
+    children: [{ name: "List", href: "#", current: false }],
+  },
+  {
     name: "Reports",
     href: "#",
     icon: ChartPieIcon,
     current: false,
-    children: [
-      { name: "Composite", href: route("composite.form"), current: false },
-      { name: "Graduation", href: "#", current: false },
-    ],
+    children: [{ name: "Composite", href: route("composite.form"), current: false }],
   },
 ];
 </script>
