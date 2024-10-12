@@ -10,6 +10,8 @@ use Illuminate\Support\Collection;
 
 final class OrganizeYear
 {
+    private string $report = '';
+
     public function execute(Student $student): void
     {
         $enrollments = $student->enrollments()->orderBy('session_id')->get();
@@ -25,6 +27,8 @@ final class OrganizeYear
 
             $currentYear = $currentYear->next();
         }
+
+        $this->report = 'RE-ORGANIZED STUDY YEARS';
     }
 
     /** @param \Illuminate\Support\Collection<int, \App\Models\Enrollment> $enrollments */
@@ -43,5 +47,12 @@ final class OrganizeYear
         }
 
         return true;
+    }
+
+    public function report(): string
+    {
+        return $this->report === ''
+            ? 'PASSED'
+            : $this->report;
     }
 }
