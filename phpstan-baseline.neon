@@ -26,9 +26,314 @@ parameters:
 			path: app/Http/Clients/ApiClient.php
 
 		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Program\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Department.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<App\\\\Models\\\\Student\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\: TRelatedModel, TIntermediateModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Department.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Department\\:\\:faculty\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Faculty, App\\\\Models\\\\Department\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Faculty, \\$this\\(App\\\\Models\\\\Department\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Department.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Department\\:\\:programs\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Program\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Program, \\$this\\(App\\\\Models\\\\Department\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Department.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Department\\:\\:students\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<App\\\\Models\\\\Student\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<App\\\\Models\\\\Student, App\\\\Models\\\\Program, \\$this\\(App\\\\Models\\\\Department\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Department.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\SemesterEnrollment\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Enrollment.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<App\\\\Models\\\\Registration\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\: TRelatedModel, TIntermediateModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Enrollment.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Enrollment\\:\\:courses\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<App\\\\Models\\\\Registration\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<App\\\\Models\\\\Registration, App\\\\Models\\\\SemesterEnrollment, \\$this\\(App\\\\Models\\\\Enrollment\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Enrollment.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Enrollment\\:\\:level\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Level, App\\\\Models\\\\Enrollment\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Level, \\$this\\(App\\\\Models\\\\Enrollment\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Enrollment.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Enrollment\\:\\:semesters\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\SemesterEnrollment\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\SemesterEnrollment, \\$this\\(App\\\\Models\\\\Enrollment\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Enrollment.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Enrollment\\:\\:session\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Session, App\\\\Models\\\\Enrollment\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Session, \\$this\\(App\\\\Models\\\\Enrollment\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Enrollment.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Enrollment\\:\\:student\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Student, App\\\\Models\\\\Enrollment\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Student, \\$this\\(App\\\\Models\\\\Enrollment\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Enrollment.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Department\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Faculty.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Faculty\\:\\:departments\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Department\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Department, \\$this\\(App\\\\Models\\\\Faculty\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Faculty.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\RawCourse\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/ImportEvent.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\RawDepartment\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/ImportEvent.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\RawRegistration\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/ImportEvent.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\RawResult\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/ImportEvent.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\RawStudent\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/ImportEvent.php
+
+		-
+			message: "#^Method App\\\\Models\\\\ImportEvent\\:\\:courses\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\RawCourse\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\RawCourse, \\$this\\(App\\\\Models\\\\ImportEvent\\)\\>\\.$#"
+			count: 1
+			path: app/Models/ImportEvent.php
+
+		-
+			message: "#^Method App\\\\Models\\\\ImportEvent\\:\\:departments\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\RawDepartment\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\RawDepartment, \\$this\\(App\\\\Models\\\\ImportEvent\\)\\>\\.$#"
+			count: 1
+			path: app/Models/ImportEvent.php
+
+		-
+			message: "#^Method App\\\\Models\\\\ImportEvent\\:\\:registrations\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\RawRegistration\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\RawRegistration, \\$this\\(App\\\\Models\\\\ImportEvent\\)\\>\\.$#"
+			count: 1
+			path: app/Models/ImportEvent.php
+
+		-
+			message: "#^Method App\\\\Models\\\\ImportEvent\\:\\:results\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\RawResult\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\RawResult, \\$this\\(App\\\\Models\\\\ImportEvent\\)\\>\\.$#"
+			count: 1
+			path: app/Models/ImportEvent.php
+
+		-
+			message: "#^Method App\\\\Models\\\\ImportEvent\\:\\:students\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\RawStudent\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\RawStudent, \\$this\\(App\\\\Models\\\\ImportEvent\\)\\>\\.$#"
+			count: 1
+			path: app/Models/ImportEvent.php
+
+		-
+			message: "#^Method App\\\\Models\\\\ImportEvent\\:\\:user\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\User, App\\\\Models\\\\ImportEvent\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\User, \\$this\\(App\\\\Models\\\\ImportEvent\\)\\>\\.$#"
+			count: 1
+			path: app/Models/ImportEvent.php
+
+		-
+			message: "#^Method App\\\\Models\\\\LocalGovernment\\:\\:state\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\State, App\\\\Models\\\\Student\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\State, \\$this\\(App\\\\Models\\\\LocalGovernment\\)\\>\\.$#"
+			count: 1
+			path: app/Models/LocalGovernment.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Student\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Program.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Program\\:\\:department\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Department, App\\\\Models\\\\Program\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Department, \\$this\\(App\\\\Models\\\\Program\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Program.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Program\\:\\:programType\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\ProgramType, App\\\\Models\\\\Program\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\ProgramType, \\$this\\(App\\\\Models\\\\Program\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Program.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Program\\:\\:students\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Student\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Student, \\$this\\(App\\\\Models\\\\Program\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Program.php
+
+		-
+			message: "#^Method App\\\\Models\\\\ProgramCourse\\:\\:course\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Course, App\\\\Models\\\\ProgramCourse\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Course, \\$this\\(App\\\\Models\\\\ProgramCourse\\)\\>\\.$#"
+			count: 1
+			path: app/Models/ProgramCourse.php
+
+		-
+			message: "#^Method App\\\\Models\\\\ProgramCourse\\:\\:courseType\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\CourseType, App\\\\Models\\\\ProgramCourse\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\CourseType, \\$this\\(App\\\\Models\\\\ProgramCourse\\)\\>\\.$#"
+			count: 1
+			path: app/Models/ProgramCourse.php
+
+		-
+			message: "#^Method App\\\\Models\\\\ProgramCourse\\:\\:programCurriculum\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\ProgramCurriculum, App\\\\Models\\\\ProgramCourse\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\ProgramCurriculum, \\$this\\(App\\\\Models\\\\ProgramCourse\\)\\>\\.$#"
+			count: 1
+			path: app/Models/ProgramCourse.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\ProgramCourse\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/ProgramCurriculum.php
+
+		-
+			message: "#^Method App\\\\Models\\\\ProgramCurriculum\\:\\:courses\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\ProgramCourse\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\ProgramCourse, \\$this\\(App\\\\Models\\\\ProgramCurriculum\\)\\>\\.$#"
+			count: 1
+			path: app/Models/ProgramCurriculum.php
+
+		-
+			message: "#^Method App\\\\Models\\\\ProgramCurriculum\\:\\:curriculum\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Curriculum, App\\\\Models\\\\ProgramCurriculum\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Curriculum, \\$this\\(App\\\\Models\\\\ProgramCurriculum\\)\\>\\.$#"
+			count: 1
+			path: app/Models/ProgramCurriculum.php
+
+		-
+			message: "#^Method App\\\\Models\\\\ProgramCurriculum\\:\\:level\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Level, App\\\\Models\\\\ProgramCurriculum\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Level, \\$this\\(App\\\\Models\\\\ProgramCurriculum\\)\\>\\.$#"
+			count: 1
+			path: app/Models/ProgramCurriculum.php
+
+		-
+			message: "#^Method App\\\\Models\\\\ProgramCurriculum\\:\\:program\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Program, App\\\\Models\\\\ProgramCurriculum\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Program, \\$this\\(App\\\\Models\\\\ProgramCurriculum\\)\\>\\.$#"
+			count: 1
+			path: app/Models/ProgramCurriculum.php
+
+		-
+			message: "#^Method App\\\\Models\\\\ProgramCurriculum\\:\\:semester\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Semester, App\\\\Models\\\\ProgramCurriculum\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Semester, \\$this\\(App\\\\Models\\\\ProgramCurriculum\\)\\>\\.$#"
+			count: 1
+			path: app/Models/ProgramCurriculum.php
+
+		-
+			message: "#^Method App\\\\Models\\\\ProgramCurriculum\\:\\:session\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Session, App\\\\Models\\\\ProgramCurriculum\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Session, \\$this\\(App\\\\Models\\\\ProgramCurriculum\\)\\>\\.$#"
+			count: 1
+			path: app/Models/ProgramCurriculum.php
+
+		-
+			message: "#^Method App\\\\Models\\\\RawResult\\:\\:event\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\ImportEvent, App\\\\Models\\\\RawResult\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\ImportEvent, \\$this\\(App\\\\Models\\\\RawResult\\)\\>\\.$#"
+			count: 1
+			path: app/Models/RawResult.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasOne\\<App\\\\Models\\\\Result\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasOne\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Registration.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Registration\\:\\:course\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Course, App\\\\Models\\\\Registration\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Course, \\$this\\(App\\\\Models\\\\Registration\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Registration.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Registration\\:\\:result\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasOne\\<App\\\\Models\\\\Result\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasOne\\<App\\\\Models\\\\Result, \\$this\\(App\\\\Models\\\\Registration\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Registration.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Registration\\:\\:semesterEnrollment\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\SemesterEnrollment, App\\\\Models\\\\Registration\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\SemesterEnrollment, \\$this\\(App\\\\Models\\\\Registration\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Registration.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Result\\:\\:registration\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Registration, App\\\\Models\\\\Result\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Registration, \\$this\\(App\\\\Models\\\\Result\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Result.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Registration\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/SemesterEnrollment.php
+
+		-
+			message: "#^Method App\\\\Models\\\\SemesterEnrollment\\:\\:courses\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Registration\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Registration, \\$this\\(App\\\\Models\\\\SemesterEnrollment\\)\\>\\.$#"
+			count: 1
+			path: app/Models/SemesterEnrollment.php
+
+		-
+			message: "#^Method App\\\\Models\\\\SemesterEnrollment\\:\\:enrollment\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Enrollment, App\\\\Models\\\\SemesterEnrollment\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Enrollment, \\$this\\(App\\\\Models\\\\SemesterEnrollment\\)\\>\\.$#"
+			count: 1
+			path: app/Models/SemesterEnrollment.php
+
+		-
+			message: "#^Method App\\\\Models\\\\SemesterEnrollment\\:\\:semester\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Semester, App\\\\Models\\\\SemesterEnrollment\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Semester, \\$this\\(App\\\\Models\\\\SemesterEnrollment\\)\\>\\.$#"
+			count: 1
+			path: app/Models/SemesterEnrollment.php
+
+		-
+			message: "#^Method App\\\\Models\\\\State\\:\\:country\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Country, App\\\\Models\\\\State\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Country, \\$this\\(App\\\\Models\\\\State\\)\\>\\.$#"
+			count: 1
+			path: app/Models/State.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Enrollment\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Student.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<App\\\\Models\\\\Registration\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\: TRelatedModel, TIntermediateModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Student.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<App\\\\Models\\\\SemesterEnrollment\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\: TRelatedModel, TIntermediateModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Student.php
+
+		-
 			message: "#^Method App\\\\Models\\\\Student\\:\\:courses\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<App\\\\Models\\\\Registration\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<Illuminate\\\\Database\\\\Eloquent\\\\Model, Illuminate\\\\Database\\\\Eloquent\\\\Model, App\\\\Models\\\\Student\\>\\|Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasOneThrough\\<Illuminate\\\\Database\\\\Eloquent\\\\Model, Illuminate\\\\Database\\\\Eloquent\\\\Model, App\\\\Models\\\\Student\\>\\.$#"
 			count: 1
 			path: app/Models/Student.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Student\\:\\:enrollments\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Enrollment\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Enrollment, \\$this\\(App\\\\Models\\\\Student\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Student.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Student\\:\\:entryLevel\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Level, App\\\\Models\\\\Student\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Level, \\$this\\(App\\\\Models\\\\Student\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Student.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Student\\:\\:entrySession\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Session, App\\\\Models\\\\Student\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Session, \\$this\\(App\\\\Models\\\\Student\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Student.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Student\\:\\:government\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\LocalGovernment, App\\\\Models\\\\Student\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\LocalGovernment, \\$this\\(App\\\\Models\\\\Student\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Student.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Student\\:\\:program\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Program, App\\\\Models\\\\Student\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Program, \\$this\\(App\\\\Models\\\\Student\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Student.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Student\\:\\:semesters\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<App\\\\Models\\\\SemesterEnrollment\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<App\\\\Models\\\\SemesterEnrollment, App\\\\Models\\\\Enrollment, \\$this\\(App\\\\Models\\\\Student\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Student.php
+
+		-
+			message: "#^Method App\\\\Models\\\\User\\:\\:imports\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\ImportEvent, App\\\\Models\\\\User\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\ImportEvent, \\$this\\(App\\\\Models\\\\User\\)\\>\\.$#"
+			count: 1
+			path: app/Models/User.php
 
 		-
 			message: "#^Method App\\\\Services\\\\Api\\\\PortalServiceFactory\\:\\:resolve\\(\\) return type with generic interface App\\\\Contracts\\\\PortalService does not specify its types\\: T$#"

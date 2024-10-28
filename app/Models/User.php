@@ -30,7 +30,7 @@ final class User extends Authenticatable
         'remember_token',
     ];
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ImportEvent> */
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ImportEvent, \App\Models\User> */
     public function imports(): HasMany
     {
         return $this->hasMany(ImportEvent::class);
