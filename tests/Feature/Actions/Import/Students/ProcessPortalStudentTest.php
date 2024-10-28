@@ -7,10 +7,10 @@ use App\Enums\RawDataStatus;
 use App\Values\DateValue;
 use Tests\Factories\DepartmentFactory;
 use Tests\Factories\LevelFactory;
+use Tests\Factories\LocalGovernmentFactory;
 use Tests\Factories\ProgramFactory;
 use Tests\Factories\RawStudentFactory;
 use Tests\Factories\SessionFactory;
-use Tests\Factories\StateFactory;
 use Tests\Factories\StudentFactory;
 
 use function Pest\Laravel\assertDatabaseHas;
@@ -22,7 +22,7 @@ it('can process raw student and save into the students table', function (): void
     ProgramFactory::new()->createOne(['department_id' => $department->id, 'name' => $department->name]);
     LevelFactory::new()->createOne(['name' => 100]);
     SessionFactory::new()->createOne(['name' => '2009-2010']);
-    StateFactory::new()->createOne(['name' => 'EBONYI']);
+    LocalGovernmentFactory::new()->createOne(['name' => 'ABAKALIKI']);
 
     $rawStudent = RawStudentFactory::new()->createOne(['department_id' => (string) $department->id]);
 

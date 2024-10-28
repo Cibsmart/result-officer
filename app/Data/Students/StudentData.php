@@ -46,7 +46,7 @@ final class StudentData extends Data
             department: $student->program->department->name,
             faculty: $student->program->department->faculty->name,
             admissionYear: $student->entrySession->firstYear(),
-            nationality: $student->state->country->demonym,
+            nationality: $student->government->state->country->demonym,
         );
     }
 }

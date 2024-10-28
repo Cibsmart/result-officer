@@ -29,10 +29,10 @@ final class StudentFactory extends Factory
             'first_name' => fake()->firstName(),
             'gender' => $gender->value,
             'last_name' => fake()->lastName(),
+            'local_government_id' => LocalGovernmentFactory::new(),
             'other_names' => fake()->firstName(),
             'program_id' => ProgramFactory::new(),
             'registration_number' => 'EBSU/' . fake()->year() . '/' . fake()->unique()->randomNumber(5, true),
-            'state_id' => StateFactory::new(),
         ];
     }
 }
