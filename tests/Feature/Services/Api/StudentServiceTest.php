@@ -13,10 +13,10 @@ use Illuminate\Support\Collection;
 use Tests\Factories\DepartmentFactory;
 use Tests\Factories\ImportEventFactory;
 use Tests\Factories\LevelFactory;
+use Tests\Factories\LocalGovernmentFactory;
 use Tests\Factories\ProgramFactory;
 use Tests\Factories\RawStudentFactory;
 use Tests\Factories\SessionFactory;
-use Tests\Factories\StateFactory;
 
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseHas;
@@ -126,7 +126,7 @@ test('the process method iterates over a collection of raw students and calls th
     ProgramFactory::new()->createOne(['department_id' => $department->id, 'name' => $department->name]);
     LevelFactory::new()->createOne(['name' => 100]);
     SessionFactory::new()->createOne(['name' => '2009-2010']);
-    StateFactory::new()->createOne(['name' => 'EBONYI']);
+    LocalGovernmentFactory::new()->createOne(['name' => 'ABAKALIKI']);
     $data = RawStudentFactory::new()->createOne(['import_event_id' => $event->id, 'department_id' => 1]);
 
     $this->service->process($event);

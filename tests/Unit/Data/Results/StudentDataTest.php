@@ -20,7 +20,7 @@ test('student data object is correct', function (): void {
         ->and($studentData->department)->toBe($student->program->department->name)
         ->and($studentData->faculty)->toBe($student->program->department->faculty->name)
         ->and($studentData->admissionYear)->toBe($student->entrySession->firstYear())
-        ->and($studentData->nationality)->toBe($student->state->country->demonym);
+        ->and($studentData->nationality)->toBe($student->government->state->country->demonym);
 });
 
 it('returns blank date for student without date', function (): void {

@@ -28,8 +28,7 @@ return new class extends Migration
             $table->foreignId('entry_session_id')->constrained('academic_sessions');
             $table->string('entry_mode')->default(EntryMode::UTME->value);
             $table->foreignId('entry_level_id')->constrained('levels');
-            $table->foreignId('state_id')->constrained('states');
-            $table->string('local_government')->nullable();
+            $table->foreignId('local_government_id')->constrained('local_governments');
             $table->string('jamb_registration_number')->nullable();
             $table->string('email')->nullable();
             $table->string('phone_number')->nullable();

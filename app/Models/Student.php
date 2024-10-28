@@ -51,20 +51,19 @@ final class Student extends Model
         $student->date_of_birth = $dateOfBirth->value;
         $student->email = $rawStudent->email;
         $student->entry_level_id = Level::getUsingName($rawStudent->entry_level)->id;
-        $student->entry_mode = EntryMode::tryFrom($rawStudent->entry_mode);
+        $student->entry_mode = EntryMode::get($rawStudent->entry_mode);
         $student->entry_session_id = Session::getUsingName($rawStudent->entry_session)->id;
         $student->first_name = $rawStudent->first_name;
         $student->gender = Gender::from($rawStudent->gender);
         $student->jamb_registration_number = $rawStudent->jamb_registration_number;
         $student->last_name = $rawStudent->last_name;
-        $student->local_government = $rawStudent->local_government;
         $student->online_id = $rawStudent->online_id;
         $student->other_names = $rawStudent->other_names;
         $student->phone_number = $rawStudent->phone_number;
         $student->program_id = Program::getFromDepartmentAndName($department, $rawStudent->option)->id;
         $student->registration_number = $registrationNumber->value;
         $student->source = RecordSource::PORTAL;
-        $student->state_id = State::getUsingName($rawStudent->state)->id;
+        $student->local_government_id = LocalGovernment::getUsingName($rawStudent->local_government)->id;
         $student->status = StudentStatusEnum::NEW;
 
         $student->save();
@@ -81,10 +80,10 @@ final class Student extends Model
         return $this->through('enrollments')->has('courses');
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\State, \App\Models\Student> */
-    public function state(): BelongsTo
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\LocalGovernment, \App\Models\Student> */
+    public function government(): BelongsTo
     {
-        return $this->belongsTo(State::class);
+        return $this->belongsTo(LocalGovernment::class, 'local_government_id');
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Enrollment> */

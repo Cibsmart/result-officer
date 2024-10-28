@@ -37,7 +37,7 @@ final class DepartmentResultSummaryData extends Data
             students: StudentResultSummaryData::collect(
                 $department
                     ->students()
-                    ->with(['program', 'entrySession', 'state.country'])
+                    ->with(['program', 'entrySession', 'government.state.country'])
                     ->whereHas('enrollments',
                         static function (Builder $query) use ($session, $level): void {
                             $query->where('session_id', $session->id)
