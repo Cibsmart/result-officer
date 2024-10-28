@@ -11,9 +11,15 @@ final class LocalGovernment extends Model
 {
     protected $fillable = ['state_id', 'name'];
 
-    public static function getUsingName(mixed $localGovernmentName): self
+    public static function getUsingName(string $localGovernmentName): self
     {
-        return self::query()->where('name', $localGovernmentName)->firstOrFail();
+        $lga = self::query()->where('name', $localGovernmentName)->first();
+
+        if (is_null($lga)) {
+            $lga = self::query()->where('name', 'OTHERS')->firstOrFail();
+        }
+
+        return $lga;
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\State, \App\Models\Student> */
