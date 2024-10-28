@@ -11,7 +11,10 @@ final class StateSeeder extends Seeder
 {
     /** @var array<int, string> */
     private array $states = [
-        'ABIA', 'ANAMBRA', 'EBONYI', 'ENUGU', 'IMO',
+        'ABIA', 'ADAMAWA', 'AKWA IBOM', 'ANAMBRA', 'BAUCHI', 'BAYELSA', 'BENUE', 'BORNU', 'CROSS RIVER', 'DELTA',
+        'EBONYI', 'EDO', 'EKITI', 'ENUGU', 'FCT', 'GOMBE', 'IMO', 'JIGAWA', 'KADUNA', 'KANO', 'KASTINA', 'KEBBI',
+        'KOGI', 'KWARA', 'LAGOS', 'NASSARAWA', 'NIGER', 'OGUN', 'ONDO', 'OSUN', 'OYO', 'PLATEAU', 'RIVERS', 'SOKOTO',
+        'TARABA', 'YOBE', 'ZAMFARA', 'OTHERS',
     ];
 
     public function run(): void
