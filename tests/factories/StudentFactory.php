@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Factories;
 
+use App\Enums\EntryMode;
 use App\Enums\Gender;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -23,7 +24,7 @@ final class StudentFactory extends Factory
         return [
             'date_of_birth' => fake()->date(max: $maximumDateOfBirth),
             'entry_level_id' => LevelFactory::new(),
-            'entry_mode_id' => EntryModeFactory::new(),
+            'entry_mode' => EntryMode::UTME,
             'entry_session_id' => SessionFactory::new(),
             'first_name' => fake()->firstName(),
             'gender' => $gender->value,

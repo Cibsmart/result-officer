@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Enums\EntryMode;
 use App\Enums\RecordSource;
 use App\Enums\StudentStatusEnum;
 use Illuminate\Database\Migrations\Migration;
@@ -25,7 +26,7 @@ return new class extends Migration
             $table->date('date_of_birth')->nullable();
             $table->foreignId('program_id')->constrained('programs');
             $table->foreignId('entry_session_id')->constrained('academic_sessions');
-            $table->foreignId('entry_mode_id')->constrained('entry_modes');
+            $table->string('entry_mode')->default(EntryMode::UTME->value);
             $table->foreignId('entry_level_id')->constrained('levels');
             $table->foreignId('state_id')->constrained('states');
             $table->string('local_government')->nullable();

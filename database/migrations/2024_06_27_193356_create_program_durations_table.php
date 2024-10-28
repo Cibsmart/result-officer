@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('program_durations', static function (Blueprint $table): void {
             $table->id();
             $table->foreignId('program_id')->constrained('programs');
-            $table->foreignId('entry_mode_id')->constrained('entry_modes');
+            $table->string('entry_mode');
             $table->unsignedSmallInteger('value');
             $table->timestamps();
 
-            $table->unique(['program_id', 'entry_mode_id']);
+            $table->unique(['program_id', 'entry_mode']);
         });
     }
 

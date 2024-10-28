@@ -11,7 +11,6 @@ use App\Http\Clients\Fakes\FakeStudentClient;
 use App\Services\Api\StudentService;
 use Illuminate\Support\Collection;
 use Tests\Factories\DepartmentFactory;
-use Tests\Factories\EntryModeFactory;
 use Tests\Factories\ImportEventFactory;
 use Tests\Factories\LevelFactory;
 use Tests\Factories\ProgramFactory;
@@ -127,7 +126,6 @@ test('the process method iterates over a collection of raw students and calls th
     ProgramFactory::new()->createOne(['department_id' => $department->id, 'name' => $department->name]);
     LevelFactory::new()->createOne(['name' => 100]);
     SessionFactory::new()->createOne(['name' => '2009-2010']);
-    EntryModeFactory::new()->createOne(['code' => 'UTME']);
     StateFactory::new()->createOne(['name' => 'EBONYI']);
     $data = RawStudentFactory::new()->createOne(['import_event_id' => $event->id, 'department_id' => 1]);
 
