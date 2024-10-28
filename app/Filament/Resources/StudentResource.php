@@ -53,7 +53,7 @@ final class StudentResource extends Resource
                 Select::make('entry_level_id')
                     ->options([1 => '100', 2 => '200'])
                     ->required(),
-                Select::make('entry_mode_id')
+                Select::make('entry_mode')
                     ->relationship('entryMode', 'code')
                     ->required(),
             ])->columns(3);

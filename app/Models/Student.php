@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\EntryMode;
 use App\Enums\Gender;
 use App\Enums\RecordSource;
 use App\Enums\StudentStatusEnum;
@@ -29,7 +30,7 @@ final class Student extends Model
         'program_id',
         'entry_session_id',
         'entry_level_id',
-        'entry_mode_id',
+        'entry_mode',
         'jamb_registration_number',
         'online_id',
         'email',
@@ -50,7 +51,7 @@ final class Student extends Model
         $student->date_of_birth = $dateOfBirth->value;
         $student->email = $rawStudent->email;
         $student->entry_level_id = Level::getUsingName($rawStudent->entry_level)->id;
-        $student->entry_mode_id = EntryMode::getUsingCode($rawStudent->entry_mode)->id;
+        $student->entry_mode = EntryMode::tryFrom($rawStudent->entry_mode);
         $student->entry_session_id = Session::getUsingName($rawStudent->entry_session)->id;
         $student->first_name = $rawStudent->first_name;
         $student->gender = Gender::from($rawStudent->gender);
@@ -98,12 +99,6 @@ final class Student extends Model
         return $this->belongsTo(Level::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\EntryMode, \App\Models\Student> */
-    public function entryMode(): BelongsTo
-    {
-        return $this->belongsTo(EntryMode::class);
-    }
-
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, \App\Models\Student> */
     public function entrySession(): BelongsTo
     {
@@ -128,13 +123,14 @@ final class Student extends Model
     }
 
     /**
-     * @return array{date_of_birth: 'date', gender: 'App\Enums\Gender', source: 'App\Enums\RecordSource',
-     *     status: 'App\Enums\StudentStatusEnum'}
+     * @return array{date_of_birth: 'date', entry_mode: 'App\Enums\EntryMode', gender: 'App\Enums\Gender',
+     *     source: 'App\Enums\RecordSource', status: 'App\Enums\StudentStatusEnum'}
      */
     protected function casts(): array
     {
         return [
             'date_of_birth' => 'date',
+            'entry_mode' => EntryMode::class,
             'gender' => Gender::class,
             'source' => RecordSource::class,
             'status' => StudentStatusEnum::class,

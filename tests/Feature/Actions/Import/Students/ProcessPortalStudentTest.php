@@ -6,7 +6,6 @@ use App\Actions\Import\Students\ProcessPortalStudent;
 use App\Enums\RawDataStatus;
 use App\Values\DateValue;
 use Tests\Factories\DepartmentFactory;
-use Tests\Factories\EntryModeFactory;
 use Tests\Factories\LevelFactory;
 use Tests\Factories\ProgramFactory;
 use Tests\Factories\RawStudentFactory;
@@ -23,7 +22,6 @@ it('can process raw student and save into the students table', function (): void
     ProgramFactory::new()->createOne(['department_id' => $department->id, 'name' => $department->name]);
     LevelFactory::new()->createOne(['name' => 100]);
     SessionFactory::new()->createOne(['name' => '2009-2010']);
-    EntryModeFactory::new()->createOne(['code' => 'UTME']);
     StateFactory::new()->createOne(['name' => 'EBONYI']);
 
     $rawStudent = RawStudentFactory::new()->createOne(['department_id' => (string) $department->id]);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Enums\EntryMode;
 use App\Enums\Gender;
 use App\Models\Student;
 use Carbon\Carbon;
@@ -15,7 +16,7 @@ final class StudentSeeder extends Seeder
         [
             'date_of_birth' => '2004-9-10',
             'entry_level_id' => 1,
-            'entry_mode_id' => 1,
+            'entry_mode' => EntryMode::UTME,
             'entry_session_id' => 1,
             'first_name' => 'STUDENT',
             'gender' => Gender::MALE,
@@ -28,7 +29,7 @@ final class StudentSeeder extends Seeder
         [
             'date_of_birth' => '1988-7-27',
             'entry_level_id' => 1,
-            'entry_mode_id' => 1,
+            'entry_mode' => EntryMode::UTME,
             'entry_session_id' => 1,
             'first_name' => 'BARNABAS',
             'gender' => Gender::MALE,
@@ -41,7 +42,7 @@ final class StudentSeeder extends Seeder
         [
             'date_of_birth' => '1987-8-19',
             'entry_level_id' => 1,
-            'entry_mode_id' => 1,
+            'entry_mode' => EntryMode::UTME,
             'entry_session_id' => 1,
             'first_name' => 'RUTH',
             'gender' => Gender::FEMALE,
@@ -54,7 +55,7 @@ final class StudentSeeder extends Seeder
         [
             'date_of_birth' => '1990-8-19',
             'entry_level_id' => 1,
-            'entry_mode_id' => 1,
+            'entry_mode' => EntryMode::UTME,
             'entry_session_id' => 1,
             'first_name' => 'STUDENT',
             'gender' => Gender::FEMALE,
@@ -72,7 +73,7 @@ final class StudentSeeder extends Seeder
             Student::query()->create([
                 'date_of_birth' => Carbon::make($student['date_of_birth']),
                 'entry_level_id' => $student['entry_level_id'],
-                'entry_mode_id' => $student['entry_mode_id'],
+                'entry_mode' => $student['entry_mode'],
                 'entry_session_id' => $student['entry_session_id'],
                 'first_name' => $student['first_name'],
                 'gender' => $student['gender'],
