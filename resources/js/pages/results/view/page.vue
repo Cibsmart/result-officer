@@ -21,7 +21,7 @@ const pages: BreadcrumbItem[] = [
   { name: "Result View", href: route("results.view"), current: route().current("results.view") },
 ];
 
-const hasResults = computed(() => props.results.enrollments.length > 0);
+const hasResults = computed(() => props.results.sessionEnrollments.length > 0);
 </script>
 
 <template>
@@ -71,7 +71,7 @@ const hasResults = computed(() => props.results.enrollments.length > 0);
         <div>
           <template v-if="hasResults">
             <Session
-              v-for="session in results.enrollments"
+              v-for="session in results.sessionEnrollments"
               :key="session.id"
               :session="session" />
           </template>
