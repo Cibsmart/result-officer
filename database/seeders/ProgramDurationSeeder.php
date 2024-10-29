@@ -19,7 +19,7 @@ final class ProgramDurationSeeder extends Seeder
         ]);
 
         ProgramDuration::query()->create([
-            'entry_mode' => EntryMode::DE,
+            'entry_mode' => EntryMode::DENT,
             'program_id' => 1,
             'value' => 3,
         ]);
