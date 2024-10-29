@@ -49,9 +49,9 @@ final class ProgramCurriculum extends Model
         return $this->belongsTo(Session::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCourse> */
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumCourse> */
     public function courses(): HasMany
     {
-        return $this->HasMany(ProgramCourse::class);
+        return $this->HasMany(ProgramCurriculumCourse::class);
     }
 }
