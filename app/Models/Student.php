@@ -168,7 +168,7 @@ final class Student extends Model
     protected function otherNames(): Attribute
     {
         return Attribute::make(
-            set: static fn (string $value): string => strtoupper($value),
+            set: static fn (?string $value): ?string => is_null($value) ? null : strtoupper($value),
         );
     }
 
