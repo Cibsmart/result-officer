@@ -61,7 +61,7 @@
     </table>
   </div>
 
-  @foreach($results->enrollments as $session)
+  @foreach($results->sessionEnrollments as $session)
     @foreach($session->semesterResults as $semester)
       <table class="w-full mt-4 mx-auto divide-y divide-gray-400 ring-1 ring-gray-400">
         <thead>

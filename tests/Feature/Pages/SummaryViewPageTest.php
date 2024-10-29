@@ -6,8 +6,10 @@ use Inertia\Testing\AssertableInertia as Assert;
 use Tests\Factories\UserFactory;
 
 use function Pest\Laravel\actingAs;
+use function Pest\Laravel\withoutExceptionHandling;
 
 test('student result view page loads', function (): void {
+    withoutExceptionHandling();
     $numberOfStudents = 5;
     $user = UserFactory::new()->createOne();
     $student = createMultipleStudentsWithResults(numberOfStudents: $numberOfStudents)[0];

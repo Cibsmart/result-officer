@@ -15,7 +15,7 @@ final class ValidateResults
 
     public function execute(Student $student): void
     {
-        $sessionEnrollments = $student->enrollments;
+        $sessionEnrollments = $student->sessionEnrollments;
 
         foreach ($sessionEnrollments as $sessionEnrollment) {
             $semesterEnrollments = $sessionEnrollment->semesters;

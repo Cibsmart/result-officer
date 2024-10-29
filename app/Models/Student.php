@@ -86,10 +86,10 @@ final class Student extends Model
         return $this->belongsTo(LocalGovernment::class, 'local_government_id');
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Enrollment> */
-    public function enrollments(): HasMany
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\SessionEnrollment> */
+    public function sessionEnrollments(): HasMany
     {
-        return $this->hasMany(Enrollment::class);
+        return $this->hasMany(SessionEnrollment::class);
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, \App\Models\Student> */
@@ -113,7 +113,7 @@ final class Student extends Model
     /** @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\SemesterEnrollment> */
     public function semesters(): HasManyThrough
     {
-        return $this->hasManyThrough(SemesterEnrollment::class, Enrollment::class);
+        return $this->hasManyThrough(SemesterEnrollment::class, SessionEnrollment::class);
     }
 
     public function allowEGrade(): bool

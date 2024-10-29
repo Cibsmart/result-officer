@@ -10,19 +10,19 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class SemesterEnrollment extends Model
 {
-    protected $fillable = ['enrollment_id', 'semester_id'];
+    protected $fillable = ['session_enrollment_id', 'semester_id'];
 
-    public static function getOrCreate(Enrollment $sessionEnrollment, Semester $semester): self
+    public static function getOrCreate(SessionEnrollment $sessionEnrollment, Semester $semester): self
     {
         return self::query()->firstOrCreate(
-            ['enrollment_id' => $sessionEnrollment->id, 'semester_id' => $semester->id],
+            ['session_enrollment_id' => $sessionEnrollment->id, 'semester_id' => $semester->id],
         );
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Enrollment, \App\Models\SemesterEnrollment> */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\SessionEnrollment, \App\Models\SemesterEnrollment> */
     public function enrollment(): BelongsTo
     {
-        return $this->belongsTo(Enrollment::class);
+        return $this->belongsTo(SessionEnrollment::class);
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Semester, \App\Models\SemesterEnrollment> */

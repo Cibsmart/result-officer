@@ -38,7 +38,7 @@ final class DepartmentResultSummaryData extends Data
                 $department
                     ->students()
                     ->with(['program', 'entrySession', 'government.state.country'])
-                    ->whereHas('enrollments',
+                    ->whereHas('sessionEnrollments',
                         static function (Builder $query) use ($session, $level): void {
                             $query->where('session_id', $session->id)
                                 ->where('level_id', $level->id);

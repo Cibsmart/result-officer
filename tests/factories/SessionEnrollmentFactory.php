@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Tests\Factories;
 
 use App\Enums\Year;
-use App\Models\Enrollment;
+use App\Models\SessionEnrollment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/** @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Student> */
-final class EnrollmentFactory extends Factory
+/** @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SessionEnrollment> */
+final class SessionEnrollmentFactory extends Factory
 {
-    protected $model = Enrollment::class;
+    protected $model = SessionEnrollment::class;
 
     /** @return array<string, string> */
     public function definition(): array

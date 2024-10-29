@@ -17,7 +17,7 @@ it('validates the integrity of the students results', function (): void {
 it('reports students results with tampered score', function (): void {
     $student = createStudentWithResults();
 
-    $sessionEnrollment = $student->enrollments->first();
+    $sessionEnrollment = $student->sessionEnrollments->first();
     $semesterEnrollment = $sessionEnrollment->semesters->first();
     $registration = $semesterEnrollment->courses->first();
     $result = $registration->result;
@@ -39,7 +39,7 @@ it('reports students results with tampered score', function (): void {
 it('reports students results with tampered grade', function (): void {
     $student = createStudentWithResults();
 
-    $sessionEnrollment = $student->enrollments->first();
+    $sessionEnrollment = $student->sessionEnrollments->first();
     $semesterEnrollment = $sessionEnrollment->semesters->first();
     $registration = $semesterEnrollment->courses->first();
     $result = $registration->result;
@@ -61,7 +61,7 @@ it('reports students results with tampered grade', function (): void {
 it('reports students results with tampered grade point', function (): void {
     $student = createStudentWithResults();
 
-    $sessionEnrollment = $student->enrollments->first();
+    $sessionEnrollment = $student->sessionEnrollments->first();
     $semesterEnrollment = $sessionEnrollment->semesters->first();
     $registration = $semesterEnrollment->courses->first();
     $result = $registration->result;

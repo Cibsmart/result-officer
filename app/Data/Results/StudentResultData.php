@@ -16,7 +16,7 @@ final class StudentResultData extends Data
     public function __construct(
         public readonly int $id,
         /** @var \Illuminate\Support\Collection<int, \App\Data\Results\SessionResultData> */
-        public readonly Collection $enrollments,
+        public readonly Collection $sessionEnrollments,
         public readonly float $finalCumulativeGradePointAverage,
         public readonly string $degreeClass,
         public readonly string $degreeAwarded,
@@ -27,7 +27,7 @@ final class StudentResultData extends Data
     public static function fromModel(Student $student): self
     {
         $enrollments = SessionResultData::collect(
-            $student->enrollments()->with(['semesters', 'session'])->orderBy('session_id')->get(),
+            $student->sessionEnrollments()->with(['semesters', 'session'])->orderBy('session_id')->get(),
         );
 
         $finalCGPA = round(
@@ -47,7 +47,7 @@ final class StudentResultData extends Data
 
         return new self(
             id: $student->id,
-            enrollments: $enrollments,
+            sessionEnrollments: $enrollments,
             finalCumulativeGradePointAverage: $finalCGPA,
             degreeClass: $degreeClass->value,
             degreeAwarded: "$programType->name ($programType->code)",

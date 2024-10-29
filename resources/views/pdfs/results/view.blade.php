@@ -62,7 +62,7 @@
     </tr>
     </thead>
     <tbody class="divide-y divide-gray-400 bg-white">
-    @foreach($results->enrollments as $session)
+    @foreach($results->sessionEnrollments as $session)
       @foreach($session->semesterResults as $semester)
         <tr class="divide-x divide-gray-400">
           <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-extrabold" colspan="9">

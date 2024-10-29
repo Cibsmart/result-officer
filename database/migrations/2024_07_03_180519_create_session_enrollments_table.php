@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('enrollments', static function (Blueprint $table): void {
+        Schema::create('session_enrollments', static function (Blueprint $table): void {
             $table->id();
             $table->foreignId('student_id')->constrained('students');
             $table->foreignId('session_id')->constrained('academic_sessions');
