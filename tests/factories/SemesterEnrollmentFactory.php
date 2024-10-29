@@ -16,8 +16,8 @@ final class SemesterEnrollmentFactory extends Factory
     public function definition(): array
     {
         return [
-            'enrollment_id' => EnrollmentFactory::new(),
             'semester_id' => SemesterFactory::new(),
+            'session_enrollment_id' => SessionEnrollmentFactory::new(),
         ];
     }
 }

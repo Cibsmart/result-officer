@@ -9,7 +9,7 @@ use Tests\Factories\StudentFactory;
 test('student result data is correct', function (): void {
     $student = createStudentWithResults();
 
-    $lastYear = $student->enrollments->last()->session->lastYear();
+    $lastYear = $student->sessionEnrollments->last()->session->lastYear();
 
     $resultData = StudentResultData::from($student);
     $programType = $student->program->programType;
@@ -19,7 +19,7 @@ test('student result data is correct', function (): void {
 
     expect($resultData)->toBeInstanceOf(StudentResultData::class)
         ->and($resultData->id)->toBe($student->id)
-        ->and($resultData->enrollments->count())->toBe($student->enrollments->count())
+        ->and($resultData->sessionEnrollments->count())->toBe($student->sessionEnrollments->count())
         ->and($resultData->finalCumulativeGradePointAverage)->toBe($fcgpa)
         ->and($resultData->degreeClass)->toBe($degreeClass->value)
         ->and($resultData->degreeAwarded)->toBe("$programType->name ($programType->code)")
@@ -33,7 +33,7 @@ test('student without enrollment return an empty state with zero fcgpa', functio
 
     expect($resultData)->toBeInstanceOf(StudentResultData::class)
         ->and($resultData->id)->toBe($student->id)
-        ->and($resultData->enrollments->count())->toBe($student->enrollments->count())
+        ->and($resultData->sessionEnrollments->count())->toBe($student->sessionEnrollments->count())
         ->and($resultData->finalCumulativeGradePointAverage)->toBe(0.0)
         ->and($resultData->graduationYear)->toBe(0);
 });

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
-final class Enrollment extends Model
+final class SessionEnrollment extends Model
 {
     /** @var array<int, string> */
     protected $fillable = [
@@ -37,7 +37,7 @@ final class Enrollment extends Model
         $this->save();
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, \App\Models\Enrollment> */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, \App\Models\SessionEnrollment> */
     public function level(): BelongsTo
     {
         return $this->belongsTo(Level::class);
@@ -55,13 +55,13 @@ final class Enrollment extends Model
         return $this->hasMany(SemesterEnrollment::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, \App\Models\Enrollment> */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, \App\Models\SessionEnrollment> */
     public function session(): BelongsTo
     {
         return $this->belongsTo(Session::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, \App\Models\Enrollment> */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, \App\Models\SessionEnrollment> */
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class);

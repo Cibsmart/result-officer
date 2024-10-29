@@ -6,13 +6,13 @@ namespace App\Actions\Import\Registrations;
 
 use App\Enums\RawDataStatus;
 use App\Models\Course;
-use App\Models\Enrollment;
 use App\Models\Level;
 use App\Models\RawRegistration;
 use App\Models\Registration;
 use App\Models\Semester;
 use App\Models\SemesterEnrollment;
 use App\Models\Session;
+use App\Models\SessionEnrollment;
 use App\Models\Student;
 
 final class ProcessPortalRegistration
@@ -26,7 +26,7 @@ final class ProcessPortalRegistration
         $semester = Semester::getUsingName($rawRegistration->semester);
         $course = Course::getUsingOnlineId((string) $rawRegistration->course_id);
 
-        $sessionEnrollment = Enrollment::getOrCreate($student, $session, $level);
+        $sessionEnrollment = SessionEnrollment::getOrCreate($student, $session, $level);
         $semesterEnrollment = SemesterEnrollment::getOrCreate($sessionEnrollment, $semester);
 
         $exists = Registration::query()

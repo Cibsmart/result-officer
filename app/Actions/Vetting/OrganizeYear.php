@@ -14,7 +14,7 @@ final class OrganizeYear
 
     public function execute(Student $student): void
     {
-        $enrollments = $student->enrollments()->orderBy('session_id')->get();
+        $enrollments = $student->sessionEnrollments()->orderBy('session_id')->get();
 
         if ($this->enrollmentYearIsOrganized($enrollments)) {
             return;
@@ -31,7 +31,7 @@ final class OrganizeYear
         $this->report = 'RE-ORGANIZED STUDY YEARS';
     }
 
-    /** @param \Illuminate\Support\Collection<int, \App\Models\Enrollment> $enrollments */
+    /** @param \Illuminate\Support\Collection<int, \App\Models\SessionEnrollment> $enrollments */
     public function enrollmentYearIsOrganized(Collection $enrollments): bool
     {
         $sessionYear = $enrollments->pluck('year.value', 'session_id');

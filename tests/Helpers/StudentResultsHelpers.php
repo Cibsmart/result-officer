@@ -3,18 +3,18 @@
 declare(strict_types=1);
 
 use App\Helpers\ComputeAverage;
-use App\Models\Enrollment;
 use App\Models\SemesterEnrollment;
+use App\Models\SessionEnrollment;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Sequence;
-use Tests\Factories\EnrollmentFactory;
 use Tests\Factories\LevelFactory;
 use Tests\Factories\ProgramFactory;
 use Tests\Factories\RegistrationFactory;
 use Tests\Factories\ResultFactory;
 use Tests\Factories\SemesterEnrollmentFactory;
 use Tests\Factories\SemesterFactory;
+use Tests\Factories\SessionEnrollmentFactory;
 use Tests\Factories\SessionFactory;
 use Tests\Factories\StudentFactory;
 
@@ -28,7 +28,7 @@ function createStudentWithResults(
 
     return
         StudentFactory::new()->has(
-            EnrollmentFactory::new()
+            SessionEnrollmentFactory::new()
                 ->has(SemesterEnrollmentFactory::new()
                     ->has(RegistrationFactory::new()
                         ->has(ResultFactory::new())
@@ -57,7 +57,7 @@ function createMultipleStudentsWithResults(
 
     return
         StudentFactory::new()->has(
-            EnrollmentFactory::new(['level_id' => $level->id, 'session_id' => $session->id])
+            SessionEnrollmentFactory::new(['level_id' => $level->id, 'session_id' => $session->id])
                 ->has(SemesterEnrollmentFactory::new()
                     ->has(RegistrationFactory::new()
                         ->has(ResultFactory::new())
@@ -88,7 +88,7 @@ function computeGPA(SemesterEnrollment $semesterEnrollment): float
     )->value();
 }
 
-function computeCGPA(Enrollment $sessionEnrollment): float
+function computeCGPA(SessionEnrollment $sessionEnrollment): float
 {
     $semesterEnrollments = $sessionEnrollment->semesters;
 
@@ -103,7 +103,7 @@ function computeCGPA(Enrollment $sessionEnrollment): float
 
 function computeFCGPA(Student $student): float
 {
-    $sessionEnrollments = $student->enrollments;
+    $sessionEnrollments = $student->sessionEnrollments;
 
     $cgpaSum = 0;
 

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use App\Actions\Vetting\OrganizeYear;
 use App\Enums\Year;
-use Tests\Factories\EnrollmentFactory;
 use Tests\Factories\LevelFactory;
+use Tests\Factories\SessionEnrollmentFactory;
 use Tests\Factories\SessionFactory;
 use Tests\Factories\StudentFactory;
 
@@ -18,7 +18,7 @@ it('can correctly organize study year original set to all first', function (): v
     $level = LevelFactory::new()->createOne();
 
     $student = StudentFactory::new()->has(
-        EnrollmentFactory::new()
+        SessionEnrollmentFactory::new()
             ->count(4)
             ->sequence(
                 ['session_id' => $session->id, 'level_id' => $level->id], ['session_id' => $session2->id],
@@ -32,7 +32,7 @@ it('can correctly organize study year original set to all first', function (): v
 
     expect($organize->report())->toBe('RE-ORGANIZED STUDY YEARS');
 
-    $enrollments = $student->fresh()->enrollments;
+    $enrollments = $student->fresh()->sessionEnrollments;
 
     expect($enrollments->count())->toBe(4)
         ->and($enrollments->firstWhere('session_id', $session->id)->year)->toBe(Year::FIRST)
@@ -50,7 +50,7 @@ it('can correctly organize study year original set in descending order', functio
     $level = LevelFactory::new()->createOne();
 
     $student = StudentFactory::new()->has(
-        EnrollmentFactory::new()
+        SessionEnrollmentFactory::new()
             ->count(4)
             ->sequence(
                 ['session_id' => $session->id, 'level_id' => $level->id, 'year' => Year::FOURTH],
@@ -66,7 +66,7 @@ it('can correctly organize study year original set in descending order', functio
 
     expect($organize->report())->toBe('RE-ORGANIZED STUDY YEARS');
 
-    $enrollments = $student->fresh()->enrollments;
+    $enrollments = $student->fresh()->sessionEnrollments;
 
     expect($enrollments->count())->toBe(4)
         ->and($enrollments->firstWhere('session_id', $session->id)->year)->toBe(Year::FIRST)
@@ -84,7 +84,7 @@ it('does not re-organize study year for already organized year', function (): vo
     $level = LevelFactory::new()->createOne();
 
     $student = StudentFactory::new()->has(
-        EnrollmentFactory::new()
+        SessionEnrollmentFactory::new()
             ->count(4)
             ->sequence(
                 ['session_id' => $session->id, 'level_id' => $level->id, 'year' => Year::FIRST],

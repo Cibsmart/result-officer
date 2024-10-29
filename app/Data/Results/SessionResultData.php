@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Data\Results;
 
 use App\Helpers\ComputeAverage;
-use App\Models\Enrollment;
+use App\Models\SessionEnrollment;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
 
@@ -22,7 +22,7 @@ final class SessionResultData extends Data
     ) {
     }
 
-    public static function fromModel(Enrollment $enrollment): self
+    public static function fromModel(SessionEnrollment $enrollment): self
     {
         $semesters = SemesterResultData::collect(
             $enrollment->semesters()->with('semester')->get(),

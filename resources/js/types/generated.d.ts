@@ -200,7 +200,7 @@ declare namespace App.Data.Results {
   };
   export type StudentResultData = {
     id: number;
-    enrollments: Array<App.Data.Results.SessionResultData>;
+    sessionEnrollments: Array<App.Data.Results.SessionResultData>;
     finalCumulativeGradePointAverage: number;
     degreeClass: string;
     degreeAwarded: string;
@@ -316,7 +316,7 @@ declare namespace App.Enums {
   export type ResultRemark = "PAS" | "FAL" | "ABS" | "MAL";
   export type Role = "super-admin" | "admin" | "desk-officer" | "exam-officer" | "database-officer" | "user";
   export type ScoreType = "course-work" | "exam";
-  export type StudentStatusEnum =
+  export type StudentStatus =
     | "new"
     | "active"
     | "inactive"

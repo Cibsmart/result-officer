@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 use App\Data\Results\SessionResultData;
 use App\Helpers\ComputeAverage;
-use Tests\Factories\EnrollmentFactory;
 use Tests\Factories\RegistrationFactory;
 use Tests\Factories\ResultFactory;
 use Tests\Factories\SemesterEnrollmentFactory;
+use Tests\Factories\SessionEnrollmentFactory;
 use Tests\Factories\StudentFactory;
 
 test('session result data is correct', function (): void {
     $student = StudentFactory::new()->createOne();
 
-    $enrollment = EnrollmentFactory::new(['student_id' => $student->id])
+    $enrollment = SessionEnrollmentFactory::new(['student_id' => $student->id])
         ->has(SemesterEnrollmentFactory::new()
             ->has(RegistrationFactory::new()
                 ->has(ResultFactory::new())
@@ -53,7 +53,7 @@ test('session result data is correct', function (): void {
 test('session enrollment without result data returns zeroes', function (): void {
     $student = StudentFactory::new()->createOne();
 
-    $enrollment = EnrollmentFactory::new(['student_id' => $student->id])
+    $enrollment = SessionEnrollmentFactory::new(['student_id' => $student->id])
         ->has(SemesterEnrollmentFactory::new()
             ->has(RegistrationFactory::new(), 'courses')
             ->count(2),
@@ -76,7 +76,7 @@ test('session enrollment without result data returns zeroes', function (): void 
 test('session enrollment without semester enrollments returns zeroes', function (): void {
     $student = StudentFactory::new()->createOne();
 
-    $enrollment = EnrollmentFactory::new(['student_id' => $student->id])
+    $enrollment = SessionEnrollmentFactory::new(['student_id' => $student->id])
         ->createOne();
 
     $sessionData = SessionResultData::from($enrollment);

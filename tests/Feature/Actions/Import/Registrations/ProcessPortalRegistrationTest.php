@@ -6,12 +6,12 @@ use App\Actions\Import\Registrations\ProcessPortalRegistration;
 use App\Enums\RawDataStatus;
 use App\Enums\RecordSource;
 use Tests\Factories\CourseFactory;
-use Tests\Factories\EnrollmentFactory;
 use Tests\Factories\LevelFactory;
 use Tests\Factories\RawRegistrationFactory;
 use Tests\Factories\RegistrationFactory;
 use Tests\Factories\SemesterEnrollmentFactory;
 use Tests\Factories\SemesterFactory;
+use Tests\Factories\SessionEnrollmentFactory;
 use Tests\Factories\SessionFactory;
 use Tests\Factories\StudentFactory;
 
@@ -42,11 +42,11 @@ it('does not save save duplicate registration into the registrations table', fun
     $session = SessionFactory::new()->createOne();
     $level = LevelFactory::new()->createOne();
     $semester = SemesterFactory::new()->createOne();
-    $sessionEnrollment = EnrollmentFactory::new()->createOne([
+    $sessionEnrollment = SessionEnrollmentFactory::new()->createOne([
         'level_id' => $level->id, 'session_id' => $session->id, 'student_id' => $student->id,
     ]);
     $semesterEnrollment = SemesterEnrollmentFactory::new()->createOne([
-        'enrollment_id' => $sessionEnrollment->id, 'semester_id' => $semester->id,
+        'session_enrollment_id' => $sessionEnrollment->id, 'semester_id' => $semester->id,
     ]);
 
     RegistrationFactory::new()->createOne([
