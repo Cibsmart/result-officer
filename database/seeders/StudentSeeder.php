@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Enums\EntryMode;
 use App\Enums\Gender;
+use App\Models\Program;
 use App\Models\Student;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -21,10 +22,9 @@ final class StudentSeeder extends Seeder
             'first_name' => 'STUDENT',
             'gender' => Gender::MALE,
             'last_name' => 'FIRST',
+            'local_government_id' => 1,
             'other_names' => null,
-            'program_id' => 1,
             'registration_number' => 'EBSU/2009/51485',
-            'state_id' => 1,
         ],
         [
             'date_of_birth' => '1988-7-27',
@@ -34,10 +34,9 @@ final class StudentSeeder extends Seeder
             'first_name' => 'BARNABAS',
             'gender' => Gender::MALE,
             'last_name' => 'IFEBUDE',
+            'local_government_id' => 1,
             'other_names' => 'CHUKWUDIKE',
-            'program_id' => 1,
             'registration_number' => 'EBSU/2009/51486',
-            'state_id' => 1,
         ],
         [
             'date_of_birth' => '1987-8-19',
@@ -47,10 +46,9 @@ final class StudentSeeder extends Seeder
             'first_name' => 'RUTH',
             'gender' => Gender::FEMALE,
             'last_name' => 'NWEKE',
+            'local_government_id' => 1,
             'other_names' => 'OGECHUKWU',
-            'program_id' => 1,
             'registration_number' => 'EBSU/2009/51895',
-            'state_id' => 1,
         ],
         [
             'date_of_birth' => '1990-8-19',
@@ -60,15 +58,16 @@ final class StudentSeeder extends Seeder
             'first_name' => 'STUDENT',
             'gender' => Gender::FEMALE,
             'last_name' => 'EMPTY',
+            'local_government_id' => 1,
             'other_names' => null,
-            'program_id' => 1,
             'registration_number' => 'EBSU/2009/51896',
-            'state_id' => 1,
         ],
     ];
 
     public function run(): void
     {
+        $program = Program::query()->where('name', 'COMPUTER SCIENCE')->first();
+
         foreach ($this->students as $student) {
             Student::query()->create([
                 'date_of_birth' => Carbon::make($student['date_of_birth']),
@@ -78,10 +77,10 @@ final class StudentSeeder extends Seeder
                 'first_name' => $student['first_name'],
                 'gender' => $student['gender'],
                 'last_name' => $student['last_name'],
+                'local_government_id' => $student['local_government_id'],
                 'other_names' => $student['other_names'],
-                'program_id' => $student['program_id'],
+                'program_id' => $program->id,
                 'registration_number' => $student['registration_number'],
-                'state_id' => $student['state_id'],
             ]);
         }
     }
