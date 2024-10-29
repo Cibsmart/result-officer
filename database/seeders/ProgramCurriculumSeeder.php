@@ -32,6 +32,6 @@ final class ProgramCurriculumSeeder extends Seeder
             'session_id' => 1,
         ]);
 
-        $this->call([ProgramCourseSeeder::class]);
+        $this->call([ProgramCurriculumCourseSeeder::class]);
     }
 }

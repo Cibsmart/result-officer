@@ -13,8 +13,8 @@ use App\Data\Semester\SemesterData;
 use App\Data\Session\SessionData;
 use App\Models\Level;
 use App\Models\Program;
-use App\Models\ProgramCourse;
 use App\Models\ProgramCurriculum;
+use App\Models\ProgramCurriculumCourse;
 use App\Models\Semester;
 use App\Models\Session;
 use App\Models\Student;
@@ -124,7 +124,9 @@ final class CompositeSheetData extends Data
                 ->with('course')
                 ->get()
                 ->map(
-                    fn (ProgramCourse $course) => ['code' => $course->course->code, 'unit' => $course->credit_unit],
+                    fn (ProgramCurriculumCourse $course) => [
+                        'code' => $course->course->code, 'unit' => $course->credit_unit,
+                    ],
                 )
             : collect([]);
     }
