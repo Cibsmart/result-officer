@@ -7,7 +7,7 @@ namespace App\Models;
 use App\Enums\EntryMode;
 use App\Enums\Gender;
 use App\Enums\RecordSource;
-use App\Enums\StudentStatusEnum;
+use App\Enums\StudentStatus;
 use App\Values\DateValue;
 use App\Values\RegistrationNumber;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -64,7 +64,7 @@ final class Student extends Model
         $student->registration_number = $registrationNumber->value;
         $student->source = RecordSource::PORTAL;
         $student->local_government_id = LocalGovernment::getUsingName($rawStudent->local_government)->id;
-        $student->status = StudentStatusEnum::NEW;
+        $student->status = StudentStatus::NEW;
 
         $student->save();
     }
@@ -132,7 +132,7 @@ final class Student extends Model
             'entry_mode' => EntryMode::class,
             'gender' => Gender::class,
             'source' => RecordSource::class,
-            'status' => StudentStatusEnum::class,
+            'status' => StudentStatus::class,
         ];
     }
 

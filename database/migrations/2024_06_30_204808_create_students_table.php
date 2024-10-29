@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use App\Enums\EntryMode;
 use App\Enums\RecordSource;
-use App\Enums\StudentStatusEnum;
+use App\Enums\StudentStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('jamb_registration_number')->nullable();
             $table->string('email')->nullable();
             $table->string('phone_number')->nullable();
-            $table->string('status')->default(StudentStatusEnum::NEW->value);
+            $table->string('status')->default(StudentStatus::NEW->value);
             $table->string('online_id')->nullable();
             $table->string('source')->default(RecordSource::LEGACY->value);
             $table->timestamps();
