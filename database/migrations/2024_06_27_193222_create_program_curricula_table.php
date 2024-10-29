@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use App\Enums\EntryMode;
+use App\Models\Curriculum;
+use App\Models\Program;
+use App\Models\Session;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,15 +19,13 @@ return new class extends Migration
     {
         Schema::create('program_curricula', static function (Blueprint $table): void {
             $table->id();
-            $table->foreignId('program_id')->constrained('programs');
-            $table->foreignId('curriculum_id')->constrained('curricula');
-            $table->foreignId('session_id')->constrained('academic_sessions');
-            $table->foreignId('level_id')->constrained('levels');
-            $table->foreignId('semester_id')->constrained('semesters');
-            $table->unsignedSmallInteger('minimum_elective_units')->default(0);
+            $table->foreignIdFor(Program::class)->constrained();
+            $table->foreignIdFor(Curriculum::class)->constrained();
+            $table->foreignIdFor(Session::class, 'entry_session_id')->constrained();
+            $table->string('entry_mode')->default(EntryMode::UTME->value);
             $table->timestamps();
 
-            $table->unique(['program_id', 'curriculum_id', 'level_id', 'semester_id'], 'program_curriculum_unique');
+            $table->unique(['program_id', 'entry_session_id', 'entry_mode'], 'program_curriculum_unique');
         });
     }
 
