@@ -19,7 +19,6 @@ final class DatabaseSeeder extends Seeder
             LevelSeeder::class,
             CourseTypeSeeder::class,
             CurriculumSeeder::class,
-            StudentStatusSeeder::class,
             RecordsUnitHeadSeeder::class,
         ]);
     }
