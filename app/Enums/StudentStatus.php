@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
-enum StudentStatusEnum: string
+enum StudentStatus: string
 {
     case NEW = 'new';
     case ACTIVE = 'active';
