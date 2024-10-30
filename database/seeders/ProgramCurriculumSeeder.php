@@ -83,7 +83,7 @@ final class ProgramCurriculumSeeder extends Seeder
                 $currentSemester = $item['semester'];
 
                 $programCurriculumSemester = $this->getProgramCurriculumSemester($currentSemester,
-                    $item['minimum_elective'], $programCurriculumLevel);
+                    $item['minimum_elective_units'], $programCurriculumLevel);
             }
 
             $course = Course::getUsingCode($item['course']);
