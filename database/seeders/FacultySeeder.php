@@ -4,78 +4,62 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Helpers\CSVFile;
 use App\Models\Department;
 use App\Models\Faculty;
 use App\Models\Program;
 use App\Models\ProgramType;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
 
 final class FacultySeeder extends Seeder
 {
     public function run(): void
     {
-        $content = Storage::get('seeders/programs.csv');
+        /** @var \Illuminate\Support\Collection<int, \Illuminate\Support\Collection<string, string>> $content */
+        $content = (new CSVFile('seeders/programs.csv'))->read();
 
-        assert(! is_null($content));
+        $faculties = $content->sortBy([
+            ['faculty_name', 'asc'],
+            ['department_name', 'asc'],
+        ])->groupBy('faculty_name');
 
-        $lines = explode("\n", $content);
+        foreach ($faculties as $facultyName => $departments) {
+            $facultyCode = $departments->firstOrFail()['faculty_code'];
 
-        $header = [];
-
-        $currentFaculty = '';
-        $currentDepartment = '';
-
-        $faculty = null;
-        $department = null;
-
-        foreach ($lines as $index => $line) {
-            /** @var array<int, string> $data */
-            $data = str_getcsv($line);
-
-            if ($index === 0) {
-                $header = collect($data)->map(fn ($value) => Str::slug($value, '_'))->all();
-
-                continue;
-            }
-
-            /** @var array<string, string> $item */
-            $item = array_combine($header, $data);
-
-            if ($currentFaculty !== $item['faculty_name']) {
-
-                $currentFaculty = $item['faculty_name'];
-                $code = $item['faculty_code'];
-
-                $faculty = Faculty::query()->firstOrCreate([
-                    'code' => $code,
-                    'name' => $currentFaculty,
-                ]);
-
-            }
-
-            if ($currentDepartment !== $item['department_name']) {
-                $currentDepartment = $item['department_name'];
-                $code = $item['department_code'];
-                $onlineId = $item['department_online_id'];
-
-                $department = Department::query()->firstOrCreate([
-                    'code' => $code,
-                    'faculty_id' => $faculty->id,
-                    'name' => $currentDepartment,
-                    'online_id' => $onlineId,
-                ]);
-
-            }
-
-            Program::query()->create([
-                'code' => $item['program_code'],
-                'department_id' => $department->id,
-                'name' => $item['program_name'],
-                'program_type_id' => ProgramType::getUsingCode($item['program_type'])->id,
+            $faculty = Faculty::query()->firstOrCreate([
+                'code' => $facultyCode,
+                'name' => $facultyName,
             ]);
 
+            $this->createDepartmentsAndPrograms($faculty, $departments);
+        }
+    }
+
+    /** @param \Illuminate\Support\Collection<int, \Illuminate\Support\Collection<string, string>> $departments */
+    private function createDepartmentsAndPrograms(
+        Faculty $faculty,
+        Collection $departments,
+    ): void {
+        foreach ($departments->groupBy('department_name') as $departmentName => $programs) {
+            $departmentCode = $programs->firstOrFail()['department_code'];
+            $departmentOnlineId = $programs->firstOrFail()['department_online_id'];
+
+            $department = Department::query()->firstOrCreate([
+                'code' => $departmentCode,
+                'faculty_id' => $faculty->id,
+                'name' => $departmentName,
+                'online_id' => $departmentOnlineId,
+            ]);
+
+            foreach ($programs as $program) {
+                Program::query()->create([
+                    'code' => $program['program_code'],
+                    'department_id' => $department->id,
+                    'name' => $program['program_name'],
+                    'program_type_id' => ProgramType::getUsingCode($program['program_type'])->id,
+                ]);
+            }
         }
     }
 }
