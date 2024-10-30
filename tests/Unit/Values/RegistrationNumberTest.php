@@ -53,7 +53,7 @@ it('can get the session associated with a registration number', function (): voi
 
     $session = RegistrationNumber::new($registrationNumber)->session();
 
-    expect($session)->toBeString()->and($session)->toBe('2009/2010');
+    expect($session)->toBeString()->and($session)->toBe('2009-2010');
 });
 
 it('can check if E grade should allowed for registration number',
