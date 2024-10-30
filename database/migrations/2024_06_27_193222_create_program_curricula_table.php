@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('entry_mode')->default(EntryMode::UTME->value);
             $table->timestamps();
 
-            $table->unique(['program_id', 'entry_session_id', 'entry_mode'], 'program_curriculum_unique');
+            $table->unique(['program_id', 'entry_session_id', 'entry_mode'], 'program_curricula_unique');
         });
     }
 

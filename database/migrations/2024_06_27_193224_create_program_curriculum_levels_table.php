@@ -20,6 +20,8 @@ return new class extends Migration
             $table->foreignIdFor(ProgramCurriculum::class);
             $table->foreignIdFor(Level::class)->constrained();
             $table->timestamps();
+
+            $table->unique(['program_curriculum_id', 'level_id'], 'program_curriculum_levels_unique');
         });
     }
 

@@ -8,7 +8,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -16,13 +17,14 @@ return new class extends Migration {
     {
         Schema::create('program_curriculum_courses', static function (Blueprint $table): void {
             $table->id();
-            $table->foreignIdFor(ProgramCurriculumSemester::class)->constrained();
+            $table->foreignIdFor(ProgramCurriculumSemester::class)
+                ->constrained(indexName: 'program_curriculum_courses_semester_id_foreign');
             $table->foreignIdFor(Course::class)->constrained();
             $table->unsignedSmallInteger('credit_unit');
             $table->string('course_type');
             $table->timestamps();
 
-            $table->unique(['program_curriculum_semester_id', 'course_id']);
+            $table->unique(['program_curriculum_semester_id', 'course_id'], 'program_curriculum_courses_unique');
         });
     }
 
