@@ -54,4 +54,10 @@ final class ProgramCurriculum extends Model
     {
         return $this->HasMany(ProgramCurriculumCourse::class);
     }
+
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumLevel> */
+    public function levels(): HasMany
+    {
+        return $this->HasMany(ProgramCurriculumLevel::class);
+    }
 }

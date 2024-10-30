@@ -6,9 +6,16 @@ namespace App\Models;
 
 use App\Enums\CreditUnit;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class ProgramCurriculumSemester extends Model
 {
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumCourse> */
+    public function courses(): HasMany
+    {
+        return $this->HasMany(ProgramCurriculumCourse::class);
+    }
+
     /** @return array{minimum_elective_units: 'App\Enums\CreditUnit'} */
     protected function casts(): array
     {
