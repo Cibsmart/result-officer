@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 final class Curriculum extends Model
 {
+    public static function getUsingCode(string $curriculumCode): self
+    {
+        return self::query()->where('code', $curriculumCode)->firstOrFail();
+    }
 }
