@@ -19,7 +19,10 @@ final class SemesterEnrollment extends Model
         );
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\SessionEnrollment, \App\Models\SemesterEnrollment> */
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\SessionEnrollment, \App\Models\SemesterEnrollment>
+     */
     public function enrollment(): BelongsTo
     {
         return $this->belongsTo(SessionEnrollment::class);

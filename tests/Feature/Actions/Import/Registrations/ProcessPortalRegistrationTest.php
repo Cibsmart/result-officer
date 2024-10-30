@@ -46,7 +46,8 @@ it('does not save save duplicate registration into the registrations table', fun
         'level_id' => $level->id, 'session_id' => $session->id, 'student_id' => $student->id,
     ]);
     $semesterEnrollment = SemesterEnrollmentFactory::new()->createOne([
-        'session_enrollment_id' => $sessionEnrollment->id, 'semester_id' => $semester->id,
+        'semester_id' => $semester->id,
+        'session_enrollment_id' => $sessionEnrollment->id,
     ]);
 
     RegistrationFactory::new()->createOne([

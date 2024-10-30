@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\ProgramCurriculumLevel;
 use App\Models\Semester;
 use Illuminate\Database\Migrations\Migration;

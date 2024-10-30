@@ -52,7 +52,8 @@ it('does not save save duplicate result into the results table', function (): vo
         'level_id' => $level->id, 'session_id' => $session->id, 'student_id' => $student->id,
     ]);
     $semesterEnrollment = SemesterEnrollmentFactory::new()->createOne([
-        'session_enrollment_id' => $sessionEnrollment->id, 'semester_id' => $semester->id,
+        'semester_id' => $semester->id,
+        'session_enrollment_id' => $sessionEnrollment->id,
     ]);
 
     $registration = RegistrationFactory::new()->createOne([
