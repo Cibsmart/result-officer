@@ -41,7 +41,7 @@ final readonly class RegistrationNumber
         $next = $year + 1;
 
         return Str::of((string) $year)
-            ->append('/')
+            ->append('-')
             ->append((string) $next)
             ->value();
     }
