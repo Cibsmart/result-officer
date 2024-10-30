@@ -88,7 +88,6 @@ final class ResultSeeder extends Seeder
 
             $course = Course::getUsingCode($item['course_code']);
 
-            dump($semesterEnrollment, $course->code, $course->id);
             $registration = Registration::query()->create([
                 'course_id' => $course->id,
                 'course_status' => CourseStatus::from($item['course_status']),

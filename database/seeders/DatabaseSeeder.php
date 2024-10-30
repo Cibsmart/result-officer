@@ -20,6 +20,7 @@ final class DatabaseSeeder extends Seeder
             CourseSeeder::class,
             CurriculumSeeder::class,
             FacultySeeder::class,
+            ProgramCurriculumSeeder::class,
             StudentSeeder::class,
             ResultSeeder::class,
             RecordsUnitHeadSeeder::class,
