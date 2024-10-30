@@ -27,6 +27,11 @@ final class Course extends Model
         return self::query()->where('online_id', $onlineId)->firstOrFail();
     }
 
+    public static function getUsingCode(string $courseCode): self
+    {
+        return self::query()->where('code', $courseCode)->firstOrFail();
+    }
+
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
     protected function name(): Attribute
     {

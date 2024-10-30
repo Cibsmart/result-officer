@@ -123,6 +123,11 @@ final class Program extends Model
         return $department->programs()->where('name', $programName)->firstOrFail();
     }
 
+    public static function getUsingName(string $programName): self
+    {
+        return self::query()->where('name', $programName)->firstOrFail();
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Department, \App\Models\Program> */
     public function department(): BelongsTo
     {
