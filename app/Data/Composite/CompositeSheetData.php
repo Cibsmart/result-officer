@@ -11,6 +11,7 @@ use App\Data\Results\ResultData;
 use App\Data\Results\SemesterResultData;
 use App\Data\Semester\SemesterData;
 use App\Data\Session\SessionData;
+use App\Enums\EntryMode;
 use App\Models\Level;
 use App\Models\Program;
 use App\Models\ProgramCurriculum;
@@ -108,27 +109,34 @@ final class CompositeSheetData extends Data
         Level $level,
         Semester $semester,
     ): Collection {
+
+        $entrySession = $session->entry($level);
+
         $curriculum = ProgramCurriculum::query()
             ->where('program_id', $program->id)
-            ->where('session_id', $session->id)
-            ->where('level_id', $level->id)
-            ->where('semester_id', $semester->id)
+            ->where('entry_session_id', $entrySession->id)
+            ->where('entry_mode', EntryMode::UTME)
             ->first();
 
-        return $curriculum
-            ? $curriculum
-                ->courses()
-                ->select('program_courses.*')
-                ->join('courses', 'courses.id', '=', 'program_courses.course_id')
-                ->orderBy('courses.code')
-                ->with('course')
-                ->get()
-                ->map(
-                    fn (ProgramCurriculumCourse $course) => [
-                        'code' => $course->course->code, 'unit' => $course->credit_unit,
-                    ],
-                )
-            : collect([]);
+        if ($curriculum === null) {
+            return collect([]);
+        }
+
+        $curriculumLevel = $curriculum->levels()->where('level_id', $level->id)->first();
+        $curriculumSemester = $curriculumLevel->semesters()->where('semester_id', $semester->id)->first();
+
+        return $curriculumSemester
+            ->courses()
+            ->select('program_curriculum_courses.*')
+            ->join('courses', 'courses.id', '=', 'program_curriculum_courses.course_id')
+            ->orderBy('courses.code')
+            ->with('course')
+            ->get()
+            ->map(
+                fn (ProgramCurriculumCourse $course) => [
+                    'code' => $course->course->code, 'unit' => $course->credit_unit->value,
+                ],
+            );
     }
 
     /** @return \Illuminate\Support\LazyCollection<int, \App\Models\Student> */
