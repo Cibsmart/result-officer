@@ -83,5 +83,7 @@ final class StudentSeeder extends Seeder
                 'registration_number' => $student['registration_number'],
             ]);
         }
+
+        $this->call([SessionEnrollmentSeeder::class]);
     }
 }
