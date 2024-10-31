@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Enums\CourseType;
 use App\Enums\CreditUnit;
 use App\Enums\EntryMode;
+use App\Helpers\CSVFile;
 use App\Models\Course;
 use App\Models\Curriculum;
 use App\Models\Level;
@@ -18,128 +19,110 @@ use App\Models\ProgramCurriculumSemester;
 use App\Models\Semester;
 use App\Models\Session;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
 
 final class ProgramCurriculumSeeder extends Seeder
 {
     public function run(): void
     {
-        $content = Storage::get('seeders/program_curriculum_courses.csv');
+        /** @var \Illuminate\Support\Collection<int, \Illuminate\Support\Collection<string, string>> $content */
+        $content = (new CSVFile('seeders/program_courses.csv'))->read();
 
-        assert(! is_null($content));
+        $programCurriculumCourses = $content->sortBy([
+            ['program', 'asc'],
+            ['curriculum', 'asc'],
+            ['entry_session', 'asc'],
+            ['entry_mode', 'desc'],
+            ['level', 'asc'],
+            ['semester', 'asc'],
+            ['course_code', 'asc'],
+        ])->groupBy('program');
 
-        $lines = explode("\n", $content);
-
-        $header = [];
-
-        $currentProgram = '';
-        $currentCurriculum = '';
-        $currentEntrySession = '';
-        $currentEntryMode = '';
-
-        $currentLevel = '';
-        $currentSemester = '';
-
-        $programCurriculum = null;
-        $programCurriculumLevel = null;
-        $programCurriculumSemester = null;
-
-        foreach ($lines as $index => $line) {
-            /** @var array<int, string> $data */
-            $data = str_getcsv($line);
-
-            if ($index === 0) {
-                $header = collect($data)->map(fn ($value) => Str::slug($value, '_'))->all();
-
-                continue;
+        foreach ($programCurriculumCourses as $programName => $programCourses) {
+            foreach ($programCourses->groupBy('curriculum') as $curriculumName => $curriculumCourses) {
+                $this->createProgramCurriculum($programName, $curriculumName, $curriculumCourses);
             }
-
-            /** @var array<string, string> $item */
-            $item = array_combine($header, $data);
-
-            if ($currentProgram !== $item['program']
-                || $currentCurriculum !== $item['curriculum']
-                || $currentEntrySession !== $item['entry_session']
-                || $currentEntryMode !== $item['entry_mode']) {
-
-                $currentProgram = $item['program'];
-                $currentCurriculum = $item['curriculum'];
-                $currentEntrySession = $item['entry_session'];
-                $currentEntryMode = $item['entry_mode'];
-
-                $programCurriculum = $this->getProgramCurriculum(
-                    $currentProgram, $currentCurriculum,
-                    $currentEntrySession, $currentEntryMode);
-            }
-
-            if ($currentLevel !== $item['level']) {
-                $currentLevel = $item['level'];
-
-                $programCurriculumLevel = $this->getProgramCurriculumLevel($currentLevel, $programCurriculum);
-            }
-
-            if ($currentSemester !== $item['semester']) {
-                $currentSemester = $item['semester'];
-
-                $programCurriculumSemester = $this->getProgramCurriculumSemester($currentSemester,
-                    $item['minimum_elective_units'], $programCurriculumLevel);
-            }
-
-            $course = Course::getUsingCode($item['course']);
-            ProgramCurriculumCourse::query()->create([
-                'course_id' => $course->id,
-                'course_type' => CourseType::from($item['course_type']),
-                'credit_unit' => CreditUnit::from((int) $item['credit_unit']),
-                'program_curriculum_semester_id' => $programCurriculumSemester->id,
-            ]);
-
         }
     }
 
-    private function getProgramCurriculum(
-        string $currentProgram,
-        string $currentCurriculum,
-        string $currentEntrySession,
-        string $currentEntryMode,
-    ): ProgramCurriculum {
-        $program = Program::getUsingName($currentProgram);
-        $curriculum = Curriculum::getUsingCode($currentCurriculum);
-        $entrySession = Session::getUsingName($currentEntrySession);
+    /** @param \Illuminate\Support\Collection<int, \Illuminate\Support\Collection<string, string>> $curriculumCourses */
+    private function createProgramCurriculum(
+        string $programName,
+        string $curriculumName,
+        Collection $curriculumCourses,
+    ): void {
+        foreach ($curriculumCourses->groupBy('entry_session') as $entrySessionName => $sessionCourses) {
+            foreach ($sessionCourses->groupBy('entry_mode') as $entryMode => $entryModeCourses) {
+                $program = Program::getUsingName($programName);
+                $curriculum = Curriculum::getUsingCode($curriculumName);
+                $entrySession = Session::getUsingName($entrySessionName);
 
-        return ProgramCurriculum::query()->firstOrCreate([
-            'curriculum_id' => $curriculum->id,
-            'entry_mode' => EntryMode::get($currentEntryMode),
-            'entry_session_id' => $entrySession->id,
-            'program_id' => $program->id,
-        ]);
+                $programCurriculum = ProgramCurriculum::query()->firstOrCreate([
+                    'curriculum_id' => $curriculum->id,
+                    'entry_mode' => EntryMode::get($entryMode),
+                    'entry_session_id' => $entrySession->id,
+                    'program_id' => $program->id,
+                ]);
+
+                $this->createProgramCurriculumLevel($programCurriculum, $entryModeCourses);
+            }
+        }
     }
 
-    private function getProgramCurriculumLevel(
-        string $currentLevel,
+    /** @param \Illuminate\Support\Collection<int, \Illuminate\Support\Collection<string, string>> $entryModeCourses */
+    private function createProgramCurriculumLevel(
         ProgramCurriculum $programCurriculum,
-    ): ProgramCurriculumLevel {
-        $level = Level::getUsingName($currentLevel);
+        Collection $entryModeCourses,
+    ): void {
+        foreach ($entryModeCourses->groupBy('level') as $levelName => $levelCourses) {
+            $level = Level::getUsingName((string) $levelName);
 
-        return ProgramCurriculumLevel::query()->firstOrCreate([
-            'level_id' => $level->id,
-            'program_curriculum_id' => $programCurriculum->id,
-        ]);
+            $programCurriculumLevel = ProgramCurriculumLevel::query()->firstOrCreate([
+                'level_id' => $level->id,
+                'program_curriculum_id' => $programCurriculum->id,
+            ]);
+
+            $this->createProgramCurriculumSemester($programCurriculumLevel, $levelCourses);
+        }
     }
 
-    private function getProgramCurriculumSemester(
-        string $currentSemester,
-        string $minimumElective,
+    /** @param \Illuminate\Support\Collection<int, \Illuminate\Support\Collection<string, string>> $levelCourses */
+    private function createProgramCurriculumSemester(
         ProgramCurriculumLevel $programCurriculumLevel,
-    ): ProgramCurriculumSemester {
-        $semester = Semester::getUsingName($currentSemester);
+        Collection $levelCourses,
+    ): void {
+        foreach ($levelCourses->groupBy('semester') as $semesterName => $semesterCourses) {
+            $semester = Semester::getUsingName($semesterName);
 
-        return ProgramCurriculumSemester::query()->firstOrCreate(
-            [
-                'program_curriculum_level_id' => $programCurriculumLevel->id,
-                'semester_id' => $semester->id,
-            ],
-            ['minimum_elective_units' => CreditUnit::from((int) $minimumElective)],
-        );
+            $programCurriculumSemester = ProgramCurriculumSemester::query()->firstOrCreate(
+                [
+                    'program_curriculum_level_id' => $programCurriculumLevel->id,
+                    'semester_id' => $semester->id,
+                ],
+                [
+                    'minimum_elective_units' => CreditUnit::from(
+                        (int) $semesterCourses->first()['minimum_elective_units'],
+                    ),
+                ],
+            );
+
+            $this->createProgramCurriculumCourses($programCurriculumSemester, $semesterCourses);
+        }
+    }
+
+    /** @param \Illuminate\Support\Collection<int, \Illuminate\Support\Collection<string, string>> $semesterCourses */
+    private function createProgramCurriculumCourses(
+        ProgramCurriculumSemester $programCurriculumSemester,
+        Collection $semesterCourses,
+    ): void {
+        foreach ($semesterCourses as $semesterCourse) {
+            $course = Course::getUsingCode($semesterCourse['course_code']);
+            ProgramCurriculumCourse::query()->create([
+                'course_id' => $course->id,
+                'course_type' => CourseType::from($semesterCourse['course_type']),
+                'credit_unit' => CreditUnit::from((int) $semesterCourse['credit_unit']),
+                'program_curriculum_semester_id' => $programCurriculumSemester->id,
+            ]);
+        }
     }
 }
