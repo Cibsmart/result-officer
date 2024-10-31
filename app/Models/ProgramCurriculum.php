@@ -49,13 +49,19 @@ final class ProgramCurriculum extends Model
         return $this->belongsTo(Session::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumCourse> */
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumCourse, \App\Models\ProgramCurriculum>
+     */
     public function courses(): HasMany
     {
         return $this->HasMany(ProgramCurriculumCourse::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumLevel> */
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumLevel, \App\Models\ProgramCurriculum>
+     */
     public function levels(): HasMany
     {
         return $this->HasMany(ProgramCurriculumLevel::class);

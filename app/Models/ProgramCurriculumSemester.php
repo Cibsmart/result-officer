@@ -10,7 +10,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class ProgramCurriculumSemester extends Model
 {
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumCourse> */
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumCourse, \App\Models\ProgramCurriculumSemester>
+     */
     public function courses(): HasMany
     {
         return $this->HasMany(ProgramCurriculumCourse::class);

@@ -43,13 +43,19 @@ final class SessionEnrollment extends Model
         return $this->belongsTo(Level::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Registration> */
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Registration, \App\Models\SemesterEnrollment, \App\Models\SessionEnrollment>
+     */
     public function courses(): HasManyThrough
     {
         return $this->hasManyThrough(Registration::class, SemesterEnrollment::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\SemesterEnrollment> */
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\SemesterEnrollment, \App\Models\SessionEnrollment>
+     */
     public function semesters(): HasMany
     {
         return $this->hasMany(SemesterEnrollment::class);
