@@ -34,7 +34,7 @@ final class SemesterEnrollment extends Model
         return $this->belongsTo(Semester::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Registration> */
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Registration, \App\Models\SemesterEnrollment> */
     public function courses(): HasMany
     {
         return $this->hasMany(Registration::class);

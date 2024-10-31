@@ -14,6 +14,7 @@ parameters:
         -   '#^Cannot access property \$\w+ on App\\Models\\\w+\|null\.$#'
         -   '#^Cannot call method \w+\(\) on App\\Models\\\w+\|null\.$#'
         -   '#^Parameter (\#1 )?\$user of static method App\\[A-Za-z\\]+:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+        -   '#^Method App\\Models\\\w+\:\:\w+\(\) should return Illuminate\\Database\\Eloquent\\Relations\\\w+\<(?:App\\Models\\\w+(?:, )?){1,3}\> but returns Illuminate\\Database\\Eloquent\\Relations\\\w+\<(?:App\\Models\\\w+(?:, )?){1,2}\$this\(App\\Models\\\w+\)\>\.$#'
 
 
     treatPhpDocTypesAsCertain: false

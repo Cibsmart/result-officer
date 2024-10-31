@@ -74,10 +74,13 @@ final class Student extends Model
         return self::query()->where('registration_number', $registrationNumber)->firstOrFail();
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Registration> */
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\Illuminate\Database\Eloquent\Model, \Illuminate\Database\Eloquent\Model, \App\Models\Student>
+     */
     public function courses(): HasManyThrough
     {
-        return $this->through('enrollments')->has('courses');
+        return $this->through('sessionEnrollments')->has('courses');
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\LocalGovernment, \App\Models\Student> */
@@ -86,7 +89,7 @@ final class Student extends Model
         return $this->belongsTo(LocalGovernment::class, 'local_government_id');
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\SessionEnrollment> */
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\SessionEnrollment, \App\Models\Student> */
     public function sessionEnrollments(): HasMany
     {
         return $this->hasMany(SessionEnrollment::class);
@@ -110,7 +113,10 @@ final class Student extends Model
         return $this->belongsTo(Program::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\SemesterEnrollment> */
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\SemesterEnrollment, \App\Models\SessionEnrollment, \App\Models\Student>
+     */
     public function semesters(): HasManyThrough
     {
         return $this->hasManyThrough(SemesterEnrollment::class, SessionEnrollment::class);
@@ -123,7 +129,7 @@ final class Student extends Model
 
     /**
      * @return array{date_of_birth: 'date', entry_mode: 'App\Enums\EntryMode', gender: 'App\Enums\Gender',
-     *     source: 'App\Enums\RecordSource', status: 'App\Enums\StudentStatusEnum'}
+     *     source: 'App\Enums\RecordSource', status: 'App\Enums\StudentStatus'}
      */
     protected function casts(): array
     {

@@ -37,13 +37,16 @@ final class Department extends Model
         return $this->belongsTo(Faculty::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Program> */
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Program, \App\Models\Department> */
     public function programs(): HasMany
     {
         return $this->hasMany(Program::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Student> */
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Student, \App\Models\Program, \App\Models\Department>
+     */
     public function students(): HasManyThrough
     {
         return $this->hasManyThrough(Student::class, Program::class);

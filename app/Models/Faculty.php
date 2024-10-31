@@ -44,7 +44,7 @@ final class Faculty extends Model
         );
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Department> */
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Department, \App\Models\Faculty> */
     public function departments(): HasMany
     {
         return $this->hasMany(Department::class);

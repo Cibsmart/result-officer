@@ -140,7 +140,7 @@ final class Program extends Model
         return $this->belongsTo(ProgramType::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Student> */
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Student, \App\Models\Program> */
     public function students(): HasMany
     {
         return $this->hasMany(Student::class);

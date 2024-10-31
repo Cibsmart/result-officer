@@ -61,7 +61,7 @@ final class Registration extends Model
         return $this->belongsTo(Course::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\Result> */
+    /** @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\Result, \App\Models\Registration> */
     public function result(): HasOne
     {
         return $this->hasOne(Result::class);
