@@ -6,8 +6,8 @@ namespace App\Enums;
 
 enum CourseType: string
 {
-    case COMPULSORY = 'C';
+    case CORE = 'C';
     case ELECTIVE = 'E';
     case GENERAL = 'G';
-    case REQUIRED = 'R';
+    case ANCILLARY = 'A';
 }
