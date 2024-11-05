@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Helpers\CSVFile;
 use App\Models\Course;
 use Illuminate\Database\Seeder;
 
@@ -95,14 +96,19 @@ final class CourseSeeder extends Seeder
 
     public function run(): void
     {
-        foreach ($this->courses as $course) {
-            foreach ($course as $code => $title) {
-                Course::query()->create([
-                    'active' => true,
-                    'code' => $code,
-                    'title' => $title,
-                ]);
-            }
+
+        /** @var \Illuminate\Support\Collection<int, \Illuminate\Support\Collection<string, string>> $content */
+        $content = (new CSVFile('seeders/courses.csv'))->read();
+
+        $courses = $content->sortBy('code');
+
+        foreach ($courses as $course) {
+            Course::query()->create([
+                'active' => true,
+                'code' => $course['code'],
+                'online_id' => $course['online_id'],
+                'title' => $course['title'],
+            ]);
         }
     }
 }
