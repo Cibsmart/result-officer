@@ -16,6 +16,8 @@ final class Session extends Model
 
     public static function getUsingName(string $sessionName): self
     {
+        $sessionName = Str::replace('/', '-', $sessionName);
+
         return self::query()->where('name', $sessionName)->firstOrFail();
     }
 
