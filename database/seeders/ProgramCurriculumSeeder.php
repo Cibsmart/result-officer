@@ -38,22 +38,22 @@ final class ProgramCurriculumSeeder extends Seeder
             ['course_code', 'asc'],
         ])->groupBy('program');
 
-        foreach ($programCurriculumCourses as $programName => $programCourses) {
+        foreach ($programCurriculumCourses as $programCode => $programCourses) {
             foreach ($programCourses->groupBy('curriculum') as $curriculumName => $curriculumCourses) {
-                $this->createProgramCurriculum($programName, $curriculumName, $curriculumCourses);
+                $this->createProgramCurriculum($programCode, $curriculumName, $curriculumCourses);
             }
         }
     }
 
     /** @param \Illuminate\Support\Collection<int, \Illuminate\Support\Collection<string, string>> $curriculumCourses */
     private function createProgramCurriculum(
-        string $programName,
+        string $programCode,
         string $curriculumName,
         Collection $curriculumCourses,
     ): void {
         foreach ($curriculumCourses->groupBy('entry_session') as $entrySessionName => $sessionCourses) {
             foreach ($sessionCourses->groupBy('entry_mode') as $entryMode => $entryModeCourses) {
-                $program = Program::getUsingName($programName);
+                $program = Program::getUsingCode($programCode);
                 $curriculum = Curriculum::getUsingCode($curriculumName);
                 $entrySession = Session::getUsingName($entrySessionName);
 
