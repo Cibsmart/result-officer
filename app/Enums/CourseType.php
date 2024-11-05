@@ -10,4 +10,5 @@ enum CourseType: string
     case ELECTIVE = 'E';
     case GENERAL = 'G';
     case ANCILLARY = 'A';
+    case REQUIRED = 'R';
 }
