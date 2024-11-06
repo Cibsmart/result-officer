@@ -10,9 +10,12 @@ use App\Values\RegistrationNumber;
 use App\Values\TotalScore;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class Result extends Model
 {
+    use SoftDeletes;
+
     /** @var array<int, string> */
     protected $fillable = [
         'semester_enrollment_id',

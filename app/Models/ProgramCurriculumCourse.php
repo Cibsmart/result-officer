@@ -8,9 +8,12 @@ use App\Enums\CourseType;
 use App\Enums\CreditUnit;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class ProgramCurriculumCourse extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'program_curriculum_id',
         'course_id',

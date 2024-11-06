@@ -36,6 +36,7 @@ return new class extends Migration
             $table->string('online_id')->nullable();
             $table->string('source')->default(RecordSource::LEGACY->value);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

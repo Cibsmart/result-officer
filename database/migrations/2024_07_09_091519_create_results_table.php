@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('source')->default(RecordSource::LEGACY->value);
             $table->foreignIdFor(Lecturer::class)->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->unique(['registration_id']);
         });

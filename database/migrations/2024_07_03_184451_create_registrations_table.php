@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('online_id')->nullable();
             $table->string('source')->default(RecordSource::LEGACY->value);
             $table->timestamps();
+            $table->softDeletes();
 
             $table->unique(['semester_enrollment_id', 'course_id'], 'semester_enrollment_course_id');
         });

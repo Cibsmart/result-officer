@@ -15,9 +15,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class Student extends Model
 {
+    use SoftDeletes;
+
     /** @var array<int, string> */
     protected $fillable = [
         'registration_number',

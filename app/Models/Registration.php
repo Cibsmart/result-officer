@@ -11,9 +11,12 @@ use App\Values\DateValue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class Registration extends Model
 {
+    use SoftDeletes;
+
     /** @var array<int, string> */
     protected $fillable = [
         'semester_enrollment_id',
