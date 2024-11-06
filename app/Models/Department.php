@@ -17,13 +17,15 @@ final class Department extends Model
 
     protected $fillable = ['faculty_id', 'code', 'name', 'online_id'];
 
-    public static function createFromRawDepartment(RawDepartment $rawDepartment): void
+    public static function createFromRawDepartment(RawDepartment $rawDepartment): self
     {
         $faculty = Faculty::getOrCreate($rawDepartment->faculty);
 
         $department = self::getOrCreate($rawDepartment, $faculty);
 
         Program::createForDepartment($department, $rawDepartment);
+
+        return $department;
     }
 
     public static function getUsingOnlineId(string $departmentOnlineId): self
