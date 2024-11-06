@@ -54,6 +54,13 @@ final class RawResult extends Model
         return $this->belongsTo(ImportEvent::class);
     }
 
+    public function updateStatusAndResult(RawDataStatus $status, Result $result): void
+    {
+        $this->status = $status;
+        $this->result_id = $result->id;
+        $this->save();
+    }
+
     /** @return array{status: 'App\Enums\RawDataStatus'} */
     protected function casts(): array
     {
