@@ -44,7 +44,7 @@ final class Student extends Model
     ];
 
     /** @throws \Exception */
-    public static function createFromRawStudent(RawStudent $rawStudent): void
+    public static function createFromRawStudent(RawStudent $rawStudent): self
     {
         $registrationNumber = RegistrationNumber::new($rawStudent->registration_number);
         $department = Department::getUsingOnlineId($rawStudent->department_id);
@@ -70,6 +70,8 @@ final class Student extends Model
         $student->status = StudentStatus::NEW;
 
         $student->save();
+
+        return $student;
     }
 
     public static function getUsingRegistrationNumber(string $registrationNumber): self

@@ -23,8 +23,8 @@ final class ProcessPortalStudent
             return;
         }
 
-        Student::createFromRawStudent($rawStudent);
+        $student = Student::createFromRawStudent($rawStudent);
 
-        $rawStudent->updateStatus(RawDataStatus::PROCESSED);
+        $rawStudent->updateStatusAndStudent(RawDataStatus::PROCESSED, $student);
     }
 }
