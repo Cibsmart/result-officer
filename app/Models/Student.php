@@ -133,8 +133,8 @@ final class Student extends Model
     }
 
     /**
-     * @return array{date_of_birth: 'date', entry_mode: 'App\Enums\EntryMode', gender: 'App\Enums\Gender',
-     *     source: 'App\Enums\RecordSource', status: 'App\Enums\StudentStatus'}
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return array{date_of_birth: 'date', entry_mode: 'App\Enums\EntryMode', gender: 'App\Enums\Gender', source: 'App\Enums\RecordSource', status: 'App\Enums\StudentStatus'}
      */
     protected function casts(): array
     {
