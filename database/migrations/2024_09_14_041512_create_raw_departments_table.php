@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Department;
 use App\Models\ImportEvent;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->json('options');
             $table->string('status');
             $table->text('message')->nullable();
+            $table->foreignIdFor(Department::class);
             $table->timestamps();
         });
     }

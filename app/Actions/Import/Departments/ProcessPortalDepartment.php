@@ -23,8 +23,8 @@ final class ProcessPortalDepartment
             return;
         }
 
-        Department::createFromRawDepartment($rawDepartment);
+        $department = Department::createFromRawDepartment($rawDepartment);
 
-        $rawDepartment->updateStatus(RawDataStatus::PROCESSED);
+        $rawDepartment->updateStatusAndDepartment(RawDataStatus::PROCESSED, $department);
     }
 }

@@ -35,6 +35,13 @@ final class RawDepartment extends Model
         $this->save();
     }
 
+    public function updateStatusAndDepartment(RawDataStatus $status, Department $department): void
+    {
+        $this->status = $status;
+        $this->department_id = $department->id;
+        $this->save();
+    }
+
     /** @return array{options: 'array', status: 'App\Enums\RawDataStatus'} */
     protected function casts(): array
     {
