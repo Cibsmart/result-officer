@@ -23,8 +23,8 @@ final class ProcessPortalCourse
             return;
         }
 
-        Course::createFromRawCourse($rawCourse);
+        $course = Course::createFromRawCourse($rawCourse);
 
-        $rawCourse->updateStatus(RawDataStatus::PROCESSED);
+        $rawCourse->updateStatusAndCourse(RawDataStatus::PROCESSED, $course);
     }
 }
