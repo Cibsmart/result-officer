@@ -23,6 +23,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('credit_unit');
             $table->string('course_type');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->unique(['program_curriculum_semester_id', 'course_id'], 'program_curriculum_courses_unique');
         });
