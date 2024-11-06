@@ -41,6 +41,13 @@ final class RawRegistration extends Model
         $this->save();
     }
 
+    public function updateStatusAndRegistration(RawDataStatus $status, Registration $registration): void
+    {
+        $this->status = $status;
+        $this->registration_id = $registration->id;
+        $this->save();
+    }
+
     /** @return array{status: 'App\Enums\RawDataStatus'} */
     protected function casts(): array
     {

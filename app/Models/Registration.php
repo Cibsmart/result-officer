@@ -29,7 +29,7 @@ final class Registration extends Model
         RawRegistration $rawRegistration,
         SemesterEnrollment $semesterEnrollment,
         Course $course,
-    ): void {
+    ): self {
         $registrationDate = DateValue::fromString($rawRegistration->registration_date);
         $registration = new self();
 
@@ -42,6 +42,8 @@ final class Registration extends Model
         $registration->source = RecordSource::PORTAL;
 
         $registration->save();
+
+        return $registration;
     }
 
     public static function getUsingOnlineId(string $onlineId): self

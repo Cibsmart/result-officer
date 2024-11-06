@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\ImportEvent;
+use App\Models\Registration;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -28,6 +29,7 @@ return new class extends Migration
             $table->string('registration_date')->nullable();
             $table->string('status');
             $table->text('message')->nullable();
+            $table->foreignIdFor(Registration::class);
             $table->timestamps();
         });
     }
