@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Course;
 use App\Models\ImportEvent;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -19,6 +20,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('status');
             $table->text('message')->nullable();
+            $table->foreignIdFor(Course::class);
             $table->timestamps();
         });
     }

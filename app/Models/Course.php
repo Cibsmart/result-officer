@@ -11,7 +11,7 @@ final class Course extends Model
 {
     protected $fillable = ['code', 'title', 'online_id', 'active'];
 
-    public static function createFromRawCourse(RawCourse $rawCourse): void
+    public static function createFromRawCourse(RawCourse $rawCourse): self
     {
         $course = new self();
 
@@ -20,6 +20,8 @@ final class Course extends Model
         $course->online_id = $rawCourse->online_id;
 
         $course->save();
+
+        return $course;
     }
 
     public static function getUsingOnlineId(string $onlineId): self

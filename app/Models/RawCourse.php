@@ -33,6 +33,13 @@ final class RawCourse extends Model
         $this->save();
     }
 
+    public function updateStatusAndCourse(RawDataStatus $status, Course $course): void
+    {
+        $this->status = $status;
+        $this->course_id = $course->id;
+        $this->save();
+    }
+
     /** @return array{status: 'App\Enums\RawDataStatus'} */
     protected function casts(): array
     {
