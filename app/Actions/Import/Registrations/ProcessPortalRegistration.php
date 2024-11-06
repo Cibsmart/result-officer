@@ -40,8 +40,8 @@ final class ProcessPortalRegistration
             return;
         }
 
-        Registration::createFromRawRegistration($rawRegistration, $semesterEnrollment, $course);
+        $registration = Registration::createFromRawRegistration($rawRegistration, $semesterEnrollment, $course);
 
-        $rawRegistration->updateStatus(RawDataStatus::PROCESSED);
+        $rawRegistration->updateStatusAndRegistration(RawDataStatus::PROCESSED, $registration);
     }
 }
