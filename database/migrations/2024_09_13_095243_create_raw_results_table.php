@@ -34,7 +34,7 @@ return new class extends Migration
             $table->string('lecturer_department')->nullable();
             $table->string('status');
             $table->text('message')->nullable();
-            $table->foreignIdFor(Result::class);
+            $table->foreignIdFor(Result::class)->nullable();
             $table->timestamps();
         });
     }

@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('registration_date')->nullable();
             $table->string('status');
             $table->text('message')->nullable();
-            $table->foreignIdFor(Registration::class);
+            $table->foreignIdFor(Registration::class)->nullable();
             $table->timestamps();
         });
     }
