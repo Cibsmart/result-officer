@@ -11,7 +11,7 @@ final readonly class SessionValue
 {
     public function __construct(public string $value)
     {
-        if (! preg_match('/^\d{4}-\d{4}$/i', Str::trim($this->value))) {
+        if (! preg_match('/^\d{4}\/\d{4}$/i', Str::trim($this->value))) {
             throw new InvalidArgumentException('Invalid session');
         }
     }
@@ -23,11 +23,11 @@ final readonly class SessionValue
 
     public function firstYear(): int
     {
-        return (int) Str::of($this->value)->explode('-')->first();
+        return (int) Str::of($this->value)->explode('/')->first();
     }
 
     public function lastYear(): int
     {
-        return (int) Str::of($this->value)->explode('-')->last();
+        return (int) Str::of($this->value)->explode('/')->last();
     }
 }

@@ -125,7 +125,7 @@ test('the process method iterates over a collection of raw students and calls th
     $department = DepartmentFactory::new()->createOne(['online_id' => 1]);
     ProgramFactory::new()->createOne(['department_id' => $department->id, 'name' => $department->name]);
     LevelFactory::new()->createOne(['name' => 100]);
-    SessionFactory::new()->createOne(['name' => '2009-2010']);
+    SessionFactory::new()->createOne(['name' => '2009/2010']);
     LocalGovernmentFactory::new()->createOne(['name' => 'ABAKALIKI']);
     $data = RawStudentFactory::new()->createOne(['import_event_id' => $event->id, 'department_id' => 1]);
 

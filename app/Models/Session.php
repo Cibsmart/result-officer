@@ -16,7 +16,7 @@ final class Session extends Model
 
     public static function getUsingName(string $sessionName): self
     {
-        $sessionName = Str::replace('/', '-', $sessionName);
+        $sessionName = Str::replace('-', '/', $sessionName);
 
         return self::query()->where('name', $sessionName)->firstOrFail();
     }
@@ -26,7 +26,7 @@ final class Session extends Model
         $next = $year + 1;
 
         return Str::of((string) $year)
-            ->append('-')
+            ->append('/')
             ->append((string) $next)
             ->value();
     }

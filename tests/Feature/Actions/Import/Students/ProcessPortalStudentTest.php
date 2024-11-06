@@ -21,7 +21,7 @@ it('can process raw student and save into the students table', function (): void
     $department = DepartmentFactory::new()->createOne(['online_id' => 1]);
     ProgramFactory::new()->createOne(['department_id' => $department->id, 'name' => $department->name]);
     LevelFactory::new()->createOne(['name' => 100]);
-    SessionFactory::new()->createOne(['name' => '2009-2010']);
+    SessionFactory::new()->createOne(['name' => '2009/2010']);
     LocalGovernmentFactory::new()->createOne(['name' => 'ABAKALIKI']);
 
     $rawStudent = RawStudentFactory::new()->createOne(['department_id' => (string) $department->id]);

@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Enums\EntryMode;
 use App\Enums\Gender;
 use App\Models\Program;
+use App\Models\Session;
 use App\Models\Student;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -18,7 +19,7 @@ final class StudentSeeder extends Seeder
             'date_of_birth' => '2004-9-10',
             'entry_level_id' => 1,
             'entry_mode' => EntryMode::UTME,
-            'entry_session_id' => 1,
+            'entry_session' => '2009/2010',
             'first_name' => 'STUDENT',
             'gender' => Gender::MALE,
             'last_name' => 'FIRST',
@@ -30,7 +31,7 @@ final class StudentSeeder extends Seeder
             'date_of_birth' => '1988-7-27',
             'entry_level_id' => 1,
             'entry_mode' => EntryMode::UTME,
-            'entry_session_id' => 1,
+            'entry_session' => '2009/2010',
             'first_name' => 'BARNABAS',
             'gender' => Gender::MALE,
             'last_name' => 'IFEBUDE',
@@ -42,7 +43,7 @@ final class StudentSeeder extends Seeder
             'date_of_birth' => '1987-8-19',
             'entry_level_id' => 1,
             'entry_mode' => EntryMode::UTME,
-            'entry_session_id' => 1,
+            'entry_session' => '2009/2010',
             'first_name' => 'RUTH',
             'gender' => Gender::FEMALE,
             'last_name' => 'NWEKE',
@@ -54,7 +55,7 @@ final class StudentSeeder extends Seeder
             'date_of_birth' => '1990-8-19',
             'entry_level_id' => 1,
             'entry_mode' => EntryMode::UTME,
-            'entry_session_id' => 1,
+            'entry_session' => '2009/2010',
             'first_name' => 'STUDENT',
             'gender' => Gender::FEMALE,
             'last_name' => 'EMPTY',
@@ -69,11 +70,12 @@ final class StudentSeeder extends Seeder
         $program = Program::query()->where('name', 'COMPUTER SCIENCE')->first();
 
         foreach ($this->students as $student) {
+            $session = Session::getUsingName($student['entry_session']);
             Student::query()->create([
                 'date_of_birth' => Carbon::make($student['date_of_birth']),
                 'entry_level_id' => $student['entry_level_id'],
                 'entry_mode' => $student['entry_mode'],
-                'entry_session_id' => $student['entry_session_id'],
+                'entry_session_id' => $session->id,
                 'first_name' => $student['first_name'],
                 'gender' => $student['gender'],
                 'last_name' => $student['last_name'],
