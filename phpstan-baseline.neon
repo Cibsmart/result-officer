@@ -6,6 +6,21 @@ parameters:
 			path: app/Actions/Vetting/ValidateResults.php
 
 		-
+			message: "#^Cannot access property \\$value on int\\.$#"
+			count: 1
+			path: app/Data/Composite/CompositeSheetData.php
+
+		-
+			message: "#^Method App\\\\Data\\\\Composite\\\\CompositeSheetData\\:\\:getCourses\\(\\) should return Illuminate\\\\Support\\\\Collection\\<int, array\\{code\\: string, unit\\: int\\}\\> but returns Illuminate\\\\Support\\\\Collection\\<int, array\\{code\\: string, unit\\: mixed\\}\\>\\.$#"
+			count: 1
+			path: app/Data/Composite/CompositeSheetData.php
+
+		-
+			message: "#^Return type of call to method Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int,App\\\\Models\\\\ProgramCurriculumCourse\\>\\:\\:map\\(\\) contains unresolvable type\\.$#"
+			count: 1
+			path: app/Data/Composite/CompositeSheetData.php
+
+		-
 			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Department\\>\\:\\:tap\\(\\) expects callable\\(Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Department\\>\\)\\: mixed, App\\\\Scopes\\\\ActiveScope given\\.$#"
 			count: 1
 			path: app/Data/Department/DepartmentListData.php
@@ -21,12 +36,77 @@ parameters:
 			path: app/Data/Program/ProgramListData.php
 
 		-
+			message: "#^Cannot call method format\\(\\) on string\\.$#"
+			count: 1
+			path: app/Data/Students/StudentData.php
+
+		-
+			message: "#^Parameter \\$gender of class App\\\\Data\\\\Students\\\\StudentData constructor expects App\\\\Enums\\\\Gender, string given\\.$#"
+			count: 1
+			path: app/Data/Students/StudentData.php
+
+		-
 			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(array\\<string, array\\<string, string\\>\\|string\\>\\|string\\)\\: mixed\\)\\|null, 'array_change_key…' given\\.$#"
 			count: 1
 			path: app/Http/Clients/ApiClient.php
 
 		-
+			message: "#^Property App\\\\Models\\\\Registration\\:\\:\\$course_status \\(string\\) does not accept App\\\\Enums\\\\CourseStatus\\:\\:FRESH\\.$#"
+			count: 1
+			path: app/Models/Registration.php
+
+		-
+			message: "#^Property App\\\\Models\\\\Registration\\:\\:\\$registration_date \\(string\\|null\\) does not accept Carbon\\\\Carbon\\|null\\.$#"
+			count: 1
+			path: app/Models/Registration.php
+
+		-
+			message: "#^Property App\\\\Models\\\\Registration\\:\\:\\$source \\(string\\) does not accept App\\\\Enums\\\\RecordSource\\:\\:PORTAL\\.$#"
+			count: 1
+			path: app/Models/Registration.php
+
+		-
+			message: "#^Property App\\\\Models\\\\Result\\:\\:\\$scores \\(string\\) does not accept array\\<string, string\\>\\.$#"
+			count: 1
+			path: app/Models/Result.php
+
+		-
+			message: "#^Property App\\\\Models\\\\Result\\:\\:\\$source \\(string\\) does not accept App\\\\Enums\\\\RecordSource\\:\\:PORTAL\\.$#"
+			count: 1
+			path: app/Models/Result.php
+
+		-
+			message: "#^Property App\\\\Models\\\\Result\\:\\:\\$upload_date \\(string\\|null\\) does not accept Carbon\\\\Carbon\\|null\\.$#"
+			count: 1
+			path: app/Models/Result.php
+
+		-
 			message: "#^Method App\\\\Models\\\\Student\\:\\:courses\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<Illuminate\\\\Database\\\\Eloquent\\\\Model, Illuminate\\\\Database\\\\Eloquent\\\\Model, App\\\\Models\\\\Student\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<Illuminate\\\\Database\\\\Eloquent\\\\Model, Illuminate\\\\Database\\\\Eloquent\\\\Model, App\\\\Models\\\\Student\\>\\|Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasOneThrough\\<Illuminate\\\\Database\\\\Eloquent\\\\Model, Illuminate\\\\Database\\\\Eloquent\\\\Model, App\\\\Models\\\\Student\\>\\.$#"
+			count: 1
+			path: app/Models/Student.php
+
+		-
+			message: "#^Property App\\\\Models\\\\Student\\:\\:\\$date_of_birth \\(string\\|null\\) does not accept Carbon\\\\Carbon\\|null\\.$#"
+			count: 1
+			path: app/Models/Student.php
+
+		-
+			message: "#^Property App\\\\Models\\\\Student\\:\\:\\$entry_mode \\(string\\) does not accept App\\\\Enums\\\\EntryMode\\.$#"
+			count: 1
+			path: app/Models/Student.php
+
+		-
+			message: "#^Property App\\\\Models\\\\Student\\:\\:\\$gender \\(string\\) does not accept App\\\\Enums\\\\Gender\\.$#"
+			count: 1
+			path: app/Models/Student.php
+
+		-
+			message: "#^Property App\\\\Models\\\\Student\\:\\:\\$source \\(string\\) does not accept App\\\\Enums\\\\RecordSource\\:\\:PORTAL\\.$#"
+			count: 1
+			path: app/Models/Student.php
+
+		-
+			message: "#^Property App\\\\Models\\\\Student\\:\\:\\$status \\(string\\) does not accept App\\\\Enums\\\\StudentStatus\\:\\:NEW\\.$#"
 			count: 1
 			path: app/Models/Student.php
 

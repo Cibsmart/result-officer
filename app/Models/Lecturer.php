@@ -1,16 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Lecturer extends Model
+use function PHPUnit\Framework\assertNotNull;
+
+final class Lecturer extends Model
 {
     public static function createFromRawResult(RawResult $rawResult): self
     {
         $lecturer = new self();
 
-        $lecturer->name = $rawResult->lecturer_name;
+        $lecturerNmae = $rawResult->lecturer_name;
+        assertNotNull($lecturerNmae);
+
+        $lecturer->name = $lecturerNmae;
         $lecturer->phone = $rawResult->lecturer_phone;
         $lecturer->email = $rawResult->lecturer_email;
         $lecturer->department = $rawResult->lecturer_department;

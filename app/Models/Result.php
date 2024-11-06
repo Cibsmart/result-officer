@@ -37,7 +37,11 @@ final class Result extends Model
         $grade = $totalScore->grade($registrationNumber->allowEGrade());
         $gradePoint = $grade->point() * $registration->credit_unit;
 
-        $lecturer = Lecturer::getOrCreateFromRawResult($rawResult);
+        $lecturer = null;
+
+        if (! is_null($rawResult->lecturer_name)) {
+            $lecturer = Lecturer::getOrCreateFromRawResult($rawResult)->id;
+        }
 
         $scores = [
             'exam' => $rawResult->exam,
@@ -54,7 +58,7 @@ final class Result extends Model
         $result->data = $result->getData();
         $result->remarks = null;
         $result->source = RecordSource::PORTAL;
-        $result->lecturer_id = $lecturer->id;
+        $result->lecturer_id = $lecturer;
 
         $result->save();
 
