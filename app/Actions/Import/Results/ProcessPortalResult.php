@@ -26,8 +26,8 @@ final class ProcessPortalResult
             return;
         }
 
-        Result::createFromRawResult($rawResult, $registration);
+        $result = Result::createFromRawResult($rawResult, $registration);
 
-        $rawResult->updateStatus(RawDataStatus::PROCESSED);
+        $rawResult->updateStatusAndResult(RawDataStatus::PROCESSED, $result);
     }
 }

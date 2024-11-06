@@ -30,7 +30,7 @@ final class Result extends Model
     /** @var array<int, string> */
     protected $hidden = ['data'];
 
-    public static function createFromRawResult(RawResult $rawResult, Registration $registration): void
+    public static function createFromRawResult(RawResult $rawResult, Registration $registration): self
     {
         $registrationNumber = RegistrationNumber::new($rawResult->registration_number);
         $totalScore = TotalScore::new((int) $rawResult->in_course + (int) $rawResult->exam);
@@ -57,6 +57,8 @@ final class Result extends Model
         $result->lecturer_id = $lecturer->id;
 
         $result->save();
+
+        return $result;
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Registration, \App\Models\Result> */
