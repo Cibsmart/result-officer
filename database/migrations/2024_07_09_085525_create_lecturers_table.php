@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('lecturers', function (Blueprint $table): void {
             $table->id();
-            $table->string('lecturer_name');
-            $table->string('lecturer_phone')->nullable();
-            $table->string('lecturer_email')->nullable();
-            $table->string('lecturer_department')->nullable();
+            $table->string('name');
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
+            $table->string('department')->nullable();
             $table->timestamps();
         });
     }

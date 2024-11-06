@@ -37,11 +37,11 @@ final class Result extends Model
         $grade = $totalScore->grade($registrationNumber->allowEGrade());
         $gradePoint = $grade->point() * $registration->credit_unit;
 
+        $lecturer = Lecturer::getOrCreateFromRawResult($rawResult);
+
         $scores = [
             'exam' => $rawResult->exam,
-            'grade' => $rawResult->grade,
             'in-course' => $rawResult->in_course,
-            'total' => $rawResult->total,
         ];
 
         $result = new self();
@@ -54,11 +54,7 @@ final class Result extends Model
         $result->data = $result->getData();
         $result->remarks = null;
         $result->source = RecordSource::PORTAL;
-
-        $result->lecturer_name = $rawResult->lecturer_name;
-        $result->lecturer_phone = $rawResult->lecturer_phone;
-        $result->lecturer_email = $rawResult->lecturer_email;
-        $result->lecturer_department = $rawResult->lecturer_department;
+        $result->lecturer_id = $lecturer->id;
 
         $result->save();
     }
@@ -74,12 +70,12 @@ final class Result extends Model
         return "{$this->registration_id}-{$this->total_score}-{$this->grade}-{$this->grade_point}";
     }
 
-    /** @return array{data: 'hashed', scores: 'array', source: 'App\Enums\RecordSource', upload_date: 'date'} */
+    /** @return array{data: 'hashed', scores: 'json', source: 'App\Enums\RecordSource', upload_date: 'date'} */
     protected function casts(): array
     {
         return [
             'data' => 'hashed',
-            'scores' => 'array',
+            'scores' => 'json',
             'source' => RecordSource::class,
             'upload_date' => 'date',
         ];

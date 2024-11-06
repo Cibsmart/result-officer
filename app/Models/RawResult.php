@@ -8,6 +8,7 @@ use App\Data\Download\PortalResultData;
 use App\Enums\RawDataStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 final class RawResult extends Model
 {
@@ -26,10 +27,10 @@ final class RawResult extends Model
         $rawResult->remark = '';
         $rawResult->upload_date = $data->uploadDate;
         $rawResult->exam_date = $data->examDate;
-        $rawResult->lecturer_name = $data->lecturerName;
-        $rawResult->lecturer_phone = $data->lecturerPhoneNumber;
-        $rawResult->lecturer_email = $data->lecturerEmail;
-        $rawResult->lecturer_department = $data->lecturerDepartment;
+        $rawResult->lecturer_name = Str::trim($data->lecturerName);
+        $rawResult->lecturer_phone = Str::trim($data->lecturerPhoneNumber);
+        $rawResult->lecturer_email = Str::trim($data->lecturerEmail);
+        $rawResult->lecturer_department = Str::trim($data->lecturerDepartment);
         $rawResult->status = RawDataStatus::PENDING;
 
         $rawResult->save();
