@@ -49,6 +49,13 @@ final class RawStudent extends Model
         $this->save();
     }
 
+    public function updateStatusAndStudent(RawDataStatus $status, Student $student): void
+    {
+        $this->status = $status;
+        $this->student_id = $student->id;
+        $this->save();
+    }
+
     /** @return array{status: 'App\Enums\RawDataStatus'} */
     protected function casts(): array
     {
