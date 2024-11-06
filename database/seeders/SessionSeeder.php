@@ -11,10 +11,10 @@ final class SessionSeeder extends Seeder
 {
     public function run(): void
     {
-        for ($year = 1998; $year <= 2025; $year ++) {
+        for ($year = 1994; $year <= 2025; $year ++) {
             $next = $year + 1;
             Session::query()->create([
-                'name' => "$year-$next",
+                'name' => "$year/$next",
             ]);
         }
     }
