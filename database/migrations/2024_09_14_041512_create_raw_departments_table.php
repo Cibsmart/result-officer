@@ -22,7 +22,7 @@ return new class extends Migration
             $table->json('options');
             $table->string('status');
             $table->text('message')->nullable();
-            $table->foreignIdFor(Department::class);
+            $table->foreignIdFor(Department::class)->nullable();
             $table->timestamps();
         });
     }

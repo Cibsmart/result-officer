@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('status');
             $table->text('message')->nullable();
-            $table->foreignIdFor(Course::class);
+            $table->foreignIdFor(Course::class)->nullable();
             $table->timestamps();
         });
     }

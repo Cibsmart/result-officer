@@ -34,7 +34,7 @@ return new class extends Migration
             $table->string('jamb_registration_number');
             $table->string('status');
             $table->text('message')->nullable();
-            $table->foreignIdFor(Student::class);
+            $table->foreignIdFor(Student::class)->nullable();
             $table->timestamps();
         });
     }
