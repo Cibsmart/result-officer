@@ -16,13 +16,13 @@ return new class extends Migration
     {
         Schema::create('vetting_steps', function (Blueprint $table): void {
             $table->id();
-            $table->foreignIdFor(VettingEvent::class);
-            $table->string('vetting_type');
+            $table->foreignIdFor(VettingEvent::class)->constrained();
+            $table->string('type');
             $table->string('status');
             $table->text('remarks')->nullable();
             $table->timestamps();
 
-            $table->unique(['vetting_event_id', 'vetting_type']);
+            $table->unique(['vetting_event_id', 'type']);
         });
     }
 
