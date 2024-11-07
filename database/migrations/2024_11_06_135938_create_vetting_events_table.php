@@ -17,8 +17,8 @@ return new class extends Migration
     {
         Schema::create('vetting_events', function (Blueprint $table): void {
             $table->id();
-            $table->foreignIdFor(Student::class);
-            $table->foreignIdFor(ProgramCurriculum::class);
+            $table->foreignIdFor(Student::class)->constrained();
+            $table->foreignIdFor(ProgramCurriculum::class)->nullable()->constrained();
             $table->string('status');
             $table->text('message')->nullable();
             $table->timestamps();
