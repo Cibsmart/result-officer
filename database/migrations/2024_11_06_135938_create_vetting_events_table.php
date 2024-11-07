@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('status');
             $table->text('message')->nullable();
             $table->timestamps();
+
+            $table->unique(['student_id']);
         });
     }
 
