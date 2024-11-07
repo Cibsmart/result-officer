@@ -23,6 +23,16 @@ enum CreditUnit: int
     case EIGHTEEN = 18;
     case TWENTYFOUR = 24;
 
+    public static function minSemesterUnit(): self
+    {
+        return self::FIFTY;
+    }
+
+    public static function maxSemesterUnit(): self
+    {
+        return self::TWENTYFOUR;
+    }
+
     public function getLabel(): ?string
     {
         return $this->name;
