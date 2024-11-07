@@ -328,6 +328,7 @@ declare namespace App.Enums {
     | "deceased"
     | "transferred"
     | "graduated";
+  export type VettingReportStatus = "running" | "failed" | "passed";
   export type Year = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 }
 declare namespace App.ViewModels.Downloads {
