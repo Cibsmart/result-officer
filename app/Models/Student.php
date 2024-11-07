@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -81,9 +82,15 @@ final class Student extends Model
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\Student> */
-    public function vettingReport(): MorphMany
+    public function vettable(): MorphMany
     {
         return $this->MorphMany(VettingReport::class, 'vettable');
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\VettingEvent, \App\Models\Student> */
+    public function vettingEvent(): HasOne
+    {
+        return $this->hasOne(VettingEvent::class);
     }
 
     /**

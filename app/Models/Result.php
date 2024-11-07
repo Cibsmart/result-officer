@@ -10,6 +10,7 @@ use App\Values\RegistrationNumber;
 use App\Values\TotalScore;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class Result extends Model
@@ -63,6 +64,12 @@ final class Result extends Model
         $result->save();
 
         return $result;
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\Result> */
+    public function vettable(): MorphMany
+    {
+        return $this->MorphMany(VettingReport::class, 'vettable');
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Registration, \App\Models\Result> */
