@@ -328,7 +328,17 @@ declare namespace App.Enums {
     | "deceased"
     | "transferred"
     | "graduated";
-  export type VettingReportStatus = "running" | "failed" | "passed";
+  export type VettingEventStatus = "new" | "processing" | "cancelled" | "failed" | "completed";
+  export type VettingStatus = "running" | "failed" | "passed";
+  export type VettingStep =
+    | "validate_result"
+    | "minimum_credit"
+    | "maximum_credit"
+    | "match_credit"
+    | "first_year_courses"
+    | "curriculum_courses"
+    | "taken_courses"
+    | "other_courses";
   export type Year = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 }
 declare namespace App.ViewModels.Downloads {
