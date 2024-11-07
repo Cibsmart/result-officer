@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('vetting_reports', function (Blueprint $table): void {
             $table->id();
-            $table->foreignIdFor(VettingStep::class);
+            $table->foreignIdFor(VettingStep::class)->constrained();
             $table->unsignedBigInteger('vettable_id');
             $table->string('vettable_type');
             $table->string('status');
             $table->text('remarks')->nullable();
             $table->timestamps();
+
+            $table->unique(['vetting_step_id', 'vettable_type', 'vettable_id'], 'vetting_reports_unique');
         });
     }
 
