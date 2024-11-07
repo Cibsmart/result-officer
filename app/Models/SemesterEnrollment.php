@@ -23,7 +23,7 @@ final class SemesterEnrollment extends Model
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\SessionEnrollment, \App\Models\SemesterEnrollment>
      */
-    public function enrollment(): BelongsTo
+    public function sessionEnrollment(): BelongsTo
     {
         return $this->belongsTo(SessionEnrollment::class);
     }
