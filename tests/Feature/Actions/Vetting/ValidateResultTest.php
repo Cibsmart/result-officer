@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-use App\Actions\Vetting\ValidateResults;
+use App\Actions\Vetting\ValidateResultsAction;
 
 it('validates the integrity of the students results', function (): void {
     $student = createStudentWithResults();
 
-    $validation = new ValidateResults();
+    $validation = new ValidateResultsAction();
 
     $validation->execute($student);
 
@@ -29,7 +29,7 @@ it('reports students results with tampered score', function (): void {
     $result->total_score = 101;
     $result->save();
 
-    $validation = new ValidateResults();
+    $validation = new ValidateResultsAction();
 
     $validation->execute($student);
 
@@ -51,7 +51,7 @@ it('reports students results with tampered grade', function (): void {
     $result->grade = 'Z';
     $result->save();
 
-    $validation = new ValidateResults();
+    $validation = new ValidateResultsAction();
 
     $validation->execute($student);
 
@@ -73,7 +73,7 @@ it('reports students results with tampered grade point', function (): void {
     $result->grade_point = 150;
     $result->save();
 
-    $validation = new ValidateResults();
+    $validation = new ValidateResultsAction();
 
     $validation->execute($student);
 
