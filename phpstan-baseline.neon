@@ -81,7 +81,7 @@ parameters:
 			path: app/Models/Result.php
 
 		-
-			message: "#^Method App\\\\Models\\\\Student\\:\\:courses\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<Illuminate\\\\Database\\\\Eloquent\\\\Model, Illuminate\\\\Database\\\\Eloquent\\\\Model, App\\\\Models\\\\Student\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<Illuminate\\\\Database\\\\Eloquent\\\\Model, Illuminate\\\\Database\\\\Eloquent\\\\Model, App\\\\Models\\\\Student\\>\\|Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasOneThrough\\<Illuminate\\\\Database\\\\Eloquent\\\\Model, Illuminate\\\\Database\\\\Eloquent\\\\Model, App\\\\Models\\\\Student\\>\\.$#"
+			message: "#^Method App\\\\Models\\\\Student\\:\\:courses\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<Illuminate\\\\Database\\\\Eloquent\\\\Model, App\\\\Models\\\\SessionEnrollment, App\\\\Models\\\\Student\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<Illuminate\\\\Database\\\\Eloquent\\\\Model, App\\\\Models\\\\SessionEnrollment, \\$this\\(App\\\\Models\\\\Student\\)\\>\\|Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasOneThrough\\<Illuminate\\\\Database\\\\Eloquent\\\\Model, App\\\\Models\\\\SessionEnrollment, \\$this\\(App\\\\Models\\\\Student\\)\\>\\.$#"
 			count: 1
 			path: app/Models/Student.php
 
@@ -109,7 +109,6 @@ parameters:
 			message: "#^Property App\\\\Models\\\\Student\\:\\:\\$status \\(string\\) does not accept App\\\\Enums\\\\StudentStatus\\:\\:NEW\\.$#"
 			count: 1
 			path: app/Models/Student.php
-
 		-
 			message: "#^Method App\\\\Services\\\\Api\\\\PortalServiceFactory\\:\\:resolve\\(\\) return type with generic interface App\\\\Contracts\\\\PortalService does not specify its types\\: T$#"
 			count: 1
