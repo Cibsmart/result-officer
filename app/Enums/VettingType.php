@@ -14,4 +14,5 @@ enum VettingType: string
     case CHECK_CURRICULUM_COURSES = 'curriculum_courses';
     case CHECK_TAKEN_COURSES = 'taken_courses';
     case CHECK_OTHER_COURSES = 'other_courses';
+    case CHECK_ELECTIVE_COURSES = 'elective_courses';
 }

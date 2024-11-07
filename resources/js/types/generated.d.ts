@@ -338,7 +338,8 @@ declare namespace App.Enums {
     | "first_year_courses"
     | "curriculum_courses"
     | "taken_courses"
-    | "other_courses";
+    | "other_courses"
+    | "elective_courses";
   export type Year = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 }
 declare namespace App.ViewModels.Downloads {
