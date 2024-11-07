@@ -30,7 +30,7 @@ it('can correctly organize study year original set to all first', function (): v
 
     $organize->execute($student);
 
-    expect($organize->report())->toBe('RE-ORGANIZED STUDY YEARS');
+    expect($organize->report())->toBe('STUDY YEARS RE-ORGANIZED');
 
     $enrollments = $student->fresh()->sessionEnrollments;
 
@@ -64,7 +64,7 @@ it('can correctly organize study year original set in descending order', functio
 
     $organize->execute($student);
 
-    expect($organize->report())->toBe('RE-ORGANIZED STUDY YEARS');
+    expect($organize->report())->toBe('STUDY YEARS RE-ORGANIZED');
 
     $enrollments = $student->fresh()->sessionEnrollments;
 

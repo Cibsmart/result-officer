@@ -28,7 +28,7 @@ final class OrganizeYear
             $currentYear = $currentYear->next();
         }
 
-        $this->report = 'RE-ORGANIZED STUDY YEARS';
+        $this->report = 'STUDY YEARS RE-ORGANIZED';
     }
 
     /** @param \Illuminate\Support\Collection<int, \App\Models\SessionEnrollment> $enrollments */
