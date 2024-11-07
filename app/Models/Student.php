@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class Student extends Model
@@ -79,13 +80,19 @@ final class Student extends Model
         return self::query()->where('registration_number', $registrationNumber)->firstOrFail();
     }
 
+    /** @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\Student> */
+    public function vettingReport(): MorphMany
+    {
+        return $this->MorphMany(VettingReport::class, 'vettable');
+    }
+
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\Illuminate\Database\Eloquent\Model, \Illuminate\Database\Eloquent\Model, \App\Models\Student>
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\Illuminate\Database\Eloquent\Model, \App\Models\SessionEnrollment, \App\Models\Student>
      */
     public function courses(): HasManyThrough
     {
-        return $this->through('sessionEnrollments')->has('courses');
+        return $this->through($this->sessionEnrollments())->has('courses');
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\LocalGovernment, \App\Models\Student> */
