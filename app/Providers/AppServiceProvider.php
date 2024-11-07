@@ -10,6 +10,12 @@ use App\Contracts\StudentClient;
 use App\Http\Clients\PortalRegistrationClient;
 use App\Http\Clients\PortalResultClient;
 use App\Http\Clients\PortalStudentClient;
+use App\Models\ProgramCurriculumCourse;
+use App\Models\Registration;
+use App\Models\Result;
+use App\Models\SemesterEnrollment;
+use App\Models\SessionEnrollment;
+use App\Models\Student;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\App;
@@ -35,12 +41,12 @@ final class AppServiceProvider extends ServiceProvider
         Model::shouldBeStrict(App::isLocal());
 
         Relation::enforceMorphMap([
-            'programCurriculumCourse' => 'App\Models\ProgramCurriculumCourse',
-            'registration' => 'App\Models\Registration',
-            'result' => 'App\Models\Result',
-            'semesterEnrollment' => 'App\Models\SemesterEnrollment',
-            'sessionEnrollment' => 'App\Models\SessionEnrollment',
-            'student' => 'App\Models\Student',
+            'programCurriculumCourse' => ProgramCurriculumCourse::class,
+            'registration' => Registration::class,
+            'result' => Result::class,
+            'semesterEnrollment' => SemesterEnrollment::class,
+            'sessionEnrollment' => SessionEnrollment::class,
+            'student' => Student::class,
         ]);
     }
 }
