@@ -8,6 +8,7 @@ use App\Enums\CourseType;
 use App\Enums\CreditUnit;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class ProgramCurriculumCourse extends Model
@@ -20,6 +21,15 @@ final class ProgramCurriculumCourse extends Model
         'credit_unit',
         'course_type',
     ];
+
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\ProgramCurriculumCourse>
+     */
+    public function vettable(): MorphMany
+    {
+        return $this->MorphMany(VettingReport::class, 'vettable');
+    }
 
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
