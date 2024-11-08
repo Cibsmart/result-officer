@@ -141,7 +141,7 @@ final class Student extends Model
         return $this->hasManyThrough(SemesterEnrollment::class, SessionEnrollment::class);
     }
 
-    public function curriculum(): ProgramCurriculum
+    public function programCurriculum(): ProgramCurriculum
     {
         return ProgramCurriculum::query()
             ->where('program_id', $this->program->id)
