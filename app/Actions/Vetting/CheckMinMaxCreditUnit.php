@@ -13,7 +13,7 @@ final class CheckMinMaxCreditUnit
 
     public function execute(SemesterEnrollment $semesterEnrollment): void
     {
-        $creditUnitSum = $semesterEnrollment->courses->sum('credit_unit');
+        $creditUnitSum = $semesterEnrollment->registrations()->sum('credit_unit');
         $semester = $semesterEnrollment->semester->name;
         $session = $semesterEnrollment->sessionEnrollment->session->name;
 

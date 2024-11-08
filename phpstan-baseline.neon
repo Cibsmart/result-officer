@@ -1,11 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Parameter \\#2 \\$session of method App\\\\Actions\\\\Vetting\\\\ValidateResults\\:\\:validate\\(\\) expects App\\\\Models\\\\Session, App\\\\Models\\\\Session\\|null given\\.$#"
-			count: 1
-			path: app/Actions/Vetting/ValidateResults.php
-
-		-
 			message: "#^Cannot access property \\$value on int\\.$#"
 			count: 1
 			path: app/Data/Composite/CompositeSheetData.php
