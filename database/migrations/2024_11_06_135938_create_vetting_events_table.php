@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignIdFor(Student::class)->constrained();
             $table->foreignIdFor(ProgramCurriculum::class)->nullable()->constrained();
             $table->string('status');
+            $table->string('vetting_status')->default('pending');
             $table->text('message')->nullable();
             $table->timestamps();
 
