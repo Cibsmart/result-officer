@@ -26,25 +26,25 @@ final class SemesterResultData extends Data
     ) {
     }
 
-    public static function fromModel(SemesterEnrollment $enrollment): self
+    public static function fromModel(SemesterEnrollment $semesterEnrollment): self
     {
 
-        $courses = ResultData::collect(
-            $enrollment->courses()
+        $resultData = ResultData::collect(
+            $semesterEnrollment->registrations()
                 ->with(['course', 'result'])
                 ->orderBy('course_id')
                 ->get(),
         );
 
-        $totalCreditUnit = (int) $courses->sum('creditUnit');
-        $totalGradePoint = (int) $courses->sum('gradePoint');
+        $totalCreditUnit = (int) $resultData->sum('creditUnit');
+        $totalGradePoint = (int) $resultData->sum('gradePoint');
 
         $gpa = ComputeAverage::new($totalGradePoint, $totalCreditUnit)->value();
 
         return new self(
-            id: $enrollment->id,
-            results: $courses,
-            semester: $enrollment->semester->name,
+            id: $semesterEnrollment->id,
+            results: $resultData,
+            semester: $semesterEnrollment->semester->name,
             creditUnitTotal: $totalCreditUnit,
             gradePointTotal: $totalGradePoint,
             gradePointAverage: $gpa,

@@ -22,14 +22,14 @@ final class ValidateResultsAction
 
     public function execute(Student $student): void
     {
-        $sessionEnrollments = $student->sessionEnrollments()->with('semesters');
+        $sessionEnrollments = $student->sessionEnrollments()->with(['session', 'semesterEnrollments.semester'])->get();
 
         $vettingStep = $student->vettingEvent->vettingSteps()
             ->where('type', VettingType::VALIDATE_RESULTS)
             ->firstOrFail();
 
         foreach ($sessionEnrollments as $sessionEnrollment) {
-            $semesterEnrollments = $sessionEnrollment->semesters;
+            $semesterEnrollments = $sessionEnrollment->semesterEnrollments;
 
             foreach ($semesterEnrollments as $semesterEnrollment) {
                 $session = $sessionEnrollment->session;
@@ -51,10 +51,10 @@ final class ValidateResultsAction
         Session $session,
         VettingStep $vettingStep,
     ): void {
-        $courses = $semesterEnrollment->courses()->with('result')->get();
+        $registrations = $semesterEnrollment->registrations()->with('result', 'course')->get();
 
-        foreach ($courses as $course) {
-            $result = $course->result;
+        foreach ($registrations as $registration) {
+            $result = $registration->result;
 
             if (Hash::check($result->getData(), $result->data)) {
                 continue;
@@ -72,7 +72,7 @@ final class ValidateResultsAction
                 ['status' => VettingStatus::FAILED],
             );
 
-            $code = $course->course->code;
+            $code = $registration->course->code;
             $semester = $semesterEnrollment->semester;
 
             if ($this->report !== VettingStatus::FAILED) {

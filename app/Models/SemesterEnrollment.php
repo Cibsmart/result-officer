@@ -35,7 +35,7 @@ final class SemesterEnrollment extends Model
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Registration, \App\Models\SemesterEnrollment> */
-    public function courses(): HasMany
+    public function registrations(): HasMany
     {
         return $this->hasMany(Registration::class);
     }

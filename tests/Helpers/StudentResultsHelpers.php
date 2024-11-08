@@ -33,12 +33,12 @@ function createStudentWithResults(
                     ->has(RegistrationFactory::new()
                         ->has(ResultFactory::new())
                         ->count($numberOfCourses),
-                        'courses')
+                        'registrations')
                     ->count($numberOfSemesters)
                     ->state(new Sequence(
                         ['semester_id' => $firstSemester->id],
                         ['semester_id' => $secondSemester->id]),
-                    ), 'semesters')
+                    ), 'semesterEnrollments')
                 ->count($numberOfSessions),
         )->createOne();
 }
@@ -62,12 +62,12 @@ function createMultipleStudentsWithResults(
                     ->has(RegistrationFactory::new()
                         ->has(ResultFactory::new())
                         ->count($numberOfCourses),
-                        'courses')
+                        'registrations')
                     ->count($numberOfSemesters)
                     ->state(new Sequence(
                         ['semester_id' => $firstSemester->id],
                         ['semester_id' => $secondSemester->id]),
-                    ), 'semesters')
+                    ), 'semesterEnrollments')
                 ->count($numberOfSessions),
         )
             ->count($numberOfStudents)
@@ -80,17 +80,17 @@ function createMultipleStudentsWithResults(
 
 function computeGPA(SemesterEnrollment $semesterEnrollment): float
 {
-    $courses = $semesterEnrollment->courses;
+    $registrations = $semesterEnrollment->registrations;
 
     return ComputeAverage::new(
-        $courses->sum('result.grade_point'),
-        $courses->sum('credit_unit'),
+        $registrations->sum('result.grade_point'),
+        $registrations->sum('credit_unit'),
     )->value();
 }
 
 function computeCGPA(SessionEnrollment $sessionEnrollment): float
 {
-    $semesterEnrollments = $sessionEnrollment->semesters;
+    $semesterEnrollments = $sessionEnrollment->semesterEnrollments;
 
     $gpaSum = 0;
 
