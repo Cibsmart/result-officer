@@ -3,19 +3,29 @@
 declare(strict_types=1);
 
 use App\Actions\Vetting\ValidateResults;
+use App\Enums\VettingStatus;
+use Tests\Factories\VettingEventFactory;
+use Tests\Factories\VettingStepFactory;
 
 it('validates the integrity of the students results', function (): void {
     $student = createStudentWithResults();
 
+    $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
+    $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
+
     $validation = new ValidateResults();
 
-    $validation->execute($student);
+    $status = $validation->execute($student, $vettingStep);
 
-    expect($validation->report())->toBe('PASSED');
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
+        ->and($validation->remarks())->toBe('');
 });
 
 it('reports students results with tampered score', function (): void {
     $student = createStudentWithResults();
+
+    $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
+    $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
 
     $sessionEnrollment = $student->sessionEnrollments->first();
     $semesterEnrollment = $sessionEnrollment->semesterEnrollments->first();
@@ -31,13 +41,17 @@ it('reports students results with tampered score', function (): void {
 
     $validation = new ValidateResults();
 
-    $validation->execute($student);
+    $status = $validation->execute($student, $vettingStep);
 
-    expect($validation->report())->toBe("{$course->code} in {$semester->name} {$session->name} is invalid. \n");
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
+        ->and($validation->remarks())->toBe("{$course->code} in {$semester->name} {$session->name} is invalid. \n");
 });
 
 it('reports students results with tampered grade', function (): void {
     $student = createStudentWithResults();
+
+    $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
+    $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
 
     $sessionEnrollment = $student->sessionEnrollments->first();
     $semesterEnrollment = $sessionEnrollment->semesterEnrollments->first();
@@ -53,13 +67,17 @@ it('reports students results with tampered grade', function (): void {
 
     $validation = new ValidateResults();
 
-    $validation->execute($student);
+    $status = $validation->execute($student, $vettingStep);
 
-    expect($validation->report())->toBe("{$course->code} in {$semester->name} {$session->name} is invalid. \n");
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
+        ->and($validation->remarks())->toBe("{$course->code} in {$semester->name} {$session->name} is invalid. \n");
 });
 
 it('reports students results with tampered grade point', function (): void {
     $student = createStudentWithResults();
+
+    $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
+    $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
 
     $sessionEnrollment = $student->sessionEnrollments->first();
     $semesterEnrollment = $sessionEnrollment->semesterEnrollments->first();
@@ -75,7 +93,8 @@ it('reports students results with tampered grade point', function (): void {
 
     $validation = new ValidateResults();
 
-    $validation->execute($student);
+    $status = $validation->execute($student, $vettingStep);
 
-    expect($validation->report())->toBe("{$course->code} in {$semester->name} {$session->name} is invalid. \n");
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
+        ->and($validation->remarks())->toBe("{$course->code} in {$semester->name} {$session->name} is invalid. \n");
 });
