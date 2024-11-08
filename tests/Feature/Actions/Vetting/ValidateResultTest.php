@@ -44,7 +44,9 @@ it('reports students results with tampered score', function (): void {
     $status = $validation->execute($student, $vettingStep);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
-        ->and($validation->remarks())->toBe("{$course->code} in {$semester->name} {$session->name} is invalid. \n");
+        ->and($validation->remarks())->toBe(
+            "{$course->code} in {$semester->name} semester {$session->name} is invalid. \n",
+        );
 });
 
 it('reports students results with tampered grade', function (): void {
@@ -70,7 +72,9 @@ it('reports students results with tampered grade', function (): void {
     $status = $validation->execute($student, $vettingStep);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
-        ->and($validation->remarks())->toBe("{$course->code} in {$semester->name} {$session->name} is invalid. \n");
+        ->and($validation->remarks())->toBe(
+            "{$course->code} in {$semester->name} semester {$session->name} is invalid. \n",
+        );
 });
 
 it('reports students results with tampered grade point', function (): void {
@@ -96,5 +100,7 @@ it('reports students results with tampered grade point', function (): void {
     $status = $validation->execute($student, $vettingStep);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
-        ->and($validation->remarks())->toBe("{$course->code} in {$semester->name} {$session->name} is invalid. \n");
+        ->and($validation->remarks())->toBe(
+            "{$course->code} in {$semester->name} semester {$session->name} is invalid. \n",
+        );
 });

@@ -89,6 +89,6 @@ final class ValidateResults
         $code = $registration->course->code;
         $semester = $semesterEnrollment->semester;
 
-        $this->remarks .= "{$code} in {$semester->name} {$session->name} is invalid. \n";
+        $this->remarks .= "{$code} in {$semester->name} semester {$session->name} is invalid. \n";
     }
 }
