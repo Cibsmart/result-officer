@@ -35,10 +35,10 @@ final class VettingStep extends Model
         $this->save();
     }
 
-    public function updateStatusAndRemarks(VettingStatus $status, string $remarks): void
+    public function updateStatusAndRemarks(VettingStatus $status, string $message): void
     {
         $this->status = $status;
-        $this->remarks = $remarks;
+        $this->message = $message;
         $this->save();
     }
 
