@@ -14,8 +14,6 @@ use App\Models\VettingReport;
 use App\Models\VettingStep;
 use Illuminate\Support\Facades\Hash;
 
-use function PHPUnit\Framework\assertNotNull;
-
 final class ValidateResults extends ReportVettingStep
 {
     public function execute(Student $student, VettingStep $vettingStep): VettingStatus
@@ -32,8 +30,6 @@ final class ValidateResults extends ReportVettingStep
 
             foreach ($semesterEnrollments as $semesterEnrollment) {
                 $session = $sessionEnrollment->session;
-
-                assertNotNull($session);
 
                 $passed = $this->validate($semesterEnrollment, $session, $vettingStep) && $passed;
             }
@@ -59,8 +55,6 @@ final class ValidateResults extends ReportVettingStep
             if (Hash::check($result->getData(), $result->data)) {
                 continue;
             }
-
-            assertNotNull($result);
 
             $passed = false;
 
