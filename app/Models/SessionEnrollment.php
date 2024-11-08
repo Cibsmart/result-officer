@@ -47,7 +47,7 @@ final class SessionEnrollment extends Model
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Registration, \App\Models\SemesterEnrollment, \App\Models\SessionEnrollment>
      */
-    public function courses(): HasManyThrough
+    public function registrations(): HasManyThrough
     {
         return $this->hasManyThrough(Registration::class, SemesterEnrollment::class);
     }
@@ -56,7 +56,7 @@ final class SessionEnrollment extends Model
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\SemesterEnrollment, \App\Models\SessionEnrollment>
      */
-    public function semesters(): HasMany
+    public function semesterEnrollments(): HasMany
     {
         return $this->hasMany(SemesterEnrollment::class);
     }

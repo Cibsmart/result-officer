@@ -9,26 +9,26 @@ use Tests\Factories\SemesterEnrollmentFactory;
 
 test('semester result data is correct', function (): void {
 
-    $enrollment = SemesterEnrollmentFactory::new()
+    $semesterEnrollment = SemesterEnrollmentFactory::new()
         ->has(RegistrationFactory::new()
             ->has(ResultFactory::new())
-            ->count(5), 'courses')
+            ->count(5), 'registrations')
         ->create();
 
-    $semesterData = SemesterResultData::from($enrollment);
+    $semesterData = SemesterResultData::from($semesterEnrollment);
 
-    $courses = $enrollment->courses;
+    $registrations = $semesterEnrollment->registrations;
 
-    $totalCU = $courses->sum('credit_unit');
-    $totalGP = $courses->sum('result.grade_point');
+    $totalCU = $registrations->sum('credit_unit');
+    $totalGP = $registrations->sum('result.grade_point');
     $gpa = round($totalGP / $totalCU, 3);
     $totalCUFormatted = str($totalCU)->padLeft(2, '0')->value();
     $totalGPFormatted = str($totalGP)->padLeft(2, '0')->value();
     $gpaFormatted = number_format($gpa, 3);
 
     expect($semesterData)->toBeInstanceOf(SemesterResultData::class)
-        ->and($semesterData->id)->toBe($enrollment->id)
-        ->and($semesterData->results->count())->toBe($courses->count())
+        ->and($semesterData->id)->toBe($semesterEnrollment->id)
+        ->and($semesterData->results->count())->toBe($registrations->count())
         ->and($semesterData->creditUnitTotal)->toBe($totalCU)->toBeInt()
         ->and($semesterData->gradePointTotal)->toBe($totalGP)->toBeInt()
         ->and($semesterData->gradePointAverage)->toBe($gpa)->toBeFloat()
@@ -39,9 +39,9 @@ test('semester result data is correct', function (): void {
 });
 
 test('semester enrollment without result data returns zeroes', function (): void {
-    $enrollment = SemesterEnrollmentFactory::new()->create();
+    $semesterEnrollment = SemesterEnrollmentFactory::new()->create();
 
-    $semesterData = SemesterResultData::from($enrollment);
+    $semesterData = SemesterResultData::from($semesterEnrollment);
 
     expect($semesterData)->toBeInstanceOf(SemesterResultData::class)
         ->and($semesterData->gradePointTotal)->toBe(0)->toBeInt()

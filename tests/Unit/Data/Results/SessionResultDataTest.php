@@ -13,24 +13,24 @@ use Tests\Factories\StudentFactory;
 test('session result data is correct', function (): void {
     $student = StudentFactory::new()->createOne();
 
-    $enrollment = SessionEnrollmentFactory::new(['student_id' => $student->id])
+    $sessionEnrollment = SessionEnrollmentFactory::new(['student_id' => $student->id])
         ->has(SemesterEnrollmentFactory::new()
             ->has(RegistrationFactory::new()
                 ->has(ResultFactory::new())
                 ->count(5),
-                'courses')
+                'registrations')
             ->count(2),
-            'semesters')
+            'semesterEnrollments')
         ->createOne();
 
-    $sessionData = SessionResultData::from($enrollment);
+    $sessionData = SessionResultData::from($sessionEnrollment);
 
-    $semestersResults = $enrollment->semesters;
+    $semestersResults = $sessionEnrollment->semesterEnrollments;
 
     $gradePointAverageTotal = 0;
 
     foreach ($semestersResults as $semesterResult) {
-        $courses = $semesterResult->courses;
+        $courses = $semesterResult->registrations;
         $gradePointAverageTotal +=
             ComputeAverage::new(
                 $courses->sum('result.grade_point'),
@@ -42,10 +42,10 @@ test('session result data is correct', function (): void {
     $cgpaFormatted = number_format($cgpa, 3);
 
     expect($sessionData)->toBeInstanceOf(SessionResultData::class)
-        ->and($sessionData->id)->toBe($enrollment->id)
+        ->and($sessionData->id)->toBe($sessionEnrollment->id)
         ->and($sessionData->semesterResults->count())->toBe($semestersResults->count())
-        ->and($sessionData->session)->toBe($enrollment->session->name)
-        ->and($sessionData->year)->toBe($enrollment->year->name)
+        ->and($sessionData->session)->toBe($sessionEnrollment->session->name)
+        ->and($sessionData->year)->toBe($sessionEnrollment->year->name)
         ->and($sessionData->cumulativeGradePointAverage)->toBe($cgpa)->toBeFloat()
         ->and($sessionData->formattedCGPA)->toBe($cgpaFormatted)->toBeString();
 });
@@ -53,21 +53,21 @@ test('session result data is correct', function (): void {
 test('session enrollment without result data returns zeroes', function (): void {
     $student = StudentFactory::new()->createOne();
 
-    $enrollment = SessionEnrollmentFactory::new(['student_id' => $student->id])
+    $sessionEnrollment = SessionEnrollmentFactory::new(['student_id' => $student->id])
         ->has(SemesterEnrollmentFactory::new()
-            ->has(RegistrationFactory::new(), 'courses')
+            ->has(RegistrationFactory::new(), 'registrations')
             ->count(2),
-            'semesters')
+            'semesterEnrollments')
         ->createOne();
 
-    $sessionData = SessionResultData::from($enrollment);
+    $sessionData = SessionResultData::from($sessionEnrollment);
 
-    $semestersResults = $enrollment->semesters;
+    $semestersResults = $sessionEnrollment->semesterEnrollments;
 
     expect($sessionData)->toBeInstanceOf(SessionResultData::class)
-        ->and($sessionData->id)->toBe($enrollment->id)
+        ->and($sessionData->id)->toBe($sessionEnrollment->id)
         ->and($sessionData->semesterResults->count())->toBe($semestersResults->count())
-        ->and($sessionData->session)->toBe($enrollment->session->name)
+        ->and($sessionData->session)->toBe($sessionEnrollment->session->name)
         ->and($sessionData->cumulativeGradePointAverage)->toBe(0.0)
         ->and($sessionData->formattedCGPA)->toBe('0.000')->toBeString();
 
@@ -76,17 +76,17 @@ test('session enrollment without result data returns zeroes', function (): void 
 test('session enrollment without semester enrollments returns zeroes', function (): void {
     $student = StudentFactory::new()->createOne();
 
-    $enrollment = SessionEnrollmentFactory::new(['student_id' => $student->id])
+    $sessionEnrollment = SessionEnrollmentFactory::new(['student_id' => $student->id])
         ->createOne();
 
-    $sessionData = SessionResultData::from($enrollment);
+    $sessionData = SessionResultData::from($sessionEnrollment);
 
-    $semestersResults = $enrollment->semesters;
+    $semestersResults = $sessionEnrollment->semesterEnrollments;
 
     expect($sessionData)->toBeInstanceOf(SessionResultData::class)
-        ->and($sessionData->id)->toBe($enrollment->id)
+        ->and($sessionData->id)->toBe($sessionEnrollment->id)
         ->and($sessionData->semesterResults->count())->toBe($semestersResults->count())
-        ->and($sessionData->session)->toBe($enrollment->session->name)
+        ->and($sessionData->session)->toBe($sessionEnrollment->session->name)
         ->and($sessionData->cumulativeGradePointAverage)->toBe(0.0)
         ->and($sessionData->formattedCGPA)->toBe('0.000')->toBeString();
 

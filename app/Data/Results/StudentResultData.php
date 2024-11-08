@@ -26,28 +26,28 @@ final class StudentResultData extends Data
 
     public static function fromModel(Student $student): self
     {
-        $enrollments = SessionResultData::collect(
-            $student->sessionEnrollments()->with(['semesters', 'session'])->orderBy('session_id')->get(),
+        $sessionEnrollments = SessionResultData::collect(
+            $student->sessionEnrollments()->with(['semesterEnrollments', 'session'])->orderBy('session_id')->get(),
         );
 
         $finalCGPA = round(
             ComputeAverage::new(
-                $enrollments->sum('cumulativeGradePointAverage'),
-                $enrollments->count(),
+                $sessionEnrollments->sum('cumulativeGradePointAverage'),
+                $sessionEnrollments->count(),
             )->value(),
             2,
         );
 
         $degreeClass = ClassOfDegree::for($finalCGPA);
         $programType = $student->program->programType;
-        $lastSession = $enrollments->last();
+        $lastSession = $sessionEnrollments->last();
         $graduationYear = $lastSession
             ? SessionValue::new($lastSession->session)->lastYear()
             : 0;
 
         return new self(
             id: $student->id,
-            sessionEnrollments: $enrollments,
+            sessionEnrollments: $sessionEnrollments,
             finalCumulativeGradePointAverage: $finalCGPA,
             degreeClass: $degreeClass->value,
             degreeAwarded: "$programType->name ($programType->code)",

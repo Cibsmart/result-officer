@@ -148,11 +148,11 @@ final class CompositeSheetData extends Data
     ): LazyCollection {
         return $program->students()
             ->with([
-                'sessionEnrollments.semesters.courses.course',
-                'sessionEnrollments.semesters.courses.result',
-                'sessionEnrollments.semesters.semester',
+                'sessionEnrollments.semesterEnrollments.registrations.course',
+                'sessionEnrollments.semesterEnrollments.registrations.result',
+                'sessionEnrollments.semesterEnrollments.semester',
             ])
-            ->whereHas('sessionEnrollments.semesters',
+            ->whereHas('sessionEnrollments.semesterEnrollments',
                 function (Builder $query) use ($session, $level, $semester): void {
                     $query->where('session_id', $session->id)
                         ->where('level_id', $level->id)
