@@ -22,6 +22,6 @@ final readonly class Vetting
             $step->check($vettingEvent);
         }
 
-        $vettingEvent->updateStatus(VettingEventStatus::COMPLETED);
+        $vettingEvent->updateVettingStatus();
     }
 }
