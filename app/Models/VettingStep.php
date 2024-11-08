@@ -16,11 +16,10 @@ final class VettingStep extends Model
     public static function getOrCreateUsingVettingEvent(
         VettingEvent $vettingEvent,
         VettingType $vettingType,
-        VettingStatus $vettingStatus,
     ): self {
         return self::query()->firstOrCreate(
             ['vetting_event_id' => $vettingEvent->id, 'type' => $vettingType],
-            ['status' => $vettingStatus],
+            ['status' => VettingStatus::NEW],
         );
     }
 
