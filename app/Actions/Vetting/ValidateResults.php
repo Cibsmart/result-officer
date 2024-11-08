@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace App\Actions\Vetting;
 
 use App\Enums\VettingStatus;
-use App\Models\Registration;
-use App\Models\Result;
 use App\Models\SemesterEnrollment;
 use App\Models\Session;
 use App\Models\Student;
-use App\Models\VettingReport;
 use App\Models\VettingStep;
 use Illuminate\Support\Facades\Hash;
 
@@ -56,26 +53,15 @@ final class ValidateResults extends ReportVettingStep
                 continue;
             }
 
-            $passed = false;
+            $code = $registration->course->code;
+            $semester = $semesterEnrollment->semester;
 
-            $this->createReport($result, $vettingStep, $registration, $semesterEnrollment, $session);
+            $passed = false;
+            $message = "{$code} in {$semester->name} semester {$session->name} is invalid. \n";
+
+            $this->createReport($result, $vettingStep, $message);
         }
 
         return $passed;
-    }
-
-    private function createReport(
-        Result $result,
-        VettingStep $vettingStep,
-        Registration $registration,
-        SemesterEnrollment $semesterEnrollment,
-        Session $session,
-    ): void {
-        VettingReport::updateOrCreateUsingModel($result, $vettingStep, VettingStatus::FAILED);
-
-        $code = $registration->course->code;
-        $semester = $semesterEnrollment->semester;
-
-        $this->updateReport("{$code} in {$semester->name} semester {$session->name} is invalid. \n");
     }
 }
