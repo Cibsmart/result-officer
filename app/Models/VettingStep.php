@@ -5,12 +5,24 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\VettingStatus;
+use App\Enums\VettingType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class VettingStep extends Model
 {
     protected $fillable = ['vetting_event_id', 'type', 'status'];
+
+    public static function getOrCreateUsingVettingEvent(
+        VettingEvent $vettingEvent,
+        VettingType $vettingType,
+        VettingStatus $vettingStatus,
+    ): self {
+        return self::query()->firstOrCreate(
+            ['vetting_event_id' => $vettingEvent->id, 'type' => $vettingType],
+            ['status' => $vettingStatus],
+        );
+    }
 
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\VettingReport, \App\Models\VettingStep> */
     public function reports(): HasMany
@@ -21,6 +33,13 @@ final class VettingStep extends Model
     public function updateStatus(VettingStatus $status): void
     {
         $this->status = $status;
+        $this->save();
+    }
+
+    public function updateStatusAndRemarks(VettingStatus $status, string $remarks): void
+    {
+        $this->status = $status;
+        $this->remarks = $remarks;
         $this->save();
     }
 
