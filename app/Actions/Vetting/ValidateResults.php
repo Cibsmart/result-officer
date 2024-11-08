@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Hash;
 
 use function PHPUnit\Framework\assertNotNull;
 
-final class ValidateResultsAction
+final class ValidateResults
 {
     private VettingStatus $report = VettingStatus::PASSED;
 
