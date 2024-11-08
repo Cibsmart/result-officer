@@ -24,7 +24,7 @@ final readonly class OrganizeStudyYearStep implements VettingService
 
         assertNotNull($student);
 
-        $vettingStep = VettingStep::getOrCreateUsingVettingEvent($vettingEvent, VettingType::VALIDATE_RESULTS);
+        $vettingStep = VettingStep::getOrCreateUsingVettingEvent($vettingEvent, VettingType::ORGANIZE_STUDY_YEAR);
 
         $status = $this->action->execute($student);
 

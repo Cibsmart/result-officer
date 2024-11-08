@@ -331,6 +331,7 @@ declare namespace App.Enums {
   export type VettingEventStatus = "new" | "vetting" | "cancelled" | "failed" | "completed";
   export type VettingStatus = "new" | "checking" | "failed" | "passed" | "unchecked";
   export type VettingType =
+    | "organize_year"
     | "validate_result"
     | "minimum_credit"
     | "maximum_credit"
