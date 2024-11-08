@@ -16,10 +16,8 @@ use Illuminate\Support\Facades\Hash;
 
 use function PHPUnit\Framework\assertNotNull;
 
-final class ValidateResults
+final class ValidateResults extends ReportVettingStep
 {
-    private string $remarks = '';
-
     public function execute(Student $student, VettingStep $vettingStep): VettingStatus
     {
         $sessionEnrollments = $student->sessionEnrollments()->with(['session', 'semesterEnrollments.semester'])->get();
@@ -46,11 +44,6 @@ final class ValidateResults
             : VettingStatus::FAILED;
     }
 
-    public function remarks(): string
-    {
-        return $this->remarks;
-    }
-
     private function validate(
         SemesterEnrollment $semesterEnrollment,
         Session $session,
@@ -71,13 +64,13 @@ final class ValidateResults
 
             $passed = false;
 
-            $this->updateReport($result, $vettingStep, $registration, $semesterEnrollment, $session);
+            $this->createReport($result, $vettingStep, $registration, $semesterEnrollment, $session);
         }
 
         return $passed;
     }
 
-    private function updateReport(
+    private function createReport(
         Result $result,
         VettingStep $vettingStep,
         Registration $registration,
@@ -89,6 +82,6 @@ final class ValidateResults
         $code = $registration->course->code;
         $semester = $semesterEnrollment->semester;
 
-        $this->remarks .= "{$code} in {$semester->name} semester {$session->name} is invalid. \n";
+        $this->updateReport("{$code} in {$semester->name} semester {$session->name} is invalid. \n");
     }
 }
