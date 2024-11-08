@@ -17,7 +17,6 @@ return new class extends Migration
             $table->unsignedBigInteger('vettable_id');
             $table->string('vettable_type');
             $table->string('status');
-            $table->text('remarks')->nullable();
             $table->timestamps();
 
             $table->unique(['vetting_step_id', 'vettable_type', 'vettable_id'], 'vetting_reports_unique');

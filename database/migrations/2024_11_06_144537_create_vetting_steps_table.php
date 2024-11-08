@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(VettingEvent::class)->constrained();
             $table->string('type');
             $table->string('status');
-            $table->text('remarks')->nullable();
+            $table->text('message')->nullable();
             $table->timestamps();
 
             $table->unique(['vetting_event_id', 'type']);
