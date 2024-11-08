@@ -14,6 +14,16 @@ final class VettingEvent extends Model
 {
     protected $fillable = ['student_id', 'program_curriculum_id', 'status'];
 
+    public static function getOrCreateUsingStudent(Student $student): self
+    {
+        $programCurriculum = $student->programCurriculum();
+
+        return self::query()->firstOrCreate(
+            ['student_id' => $student->id],
+            ['status' => VettingEventStatus::NEW, 'program_curriculum_id' => $programCurriculum->id],
+        );
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, \App\Models\VettingEvent> */
     public function student(): BelongsTo
     {
