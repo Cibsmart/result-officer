@@ -11,6 +11,7 @@ use App\Values\DateValue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class Registration extends Model
@@ -49,6 +50,12 @@ final class Registration extends Model
     public static function getUsingOnlineId(string $onlineId): self
     {
         return self::query()->where('online_id', $onlineId)->firstOrFail();
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\Registration> */
+    public function vettable(): MorphMany
+    {
+        return $this->MorphMany(VettingReport::class, 'vettable');
     }
 
     /**

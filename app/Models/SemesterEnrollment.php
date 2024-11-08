@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 final class SemesterEnrollment extends Model
 {
@@ -17,6 +18,15 @@ final class SemesterEnrollment extends Model
         return self::query()->firstOrCreate(
             ['session_enrollment_id' => $sessionEnrollment->id, 'semester_id' => $semester->id],
         );
+    }
+
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\SemesterEnrollment>
+     */
+    public function vettable(): MorphMany
+    {
+        return $this->MorphMany(VettingReport::class, 'vettable');
     }
 
     /**
