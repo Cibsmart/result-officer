@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Actions\Vetting;
 
 use App\Enums\VettingStatus;
-use App\Enums\VettingType;
+use App\Models\Registration;
+use App\Models\Result;
 use App\Models\SemesterEnrollment;
 use App\Models\Session;
 use App\Models\Student;
+use App\Models\VettingReport;
 use App\Models\VettingStep;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,19 +18,18 @@ use function PHPUnit\Framework\assertNotNull;
 
 final class ValidateResults
 {
-    private VettingStatus $report = VettingStatus::PASSED;
+    private string $remarks = '';
 
-    private string $message = '';
-
-    public function execute(Student $student): void
+    public function execute(Student $student, VettingStep $vettingStep): VettingStatus
     {
         $sessionEnrollments = $student->sessionEnrollments()->with(['session', 'semesterEnrollments.semester'])->get();
 
-        $vettingStep = $student->vettingEvent->vettingSteps()
-            ->where('type', VettingType::VALIDATE_RESULTS)
-            ->firstOrFail();
+        $passed = true;
+        $status = VettingStatus::UNCHECKED;
 
         foreach ($sessionEnrollments as $sessionEnrollment) {
+            $status = VettingStatus::PASSED;
+
             $semesterEnrollments = $sessionEnrollment->semesterEnrollments;
 
             foreach ($semesterEnrollments as $semesterEnrollment) {
@@ -36,22 +37,28 @@ final class ValidateResults
 
                 assertNotNull($session);
 
-                $this->validate($semesterEnrollment, $session, $vettingStep);
+                $passed = $this->validate($semesterEnrollment, $session, $vettingStep) && $passed;
             }
         }
+
+        return $passed
+            ? $status
+            : VettingStatus::FAILED;
     }
 
-    public function report(): VettingStatus
+    public function remarks(): string
     {
-        return $this->report;
+        return $this->remarks;
     }
 
     private function validate(
         SemesterEnrollment $semesterEnrollment,
         Session $session,
         VettingStep $vettingStep,
-    ): void {
+    ): bool {
         $registrations = $semesterEnrollment->registrations()->with('result', 'course')->get();
+
+        $passed = true;
 
         foreach ($registrations as $registration) {
             $result = $registration->result;
@@ -61,25 +68,27 @@ final class ValidateResults
             }
 
             assertNotNull($result);
-            $modelName = $result::class;
 
-            $result->vettable()->updateOrCreate(
-                [
-                    'vettable_id' => $result->id,
-                    'vettable_type' => (new $modelName())->getMorphClass(),
-                    'vetting_step_id' => $vettingStep->id,
-                ],
-                ['status' => VettingStatus::FAILED],
-            );
+            $passed = false;
 
-            $code = $registration->course->code;
-            $semester = $semesterEnrollment->semester;
-
-            if ($this->report !== VettingStatus::FAILED) {
-                $this->report = VettingStatus::FAILED;
-            }
-
-            $this->message .= "{$code} in {$semester->name} {$session->name} is invalid. \n";
+            $this->updateReport($result, $vettingStep, $registration, $semesterEnrollment, $session);
         }
+
+        return $passed;
+    }
+
+    private function updateReport(
+        Result $result,
+        VettingStep $vettingStep,
+        Registration $registration,
+        SemesterEnrollment $semesterEnrollment,
+        Session $session,
+    ): void {
+        VettingReport::updateOrCreateUsingModel($result, $vettingStep, VettingStatus::FAILED);
+
+        $code = $registration->course->code;
+        $semester = $semesterEnrollment->semester;
+
+        $this->remarks .= "{$code} in {$semester->name} {$session->name} is invalid. \n";
     }
 }
