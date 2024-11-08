@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Actions\Vetting\OrganizeYear;
+use App\Actions\Vetting\OrganizeStudyYear;
+use App\Enums\VettingStatus;
 use App\Enums\Year;
 use Tests\Factories\LevelFactory;
 use Tests\Factories\SessionEnrollmentFactory;
@@ -26,11 +27,11 @@ it('can correctly organize study year original set to all first', function (): v
             ),
     )->createOne(['entry_session_id' => $session->id, 'entry_level_id' => $level->id]);
 
-    $organize = new OrganizeYear();
+    $organize = new OrganizeStudyYear();
 
     $organize->execute($student);
 
-    expect($organize->report())->toBe('STUDY YEARS RE-ORGANIZED');
+    expect($organize->report())->toBe('Study Years Re-Organized');
 
     $enrollments = $student->fresh()->sessionEnrollments;
 
@@ -60,11 +61,11 @@ it('can correctly organize study year original set in descending order', functio
             ),
     )->createOne(['entry_session_id' => $session->id, 'entry_level_id' => $level->id]);
 
-    $organize = new OrganizeYear();
+    $organize = new OrganizeStudyYear();
 
     $organize->execute($student);
 
-    expect($organize->report())->toBe('STUDY YEARS RE-ORGANIZED');
+    expect($organize->report())->toBe('Study Years Re-Organized');
 
     $enrollments = $student->fresh()->sessionEnrollments;
 
@@ -94,8 +95,10 @@ it('does not re-organize study year for already organized year', function (): vo
             ),
     )->createOne(['entry_session_id' => $session->id, 'entry_level_id' => $level->id]);
 
-    $organize = new OrganizeYear();
-    $organize->execute($student);
+    $organize = new OrganizeStudyYear();
 
-    expect($organize->report())->toBe('PASSED');
+    $status = $organize->execute($student);
+
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
+        ->and($organize->report())->toBe('');
 });
