@@ -172,7 +172,7 @@ final class CompositeSheetData extends Data
             ->firstOrFail();
 
         $semesterEnrollment = $sessionEnrollment
-            ->semesters
+            ->semesterEnrollments
             ->where('semester_id', '===', $semester->id)
             ->firstOrFail();
 
