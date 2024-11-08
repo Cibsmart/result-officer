@@ -8,8 +8,7 @@ enum VettingType: string
 {
     case ORGANIZE_STUDY_YEAR = 'organize_year';
     case VALIDATE_RESULTS = 'validate_result';
-    case CHECK_MINIMUM_CREDIT = 'minimum_credit';
-    case CHECK_MAXIMUM_CREDIT = 'maximum_credit';
+    case CHECK_CREDIT_UNITS = 'credit_units';
     case MATCH_CREDIT_UNITS = 'match_credit';
     case CHECK_FIRST_YEAR_COURSES = 'first_year_courses';
     case CHECK_CURRICULUM_COURSES = 'curriculum_courses';
