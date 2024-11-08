@@ -14,7 +14,7 @@ final class VettingReport extends Model
     protected $fillable = ['vetting_step_id', 'vettable_id', 'vettable_type', 'status'];
 
     public static function updateOrCreateUsingModel(
-        Student|Result $model,
+        Model $model,
         VettingStep $vettingStep,
         VettingStatus $vettingStatus,
     ): self {
