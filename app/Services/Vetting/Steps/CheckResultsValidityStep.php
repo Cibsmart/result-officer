@@ -10,8 +10,6 @@ use App\Enums\VettingType;
 use App\Models\VettingEvent;
 use App\Models\VettingStep;
 
-use function PHPUnit\Framework\assertNotNull;
-
 final readonly class CheckResultsValidityStep implements VettingService
 {
     public function __construct(private ValidateResults $action)
@@ -21,8 +19,6 @@ final readonly class CheckResultsValidityStep implements VettingService
     public function check(VettingEvent $vettingEvent): void
     {
         $student = $vettingEvent->student;
-
-        assertNotNull($student);
 
         $vettingStep = VettingStep::getOrCreateUsingVettingEvent($vettingEvent, VettingType::VALIDATE_RESULTS);
 
