@@ -58,7 +58,7 @@ final class ProgramCurriculum extends Model
 
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\Illuminate\Database\Eloquent\Model, \Illuminate\Database\Eloquent\Model, \App\Models\ProgramCurriculum>
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\ProgramCurriculumCourse, \Illuminate\Database\Eloquent\Model, \App\Models\ProgramCurriculum>
      */
     public function programCurriculumCourses(): HasManyThrough
     {
