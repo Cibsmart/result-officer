@@ -13,7 +13,7 @@ parameters:
     ignoreErrors:
         -   '#^Cannot access property \$\w+ on App\\Models\\\w+\|null\.$#'
         -   '#^Cannot call method \w+\(\) on App\\Models\\\w+\|null\.$#'
-        -   '#^Parameter \#\d \$\w+ of method App\\Actions\\Vetting\\ValidateResults\:\:\w+\(\) expects App\\Models\\\w+, App\\Models\\\w+\|null given\.$#'
+        -   '#^Parameter \#\d+ \$\w+ of method App\\Actions\\Vetting\\\w+::\w+\(\) expects (App\\Models\\\w+|Illuminate\\Database\\Eloquent\\Model), (App\\Models\\\w+\|null) given\.$#'
         -   '#^Parameter (\#1 )?\$user of static method App\\[A-Za-z\\]+:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
         -   '#^Method App\\Models\\\w+\:\:\w+\(\) should return Illuminate\\Database\\Eloquent\\Relations\\\w+\<(?:App\\Models\\\w+(?:, )?){1,3}\> but returns Illuminate\\Database\\Eloquent\\Relations\\\w+\<(?:App\\Models\\\w+(?:, )?){1,2}\$this\(App\\Models\\\w+\)\>\.$#'
         -   '#^Method App\\Models\\VettingReport\:\:vettingReport\(\) should return Illuminate\\Database\\Eloquent\\Relations\\MorphTo\<Illuminate\\Database\\Eloquent\\Model, App\\Models\\VettingReport\> but returns Illuminate\\Database\\Eloquent\\Relations\\MorphTo\<Illuminate\\Database\\Eloquent\\Model, \$this\(App\\Models\\VettingReport\)\>\.$#'

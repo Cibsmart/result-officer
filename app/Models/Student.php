@@ -95,7 +95,7 @@ final class Student extends Model
 
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\Illuminate\Database\Eloquent\Model, \App\Models\SessionEnrollment, \App\Models\Student>
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\Illuminate\Database\Eloquent\Model, \Illuminate\Database\Eloquent\Model, \App\Models\Student>
      */
     public function registrations(): HasManyThrough
     {
