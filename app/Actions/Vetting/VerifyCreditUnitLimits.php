@@ -56,7 +56,7 @@ final class VerifyCreditUnitLimits extends ReportVettingStep
             return true;
         }
 
-        $message = "{$session} {$semester} Semester is ";
+        $message = "{$session->name} {$semester->name} Semester is ";
 
         $message .= $minCheck
             ? "greater than the maximum {$maxSemesterTotalCreditUnit} Credit Units \n"
