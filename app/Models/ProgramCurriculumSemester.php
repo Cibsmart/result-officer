@@ -14,7 +14,7 @@ final class ProgramCurriculumSemester extends Model
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumCourse, \App\Models\ProgramCurriculumSemester>
      */
-    public function courses(): HasMany
+    public function programCurriculumCourses(): HasMany
     {
         return $this->HasMany(ProgramCurriculumCourse::class);
     }

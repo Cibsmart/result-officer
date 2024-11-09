@@ -122,7 +122,7 @@ final class CompositeSheetData extends Data
             return collect([]);
         }
 
-        $curriculumLevel = $curriculum->levels()->where('level_id', $level->id)->first();
+        $curriculumLevel = $curriculum->programCurriculumLevels()->where('level_id', $level->id)->first();
         $curriculumSemester = $curriculumLevel->semesters()->where('semester_id', $semester->id)->first();
 
         return $curriculumSemester
