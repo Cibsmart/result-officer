@@ -20,7 +20,7 @@ final class ProgramCurriculumFactory extends Factory
             'curriculum_id' => CurriculumFactory::new(),
             'entry_mode' => EntryMode::UTME,
             'entry_session_id' => SessionFactory::new(),
-            'program_id' => StudentFactory::new(),
+            'program_id' => ProgramFactory::new(),
         ];
     }
 }
