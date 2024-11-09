@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Actions\Vetting;
 
 use App\Enums\VettingStatus;
+use App\Models\Student;
 use App\Models\VettingReport;
 use App\Models\VettingStep;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +13,8 @@ use Illuminate\Database\Eloquent\Model;
 abstract class ReportVettingStep
 {
     private string $message = '';
+
+    abstract public function execute(Student $student, VettingStep $vettingStep): VettingStatus;
 
     public function report(): string
     {
