@@ -88,6 +88,24 @@ final class Registration extends Model
         return $student;
     }
 
+    public function semester(): Semester
+    {
+        $semester = $this->semesterEnrollment->semester;
+
+        assert($semester instanceof Semester);
+
+        return $semester;
+    }
+
+    public function session(): Session
+    {
+        $session = $this->semesterEnrollment->sessionEnrollment->session;
+
+        assert($session instanceof Session);
+
+        return $session;
+    }
+
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return array{course_status: 'App\Enums\CourseStatus', credit_unit: 'App\Enums\CreditUnit', registration_date: 'date', source: 'App\Enums\RecordSource' }
