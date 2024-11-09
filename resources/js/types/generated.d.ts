@@ -332,6 +332,7 @@ declare namespace App.Enums {
   export type VettingStatus = "new" | "checking" | "failed" | "passed" | "unchecked";
   export type VettingType =
     | "organize_year"
+    | "match_courses"
     | "validate_result"
     | "credit_units"
     | "match_credit"
