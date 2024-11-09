@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Models\Level;
+use App\Models\Session;
+use App\Models\Student;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,9 +18,9 @@ return new class extends Migration
     {
         Schema::create('session_enrollments', static function (Blueprint $table): void {
             $table->id();
-            $table->foreignId('student_id')->constrained('students');
-            $table->foreignId('session_id')->constrained('academic_sessions');
-            $table->foreignId('level_id')->constrained('levels');
+            $table->foreignIdFor(Student::class)->constrained();
+            $table->foreignIdFor(Session::class)->constrained('academic_sessions');
+            $table->foreignIdFor(Level::class)->constrained();
             $table->unsignedSmallInteger('year')->default(1);
             $table->timestamps();
 
