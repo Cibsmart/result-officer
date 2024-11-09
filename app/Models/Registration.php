@@ -89,13 +89,14 @@ final class Registration extends Model
     }
 
     /**
-     * @return array{course_status: 'App\Enums\CourseStatus', registration_date: 'date',
-     *     source: 'App\Enums\RecordSource' }
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return array{course_status: 'App\Enums\CourseStatus', credit_unit: 'App\Enums\CreditUnit', registration_date: 'date', source: 'App\Enums\RecordSource' }
      */
     protected function casts(): array
     {
         return [
             'course_status' => CourseStatus::class,
+            'credit_unit' => CreditUnit::class,
             'registration_date' => 'date',
             'source' => RecordSource::class,
         ];

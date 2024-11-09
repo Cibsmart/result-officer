@@ -29,7 +29,7 @@ final class ResultFactory extends Factory
             'data' => $data,
             'grade' => $grade->name,
             'grade_point' => fn (array $attributes,
-            ) => $grade->point() * Registration::find($attributes['registration_id'])->credit_unit,
+            ) => $grade->point() * Registration::find($attributes['registration_id'])->credit_unit->value,
             'registration_id' => RegistrationFactory::new(),
             'scores' => json_encode($scores),
             'total_score' => $score->value,

@@ -32,7 +32,7 @@ final class ResultData extends Data
             id: $courseRegistration->id,
             courseCode: $courseRegistration->course->code,
             courseTitle: $courseRegistration->course->title,
-            creditUnit: $courseRegistration->credit_unit,
+            creditUnit: $courseRegistration->credit_unit->value,
             totalScore: $result->total_score,
             grade: $result->grade,
             gradePoint: $result->grade_point,

@@ -36,7 +36,7 @@ final class Result extends Model
         $registrationNumber = RegistrationNumber::new($rawResult->registration_number);
         $totalScore = TotalScore::new((int) $rawResult->in_course + (int) $rawResult->exam);
         $grade = $totalScore->grade($registrationNumber->allowEGrade());
-        $gradePoint = $grade->point() * $registration->credit_unit;
+        $gradePoint = $grade->point() * $registration->credit_unit->value;
 
         $lecturer = null;
 

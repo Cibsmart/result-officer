@@ -84,7 +84,7 @@ function computeGPA(SemesterEnrollment $semesterEnrollment): float
 
     return ComputeAverage::new(
         $registrations->sum('result.grade_point'),
-        $registrations->sum('credit_unit'),
+        $registrations->sum('credit_unit.value'),
     )->value();
 }
 

@@ -19,7 +19,7 @@ test('semester result data is correct', function (): void {
 
     $registrations = $semesterEnrollment->registrations;
 
-    $totalCU = $registrations->sum('credit_unit');
+    $totalCU = $registrations->sum('credit_unit.value');
     $totalGP = $registrations->sum('result.grade_point');
     $gpa = round($totalGP / $totalCU, 3);
     $totalCUFormatted = str($totalCU)->padLeft(2, '0')->value();
