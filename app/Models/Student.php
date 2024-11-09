@@ -141,13 +141,13 @@ final class Student extends Model
         return $this->hasManyThrough(SemesterEnrollment::class, SessionEnrollment::class);
     }
 
-    public function programCurriculum(): ProgramCurriculum
+    public function programCurriculum(): ?ProgramCurriculum
     {
         return ProgramCurriculum::query()
             ->where('program_id', $this->program->id)
             ->where('entry_session_id', $this->entrySession->id)
             ->where('entry_mode', $this->entry_mode)
-            ->firstOrFail();
+            ->first();
     }
 
     public function allowEGrade(): bool
