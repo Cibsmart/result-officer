@@ -79,9 +79,18 @@ final class Registration extends Model
         return $this->hasOne(Result::class);
     }
 
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumCourse, \App\Models\Registration>
+     */
+    public function programCurriculumCourse(): BelongsTo
+    {
+        return $this->belongsTo(ProgramCurriculumCourse::class);
+    }
+
     public function student(): Student
     {
-        $student = $this->semesterEnrollment->enrollment->student;
+        $student = $this->semesterEnrollment->sessionEnrollment->student;
 
         assert($student instanceof Student);
 
