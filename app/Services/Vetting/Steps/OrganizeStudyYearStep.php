@@ -26,7 +26,7 @@ final readonly class OrganizeStudyYearStep implements VettingService
 
         $vettingStep = VettingStep::getOrCreateUsingVettingEvent($vettingEvent, VettingType::ORGANIZE_STUDY_YEAR);
 
-        $status = $this->action->execute($student);
+        $status = $this->action->execute($student, $vettingStep);
 
         $vettingStep->updateStatusAndRemarks($status, $this->action->report());
     }

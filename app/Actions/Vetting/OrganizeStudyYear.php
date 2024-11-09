@@ -7,17 +7,20 @@ namespace App\Actions\Vetting;
 use App\Enums\VettingStatus;
 use App\Enums\Year;
 use App\Models\Student;
+use App\Models\VettingStep;
 use Illuminate\Support\Collection;
 
 final class OrganizeStudyYear extends ReportVettingStep
 {
-    public function execute(Student $student): VettingStatus
+    public function execute(Student $student, VettingStep $vettingStep): VettingStatus
     {
         $enrollments = $student->sessionEnrollments()->orderBy('session_id')->get();
 
         if ($this->enrollmentYearIsOrganized($enrollments)) {
             return VettingStatus::PASSED;
         }
+
+        $this->createReport($student, $vettingStep, 'Student Study Years Re-Organized');
 
         $currentYear = Year::FIRST;
 
@@ -26,8 +29,6 @@ final class OrganizeStudyYear extends ReportVettingStep
 
             $currentYear = $currentYear->next();
         }
-
-        $this->updateReport('Study Years Re-Organized');
 
         return VettingStatus::PASSED;
     }
