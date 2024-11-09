@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Services\Vetting\Steps;
 
-use App\Actions\Vetting\OrganizeStudyYear;
+use App\Actions\Vetting\MatchCurriculumCourses;
 use App\Contracts\VettingService;
 use App\Enums\VettingType;
 use App\Models\VettingEvent;
 use App\Models\VettingStep;
 
-final readonly class OrganizeStudyYearStep implements VettingService
+final readonly class MatchCurriculumCoursesStep implements VettingService
 {
-    public function __construct(private OrganizeStudyYear $action)
+    public function __construct(private MatchCurriculumCourses $action)
     {
     }
 
@@ -20,7 +20,7 @@ final readonly class OrganizeStudyYearStep implements VettingService
     {
         $student = $vettingEvent->student;
 
-        $vettingStep = VettingStep::getOrCreateUsingVettingEvent($vettingEvent, VettingType::ORGANIZE_STUDY_YEAR);
+        $vettingStep = VettingStep::getOrCreateUsingVettingEvent($vettingEvent, VettingType::MATCH_COURSES);
 
         $status = $this->action->execute($student, $vettingStep);
 
