@@ -6,16 +6,6 @@ parameters:
 			path: app/Data/Composite/CompositeSheetData.php
 
 		-
-			message: "#^Method App\\\\Data\\\\Composite\\\\CompositeSheetData\\:\\:getCourses\\(\\) should return Illuminate\\\\Support\\\\Collection\\<int, array\\{code\\: string, unit\\: int\\}\\> but returns Illuminate\\\\Support\\\\Collection\\<int, array\\{code\\: string, unit\\: mixed\\}\\>\\.$#"
-			count: 1
-			path: app/Data/Composite/CompositeSheetData.php
-
-		-
-			message: "#^Return type of call to method Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int,App\\\\Models\\\\ProgramCurriculumCourse\\>\\:\\:map\\(\\) contains unresolvable type\\.$#"
-			count: 1
-			path: app/Data/Composite/CompositeSheetData.php
-
-		-
 			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Department\\>\\:\\:tap\\(\\) expects callable\\(Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Department\\>\\)\\: mixed, App\\\\Scopes\\\\ActiveScope given\\.$#"
 			count: 1
 			path: app/Data/Department/DepartmentListData.php
@@ -74,11 +64,6 @@ parameters:
 			message: "#^Property App\\\\Models\\\\Result\\:\\:\\$upload_date \\(string\\|null\\) does not accept Carbon\\\\Carbon\\|null\\.$#"
 			count: 1
 			path: app/Models/Result.php
-
-		-
-			message: "#^Method App\\\\Models\\\\Student\\:\\:registrations\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<Illuminate\\\\Database\\\\Eloquent\\\\Model, Illuminate\\\\Database\\\\Eloquent\\\\Model, App\\\\Models\\\\Student\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<Illuminate\\\\Database\\\\Eloquent\\\\Model, Illuminate\\\\Database\\\\Eloquent\\\\Model, \\$this\\(App\\\\Models\\\\Student\\)\\>\\|Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasOneThrough\\<Illuminate\\\\Database\\\\Eloquent\\\\Model, Illuminate\\\\Database\\\\Eloquent\\\\Model, \\$this\\(App\\\\Models\\\\Student\\)\\>\\.$#"
-			count: 1
-			path: app/Models/Student.php
 
 		-
 			message: "#^Property App\\\\Models\\\\Student\\:\\:\\$date_of_birth \\(string\\|null\\) does not accept Carbon\\\\Carbon\\|null\\.$#"
