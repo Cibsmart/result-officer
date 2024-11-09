@@ -16,6 +16,7 @@ use App\Models\Result;
 use App\Models\SemesterEnrollment;
 use App\Models\SessionEnrollment;
 use App\Models\Student;
+use App\Services\Vetting\Steps\CheckCreditUnitStep;
 use App\Services\Vetting\Steps\CheckResultsValidityStep;
 use App\Services\Vetting\Steps\OrganizeStudyYearStep;
 use App\Services\Vetting\Vetting;
@@ -37,6 +38,7 @@ final class AppServiceProvider extends ServiceProvider
         $this->app->bind(Vetting::class, fn ($app) => new Vetting([
             $app->make(OrganizeStudyYearStep::class),
             $app->make(CheckResultsValidityStep::class),
+            $app->make(CheckCreditUnitStep::class),
         ]));
     }
 
