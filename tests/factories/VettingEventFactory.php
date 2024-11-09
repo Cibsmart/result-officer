@@ -17,7 +17,6 @@ final class VettingEventFactory extends Factory
     public function definition(): array
     {
         return [
-            'program_curriculum_id' => ProgramCurriculumFactory::new(),
             'status' => fake()->randomElement(VettingEventStatus::cases()),
             'student_id' => StudentFactory::new(),
         ];
