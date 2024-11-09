@@ -17,7 +17,7 @@ test('course result data is correct', function (): void {
         ->and($resultData->id)->toBe($course->id)
         ->and($resultData->courseCode)->toBe($course->course->code)
         ->and($resultData->courseTitle)->toBe($course->course->title)
-        ->and($resultData->creditUnit)->toBe($course->credit_unit)
+        ->and($resultData->creditUnit)->toBe($course->credit_unit->value)
         ->and($resultData->totalScore)->toBe($course->result->total_score)
         ->and($resultData->grade)->toBe($course->result->grade)
         ->and($resultData->gradePoint)->toBe($course->result->grade_point);

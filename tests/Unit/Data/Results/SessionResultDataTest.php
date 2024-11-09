@@ -34,7 +34,7 @@ test('session result data is correct', function (): void {
         $gradePointAverageTotal +=
             ComputeAverage::new(
                 $courses->sum('result.grade_point'),
-                $courses->sum('credit_unit'),
+                $courses->sum('credit_unit.value'),
             )->value();
     }
 
