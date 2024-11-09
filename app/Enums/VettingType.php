@@ -7,6 +7,7 @@ namespace App\Enums;
 enum VettingType: string
 {
     case ORGANIZE_STUDY_YEAR = 'organize_year';
+    case MATCH_COURSES = 'match_courses';
     case VALIDATE_RESULTS = 'validate_result';
     case CHECK_CREDIT_UNITS = 'credit_units';
     case MATCH_CREDIT_UNITS = 'match_credit';
