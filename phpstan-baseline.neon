@@ -21,6 +21,11 @@ parameters:
 			path: app/Data/Program/ProgramListData.php
 
 		-
+			message: "#^Cannot access property \\$value on int\\.$#"
+			count: 1
+			path: app/Data/Results/ResultData.php
+
+		-
 			message: "#^Cannot call method format\\(\\) on string\\.$#"
 			count: 1
 			path: app/Data/Students/StudentData.php
@@ -49,6 +54,11 @@ parameters:
 			message: "#^Property App\\\\Models\\\\Registration\\:\\:\\$source \\(string\\) does not accept App\\\\Enums\\\\RecordSource\\:\\:PORTAL\\.$#"
 			count: 1
 			path: app/Models/Registration.php
+
+		-
+			message: "#^Cannot access property \\$value on int\\.$#"
+			count: 1
+			path: app/Models/Result.php
 
 		-
 			message: "#^Property App\\\\Models\\\\Result\\:\\:\\$scores \\(string\\) does not accept array\\<string, string\\>\\.$#"
