@@ -13,7 +13,7 @@ final class ProgramCurriculumLevel extends Model
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumSemester, \App\Models\ProgramCurriculumLevel>
      */
-    public function semesters(): HasMany
+    public function programCurriculumSemesters(): HasMany
     {
         return $this->HasMany(ProgramCurriculumSemester::class);
     }

@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 final class ProgramCurriculum extends Model
 {
@@ -31,18 +32,6 @@ final class ProgramCurriculum extends Model
         return $this->belongsTo(Curriculum::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, \App\Models\ProgramCurriculum> */
-    public function level(): BelongsTo
-    {
-        return $this->belongsTo(Level::class);
-    }
-
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Semester,\App\Models\ProgramCurriculum> */
-    public function semester(): BelongsTo
-    {
-        return $this->belongsTo(Semester::class);
-    }
-
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session,\App\Models\ProgramCurriculum> */
     public function session(): BelongsTo
     {
@@ -51,19 +40,28 @@ final class ProgramCurriculum extends Model
 
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumCourse, \App\Models\ProgramCurriculum>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumLevel, \App\Models\ProgramCurriculum>
      */
-    public function courses(): HasMany
+    public function programCurriculumLevels(): HasMany
     {
-        return $this->HasMany(ProgramCurriculumCourse::class);
+        return $this->HasMany(ProgramCurriculumLevel::class);
     }
 
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumLevel, \App\Models\ProgramCurriculum>
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\ProgramCurriculumSemester, \App\Models\ProgramCurriculumLevel, \App\Models\ProgramCurriculum>
      */
-    public function levels(): HasMany
+    public function programCurriculumSemesters(): HasManyThrough
     {
-        return $this->HasMany(ProgramCurriculumLevel::class);
+        return $this->hasManyThrough(ProgramCurriculumSemester::class, ProgramCurriculumLevel::class);
+    }
+
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\Illuminate\Database\Eloquent\Model, \Illuminate\Database\Eloquent\Model, \App\Models\ProgramCurriculum>
+     */
+    public function programCurriculumCourses(): HasManyThrough
+    {
+        return $this->through('programCurriculumSemesters')->has('programCurriculumCourses');
     }
 }
