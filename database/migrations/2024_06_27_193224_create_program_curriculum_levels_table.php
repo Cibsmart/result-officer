@@ -17,7 +17,7 @@ return new class extends Migration
     {
         Schema::create('program_curriculum_levels', function (Blueprint $table): void {
             $table->id();
-            $table->foreignIdFor(ProgramCurriculum::class);
+            $table->foreignIdFor(ProgramCurriculum::class)->constrained();
             $table->foreignIdFor(Level::class)->constrained();
             $table->timestamps();
 

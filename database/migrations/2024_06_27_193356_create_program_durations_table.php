@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Program;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('program_durations', static function (Blueprint $table): void {
             $table->id();
-            $table->foreignId('program_id')->constrained('programs');
+            $table->foreignIdFor(Program::class)->constrained();
             $table->string('entry_mode');
             $table->unsignedSmallInteger('value');
             $table->timestamps();
