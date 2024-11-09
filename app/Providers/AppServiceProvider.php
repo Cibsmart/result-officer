@@ -10,6 +10,7 @@ use App\Contracts\StudentClient;
 use App\Http\Clients\PortalRegistrationClient;
 use App\Http\Clients\PortalResultClient;
 use App\Http\Clients\PortalStudentClient;
+use App\Models\Program;
 use App\Models\ProgramCurriculumCourse;
 use App\Models\Registration;
 use App\Models\Result;
@@ -50,6 +51,7 @@ final class AppServiceProvider extends ServiceProvider
         Model::shouldBeStrict(App::isLocal());
 
         Relation::enforceMorphMap([
+            'program' => Program::class,
             'programCurriculumCourse' => ProgramCurriculumCourse::class,
             'registration' => Registration::class,
             'result' => Result::class,
