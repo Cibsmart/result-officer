@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use App\Actions\Vetting\MatchCurriculumCourses;
 use App\Enums\VettingStatus;
+use App\Enums\VettingType;
+use App\Services\Vetting\Steps\MatchCurriculumCoursesStep;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Tests\Factories\CourseFactory;
 use Tests\Factories\ProgramCurriculumCourseFactory;
@@ -16,13 +18,13 @@ use Tests\Factories\SemesterFactory;
 use Tests\Factories\SessionEnrollmentFactory;
 use Tests\Factories\StudentFactory;
 use Tests\Factories\VettingEventFactory;
-use Tests\Factories\VettingStepFactory;
 
+use function Pest\Laravel\assertDatabaseEmpty;
 use function Pest\Laravel\assertDatabaseHas;
 
-covers(MatchCurriculumCourses::class);
+covers(MatchCurriculumCoursesStep::class);
 
-it('matches student courses with the program curriculum courses', function (): void {
+it('matches matching students courses and passes check', function (): void {
     $semester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
     $course = CourseFactory::new()->createOne();
 
@@ -45,49 +47,22 @@ it('matches student courses with the program curriculum courses', function (): v
     ]);
 
     $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
-    $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
 
     $action = new MatchCurriculumCourses();
-    $status = $action->execute($student, $vettingStep);
+    $step = new MatchCurriculumCoursesStep($action);
 
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
-        ->and($action->report())->toBe('');
-});
+    $step->check($vettingEvent);
 
-it('reports unchecked for program without curriculum', function (): void {
-    $semester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
-    $course = CourseFactory::new()->createOne();
-
-    $student = StudentFactory::new()
-        ->has(SessionEnrollmentFactory::new()
-            ->has(SemesterEnrollmentFactory::new()->state(['semester_id' => $semester->id])
-                ->has(RegistrationFactory::new()->state(['course_id' => $course->id])),
-            ),
-        )->createOne();
-
-    $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
-    $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
-
-    $action = new MatchCurriculumCourses();
-    $status = $action->execute($student, $vettingStep);
-
-    $session = $student->entrySession;
-    $entryMode = $student->entry_mode;
-
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED)
-        ->and($action->report())->toBe(
-            "Curriculum not found for {$student->program->name} {$session->name} ({$entryMode->value})  \n",
-        );
-
-    assertDatabaseHas('vetting_reports', [
-        'status' => VettingStatus::FAILED,
-        'vettable_id' => $student->program->id,
-        'vettable_type' => 'program',
-        'vetting_step_id' => $vettingStep->id,
+    assertDatabaseHas('vetting_steps', [
+        'status' => VettingStatus::PASSED,
+        'type' => VettingType::MATCH_COURSES,
+        'vetting_event_id' => $vettingEvent->id,
     ]);
+
+    assertDatabaseEmpty('vetting_reports');
 });
 
-it('reports unmatched student courses', function (): void {
+it('matches non-matching students courses and fails check', function (): void {
     $semester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
     $course = CourseFactory::new()->createOne();
     $course2 = CourseFactory::new()->createOne();
@@ -112,23 +87,54 @@ it('reports unmatched student courses', function (): void {
     ]);
 
     $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
-    $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
 
     $action = new MatchCurriculumCourses();
-    $status = $action->execute($student, $vettingStep);
+    $step = new MatchCurriculumCoursesStep($action);
 
-    $registration = $student->registrations->last();
-    $session = $registration->semesterEnrollment->sessionEnrollment->session;
+    $step->check($vettingEvent);
 
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
-        ->and($action->report())->toBe(
-            "{$course2->code} in {$session->name} {$semester->name} Semester does not match any course in the curriculum \n",
-        );
+    assertDatabaseHas('vetting_steps', [
+        'status' => VettingStatus::FAILED,
+        'type' => VettingType::MATCH_COURSES,
+        'vetting_event_id' => $vettingEvent->id,
+    ]);
+
+    $vettingStep = $vettingEvent->vettingSteps->first();
 
     assertDatabaseHas('vetting_reports', [
         'status' => VettingStatus::FAILED,
-        'vettable_id' => $registration->id,
-        'vettable_type' => 'registration',
+        'vetting_step_id' => $vettingStep->id,
+    ]);
+});
+
+it('checks and does not match courses for program without curriculum', function (): void {
+    $semester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
+    $course = CourseFactory::new()->createOne();
+
+    $student = StudentFactory::new()
+        ->has(SessionEnrollmentFactory::new()
+            ->has(SemesterEnrollmentFactory::new()->state(['semester_id' => $semester->id])
+                ->has(RegistrationFactory::new()->state(['course_id' => $course->id])),
+            ),
+        )->createOne();
+
+    $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
+
+    $action = new MatchCurriculumCourses();
+    $step = new MatchCurriculumCoursesStep($action);
+
+    $step->check($vettingEvent);
+
+    assertDatabaseHas('vetting_steps', [
+        'status' => VettingStatus::UNCHECKED,
+        'type' => VettingType::MATCH_COURSES,
+        'vetting_event_id' => $vettingEvent->id,
+    ]);
+
+    $vettingStep = $vettingEvent->vettingSteps->first();
+
+    assertDatabaseHas('vetting_reports', [
+        'status' => VettingStatus::FAILED,
         'vetting_step_id' => $vettingStep->id,
     ]);
 });
