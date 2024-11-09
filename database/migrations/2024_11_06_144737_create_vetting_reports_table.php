@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('vettable_type');
             $table->string('status');
             $table->timestamps();
+            $table->softDeletes();
 
-            $table->unique(['vetting_step_id', 'vettable_type', 'vettable_id'], 'vetting_reports_unique');
+            $table->unique(['vetting_step_id', 'vettable_type', 'vettable_id', 'deleted_at'], 'vetting_reports_unique');
         });
     }
 

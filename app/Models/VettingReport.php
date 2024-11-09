@@ -8,9 +8,12 @@ use App\Enums\VettingStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class VettingReport extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = ['vetting_step_id', 'vettable_id', 'vettable_type', 'status'];
 
     public static function updateOrCreateUsingModel(
