@@ -11,7 +11,7 @@ use App\Models\Session;
 use App\Models\Student;
 use App\Models\VettingStep;
 
-final class VerifyCreditUnitLimits extends ReportVettingStep
+final class VerifySemesterCreditLimits extends ReportVettingStep
 {
     public function execute(Student $student, VettingStep $vettingStep): VettingStatus
     {

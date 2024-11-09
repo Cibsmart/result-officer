@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Actions\Vetting\VerifyCreditUnitLimits;
+use App\Actions\Vetting\VerifySemesterCreditLimits;
 use App\Enums\VettingStatus;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Tests\Factories\RegistrationFactory;
@@ -16,7 +16,7 @@ use Tests\Factories\VettingStepFactory;
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseEmpty;
 
-covers(VerifyCreditUnitLimits::class);
+covers(VerifySemesterCreditLimits::class);
 
 it('checks and reports passed for student result semester total unit within limit', function (): void {
     $firstSemester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
@@ -26,7 +26,7 @@ it('checks and reports passed for student result semester total unit within limi
         ->has(SessionEnrollmentFactory::new()
             ->has(SemesterEnrollmentFactory::new()->count(2)->state(new Sequence(
                 ['semester_id' => $firstSemester->id],
-                ['semester_id' => $secondSemester->id], ))
+                ['semester_id' => $secondSemester->id],))
                 ->has(RegistrationFactory::new()->count(8)->state(['credit_unit' => 3])),
             ),
         )->createOne();
@@ -34,7 +34,7 @@ it('checks and reports passed for student result semester total unit within limi
     $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
     $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
 
-    $action = new VerifyCreditUnitLimits();
+    $action = new VerifySemesterCreditLimits();
 
     $status = $action->execute($student, $vettingStep);
 
@@ -57,7 +57,7 @@ it('checks and report failed for student result semester total unit above limit'
     $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
     $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
 
-    $action = new VerifyCreditUnitLimits();
+    $action = new VerifySemesterCreditLimits();
 
     $status = $action->execute($student, $vettingStep);
 
@@ -80,7 +80,7 @@ it('checks and report failed for student result semester total unit below limit'
     $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
     $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
 
-    $action = new VerifyCreditUnitLimits();
+    $action = new VerifySemesterCreditLimits();
 
     $status = $action->execute($student, $vettingStep);
 
@@ -96,7 +96,7 @@ it('checks and report unchecked for student without enrollments', function (): v
     $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
     $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
 
-    $action = new VerifyCreditUnitLimits();
+    $action = new VerifySemesterCreditLimits();
 
     $status = $action->execute($student, $vettingStep);
 

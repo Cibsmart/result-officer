@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use App\Actions\Vetting\VerifyCreditUnitLimits;
+use App\Actions\Vetting\VerifySemesterCreditLimits;
 use App\Enums\VettingStatus;
 use App\Enums\VettingType;
-use App\Services\Vetting\Steps\CheckCreditUnitStep;
+use App\Services\Vetting\Steps\CheckSemesterCreditLimitsStep;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Tests\Factories\RegistrationFactory;
 use Tests\Factories\SemesterEnrollmentFactory;
@@ -17,7 +17,7 @@ use Tests\Factories\VettingEventFactory;
 use function Pest\Laravel\assertDatabaseEmpty;
 use function Pest\Laravel\assertDatabaseHas;
 
-covers(CheckCreditUnitStep::class);
+covers(CheckSemesterCreditLimitsStep::class);
 
 it('checks students semester credit unit within credit limit with passed status', function (): void {
     $firstSemester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
@@ -34,14 +34,14 @@ it('checks students semester credit unit within credit limit with passed status'
 
     $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
 
-    $action = new VerifyCreditUnitLimits();
-    $step = new CheckCreditUnitStep($action);
+    $action = new VerifySemesterCreditLimits();
+    $step = new CheckSemesterCreditLimitsStep($action);
 
     $step->check($vettingEvent);
 
     assertDatabaseHas('vetting_steps', [
         'status' => VettingStatus::PASSED,
-        'type' => VettingType::CHECK_CREDIT_UNITS,
+        'type' => VettingType::CHECK_SEMESTER_CREDIT_UNITS,
         'vetting_event_id' => $vettingEvent->id,
     ]);
 
@@ -63,15 +63,15 @@ it('checks students semester results below minimum credit limit with failed stat
 
     $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
 
-    $action = new VerifyCreditUnitLimits();
-    $step = new CheckCreditUnitStep($action);
+    $action = new VerifySemesterCreditLimits();
+    $step = new CheckSemesterCreditLimitsStep($action);
 
     $step->check($vettingEvent);
 
     assertDatabaseHas('vetting_steps', [
         'message' => $action->report(),
         'status' => VettingStatus::FAILED,
-        'type' => VettingType::CHECK_CREDIT_UNITS,
+        'type' => VettingType::CHECK_SEMESTER_CREDIT_UNITS,
         'vetting_event_id' => $vettingEvent->id,
     ]);
 
@@ -86,14 +86,14 @@ it('checks students semester results below minimum credit limit with failed stat
 it('checks students without results with unchecked status', function (): void {
     $vettingEvent = VettingEventFactory::new()->createOne();
 
-    $action = new VerifyCreditUnitLimits();
-    $step = new CheckCreditUnitStep($action);
+    $action = new VerifySemesterCreditLimits();
+    $step = new CheckSemesterCreditLimitsStep($action);
 
     $step->check($vettingEvent);
 
     assertDatabaseHas('vetting_steps', [
         'status' => VettingStatus::UNCHECKED,
-        'type' => VettingType::CHECK_CREDIT_UNITS,
+        'type' => VettingType::CHECK_SEMESTER_CREDIT_UNITS,
         'vetting_event_id' => $vettingEvent->id,
     ]);
 
