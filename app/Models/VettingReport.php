@@ -33,6 +33,14 @@ final class VettingReport extends Model
         );
     }
 
+    public static function clearFailedReportForStep(VettingStep $vettingStep): void
+    {
+        self::query()
+            ->where('vetting_step_id', $vettingStep->id)
+            ->where('status', VettingStatus::FAILED)
+            ->delete();
+    }
+
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo<\Illuminate\Database\Eloquent\Model, \App\Models\VettingReport>
