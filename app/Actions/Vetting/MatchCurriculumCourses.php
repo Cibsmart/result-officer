@@ -42,11 +42,16 @@ final class MatchCurriculumCourses extends ReportVettingStep
 
     private function updateProgramCurriculumId(ProgramCurriculum $curriculum, Student $student): void
     {
-        $programCurriculumCourses = $curriculum->programCurriculumCourses;
+        /** @var \Illuminate\Support\Collection<int, \App\Models\ProgramCurriculumCourse> $programCurriculumCourses */
+        $programCurriculumCourses = $curriculum->programCurriculumCourses()->with('course')->get();
         $registrations = $student->registrations()->whereNull('program_curriculum_course_id')->get();
 
         foreach ($programCurriculumCourses as $programCurriculumCourse) {
             $course = $programCurriculumCourse->course;
+
+            if ($registrations->where('course_id', $course->id)->isEmpty()) {
+                continue;
+            }
 
             $registrations->where('course_id', $course->id)->toQuery()
                 ->update(['program_curriculum_course_id' => $programCurriculumCourse->id]);
@@ -56,7 +61,7 @@ final class MatchCurriculumCourses extends ReportVettingStep
     private function checkAndReportUnMatchedCourses(Student $student, VettingStep $vettingStep): bool
     {
         $registrations = $student->registrations()
-            ->with('semesterEnrollment.semester', 'semesterEnrollment.sessionEnrollment.session')
+            ->with('course', 'semesterEnrollment.semester', 'semesterEnrollment.sessionEnrollment.session')
             ->whereNull('program_curriculum_course_id')
             ->get();
 
