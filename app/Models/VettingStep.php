@@ -24,7 +24,7 @@ final class VettingStep extends Model
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\VettingReport, \App\Models\VettingStep> */
-    public function reports(): HasMany
+    public function vettingRports(): HasMany
     {
         return $this->hasMany(VettingReport::class, 'vetting_step_id');
     }
@@ -37,6 +37,10 @@ final class VettingStep extends Model
 
     public function updateStatusAndRemarks(VettingStatus $status, string $message): void
     {
+        if ($status === VettingStatus::PASSED && $this->failureReports()) {
+            VettingReport::clearFailedReportForStep($this);
+        }
+
         $this->status = $status;
         $this->message = $message;
         $this->save();
@@ -48,5 +52,12 @@ final class VettingStep extends Model
         return [
             'status' => VettingStatus::class,
         ];
+    }
+
+    private function failureReports(): bool
+    {
+        return $this->vettingRports()
+            ->where('status', VettingStatus::FAILED)
+            ->exists();
     }
 }
