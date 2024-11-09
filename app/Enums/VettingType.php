@@ -10,8 +10,8 @@ enum VettingType: string
     case MATCH_COURSES = 'match_courses';
     case VALIDATE_RESULTS = 'validate_result';
     case CHECK_CREDIT_UNITS = 'credit_units';
-    case MATCH_CREDIT_UNITS = 'match_credit';
-    case CHECK_FIRST_YEAR_COURSES = 'first_year_courses';
+    case CHECK_SEMESTER_CREDIT_UNITS = 'semester_credit';
+    case CHECK_FIRST_YEAR_COURSES = 'first_year';
     case CHECK_CURRICULUM_COURSES = 'curriculum_courses';
     case CHECK_TAKEN_COURSES = 'taken_courses';
     case CHECK_OTHER_COURSES = 'other_courses';

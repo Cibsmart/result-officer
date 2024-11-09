@@ -17,8 +17,8 @@ use App\Models\Result;
 use App\Models\SemesterEnrollment;
 use App\Models\SessionEnrollment;
 use App\Models\Student;
-use App\Services\Vetting\Steps\CheckCreditUnitStep;
 use App\Services\Vetting\Steps\CheckResultsValidityStep;
+use App\Services\Vetting\Steps\CheckSemesterCreditLimitsStep;
 use App\Services\Vetting\Steps\MatchCurriculumCoursesStep;
 use App\Services\Vetting\Steps\OrganizeStudyYearStep;
 use App\Services\Vetting\Vetting;
@@ -41,7 +41,7 @@ final class AppServiceProvider extends ServiceProvider
             $app->make(OrganizeStudyYearStep::class),
             $app->make(MatchCurriculumCoursesStep::class),
             $app->make(CheckResultsValidityStep::class),
-            $app->make(CheckCreditUnitStep::class),
+            $app->make(CheckSemesterCreditLimitsStep::class),
         ]));
     }
 

@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Services\Vetting\Steps;
 
-use App\Actions\Vetting\VerifyCreditUnitLimits;
+use App\Actions\Vetting\VerifySemesterCreditLimits;
 use App\Contracts\VettingService;
 use App\Enums\VettingType;
 use App\Models\VettingEvent;
 use App\Models\VettingStep;
 
-final class CheckCreditUnitStep implements VettingService
+final class CheckSemesterCreditLimitsStep implements VettingService
 {
-    public function __construct(private VerifyCreditUnitLimits $action)
+    public function __construct(private VerifySemesterCreditLimits $action)
     {
     }
 
@@ -20,7 +20,8 @@ final class CheckCreditUnitStep implements VettingService
     {
         $student = $vettingEvent->student;
 
-        $vettingStep = VettingStep::getOrCreateUsingVettingEvent($vettingEvent, VettingType::CHECK_CREDIT_UNITS);
+        $vettingStep = VettingStep::getOrCreateUsingVettingEvent($vettingEvent,
+            VettingType::CHECK_SEMESTER_CREDIT_UNITS);
 
         $status = $this->action->execute($student, $vettingStep);
 
