@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
@@ -131,6 +132,12 @@ final class Program extends Model
     public static function getUsingCode(string $programCode): self
     {
         return self::query()->where('code', $programCode)->firstOrFail();
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\Program> */
+    public function vettable(): MorphMany
+    {
+        return $this->MorphMany(VettingReport::class, 'vettable');
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Department, \App\Models\Program> */
