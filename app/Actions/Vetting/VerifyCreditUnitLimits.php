@@ -7,6 +7,7 @@ namespace App\Actions\Vetting;
 use App\Enums\CreditUnit;
 use App\Enums\VettingStatus;
 use App\Models\SemesterEnrollment;
+use App\Models\Session;
 use App\Models\Student;
 use App\Models\VettingStep;
 
@@ -24,8 +25,10 @@ final class VerifyCreditUnitLimits extends ReportVettingStep
 
             $semesterEnrollments = $sessionEnrollment->semesterEnrollments;
 
+            $session = $sessionEnrollment->session;
+
             foreach ($semesterEnrollments as $semesterEnrollment) {
-                $passed = $this->performSemesterCreditUnitCheck($semesterEnrollment, $vettingStep) && $passed;
+                $passed = $this->performSemesterCreditUnitCheck($semesterEnrollment, $vettingStep, $session) && $passed;
             }
         }
 
@@ -37,11 +40,11 @@ final class VerifyCreditUnitLimits extends ReportVettingStep
     public function performSemesterCreditUnitCheck(
         SemesterEnrollment $semesterEnrollment,
         VettingStep $vettingStep,
+        Session $session,
     ): bool {
         $creditUnitSum = $semesterEnrollment->registrations()->sum('credit_unit');
 
         $semester = $semesterEnrollment->semester;
-        $session = $semesterEnrollment->sessionEnrollment->session;
 
         $minSemesterTotalCreditUnit = CreditUnit::minSemesterUnit()->value;
         $maxSemesterTotalCreditUnit = CreditUnit::maxSemesterUnit()->value;
