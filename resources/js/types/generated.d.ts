@@ -336,10 +336,11 @@ declare namespace App.Enums {
     | "validate_result"
     | "credit_units"
     | "semester_credit"
+    | "first_year"
     | "student_courses"
+    | "elective_courses"
     | "failed_courses"
-    | "other_courses"
-    | "elective_courses";
+    | "other_courses";
   export type Year = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 }
 declare namespace App.ViewModels.Downloads {
