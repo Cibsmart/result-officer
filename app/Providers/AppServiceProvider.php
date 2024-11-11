@@ -7,6 +7,7 @@ namespace App\Providers;
 use App\Contracts\RegistrationClient;
 use App\Contracts\ResultClient;
 use App\Contracts\StudentClient;
+use App\Enums\VettingType;
 use App\Http\Clients\PortalRegistrationClient;
 use App\Http\Clients\PortalResultClient;
 use App\Http\Clients\PortalStudentClient;
@@ -37,12 +38,18 @@ final class AppServiceProvider extends ServiceProvider
         $this->app->bind(ResultClient::class, PortalResultClient::class);
         $this->app->bind(StudentClient::class, PortalStudentClient::class);
         $this->app->bind(RegistrationClient::class, PortalRegistrationClient::class);
-        $this->app->bind(Vetting::class, fn ($app) => new Vetting([
-            $app->make(OrganizeStudyYearStep::class),
-            $app->make(MatchCurriculumCoursesStep::class),
-            $app->make(CheckResultsValidityStep::class),
-            $app->make(CheckSemesterCreditLimitsStep::class),
-        ]));
+
+        $this->app->bind(Vetting::class, function ($app) {
+            // phpcs:ignore SlevomatCodingStandard.Arrays.AlphabeticallySortedByKeys
+            $steps = [
+                VettingType::ORGANIZE_STUDY_YEAR->value => $app->make(OrganizeStudyYearStep::class),
+                VettingType::MATCH_COURSES->value => $app->make(MatchCurriculumCoursesStep::class),
+                VettingType::VALIDATE_RESULTS->value => $app->make(CheckResultsValidityStep::class),
+                VettingType::CHECK_SEMESTER_CREDIT_UNITS->value => $app->make(CheckSemesterCreditLimitsStep::class),
+            ];
+
+            return new Vetting($steps);
+        });
     }
 
     /**

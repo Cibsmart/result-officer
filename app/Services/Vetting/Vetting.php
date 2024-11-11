@@ -9,7 +9,7 @@ use App\Models\VettingEvent;
 
 final readonly class Vetting
 {
-    /** @param array<int, \App\Contracts\VettingService> $vettingSteps */
+    /** @param array<string, \App\Contracts\VettingService> $vettingSteps */
     public function __construct(private array $vettingSteps)
     {
     }
@@ -18,7 +18,8 @@ final readonly class Vetting
     {
         $vettingEvent->updateStatus(VettingEventStatus::VETTING);
 
-        foreach ($this->vettingSteps as $step) {
+        foreach ($this->vettingSteps as $type => $step) {
+            dump($type);
             $step->check($vettingEvent);
         }
 
