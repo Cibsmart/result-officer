@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('raw_courses', function (Blueprint $table): void {
             $table->id();
             $table->foreignIdFor(ImportEvent::class);
-            $table->string('online_id');
+            $table->unsignedBigInteger('online_id');
             $table->string('code');
             $table->string('title');
             $table->string('status');
