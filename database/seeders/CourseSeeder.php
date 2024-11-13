@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Helpers\CSVFile;
 use App\Models\Course;
+use App\Models\RawCourseAlternative;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -27,12 +28,25 @@ final class CourseSeeder extends Seeder
                 continue;
             }
 
+            $online_id = $course['online_id'];
+
             Course::query()->create([
                 'active' => true,
                 'code' => $code,
-                'online_id' => $course['online_id'],
+                'online_id' => $online_id,
                 'title' => $title,
             ]);
+
+            $alternatives = $course['alternatives'];
+
+            $alternativeIds = Str::of($alternatives)->explode(',')->filter();
+
+            foreach ($alternativeIds as $alternativeId) {
+                RawCourseAlternative::query()->create([
+                    'alternative_course_id' => $online_id,
+                    'original_course_id' => $alternativeId,
+                ]);
+            }
         }
     }
 }
