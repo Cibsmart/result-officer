@@ -7,6 +7,7 @@ namespace App\Actions\Import\Registrations;
 use App\Enums\RawDataStatus;
 use App\Models\Course;
 use App\Models\Level;
+use App\Models\RawCourseAlternative;
 use App\Models\RawRegistration;
 use App\Models\Registration;
 use App\Models\Semester;
@@ -20,11 +21,17 @@ final class ProcessPortalRegistration
     /** @throws \Exception */
     public function execute(RawRegistration $rawRegistration): void
     {
+        $alternativeOnlineCourseId = RawCourseAlternative::getAlternativeOnlineCourseId($rawRegistration->course_id);
+
+        $onlineCourseId = $alternativeOnlineCourseId === null
+            ? $rawRegistration->course_id
+            : $alternativeOnlineCourseId->alternative_course_id;
+
         $student = Student::getUsingRegistrationNumber($rawRegistration->registration_number);
         $session = Session::getUsingName($rawRegistration->session);
         $level = Level::getUsingName($rawRegistration->level);
         $semester = Semester::getUsingName($rawRegistration->semester);
-        $course = Course::getUsingOnlineId((string) $rawRegistration->course_id);
+        $course = Course::getUsingOnlineId((string) $onlineCourseId);
 
         $sessionEnrollment = SessionEnrollment::getOrCreate($student, $session, $level);
         $semesterEnrollment = SemesterEnrollment::getOrCreate($sessionEnrollment, $semester);
