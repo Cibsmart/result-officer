@@ -46,7 +46,7 @@ final class Result extends Model
 
         $scores = [
             'exam' => $rawResult->exam,
-            'in-course' => $rawResult->in_course,
+            'in_course' => $rawResult->in_course,
         ];
 
         $result = new self();

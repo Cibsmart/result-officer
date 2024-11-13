@@ -102,7 +102,7 @@ final class ResultSeeder extends Seeder
                 'registration_id' => $registration->id,
                 'scores' => json_encode([
                     'exam' => $semesterResult['exam_score'],
-                    'in-course' => $semesterResult['in_course_score'],
+                    'in_course' => $semesterResult['in_course_score'],
                 ]),
                 'total_score' => $score->value,
             ]);
