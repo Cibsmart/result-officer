@@ -19,6 +19,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(ProgramCurriculumLevel::class)->constrained();
             $table->foreignIdFor(Semester::class)->constrained();
+            $table->unsignedSmallInteger('minimum_elective_count')->default(0);
             $table->unsignedSmallInteger('minimum_elective_units')->default(0);
             $table->timestamps();
 
