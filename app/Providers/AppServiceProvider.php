@@ -13,6 +13,7 @@ use App\Http\Clients\PortalResultClient;
 use App\Http\Clients\PortalStudentClient;
 use App\Models\Program;
 use App\Models\ProgramCurriculumCourse;
+use App\Models\ProgramCurriculumSemester;
 use App\Models\Registration;
 use App\Models\Result;
 use App\Models\SemesterEnrollment;
@@ -62,6 +63,7 @@ final class AppServiceProvider extends ServiceProvider
         Relation::enforceMorphMap([
             'program' => Program::class,
             'programCurriculumCourse' => ProgramCurriculumCourse::class,
+            'programCurriculumSemester' => ProgramCurriculumSemester::class,
             'registration' => Registration::class,
             'result' => Result::class,
             'semesterEnrollment' => SemesterEnrollment::class,
