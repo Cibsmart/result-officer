@@ -6,10 +6,21 @@ namespace App\Models;
 
 use App\Enums\CreditUnit;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 final class ProgramCurriculumSemester extends Model
 {
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\ProgramCurriculumCourse>
+     */
+    public function vettable(): MorphMany
+    {
+        return $this->MorphMany(VettingReport::class, 'vettable');
+    }
+
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumCourse, \App\Models\ProgramCurriculumSemester>
@@ -17,6 +28,24 @@ final class ProgramCurriculumSemester extends Model
     public function programCurriculumCourses(): HasMany
     {
         return $this->HasMany(ProgramCurriculumCourse::class);
+    }
+
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumLevel, \App\Models\ProgramCurriculumSemester>
+     */
+    public function programCurriculumLevel(): BelongsTo
+    {
+        return $this->belongsTo(ProgramCurriculumLevel::class);
+    }
+
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Semester, \App\Models\ProgramCurriculumSemester>
+     */
+    public function semester(): BelongsTo
+    {
+        return $this->belongsTo(Semester::class);
     }
 
     /** @return array{minimum_elective_units: 'App\Enums\CreditUnit'} */
