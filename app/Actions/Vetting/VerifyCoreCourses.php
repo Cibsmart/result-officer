@@ -15,6 +15,7 @@ final class VerifyCoreCourses extends ReportVettingStep
 {
     public function execute(Student $student, VettingStep $vettingStep): VettingStatus
     {
+        /** @var Collection<int, \App\Models\Registration> $registrations */
         $registrations = $student->registrations()
             ->whereNotNull('program_curriculum_course_id')
             ->get();
