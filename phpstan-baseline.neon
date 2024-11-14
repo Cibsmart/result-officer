@@ -1,6 +1,11 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Parameter \\#1 \\$column of method Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<App\\\\Models\\\\ProgramCurriculumSemester,App\\\\Models\\\\ProgramCurriculumLevel,App\\\\Models\\\\ProgramCurriculum\\>\\:\\:where\\(\\) expects array\\<int\\|string, mixed\\>\\|\\(Closure\\(Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough\\<App\\\\Models\\\\ProgramCurriculumSemester, App\\\\Models\\\\ProgramCurriculumLevel, App\\\\Models\\\\ProgramCurriculum\\>\\)\\: mixed\\)\\|Illuminate\\\\Contracts\\\\Database\\\\Query\\\\Expression\\|string, Closure\\(Illuminate\\\\Database\\\\Eloquent\\\\Builder\\)\\: Illuminate\\\\Database\\\\Eloquent\\\\Builder given\\.$#"
+			count: 1
+			path: app/Actions/Vetting/VerifyElectiveCourses.php
+
+		-
 			message: "#^Cannot access property \\$value on int\\.$#"
 			count: 1
 			path: app/Data/Composite/CompositeSheetData.php
