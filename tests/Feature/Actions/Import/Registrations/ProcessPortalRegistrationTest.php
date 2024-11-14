@@ -22,7 +22,7 @@ covers(ProcessPortalRegistration::class);
 it('can process raw registration and save into the registrations table', function (): void {
     $course = CourseFactory::new()->createOne(['online_id' => 1]);
 
-    $rawRegistration = RawRegistrationFactory::new()->createOne(['course_id' => $course->id]);
+    $rawRegistration = RawRegistrationFactory::new()->createOne(['course_id' => (string) $course->id]);
 
     (new ProcessPortalRegistration())->execute($rawRegistration);
 
@@ -56,7 +56,7 @@ it('does not save save duplicate registration into the registrations table', fun
 
     $rawRegistration = RawRegistrationFactory::new()->createOne(
         [
-            'course_id' => $course->id,
+            'course_id' => (string) $course->id,
             'level' => $level->name,
             'registration_number' => $student->registration_number,
             'semester' => $semester->name,

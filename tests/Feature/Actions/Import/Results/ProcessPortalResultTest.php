@@ -33,7 +33,7 @@ it('can process raw result and save into the results table', function (): void {
         'grade' => $rawResult->grade,
         'registration_id' => $rawResult->online_id,
         'scores' => json_encode([
-            'exam' => $rawResult->exam, 'in-course' => $rawResult->in_course,
+            'exam' => $rawResult->exam, 'in_course' => $rawResult->in_course,
         ]),
         'source' => RecordSource::PORTAL,
         'total_score' => $rawResult->total,
