@@ -103,6 +103,9 @@ final class ProgramCurriculumSeeder extends Seeder
                     'minimum_elective_units' => CreditUnit::from(
                         (int) $semesterCourses->first()['minimum_elective_units'],
                     ),
+                    'minimum_elective_count' => CreditUnit::from(
+                        (int) $semesterCourses->first()['minimum_elective_count'],
+                    ),
                 ],
             );
 
