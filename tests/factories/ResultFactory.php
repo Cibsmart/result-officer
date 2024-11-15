@@ -20,7 +20,7 @@ final class ResultFactory extends Factory
     {
         $inCourse = fake()->numberBetween(0, 30);
         $exam = fake()->numberBetween(0, 70);
-        $scores = ['in-course' => $inCourse, 'exam' => $exam];
+        $scores = ['in_course' => $inCourse, 'exam' => $exam];
         $score = TotalScore::new($inCourse + $exam);
         $grade = Grade::for($score, fake()->randomElement([true, false]));
         $data = '';
