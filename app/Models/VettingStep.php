@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Enums\VettingStatus;
 use App\Enums\VettingType;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class VettingStep extends Model
@@ -21,6 +22,12 @@ final class VettingStep extends Model
             ['vetting_event_id' => $vettingEvent->id, 'type' => $vettingType],
             ['status' => VettingStatus::NEW],
         );
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\VettingEvent, \App\Models\VettingStep> */
+    public function vettingEvent(): BelongsTo
+    {
+        return $this->belongsTo(VettingEvent::class);
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\VettingReport, \App\Models\VettingStep> */
