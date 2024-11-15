@@ -33,11 +33,11 @@ final class ProgramCurriculumCourse extends Model
 
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculum,\App\Models\ProgramCurriculumCourse>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumSemester,\App\Models\ProgramCurriculumCourse>
      */
-    public function programCurriculum(): BelongsTo
+    public function programCurriculumSemester(): BelongsTo
     {
-        return $this->belongsTo(ProgramCurriculum::class);
+        return $this->belongsTo(ProgramCurriculumSemester::class);
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Course,\App\Models\ProgramCurriculumCourse> */
