@@ -15,6 +15,12 @@ enum Grade: string
     case E = 'E';
     case F = 'F';
 
+    /** @return array<int, \App\Enums\Grade> */
+    public static function passGrade(): array
+    {
+        return [self::A, self::B, self::C, self::D, self::E];
+    }
+
     public static function for(TotalScore $score, bool $isEGradeAllowed = true): self
     {
         return match (true) {
