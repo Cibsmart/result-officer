@@ -43,7 +43,7 @@ it('reports failed courses not checked for student without results', function ()
     assertDatabaseCount(VettingReport::class, 1);
 });
 
-it('reports failed courses check failed for student who registered a course without result', function (): void {
+it('reports failed courses check failed for student who have not passed all failed course', function (): void {
     $student = StudentFactory::new()
         ->has(SessionEnrollmentFactory::new()->state(['year' => Year::FIRST])
             ->has(SemesterEnrollmentFactory::new()
