@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Queries;
 
+use App\Data\Query\StudentCoursesData;
 use App\Models\Student;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
@@ -25,7 +26,7 @@ final class StudentCourses
             ->join('semesters', 'semester_enrollments.semester_id', '=', 'semesters.id')
             ->join('courses', 'registrations.course_id', '=', 'courses.id')
             ->select(
-                'registrations.id as registration_id', 'academic_sessions.name as session',
+                'students.id', 'registrations.id as registration_id', 'academic_sessions.name as session',
                 'semesters.name as semester', 'courses.id as course_id', 'courses.code as course_code',
                 'courses.title as course_title', 'registrations.credit_unit', 'registrations.course_status',
                 'results.total_score', 'results.grade', 'results.grade_point', 'academic_sessions.id as session_id',
@@ -46,8 +47,9 @@ final class StudentCourses
         return $this->query;
     }
 
+    /** @return \Illuminate\Support\Collection<int, \App\Data\Query\StudentCoursesData> */
     public function get(): Collection
     {
-        return $this->query->get();
+        return StudentCoursesData::collect($this->query->get());
     }
 }
