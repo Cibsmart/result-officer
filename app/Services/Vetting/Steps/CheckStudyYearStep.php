@@ -8,7 +8,7 @@ use App\Actions\Vetting\OrganizeStudyYear;
 use App\Contracts\VettingService;
 use App\Models\VettingEvent;
 
-final readonly class OrganizeStudyYearStep implements VettingService
+final readonly class CheckStudyYearStep implements VettingService
 {
     public function __construct(private OrganizeStudyYear $action)
     {
