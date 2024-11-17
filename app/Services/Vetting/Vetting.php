@@ -19,7 +19,6 @@ final readonly class Vetting
         $vettingEvent->updateStatus(VettingEventStatus::VETTING);
 
         foreach ($this->vettingSteps as $type => $step) {
-            dump($type);
             $step->check($vettingEvent);
         }
 

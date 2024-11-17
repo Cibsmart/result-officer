@@ -25,6 +25,11 @@ abstract class ReportVettingStep
         return $this->message;
     }
 
+    public function vettingStep(): VettingStep
+    {
+        return $this->vettingStep;
+    }
+
     public function updateReport(string $message): void
     {
         $this->message .= $message;

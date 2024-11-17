@@ -98,7 +98,9 @@ it('reports failed courses check passed for student who have passed all failed c
     $semester = SemesterFactory::new()->createOne(['name' => 'FIRST']);
     $course = CourseFactory::new()->createOne();
 
-    $student = StudentFactory::new()->has(VettingEventFactory::new())->createOne(['entry_session_id' => $sessions[0]->id]);
+    $student = StudentFactory::new()->has(VettingEventFactory::new())->createOne(
+        ['entry_session_id' => $sessions[0]->id],
+    );
 
     SessionEnrollmentFactory::new()->for($student)
         ->has(SemesterEnrollmentFactory::new()->state(['semester_id' => $semester->id])
