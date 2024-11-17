@@ -21,8 +21,8 @@ use App\Models\SessionEnrollment;
 use App\Models\Student;
 use App\Services\Vetting\Steps\CheckResultsValidityStep;
 use App\Services\Vetting\Steps\CheckSemesterCreditLimitsStep;
+use App\Services\Vetting\Steps\CheckStudyYearStep;
 use App\Services\Vetting\Steps\MatchCurriculumCoursesStep;
-use App\Services\Vetting\Steps\OrganizeStudyYearStep;
 use App\Services\Vetting\Vetting;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -43,7 +43,7 @@ final class AppServiceProvider extends ServiceProvider
         $this->app->bind(Vetting::class, function ($app) {
             // phpcs:ignore SlevomatCodingStandard.Arrays.AlphabeticallySortedByKeys
             $steps = [
-                VettingType::ORGANIZE_STUDY_YEAR->value => $app->make(OrganizeStudyYearStep::class),
+                VettingType::ORGANIZE_STUDY_YEAR->value => $app->make(CheckStudyYearStep::class),
                 VettingType::MATCH_COURSES->value => $app->make(MatchCurriculumCoursesStep::class),
                 VettingType::VALIDATE_RESULTS->value => $app->make(CheckResultsValidityStep::class),
                 VettingType::CHECK_SEMESTER_CREDIT_UNITS->value => $app->make(CheckSemesterCreditLimitsStep::class),
