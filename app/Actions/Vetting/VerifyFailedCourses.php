@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Actions\Vetting;
 
+use App\Data\Query\StudentCoursesData;
 use App\Enums\Grade;
 use App\Enums\VettingStatus;
 use App\Models\Registration;
 use App\Models\Student;
 use App\Models\VettingStep;
 use App\Queries\StudentCourses;
+use Illuminate\Support\Collection;
 
 final class VerifyFailedCourses extends ReportVettingStep
 {
@@ -17,9 +19,9 @@ final class VerifyFailedCourses extends ReportVettingStep
     {
         //        $this->createVettingStep($student, VettingType::CHECK_FAILED_COURSES):
 
-        $results = StudentCourses::for($student)->get();
+        $courses = StudentCourses::for($student)->get();
 
-        if ($results->isEmpty()) {
+        if ($courses->isEmpty()) {
             $message = "Failed courses not checked for {$student->registration_number}\n";
 
             $this->createReport($student, $vettingStep, $message);
@@ -27,32 +29,15 @@ final class VerifyFailedCourses extends ReportVettingStep
             return VettingStatus::UNCHECKED;
         }
 
-        $failedCourses = [];
-
-        foreach ($results as $result) {
-            if ($result->grade === Grade::F->value || $result->grade === null) {
-                $failedCourses[$result->course_id] = $result;
-
-                continue;
-            }
-
-            if (
-                ! array_key_exists($result->course_id, $failedCourses)
-                || ($result->session_id <= $failedCourses[$result->course_id]->session_id)
-            ) {
-                continue;
-            }
-
-            unset($failedCourses[$result->course_id]);
-        }
+        $failedCourses = $this->getFailedCourses($courses);
 
         $passed = true;
 
         foreach ($failedCourses as $failedCourse) {
-            $message = "Failed {$failedCourse->course_code} in {$failedCourse->session} {$failedCourse->semester}";
+            $message = "Failed {$failedCourse->courseCode} in {$failedCourse->session} {$failedCourse->semester}";
             $message .= " Semester\n";
 
-            $registration = Registration::query()->find($failedCourse->registration_id);
+            $registration = Registration::query()->find($failedCourse->registrationId);
 
             $this->createReport($registration, $vettingStep, $message);
 
@@ -62,5 +47,37 @@ final class VerifyFailedCourses extends ReportVettingStep
         return $passed
             ? VettingStatus::PASSED
             : VettingStatus::FAILED;
+    }
+
+    /**
+     * @param \Illuminate\Support\Collection<int, \App\Data\Query\StudentCoursesData> $courses
+     * @return \Illuminate\Support\Collection<int, \App\Data\Query\StudentCoursesData>
+     */
+    private function getFailedCourses(Collection $courses): Collection
+    {
+        $failedCourses = [];
+
+        foreach ($courses as $course) {
+            if (! in_array($course->grade, Grade::passGrade(), true)) {
+                $failedCourses[$course->courseId] = $course;
+
+                continue;
+            }
+
+            if (! $this->passedFailedCourse($course, $failedCourses)) {
+                continue;
+            }
+
+            unset($failedCourses[$course->courseId]);
+        }
+
+        return collect($failedCourses);
+    }
+
+    /** @param array<int, \App\Data\Query\StudentCoursesData> $failedCourses */
+    private function passedFailedCourse(StudentCoursesData $course, array $failedCourses): bool
+    {
+        return array_key_exists($course->courseId, $failedCourses)
+            && ($course->sessionId > $failedCourses[$course->courseId]->sessionId);
     }
 }
