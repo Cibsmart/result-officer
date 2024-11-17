@@ -19,6 +19,11 @@ use App\Models\Result;
 use App\Models\SemesterEnrollment;
 use App\Models\SessionEnrollment;
 use App\Models\Student;
+use App\Services\Vetting\Steps\CheckCoreCoursesStep;
+use App\Services\Vetting\Steps\CheckCreditUnitsStep;
+use App\Services\Vetting\Steps\CheckElectiveCoursesStep;
+use App\Services\Vetting\Steps\CheckFailedCoursesStep;
+use App\Services\Vetting\Steps\CheckFirstYearCoursesStep;
 use App\Services\Vetting\Steps\CheckResultsValidityStep;
 use App\Services\Vetting\Steps\CheckSemesterCreditLimitsStep;
 use App\Services\Vetting\Steps\CheckStudyYearStep;
@@ -44,9 +49,14 @@ final class AppServiceProvider extends ServiceProvider
             // phpcs:ignore SlevomatCodingStandard.Arrays.AlphabeticallySortedByKeys
             $steps = [
                 VettingType::ORGANIZE_STUDY_YEAR->value => $app->make(CheckStudyYearStep::class),
-                VettingType::MATCH_COURSES->value => $app->make(MatchCurriculumCoursesStep::class),
                 VettingType::VALIDATE_RESULTS->value => $app->make(CheckResultsValidityStep::class),
                 VettingType::CHECK_SEMESTER_CREDIT_UNITS->value => $app->make(CheckSemesterCreditLimitsStep::class),
+                VettingType::CHECK_FAILED_COURSES->value => $app->make(CheckFailedCoursesStep::class),
+                VettingType::MATCH_COURSES->value => $app->make(MatchCurriculumCoursesStep::class),
+                VettingType::CHECK_CREDIT_UNITS->value => $app->make(CheckCreditUnitsStep::class),
+                VettingType::CHECK_CORE_COURSES->value => $app->make(CheckCoreCoursesStep::class),
+                VettingType::CHECK_ELECTIVE_COURSES->value => $app->make(CheckElectiveCoursesStep::class),
+                VettingType::CHECK_FIRST_YEAR_COURSES->value => $app->make(CheckFirstYearCoursesStep::class),
             ];
 
             return new Vetting($steps);
