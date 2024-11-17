@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -101,15 +100,6 @@ final class Student extends Model
     public function registrations(): HasManyThrough
     {
         return $this->through('semesterEnrollments')->has('registrations');
-    }
-
-    /**
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\HasOneThrough<\App\Models\Result, \Illuminate\Database\Eloquent\Model, \App\Models\Student>
-     */
-    public function results(): HasOneThrough
-    {
-        return $this->through('registrations')->has('result');
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\LocalGovernment, \App\Models\Student> */
