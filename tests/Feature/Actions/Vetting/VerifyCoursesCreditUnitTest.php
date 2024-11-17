@@ -11,7 +11,6 @@ use Tests\Factories\SemesterEnrollmentFactory;
 use Tests\Factories\SessionEnrollmentFactory;
 use Tests\Factories\StudentFactory;
 use Tests\Factories\VettingEventFactory;
-use Tests\Factories\VettingStepFactory;
 
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseEmpty;
@@ -30,14 +29,13 @@ it('passes credit unit check for student courses with matching credit unit to cu
                     'program_curriculum_course_id' => $programCurriculumCourse->id,
                 ])),
             ),
-        )->createOne();
-
-    $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
-    $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
+        )
+        ->has(VettingEventFactory::new())
+        ->createOne();
 
     $action = new VerifyCoursesCreditUnit();
 
-    $status = $action->execute($student, $vettingStep);
+    $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
         ->and($action->report())->toBe('');
@@ -59,14 +57,13 @@ it(
                         'program_curriculum_course_id' => $programCurriculumCourse->id,
                     ])),
                 ),
-            )->createOne();
-
-        $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
-        $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
+            )
+            ->has(VettingEventFactory::new())
+            ->createOne();
 
         $action = new VerifyCoursesCreditUnit();
 
-        $status = $action->execute($student, $vettingStep);
+        $status = $action->execute($student);
 
         $registration = $student->registrations->first();
         $course = $registration->course;
@@ -84,14 +81,11 @@ it(
 );
 
 it('reports unchecked credit unit for student courses not matched to any curriculum course', function (): void {
-    $student = StudentFactory::new()->createOne();
-
-    $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
-    $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
+    $student = StudentFactory::new()->has(VettingEventFactory::new())->createOne();
 
     $action = new VerifyCoursesCreditUnit();
 
-    $status = $action->execute($student, $vettingStep);
+    $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED)
         ->and($action->report())->toBe(

@@ -7,10 +7,10 @@ namespace App\Actions\Vetting;
 use App\Enums\CourseType;
 use App\Enums\CreditUnit;
 use App\Enums\VettingStatus;
+use App\Enums\VettingType;
 use App\Models\ProgramCurriculum;
 use App\Models\ProgramCurriculumSemester;
 use App\Models\Student;
-use App\Models\VettingStep;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -18,8 +18,10 @@ use function assert;
 
 final class VerifyElectiveCourses extends ReportVettingStep
 {
-    public function execute(Student $student, VettingStep $vettingStep): VettingStatus
+    public function execute(Student $student): VettingStatus
     {
+        $this->createVettingStep($student, VettingType::CHECK_ELECTIVE_COURSES);
+
         /** @var \Illuminate\Database\Eloquent\Collection<int, \App\Models\Registration> $registrations */
         $registrations = $student->registrations()
             ->whereNotNull('program_curriculum_course_id')
@@ -28,7 +30,7 @@ final class VerifyElectiveCourses extends ReportVettingStep
         if ($registrations->isEmpty()) {
             $message = "Elective Courses Not Checked for {$student->registration_number} \n";
 
-            $this->createReport($student, $vettingStep, $message);
+            $this->createReport($student, $message);
 
             return VettingStatus::UNCHECKED;
         }
@@ -39,7 +41,7 @@ final class VerifyElectiveCourses extends ReportVettingStep
             return VettingStatus::UNCHECKED;
         }
 
-        $passed = $this->checkStudentElectiveCourses($programCurriculum, $registrations, $vettingStep);
+        $passed = $this->checkStudentElectiveCourses($programCurriculum, $registrations);
 
         return $passed
             ? VettingStatus::PASSED
@@ -50,7 +52,6 @@ final class VerifyElectiveCourses extends ReportVettingStep
     private function checkStudentElectiveCourses(
         ProgramCurriculum $programCurriculum,
         Collection $registrations,
-        VettingStep $vettingStep,
     ): bool {
 
         $programCurriculumSemesters = $programCurriculum->programCurriculumSemesters()
@@ -73,7 +74,7 @@ final class VerifyElectiveCourses extends ReportVettingStep
 
             $message = "Elective Course(s) for {$level->name} Level {$semester->name} Semester not complete \n";
 
-            $this->createReport($programCurriculumSemester, $vettingStep, $message);
+            $this->createReport($programCurriculumSemester, $message);
         }
 
         return $passed;

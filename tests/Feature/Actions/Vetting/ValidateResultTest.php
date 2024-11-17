@@ -5,7 +5,6 @@ declare(strict_types=1);
 use App\Actions\Vetting\ValidateResults;
 use App\Enums\VettingStatus;
 use Tests\Factories\VettingEventFactory;
-use Tests\Factories\VettingStepFactory;
 
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseHas;
@@ -15,12 +14,11 @@ covers(ValidateResults::class);
 it('validates the integrity of the students results', function (): void {
     $student = createStudentWithResults();
 
-    $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
-    $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
+    VettingEventFactory::new()->for($student)->createOne();
 
     $validation = new ValidateResults();
 
-    $status = $validation->execute($student, $vettingStep);
+    $status = $validation->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
         ->and($validation->report())->toBe('');
@@ -29,8 +27,7 @@ it('validates the integrity of the students results', function (): void {
 it('reports students results with tampered score', function (): void {
     $student = createStudentWithResults();
 
-    $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
-    $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
+    VettingEventFactory::new()->for($student)->createOne();
 
     $sessionEnrollment = $student->sessionEnrollments->first();
     $semesterEnrollment = $sessionEnrollment->semesterEnrollments->first();
@@ -46,7 +43,7 @@ it('reports students results with tampered score', function (): void {
 
     $validation = new ValidateResults();
 
-    $status = $validation->execute($student, $vettingStep);
+    $status = $validation->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
         ->and($validation->report())->toBe(
@@ -55,15 +52,13 @@ it('reports students results with tampered score', function (): void {
 
     assertDatabaseHas('vetting_reports', [
         'status' => VettingStatus::FAILED,
-        'vetting_step_id' => $vettingStep->id,
     ]);
 });
 
 it('reports students results with tampered grade', function (): void {
     $student = createStudentWithResults();
 
-    $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
-    $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
+    VettingEventFactory::new()->for($student)->createOne();
 
     $sessionEnrollment = $student->sessionEnrollments->first();
     $semesterEnrollment = $sessionEnrollment->semesterEnrollments->first();
@@ -79,7 +74,7 @@ it('reports students results with tampered grade', function (): void {
 
     $validation = new ValidateResults();
 
-    $status = $validation->execute($student, $vettingStep);
+    $status = $validation->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
         ->and($validation->report())->toBe(
@@ -90,8 +85,7 @@ it('reports students results with tampered grade', function (): void {
 it('reports students results with tampered grade point', function (): void {
     $student = createStudentWithResults();
 
-    $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
-    $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
+    VettingEventFactory::new()->for($student)->createOne();
 
     $sessionEnrollment = $student->sessionEnrollments->first();
     $semesterEnrollment = $sessionEnrollment->semesterEnrollments->first();
@@ -107,7 +101,7 @@ it('reports students results with tampered grade point', function (): void {
 
     $validation = new ValidateResults();
 
-    $status = $validation->execute($student, $vettingStep);
+    $status = $validation->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
         ->and($validation->report())->toBe(
@@ -118,8 +112,7 @@ it('reports students results with tampered grade point', function (): void {
 it('reports all cases of tampered students results', function (): void {
     $student = createStudentWithResults();
 
-    $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
-    $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
+    VettingEventFactory::new()->for($student)->createOne();
 
     $sessionEnrollment = $student->sessionEnrollments->first();
     $semesterEnrollment = $sessionEnrollment->semesterEnrollments->first();
@@ -135,19 +128,17 @@ it('reports all cases of tampered students results', function (): void {
 
     $validation = new ValidateResults();
 
-    $status = $validation->execute($student, $vettingStep);
+    $status = $validation->execute($student);
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED);
 
     assertDatabaseHas('vetting_reports', [
         'status' => VettingStatus::FAILED,
         'vettable_id' => $result->id,
-        'vetting_step_id' => $vettingStep->id,
     ]);
 
     assertDatabaseHas('vetting_reports', [
         'status' => VettingStatus::FAILED,
         'vettable_id' => $result2->id,
-        'vetting_step_id' => $vettingStep->id,
     ]);
 
     assertDatabaseCount('vetting_reports', 2);

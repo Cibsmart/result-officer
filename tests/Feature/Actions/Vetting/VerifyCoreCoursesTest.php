@@ -18,7 +18,6 @@ use Tests\Factories\SemesterFactory;
 use Tests\Factories\SessionEnrollmentFactory;
 use Tests\Factories\StudentFactory;
 use Tests\Factories\VettingEventFactory;
-use Tests\Factories\VettingStepFactory;
 
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseEmpty;
@@ -26,14 +25,11 @@ use function Pest\Laravel\assertDatabaseEmpty;
 covers(VerifyCoreCourses::class);
 
 it('reports unchecked core courses for student without courses or no matching curriculum courses', function (): void {
-    $student = StudentFactory::new()->createOne();
-
-    $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
-    $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
+    $student = StudentFactory::new()->has(VettingEventFactory::new())->createOne();
 
     $action = new VerifyCoreCourses();
 
-    $status = $action->execute($student, $vettingStep);
+    $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED)
         ->and($action->report())->toBe(
@@ -67,18 +63,17 @@ it('reports passed core courses check for student who have taken all non-electiv
                     'course_id' => $course->id, 'program_curriculum_course_id' => $programCurriculumCourse->id,
                 ])),
             ),
-        )->createOne([
+        )
+        ->has(VettingEventFactory::new())
+        ->createOne([
             'entry_mode' => $programCurriculum->entry_mode,
             'entry_session_id' => $programCurriculum->entry_session_id,
             'program_id' => $programCurriculum->program->id,
         ]);
 
-    $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
-    $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
-
     $action = new VerifyCoreCourses();
 
-    $status = $action->execute($student, $vettingStep);
+    $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
         ->and($action->report())->toBe('');
@@ -110,18 +105,17 @@ it('reports failed core courses check for student who have taken all non-electiv
                     'course_id' => $course2->id, 'program_curriculum_course_id' => $programCurriculumCourse->id,
                 ])),
             ),
-        )->createOne([
+        )
+        ->has(VettingEventFactory::new())
+        ->createOne([
             'entry_mode' => $programCurriculum->entry_mode,
             'entry_session_id' => $programCurriculum->entry_session_id,
             'program_id' => $programCurriculum->program->id,
         ]);
 
-    $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
-    $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
-
     $action = new VerifyCoreCourses();
 
-    $status = $action->execute($student, $vettingStep);
+    $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
         ->and($action->report())->toBe("{$course->name} Not Taken\n");

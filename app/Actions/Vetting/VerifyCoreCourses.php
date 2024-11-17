@@ -6,15 +6,17 @@ namespace App\Actions\Vetting;
 
 use App\Enums\CourseType;
 use App\Enums\VettingStatus;
+use App\Enums\VettingType;
 use App\Models\ProgramCurriculum;
 use App\Models\Student;
-use App\Models\VettingStep;
 use Illuminate\Database\Eloquent\Collection;
 
 final class VerifyCoreCourses extends ReportVettingStep
 {
-    public function execute(Student $student, VettingStep $vettingStep): VettingStatus
+    public function execute(Student $student): VettingStatus
     {
+        $this->createVettingStep($student, VettingType::CHECK_CORE_COURSES);
+
         /** @var \Illuminate\Database\Eloquent\Collection<int, \App\Models\Registration> $registrations */
         $registrations = $student->registrations()
             ->whereNotNull('program_curriculum_course_id')
@@ -23,7 +25,7 @@ final class VerifyCoreCourses extends ReportVettingStep
         if ($registrations->isEmpty()) {
             $message = "{$student->registration_number} Courses Not Checked\n";
 
-            $this->createReport($student, $vettingStep, $message);
+            $this->createReport($student, $message);
 
             return VettingStatus::UNCHECKED;
         }
@@ -34,7 +36,7 @@ final class VerifyCoreCourses extends ReportVettingStep
             return VettingStatus::UNCHECKED;
         }
 
-        $passed = $this->checkNonElectiveCourses($programCurriculum, $registrations, $vettingStep);
+        $passed = $this->checkNonElectiveCourses($programCurriculum, $registrations);
 
         return $passed
             ? VettingStatus::PASSED
@@ -45,7 +47,6 @@ final class VerifyCoreCourses extends ReportVettingStep
     private function checkNonElectiveCourses(
         ProgramCurriculum $programCurriculum,
         Collection $registrations,
-        VettingStep $vettingStep,
     ): bool {
         /**
          * phpcs:ignore SlevomatCodingStandard.Files.LineLength
@@ -66,7 +67,7 @@ final class VerifyCoreCourses extends ReportVettingStep
 
             $message = "{$programCurriculumCourse->course->name} Not Taken\n";
 
-            $this->createReport($programCurriculumCourse, $vettingStep, $message);
+            $this->createReport($programCurriculumCourse, $message);
         }
 
         return $passed;
