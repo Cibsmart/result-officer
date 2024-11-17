@@ -7,8 +7,10 @@ namespace App\Actions\Vetting;
 use App\Enums\CourseType;
 use App\Enums\VettingStatus;
 use App\Enums\Year;
+use App\Models\ProgramCurriculumLevel;
 use App\Models\Student;
 use App\Models\VettingStep;
+use Illuminate\Database\Eloquent\Collection;
 
 final class VerifyFirstYearCourses extends ReportVettingStep
 {
@@ -26,7 +28,7 @@ final class VerifyFirstYearCourses extends ReportVettingStep
 
         $programCurriculum = $student->programCurriculum();
 
-        if (is_null($programCurriculum)) {
+        if ($programCurriculum === null) {
             return VettingStatus::UNCHECKED;
         }
 
@@ -35,13 +37,27 @@ final class VerifyFirstYearCourses extends ReportVettingStep
             ->orderBy('level_id')
             ->first();
 
-        $programCurriculumSemesters = $firstYearProgramCurriculum->programCurriculumSemesters;
         $firstYearRegistrations = $firstYearEnrollment->registrations;
 
+        $passed = $this->checkFirstYearCourses($firstYearProgramCurriculum, $firstYearRegistrations, $vettingStep);
+
+        return $passed
+            ? VettingStatus::PASSED
+            : VettingStatus::FAILED;
+    }
+
+    /** @param \Illuminate\Database\Eloquent\Collection<int, \App\Models\Registration> $firstYearRegistrations */
+    private function checkFirstYearCourses(
+        ProgramCurriculumLevel $firstYearProgramCurriculum,
+        Collection $firstYearRegistrations,
+        VettingStep $vettingStep,
+    ): bool {
         $passed = true;
 
-        foreach ($programCurriculumSemesters as $programCurriculumSemester) {
-            $unregisteredFirstYearCourses = $programCurriculumSemester->programCurriculumCourses()
+        $firstYearProgramCurriculumSemesters = $firstYearProgramCurriculum->programCurriculumSemesters;
+
+        foreach ($firstYearProgramCurriculumSemesters as $firstYearProgramCurriculumSemester) {
+            $unregisteredFirstYearCourses = $firstYearProgramCurriculumSemester->programCurriculumCourses()
                 ->whereNotIn('id', $firstYearRegistrations->pluck('program_curriculum_course_id'))
                 ->where('course_type', '<>', CourseType::ELECTIVE)
                 ->get();
@@ -60,8 +76,6 @@ final class VerifyFirstYearCourses extends ReportVettingStep
             }
         }
 
-        return $passed
-            ? VettingStatus::PASSED
-            : VettingStatus::FAILED;
+        return $passed;
     }
 }
