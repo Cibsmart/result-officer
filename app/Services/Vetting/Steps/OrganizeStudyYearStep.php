@@ -6,9 +6,7 @@ namespace App\Services\Vetting\Steps;
 
 use App\Actions\Vetting\OrganizeStudyYear;
 use App\Contracts\VettingService;
-use App\Enums\VettingType;
 use App\Models\VettingEvent;
-use App\Models\VettingStep;
 
 final readonly class OrganizeStudyYearStep implements VettingService
 {
@@ -20,10 +18,8 @@ final readonly class OrganizeStudyYearStep implements VettingService
     {
         $student = $vettingEvent->student;
 
-        $vettingStep = VettingStep::getOrCreateUsingVettingEvent($vettingEvent, VettingType::ORGANIZE_STUDY_YEAR);
+        $status = $this->action->execute($student);
 
-        $status = $this->action->execute($student, $vettingStep);
-
-        $vettingStep->updateStatusAndRemarks($status, $this->action->report());
+        $this->action->vettingStep()->updateStatusAndRemarks($status, $this->action->report());
     }
 }

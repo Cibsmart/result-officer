@@ -6,9 +6,7 @@ namespace App\Services\Vetting\Steps;
 
 use App\Actions\Vetting\VerifySemesterCreditLimits;
 use App\Contracts\VettingService;
-use App\Enums\VettingType;
 use App\Models\VettingEvent;
-use App\Models\VettingStep;
 
 final class CheckSemesterCreditLimitsStep implements VettingService
 {
@@ -20,11 +18,8 @@ final class CheckSemesterCreditLimitsStep implements VettingService
     {
         $student = $vettingEvent->student;
 
-        $vettingStep = VettingStep::getOrCreateUsingVettingEvent($vettingEvent,
-            VettingType::CHECK_SEMESTER_CREDIT_UNITS);
+        $status = $this->action->execute($student);
 
-        $status = $this->action->execute($student, $vettingStep);
-
-        $vettingStep->updateStatusAndRemarks($status, $this->action->report());
+        $this->action->vettingStep()->updateStatusAndRemarks($status, $this->action->report());
     }
 }
