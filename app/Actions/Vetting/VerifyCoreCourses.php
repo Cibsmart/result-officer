@@ -53,6 +53,7 @@ final class VerifyCoreCourses extends ReportVettingStep
          * @var \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProgramCurriculumCourse> $programCurriculumCourses
          */
         $programCurriculumCourses = $programCurriculum->programCurriculumCourses()
+            ->with('course')
             ->where('course_type', '<>', CourseType::ELECTIVE)
             ->get();
 

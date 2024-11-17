@@ -57,7 +57,7 @@ final class VerifyElectiveCourses extends ReportVettingStep
         $programCurriculumSemesters = $programCurriculum->programCurriculumSemesters()
             ->where(fn (Builder $query) => $query->where('minimum_elective_units', '>', 0)
                 ->orWhere('minimum_elective_count', '>', 0))
-            ->with('programCurriculumCourses')
+            ->with('semester', 'programCurriculumCourses', 'programCurriculumLevel.level')
             ->get();
 
         $passed = true;
