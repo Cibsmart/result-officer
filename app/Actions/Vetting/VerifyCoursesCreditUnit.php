@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace App\Actions\Vetting;
 
 use App\Enums\VettingStatus;
+use App\Enums\VettingType;
 use App\Models\Student;
-use App\Models\VettingStep;
 
 final class VerifyCoursesCreditUnit extends ReportVettingStep
 {
-    public function execute(Student $student, VettingStep $vettingStep): VettingStatus
+    public function execute(Student $student): VettingStatus
     {
+        $this->createVettingStep($student, VettingType::CHECK_CREDIT_UNITS);
+
         /** @var \Illuminate\Support\Collection<int, \App\Models\Registration> $registrations */
         $registrations = $student->registrations()
             ->with('programCurriculumCourse', 'course')
@@ -22,7 +24,7 @@ final class VerifyCoursesCreditUnit extends ReportVettingStep
             $message = "Not Checked for {$student->registration_number}: ";
             $message .= "Unmatched Courses with program curriculum course  \n";
 
-            $this->createReport($student, $vettingStep, $message);
+            $this->createReport($student, $message);
 
             return VettingStatus::UNCHECKED;
         }
@@ -44,7 +46,7 @@ final class VerifyCoursesCreditUnit extends ReportVettingStep
             $message = "Credit for {$course->code} in {$session->name} {$semester->name} Semester ";
             $message .= "does not matched with the program curriculum course credit unit  \n";
 
-            $this->createReport($registration, $vettingStep, $message);
+            $this->createReport($registration, $message);
         }
 
         return $passed

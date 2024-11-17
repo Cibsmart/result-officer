@@ -17,20 +17,16 @@ use Tests\Factories\SemesterFactory;
 use Tests\Factories\SessionEnrollmentFactory;
 use Tests\Factories\StudentFactory;
 use Tests\Factories\VettingEventFactory;
-use Tests\Factories\VettingStepFactory;
 
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseEmpty;
 
 it('reports elective courses not checked for student without courses or no matching  courses', function (): void {
-    $student = StudentFactory::new()->createOne();
-
-    $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
-    $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
+    $student = StudentFactory::new()->has(VettingEventFactory::new())->createOne();
 
     $action = new VerifyElectiveCourses();
 
-    $status = $action->execute($student, $vettingStep);
+    $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED)
         ->and($action->report())->toBe(
@@ -72,18 +68,17 @@ it('reports elective courses passed for student who have taken necessary electiv
                     'program_curriculum_course_id' => $programCurriculumCourse->id,
                 ])),
             ),
-        )->createOne([
+        )
+        ->has(VettingEventFactory::new())
+        ->createOne([
             'entry_mode' => $programCurriculum->entry_mode,
             'entry_session_id' => $programCurriculum->entry_session_id,
             'program_id' => $programCurriculum->program->id,
         ]);
 
-    $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
-    $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
-
     $action = new VerifyElectiveCourses();
 
-    $status = $action->execute($student, $vettingStep);
+    $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
         ->and($action->report())->toBe('');
@@ -123,18 +118,17 @@ it('reports elective courses failed for student who have not taken necessary ele
                     'program_curriculum_course_id' => $programCurriculumCourse->id,
                 ])),
             ),
-        )->createOne([
+        )
+        ->has(VettingEventFactory::new())
+        ->createOne([
             'entry_mode' => $programCurriculum->entry_mode,
             'entry_session_id' => $programCurriculum->entry_session_id,
             'program_id' => $programCurriculum->program->id,
         ]);
 
-    $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
-    $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
-
     $action = new VerifyElectiveCourses();
 
-    $status = $action->execute($student, $vettingStep);
+    $status = $action->execute($student);
 
     $programCurriculumSemester = $programCurriculum->programCurriculumSemesters()->first();
     $level = $programCurriculumSemester->programCurriculumLevel->level;

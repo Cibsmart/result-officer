@@ -7,24 +7,24 @@ namespace App\Actions\Vetting;
 use App\Data\Query\StudentCoursesData;
 use App\Enums\Grade;
 use App\Enums\VettingStatus;
+use App\Enums\VettingType;
 use App\Models\Registration;
 use App\Models\Student;
-use App\Models\VettingStep;
 use App\Queries\StudentCourses;
 use Illuminate\Support\Collection;
 
 final class VerifyFailedCourses extends ReportVettingStep
 {
-    public function execute(Student $student, VettingStep $vettingStep): VettingStatus
+    public function execute(Student $student): VettingStatus
     {
-        //        $this->createVettingStep($student, VettingType::CHECK_FAILED_COURSES):
+        $this->createVettingStep($student, VettingType::CHECK_FAILED_COURSES);
 
         $courses = StudentCourses::for($student)->get();
 
         if ($courses->isEmpty()) {
             $message = "Failed courses not checked for {$student->registration_number}\n";
 
-            $this->createReport($student, $vettingStep, $message);
+            $this->createReport($student, $message);
 
             return VettingStatus::UNCHECKED;
         }
@@ -39,7 +39,7 @@ final class VerifyFailedCourses extends ReportVettingStep
 
             $registration = Registration::query()->find($failedCourse->registrationId);
 
-            $this->createReport($registration, $vettingStep, $message);
+            $this->createReport($registration, $message);
 
             $passed = false;
         }

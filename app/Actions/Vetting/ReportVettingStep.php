@@ -18,7 +18,7 @@ abstract class ReportVettingStep
 
     private VettingStep $vettingStep;
 
-    abstract public function execute(Student $student, VettingStep $vettingStep): VettingStatus;
+    abstract public function execute(Student $student): VettingStatus;
 
     public function report(): string
     {
@@ -32,19 +32,18 @@ abstract class ReportVettingStep
 
     public function createReport(
         Model $model,
-        VettingStep $vettingStep,
         string $message,
     ): void {
-        VettingReport::updateOrCreateUsingModel($model, $vettingStep, VettingStatus::FAILED);
+        VettingReport::updateOrCreateUsingModel($model, $this->vettingStep, VettingStatus::FAILED);
 
         $this->updateReport($message);
     }
 
-    public function createVettingStep(Student $student, VettingType $vettingType): VettingStep
+    public function createVettingStep(Student $student, VettingType $vettingType): void
     {
         $vettingEvent = $student->vettingEvent;
         assert($vettingEvent instanceof VettingEvent);
 
-        return VettingStep::getOrCreateUsingVettingEvent($vettingEvent, $vettingType);
+        $this->vettingStep = VettingStep::getOrCreateUsingVettingEvent($vettingEvent, $vettingType);
     }
 }

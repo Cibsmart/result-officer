@@ -6,15 +6,17 @@ namespace App\Actions\Vetting;
 
 use App\Enums\CreditUnit;
 use App\Enums\VettingStatus;
+use App\Enums\VettingType;
 use App\Models\SemesterEnrollment;
 use App\Models\Session;
 use App\Models\Student;
-use App\Models\VettingStep;
 
 final class VerifySemesterCreditLimits extends ReportVettingStep
 {
-    public function execute(Student $student, VettingStep $vettingStep): VettingStatus
+    public function execute(Student $student): VettingStatus
     {
+        $this->createVettingStep($student, VettingType::CHECK_SEMESTER_CREDIT_UNITS);
+
         $sessionEnrollments = $student->sessionEnrollments()->with(['session', 'semesterEnrollments.semester'])->get();
 
         $passed = true;
@@ -28,7 +30,7 @@ final class VerifySemesterCreditLimits extends ReportVettingStep
             $session = $sessionEnrollment->session;
 
             foreach ($semesterEnrollments as $semesterEnrollment) {
-                $passed = $this->performSemesterCreditUnitCheck($semesterEnrollment, $vettingStep, $session) && $passed;
+                $passed = $this->performSemesterCreditUnitCheck($semesterEnrollment, $session) && $passed;
             }
         }
 
@@ -39,7 +41,6 @@ final class VerifySemesterCreditLimits extends ReportVettingStep
 
     public function performSemesterCreditUnitCheck(
         SemesterEnrollment $semesterEnrollment,
-        VettingStep $vettingStep,
         Session $session,
     ): bool {
         $creditUnitSum = $semesterEnrollment->registrations()->sum('credit_unit');
@@ -62,7 +63,7 @@ final class VerifySemesterCreditLimits extends ReportVettingStep
             ? "greater than the maximum {$maxSemesterTotalCreditUnit} Credit Units \n"
             : "less than the minimum {$minSemesterTotalCreditUnit} Credit Units \n";
 
-        $this->createReport($semesterEnrollment, $vettingStep, $message);
+        $this->createReport($semesterEnrollment, $message);
 
         return false;
     }

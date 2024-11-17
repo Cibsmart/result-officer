@@ -6,15 +6,17 @@ namespace App\Actions\Vetting;
 
 use App\Enums\EntryMode;
 use App\Enums\VettingStatus;
+use App\Enums\VettingType;
 use App\Models\ProgramCurriculum;
 use App\Models\Registration;
 use App\Models\Student;
-use App\Models\VettingStep;
 
 final class MatchCurriculumCourses extends ReportVettingStep
 {
-    public function execute(Student $student, VettingStep $vettingStep): VettingStatus
+    public function execute(Student $student): VettingStatus
     {
+        $this->createVettingStep($student, VettingType::MATCH_COURSES);
+
         $curriculum = $student->programCurriculum();
 
         if (is_null($curriculum)) {
@@ -26,14 +28,14 @@ final class MatchCurriculumCourses extends ReportVettingStep
 
             $message = "Curriculum not found for {$program->name} {$entrySession->name} ({$entryMode->value})  \n";
 
-            $this->createReport($program, $vettingStep, $message);
+            $this->createReport($program, $message);
 
             return VettingStatus::UNCHECKED;
         }
 
         $this->updateProgramCurriculumId($curriculum, $student);
 
-        $passed = $this->checkAndReportUnMatchedCourses($student, $vettingStep);
+        $passed = $this->checkAndReportUnMatchedCourses($student);
 
         return $passed
             ? VettingStatus::PASSED
@@ -58,7 +60,7 @@ final class MatchCurriculumCourses extends ReportVettingStep
         }
     }
 
-    private function checkAndReportUnMatchedCourses(Student $student, VettingStep $vettingStep): bool
+    private function checkAndReportUnMatchedCourses(Student $student): bool
     {
         $registrations = $student->registrations()
             ->with('course', 'semesterEnrollment.semester', 'semesterEnrollment.sessionEnrollment.session')
@@ -80,7 +82,7 @@ final class MatchCurriculumCourses extends ReportVettingStep
             $message = "{$code} in {$session->name} {$semester->name}";
             $message .= " Semester does not match any course in the curriculum \n";
 
-            $this->createReport($registration, $vettingStep, $message);
+            $this->createReport($registration, $message);
         }
 
         return false;

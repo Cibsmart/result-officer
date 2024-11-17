@@ -17,7 +17,6 @@ use Tests\Factories\SessionEnrollmentFactory;
 use Tests\Factories\SessionFactory;
 use Tests\Factories\StudentFactory;
 use Tests\Factories\VettingEventFactory;
-use Tests\Factories\VettingStepFactory;
 
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseEmpty;
@@ -25,15 +24,11 @@ use function Pest\Laravel\assertDatabaseEmpty;
 covers(VerifyFailedCourses::class);
 
 it('reports failed courses not checked for student without results', function (): void {
-    $student = StudentFactory::new()->createOne();
-
-    $vettingStep = VettingStepFactory::new()->for(
-        VettingEventFactory::new()->state(['student_id' => $student->id]),
-    )->createOne();
+    $student = StudentFactory::new()->has(VettingEventFactory::new())->createOne();
 
     $action = new VerifyFailedCourses();
 
-    $status = $action->execute($student, $vettingStep);
+    $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED)
         ->and($action->report())->toBe(
@@ -53,15 +48,12 @@ it('reports failed courses check failed for student who have not passed all fail
                     )))))
         ->recycle(SessionFactory::new()->createOne())
         ->recycle(LevelFactory::new()->createOne())
+        ->has(VettingEventFactory::new())
         ->createOne();
-
-    $vettingStep = VettingStepFactory::new()->for(
-        VettingEventFactory::new()->state(['student_id' => $student->id]),
-    )->createOne();
 
     $action = new VerifyFailedCourses();
 
-    $status = $action->execute($student, $vettingStep);
+    $status = $action->execute($student);
 
     $course = $student->registrations->first()->course;
     $session = $student->sessionEnrollments->first()->session;
@@ -85,15 +77,12 @@ it('reports failed courses check passed for student who passed all registered co
                     )))))
         ->recycle(SessionFactory::new()->createOne())
         ->recycle(LevelFactory::new()->createOne())
+        ->has(VettingEventFactory::new())
         ->createOne();
-
-    $vettingStep = VettingStepFactory::new()->for(
-        VettingEventFactory::new()->state(['student_id' => $student->id]),
-    )->createOne();
 
     $action = new VerifyFailedCourses();
 
-    $status = $action->execute($student, $vettingStep);
+    $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
         ->and($action->report())->toBe('');
@@ -109,7 +98,7 @@ it('reports failed courses check passed for student who have passed all failed c
     $semester = SemesterFactory::new()->createOne(['name' => 'FIRST']);
     $course = CourseFactory::new()->createOne();
 
-    $student = StudentFactory::new()->createOne(['entry_session_id' => $sessions[0]->id]);
+    $student = StudentFactory::new()->has(VettingEventFactory::new())->createOne(['entry_session_id' => $sessions[0]->id]);
 
     SessionEnrollmentFactory::new()->for($student)
         ->has(SemesterEnrollmentFactory::new()->state(['semester_id' => $semester->id])
@@ -127,13 +116,9 @@ it('reports failed courses check passed for student who have passed all failed c
             ['level_id' => $levels->last()->id, 'session_id' => $sessions->last()->id, 'year' => Year::SECOND],
         );
 
-    $vettingStep = VettingStepFactory::new()->for(
-        VettingEventFactory::new()->state(['student_id' => $student->id]),
-    )->createOne();
-
     $action = new VerifyFailedCourses();
 
-    $status = $action->execute($student, $vettingStep);
+    $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
         ->and($action->report())->toBe('');
@@ -147,7 +132,7 @@ it('reports failed courses check failed for student who registered and did not t
     $semester = SemesterFactory::new()->createOne(['name' => 'FIRST']);
     $course = CourseFactory::new()->createOne();
 
-    $student = StudentFactory::new()->createOne(['entry_session_id' => $session->id]);
+    $student = StudentFactory::new()->has(VettingEventFactory::new())->createOne(['entry_session_id' => $session->id]);
 
     SessionEnrollmentFactory::new()->for($student)
         ->has(SemesterEnrollmentFactory::new()->state(['semester_id' => $semester->id])
@@ -156,13 +141,9 @@ it('reports failed courses check failed for student who registered and did not t
             ['level_id' => $level->id, 'session_id' => $session->id, 'year' => Year::FIRST],
         );
 
-    $vettingStep = VettingStepFactory::new()->for(
-        VettingEventFactory::new()->state(['student_id' => $student->id]),
-    )->createOne();
-
     $action = new VerifyFailedCourses();
 
-    $status = $action->execute($student, $vettingStep);
+    $status = $action->execute($student);
 
     $course = $student->registrations->first()->course;
     $session = $student->sessionEnrollments->first()->session;

@@ -19,7 +19,6 @@ use Tests\Factories\SemesterFactory;
 use Tests\Factories\SessionEnrollmentFactory;
 use Tests\Factories\StudentFactory;
 use Tests\Factories\VettingEventFactory;
-use Tests\Factories\VettingStepFactory;
 
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseEmpty;
@@ -27,15 +26,11 @@ use function Pest\Laravel\assertDatabaseEmpty;
 covers(VerifyFirstYearCourses::class);
 
 it('reports first year courses not checked for student without courses or no matching courses ', function (): void {
-    $student = StudentFactory::new()->createOne();
-
-    $vettingStep = VettingStepFactory::new()->for(
-        VettingEventFactory::new()->state(['student_id' => $student->id]),
-    )->createOne();
+    $student = StudentFactory::new()->has(VettingEventFactory::new())->createOne();
 
     $action = new VerifyFirstYearCourses();
 
-    $status = $action->execute($student, $vettingStep);
+    $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED)
         ->and($action->report())->toBe(
@@ -71,20 +66,18 @@ it('reports first year courses passed for student who took all required first ye
                     'course_id' => $course->id, 'program_curriculum_course_id' => $programCurriculumCourse->id,
                 ])),
             ),
-        )->createOne([
+        )
+        ->has(VettingEventFactory::new())
+        ->createOne([
             'entry_level_id' => $level->id,
             'entry_mode' => $programCurriculum->entry_mode,
             'entry_session_id' => $sessionId,
             'program_id' => $programCurriculum->program->id,
         ]);
 
-    $vettingStep = VettingStepFactory::new()->for(
-        VettingEventFactory::new()->state(['student_id' => $student->id]),
-    )->createOne();
-
     $action = new VerifyFirstYearCourses();
 
-    $status = $action->execute($student, $vettingStep);
+    $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
         ->and($action->report())->toBe('');
@@ -119,20 +112,18 @@ it('reports first year courses failed for student who did not taken all required
                         'course_id' => $course->id, 'program_curriculum_course_id' => $programCurriculumCourse->id,
                     ])),
                 ),
-            )->createOne([
+            )
+            ->has(VettingEventFactory::new())
+            ->createOne([
                 'entry_level_id' => $level->id,
                 'entry_mode' => $programCurriculum->entry_mode,
                 'entry_session_id' => $sessionId,
                 'program_id' => $programCurriculum->program->id,
             ]);
 
-        $vettingStep = VettingStepFactory::new()->for(
-            VettingEventFactory::new()->state(['student_id' => $student->id]),
-        )->createOne();
-
         $action = new VerifyFirstYearCourses();
 
-        $status = $action->execute($student, $vettingStep);
+        $status = $action->execute($student);
 
         $unregisteredFirstYearCourse = $programCurriculum->programCurriculumCourses->first();
         $course = $unregisteredFirstYearCourse->course;

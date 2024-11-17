@@ -6,22 +6,24 @@ namespace App\Actions\Vetting;
 
 use App\Enums\CourseType;
 use App\Enums\VettingStatus;
+use App\Enums\VettingType;
 use App\Enums\Year;
 use App\Models\ProgramCurriculumLevel;
 use App\Models\Student;
-use App\Models\VettingStep;
 use Illuminate\Database\Eloquent\Collection;
 
 final class VerifyFirstYearCourses extends ReportVettingStep
 {
-    public function execute(Student $student, VettingStep $vettingStep): VettingStatus
+    public function execute(Student $student): VettingStatus
     {
+        $this->createVettingStep($student, VettingType::CHECK_FIRST_YEAR_COURSES);
+
         $firstYearEnrollment = $student->sessionEnrollments()->where('year', Year::FIRST)->first();
 
         if ($firstYearEnrollment === null) {
             $message = "First Year Courses not checked for {$student->registration_number}\n";
 
-            $this->createReport($student, $vettingStep, $message);
+            $this->createReport($student, $message);
 
             return VettingStatus::UNCHECKED;
         }
@@ -39,7 +41,7 @@ final class VerifyFirstYearCourses extends ReportVettingStep
 
         $firstYearRegistrations = $firstYearEnrollment->registrations;
 
-        $passed = $this->checkFirstYearCourses($firstYearProgramCurriculum, $firstYearRegistrations, $vettingStep);
+        $passed = $this->checkFirstYearCourses($firstYearProgramCurriculum, $firstYearRegistrations);
 
         return $passed
             ? VettingStatus::PASSED
@@ -50,7 +52,6 @@ final class VerifyFirstYearCourses extends ReportVettingStep
     private function checkFirstYearCourses(
         ProgramCurriculumLevel $firstYearProgramCurriculum,
         Collection $firstYearRegistrations,
-        VettingStep $vettingStep,
     ): bool {
         $passed = true;
 
@@ -72,7 +73,7 @@ final class VerifyFirstYearCourses extends ReportVettingStep
                 $course = $unregisteredFirstYearCourse->course;
                 $message = "{$course->code} ({$courseType->name}) Not taken in the first year \n";
 
-                $this->createReport($unregisteredFirstYearCourse, $vettingStep, $message);
+                $this->createReport($unregisteredFirstYearCourse, $message);
             }
         }
 

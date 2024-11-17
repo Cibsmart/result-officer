@@ -5,16 +5,18 @@ declare(strict_types=1);
 namespace App\Actions\Vetting;
 
 use App\Enums\VettingStatus;
+use App\Enums\VettingType;
 use App\Models\SemesterEnrollment;
 use App\Models\Session;
 use App\Models\Student;
-use App\Models\VettingStep;
 use Illuminate\Support\Facades\Hash;
 
 final class ValidateResults extends ReportVettingStep
 {
-    public function execute(Student $student, VettingStep $vettingStep): VettingStatus
+    public function execute(Student $student): VettingStatus
     {
+        $this->createVettingStep($student, VettingType::VALIDATE_RESULTS);
+
         $sessionEnrollments = $student->sessionEnrollments()->with(['session', 'semesterEnrollments.semester'])->get();
 
         $passed = true;
@@ -28,7 +30,7 @@ final class ValidateResults extends ReportVettingStep
             foreach ($semesterEnrollments as $semesterEnrollment) {
                 $session = $sessionEnrollment->session;
 
-                $passed = $this->validate($semesterEnrollment, $session, $vettingStep) && $passed;
+                $passed = $this->validate($semesterEnrollment, $session) && $passed;
             }
         }
 
@@ -40,7 +42,6 @@ final class ValidateResults extends ReportVettingStep
     private function validate(
         SemesterEnrollment $semesterEnrollment,
         Session $session,
-        VettingStep $vettingStep,
     ): bool {
         $registrations = $semesterEnrollment->registrations()->with('result', 'course')->get();
 
@@ -59,7 +60,7 @@ final class ValidateResults extends ReportVettingStep
             $passed = false;
             $message = "{$code} in {$semester->name} semester {$session->name} is invalid. \n";
 
-            $this->createReport($result, $vettingStep, $message);
+            $this->createReport($result, $message);
         }
 
         return $passed;

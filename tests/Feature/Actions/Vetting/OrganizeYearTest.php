@@ -10,7 +10,6 @@ use Tests\Factories\SessionEnrollmentFactory;
 use Tests\Factories\SessionFactory;
 use Tests\Factories\StudentFactory;
 use Tests\Factories\VettingEventFactory;
-use Tests\Factories\VettingStepFactory;
 
 it('can correctly organize study year original set to all first', function (): void {
     $session = SessionFactory::new()->createOne(['name' => '2009/2010']);
@@ -27,14 +26,13 @@ it('can correctly organize study year original set to all first', function (): v
                 ['session_id' => $session->id, 'level_id' => $level->id], ['session_id' => $session2->id],
                 ['session_id' => $session3->id], ['session_id' => $session4->id],
             ),
-    )->createOne(['entry_session_id' => $session->id, 'entry_level_id' => $level->id]);
-
-    $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
-    $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
+    )
+        ->has(VettingEventFactory::new())
+        ->createOne(['entry_session_id' => $session->id, 'entry_level_id' => $level->id]);
 
     $organize = new OrganizeStudyYear();
 
-    $status = $organize->execute($student, $vettingStep);
+    $status = $organize->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
         ->and($organize->report())->toBe('Student Study Years Re-Organized');
@@ -65,14 +63,13 @@ it('can correctly organize study year original set in descending order', functio
                 ['session_id' => $session3->id, 'year' => Year::SECOND],
                 ['session_id' => $session4->id, 'year' => Year::FIRST],
             ),
-    )->createOne(['entry_session_id' => $session->id, 'entry_level_id' => $level->id]);
-
-    $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
-    $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
+    )
+        ->has(VettingEventFactory::new())
+        ->createOne(['entry_session_id' => $session->id, 'entry_level_id' => $level->id]);
 
     $organize = new OrganizeStudyYear();
 
-    $status = $organize->execute($student, $vettingStep);
+    $status = $organize->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
         ->and($organize->report())->toBe('Student Study Years Re-Organized');
@@ -103,14 +100,13 @@ it('does not re-organize study year for already organized year', function (): vo
                 ['session_id' => $session3->id, 'year' => Year::THIRD],
                 ['session_id' => $session4->id, 'year' => Year::FOURTH],
             ),
-    )->createOne(['entry_session_id' => $session->id, 'entry_level_id' => $level->id]);
-
-    $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
-    $vettingStep = VettingStepFactory::new()->createOne(['vetting_event_id' => $vettingEvent->id]);
+    )
+        ->has(VettingEventFactory::new())
+        ->createOne(['entry_session_id' => $session->id, 'entry_level_id' => $level->id]);
 
     $organize = new OrganizeStudyYear();
 
-    $status = $organize->execute($student, $vettingStep);
+    $status = $organize->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
         ->and($organize->report())->toBe('');
