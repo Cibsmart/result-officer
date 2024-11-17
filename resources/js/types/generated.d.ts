@@ -156,6 +156,23 @@ declare namespace App.Data.Program {
     programs: Array<App.Data.Program.ProgramData>;
   };
 }
+declare namespace App.Data.Query {
+  export type StudentCoursesData = {
+    studentId: number;
+    registrationId: number;
+    sessionId: number;
+    session: string;
+    semester: string;
+    courseId: number;
+    courseCode: string;
+    courseTitle: string;
+    creditUnit: App.Enums.CreditUnit;
+    courseStatus: App.Enums.CourseStatus;
+    totalScore: number | null;
+    grade: App.Enums.Grade | null;
+    gradePoint: number | null;
+  };
+}
 declare namespace App.Data.Response {
   export type ResponseData = {
     key: string;
