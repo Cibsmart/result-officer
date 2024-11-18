@@ -16,6 +16,7 @@ enum StudentStatus: string
     case DECEASED = 'deceased';
     case TRANSFERRED = 'transferred';
     case FINAL_YEAR = 'final';
+    case EXTRA_YEAR = 'extra';
     case CHECKED = 'checked';
     case CLEARED = 'cleared';
     case GRADUATED = 'graduated';
