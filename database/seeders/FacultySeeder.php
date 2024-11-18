@@ -56,6 +56,7 @@ final class FacultySeeder extends Seeder
                 Program::query()->create([
                     'code' => $program['program_code'],
                     'department_id' => $department->id,
+                    'duration' => $program['duration'],
                     'name' => $program['program_name'],
                     'program_type_id' => ProgramType::getUsingCode($program['program_type'])->id,
                 ]);

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Models\Department;
+use App\Models\ProgramType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,10 +17,11 @@ return new class extends Migration
     {
         Schema::create('programs', static function (Blueprint $table): void {
             $table->id();
-            $table->foreignId('department_id')->constrained('departments');
+            $table->foreignIdFor(Department::class)->constrained();
             $table->string('code');
             $table->string('name');
-            $table->foreignId('program_type_id')->constrained('program_types');
+            $table->unsignedTinyInteger('duration');
+            $table->foreignIdFor(ProgramType::class)->constrained();
             $table->boolean('is_active')->default(true);
             $table->string('online_id')->nullable();
             $table->timestamps();

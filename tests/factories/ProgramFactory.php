@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Factories;
 
+use App\Enums\ProgramDuration;
 use App\Models\Program;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,6 +19,7 @@ final class ProgramFactory extends Factory
         return [
             'code' => fake()->unique()->countryCode(),
             'department_id' => DepartmentFactory::new(),
+            'duration' => ProgramDuration::FOUR->value,
             'name' => fake()->country(),
             'program_type_id' => ProgramTypeFactory::new(),
         ];

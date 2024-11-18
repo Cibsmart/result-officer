@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\ProgramDuration;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -110,6 +111,7 @@ final class Program extends Model
             [
                 'code' => $programCode,
                 'department_id' => $department->id,
+                'duration' => ProgramDuration::FOUR,
                 'program_type_id' => 5,
             ],
         );
@@ -191,10 +193,11 @@ final class Program extends Model
             ->join('');
     }
 
-    /** @return array<string, string> */
+    /** @return array{duration: 'App\Enums\ProgramDuration', is_active: 'bool'} */
     protected function casts(): array
     {
         return [
+            'duration' => ProgramDuration::class,
             'is_active' => 'bool',
         ];
     }
