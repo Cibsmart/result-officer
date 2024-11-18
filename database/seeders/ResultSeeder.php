@@ -7,7 +7,6 @@ namespace Database\Seeders;
 use App\Enums\CourseStatus;
 use App\Enums\CreditUnit;
 use App\Enums\Grade;
-use App\Enums\Year;
 use App\Helpers\CSVFile;
 use App\Models\Course;
 use App\Models\Level;
@@ -51,21 +50,18 @@ final class ResultSeeder extends Seeder
         Student $student,
         Collection $results,
     ): void {
-        foreach ($results->groupBy('session') as $session => $sessionResults) {
+        foreach ($results->groupBy('session') as $sessionName => $sessionResults) {
             $level = Level::getUsingName($sessionResults->first()['level']);
+            $session = Session::getUsingName($sessionName);
 
-            $sessionEnrollment = SessionEnrollment::query()->firstOrCreate(
-                ['session_id' => Session::getUsingName($session)->id, 'student_id' => $student->id],
-                ['level_id' => $level->id, 'year' => Year::FIRST],
-            );
+            $sessionEnrollment = SessionEnrollment::getOrCreate($student, $session, $level);
 
             $student->updateStatus($student->getStatus());
 
-            foreach ($sessionResults->groupBy('semester') as $semester => $semesterResults) {
-                $semesterEnrollment = SemesterEnrollment::query()->firstOrCreate([
-                    'semester_id' => Semester::getUsingName($semester)->id,
-                    'session_enrollment_id' => $sessionEnrollment->id,
-                ]);
+            foreach ($sessionResults->groupBy('semester') as $semesterName => $semesterResults) {
+                $semester = Semester::getUsingName($semesterName);
+
+                $semesterEnrollment = SemesterEnrollment::getOrCreate($sessionEnrollment, $semester);
 
                 $this->createRegistrationsAndResults($semesterEnrollment, $semesterResults);
             }
