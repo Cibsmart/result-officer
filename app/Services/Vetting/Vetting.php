@@ -18,7 +18,7 @@ final readonly class Vetting
     {
         $vettingEvent->updateStatus(VettingEventStatus::VETTING);
 
-        foreach ($this->vettingSteps as $type => $step) {
+        foreach ($this->vettingSteps as $step) {
             $step->check($vettingEvent);
         }
 
