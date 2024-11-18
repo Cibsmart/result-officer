@@ -111,7 +111,7 @@ final class Program extends Model
             [
                 'code' => $programCode,
                 'department_id' => $department->id,
-                'duration' => ProgramDuration::FOUR,
+                'duration' => ProgramDuration::FOUR->value,
                 'program_type_id' => 5,
             ],
         );

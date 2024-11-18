@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 use App\Actions\Import\Departments\ProcessPortalDepartment;
 use App\Enums\RawDataStatus;
+use App\Models\Department;
+use App\Models\Faculty;
+use App\Models\Program;
 use Tests\Factories\DepartmentFactory;
 use Tests\Factories\ProgramTypeFactory;
 use Tests\Factories\RawDepartmentFactory;
@@ -20,19 +23,15 @@ it('can process raw department and save into the departments table', function ()
 
     expect($rawDepartment->fresh()->status)->toBe(RawDataStatus::PROCESSED);
 
-    assertDatabaseHas('faculties', [
-        'name' => strtoupper($rawDepartment->faculty),
-    ]);
+    assertDatabaseHas(Faculty::class, ['name' => strtoupper($rawDepartment->faculty)]);
 
-    assertDatabaseHas('departments', [
+    assertDatabaseHas(Department::class, [
         'code' => strtoupper($rawDepartment->code),
         'name' => strtoupper($rawDepartment->name),
         'online_id' => $rawDepartment->online_id,
     ]);
 
-    assertDatabaseHas('programs', [
-        'name' => strtoupper($rawDepartment->name),
-    ]);
+    assertDatabaseHas(Program::class, ['name' => strtoupper($rawDepartment->name)]);
 });
 
 it('does not save save duplicate department into the departments table', function (): void {
