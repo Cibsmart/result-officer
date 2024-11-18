@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignIdFor(Department::class)->constrained();
             $table->string('code');
             $table->string('name');
-            $table->unsignedTinyInteger('duration');
+            $table->unsignedTinyInteger('duration')->nullable(4);
             $table->foreignIdFor(ProgramType::class)->constrained();
             $table->boolean('is_active')->default(true);
             $table->string('online_id')->nullable();
