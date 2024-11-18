@@ -25,7 +25,6 @@ return new class extends Migration
             $table->timestamps();
 
             $table->unique(['student_id', 'session_id']);
-            $table->unique(['student_id', 'session_id', 'level_id']);
         });
     }
 
