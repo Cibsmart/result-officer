@@ -15,5 +15,8 @@ enum StudentStatus: string
     case SUSPENDED = 'suspended';
     case DECEASED = 'deceased';
     case TRANSFERRED = 'transferred';
+    case FINAL_YEAR = 'final';
+    case CHECKED = 'checked';
+    case CLEARED = 'cleared';
     case GRADUATED = 'graduated';
 }
