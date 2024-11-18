@@ -155,6 +155,33 @@ final class Student extends Model
         return RegistrationNumber::new($this->registration_number)->allowEGrade();
     }
 
+    public function updateStatus(StudentStatus $status): void
+    {
+        if ($this->status === StudentStatus::GRADUATED) {
+            return;
+        }
+
+        if ($this->status === $status) {
+            return;
+        }
+
+        $this->status = $status;
+        $this->save();
+    }
+
+    public function getStatus(): StudentStatus
+    {
+        if ($this->inExtraYear()) {
+            return StudentStatus::EXTRA_YEAR;
+        }
+
+        if ($this->inFinalYear()) {
+            return StudentStatus::FINAL_YEAR;
+        }
+
+        return StudentStatus::ACTIVE;
+    }
+
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return array{date_of_birth: 'date', entry_mode: 'App\Enums\EntryMode', gender: 'App\Enums\Gender', source: 'App\Enums\RecordSource', status: 'App\Enums\StudentStatus'}
@@ -220,5 +247,23 @@ final class Student extends Model
         return Attribute::make(
             set: static fn (string $value): string => strtoupper($value),
         );
+    }
+
+    private function inFinalYear(): bool
+    {
+        if ($this->status === StudentStatus::FINAL_YEAR) {
+            return true;
+        }
+
+        return $this->sessionEnrollments()->count() === $this->program->duration->value;
+    }
+
+    private function inExtraYear(): bool
+    {
+        if ($this->status === StudentStatus::EXTRA_YEAR) {
+            return true;
+        }
+
+        return $this->sessionEnrollments()->count() > $this->program->duration->value;
     }
 }

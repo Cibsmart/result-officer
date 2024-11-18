@@ -34,8 +34,8 @@ final class ResultSeeder extends Seeder
         $students = $content->sortBy([
             ['registration_number', 'asc'],
             ['session', 'asc'],
-            ['level', 'desc'],
             ['semester', 'asc'],
+            ['level', 'desc'],
             ['course_code', 'asc'],
         ])->groupBy('registration_number');
 
@@ -52,14 +52,14 @@ final class ResultSeeder extends Seeder
         Collection $results,
     ): void {
         foreach ($results->groupBy('session') as $session => $sessionResults) {
-            $level = $sessionResults->first()['level'];
+            $level = Level::getUsingName($sessionResults->first()['level']);
 
-            $sessionEnrollment = SessionEnrollment::query()->firstOrCreate([
-                'level_id' => Level::getUsingName($level)->id,
-                'session_id' => Session::getUsingName($session)->id,
-                'student_id' => $student->id,
-                'year' => Year::FIRST,
-            ]);
+            $sessionEnrollment = SessionEnrollment::query()->firstOrCreate(
+                ['session_id' => Session::getUsingName($session)->id, 'student_id' => $student->id],
+                ['level_id' => $level->id, 'year' => Year::FIRST],
+            );
+
+            $student->updateStatus($student->getStatus());
 
             foreach ($sessionResults->groupBy('semester') as $semester => $semesterResults) {
                 $semesterEnrollment = SemesterEnrollment::query()->firstOrCreate([
