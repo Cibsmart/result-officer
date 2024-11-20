@@ -7,9 +7,18 @@ namespace App\Enums;
 enum VettingEventStatus: string
 {
     case NEW = 'new';
-    case VETTING = 'vetting';
-    case CANCELLED = 'cancelled';
-    case FAILED = 'failed';
-    case COMPLETED = 'completed';
     case PENDING = 'pending';
+    case VETTING = 'vetting';
+    case FAILED = 'failed';
+    case PASSED = 'passed';
+
+    public function color(): StatusColor
+    {
+        return match ($this) {
+            self::NEW, self::PENDING => StatusColor::GRAY,
+            self::VETTING, => StatusColor::INDIGO,
+            self::FAILED => StatusColor::RED,
+            self::PASSED => StatusColor::GREEN,
+        };
+    }
 }
