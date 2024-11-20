@@ -12,15 +12,22 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class VettingEvent extends Model
 {
-    protected $fillable = ['student_id', 'program_curriculum_id', 'status'];
+    protected $fillable = ['user_id', 'student_id', 'program_curriculum_id', 'status'];
 
-    public static function getOrCreateUsingStudent(Student $student): self
+    public static function getOrCreateUsingStudent(Student $student, User $user): self
     {
         $programCurriculum = $student->programCurriculum();
+        $programCurriculumId = $programCurriculum
+            ? $programCurriculum->id
+            : null;
 
         return self::query()->firstOrCreate(
             ['student_id' => $student->id],
-            ['status' => VettingEventStatus::NEW, 'program_curriculum_id' => $programCurriculum->id],
+            [
+                'program_curriculum_id' => $programCurriculumId,
+                'status' => VettingEventStatus::NEW,
+                'user_id' => $user->id,
+            ],
         );
     }
 
@@ -48,20 +55,18 @@ final class VettingEvent extends Model
             ->where('status', VettingStatus::FAILED)
             ->exists();
 
-        $this->status = VettingEventStatus::COMPLETED;
-        $this->vetting_status = $failed
-            ? VettingStatus::FAILED
-            : VettingStatus::PASSED;
+        $this->status = $failed
+            ? VettingEventStatus::FAILED
+            : VettingEventStatus::PASSED;
 
         $this->save();
     }
 
-    /** @return array{status: 'App\Enums\VettingEventStatus', vetting_status: 'App\Enums\VettingStatus'} */
+    /** @return array{status: 'App\Enums\VettingEventStatus'} */
     protected function casts(): array
     {
         return [
             'status' => VettingEventStatus::class,
-            'vetting_status' => VettingStatus::class,
         ];
     }
 }
