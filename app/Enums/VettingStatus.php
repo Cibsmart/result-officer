@@ -11,4 +11,5 @@ enum VettingStatus: string
     case FAILED = 'failed';
     case PASSED = 'passed';
     case UNCHECKED = 'unchecked';
+    case PENDING = 'pending';
 }
