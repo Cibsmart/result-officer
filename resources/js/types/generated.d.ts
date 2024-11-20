@@ -433,7 +433,4 @@ declare namespace App.ViewModels.Vetting {
     departments: App.Data.Department.DepartmentListData;
     data: App.Data.Vetting.VettingListData;
   };
-  export type VettingViewPage = {
-    data: App.Data.Vetting.VettingListData;
-  };
 }
