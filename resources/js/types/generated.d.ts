@@ -290,6 +290,21 @@ declare namespace App.Data.Summary {
     fcgpa: number;
   };
 }
+declare namespace App.Data.Vetting {
+  export type VettingListData = {
+    faculty: App.Data.Faculty.FacultyData;
+    department: App.Data.Department.DepartmentData;
+    graduands: Array<App.Data.Vetting.VettingStudentData>;
+  };
+  export type VettingStudentData = {
+    id: number;
+    name: string;
+    registrationNumber: string;
+    studentStatus: App.Enums.StudentStatus;
+    vettingStatus: App.Enums.VettingEventStatus;
+    vettingReport: App.Enums.VettingStatus;
+  };
+}
 declare namespace App.Enums {
   export type ClassOfDegree =
     | "FIRST CLASS HONOURS"
@@ -329,6 +344,7 @@ declare namespace App.Enums {
   export type ImportEventType = "results" | "courses" | "departments" | "students" | "registrations";
   export type LevelEnum = "100" | "200" | "300" | "400" | "500" | "600";
   export type NotificationType = "success" | "error" | "warning" | "info";
+  export type ProgramDuration = 3 | 4 | 5 | 6;
   export type RawDataStatus = "pending" | "duplicate" | "failed" | "processed";
   export type RecordSource = "portal" | "excel" | "legacy";
   export type ResultRemark = "PAS" | "FAL" | "ABS" | "MAL";
@@ -344,9 +360,13 @@ declare namespace App.Enums {
     | "suspended"
     | "deceased"
     | "transferred"
+    | "final"
+    | "extra"
+    | "checked"
+    | "cleared"
     | "graduated";
-  export type VettingEventStatus = "new" | "vetting" | "cancelled" | "failed" | "completed";
-  export type VettingStatus = "new" | "checking" | "failed" | "passed" | "unchecked";
+  export type VettingEventStatus = "new" | "vetting" | "cancelled" | "failed" | "completed" | "pending";
+  export type VettingStatus = "new" | "checking" | "failed" | "passed" | "unchecked" | "pending";
   export type VettingType =
     | "organize_year"
     | "validate_result"
@@ -405,5 +425,13 @@ declare namespace App.ViewModels.Summary {
   };
   export type SummaryViewPage = {
     department: App.Data.Summary.DepartmentResultSummaryData;
+  };
+}
+declare namespace App.ViewModels.Vetting {
+  export type VettingFormPage = {
+    departments: App.Data.Department.DepartmentListData;
+  };
+  export type VettingViewPage = {
+    data: App.Data.Vetting.VettingListData;
   };
 }
