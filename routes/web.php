@@ -27,6 +27,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Reports\CompositeSheetController;
 use App\Http\Controllers\Result\ViewStudentResultController;
 use App\Http\Controllers\Summary\DepartmentResultSummaryController;
+use App\Http\Controllers\Vetting\VettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', DashboardController::class)->middleware(['auth'])->name('dashboard');
@@ -117,6 +118,11 @@ Route::middleware(['auth'])->group(static function (): void {
             ->name('download.results.department-session-semester.store');
         Route::post('session-course', DownloadResultBySessionCourseController::class)
             ->name('download.results.session-course.store');
+    });
+
+    Route::prefix('vetting')->group(static function (): void {
+        Route::get('', [VettingController::class, 'form'])->name('vetting.form');
+        Route::post('', [VettingController::class, 'view'])->name('vetting.view');
     });
 });
 
