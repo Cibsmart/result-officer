@@ -8,7 +8,7 @@ const props = defineProps<{
   student: App.Data.Vetting.VettingStudentData;
 }>();
 
-const passed = computed(() => props.student.vettingReport === "passed");
+const passed = computed(() => props.student.vettingStatus === "passed");
 </script>
 
 <template>
