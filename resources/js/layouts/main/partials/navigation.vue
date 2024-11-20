@@ -58,6 +58,13 @@ const navigation: NavigationItem[] = [
     ],
   },
   {
+    name: "Vetting",
+    href: "#",
+    icon: AcademicCapIcon,
+    current: false,
+    children: [{ name: "List", href: route("vetting.form"), current: route().current("vetting.form") }],
+  },
+  {
     name: "Graduation",
     href: "#",
     icon: AcademicCapIcon,
@@ -69,7 +76,7 @@ const navigation: NavigationItem[] = [
     href: "#",
     icon: ChartPieIcon,
     current: false,
-    children: [{ name: "Composite", href: route("composite.form"), current: false }],
+    children: [{ name: "Composite", href: route("composite.form"), current: route().current("composite.form") }],
   },
 ];
 </script>
