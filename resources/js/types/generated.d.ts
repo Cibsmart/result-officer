@@ -302,7 +302,7 @@ declare namespace App.Data.Vetting {
     registrationNumber: string;
     studentStatus: App.Enums.StudentStatus;
     vettingStatus: App.Enums.VettingEventStatus;
-    vettingReport: App.Enums.VettingStatus;
+    vettingStatusColor: App.Enums.StatusColor;
   };
 }
 declare namespace App.Enums {
@@ -350,6 +350,7 @@ declare namespace App.Enums {
   export type ResultRemark = "PAS" | "FAL" | "ABS" | "MAL";
   export type Role = "super-admin" | "admin" | "desk-officer" | "exam-officer" | "database-officer" | "user";
   export type ScoreType = "course-work" | "exam";
+  export type StatusColor = "gray" | "red" | "yellow" | "green" | "blue" | "purple" | "indigo" | "pink";
   export type StudentStatus =
     | "new"
     | "active"
@@ -365,8 +366,8 @@ declare namespace App.Enums {
     | "checked"
     | "cleared"
     | "graduated";
-  export type VettingEventStatus = "new" | "vetting" | "cancelled" | "failed" | "completed" | "pending";
-  export type VettingStatus = "new" | "checking" | "failed" | "passed" | "unchecked" | "pending";
+  export type VettingEventStatus = "new" | "pending" | "vetting" | "failed" | "passed";
+  export type VettingStatus = "new" | "checking" | "unchecked" | "failed" | "passed";
   export type VettingType =
     | "organize_year"
     | "validate_result"
@@ -428,8 +429,9 @@ declare namespace App.ViewModels.Summary {
   };
 }
 declare namespace App.ViewModels.Vetting {
-  export type VettingFormPage = {
+  export type VettingIndexPage = {
     departments: App.Data.Department.DepartmentListData;
+    data: App.Data.Vetting.VettingListData;
   };
   export type VettingViewPage = {
     data: App.Data.Vetting.VettingListData;
