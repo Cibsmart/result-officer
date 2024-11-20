@@ -30,11 +30,14 @@ final class VettingStudentData extends Data
             ? $vettingEvent->status
             : VettingEventStatus::PENDING;
 
+        $status = $student->status;
+        assert($status instanceof StudentStatus);
+
         return new self(
             id: $student->id,
             name: $student->name,
             registrationNumber: $student->registration_number,
-            studentStatus: $student->status,
+            studentStatus: $status,
             vettingStatus: $vettingStatus,
             vettingStatusColor: $vettingStatus->color(),
         );

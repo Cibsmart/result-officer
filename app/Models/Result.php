@@ -76,6 +76,7 @@ final class Result extends Model
         return $this->belongsTo(Registration::class);
     }
 
+    /** @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\ResultDetail, \App\Models\Result> */
     public function resultDetail(): HasOne
     {
         return $this->hasOne(ResultDetail::class);

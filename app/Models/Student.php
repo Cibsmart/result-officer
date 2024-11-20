@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Enums\EntryMode;
 use App\Enums\Gender;
+use App\Enums\ProgramDuration;
 use App\Enums\RecordSource;
 use App\Enums\StudentStatus;
 use App\Values\DateValue;
@@ -165,7 +166,7 @@ final class Student extends Model
             return;
         }
 
-        $this->status = $status;
+        $this->status = $status->value;
         $this->save();
     }
 
@@ -255,7 +256,12 @@ final class Student extends Model
             return true;
         }
 
-        return $this->sessionEnrollments()->count() === $this->program->duration->value;
+        $duration = $this->program->duration;
+        assert($duration instanceof ProgramDuration);
+
+        $takenFinalYearCourse = $this->sessionEnrollments()->where('level_id', $duration->level())->exists();
+
+        return $takenFinalYearCourse || $this->sessionEnrollments()->count() === $duration->value;
     }
 
     private function inExtraYear(): bool
@@ -264,6 +270,9 @@ final class Student extends Model
             return true;
         }
 
-        return $this->sessionEnrollments()->count() > $this->program->duration->value;
+        $duration = $this->program->duration;
+        assert($duration instanceof ProgramDuration);
+
+        return $this->sessionEnrollments()->count() > $duration->value;
     }
 }
