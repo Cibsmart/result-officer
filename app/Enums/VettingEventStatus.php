@@ -11,4 +11,5 @@ enum VettingEventStatus: string
     case CANCELLED = 'cancelled';
     case FAILED = 'failed';
     case COMPLETED = 'completed';
+    case PENDING = 'pending';
 }
