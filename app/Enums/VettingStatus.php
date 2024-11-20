@@ -8,8 +8,7 @@ enum VettingStatus: string
 {
     case NEW = 'new';
     case CHECKING = 'checking';
+    case UNCHECKED = 'unchecked';
     case FAILED = 'failed';
     case PASSED = 'passed';
-    case UNCHECKED = 'unchecked';
-    case PENDING = 'pending';
 }
