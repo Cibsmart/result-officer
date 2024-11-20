@@ -10,6 +10,7 @@ use App\Values\RegistrationNumber;
 use App\Values\TotalScore;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -25,11 +26,7 @@ final class Result extends Model
         'grade',
         'grade_point',
         'remarks',
-        'data',
     ];
-
-    /** @var array<int, string> */
-    protected $hidden = ['data'];
 
     public static function createFromRawResult(RawResult $rawResult, Registration $registration): self
     {
@@ -56,12 +53,13 @@ final class Result extends Model
         $result->grade = $grade->value;
         $result->grade_point = $gradePoint;
         $result->upload_date = DateValue::fromString($rawResult->upload_date)->value;
-        $result->data = $result->getData();
         $result->remarks = null;
         $result->source = RecordSource::PORTAL;
         $result->lecturer_id = $lecturer;
 
         $result->save();
+
+        $result->resultDetail()->create(['value' => $result->getData()]);
 
         return $result;
     }
@@ -78,16 +76,20 @@ final class Result extends Model
         return $this->belongsTo(Registration::class);
     }
 
+    public function resultDetail(): HasOne
+    {
+        return $this->hasOne(ResultDetail::class);
+    }
+
     public function getData(): string
     {
         return "{$this->registration_id}-{$this->total_score}-{$this->grade}-{$this->grade_point}";
     }
 
-    /** @return array{data: 'hashed', scores: 'json', source: 'App\Enums\RecordSource', upload_date: 'date'} */
+    /** @return array{scores: 'json', source: 'App\Enums\RecordSource', upload_date: 'date'} */
     protected function casts(): array
     {
         return [
-            'data' => 'hashed',
             'scores' => 'json',
             'source' => RecordSource::class,
             'upload_date' => 'date',

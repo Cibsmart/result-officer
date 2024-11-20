@@ -26,7 +26,6 @@ return new class extends Migration
             $table->date('upload_date')->nullable();
             $table->string('remarks')->nullable();
             $table->date('exam_date')->nullable();
-            $table->string('data');
             $table->string('source')->default(RecordSource::LEGACY->value);
             $table->foreignIdFor(Lecturer::class)->nullable();
             $table->timestamps();
