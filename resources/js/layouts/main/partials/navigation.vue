@@ -62,7 +62,7 @@ const navigation: NavigationItem[] = [
     href: "#",
     icon: AcademicCapIcon,
     current: false,
-    children: [{ name: "List", href: route("vetting.form"), current: route().current("vetting.form") }],
+    children: [{ name: "List", href: route("vetting.index"), current: route().current("vetting.index") }],
   },
   {
     name: "Graduation",

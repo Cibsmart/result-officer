@@ -16,7 +16,7 @@ const form = useForm({
 });
 
 const submit = () => {
-  form.post(route("vetting.view"));
+  form.get(route("vetting.index", { department: form.department }));
 };
 </script>
 
@@ -27,24 +27,26 @@ const submit = () => {
     <form
       class="mt-6 space-y-6"
       @submit.prevent="submit">
-      <div>
-        <InputLabel
-          for="department"
-          value="Department" />
+      <div class="flex w-full items-end space-x-4">
+        <div class="flex-1">
+          <InputLabel
+            for="department"
+            value="Department" />
 
-        <SelectInput
-          id="department"
-          v-model="form.department"
-          :items="departments"
-          class="mt-1 block w-full" />
+          <SelectInput
+            id="department"
+            v-model="form.department"
+            :items="departments"
+            class="mt-1 block w-full" />
 
-        <InputError
-          :message="form.errors.department"
-          class="mt-2" />
-      </div>
+          <InputError
+            :message="form.errors.department"
+            class="mt-2" />
+        </div>
 
-      <div>
-        <PrimaryButton :disabled="form.processing">View</PrimaryButton>
+        <div class="mb-1">
+          <PrimaryButton :disabled="form.processing">View</PrimaryButton>
+        </div>
       </div>
     </form>
   </BaseFormSection>

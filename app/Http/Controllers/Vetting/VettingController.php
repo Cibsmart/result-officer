@@ -7,9 +7,13 @@ namespace App\Http\Controllers\Vetting;
 use App\Data\Department\DepartmentListData;
 use App\Data\Vetting\VettingListData;
 use App\Models\Department;
-use App\ViewModels\Vetting\VettingFormPage;
-use App\ViewModels\Vetting\VettingViewPage;
+use App\Models\Student;
+use App\Models\User;
+use App\Models\VettingEvent;
+use App\ViewModels\Vetting\VettingIndexPage;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -17,20 +21,23 @@ use function assert;
 
 final class VettingController
 {
-    public function form(): Response
+    public function index(?Department $department = null): Response
     {
-        return Inertia::render('vetting/list/form/page', new VettingFormPage(
+        return Inertia::render('vetting/list/index/page', new VettingIndexPage(
             departments: DepartmentListData::new(),
+            data: fn () => $department ? VettingListData::fromModel($department) : null,
         ));
     }
 
-    public function view(Request $request): Response
+    public function create(Student $student, Request $request): RedirectResponse
     {
-        $department = Department::query()->findOrFail($request->input('department.id'));
-        assert($department instanceof Department);
+        $user = $request->user();
+        assert($user instanceof User);
 
-        return Inertia::render('vetting/list/view/page', new VettingViewPage(
-            data: VettingListData::fromModel($department),
-        ));
+        $vettingEvent = VettingEvent::getOrCreateUsingStudent($student, $user);
+
+        Artisan::queue('app:vet', ['vettingEventId' => $vettingEvent->id]);
+
+        return redirect()->back()->success("Vetting Started for {$student->registration_number}");
     }
 }
