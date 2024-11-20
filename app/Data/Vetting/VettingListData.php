@@ -8,6 +8,7 @@ use App\Data\Department\DepartmentData;
 use App\Data\Faculty\FacultyData;
 use App\Enums\StudentStatus;
 use App\Models\Department;
+use App\Models\Faculty;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
 
@@ -28,8 +29,11 @@ final class VettingListData extends Data
             ->whereIn('status', [StudentStatus::FINAL_YEAR, StudentStatus::EXTRA_YEAR])
             ->get();
 
+        $faculty = $department->faculty;
+        assert($faculty instanceof Faculty);
+
         return new self(
-            faculty: FacultyData::fromModel($department->faculty),
+            faculty: FacultyData::fromModel($faculty),
             department: DepartmentData::fromModel($department),
             graduands: VettingStudentData::collect($graduands),
         );
