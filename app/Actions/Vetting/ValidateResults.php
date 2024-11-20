@@ -6,6 +6,7 @@ namespace App\Actions\Vetting;
 
 use App\Enums\VettingStatus;
 use App\Enums\VettingType;
+use App\Models\Result;
 use App\Models\SemesterEnrollment;
 use App\Models\Session;
 use App\Models\Student;
@@ -43,14 +44,16 @@ final class ValidateResults extends ReportVettingStep
         SemesterEnrollment $semesterEnrollment,
         Session $session,
     ): bool {
-        $registrations = $semesterEnrollment->registrations()->with('result', 'course')->get();
+        $registrations = $semesterEnrollment->registrations()
+            ->with('result.resultDetail', 'course')
+            ->get();
 
         $passed = true;
 
         foreach ($registrations as $registration) {
             $result = $registration->result;
 
-            if (Hash::check($result->getData(), $result->data)) {
+            if ($this->passCheck($result)) {
                 continue;
             }
 
@@ -64,5 +67,20 @@ final class ValidateResults extends ReportVettingStep
         }
 
         return $passed;
+    }
+
+    private function passCheck(Result $result): bool
+    {
+        $resultDetail = $result->resultDetail;
+        $resultDetailValue = $resultDetail->value;
+        $resultDetailHash = $resultDetail->data;
+
+        if ($resultDetail->validate) {
+            return $result->getData() === $resultDetailValue;
+        }
+
+        return $result->getData() === $resultDetailValue
+            && $resultDetailHash !== ''
+            && Hash::check($resultDetailValue, $resultDetailHash);
     }
 }

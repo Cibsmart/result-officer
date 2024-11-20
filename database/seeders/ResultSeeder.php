@@ -91,8 +91,7 @@ final class ResultSeeder extends Seeder
             $gradePoint = $grade->point() * $registration->credit_unit->value;
             $data = "{$registration->id}-{$score->value}-{$grade->value}-{$gradePoint}";
 
-            Result::query()->create([
-                'data' => $data,
+            $result = Result::query()->create([
                 'grade' => $grade->name,
                 'grade_point' => $gradePoint,
                 'registration_id' => $registration->id,
@@ -102,6 +101,8 @@ final class ResultSeeder extends Seeder
                 ]),
                 'total_score' => $score->value,
             ]);
+
+            $result->resultDetail()->create(['value' => $data]);
         }
     }
 }

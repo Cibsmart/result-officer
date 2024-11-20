@@ -23,10 +23,8 @@ final class ResultFactory extends Factory
         $scores = ['in_course' => $inCourse, 'exam' => $exam];
         $score = TotalScore::new($inCourse + $exam);
         $grade = Grade::for($score, fake()->randomElement([true, false]));
-        $data = '';
 
         return [
-            'data' => $data,
             'grade' => $grade->name,
             'grade_point' => fn (array $attributes,
             ) => $grade->point() * Registration::find($attributes['registration_id'])->credit_unit->value,
@@ -39,8 +37,8 @@ final class ResultFactory extends Factory
     public function configure(): self
     {
         return $this->afterCreating(function (Result $result): void {
-            $result->data = $result->getData();
-            $result->save();
+            $data = $result->getData();
+            $result->resultDetail()->create(['value' => $data, 'data' => $data, 'validate' => false]);
         });
     }
 }
