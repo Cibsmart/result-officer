@@ -59,6 +59,12 @@ const hasRows = computed(() => props.data.graduands.length > 0);
                 </th>
 
                 <th
+                  class="hidden py-2 text-center text-sm font-semibold text-gray-900 lg:table-cell dark:text-white"
+                  scope="col">
+                  REPORT
+                </th>
+
+                <th
                   class="py-2 text-center text-sm font-semibold text-gray-900 dark:text-white"
                   scope="col">
                   ACTIONS
