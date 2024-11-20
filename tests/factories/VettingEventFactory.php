@@ -19,6 +19,7 @@ final class VettingEventFactory extends Factory
         return [
             'status' => fake()->randomElement(VettingEventStatus::cases()),
             'student_id' => StudentFactory::new(),
+            'user_id' => UserFactory::new(),
         ];
     }
 }
