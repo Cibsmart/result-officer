@@ -30,9 +30,9 @@ final class VettingStudentData extends Data
     {
         $vettingEvent = $student->vettingEvent;
 
-        $vettingStatus = $vettingEvent
-            ? $vettingEvent->status
-            : VettingEventStatus::PENDING;
+        [$vettingStatus, $vettingSteps] = $vettingEvent
+            ? [$vettingEvent->status, $vettingEvent->vettingSteps]
+            : [VettingEventStatus::PENDING, collect([])];
 
         $status = $student->status;
         assert($status instanceof StudentStatus);
@@ -44,7 +44,7 @@ final class VettingStudentData extends Data
             studentStatus: $status,
             vettingStatus: $vettingStatus,
             vettingStatusColor: $vettingStatus->color(),
-            vettingSteps: VettingReportData::collect($vettingEvent->vettingSteps),
+            vettingSteps: VettingReportData::collect($vettingSteps),
         );
     }
 }
