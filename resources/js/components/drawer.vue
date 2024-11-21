@@ -8,11 +8,13 @@ const props = withDefaults(
     open?: boolean;
     size?: "normal" | "wide";
     closeable?: boolean;
+    title?: string;
   }>(),
   {
     open: false,
     size: "normal",
     closeable: true,
+    string: "",
   },
 );
 
@@ -100,7 +102,7 @@ const maxWidthClass = computed(() => {
 
                 <div class="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl dark:bg-gray-800">
                   <div class="px-4 sm:px-6">
-                    <DialogTitle class="text-base font-semibold text-gray-900 dark:text-white">Panel title</DialogTitle>
+                    <DialogTitle class="text-base font-semibold text-gray-900 dark:text-white">{{ title }}</DialogTitle>
                   </div>
 
                   <div class="relative mt-6 flex-1 px-4 sm:px-6">
