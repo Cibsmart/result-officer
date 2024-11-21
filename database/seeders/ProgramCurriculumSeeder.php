@@ -21,6 +21,8 @@ use App\Models\Session;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Collection;
 
+use function PHPUnit\Framework\assertNotNull;
+
 final class ProgramCurriculumSeeder extends Seeder
 {
     public function run(): void
@@ -118,14 +120,57 @@ final class ProgramCurriculumSeeder extends Seeder
         ProgramCurriculumSemester $programCurriculumSemester,
         Collection $semesterCourses,
     ): void {
+
+        $electiveGroups = [];
+
         foreach ($semesterCourses as $semesterCourse) {
             $course = Course::getUsingCode($semesterCourse['course_code']);
-            ProgramCurriculumCourse::query()->create([
+
+            $courseType = CourseType::from($semesterCourse['course_type']);
+
+            $programCurriculumCourse = ProgramCurriculumCourse::query()->create([
                 'course_id' => $course->id,
-                'course_type' => CourseType::from($semesterCourse['course_type']),
+                'course_type' => $courseType,
                 'credit_unit' => CreditUnit::from((int) $semesterCourse['credit_unit']),
                 'program_curriculum_semester_id' => $programCurriculumSemester->id,
             ]);
+
+            $electiveGrouping = $semesterCourse['elective_group'];
+            assertNotNull($electiveGrouping);
+
+            if (! $this->isElectiveWithGrouping($courseType, $electiveGrouping)) {
+                continue;
+            }
+
+            $electiveGroups[$electiveGrouping][] = $programCurriculumCourse;
+        }
+
+        $this->createProgramCurriculumElectiveGroups($programCurriculumSemester, $electiveGroups);
+    }
+
+    private function isElectiveWithGrouping(CourseType $courseType, string $electiveGrouping): bool
+    {
+        return $courseType === CourseType::ELECTIVE && $electiveGrouping !== '';
+    }
+
+    /** @param array<string, ProgramCurriculumCourse> $electiveGroups */
+    private function createProgramCurriculumElectiveGroups(
+        ProgramCurriculumSemester $programCurriculumSemester,
+        array $electiveGroups,
+    ): void {
+        foreach ($electiveGroups as $electiveGrouping => $programCurriculumCourses) {
+            if (count($programCurriculumCourses) <= 1) {
+                continue;
+            }
+
+            $curriculumElectiveGroup = $programCurriculumSemester
+                ->programCurriculumElectiveGroups()
+                ->create(['name' => $electiveGrouping]);
+
+            foreach ($programCurriculumCourses as $programCurriculumCourse) {
+                $curriculumElectiveGroup->programCurriculumElectiveCourses()
+                    ->create(['program_curriculum_course_id' => $programCurriculumCourse->id]);
+            }
         }
     }
 }

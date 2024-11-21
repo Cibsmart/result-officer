@@ -48,6 +48,15 @@ final class ProgramCurriculumSemester extends Model
         return $this->belongsTo(Semester::class);
     }
 
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumElectiveGroup, \App\Models\ProgramCurriculumSemester>
+     */
+    public function programCurriculumElectiveGroups(): HasMany
+    {
+        return $this->hasMany(ProgramCurriculumElectiveGroup::class);
+    }
+
     /** @return array{minimum_elective_units: 'App\Enums\CreditUnit'} */
     protected function casts(): array
     {
