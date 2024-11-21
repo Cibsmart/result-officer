@@ -3,6 +3,7 @@ declare namespace App.Data {
     title: string;
     description: string;
     status: App.Enums.VettingStatus;
+    color: App.Enums.StatusColor;
   };
   export type VettingReportListData = {
     reports: Array<App.Data.VettingReportData>;
