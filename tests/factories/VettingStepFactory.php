@@ -18,6 +18,7 @@ final class VettingStepFactory extends Factory
     public function definition(): array
     {
         return [
+            'message' => '',
             'status' => VettingStatus::NEW,
             'type' => fake()->randomElement(VettingType::cases()),
             'vetting_event_id' => VettingEventFactory::new(),

@@ -12,16 +12,29 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class VettingStep extends Model
 {
-    protected $fillable = ['vetting_event_id', 'type', 'status'];
-
     public static function getOrCreateUsingVettingEvent(
         VettingEvent $vettingEvent,
         VettingType $vettingType,
     ): self {
-        return self::query()->firstOrCreate(
-            ['vetting_event_id' => $vettingEvent->id, 'type' => $vettingType],
-            ['status' => VettingStatus::NEW],
-        );
+        $vettingStep = self::query()
+            ->where('vetting_event_id', $vettingEvent->id)
+            ->where('type', $vettingType)
+            ->first();
+
+        if ($vettingStep) {
+            return $vettingStep;
+        }
+
+        $vettingStep = new self();
+
+        $vettingStep->vetting_event_id = $vettingEvent->id;
+        $vettingStep->type = $vettingType;
+        $vettingStep->message = '';
+        $vettingStep->status = VettingStatus::NEW;
+
+        $vettingStep->save();
+
+        return $vettingStep;
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\VettingEvent, \App\Models\VettingStep> */
@@ -31,7 +44,7 @@ final class VettingStep extends Model
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\VettingReport, \App\Models\VettingStep> */
-    public function vettingRports(): HasMany
+    public function vettingReports(): HasMany
     {
         return $this->hasMany(VettingReport::class, 'vetting_step_id');
     }
@@ -63,7 +76,7 @@ final class VettingStep extends Model
 
     private function failureReports(): bool
     {
-        return $this->vettingRports()
+        return $this->vettingReports()
             ->where('status', VettingStatus::FAILED)
             ->exists();
     }
