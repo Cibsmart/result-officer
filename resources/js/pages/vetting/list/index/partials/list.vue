@@ -1,14 +1,27 @@
 <script lang="ts" setup>
-import { computed } from "vue";
+import { ref, computed } from "vue";
 import EmptyState from "@/components/emptyState.vue";
 import IconLink from "@/components/links/iconLink.vue";
 import StudentRow from "@/pages/vetting/list/index/partials/studentRow.vue";
+import Drawer from "@/components/drawer.vue";
+import Disclosure from "@/components/baseDisclosure.vue";
 
 const props = defineProps<{
   data: App.Data.Vetting.VettingListData;
 }>();
 
+const showReport = ref(false);
+const currentStudent = ref<App.Data.Vetting.VettingStudentData>();
+
 const hasRows = computed(() => props.data.graduands.length > 0);
+const drawerTitle = computed(() => `VETTING REPORT FOR ${currentStudent.value?.registrationNumber}`);
+
+const closeDrawer = () => (showReport.value = false);
+const openDrawer = (studentId: number) => {
+  currentStudent.value = props.data.graduands.find((student) => student.id === studentId);
+
+  showReport.value = true;
+};
 </script>
 
 <template>
@@ -78,7 +91,8 @@ const hasRows = computed(() => props.data.graduands.length > 0);
                 :key="student.id">
                 <StudentRow
                   :index="index"
-                  :student="student" />
+                  :student="student"
+                  @show-report="openDrawer" />
               </template>
             </tbody>
           </table>
@@ -93,4 +107,21 @@ const hasRows = computed(() => props.data.graduands.length > 0);
       </EmptyState>
     </div>
   </div>
+
+  <Drawer
+    :show="showReport"
+    :title="drawerTitle"
+    @close="closeDrawer">
+    <div
+      v-for="(vettingStep, index) in currentStudent?.vettingSteps"
+      :key="index">
+      <Disclosure
+        :badge="vettingStep.status"
+        :color="vettingStep.color"
+        :title="vettingStep.title"
+        class="mt-2">
+        {{ vettingStep.description }}
+      </Disclosure>
+    </div>
+  </Drawer>
 </template>
