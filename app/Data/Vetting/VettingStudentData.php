@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Data\Vetting;
 
+use App\Data\VettingReportData;
 use App\Enums\StatusColor;
 use App\Enums\StudentStatus;
 use App\Enums\VettingEventStatus;
 use App\Models\Student;
+use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
 
 final class VettingStudentData extends Data
@@ -19,6 +21,8 @@ final class VettingStudentData extends Data
         public readonly StudentStatus $studentStatus,
         public readonly VettingEventStatus $vettingStatus,
         public readonly StatusColor $vettingStatusColor,
+        /** @var Collection<int, \App\Data\VettingReportData> @vettingSteps */
+        public readonly Collection $vettingSteps,
     ) {
     }
 
@@ -40,6 +44,7 @@ final class VettingStudentData extends Data
             studentStatus: $status,
             vettingStatus: $vettingStatus,
             vettingStatusColor: $vettingStatus->color(),
+            vettingSteps: VettingReportData::collect($vettingEvent->vettingSteps),
         );
     }
 }
