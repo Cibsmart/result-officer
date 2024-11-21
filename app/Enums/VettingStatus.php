@@ -11,4 +11,15 @@ enum VettingStatus: string
     case UNCHECKED = 'unchecked';
     case FAILED = 'failed';
     case PASSED = 'passed';
+
+    public function color(): StatusColor
+    {
+        return match ($this) {
+            self::NEW => StatusColor::GRAY,
+            self::UNCHECKED => StatusColor::YELLOW,
+            self::CHECKING => StatusColor::INDIGO,
+            self::FAILED => StatusColor::RED,
+            self::PASSED => StatusColor::GREEN,
+        };
+    }
 }
