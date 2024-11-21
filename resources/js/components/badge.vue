@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 withDefaults(
   defineProps<{
-    color: "gray" | "red" | "yellow" | "green" | "blue" | "indigo" | "purple" | "pink";
+    color: App.Enums.StatusColor;
   }>(),
   {
     color: "gray",
