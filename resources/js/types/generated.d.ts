@@ -1,3 +1,13 @@
+declare namespace App.Data {
+  export type VettingReportData = {
+    title: string;
+    description: string;
+    status: App.Enums.VettingStatus;
+  };
+  export type VettingReportListData = {
+    reports: Array<App.Data.VettingReportData>;
+  };
+}
 declare namespace App.Data.Composite {
   export type CompositeCourseData = {
     code: string;
