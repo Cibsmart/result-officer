@@ -6,6 +6,7 @@ namespace Tests\Factories;
 
 use App\Enums\EntryMode;
 use App\Enums\Gender;
+use App\Enums\StudentStatus;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -33,6 +34,7 @@ final class StudentFactory extends Factory
             'other_names' => fake()->firstName(),
             'program_id' => ProgramFactory::new(),
             'registration_number' => 'EBSU/' . fake()->year() . '/' . fake()->unique()->randomNumber(5, true),
+            'status' => StudentStatus::NEW,
         ];
     }
 }
