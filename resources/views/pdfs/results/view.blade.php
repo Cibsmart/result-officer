@@ -14,7 +14,7 @@
         <div class="flex flex-col text-center">
           <span class="text-black text-lg font-bold">EBONYI STATE UNIVERSITY, ABAKALIKI</span>
           <span class="text-black text-sm  font-bold">RESULT DATABASE OFFICE</span>
-          <span class="text-black  text-sm font-bold">STUDENT'S RESULT</span>
+          <span class="text-black  text-sm font-bold">STUDENT'S RESULT (DRAFT COPY)</span>
         </div>
       </div>
       {{-- Passport --}}
@@ -86,13 +86,13 @@
 
         <tr class="divide-x divide-gray-400">
           <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900" colspan="3"></td>
-          <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">{{ $semester->creditUnitTotal }}</td>
+          <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">{{ $semester->formattedCreditUnitTotal }}</td>
           <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900" colspan="2"></td>
-          <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">{{ $semester->gradePointTotal }}</td>
-          <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">{{ $semester->gradePointAverage }}</td>
+          <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">{{ $semester->formattedGradePointTotal }}</td>
+          <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">{{ $semester->formattedGPA }}</td>
           <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">
             @if($loop->last)
-              {{ $session->cumulativeGradePointAverage }}
+              {{ $session->formattedCGPA }}
             @endif
           </td>
         </tr>
@@ -103,7 +103,7 @@
 
   {{-- FCGPA  --}}
   <div class="mt-2 p-2 text-center text-sm font-bold uppercase text-black">
-    CURRENT FINAL CGPA: {{ $results->finalCumulativeGradePointAverage }} ({{ $results->degreeClass }})
+    CURRENT FINAL CGPA: {{ $results->formattedFCGPA }} ({{ $results->degreeClass }})
   </div>
 </div>
 

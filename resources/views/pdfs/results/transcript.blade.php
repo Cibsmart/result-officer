@@ -106,18 +106,18 @@
           @endforeach
           <tr class="divide-x divide-gray-400">
             <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900" colspan="4"></td>
-            <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">{{ $semester->creditUnitTotal }}</td>
+            <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">{{ $semester->formattedCreditUnitTotal }}</td>
             <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900"></td>
-            <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">{{ $semester->gradePointTotal }}</td>
-            <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">{{ $semester->gradePointAverage }}</td>
+            <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">{{ $semester->formattedGradePointTotal }}</td>
+            <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">{{ $semester->formattedGPA }}</td>
             <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">
               @if($loop->last)
-                {{ $session->cumulativeGradePointAverage }}
+                {{ $session->formattedCGPA }}
               @endif
             </td>
             <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">
               @if($loop->parent->last && $loop->last)
-                {{ $results->finalCumulativeGradePointAverage }}
+                {{ $results->formattedFCGPA }}
               @endif
             </td>
           </tr>
@@ -152,7 +152,7 @@
       <div class="basis-2/12 mt-4">
         <div class="h-full grid place-content-center font-extrabold">
           @if($loop->last)
-            FCGPA: {{ $results->finalCumulativeGradePointAverage }}
+            FCGPA: {{ $results->formattedFCGPA }}
           @endif
         </div>
       </div>

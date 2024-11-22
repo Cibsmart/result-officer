@@ -18,6 +18,7 @@ final class StudentResultData extends Data
         /** @var \Illuminate\Support\Collection<int, \App\Data\Results\SessionResultData> */
         public readonly Collection $sessionEnrollments,
         public readonly float $finalCumulativeGradePointAverage,
+        public readonly string $formattedFCGPA,
         public readonly string $degreeClass,
         public readonly string $degreeAwarded,
         public readonly int $graduationYear,
@@ -49,6 +50,7 @@ final class StudentResultData extends Data
             id: $student->id,
             sessionEnrollments: $sessionEnrollments,
             finalCumulativeGradePointAverage: $finalCGPA,
+            formattedFCGPA: number_format($finalCGPA, 2),
             degreeClass: $degreeClass->value,
             degreeAwarded: "$programType->name ($programType->code)",
             graduationYear: $graduationYear,

@@ -132,7 +132,7 @@ defineProps<{
 
           <td
             class="hidden border-t border-gray-200 px-3 py-2 text-center text-sm font-bold text-gray-700 lg:table-cell dark:border-gray-700 dark:text-gray-300">
-            {{ semester.creditUnitTotal }}
+            {{ semester.formattedCreditUnitTotal }}
           </td>
 
           <td
@@ -143,23 +143,23 @@ defineProps<{
 
           <td
             class="hidden border-t border-gray-200 px-3 py-2 text-center text-sm font-bold text-gray-700 lg:table-cell dark:border-gray-700 dark:text-gray-300">
-            {{ semester.gradePointTotal }}
+            {{ semester.formattedGradePointTotal }}
           </td>
 
           <td
             class="hidden border-t border-gray-200 px-3 py-2 text-center text-sm font-bold text-gray-700 lg:table-cell dark:border-gray-700 dark:text-gray-300">
-            {{ semester.gradePointAverage }}
+            {{ semester.formattedGPA }}
           </td>
         </tr>
       </tbody>
     </table>
 
     <div class="flex justify-around pb-2 text-right lg:hidden">
-      <span>Total Credit Unit: {{ semester.creditUnitTotal }}</span>
+      <span>Total Credit Unit: {{ semester.formattedCreditUnitTotal }}</span>
 
-      <span>Total Grade Point: {{ semester.gradePointTotal }}</span>
+      <span>Total Grade Point: {{ semester.formattedGradePointTotal }}</span>
 
-      <span class="font-bold">GPA: {{ semester.gradePointAverage }}</span>
+      <span class="font-bold">GPA: {{ semester.formattedGPA }}</span>
     </div>
   </div>
 </template>

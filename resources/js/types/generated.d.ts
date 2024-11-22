@@ -220,6 +220,7 @@ declare namespace App.Data.Results {
     id: number;
     sessionEnrollments: Array<App.Data.Results.SessionResultData>;
     finalCumulativeGradePointAverage: number;
+    formattedFCGPA: string;
     degreeClass: string;
     degreeAwarded: string;
     graduationYear: number;
