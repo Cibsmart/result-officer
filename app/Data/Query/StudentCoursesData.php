@@ -26,6 +26,7 @@ final class StudentCoursesData extends Data
         public readonly ?int $totalScore,
         public readonly ?Grade $grade,
         public readonly ?int $gradePoint,
+        public readonly ?int $programCurriculumCourseId,
     ) {
     }
 
@@ -45,6 +46,7 @@ final class StudentCoursesData extends Data
             totalScore: $result->total_score,
             grade: $result->grade === null ? null : Grade::from($result->grade),
             gradePoint: $result->grade_point,
+            programCurriculumCourseId: $result->program_curriculum_course_id,
         );
     }
 }

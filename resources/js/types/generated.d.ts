@@ -182,6 +182,7 @@ declare namespace App.Data.Query {
     totalScore: number | null;
     grade: App.Enums.Grade | null;
     gradePoint: number | null;
+    programCurriculumCourseId: number | null;
   };
 }
 declare namespace App.Data.Response {

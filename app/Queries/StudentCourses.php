@@ -30,6 +30,7 @@ final class StudentCourses
                 'semesters.name as semester', 'courses.id as course_id', 'courses.code as course_code',
                 'courses.title as course_title', 'registrations.credit_unit', 'registrations.course_status',
                 'results.total_score', 'results.grade', 'results.grade_point', 'academic_sessions.id as session_id',
+                'program_curriculum_course_id',
             )
             ->where('students.id', $student->id)
             ->orderBy('academic_sessions.name')
