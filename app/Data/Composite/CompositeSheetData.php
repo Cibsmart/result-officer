@@ -123,10 +123,12 @@ final class CompositeSheetData extends Data
         }
 
         $curriculumLevel = $curriculum->programCurriculumLevels()->where('level_id', $level->id)->first();
-        $curriculumSemester = $curriculumLevel->semesters()->where('semester_id', $semester->id)->first();
+        $curriculumSemester = $curriculumLevel->programCurriculumSemesters()
+            ->where('semester_id', $semester->id)
+            ->first();
 
         return $curriculumSemester
-            ->courses()
+            ->programCurriculumCourses()
             ->select('program_curriculum_courses.*')
             ->join('courses', 'courses.id', '=', 'program_curriculum_courses.course_id')
             ->orderBy('courses.code')
