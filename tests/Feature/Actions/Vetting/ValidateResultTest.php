@@ -29,8 +29,14 @@ it('reports students results with tampered score', function (): void {
 
     VettingEventFactory::new()->for($student)->createOne();
 
-    $sessionEnrollment = $student->sessionEnrollments->first();
+    $sessionEnrollment = $student->sessionEnrollments()
+        ->with('semesterEnrollments.registrations.result', 'session', 'semesterEnrollments.semester',
+            'semesterEnrollments.registrations.course')
+        ->get()
+        ->first();
+
     $semesterEnrollment = $sessionEnrollment->semesterEnrollments->first();
+
     $registration = $semesterEnrollment->registrations->first();
     $result = $registration->result;
 
@@ -60,7 +66,11 @@ it('reports students results with tampered grade', function (): void {
 
     VettingEventFactory::new()->for($student)->createOne();
 
-    $sessionEnrollment = $student->sessionEnrollments->first();
+    $sessionEnrollment = $student->sessionEnrollments()
+        ->with('semesterEnrollments.registrations.result', 'session', 'semesterEnrollments.semester',
+            'semesterEnrollments.registrations.course')
+        ->get()
+        ->first();
     $semesterEnrollment = $sessionEnrollment->semesterEnrollments->first();
     $registration = $semesterEnrollment->registrations->first();
     $result = $registration->result;
@@ -87,7 +97,12 @@ it('reports students results with tampered grade point', function (): void {
 
     VettingEventFactory::new()->for($student)->createOne();
 
-    $sessionEnrollment = $student->sessionEnrollments->first();
+    $sessionEnrollment = $student->sessionEnrollments()
+        ->with('semesterEnrollments.registrations.result', 'session', 'semesterEnrollments.semester',
+            'semesterEnrollments.registrations.course')
+        ->get()
+        ->first();
+
     $semesterEnrollment = $sessionEnrollment->semesterEnrollments->first();
     $registration = $semesterEnrollment->registrations->first();
     $result = $registration->result;
@@ -114,7 +129,10 @@ it('reports all cases of tampered students results', function (): void {
 
     VettingEventFactory::new()->for($student)->createOne();
 
-    $sessionEnrollment = $student->sessionEnrollments->first();
+    $sessionEnrollment = $student->sessionEnrollments()
+        ->with('semesterEnrollments.registrations.result')
+        ->get()->first();
+
     $semesterEnrollment = $sessionEnrollment->semesterEnrollments->first();
     $registration = $semesterEnrollment->registrations->first();
     $result = $registration->result;

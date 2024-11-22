@@ -103,7 +103,9 @@ function computeCGPA(SessionEnrollment $sessionEnrollment): float
 
 function computeFCGPA(Student $student): float
 {
-    $sessionEnrollments = $student->sessionEnrollments;
+    $sessionEnrollments = $student->sessionEnrollments()
+        ->with('semesterEnrollments.registrations.result')
+        ->get();
 
     $cgpaSum = 0;
 

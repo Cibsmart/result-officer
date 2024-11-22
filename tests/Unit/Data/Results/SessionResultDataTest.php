@@ -25,7 +25,9 @@ test('session result data is correct', function (): void {
 
     $sessionData = SessionResultData::from($sessionEnrollment);
 
-    $semestersResults = $sessionEnrollment->semesterEnrollments;
+    $semestersResults = $sessionEnrollment->semesterEnrollments()
+        ->with('registrations.result')
+        ->get();
 
     $gradePointAverageTotal = 0;
 

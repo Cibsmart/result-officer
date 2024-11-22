@@ -17,7 +17,7 @@ test('semester result data is correct', function (): void {
 
     $semesterData = SemesterResultData::from($semesterEnrollment);
 
-    $registrations = $semesterEnrollment->registrations;
+    $registrations = $semesterEnrollment->registrations()->with('result')->get();
 
     $totalCU = $registrations->sum('credit_unit.value');
     $totalGP = $registrations->sum('result.grade_point');

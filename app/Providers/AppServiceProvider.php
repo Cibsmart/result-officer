@@ -72,6 +72,8 @@ final class AppServiceProvider extends ServiceProvider
     {
         Model::shouldBeStrict(App::isLocal());
 
+        Model::preventLazyLoading();
+
         Relation::enforceMorphMap([
             'program' => Program::class,
             'programCurriculumCourse' => ProgramCurriculumCourse::class,
