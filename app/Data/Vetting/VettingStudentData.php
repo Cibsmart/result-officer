@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Data\Vetting;
 
-use App\Data\VettingReportData;
 use App\Enums\StatusColor;
 use App\Enums\StudentStatus;
 use App\Enums\VettingEventStatus;
@@ -21,7 +20,7 @@ final class VettingStudentData extends Data
         public readonly StudentStatus $studentStatus,
         public readonly VettingEventStatus $vettingStatus,
         public readonly StatusColor $vettingStatusColor,
-        /** @var \Illuminate\Support\Collection<int, \App\Data\VettingReportData> @vettingSteps */
+        /** @var \Illuminate\Support\Collection<int, \App\Data\Vetting\VettingReportData> @vettingSteps */
         public readonly Collection $vettingSteps,
     ) {
     }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Data;
+namespace App\Data\Vetting;
 
 use App\Models\Student;
 use Illuminate\Support\Collection;
@@ -11,7 +11,7 @@ use Spatie\LaravelData\Data;
 final class VettingReportListData extends Data
 {
     public function __construct(
-        /** @var \Illuminate\Support\Collection<int, \App\Data\VettingReportData> */
+        /** @var \Illuminate\Support\Collection<int, \App\Data\Vetting\VettingReportData> */
         public Collection $reports,
     ) {
     }

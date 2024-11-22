@@ -1,14 +1,3 @@
-declare namespace App.Data {
-  export type VettingReportData = {
-    title: string;
-    description: string;
-    status: App.Enums.VettingStatus;
-    color: App.Enums.StatusColor;
-  };
-  export type VettingReportListData = {
-    reports: Array<App.Data.VettingReportData>;
-  };
-}
 declare namespace App.Data.Composite {
   export type CompositeCourseData = {
     code: string;
@@ -308,6 +297,15 @@ declare namespace App.Data.Vetting {
     department: App.Data.Department.DepartmentData;
     graduands: Array<App.Data.Vetting.VettingStudentData>;
   };
+  export type VettingReportData = {
+    title: string;
+    description: string;
+    status: App.Enums.VettingStatus;
+    color: App.Enums.StatusColor;
+  };
+  export type VettingReportListData = {
+    reports: Array<App.Data.Vetting.VettingReportData>;
+  };
   export type VettingStudentData = {
     id: number;
     name: string;
@@ -315,7 +313,7 @@ declare namespace App.Data.Vetting {
     studentStatus: App.Enums.StudentStatus;
     vettingStatus: App.Enums.VettingEventStatus;
     vettingStatusColor: App.Enums.StatusColor;
-    vettingSteps: Array<App.Data.VettingReportData>;
+    vettingSteps: Array<App.Data.Vetting.VettingReportData>;
   };
 }
 declare namespace App.Enums {
