@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import PrimaryLinkSmall from "@/components/links/primaryLinkSmall.vue";
 import Badge from "@/components/badge.vue";
 import SecondaryButtonSmall from "@/components/buttons/secondaryButtonSmall.vue";
