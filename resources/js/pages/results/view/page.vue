@@ -89,7 +89,7 @@ const hasResults = computed(() => props.results.sessionEnrollments.length > 0);
           class="mt-2 flex flex-col p-2 text-center text-xl font-bold uppercase text-black lg:block dark:text-white">
           <span>
             Current Final CGPA:
-            <span>{{ results.finalCumulativeGradePointAverage }} </span>
+            <span>{{ results.formattedFCGPA }} </span>
           </span>
 
           <span class="hidden lg:inline"> (</span>

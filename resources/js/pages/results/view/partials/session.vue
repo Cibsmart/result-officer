@@ -17,7 +17,7 @@ defineProps<{
     </template>
 
     <div class="p-2 text-right">
-      <span class="font-bold uppercase"> CGPA: {{ session.cumulativeGradePointAverage }} </span>
+      <span class="font-bold uppercase"> CGPA: {{ session.formattedCGPA }} </span>
     </div>
   </div>
 </template>
