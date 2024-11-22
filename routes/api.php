@@ -2,4 +2,6 @@
 
 declare(strict_types=1);
 
-Route::get('vetting-reports/{student}', [VettingReportController::class]);
+use App\Http\Controllers\Api\VettingReportApiController;
+
+Route::get('vetting-reports/{student}', [VettingReportApiController::class, 'index']);
