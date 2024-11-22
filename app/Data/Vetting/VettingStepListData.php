@@ -8,11 +8,11 @@ use App\Models\Student;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
 
-final class VettingReportListData extends Data
+final class VettingStepListData extends Data
 {
     public function __construct(
-        /** @var \Illuminate\Support\Collection<int, \App\Data\Vetting\VettingReportData> */
-        public Collection $reports,
+        /** @var \Illuminate\Support\Collection<int, \App\Data\Vetting\VettingStepData> */
+        public Collection $items,
     ) {
     }
 
@@ -20,6 +20,6 @@ final class VettingReportListData extends Data
     {
         $vettingEvent = $student->vettingEvent()->with('vettingSteps')->firstOrFail();
 
-        return new self(reports: VettingReportData::collect($vettingEvent->vettingSteps));
+        return new self(items: VettingStepData::collect($vettingEvent->vettingSteps));
     }
 }

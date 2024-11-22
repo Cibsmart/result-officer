@@ -9,7 +9,7 @@ use App\Enums\VettingStatus;
 use App\Models\VettingStep;
 use Spatie\LaravelData\Data;
 
-final class VettingReportData extends Data
+final class VettingStepData extends Data
 {
     public function __construct(
         public string $title,
