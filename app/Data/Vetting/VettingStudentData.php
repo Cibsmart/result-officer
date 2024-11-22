@@ -20,7 +20,7 @@ final class VettingStudentData extends Data
         public readonly StudentStatus $studentStatus,
         public readonly VettingEventStatus $vettingStatus,
         public readonly StatusColor $vettingStatusColor,
-        /** @var \Illuminate\Support\Collection<int, \App\Data\Vetting\VettingReportData> @vettingSteps */
+        /** @var \Illuminate\Support\Collection<int, \App\Data\Vetting\VettingStepData> @vettingSteps */
         public readonly Collection $vettingSteps,
     ) {
     }
@@ -43,7 +43,7 @@ final class VettingStudentData extends Data
             studentStatus: $status,
             vettingStatus: $vettingStatus,
             vettingStatusColor: $vettingStatus->color(),
-            vettingSteps: VettingReportData::collect($vettingSteps),
+            vettingSteps: VettingStepData::collect($vettingSteps),
         );
     }
 }

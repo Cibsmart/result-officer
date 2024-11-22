@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\Api\VettingReportApiController;
+use App\Http\Controllers\Api\VettingStepsApiController;
 
-Route::get('vetting-reports/{student}', [VettingReportApiController::class, 'index']);
+Route::get('vetting-steps/{student}', [VettingStepsApiController::class, 'index'])
+    ->name('api.vetting_steps.index');
