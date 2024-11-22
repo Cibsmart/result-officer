@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Data;
+namespace App\Data\Vetting;
 
 use App\Enums\StatusColor;
 use App\Enums\VettingStatus;
