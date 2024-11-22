@@ -30,34 +30,27 @@ it('skips elective course check for students without courses or matches', functi
     $student = StudentFactory::new()->has(VettingEventFactory::new())->createOne();
 
     $action = new VerifyElectiveCourses();
-
     $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED)
-        ->and($action->report())->toBe(
-            "Elective Courses Not Checked for {$student->registration_number} \n",
-        );
+        ->and($action->report())->toBe("Elective Courses Not Checked for {$student->registration_number} \n");
 
     assertDatabaseCount(VettingReport::class, 1);
 });
 
 it('passes elective course check for students with required elective credits and count', function (): void {
     $semester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
-    $course = CourseFactory::new()->createOne();
-    $course2 = CourseFactory::new()->createOne();
-    $course3 = CourseFactory::new()->createOne();
+    $courses = CourseFactory::new()->count(3)->create();
 
     $programCurriculum = ProgramCurriculumFactory::new()->has(
         ProgramCurriculumLevelFactory::new()
             ->has(ProgramCurriculumSemesterFactory::new()->state([
-                'minimum_elective_count' => 1,
-                'minimum_elective_units' => 2,
-                'semester_id' => $semester->id,
+                'minimum_elective_count' => 1, 'minimum_elective_units' => 2, 'semester_id' => $semester->id,
             ])
                 ->has(ProgramCurriculumCourseFactory::new()->count(3)->state(new Sequence(
-                    ['course_id' => $course->id, 'course_type' => CourseType::CORE],
-                    ['course_id' => $course2->id, 'course_type' => CourseType::ELECTIVE, 'credit_unit' => 2],
-                    ['course_id' => $course3->id, 'course_type' => CourseType::ELECTIVE, 'credit_unit' => 2],
+                    ['course_id' => $courses[0]->id, 'course_type' => CourseType::CORE],
+                    ['course_id' => $courses[1]->id, 'course_type' => CourseType::ELECTIVE, 'credit_unit' => 2],
+                    ['course_id' => $courses[2]->id, 'course_type' => CourseType::ELECTIVE, 'credit_unit' => 2],
                 ))),
             ),
     )->createOne();
@@ -68,21 +61,18 @@ it('passes elective course check for students with required elective credits and
         ->has(SessionEnrollmentFactory::new()
             ->has(SemesterEnrollmentFactory::new()->state(['semester_id' => $semester->id])
                 ->has(RegistrationFactory::new()->state([
-                    'course_id' => $course3->id,
-                    'credit_unit' => 2,
+                    'course_id' => $courses[2]->id, 'credit_unit' => 2,
                     'program_curriculum_course_id' => $programCurriculumCourse->id,
                 ])),
             ),
         )
         ->has(VettingEventFactory::new())
         ->createOne([
-            'entry_mode' => $programCurriculum->entry_mode,
-            'entry_session_id' => $programCurriculum->entry_session_id,
+            'entry_mode' => $programCurriculum->entry_mode, 'entry_session_id' => $programCurriculum->entry_session_id,
             'program_id' => $programCurriculum->program->id,
         ]);
 
     $action = new VerifyElectiveCourses();
-
     $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
@@ -93,18 +83,16 @@ it('passes elective course check for students with required elective credits and
 
 it('fails elective course check for students lacking required elective credit units', function (): void {
     $semester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
-    $course = CourseFactory::new()->createOne();
-    $course2 = CourseFactory::new()->createOne();
+    $courses = CourseFactory::new()->count(2)->create();
 
     $programCurriculum = ProgramCurriculumFactory::new()->has(
         ProgramCurriculumLevelFactory::new()
             ->has(ProgramCurriculumSemesterFactory::new()->state([
-                'minimum_elective_units' => 2,
-                'semester_id' => $semester->id,
+                'minimum_elective_units' => 2, 'semester_id' => $semester->id,
             ])
                 ->has(ProgramCurriculumCourseFactory::new()->count(2)->state(new Sequence(
-                    ['course_id' => $course->id, 'course_type' => CourseType::ELECTIVE, 'credit_unit' => 1],
-                    ['course_id' => $course2->id, 'course_type' => CourseType::ELECTIVE, 'credit_unit' => 1],
+                    ['course_id' => $courses[0]->id, 'course_type' => CourseType::ELECTIVE, 'credit_unit' => 1],
+                    ['course_id' => $courses[1]->id, 'course_type' => CourseType::ELECTIVE, 'credit_unit' => 1],
                 ))),
             ),
     )->createOne();
@@ -115,21 +103,18 @@ it('fails elective course check for students lacking required elective credit un
         ->has(SessionEnrollmentFactory::new()
             ->has(SemesterEnrollmentFactory::new()->state(['semester_id' => $semester->id])
                 ->has(RegistrationFactory::new()->state([
-                    'course_id' => $course->id,
-                    'credit_unit' => 1,
+                    'course_id' => $courses[0]->id, 'credit_unit' => 1,
                     'program_curriculum_course_id' => $programCurriculumCourse->id,
                 ])),
             ),
         )
         ->has(VettingEventFactory::new())
         ->createOne([
-            'entry_mode' => $programCurriculum->entry_mode,
-            'entry_session_id' => $programCurriculum->entry_session_id,
+            'entry_mode' => $programCurriculum->entry_mode, 'entry_session_id' => $programCurriculum->entry_session_id,
             'program_id' => $programCurriculum->program->id,
         ]);
 
     $action = new VerifyElectiveCourses();
-
     $status = $action->execute($student);
 
     $programCurriculumSemester = $programCurriculum->programCurriculumSemesters()->first();
@@ -146,18 +131,16 @@ it('fails elective course check for students lacking required elective credit un
 
 it('fails elective course check for students lacking required elective count', function (): void {
     $semester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
-    $course = CourseFactory::new()->createOne();
-    $course2 = CourseFactory::new()->createOne();
+    $courses = CourseFactory::new()->count(2)->create();
 
     $programCurriculum = ProgramCurriculumFactory::new()->has(
         ProgramCurriculumLevelFactory::new()
             ->has(ProgramCurriculumSemesterFactory::new()->state([
-                'minimum_elective_count' => 2,
-                'semester_id' => $semester->id,
+                'minimum_elective_count' => 2, 'semester_id' => $semester->id,
             ])
                 ->has(ProgramCurriculumCourseFactory::new()->count(2)->state(new Sequence(
-                    ['course_id' => $course->id, 'course_type' => CourseType::ELECTIVE, 'credit_unit' => 2],
-                    ['course_id' => $course2->id, 'course_type' => CourseType::ELECTIVE, 'credit_unit' => 2],
+                    ['course_id' => $courses[0]->id, 'course_type' => CourseType::ELECTIVE, 'credit_unit' => 2],
+                    ['course_id' => $courses[1]->id, 'course_type' => CourseType::ELECTIVE, 'credit_unit' => 2],
                 ))),
             ),
     )->createOne();
@@ -168,21 +151,18 @@ it('fails elective course check for students lacking required elective count', f
         ->has(SessionEnrollmentFactory::new()
             ->has(SemesterEnrollmentFactory::new()->state(['semester_id' => $semester->id])
                 ->has(RegistrationFactory::new()->state([
-                    'course_id' => $course2->id,
-                    'credit_unit' => 2,
+                    'course_id' => $courses[1]->id, 'credit_unit' => 2,
                     'program_curriculum_course_id' => $programCurriculumCourse->id,
                 ])),
             ),
         )
         ->has(VettingEventFactory::new())
         ->createOne([
-            'entry_mode' => $programCurriculum->entry_mode,
-            'entry_session_id' => $programCurriculum->entry_session_id,
+            'entry_mode' => $programCurriculum->entry_mode, 'entry_session_id' => $programCurriculum->entry_session_id,
             'program_id' => $programCurriculum->program->id,
         ]);
 
     $action = new VerifyElectiveCourses();
-
     $status = $action->execute($student);
 
     $programCurriculumSemester = $programCurriculum->programCurriculumSemesters()->first();
@@ -217,7 +197,6 @@ it('fails elective course check for students missing complete elective groups', 
     $programSemester = $programCurriculum->programCurriculumSemesters->firstOrFail();
     $programCourses = $programSemester->programCurriculumCourses;
 
-    //The first two courses are a set that must be completed together
     $electiveGroup = ProgramCurriculumElectiveGroupFactory::new()->for($programSemester)
         ->has(ProgramCurriculumElectiveCourseFactory::new()->count(2)
             ->sequence(fn (Sequence $sequence) => [
@@ -242,18 +221,15 @@ it('fails elective course check for students missing complete elective groups', 
         )
         ->has(VettingEventFactory::new())
         ->createOne([
-            'entry_mode' => $programCurriculum->entry_mode,
-            'entry_session_id' => $programCurriculum->entry_session_id,
+            'entry_mode' => $programCurriculum->entry_mode, 'entry_session_id' => $programCurriculum->entry_session_id,
             'program_id' => $programCurriculum->program->id,
         ]);
 
     $action = new VerifyElectiveCourses();
-
     $status = $action->execute($student);
 
     $level = $programSemester->programCurriculumLevel->level;
     $semester = $programSemester->semester;
-
     $message = "Did not take all courses in elective group ({$electiveGroup->name}) for ";
     $message .= "{$level->name} Level {$semester->name} Semester\n";
 
@@ -270,9 +246,7 @@ it('passes elective course check for students with complete elective groups', fu
     $programCurriculum = ProgramCurriculumFactory::new()->has(
         ProgramCurriculumLevelFactory::new()
             ->has(ProgramCurriculumSemesterFactory::new()->state([
-                'minimum_elective_count' => 2,
-                'minimum_elective_units' => 4,
-                'semester_id' => $semester->id,
+                'minimum_elective_count' => 2, 'minimum_elective_units' => 4, 'semester_id' => $semester->id,
             ])
                 ->has(ProgramCurriculumCourseFactory::new()->count(3)
                     ->sequence(fn (Sequence $sequence) => ['course_id' => $courses[$sequence->index]->id])
@@ -283,8 +257,7 @@ it('passes elective course check for students with complete elective groups', fu
     $programSemester = $programCurriculum->programCurriculumSemesters->firstOrFail();
     $programCourses = $programSemester->programCurriculumCourses;
 
-    //The first two courses are a set that must be completed together
-    $electiveGroup = ProgramCurriculumElectiveGroupFactory::new()->for($programSemester)
+    ProgramCurriculumElectiveGroupFactory::new()->for($programSemester)
         ->has(ProgramCurriculumElectiveCourseFactory::new()->count(2)
             ->sequence(fn (Sequence $sequence) => [
                 'program_curriculum_course_id' => $programCourses[$sequence->index]->id,
@@ -308,17 +281,12 @@ it('passes elective course check for students with complete elective groups', fu
         )
         ->has(VettingEventFactory::new())
         ->createOne([
-            'entry_mode' => $programCurriculum->entry_mode,
-            'entry_session_id' => $programCurriculum->entry_session_id,
+            'entry_mode' => $programCurriculum->entry_mode, 'entry_session_id' => $programCurriculum->entry_session_id,
             'program_id' => $programCurriculum->program->id,
         ]);
 
     $action = new VerifyElectiveCourses();
-
     $status = $action->execute($student);
-
-    $level = $programSemester->programCurriculumLevel->level;
-    $semester = $programSemester->semester;
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
         ->and($action->report())->toBe('');

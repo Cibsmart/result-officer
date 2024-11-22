@@ -153,7 +153,7 @@ final class ProgramCurriculumSeeder extends Seeder
         return $courseType === CourseType::ELECTIVE && $electiveGrouping !== '';
     }
 
-    /** @param array<string, ProgramCurriculumCourse> $electiveGroups */
+    /** @param array<string, \App\Models\ProgramCurriculumCourse> $electiveGroups */
     private function createProgramCurriculumElectiveGroups(
         ProgramCurriculumSemester $programCurriculumSemester,
         array $electiveGroups,
