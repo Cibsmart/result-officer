@@ -18,8 +18,8 @@ final class ProgramCurriculumElectiveGroupFactory extends Factory
     public function definition(): array
     {
         return [
-            'program_curriculum_semester_id' => ProgramCurriculumSemesterFactory::new(),
             'name' => fake()->countryCode(),
+            'program_curriculum_semester_id' => ProgramCurriculumSemesterFactory::new(),
         ];
     }
 }

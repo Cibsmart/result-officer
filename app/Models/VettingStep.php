@@ -28,7 +28,7 @@ final class VettingStep extends Model
         $vettingStep = new self();
 
         $vettingStep->vetting_event_id = $vettingEvent->id;
-        $vettingStep->type = $vettingType;
+        $vettingStep->type = $vettingType->value;
         $vettingStep->message = '';
         $vettingStep->status = VettingStatus::NEW;
 

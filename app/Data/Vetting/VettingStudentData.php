@@ -21,7 +21,7 @@ final class VettingStudentData extends Data
         public readonly StudentStatus $studentStatus,
         public readonly VettingEventStatus $vettingStatus,
         public readonly StatusColor $vettingStatusColor,
-        /** @var Collection<int, \App\Data\VettingReportData> @vettingSteps */
+        /** @var \Illuminate\Support\Collection<int, \App\Data\VettingReportData> @vettingSteps */
         public readonly Collection $vettingSteps,
     ) {
     }
