@@ -11,6 +11,7 @@ use App\Data\Results\ResultData;
 use App\Data\Results\SemesterResultData;
 use App\Data\Semester\SemesterData;
 use App\Data\Session\SessionData;
+use App\Enums\CreditUnit;
 use App\Enums\EntryMode;
 use App\Models\Level;
 use App\Models\Program;
@@ -24,6 +25,8 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\LazyCollection;
 use Illuminate\Support\Str;
 use Spatie\LaravelData\Data;
+
+use function assert;
 
 final class CompositeSheetData extends Data
 {
@@ -135,9 +138,14 @@ final class CompositeSheetData extends Data
             ->with('course')
             ->get()
             ->map(
-                fn (ProgramCurriculumCourse $course) => [
-                    'code' => $course->course->code, 'unit' => $course->credit_unit->value,
-                ],
+                function (ProgramCurriculumCourse $course) {
+                    $creditUnit = $course->credit_unit;
+                    assert($creditUnit instanceof CreditUnit);
+
+                    return [
+                        'code' => $course->course->code, 'unit' => $creditUnit->value,
+                    ];
+                },
             );
     }
 

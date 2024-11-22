@@ -110,7 +110,7 @@ it('reports unmatched student courses', function (): void {
     $action = new MatchCurriculumCourses();
     $status = $action->execute($student);
 
-    $registration = $student->registrations->last();
+    $registration = $student->registrations()->with('semesterEnrollment.sessionEnrollment.session')->get()->last();
     $session = $registration->semesterEnrollment->sessionEnrollment->session;
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)

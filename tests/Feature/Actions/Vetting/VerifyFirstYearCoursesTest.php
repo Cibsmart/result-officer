@@ -125,7 +125,9 @@ it('reports first year courses failed for student who did not taken all required
 
         $status = $action->execute($student);
 
-        $unregisteredFirstYearCourse = $programCurriculum->programCurriculumCourses->first();
+        $unregisteredFirstYearCourse = $programCurriculum->programCurriculumCourses()
+            ->with('course')->get()->first();
+
         $course = $unregisteredFirstYearCourse->course;
 
         $message = "{$course->code} ({$unregisteredFirstYearCourse->course_type->name}) Not taken in the first year \n";

@@ -35,7 +35,7 @@ it('validates students tampered results with failed status', function (): void {
     $student = createStudentWithResults(1, 2);
     $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
 
-    $registration = $student->registrations->first();
+    $registration = $student->registrations()->with('result')->get()->first();
     $result = $registration->result;
     $result->total_score = 120;
     $result->save();
