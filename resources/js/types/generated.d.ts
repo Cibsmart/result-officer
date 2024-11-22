@@ -313,7 +313,6 @@ declare namespace App.Data.Vetting {
     studentStatus: App.Enums.StudentStatus;
     vettingStatus: App.Enums.VettingEventStatus;
     vettingStatusColor: App.Enums.StatusColor;
-    vettingSteps: Array<App.Data.Vetting.VettingStepData>;
   };
 }
 declare namespace App.Enums {

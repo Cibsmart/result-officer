@@ -8,7 +8,6 @@ use App\Enums\StatusColor;
 use App\Enums\StudentStatus;
 use App\Enums\VettingEventStatus;
 use App\Models\Student;
-use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
 
 final class VettingStudentData extends Data
@@ -20,8 +19,6 @@ final class VettingStudentData extends Data
         public readonly StudentStatus $studentStatus,
         public readonly VettingEventStatus $vettingStatus,
         public readonly StatusColor $vettingStatusColor,
-        /** @var \Illuminate\Support\Collection<int, \App\Data\Vetting\VettingStepData> @vettingSteps */
-        public readonly Collection $vettingSteps,
     ) {
     }
 
@@ -29,9 +26,9 @@ final class VettingStudentData extends Data
     {
         $vettingEvent = $student->vettingEvent;
 
-        [$vettingStatus, $vettingSteps] = $vettingEvent
-            ? [$vettingEvent->status, $vettingEvent->vettingSteps]
-            : [VettingEventStatus::PENDING, collect([])];
+        $vettingStatus = $vettingEvent
+            ? $vettingEvent->status
+            : VettingEventStatus::PENDING;
 
         $status = $student->status;
         assert($status instanceof StudentStatus);
@@ -43,7 +40,6 @@ final class VettingStudentData extends Data
             studentStatus: $status,
             vettingStatus: $vettingStatus,
             vettingStatusColor: $vettingStatus->color(),
-            vettingSteps: VettingStepData::collect($vettingSteps),
         );
     }
 }
