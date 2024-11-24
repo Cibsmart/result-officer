@@ -298,7 +298,9 @@ declare namespace App.Data.Vetting {
     department: App.Data.Department.DepartmentData;
     graduands: Array<App.Data.Vetting.VettingStudentData>;
   };
+  export type VettingReportData = {};
   export type VettingStepData = {
+    type: App.Enums.VettingType;
     title: string;
     description: string;
     status: App.Enums.VettingStatus;
