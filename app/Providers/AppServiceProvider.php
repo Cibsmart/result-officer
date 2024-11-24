@@ -18,7 +18,6 @@ use App\Models\ProgramCurriculumSemester;
 use App\Models\Registration;
 use App\Models\Result;
 use App\Models\SemesterEnrollment;
-use App\Models\SessionEnrollment;
 use App\Models\Student;
 use App\Models\User;
 use App\Services\Vetting\Steps\CheckCoreCoursesStep;
@@ -82,7 +81,6 @@ final class AppServiceProvider extends ServiceProvider
             'registration' => Registration::class,
             'result' => Result::class,
             'semesterEnrollment' => SemesterEnrollment::class,
-            'sessionEnrollment' => SessionEnrollment::class,
             'student' => Student::class,
             'user' => User::class,
         ]);

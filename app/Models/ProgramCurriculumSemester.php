@@ -16,7 +16,7 @@ final class ProgramCurriculumSemester extends Model
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\ProgramCurriculumCourse>
      */
-    public function vettable(): MorphMany
+    public function vettingReports(): MorphMany
     {
         return $this->MorphMany(VettingReport::class, 'vettable');
     }
