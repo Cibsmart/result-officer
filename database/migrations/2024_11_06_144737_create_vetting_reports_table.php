@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('vettable_id');
             $table->string('vettable_type');
             $table->string('status');
+            $table->string('message');
             $table->timestamps();
             $table->softDeletes();
 
