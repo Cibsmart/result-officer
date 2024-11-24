@@ -6,10 +6,13 @@ import StudentRow from "@/pages/vetting/list/index/partials/studentRow.vue";
 import Drawer from "@/components/drawer.vue";
 import Disclosure from "@/components/baseDisclosure.vue";
 import axios from "axios";
+import { useToast } from "vue-toastification";
 
 const props = defineProps<{
   data: App.Data.Vetting.VettingListData;
 }>();
+
+const toast = useToast();
 
 const showReport = ref(false);
 const currentStudent = ref<App.Data.Vetting.VettingStudentData>();
@@ -21,9 +24,12 @@ const closeDrawer = () => (showReport.value = false);
 const openDrawer = (studentId: number) => {
   currentStudent.value = props.data.graduands.find((student) => student.id === studentId);
 
-  axios.get(route("api.vetting_steps.index", { student: studentId })).then((response) => {
-    vettingSteps.value = response.data;
-  });
+  axios
+    .get(route("api.vetting_steps.index", { student: studentId }))
+    .then((response) => {
+      vettingSteps.value = response.data;
+    })
+    .catch((error) => toast(error.message));
 
   showReport.value = true;
 };
