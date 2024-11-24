@@ -14,23 +14,34 @@ final class VettingReport extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['vetting_step_id', 'vettable_id', 'vettable_type', 'status'];
-
     public static function updateOrCreateUsingModel(
         Model $model,
         VettingStep $vettingStep,
         VettingStatus $vettingStatus,
+        string $message,
     ): self {
         $modelName = $model::class;
+        $vettableType = (new $modelName())->getMorphClass();
 
-        return $model->vettingReports()->updateOrCreate(
-            [
-                'vettable_id' => $model->id,
-                'vettable_type' => (new $modelName())->getMorphClass(),
-                'vetting_step_id' => $vettingStep->id,
-            ],
-            ['status' => $vettingStatus],
-        );
+        $vettingReport = self::query()
+            ->where('vettable_id', $model->id)
+            ->where('vettable_type', $vettableType)
+            ->where('vetting_step_id', $vettingStep->id)
+            ->first();
+
+        if ($vettingReport) {
+            return $vettingReport;
+        }
+
+        $vettingReport = new self();
+        $vettingReport->vettable_id = $model->id;
+        $vettingReport->vettable_type = $vettableType;
+        $vettingReport->vetting_step_id = $vettingStep->id;
+        $vettingReport->message = $message;
+        $vettingReport->status = $vettingStatus;
+        $vettingReport->save();
+
+        return $vettingReport;
     }
 
     public static function clearFailedReportForStep(VettingStep $vettingStep): void
