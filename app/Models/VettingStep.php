@@ -66,11 +66,12 @@ final class VettingStep extends Model
         $this->save();
     }
 
-    /** @return array{status: 'App\Enums\VettingStatus'} */
+    /** @return array{status: 'App\Enums\VettingStatus', type: 'App\Enums\VettingType'} */
     protected function casts(): array
     {
         return [
             'status' => VettingStatus::class,
+            'type' => VettingType::class,
         ];
     }
 
