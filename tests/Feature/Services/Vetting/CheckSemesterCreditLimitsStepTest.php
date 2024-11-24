@@ -41,7 +41,7 @@ it('checks students semester credit unit within credit limit with passed status'
 
     assertDatabaseHas('vetting_steps', [
         'status' => VettingStatus::PASSED,
-        'type' => VettingType::CHECK_SEMESTER_CREDIT_UNITS,
+        'type' => VettingType::CHECK_SEMESTER_CREDIT_LOADS,
         'vetting_event_id' => $vettingEvent->id,
     ]);
 
@@ -71,7 +71,7 @@ it('checks students semester results below minimum credit limit with failed stat
     assertDatabaseHas('vetting_steps', [
         'message' => $action->report(),
         'status' => VettingStatus::FAILED,
-        'type' => VettingType::CHECK_SEMESTER_CREDIT_UNITS,
+        'type' => VettingType::CHECK_SEMESTER_CREDIT_LOADS,
         'vetting_event_id' => $vettingEvent->id,
     ]);
 
@@ -93,7 +93,7 @@ it('checks students without results with unchecked status', function (): void {
 
     assertDatabaseHas('vetting_steps', [
         'status' => VettingStatus::UNCHECKED,
-        'type' => VettingType::CHECK_SEMESTER_CREDIT_UNITS,
+        'type' => VettingType::CHECK_SEMESTER_CREDIT_LOADS,
         'vetting_event_id' => $vettingEvent->id,
     ]);
 

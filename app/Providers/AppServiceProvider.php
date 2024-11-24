@@ -52,7 +52,7 @@ final class AppServiceProvider extends ServiceProvider
             $steps = [
                 VettingType::ORGANIZE_STUDY_YEAR->value => $app->make(CheckStudyYearStep::class),
                 VettingType::VALIDATE_RESULTS->value => $app->make(CheckResultsValidityStep::class),
-                VettingType::CHECK_SEMESTER_CREDIT_UNITS->value => $app->make(CheckSemesterCreditLimitsStep::class),
+                VettingType::CHECK_SEMESTER_CREDIT_LOADS->value => $app->make(CheckSemesterCreditLimitsStep::class),
                 VettingType::MATCH_COURSES->value => $app->make(MatchCurriculumCoursesStep::class),
                 VettingType::CHECK_CREDIT_UNITS->value => $app->make(CheckCreditUnitsStep::class),
                 VettingType::CHECK_FIRST_YEAR_COURSES->value => $app->make(CheckFirstYearCoursesStep::class),

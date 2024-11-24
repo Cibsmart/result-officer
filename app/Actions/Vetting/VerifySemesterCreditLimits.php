@@ -15,7 +15,7 @@ final class VerifySemesterCreditLimits extends ReportVettingStep
 {
     public function execute(Student $student): VettingStatus
     {
-        $this->createVettingStep($student, VettingType::CHECK_SEMESTER_CREDIT_UNITS);
+        $this->createVettingStep($student, VettingType::CHECK_SEMESTER_CREDIT_LOADS);
 
         $sessionEnrollments = $student->sessionEnrollments()->with(['session', 'semesterEnrollments.semester'])->get();
 
