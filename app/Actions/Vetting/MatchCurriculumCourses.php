@@ -28,7 +28,7 @@ final class MatchCurriculumCourses extends ReportVettingStep
 
             $message = "Curriculum not found for {$program->name} {$entrySession->name} ({$entryMode->value})  \n";
 
-            $this->createReport($program, $message);
+            $this->report($program, $message);
 
             return VettingStatus::UNCHECKED;
         }
@@ -82,7 +82,7 @@ final class MatchCurriculumCourses extends ReportVettingStep
             $message = "{$code} in {$session->name} {$semester->name}";
             $message .= " Semester does not match any course in the curriculum \n";
 
-            $this->createReport($registration, $message);
+            $this->report($registration, $message);
         }
 
         return false;

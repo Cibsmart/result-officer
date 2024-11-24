@@ -31,7 +31,7 @@ it('reports failed courses not checked for student without results', function ()
     $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED)
-        ->and($action->report())->toBe(
+        ->and($action->getReport())->toBe(
             "Failed courses not checked for {$student->registration_number}\n",
         );
 
@@ -62,7 +62,7 @@ it('reports failed courses check failed for student who have not passed all fail
     $message = "Failed {$course->code} in {$session->name} {$semester->name} Semester\n";
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
-        ->and($action->report())->toBe($message);
+        ->and($action->getReport())->toBe($message);
 
     assertDatabaseCount(VettingReport::class, 1);
 });
@@ -85,7 +85,7 @@ it('reports failed courses check passed for student who passed all registered co
     $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
-        ->and($action->report())->toBe('');
+        ->and($action->getReport())->toBe('');
 
     assertDatabaseEmpty(VettingReport::class);
 });
@@ -123,7 +123,7 @@ it('reports failed courses check passed for student who have passed all failed c
     $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
-        ->and($action->report())->toBe('');
+        ->and($action->getReport())->toBe('');
 
     assertDatabaseEmpty(VettingReport::class);
 });
@@ -154,7 +154,7 @@ it('reports failed courses check failed for student who registered and did not t
     $message = "Failed {$course->code} in {$session->name} {$semester->name} Semester\n";
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
-        ->and($action->report())->toBe($message);
+        ->and($action->getReport())->toBe($message);
 
     assertDatabaseCount(VettingReport::class, 1);
 });

@@ -33,7 +33,7 @@ it('skips elective course check for students without courses or matches', functi
     $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED)
-        ->and($action->report())->toBe("Elective Courses Not Checked for {$student->registration_number} \n");
+        ->and($action->getReport())->toBe("Elective Courses Not Checked for {$student->registration_number} \n");
 
     assertDatabaseCount(VettingReport::class, 1);
 });
@@ -76,7 +76,7 @@ it('passes elective course check for students with required elective credits and
     $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
-        ->and($action->report())->toBe('');
+        ->and($action->getReport())->toBe('');
 
     assertDatabaseEmpty(VettingReport::class);
 });
@@ -124,7 +124,7 @@ it('fails elective course check for students lacking required elective credit un
     $message = "Insufficient elective course unit for {$level->name} Level {$semester->name} Semester\n";
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
-        ->and($action->report())->toBe($message);
+        ->and($action->getReport())->toBe($message);
 
     assertDatabaseCount(VettingReport::class, 1);
 });
@@ -172,7 +172,7 @@ it('fails elective course check for students lacking required elective count', f
     $message = "Insufficient elective course count for {$level->name} Level {$semester->name} Semester\n";
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
-        ->and($action->report())->toBe($message);
+        ->and($action->getReport())->toBe($message);
 
     assertDatabaseCount(VettingReport::class, 1);
 });
@@ -234,7 +234,7 @@ it('fails elective course check for students missing complete elective groups', 
     $message .= "{$level->name} Level {$semester->name} Semester\n";
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
-        ->and($action->report())->toBe($message);
+        ->and($action->getReport())->toBe($message);
 
     assertDatabaseCount(VettingReport::class, 1);
 });
@@ -289,7 +289,7 @@ it('passes elective course check for students with complete elective groups', fu
     $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
-        ->and($action->report())->toBe('');
+        ->and($action->getReport())->toBe('');
 
     assertDatabaseEmpty(VettingReport::class);
 });

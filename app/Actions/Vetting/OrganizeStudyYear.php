@@ -22,7 +22,7 @@ final class OrganizeStudyYear extends ReportVettingStep
             return VettingStatus::PASSED;
         }
 
-        $this->createReport($student, 'Student Study Years Re-Organized');
+        $this->report($student, 'Student Study Years Re-Organized');
 
         $currentYear = Year::FIRST;
 

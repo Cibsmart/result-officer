@@ -23,7 +23,7 @@ final class VerifyFirstYearCourses extends ReportVettingStep
         if ($firstYearEnrollment === null) {
             $message = "First Year Courses not checked for {$student->registration_number}\n";
 
-            $this->createReport($student, $message);
+            $this->report($student, $message);
 
             return VettingStatus::UNCHECKED;
         }
@@ -73,7 +73,7 @@ final class VerifyFirstYearCourses extends ReportVettingStep
                 $course = $unregisteredFirstYearCourse->course;
                 $message = "{$course->code} ({$courseType->name}) Not taken in the first year \n";
 
-                $this->createReport($unregisteredFirstYearCourse, $message);
+                $this->report($unregisteredFirstYearCourse, $message);
             }
         }
 

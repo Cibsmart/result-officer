@@ -69,7 +69,7 @@ it('checks students semester results below minimum credit limit with failed stat
     $step->check($vettingEvent);
 
     assertDatabaseHas('vetting_steps', [
-        'message' => $action->report(),
+        'message' => $action->getReport(),
         'status' => VettingStatus::FAILED,
         'type' => VettingType::CHECK_SEMESTER_CREDIT_LOADS,
         'vetting_event_id' => $vettingEvent->id,

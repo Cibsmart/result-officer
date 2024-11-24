@@ -35,7 +35,7 @@ it('checks and reports passed for student result semester total unit within limi
     $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
-        ->and($action->report())->toBe('');
+        ->and($action->getReport())->toBe('');
 
     assertDatabaseEmpty('vetting_reports');
 });
@@ -55,7 +55,7 @@ it('checks and report failed for student result semester total unit above limit'
     $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
-        ->and($action->report())->toBe($action->report());
+        ->and($action->getReport())->toBe($action->getReport());
 
     assertDatabaseCount('vetting_reports', 1);
 });
@@ -75,7 +75,7 @@ it('checks and report failed for student result semester total unit below limit'
     $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
-        ->and($action->report())->toBe($action->report());
+        ->and($action->getReport())->toBe($action->getReport());
 
     assertDatabaseCount('vetting_reports', 1);
 });
@@ -88,5 +88,5 @@ it('checks and report unchecked for student without enrollments', function (): v
     $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED)
-        ->and($action->report())->toBe($action->report());
+        ->and($action->getReport())->toBe($action->getReport());
 });

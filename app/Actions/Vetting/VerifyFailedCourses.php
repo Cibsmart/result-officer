@@ -24,7 +24,7 @@ final class VerifyFailedCourses extends ReportVettingStep
         if ($courses->isEmpty()) {
             $message = "Failed courses not checked for {$student->registration_number}\n";
 
-            $this->createReport($student, $message);
+            $this->report($student, $message);
 
             return VettingStatus::UNCHECKED;
         }
@@ -39,7 +39,7 @@ final class VerifyFailedCourses extends ReportVettingStep
 
             $registration = Registration::query()->find($failedCourse->registrationId);
 
-            $this->createReport($registration, $message);
+            $this->report($registration, $message);
 
             $passed = false;
         }

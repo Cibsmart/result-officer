@@ -63,7 +63,7 @@ final class VerifySemesterCreditLimits extends ReportVettingStep
             ? "greater than the maximum {$maxSemesterTotalCreditUnit} Credit Units \n"
             : "less than the minimum {$minSemesterTotalCreditUnit} Credit Units \n";
 
-        $this->createReport($semesterEnrollment, $message);
+        $this->report($semesterEnrollment, $message);
 
         return false;
     }
