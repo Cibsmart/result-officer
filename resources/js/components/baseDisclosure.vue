@@ -1,23 +1,35 @@
 <script lang="ts" setup>
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
+import { computed } from "vue";
 import { ChevronUpIcon } from "@heroicons/vue/20/solid";
 import Badge from "@/components/badge.vue";
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     title: string;
     badge?: string;
     color?: App.Enums.StatusColor;
+    size?: "normal" | "wide";
   }>(),
   {
     color: "gray",
+    size: "wide",
   },
 );
+
+const maxWidthClass = computed(() => {
+  return {
+    normal: "max-w-md",
+    wide: "max-w-2xl",
+  }[props.size];
+});
 </script>
 
 <template>
   <div class="w-full">
-    <div class="mx-auto w-full max-w-md rounded bg-gray-100 p-2 dark:bg-gray-900">
+    <div
+      :class="maxWidthClass"
+      class="mx-auto w-full rounded bg-gray-100 p-2 dark:bg-gray-900">
       <Disclosure v-slot="{ open }">
         <DisclosureButton
           class="flex w-full justify-between rounded-lg bg-indigo-100 px-2 py-1.5 text-left text-sm font-medium text-indigo-900 hover:bg-indigo-200 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500/75 dark:bg-gray-800 dark:text-white hover:dark:bg-gray-700">
