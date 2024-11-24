@@ -9,12 +9,13 @@ const props = withDefaults(
     size?: "normal" | "wide";
     closeable?: boolean;
     title?: string;
+    sub?: string;
   }>(),
   {
     open: false,
     size: "normal",
     closeable: true,
-    string: "",
+    sub: "",
   },
 );
 
@@ -78,10 +79,16 @@ const maxWidthClass = computed(() => {
                 class="pointer-events-auto relative w-screen">
                 <div class="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl dark:bg-gray-800">
                   <div class="px-4 sm:px-6">
-                    <div class="flex items-start justify-between">
-                      <DialogTitle class="text-base font-semibold text-gray-900 dark:text-white">
-                        {{ title }}
-                      </DialogTitle>
+                    <div class="flex items-start justify-between space-x-3">
+                      <div class="space-y-1">
+                        <DialogTitle class="text-base font-semibold text-gray-900 dark:text-white">
+                          {{ title }}
+                        </DialogTitle>
+
+                        <p class="text-sm text-gray-400">
+                          {{ sub }}
+                        </p>
+                      </div>
 
                       <div class="ml-3 flex h-7 items-center">
                         <button
