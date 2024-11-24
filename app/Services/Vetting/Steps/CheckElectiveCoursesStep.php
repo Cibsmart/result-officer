@@ -20,6 +20,6 @@ final readonly class CheckElectiveCoursesStep implements VettingService
 
         $status = $this->action->execute($student);
 
-        $this->action->vettingStep()->updateStatusAndRemarks($status, $this->action->report());
+        $this->action->vettingStep()->updateStatusAndRemarks($status, $this->action->getReport());
     }
 }

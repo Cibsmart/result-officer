@@ -63,7 +63,7 @@ final class ValidateResults extends ReportVettingStep
             $passed = false;
             $message = "{$code} in {$semester->name} semester {$session->name} is invalid. \n";
 
-            $this->createReport($result, $message);
+            $this->report($result, $message);
         }
 
         return $passed;

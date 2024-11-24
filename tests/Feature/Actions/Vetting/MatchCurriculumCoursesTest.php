@@ -47,7 +47,7 @@ it('matches student courses with the program curriculum courses', function (): v
     $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
-        ->and($action->report())->toBe('');
+        ->and($action->getReport())->toBe('');
 });
 
 it('reports unchecked for program without curriculum', function (): void {
@@ -70,7 +70,7 @@ it('reports unchecked for program without curriculum', function (): void {
     $entryMode = $student->entry_mode;
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED)
-        ->and($action->report())->toBe(
+        ->and($action->getReport())->toBe(
             "Curriculum not found for {$student->program->name} {$session->name} ({$entryMode->value})  \n",
         );
 
@@ -114,7 +114,7 @@ it('reports unmatched student courses', function (): void {
     $session = $registration->semesterEnrollment->sessionEnrollment->session;
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
-        ->and($action->report())->toBe(
+        ->and($action->getReport())->toBe(
             "{$course2->code} in {$session->name} {$semester->name} Semester does not match any course in the curriculum \n",
         );
 

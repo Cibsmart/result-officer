@@ -20,7 +20,7 @@ abstract class ReportVettingStep
 
     abstract public function execute(Student $student): VettingStatus;
 
-    public function report(): string
+    public function getReport(): string
     {
         return $this->message;
     }
@@ -30,18 +30,11 @@ abstract class ReportVettingStep
         return $this->vettingStep;
     }
 
-    public function updateReport(string $message): void
-    {
-        $this->message .= $message;
-    }
-
-    public function createReport(
+    public function report(
         Model $model,
         string $message,
     ): void {
-        VettingReport::updateOrCreateUsingModel($model, $this->vettingStep, VettingStatus::FAILED);
-
-        $this->updateReport($message);
+        VettingReport::updateOrCreateUsingModel($model, $this->vettingStep, VettingStatus::FAILED, $message);
     }
 
     public function createVettingStep(Student $student, VettingType $vettingType): void

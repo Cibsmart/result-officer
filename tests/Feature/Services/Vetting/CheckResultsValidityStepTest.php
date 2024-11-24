@@ -46,7 +46,7 @@ it('validates students tampered results with failed status', function (): void {
     $step->check($vettingEvent);
 
     assertDatabaseHas('vetting_steps', [
-        'message' => $action->report(),
+        'message' => $action->getReport(),
         'status' => VettingStatus::FAILED,
         'type' => VettingType::VALIDATE_RESULTS,
         'vetting_event_id' => $vettingEvent->id,

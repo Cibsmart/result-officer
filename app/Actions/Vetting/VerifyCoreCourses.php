@@ -25,7 +25,7 @@ final class VerifyCoreCourses extends ReportVettingStep
         if ($registrations->isEmpty()) {
             $message = "{$student->registration_number} Courses Not Checked\n";
 
-            $this->createReport($student, $message);
+            $this->report($student, $message);
 
             return VettingStatus::UNCHECKED;
         }
@@ -68,7 +68,7 @@ final class VerifyCoreCourses extends ReportVettingStep
 
             $message = "{$programCurriculumCourse->course->name} Not Taken\n";
 
-            $this->createReport($programCurriculumCourse, $message);
+            $this->report($programCurriculumCourse, $message);
         }
 
         return $passed;

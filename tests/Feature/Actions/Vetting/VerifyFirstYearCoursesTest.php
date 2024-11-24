@@ -33,7 +33,7 @@ it('reports first year courses not checked for student without courses or no mat
     $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED)
-        ->and($action->report())->toBe(
+        ->and($action->getReport())->toBe(
             "First Year Courses not checked for {$student->registration_number}\n",
         );
 
@@ -80,7 +80,7 @@ it('reports first year courses passed for student who took all required first ye
     $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
-        ->and($action->report())->toBe('');
+        ->and($action->getReport())->toBe('');
 
     assertDatabaseEmpty(VettingReport::class);
 });
@@ -133,7 +133,7 @@ it('reports first year courses failed for student who did not taken all required
         $message = "{$course->code} ({$unregisteredFirstYearCourse->course_type->name}) Not taken in the first year \n";
 
         expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
-            ->and($action->report())->toBe($message);
+            ->and($action->getReport())->toBe($message);
 
         assertDatabaseCount(VettingReport::class, 1);
     });
