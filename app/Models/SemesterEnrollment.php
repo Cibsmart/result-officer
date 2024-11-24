@@ -24,7 +24,7 @@ final class SemesterEnrollment extends Model
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\SemesterEnrollment>
      */
-    public function vettable(): MorphMany
+    public function vettingReports(): MorphMany
     {
         return $this->MorphMany(VettingReport::class, 'vettable');
     }

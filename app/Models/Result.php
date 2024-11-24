@@ -65,7 +65,7 @@ final class Result extends Model
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\Result> */
-    public function vettable(): MorphMany
+    public function vettingReports(): MorphMany
     {
         return $this->MorphMany(VettingReport::class, 'vettable');
     }

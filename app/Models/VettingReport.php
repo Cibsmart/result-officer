@@ -23,7 +23,7 @@ final class VettingReport extends Model
     ): self {
         $modelName = $model::class;
 
-        return $model->vettable()->updateOrCreate(
+        return $model->vettingReports()->updateOrCreate(
             [
                 'vettable_id' => $model->id,
                 'vettable_type' => (new $modelName())->getMorphClass(),
@@ -45,7 +45,7 @@ final class VettingReport extends Model
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo<\Illuminate\Database\Eloquent\Model, \App\Models\VettingReport>
      */
-    public function vettingReport(): MorphTo
+    public function vettable(): MorphTo
     {
         return $this->MorphTo();
     }
