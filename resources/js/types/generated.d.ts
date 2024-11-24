@@ -383,12 +383,12 @@ declare namespace App.Enums {
     | "organize_year"
     | "validate_result"
     | "semester_credit"
-    | "failed_courses"
     | "match_courses"
     | "credit_units"
+    | "first_year"
     | "core_courses"
     | "elective_courses"
-    | "first_year";
+    | "failed_courses";
   export type Year = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 }
 declare namespace App.ViewModels.Downloads {
