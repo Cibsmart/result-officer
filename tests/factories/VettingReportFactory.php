@@ -17,6 +17,7 @@ final class VettingReportFactory extends Factory
     public function definition(): array
     {
         return [
+            'message' => fake()->countryCode(),
             'status' => VettingStatus::NEW,
             'vettable_type' => $this->vettableType(...),
             'vettable_id' => RegistrationFactory::new(),
