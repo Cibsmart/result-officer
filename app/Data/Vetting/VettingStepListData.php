@@ -20,6 +20,8 @@ final class VettingStepListData extends Data
     {
         $vettingEvent = $student->vettingEvent()->with('vettingSteps')->firstOrFail();
 
-        return new self(items: VettingStepData::collect($vettingEvent->vettingSteps));
+        $vettingSteps = $vettingEvent->vettingSteps()->orderBy('id')->get();
+
+        return new self(items: VettingStepData::collect($vettingSteps));
     }
 }
