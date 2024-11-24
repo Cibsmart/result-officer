@@ -16,7 +16,6 @@ const currentStudent = ref<App.Data.Vetting.VettingStudentData>();
 const vettingSteps = ref<App.Data.Vetting.VettingStepListData>();
 
 const hasRows = computed(() => props.data.graduands.length > 0);
-const drawerTitle = computed(() => `VETTING REPORT FOR ${currentStudent.value?.registrationNumber}`);
 
 const closeDrawer = () => (showReport.value = false);
 const openDrawer = (studentId: number) => {
@@ -116,7 +115,8 @@ const openDrawer = (studentId: number) => {
 
   <Drawer
     :show="showReport"
-    :title="drawerTitle"
+    :title="currentStudent?.registrationNumber"
+    sub="Vetting Report"
     @close="closeDrawer">
     <div
       v-for="(vettingStep, index) in vettingSteps?.items"
