@@ -107,13 +107,23 @@ parameters:
 
 		-
 			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			count: 2
+			path: app/Models/VettingReport.php
+
+		-
+			message: "#^Method App\\\\Models\\\\VettingReport\\:\\:vettable\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\MorphTo\\<Illuminate\\\\Database\\\\Eloquent\\\\Model, App\\\\Models\\\\VettingReport\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\MorphTo\\<Illuminate\\\\Database\\\\Eloquent\\\\Model, \\$this\\(App\\\\Models\\\\VettingReport\\)\\>\\.$#"
 			count: 1
 			path: app/Models/VettingReport.php
 
 		-
-			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:vettable\\(\\)\\.$#"
+			message: "#^Property App\\\\Models\\\\VettingReport\\:\\:\\$status \\(string\\) does not accept App\\\\Enums\\\\VettingStatus\\.$#"
 			count: 1
 			path: app/Models/VettingReport.php
+
+		-
+			message: "#^Property App\\\\Models\\\\VettingStep\\:\\:\\$type \\(App\\\\Enums\\\\VettingType\\) does not accept string\\.$#"
+			count: 1
+			path: app/Models/VettingStep.php
 
 		-
 			message: "#^Method App\\\\Queries\\\\ProgramCurriculumCourses\\:\\:get\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
@@ -124,4 +134,3 @@ parameters:
 			message: "#^Method App\\\\Services\\\\Api\\\\PortalServiceFactory\\:\\:resolve\\(\\) return type with generic interface App\\\\Contracts\\\\PortalService does not specify its types\\: T$#"
 			count: 1
 			path: app/Services/Api/PortalServiceFactory.php
-
