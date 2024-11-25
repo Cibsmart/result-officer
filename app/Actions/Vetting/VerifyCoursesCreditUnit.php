@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Actions\Vetting;
 
+use App\Data\Query\StudentCoursesData;
 use App\Enums\VettingStatus;
 use App\Enums\VettingType;
+use App\Models\Registration;
 use App\Models\Student;
+use App\Queries\StudentCourses;
 
 final class VerifyCoursesCreditUnit extends ReportVettingStep
 {
@@ -14,11 +17,11 @@ final class VerifyCoursesCreditUnit extends ReportVettingStep
     {
         $this->createVettingStep($student, VettingType::CHECK_CREDIT_UNITS);
 
-        /** @var \Illuminate\Support\Collection<int, \App\Models\Registration> $registrations */
-        $registrations = $student->registrations()
-            ->with('programCurriculumCourse', 'course')
+        $registrations = StudentCourses::for($student)->query()
             ->whereNotNull('program_curriculum_course_id')
             ->get();
+
+        $registrations = StudentCoursesData::collect($registrations);
 
         if ($registrations->isEmpty()) {
             return VettingStatus::UNCHECKED;
@@ -27,20 +30,25 @@ final class VerifyCoursesCreditUnit extends ReportVettingStep
         $passed = true;
 
         foreach ($registrations as $registration) {
-            $programCurriculumCourse = $registration->programCurriculumCourse;
+            $registrationModel = Registration::query()
+                ->where('id', $registration->registrationId)
+                ->with('programCurriculumCourse', 'course')
+                ->first();
 
-            if ($registration->credit_unit === $programCurriculumCourse->credit_unit) {
+            $programCourse = $registrationModel->programCurriculumCourse;
+
+            if ($registrationModel->credit_unit === $programCourse->credit_unit) {
                 continue;
             }
 
             $passed = false;
-            $course = $registration->course;
-            $session = $registration->session();
-            $semester = $registration->semester();
+            $courseCode = $registration->courseCode;
+            $session = $registration->session;
+            $semester = $registration->semester;
 
-            $message = "{$course->code} - {$session->name} {$semester->name} semester";
+            $message = "{$courseCode} - {$session} {$semester} semester";
 
-            $this->report($registration, $message);
+            $this->report($registrationModel, $message);
         }
 
         return $passed
