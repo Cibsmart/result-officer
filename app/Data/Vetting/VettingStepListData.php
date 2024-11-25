@@ -18,9 +18,9 @@ final class VettingStepListData extends Data
 
     public static function fromModel(Student $student): self
     {
-        $vettingEvent = $student->vettingEvent()->with('vettingSteps')->firstOrFail();
+        $vettingEvent = $student->vettingEvent->firstOrFail();
 
-        $vettingSteps = $vettingEvent->vettingSteps()->orderBy('id')->get();
+        $vettingSteps = $vettingEvent->vettingSteps()->with('vettingReports')->orderBy('id')->get();
 
         return new self(items: VettingStepData::collect($vettingSteps));
     }
