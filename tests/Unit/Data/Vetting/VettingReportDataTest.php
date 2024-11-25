@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Data\Vetting\VettingReportData;
 use Tests\Factories\VettingReportFactory;
 
-covers(VettingReportData::class)
+covers(VettingReportData::class);
 
 it('returns correct vetting report data', function (): void {
     $report = VettingReportFactory::new()->createOne();
