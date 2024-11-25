@@ -305,6 +305,7 @@ declare namespace App.Data.Vetting {
     message: string;
   };
   export type VettingStepData = {
+    id: number;
     type: App.Enums.VettingType;
     title: string;
     description: string;

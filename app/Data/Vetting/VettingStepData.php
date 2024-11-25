@@ -15,6 +15,7 @@ use Spatie\LaravelData\Data;
 final class VettingStepData extends Data
 {
     public function __construct(
+        public int $id,
         public VettingType $type,
         public string $title,
         public string $description,
@@ -32,6 +33,7 @@ final class VettingStepData extends Data
         $type = $vettingStep->type;
 
         return new self(
+            id: $vettingStep->id,
             type: $type,
             title: Str::of($type->name)->replace('_', ' ')->value(),
             description: $type->description($status),
