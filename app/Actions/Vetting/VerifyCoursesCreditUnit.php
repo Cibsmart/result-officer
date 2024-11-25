@@ -21,10 +21,7 @@ final class VerifyCoursesCreditUnit extends ReportVettingStep
             ->get();
 
         if ($registrations->isEmpty()) {
-            $message = "Not Checked for {$student->registration_number}: ";
-            $message .= "Unmatched Courses with program curriculum course  \n";
-
-            $this->report($student, $message);
+            $this->report($student, '');
 
             return VettingStatus::UNCHECKED;
         }
@@ -43,8 +40,7 @@ final class VerifyCoursesCreditUnit extends ReportVettingStep
             $session = $registration->session();
             $semester = $registration->semester();
 
-            $message = "Credit for {$course->code} in {$session->name} {$semester->name} Semester ";
-            $message .= "does not matched with the program curriculum course credit unit  \n";
+            $message = "{$course->code} - {$session->name} {$semester->name} semester";
 
             $this->report($registration, $message);
         }

@@ -29,9 +29,7 @@ final class VerifyElectiveCourses extends ReportVettingStep
         $registrations = StudentCoursesData::collect($registrations);
 
         if ($registrations->isEmpty()) {
-            $message = "Elective Courses Not Checked for {$student->registration_number} \n";
-
-            $this->report($student, $message);
+            $this->report($student, '');
 
             return VettingStatus::UNCHECKED;
         }
@@ -139,8 +137,8 @@ final class VerifyElectiveCourses extends ReportVettingStep
             $level = $programSemester->programCurriculumLevel->level;
             $semester = $programSemester->semester;
 
-            $message = "Did not take all courses in elective group ({$semesterElectiveGroup->name}) for ";
-            $message .= "{$level->name} Level {$semester->name} Semester\n";
+            $message = "{$level->name} level {$semester->name} semester - (incomplete elective group)";
+            $message .= "({$semesterElectiveGroup->name})";
 
             $this->report($semesterElectiveGroup, $message);
         }
@@ -175,7 +173,7 @@ final class VerifyElectiveCourses extends ReportVettingStep
         $level = $programSemester->programCurriculumLevel->level;
         $semester = $programSemester->semester;
 
-        $message = "Insufficient elective course {$type} for {$level->name} Level {$semester->name} Semester\n";
+        $message = "{$level->name} level {$semester->name} semester (Insufficient elective {$type})";
 
         $this->report($programSemester, $message);
     }

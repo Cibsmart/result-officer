@@ -23,18 +23,12 @@ final class VerifyCoreCourses extends ReportVettingStep
             ->get();
 
         if ($registrations->isEmpty()) {
-            $message = "{$student->registration_number} Courses Not Checked\n";
-
-            $this->report($student, $message);
+            $this->report($student, '');
 
             return VettingStatus::UNCHECKED;
         }
 
         $programCurriculum = $student->programCurriculum();
-
-        if (is_null($programCurriculum)) {
-            return VettingStatus::UNCHECKED;
-        }
 
         $passed = $this->checkNonElectiveCourses($programCurriculum, $registrations);
 
@@ -53,7 +47,8 @@ final class VerifyCoreCourses extends ReportVettingStep
          * @var \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProgramCurriculumCourse> $programCurriculumCourses
          */
         $programCurriculumCourses = $programCurriculum->programCurriculumCourses()
-            ->with('course')
+            ->with('course', 'programCurriculumSemester.semester',
+                'programCurriculumSemester.programCurriculumLevel.level')
             ->where('course_type', '<>', CourseType::ELECTIVE)
             ->get();
 
@@ -66,7 +61,11 @@ final class VerifyCoreCourses extends ReportVettingStep
 
             $passed = false;
 
-            $message = "{$programCurriculumCourse->course->name} Not Taken\n";
+            $course = $programCurriculumCourse->course;
+            $semester = $programCurriculumCourse->programCurriculumSemester->semester;
+            $level = $programCurriculumCourse->programCurriculumSemester->programCurriculumLevel->level;
+
+            $message = "{$course->name} - {$level->name} level {$semester->name} semester";
 
             $this->report($programCurriculumCourse, $message);
         }

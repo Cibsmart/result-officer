@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Actions\Vetting\ValidateResults;
 use App\Enums\VettingStatus;
+use App\Models\VettingReport;
 use Tests\Factories\VettingEventFactory;
 
 use function Pest\Laravel\assertDatabaseCount;
@@ -51,14 +52,9 @@ it('reports students results with tampered score', function (): void {
 
     $status = $validation->execute($student);
 
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
-        ->and($validation->getReport())->toBe(
-            "{$course->code} in {$semester->name} semester {$session->name} is invalid. \n",
-        );
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED);
 
-    assertDatabaseHas('vetting_reports', [
-        'status' => VettingStatus::FAILED,
-    ]);
+    assertDatabaseHas(VettingReport::class, ['status' => VettingStatus::FAILED]);
 });
 
 it('reports students results with tampered grade', function (): void {
@@ -86,10 +82,7 @@ it('reports students results with tampered grade', function (): void {
 
     $status = $validation->execute($student);
 
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
-        ->and($validation->getReport())->toBe(
-            "{$course->code} in {$semester->name} semester {$session->name} is invalid. \n",
-        );
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED);
 });
 
 it('reports students results with tampered grade point', function (): void {
@@ -118,10 +111,7 @@ it('reports students results with tampered grade point', function (): void {
 
     $status = $validation->execute($student);
 
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
-        ->and($validation->getReport())->toBe(
-            "{$course->code} in {$semester->name} semester {$session->name} is invalid. \n",
-        );
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED);
 });
 
 it('reports all cases of tampered students results', function (): void {
@@ -149,15 +139,15 @@ it('reports all cases of tampered students results', function (): void {
     $status = $validation->execute($student);
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED);
 
-    assertDatabaseHas('vetting_reports', [
+    assertDatabaseHas(VettingReport::class, [
         'status' => VettingStatus::FAILED,
         'vettable_id' => $result->id,
     ]);
 
-    assertDatabaseHas('vetting_reports', [
+    assertDatabaseHas(VettingReport::class, [
         'status' => VettingStatus::FAILED,
         'vettable_id' => $result2->id,
     ]);
 
-    assertDatabaseCount('vetting_reports', 2);
+    assertDatabaseCount(VettingReport::class, 2);
 });

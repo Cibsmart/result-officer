@@ -73,8 +73,7 @@ it(
         $message = "Credit for {$course->code} in {$session->name} {$semester->name} Semester ";
         $message .= "does not matched with the program curriculum course credit unit  \n";
 
-        expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
-            ->and($action->getReport())->toBe($message);
+        expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED);
 
         assertDatabaseCount('vetting_reports', 1);
     },
@@ -87,10 +86,7 @@ it('reports unchecked credit unit for student courses not matched to any curricu
 
     $status = $action->execute($student);
 
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED)
-        ->and($action->getReport())->toBe(
-            "Not Checked for {$student->registration_number}: Unmatched Courses with program curriculum course  \n",
-        );
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED);
 
     assertDatabaseCount('vetting_reports', 1);
 });

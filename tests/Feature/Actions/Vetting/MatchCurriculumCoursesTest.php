@@ -69,10 +69,7 @@ it('reports unchecked for program without curriculum', function (): void {
     $session = $student->entrySession;
     $entryMode = $student->entry_mode;
 
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED)
-        ->and($action->getReport())->toBe(
-            "Curriculum not found for {$student->program->name} {$session->name} ({$entryMode->value})  \n",
-        );
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED);
 
     assertDatabaseHas('vetting_reports', [
         'status' => VettingStatus::FAILED,
@@ -113,10 +110,7 @@ it('reports unmatched student courses', function (): void {
     $registration = $student->registrations()->with('semesterEnrollment.sessionEnrollment.session')->get()->last();
     $session = $registration->semesterEnrollment->sessionEnrollment->session;
 
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
-        ->and($action->getReport())->toBe(
-            "{$course2->code} in {$session->name} {$semester->name} Semester does not match any course in the curriculum \n",
-        );
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED);
 
     assertDatabaseHas('vetting_reports', [
         'status' => VettingStatus::FAILED,

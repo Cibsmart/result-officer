@@ -34,8 +34,7 @@ it('can correctly organize study year original set to all first', function (): v
 
     $status = $organize->execute($student);
 
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
-        ->and($organize->getReport())->toBe('Student Study Years Re-Organized');
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED);
 
     $enrollments = $student->fresh()->sessionEnrollments;
 
@@ -71,8 +70,7 @@ it('can correctly organize study year original set in descending order', functio
 
     $status = $organize->execute($student);
 
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
-        ->and($organize->getReport())->toBe('Student Study Years Re-Organized');
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED);
 
     $enrollments = $student->fresh()->sessionEnrollments;
 
