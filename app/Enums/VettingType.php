@@ -95,7 +95,7 @@ enum VettingType: string
     {
         return match ($status) {
             VettingStatus::PASSED => 'Attempted all Core, Required and General Courses',
-            VettingStatus::FAILED => 'The following core, required or general courses were not taken:',
+            VettingStatus::FAILED => 'The following core (C), required (R) and general (G) courses were not taken:',
             VettingStatus::UNCHECKED => 'Course not matched',
             default => 'pending',
         };
