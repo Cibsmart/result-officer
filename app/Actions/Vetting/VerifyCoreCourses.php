@@ -60,10 +60,11 @@ final class VerifyCoreCourses extends ReportVettingStep
             $passed = false;
 
             $course = $programCurriculumCourse->course;
+            $courseType = $programCurriculumCourse->course_type;
             $semester = $programCurriculumCourse->programCurriculumSemester->semester;
             $level = $programCurriculumCourse->programCurriculumSemester->programCurriculumLevel->level;
 
-            $message = "{$course->name} - {$level->name} level {$semester->name} semester";
+            $message = "{$course->code} ({$courseType->value}) - {$level->name} Level {$semester->name} Semester";
 
             $this->report($programCurriculumCourse, $message);
         }
