@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace App\Actions\Vetting;
 
+use App\Data\Query\ProgramCoursesData;
+use App\Data\Query\StudentCoursesData;
 use App\Enums\CourseType;
 use App\Enums\VettingStatus;
 use App\Enums\VettingType;
 use App\Models\ProgramCurriculum;
+use App\Models\ProgramCurriculumCourse;
 use App\Models\Student;
-use Illuminate\Database\Eloquent\Collection;
+use App\Queries\ProgramCourses;
+use App\Queries\StudentCourses;
+use Illuminate\Support\Collection;
 
 final class VerifyCoreCourses extends ReportVettingStep
 {
@@ -17,10 +22,11 @@ final class VerifyCoreCourses extends ReportVettingStep
     {
         $this->createVettingStep($student, VettingType::CHECK_CORE_COURSES);
 
-        /** @var \Illuminate\Database\Eloquent\Collection<int, \App\Models\Registration> $registrations */
-        $registrations = $student->registrations()
+        $registrations = StudentCourses::for($student)->query()
             ->whereNotNull('program_curriculum_course_id')
             ->get();
+
+        $registrations = StudentCoursesData::collect($registrations);
 
         if ($registrations->isEmpty()) {
             return VettingStatus::UNCHECKED;
@@ -35,38 +41,38 @@ final class VerifyCoreCourses extends ReportVettingStep
             : VettingStatus::FAILED;
     }
 
-    /** @param \Illuminate\Database\Eloquent\Collection<int, \App\Models\Registration> $registrations */
+    /** @param \Illuminate\Support\Collection<int, \App\Data\Query\StudentCoursesData> $registrations */
     private function checkNonElectiveCourses(
         ProgramCurriculum $programCurriculum,
         Collection $registrations,
     ): bool {
-        /**
-         * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-         * @var \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProgramCurriculumCourse> $programCurriculumCourses
-         */
-        $programCurriculumCourses = $programCurriculum->programCurriculumCourses()
-            ->with('course', 'programCurriculumSemester.semester',
-                'programCurriculumSemester.programCurriculumLevel.level')
+
+        $nonElectiveProgramCourses = ProgramCourses::for($programCurriculum)->query()
             ->where('course_type', '<>', CourseType::ELECTIVE)
             ->get();
+        $nonElectiveProgramCourses = ProgramCoursesData::collect($nonElectiveProgramCourses);
 
         $passed = true;
 
-        foreach ($programCurriculumCourses as $programCurriculumCourse) {
-            if ($registrations->firstWhere('program_curriculum_course_id', $programCurriculumCourse->id)) {
+        foreach ($nonElectiveProgramCourses as $nonElectiveProgramCourse) {
+            $attempted = $registrations->where('programCurriculumCourseId', $nonElectiveProgramCourse->programCourseId);
+
+            if ($attempted->isNotEmpty()) {
                 continue;
             }
 
             $passed = false;
 
-            $course = $programCurriculumCourse->course;
-            $courseType = $programCurriculumCourse->course_type;
-            $semester = $programCurriculumCourse->programCurriculumSemester->semester;
-            $level = $programCurriculumCourse->programCurriculumSemester->programCurriculumLevel->level;
+            $courseCode = $nonElectiveProgramCourse->courseCode;
+            $courseType = $nonElectiveProgramCourse->courseType;
+            $semester = $nonElectiveProgramCourse->semester;
+            $level = $nonElectiveProgramCourse->level;
 
-            $message = "{$course->code} ({$courseType->value}) - {$level->name} Level {$semester->name} Semester";
+            $message = "{$courseCode} ({$courseType->value}) - {$level} Level {$semester} Semester";
 
-            $this->report($programCurriculumCourse, $message);
+            $model = ProgramCurriculumCourse::find($nonElectiveProgramCourse->programCourseId);
+
+            $this->report($model, $message);
         }
 
         return $passed;
