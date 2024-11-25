@@ -125,10 +125,6 @@ parameters:
 			count: 1
 			path: app/Models/VettingStep.php
 
-		-
-			message: "#^Method App\\\\Queries\\\\ProgramCurriculumCourses\\:\\:get\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
-			count: 1
-			path: app/Queries/ProgramCurriculumCourses.php
 
 		-
 			message: "#^Method App\\\\Services\\\\Api\\\\PortalServiceFactory\\:\\:resolve\\(\\) return type with generic interface App\\\\Contracts\\\\PortalService does not specify its types\\: T$#"

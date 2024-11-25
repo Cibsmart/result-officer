@@ -158,9 +158,9 @@ it('passes core courses check for student who have taken all non-elective course
         )
         ->has(VettingEventFactory::new())
         ->createOne([
+            'entry_level_id' => $levels[0]->id,
             'entry_mode' => $programCurriculum->entry_mode,
             'entry_session_id' => $sessions[0]->id,
-            'entry_level_id' => $levels[0]->id,
             'program_id' => $programCurriculum->program->id,
         ]);
 
