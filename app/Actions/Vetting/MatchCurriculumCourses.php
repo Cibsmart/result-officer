@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Actions\Vetting;
 
+use App\Data\Query\StudentCoursesData;
 use App\Enums\EntryMode;
 use App\Enums\VettingStatus;
 use App\Enums\VettingType;
 use App\Models\ProgramCurriculum;
 use App\Models\Registration;
 use App\Models\Student;
+use App\Queries\ProgramCourses;
+use App\Queries\StudentCourses;
 
 final class MatchCurriculumCourses extends ReportVettingStep
 {
@@ -44,28 +47,37 @@ final class MatchCurriculumCourses extends ReportVettingStep
 
     private function updateProgramCurriculumId(ProgramCurriculum $curriculum, Student $student): void
     {
-        /** @var \Illuminate\Support\Collection<int, \App\Models\ProgramCurriculumCourse> $programCurriculumCourses */
-        $programCurriculumCourses = $curriculum->programCurriculumCourses()->with('course')->get();
-        $registrations = $student->registrations()->whereNull('program_curriculum_course_id')->get();
+        $programCourses = ProgramCourses::for($curriculum)->get();
 
-        foreach ($programCurriculumCourses as $programCurriculumCourse) {
-            $course = $programCurriculumCourse->course;
+        $registrations = StudentCourses::for($student)->query()
+            ->whereNull('program_curriculum_course_id')
+            ->get();
 
-            if ($registrations->where('course_id', $course->id)->isEmpty()) {
+        $registrations = StudentCoursesData::collect($registrations);
+
+        $registeredCourseIds = $registrations->pluck('courseId');
+
+        foreach ($programCourses as $programCourse) {
+            $courseId = $programCourse->courseId;
+
+            if ($registeredCourseIds->doesntContain($courseId)) {
                 continue;
             }
 
-            $registrations->where('course_id', $course->id)->toQuery()
-                ->update(['program_curriculum_course_id' => $programCurriculumCourse->id]);
+            Registration::query()->whereIn('id', $registrations->pluck('registrationId')->all())
+                ->where('course_id', $courseId)
+                ->whereNull('program_curriculum_course_id')
+                ->update(['program_curriculum_course_id' => $programCourse->programCourseId]);
         }
     }
 
     private function checkAndReportUnMatchedCourses(Student $student): bool
     {
-        $registrations = $student->registrations()
-            ->with('course', 'semesterEnrollment.semester', 'semesterEnrollment.sessionEnrollment.session')
+        $registrations = StudentCourses::for($student)->query()
             ->whereNull('program_curriculum_course_id')
             ->get();
+
+        $registrations = StudentCoursesData::collect($registrations);
 
         if ($registrations->isEmpty()) {
             return true;
@@ -73,15 +85,11 @@ final class MatchCurriculumCourses extends ReportVettingStep
 
         foreach ($registrations as $registration) {
 
-            assert($registration instanceof Registration);
+            $message = "{$registration->courseCode} - {$registration->session} {$registration->semester} semester";
 
-            $code = $registration->course->code;
-            $session = $registration->semesterEnrollment->sessionEnrollment->session;
-            $semester = $registration->semesterEnrollment->semester;
+            $model = Registration::find($registration->registrationId);
 
-            $message = "{$code} - {$session->name} {$semester->name} semester";
-
-            $this->report($registration, $message);
+            $this->report($model, $message);
         }
 
         return false;
