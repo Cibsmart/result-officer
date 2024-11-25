@@ -6,7 +6,7 @@ import { XMarkIcon } from "@heroicons/vue/24/outline";
 const props = withDefaults(
   defineProps<{
     open?: boolean;
-    size?: "normal" | "wide";
+    size?: "normal" | "wide" | "medium";
     closeable?: boolean;
     title?: string;
     sub?: string;
@@ -40,6 +40,7 @@ onUnmounted(() => document.removeEventListener("keydown", closeOnEscape));
 const maxWidthClass = computed(() => {
   return {
     normal: "max-w-md",
+    medium: "max-w-lg",
     wide: "max-w-2xl",
   }[props.size];
 });
