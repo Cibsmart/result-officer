@@ -8,11 +8,14 @@ use App\Data\Query\StudentCoursesData;
 use App\Enums\EntryMode;
 use App\Enums\VettingStatus;
 use App\Enums\VettingType;
+use App\Models\CourseAlternative;
 use App\Models\ProgramCurriculum;
+use App\Models\ProgramCurriculumCourse;
 use App\Models\Registration;
 use App\Models\Student;
 use App\Queries\ProgramCourses;
 use App\Queries\StudentCourses;
+use Illuminate\Database\Eloquent\Collection;
 
 final class MatchCurriculumCourses extends ReportVettingStep
 {
@@ -93,5 +96,17 @@ final class MatchCurriculumCourses extends ReportVettingStep
         }
 
         return false;
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Collection<int, \App\Models\CourseAlternative> */
+    private function getCourseAlternatives(ProgramCurriculumCourse $programCourse): Collection
+    {
+        $alternatives = $programCourse->courseAlternatives;
+
+        if ($alternatives->isNotEmpty()) {
+            return $alternatives;
+        }
+
+        return CourseAlternative::query()->where('original_course_id', $programCourse->course_id)->get();
     }
 }
