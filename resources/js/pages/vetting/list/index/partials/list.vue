@@ -7,6 +7,8 @@ import Drawer from "@/components/drawer.vue";
 import Disclosure from "@/components/baseDisclosure.vue";
 import axios from "axios";
 import { useToast } from "vue-toastification";
+import Card from "@/components/cards/card.vue";
+import CardHeading from "@/components/cards/cardHeading.vue";
 
 const props = defineProps<{
   data: App.Data.Vetting.VettingListData;
@@ -122,17 +124,31 @@ const openDrawer = (studentId: number) => {
   <Drawer
     :show="showReport"
     :title="currentStudent?.registrationNumber"
+    size="medium"
     sub="Vetting Report"
     @close="closeDrawer">
     <div
-      v-for="(vettingStep, index) in vettingSteps?.items"
-      :key="index">
+      v-for="vettingStep in vettingSteps?.items"
+      :key="vettingStep.id">
       <Disclosure
         :badge="vettingStep.status"
         :color="vettingStep.color"
         :title="vettingStep.title"
         class="mt-2">
-        {{ vettingStep.description }}
+        <Card>
+          <CardHeading>{{ vettingStep.description }}</CardHeading>
+
+          <ul
+            class="list-inside list-decimal divide-y divide-gray-300 dark:divide-gray-700"
+            role="list">
+            <li
+              v-for="report in vettingStep.reports"
+              :key="report.id"
+              class="p-2">
+              {{ report.message }}
+            </li>
+          </ul>
+        </Card>
       </Disclosure>
     </div>
   </Drawer>
