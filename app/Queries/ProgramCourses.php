@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Queries;
 
+use App\Data\Query\ProgramCoursesData;
 use App\Models\ProgramCurriculum;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
-final class ProgramCurriculumCourses
+final class ProgramCourses
 {
     private Builder $query;
 
@@ -34,6 +35,8 @@ final class ProgramCurriculumCourses
                 'semesters.name as semester', 'program_curriculum_semesters.minimum_elective_units',
                 'courses.id as course_id', 'courses.code as course_code', 'courses.title as course_title',
                 'program_curriculum_courses.course_type', 'program_curriculum_courses.credit_unit',
+                'academic_sessions.id as session_id', 'levels.id as level_id',
+                'program_curriculum_semesters.minimum_elective_count',
             )
             ->where('program_curricula.id', $this->programCurriculum->id)
             ->orderBy('academic_sessions.name')
@@ -51,8 +54,9 @@ final class ProgramCurriculumCourses
         return $this->query;
     }
 
+    /** @return \Illuminate\Support\Collection<int, \App\Data\Query\ProgramCoursesData> */
     public function get(): Collection
     {
-        return $this->query->get();
+        return ProgramCoursesData::collect($this->query->get());
     }
 }
