@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 use App\Actions\Vetting\MatchCurriculumCourses;
 use App\Enums\VettingStatus;
+use App\Models\Registration;
 use App\Models\VettingReport;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Tests\Factories\CourseFactory;
+use Tests\Factories\LevelFactory;
 use Tests\Factories\ProgramCurriculumCourseFactory;
 use Tests\Factories\ProgramCurriculumFactory;
 use Tests\Factories\ProgramCurriculumLevelFactory;
@@ -15,10 +17,12 @@ use Tests\Factories\RegistrationFactory;
 use Tests\Factories\SemesterEnrollmentFactory;
 use Tests\Factories\SemesterFactory;
 use Tests\Factories\SessionEnrollmentFactory;
+use Tests\Factories\SessionFactory;
 use Tests\Factories\StudentFactory;
 use Tests\Factories\VettingEventFactory;
 
 use function Pest\Laravel\assertDatabaseHas;
+use function Pest\Laravel\assertDatabaseMissing;
 
 covers(MatchCurriculumCourses::class);
 
@@ -113,4 +117,50 @@ it('reports unmatched student courses', function (): void {
         'vettable_id' => $registration->id,
         'vettable_type' => 'registration',
     ]);
+});
+
+it('matches student all courses with the program curriculum courses across levels', function (): void {
+    $semester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
+    $courses = CourseFactory::new()->count(2)->create();
+    $levels = LevelFactory::new()->count(2)->sequence(['name' => 100], ['name' => 200])->create();
+    $sessions = SessionFactory::new()->count(2)
+        ->sequence(['name' => '2009/2010'], ['name' => '2010/2011'])
+        ->create();
+
+    $student = StudentFactory::new()
+        ->has(SessionEnrollmentFactory::new()->count(2)
+            ->sequence(
+                ['level_id' => $levels[0]->id, 'session_id' => $sessions[0]->id],
+                ['level_id' => $levels[1]->id, 'session_id' => $sessions[1]->id],
+            )
+            ->has(SemesterEnrollmentFactory::new()->state(['semester_id' => $semester->id])
+                ->has(RegistrationFactory::new()->sequence(
+                    ['course_id' => $courses[0]->id],
+                    ['course_id' => $courses[1]->id],
+                )),
+            ),
+        )
+        ->has(VettingEventFactory::new())
+        ->state(['entry_session_id' => $sessions[0]->id, 'entry_level_id' => $levels[0]->id])
+        ->createOne();
+
+    ProgramCurriculumFactory::new()->has(
+        ProgramCurriculumLevelFactory::new()->count(2)
+            ->sequence(['level_id' => $levels[0]->id], ['level_id' => $levels[1]->id])
+            ->has(ProgramCurriculumSemesterFactory::new()->state(['semester_id' => $semester->id])
+                ->has(ProgramCurriculumCourseFactory::new()
+                    ->sequence(['course_id' => $courses[0]->id], ['course_id' => $courses[1]->id])),
+            ),
+    )->create([
+        'entry_mode' => $student->entry_mode,
+        'entry_session_id' => $sessions[0]->id,
+        'program_id' => $student->program->id,
+    ]);
+
+    $action = new MatchCurriculumCourses();
+    $status = $action->execute($student);
+
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED);
+
+    assertDatabaseMissing(Registration::class, ['program_curriculum_course_id' => null]);
 });
