@@ -21,7 +21,7 @@ final class VerifyFirstYearCourses extends ReportVettingStep
         $firstYearEnrollment = $student->sessionEnrollments()->where('year', Year::FIRST)->first();
 
         if ($firstYearEnrollment === null) {
-            $this->report($student, '');
+            $this->report($student, 'Curriculum not found');
 
             return VettingStatus::UNCHECKED;
         }

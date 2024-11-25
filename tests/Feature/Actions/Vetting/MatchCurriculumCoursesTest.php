@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Actions\Vetting\MatchCurriculumCourses;
 use App\Enums\VettingStatus;
+use App\Models\VettingReport;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Tests\Factories\CourseFactory;
 use Tests\Factories\ProgramCurriculumCourseFactory;
@@ -46,8 +47,7 @@ it('matches student courses with the program curriculum courses', function (): v
     $action = new MatchCurriculumCourses();
     $status = $action->execute($student);
 
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
-        ->and($action->getReport())->toBe('');
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED);
 });
 
 it('reports unchecked for program without curriculum', function (): void {
@@ -66,12 +66,9 @@ it('reports unchecked for program without curriculum', function (): void {
     $action = new MatchCurriculumCourses();
     $status = $action->execute($student);
 
-    $session = $student->entrySession;
-    $entryMode = $student->entry_mode;
-
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED);
 
-    assertDatabaseHas('vetting_reports', [
+    assertDatabaseHas(VettingReport::class, [
         'status' => VettingStatus::FAILED,
         'vettable_id' => $student->program->id,
         'vettable_type' => 'program',
@@ -108,11 +105,10 @@ it('reports unmatched student courses', function (): void {
     $status = $action->execute($student);
 
     $registration = $student->registrations()->with('semesterEnrollment.sessionEnrollment.session')->get()->last();
-    $session = $registration->semesterEnrollment->sessionEnrollment->session;
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED);
 
-    assertDatabaseHas('vetting_reports', [
+    assertDatabaseHas(VettingReport::class, [
         'status' => VettingStatus::FAILED,
         'vettable_id' => $registration->id,
         'vettable_type' => 'registration',

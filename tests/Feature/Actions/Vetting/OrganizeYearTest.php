@@ -106,6 +106,5 @@ it('does not re-organize study year for already organized year', function (): vo
 
     $status = $organize->execute($student);
 
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
-        ->and($organize->getReport())->toBe('');
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED);
 });

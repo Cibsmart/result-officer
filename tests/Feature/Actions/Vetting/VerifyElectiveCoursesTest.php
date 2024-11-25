@@ -33,8 +33,6 @@ it('skips elective course check for students without courses or matches', functi
     $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED);
-
-    assertDatabaseCount(VettingReport::class, 1);
 });
 
 it('passes elective course check for students with required elective credits and count', function (): void {
@@ -116,12 +114,6 @@ it('fails elective course check for students lacking required elective credit un
     $action = new VerifyElectiveCourses();
     $status = $action->execute($student);
 
-    $programCurriculumSemester = $programCurriculum->programCurriculumSemesters()->first();
-    $level = $programCurriculumSemester->programCurriculumLevel->level;
-    $semester = $programCurriculumSemester->semester;
-
-    $message = "Insufficient elective course unit for {$level->name} Level {$semester->name} Semester\n";
-
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED);
 
     assertDatabaseCount(VettingReport::class, 1);
@@ -163,12 +155,6 @@ it('fails elective course check for students lacking required elective count', f
     $action = new VerifyElectiveCourses();
     $status = $action->execute($student);
 
-    $programCurriculumSemester = $programCurriculum->programCurriculumSemesters()->first();
-    $level = $programCurriculumSemester->programCurriculumLevel->level;
-    $semester = $programCurriculumSemester->semester;
-
-    $message = "Insufficient elective course count for {$level->name} Level {$semester->name} Semester\n";
-
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED);
 
     assertDatabaseCount(VettingReport::class, 1);
@@ -194,7 +180,7 @@ it('fails elective course check for students missing complete elective groups', 
     $programSemester = $programCurriculum->programCurriculumSemesters->firstOrFail();
     $programCourses = $programSemester->programCurriculumCourses;
 
-    $electiveGroup = ProgramCurriculumElectiveGroupFactory::new()->for($programSemester)
+    ProgramCurriculumElectiveGroupFactory::new()->for($programSemester)
         ->has(ProgramCurriculumElectiveCourseFactory::new()->count(2)
             ->sequence(fn (Sequence $sequence) => [
                 'program_curriculum_course_id' => $programCourses[$sequence->index]->id,
@@ -224,11 +210,6 @@ it('fails elective course check for students missing complete elective groups', 
 
     $action = new VerifyElectiveCourses();
     $status = $action->execute($student);
-
-    $level = $programSemester->programCurriculumLevel->level;
-    $semester = $programSemester->semester;
-    $message = "Did not take all courses in elective group ({$electiveGroup->name}) for ";
-    $message .= "{$level->name} Level {$semester->name} Semester\n";
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED);
 

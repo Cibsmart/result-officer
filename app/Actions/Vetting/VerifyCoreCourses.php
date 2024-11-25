@@ -23,8 +23,6 @@ final class VerifyCoreCourses extends ReportVettingStep
             ->get();
 
         if ($registrations->isEmpty()) {
-            $this->report($student, '');
-
             return VettingStatus::UNCHECKED;
         }
 

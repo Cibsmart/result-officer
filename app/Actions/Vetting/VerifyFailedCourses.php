@@ -22,8 +22,6 @@ final class VerifyFailedCourses extends ReportVettingStep
         $courses = StudentCourses::for($student)->get();
 
         if ($courses->isEmpty()) {
-            $this->report($student, '');
-
             return VettingStatus::UNCHECKED;
         }
 

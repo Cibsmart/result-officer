@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Actions\Vetting\VerifySemesterCreditLimits;
 use App\Enums\VettingStatus;
+use App\Models\VettingReport;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Tests\Factories\RegistrationFactory;
 use Tests\Factories\SemesterEnrollmentFactory;
@@ -34,10 +35,9 @@ it('checks and reports passed for student result semester total unit within limi
 
     $status = $action->execute($student);
 
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
-        ->and($action->getReport())->toBe('');
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED);
 
-    assertDatabaseEmpty('vetting_reports');
+    assertDatabaseEmpty(VettingReport::class);
 });
 
 it('checks and report failed for student result semester total unit above limit', function (): void {
@@ -54,10 +54,9 @@ it('checks and report failed for student result semester total unit above limit'
 
     $status = $action->execute($student);
 
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
-        ->and($action->getReport())->toBe($action->getReport());
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED);
 
-    assertDatabaseCount('vetting_reports', 1);
+    assertDatabaseCount(VettingReport::class, 1);
 });
 
 it('checks and report failed for student result semester total unit below limit', function (): void {
@@ -74,10 +73,9 @@ it('checks and report failed for student result semester total unit below limit'
 
     $status = $action->execute($student);
 
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
-        ->and($action->getReport())->toBe($action->getReport());
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED);
 
-    assertDatabaseCount('vetting_reports', 1);
+    assertDatabaseCount(VettingReport::class, 1);
 });
 
 it('checks and report unchecked for student without enrollments', function (): void {

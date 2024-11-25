@@ -76,8 +76,7 @@ it('reports first year courses passed for student who took all required first ye
 
     $status = $action->execute($student);
 
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
-        ->and($action->getReport())->toBe('');
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED);
 
     assertDatabaseEmpty(VettingReport::class);
 });
@@ -121,13 +120,6 @@ it('reports first year courses failed for student who did not taken all required
         $action = new VerifyFirstYearCourses();
 
         $status = $action->execute($student);
-
-        $unregisteredFirstYearCourse = $programCurriculum->programCurriculumCourses()
-            ->with('course')->get()->first();
-
-        $course = $unregisteredFirstYearCourse->course;
-
-        $message = "{$course->code} ({$unregisteredFirstYearCourse->course_type->name}) Not taken in the first year \n";
 
         expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED);
 
