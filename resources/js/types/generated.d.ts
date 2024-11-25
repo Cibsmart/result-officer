@@ -157,6 +157,21 @@ declare namespace App.Data.Program {
   };
 }
 declare namespace App.Data.Query {
+  export type ProgramCoursesData = {
+    curriculumID: number;
+    sessionId: number;
+    session: string;
+    levelId: number;
+    level: string;
+    semester: string;
+    courseId: number;
+    courseCode: string;
+    courseTitle: string;
+    creditUnit: App.Enums.CreditUnit;
+    courseType: App.Enums.CourseType;
+    minElectiveUnit: number;
+    minElectiveCount: number;
+  };
   export type StudentCoursesData = {
     studentId: number;
     registrationId: number;
