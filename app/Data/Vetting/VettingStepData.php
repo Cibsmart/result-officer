@@ -8,6 +8,7 @@ use App\Enums\StatusColor;
 use App\Enums\VettingStatus;
 use App\Enums\VettingType;
 use App\Models\VettingStep;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Spatie\LaravelData\Data;
 
@@ -19,6 +20,8 @@ final class VettingStepData extends Data
         public string $description,
         public VettingStatus $status,
         public StatusColor $color,
+        /** @var \Illuminate\Support\Collection<int, \App\Data\Vetting\VettingReportData> */
+        public Collection $reports,
     ) {
     }
 
@@ -28,16 +31,13 @@ final class VettingStepData extends Data
 
         $type = $vettingStep->type;
 
-        $message = $status === VettingStatus::PASSED
-            ? $type->passedMessage()
-            : $type->failedMessage();
-
         return new self(
             type: $type,
             title: Str::of($type->name)->replace('_', ' ')->value(),
-            description: $message,
+            description: $type->description($status),
             status: $status,
             color: $status->color(),
+            reports: VettingReportData::collect($vettingStep->vettingReports),
         );
     }
 }
