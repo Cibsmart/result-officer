@@ -21,9 +21,7 @@ final class VerifyFirstYearCourses extends ReportVettingStep
         $firstYearEnrollment = $student->sessionEnrollments()->where('year', Year::FIRST)->first();
 
         if ($firstYearEnrollment === null) {
-            $message = "First Year Courses not checked for {$student->registration_number}\n";
-
-            $this->report($student, $message);
+            $this->report($student, '');
 
             return VettingStatus::UNCHECKED;
         }
@@ -60,6 +58,7 @@ final class VerifyFirstYearCourses extends ReportVettingStep
         foreach ($firstYearProgramCurriculumSemesters as $firstYearProgramCurriculumSemester) {
             $unregisteredFirstYearCourses = $firstYearProgramCurriculumSemester->programCurriculumCourses()
                 ->whereNotIn('id', $firstYearRegistrations->pluck('program_curriculum_course_id'))
+                ->with('course', 'programCurriculumSemester.semester')
                 ->where('course_type', '<>', CourseType::ELECTIVE)
                 ->get();
 
@@ -71,7 +70,8 @@ final class VerifyFirstYearCourses extends ReportVettingStep
                 $passed = false;
 
                 $course = $unregisteredFirstYearCourse->course;
-                $message = "{$course->code} ({$courseType->name}) Not taken in the first year \n";
+                $semester = $unregisteredFirstYearCourse->programCurriculumSemester->semester;
+                $message = "{$course->code} - {$semester->name} semester ({$courseType->name})";
 
                 $this->report($unregisteredFirstYearCourse, $message);
             }

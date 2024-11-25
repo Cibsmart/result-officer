@@ -26,7 +26,7 @@ final class MatchCurriculumCourses extends ReportVettingStep
 
             assert($entryMode instanceof EntryMode);
 
-            $message = "Curriculum not found for {$program->name} {$entrySession->name} ({$entryMode->value})  \n";
+            $message = "{$program->name} - {$entrySession->name} - ({$entryMode->value})";
 
             $this->report($program, $message);
 
@@ -79,8 +79,7 @@ final class MatchCurriculumCourses extends ReportVettingStep
             $session = $registration->semesterEnrollment->sessionEnrollment->session;
             $semester = $registration->semesterEnrollment->semester;
 
-            $message = "{$code} in {$session->name} {$semester->name}";
-            $message .= " Semester does not match any course in the curriculum \n";
+            $message = "{$code} - {$session->name} {$semester->name} semester";
 
             $this->report($registration, $message);
         }

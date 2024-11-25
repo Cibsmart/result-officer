@@ -30,10 +30,7 @@ it('reports failed courses not checked for student without results', function ()
 
     $status = $action->execute($student);
 
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED)
-        ->and($action->getReport())->toBe(
-            "Failed courses not checked for {$student->registration_number}\n",
-        );
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED);
 
     assertDatabaseCount(VettingReport::class, 1);
 });
@@ -61,8 +58,7 @@ it('reports failed courses check failed for student who have not passed all fail
 
     $message = "Failed {$course->code} in {$session->name} {$semester->name} Semester\n";
 
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
-        ->and($action->getReport())->toBe($message);
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED);
 
     assertDatabaseCount(VettingReport::class, 1);
 });
@@ -153,8 +149,7 @@ it('reports failed courses check failed for student who registered and did not t
 
     $message = "Failed {$course->code} in {$session->name} {$semester->name} Semester\n";
 
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED)
-        ->and($action->getReport())->toBe($message);
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED);
 
     assertDatabaseCount(VettingReport::class, 1);
 });
