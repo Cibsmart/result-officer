@@ -298,13 +298,19 @@ declare namespace App.Data.Vetting {
     department: App.Data.Department.DepartmentData;
     graduands: Array<App.Data.Vetting.VettingStudentData>;
   };
-  export type VettingReportData = {};
+  export type VettingReportData = {
+    id: number;
+    vettableId: number;
+    vettableType: string;
+    message: string;
+  };
   export type VettingStepData = {
     type: App.Enums.VettingType;
     title: string;
     description: string;
     status: App.Enums.VettingStatus;
     color: App.Enums.StatusColor;
+    reports: Array<App.Data.Vetting.VettingReportData>;
   };
   export type VettingStepListData = {
     items: Array<App.Data.Vetting.VettingStepData>;
