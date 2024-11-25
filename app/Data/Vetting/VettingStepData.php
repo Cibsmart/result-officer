@@ -30,7 +30,7 @@ final class VettingStepData extends Data
 
         $message = $status === VettingStatus::PASSED
             ? $type->passedMessage()
-            : $vettingStep->message;
+            : $type->failedMessage();
 
         return new self(
             type: $type,

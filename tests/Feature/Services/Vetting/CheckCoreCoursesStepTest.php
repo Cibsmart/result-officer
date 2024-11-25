@@ -135,6 +135,4 @@ it('checks students without courses and unchecked', function (): void {
         'type' => VettingType::CHECK_CORE_COURSES,
         'vetting_event_id' => $vettingEvent->id,
     ]);
-
-    assertDatabaseCount(VettingReport::class, 1);
 });

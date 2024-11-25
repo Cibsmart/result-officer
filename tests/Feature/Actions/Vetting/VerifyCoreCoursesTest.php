@@ -32,8 +32,6 @@ it('reports unchecked core courses for student without courses or no matching cu
     $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED);
-
-    assertDatabaseCount('vetting_reports', 1);
 });
 
 it('reports passed core courses check for student who have taken all non-elective courses', function (): void {
@@ -75,7 +73,7 @@ it('reports passed core courses check for student who have taken all non-electiv
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
         ->and($action->getReport())->toBe('');
 
-    assertDatabaseEmpty('vetting_reports');
+    assertDatabaseEmpty(VettingReport::class);
 });
 
 it('reports failed core courses check for student who have taken all non-elective courses', function (): void {

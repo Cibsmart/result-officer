@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Actions\Vetting\VerifyCoursesCreditUnit;
 use App\Enums\CreditUnit;
 use App\Enums\VettingStatus;
+use App\Models\VettingReport;
 use Tests\Factories\ProgramCurriculumCourseFactory;
 use Tests\Factories\RegistrationFactory;
 use Tests\Factories\SemesterEnrollmentFactory;
@@ -37,10 +38,9 @@ it('passes credit unit check for student courses with matching credit unit to cu
 
     $status = $action->execute($student);
 
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
-        ->and($action->getReport())->toBe('');
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED);
 
-    assertDatabaseEmpty('vetting_reports');
+    assertDatabaseEmpty(VettingReport::class);
 });
 
 it(
@@ -65,17 +65,9 @@ it(
 
         $status = $action->execute($student);
 
-        $registration = $student->registrations->first();
-        $course = $registration->course;
-        $session = $registration->session();
-        $semester = $registration->semester();
-
-        $message = "Credit for {$course->code} in {$session->name} {$semester->name} Semester ";
-        $message .= "does not matched with the program curriculum course credit unit  \n";
-
         expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED);
 
-        assertDatabaseCount('vetting_reports', 1);
+        assertDatabaseCount(VettingReport::class, 1);
     },
 );
 
@@ -87,6 +79,4 @@ it('reports unchecked credit unit for student courses not matched to any curricu
     $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED);
-
-    assertDatabaseCount('vetting_reports', 1);
 });

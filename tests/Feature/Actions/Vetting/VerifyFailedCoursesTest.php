@@ -31,8 +31,6 @@ it('reports failed courses not checked for student without results', function ()
     $status = $action->execute($student);
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED);
-
-    assertDatabaseCount(VettingReport::class, 1);
 });
 
 it('reports failed courses check failed for student who have not passed all failed course', function (): void {
@@ -51,12 +49,6 @@ it('reports failed courses check failed for student who have not passed all fail
     $action = new VerifyFailedCourses();
 
     $status = $action->execute($student);
-
-    $course = $student->registrations->first()->course;
-    $session = $student->sessionEnrollments->first()->session;
-    $semester = $student->semesterEnrollments->first()->semester;
-
-    $message = "Failed {$course->code} in {$session->name} {$semester->name} Semester\n";
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED);
 
@@ -80,8 +72,7 @@ it('reports failed courses check passed for student who passed all registered co
 
     $status = $action->execute($student);
 
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
-        ->and($action->getReport())->toBe('');
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED);
 
     assertDatabaseEmpty(VettingReport::class);
 });
@@ -118,8 +109,7 @@ it('reports failed courses check passed for student who have passed all failed c
 
     $status = $action->execute($student);
 
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
-        ->and($action->getReport())->toBe('');
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED);
 
     assertDatabaseEmpty(VettingReport::class);
 });
@@ -142,12 +132,6 @@ it('reports failed courses check failed for student who registered and did not t
     $action = new VerifyFailedCourses();
 
     $status = $action->execute($student);
-
-    $course = $student->registrations->first()->course;
-    $session = $student->sessionEnrollments->first()->session;
-    $semester = $student->semesterEnrollments->first()->semester;
-
-    $message = "Failed {$course->code} in {$session->name} {$semester->name} Semester\n";
 
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED);
 

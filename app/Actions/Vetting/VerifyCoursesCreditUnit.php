@@ -21,8 +21,6 @@ final class VerifyCoursesCreditUnit extends ReportVettingStep
             ->get();
 
         if ($registrations->isEmpty()) {
-            $this->report($student, '');
-
             return VettingStatus::UNCHECKED;
         }
 

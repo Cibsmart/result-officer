@@ -29,8 +29,6 @@ final class VerifyElectiveCourses extends ReportVettingStep
         $registrations = StudentCoursesData::collect($registrations);
 
         if ($registrations->isEmpty()) {
-            $this->report($student, '');
-
             return VettingStatus::UNCHECKED;
         }
 

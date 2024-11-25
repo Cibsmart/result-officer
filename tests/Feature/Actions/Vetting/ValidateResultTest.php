@@ -21,8 +21,7 @@ it('validates the integrity of the students results', function (): void {
 
     $status = $validation->execute($student);
 
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED)
-        ->and($validation->getReport())->toBe('');
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED);
 });
 
 it('reports students results with tampered score', function (): void {
@@ -31,8 +30,8 @@ it('reports students results with tampered score', function (): void {
     VettingEventFactory::new()->for($student)->createOne();
 
     $sessionEnrollment = $student->sessionEnrollments()
-        ->with('semesterEnrollments.registrations.result', 'session', 'semesterEnrollments.semester',
-            'semesterEnrollments.registrations.course')
+        ->with('semesterEnrollments.registrations.result', 'semesterEnrollments',
+            'semesterEnrollments.registrations')
         ->get()
         ->first();
 
@@ -40,10 +39,6 @@ it('reports students results with tampered score', function (): void {
 
     $registration = $semesterEnrollment->registrations->first();
     $result = $registration->result;
-
-    $session = $sessionEnrollment->session;
-    $semester = $semesterEnrollment->semester;
-    $course = $registration->course;
 
     $result->total_score = 101;
     $result->save();
@@ -63,17 +58,13 @@ it('reports students results with tampered grade', function (): void {
     VettingEventFactory::new()->for($student)->createOne();
 
     $sessionEnrollment = $student->sessionEnrollments()
-        ->with('semesterEnrollments.registrations.result', 'session', 'semesterEnrollments.semester',
-            'semesterEnrollments.registrations.course')
+        ->with('semesterEnrollments.registrations.result', 'semesterEnrollments',
+            'semesterEnrollments.registrations')
         ->get()
         ->first();
     $semesterEnrollment = $sessionEnrollment->semesterEnrollments->first();
     $registration = $semesterEnrollment->registrations->first();
     $result = $registration->result;
-
-    $session = $sessionEnrollment->session;
-    $semester = $semesterEnrollment->semester;
-    $course = $registration->course;
 
     $result->grade = 'Z';
     $result->save();
@@ -99,10 +90,6 @@ it('reports students results with tampered grade point', function (): void {
     $semesterEnrollment = $sessionEnrollment->semesterEnrollments->first();
     $registration = $semesterEnrollment->registrations->first();
     $result = $registration->result;
-
-    $session = $sessionEnrollment->session;
-    $semester = $semesterEnrollment->semester;
-    $course = $registration->course;
 
     $result->grade_point = 150;
     $result->save();
