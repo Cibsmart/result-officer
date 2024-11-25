@@ -37,6 +37,7 @@ final class ProgramCourses
                 'program_curriculum_courses.course_type', 'program_curriculum_courses.credit_unit',
                 'academic_sessions.id as session_id', 'levels.id as level_id',
                 'program_curriculum_semesters.minimum_elective_count',
+                'program_curriculum_courses.id as program_course_id',
             )
             ->where('program_curricula.id', $this->programCurriculum->id)
             ->orderBy('academic_sessions.name')

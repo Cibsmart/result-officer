@@ -12,7 +12,8 @@ use stdClass;
 final class ProgramCoursesData extends Data
 {
     public function __construct(
-        public readonly int $curriculumID,
+        public readonly int $curriculumId,
+        public readonly int $programCourseId,
         public readonly int $sessionId,
         public readonly string $session,
         public readonly int $levelId,
@@ -31,7 +32,8 @@ final class ProgramCoursesData extends Data
     public static function fromModel(stdClass $programCourse): self
     {
         return new self(
-            curriculumID: $programCourse->id,
+            curriculumId: $programCourse->id,
+            programCourseId: $programCourse->program_course_id,
             sessionId: $programCourse->session_id,
             session: $programCourse->session,
             levelId: $programCourse->level_id,

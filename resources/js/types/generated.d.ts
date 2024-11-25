@@ -158,7 +158,8 @@ declare namespace App.Data.Program {
 }
 declare namespace App.Data.Query {
   export type ProgramCoursesData = {
-    curriculumID: number;
+    curriculumId: number;
+    programCourseId: number;
     sessionId: number;
     session: string;
     levelId: number;
