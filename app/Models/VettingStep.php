@@ -29,7 +29,6 @@ final class VettingStep extends Model
 
         $vettingStep->vetting_event_id = $vettingEvent->id;
         $vettingStep->type = $vettingType->value;
-        $vettingStep->message = '';
         $vettingStep->status = VettingStatus::NEW;
 
         $vettingStep->save();
@@ -51,18 +50,11 @@ final class VettingStep extends Model
 
     public function updateStatus(VettingStatus $status): void
     {
-        $this->status = $status;
-        $this->save();
-    }
-
-    public function updateStatusAndRemarks(VettingStatus $status, string $message): void
-    {
         if ($status === VettingStatus::PASSED && $this->failureReports()) {
             VettingReport::clearFailedReportForStep($this);
         }
 
         $this->status = $status;
-        $this->message = $message;
         $this->save();
     }
 
