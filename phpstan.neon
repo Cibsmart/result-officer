@@ -21,6 +21,6 @@ parameters:
 
 
     treatPhpDocTypesAsCertain: false
-
+    reportUnmatchedIgnoredErrors: false
 
     editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
