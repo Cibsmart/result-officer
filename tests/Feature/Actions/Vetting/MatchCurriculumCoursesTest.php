@@ -7,6 +7,7 @@ use App\Enums\VettingStatus;
 use App\Models\Registration;
 use App\Models\VettingReport;
 use Illuminate\Database\Eloquent\Factories\Sequence;
+use Tests\Factories\CourseAlternativeFactory;
 use Tests\Factories\CourseFactory;
 use Tests\Factories\LevelFactory;
 use Tests\Factories\ProgramCurriculumCourseFactory;
@@ -163,4 +164,72 @@ it('matches student all courses with the program curriculum courses across level
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED);
 
     assertDatabaseMissing(Registration::class, ['program_curriculum_course_id' => null]);
+});
+
+it('matches student courses with the program curriculum course alternatives', function (): void {
+    $semester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
+    $courses = CourseFactory::new()->count(2)->create();
+
+    $student = StudentFactory::new()
+        ->has(SessionEnrollmentFactory::new()
+            ->has(SemesterEnrollmentFactory::new()->state(['semester_id' => $semester->id])
+                ->has(RegistrationFactory::new()->state(['course_id' => $courses->last()->id])),
+            ),
+        )->has(VettingEventFactory::new())->createOne();
+
+    ProgramCurriculumFactory::new()->has(
+        ProgramCurriculumLevelFactory::new()
+            ->has(ProgramCurriculumSemesterFactory::new()->state(['semester_id' => $semester->id])
+                ->has(ProgramCurriculumCourseFactory::new()
+                    ->state(['course_id' => $courses->first()->id])
+                    ->has(CourseAlternativeFactory::new()
+                        ->state([
+                            'alternate_course_id' => $courses->last()->id,
+                            'original_course_id' => $courses->first()->id,
+                        ]))),
+            ),
+    )->createOne([
+        'entry_mode' => $student->entry_mode,
+        'entry_session_id' => $student->entry_session_id,
+        'program_id' => $student->program->id,
+    ]);
+
+    $action = new MatchCurriculumCourses();
+    $status = $action->execute($student);
+
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED);
+});
+
+it('matches student courses with the general course alternatives', function (): void {
+    $semester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
+    $courses = CourseFactory::new()->count(2)->create();
+
+    CourseAlternativeFactory::new()->state([
+        'alternate_course_id' => $courses->last()->id,
+        'original_course_id' => $courses->first()->id,
+    ])->createOne();
+
+    $student = StudentFactory::new()
+        ->has(SessionEnrollmentFactory::new()
+            ->has(SemesterEnrollmentFactory::new()->state(['semester_id' => $semester->id])
+                ->has(RegistrationFactory::new()->state(['course_id' => $courses->last()->id])),
+            ),
+        )->has(VettingEventFactory::new())->createOne();
+
+    ProgramCurriculumFactory::new()->has(
+        ProgramCurriculumLevelFactory::new()
+            ->has(ProgramCurriculumSemesterFactory::new()->state(['semester_id' => $semester->id])
+                ->has(ProgramCurriculumCourseFactory::new()
+                    ->state(['course_id' => $courses->first()->id])),
+            ),
+    )->createOne([
+        'entry_mode' => $student->entry_mode,
+        'entry_session_id' => $student->entry_session_id,
+        'program_id' => $student->program->id,
+    ]);
+
+    $action = new MatchCurriculumCourses();
+    $status = $action->execute($student);
+
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::PASSED);
 });

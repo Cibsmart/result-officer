@@ -15,15 +15,14 @@ final class CourseAlternativeSeeder extends Seeder
     public function run(): void
     {
         CourseAlternative::query()->create([
-            'alternate_course_id' => 963,
-            'original_course_id' => 962,
-            'program_curriculum_course_id' => 141,
+            'alternate_course_id' => 962,
+            'original_course_id' => 963,
+            'program_curriculum_course_id' => 58,
         ]);
 
         CourseAlternative::query()->create([
             'alternate_course_id' => 4870,
             'original_course_id' => 4869,
-            'program_curriculum_course_id' => 33,
         ]);
     }
 }

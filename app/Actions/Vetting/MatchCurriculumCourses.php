@@ -58,19 +58,25 @@ final class MatchCurriculumCourses extends ReportVettingStep
 
         $registrations = StudentCoursesData::collect($registrations);
 
-        $registeredCourseIds = $registrations->pluck('courseId');
-
         foreach ($programCourses as $programCourse) {
-            $courseId = $programCourse->courseId;
+            $programCourseModel = ProgramCurriculumCourse::query()
+                ->where('id', $programCourse->programCourseId)
+                ->firstOrFail();
 
-            if ($registeredCourseIds->doesntContain($courseId)) {
+            $alternatives = $this->getCourseAlternatives($programCourseModel)->pluck('alternate_course_id');
+
+            $courseIds = [$programCourseModel->course_id, ...$alternatives];
+
+            $registrationIds = $registrations->whereIn('courseId', $courseIds)->pluck('registrationId');
+
+            if ($registrationIds->isEmpty()) {
                 continue;
             }
 
-            Registration::query()->whereIn('id', $registrations->pluck('registrationId')->all())
-                ->where('course_id', $courseId)
+            Registration::query()
+                ->whereIn('id', $registrationIds)
                 ->whereNull('program_curriculum_course_id')
-                ->update(['program_curriculum_course_id' => $programCourse->programCourseId]);
+                ->update(['program_curriculum_course_id' => $programCourseModel->id]);
         }
     }
 
@@ -107,6 +113,9 @@ final class MatchCurriculumCourses extends ReportVettingStep
             return $alternatives;
         }
 
-        return CourseAlternative::query()->where('original_course_id', $programCourse->course_id)->get();
+        return CourseAlternative::query()
+            ->whereNull('program_curriculum_course_id')
+            ->where('original_course_id', $programCourse->course_id)
+            ->get();
     }
 }
