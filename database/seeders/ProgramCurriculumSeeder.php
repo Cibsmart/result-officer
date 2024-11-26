@@ -43,6 +43,8 @@ final class ProgramCurriculumSeeder extends Seeder
                 $this->createProgramCurriculum($programCode, $curriculumName, $curriculumCourses);
             }
         }
+
+        $this->call([CourseAlternativeSeeder::class]);
     }
 
     /** @param \Illuminate\Support\Collection<int, \Illuminate\Support\Collection<string, string>> $curriculumCourses */
