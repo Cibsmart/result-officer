@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
   <title>{{ "$student->registrationNumber - EBSU RESULT DATABASE OFFICE - " . auth()->id() }}</title>
-  @vite(['resources/css/app.css'])
+  <link rel="stylesheet" href="{{ asset("css/prints.css") }}">
 </head>
 <body>
 
