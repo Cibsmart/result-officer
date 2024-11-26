@@ -44,8 +44,23 @@ final readonly class ViewStudentResultController
             'transcript' => TranscriptData::from($student->allowEGrade()),
         ])
             ->withBrowsershot(static function (Browsershot $browsershot): void {
-                $browsershot->setChromePath(Config::string('rp_pdf.chromium.path'));
-                $browsershot->scale(0.90);
+                $tempPath = Config::string('rp_pdf.chromium.temp');
+                $browsershot->setChromePath(Config::string('rp_pdf.chromium.path'))
+                    ->setOption('args', ['--disable-web-security'])
+                    ->ignoreHttpsErrors()
+                    ->noSandbox()
+                    ->setCustomTempPath("{$tempPath}/browsershot-html")
+                    ->addChromiumArguments([
+                        'disk-cache-dir' => "{$tempPath}/user-data/Default/Cache",
+                        'enable-font-antialiasing' => true,
+                        'font-render-hinting' => 'none',
+                        'force-device-scale-factor' => 1,
+                        'hide-scrollbars' => true,
+                        'lang' => 'en-US,en;q=0.9',
+                        'user-data-dir' => "{$tempPath}/user-data",
+                    ])
+                    ->newHeadless()
+                    ->scale(0.90);
             })
             ->format(Format::A4)
             ->margins(5, 5, 5, 5)
