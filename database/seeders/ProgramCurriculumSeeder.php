@@ -21,8 +21,6 @@ use App\Models\Session;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Collection;
 
-use function PHPUnit\Framework\assertNotNull;
-
 final class ProgramCurriculumSeeder extends Seeder
 {
     public function run(): void
@@ -136,7 +134,7 @@ final class ProgramCurriculumSeeder extends Seeder
             ]);
 
             $electiveGrouping = $semesterCourse['elective_group'];
-            assertNotNull($electiveGrouping);
+            assert(! is_null($electiveGrouping));
 
             if (! $this->isElectiveWithGrouping($courseType, $electiveGrouping)) {
                 continue;
