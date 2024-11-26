@@ -8,6 +8,7 @@ use App\Enums\CourseType;
 use App\Enums\CreditUnit;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -38,6 +39,15 @@ final class ProgramCurriculumCourse extends Model
     public function programCurriculumSemester(): BelongsTo
     {
         return $this->belongsTo(ProgramCurriculumSemester::class);
+    }
+
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\CourseAlternative, \App\Models\ProgramCurriculumCourse>
+     */
+    public function courseAlternatives(): HasMany
+    {
+        return $this->hasMany(CourseAlternative::class);
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Course,\App\Models\ProgramCurriculumCourse> */
