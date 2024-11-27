@@ -83,10 +83,14 @@ final class ResultSeeder extends Seeder
                 'semester_enrollment_id' => $semesterEnrollment->id,
             ]);
 
-            $score = TotalScore::fromInCourseAndExam(
-                InCourseScore::new((int) $semesterResult['in_course_score']),
-                ExamScore::new((int) $semesterResult['exam_score']),
-            );
+            $inCourse = $semesterResult['in_course_score'];
+            $exam = $semesterResult['exam_score'];
+
+            if ($inCourse === '' && $exam === '') {
+                continue;
+            }
+
+            $score = TotalScore::fromInCourseAndExam(InCourseScore::new((int) $inCourse), ExamScore::new((int) $exam));
             $grade = Grade::for($score);
             $gradePoint = $grade->point() * $registration->credit_unit->value;
             $data = "{$registration->id}-{$score->value}-{$grade->value}-{$gradePoint}";
@@ -95,10 +99,7 @@ final class ResultSeeder extends Seeder
                 'grade' => $grade->name,
                 'grade_point' => $gradePoint,
                 'registration_id' => $registration->id,
-                'scores' => json_encode([
-                    'exam' => $semesterResult['exam_score'],
-                    'in_course' => $semesterResult['in_course_score'],
-                ]),
+                'scores' => json_encode(['exam' => $exam, 'in_course' => $inCourse]),
                 'total_score' => $score->value,
             ]);
 
