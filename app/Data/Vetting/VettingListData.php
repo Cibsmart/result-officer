@@ -26,7 +26,7 @@ final class VettingListData extends Data
     {
         $graduands = $department->students()
             ->with('vettingEvent')
-            ->whereIn('status', [StudentStatus::FINAL_YEAR, StudentStatus::EXTRA_YEAR])
+            ->whereIn('status', StudentStatus::vettableStates())
             ->get();
 
         $faculty = $department->faculty;
