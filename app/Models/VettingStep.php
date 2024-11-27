@@ -22,6 +22,8 @@ final class VettingStep extends Model
             ->first();
 
         if ($vettingStep) {
+            VettingReport::clearFailedReportForStep($vettingStep);
+
             return $vettingStep;
         }
 
@@ -50,12 +52,19 @@ final class VettingStep extends Model
 
     public function updateStatus(VettingStatus $status): void
     {
-        if ($status === VettingStatus::PASSED && $this->failureReports()) {
+        if ($status === VettingStatus::PASSED) {
             VettingReport::clearFailedReportForStep($this);
         }
 
         $this->status = $status;
         $this->save();
+    }
+
+    public function failureReportExists(): bool
+    {
+        return $this->vettingReports()
+            ->where('status', VettingStatus::FAILED)
+            ->exists();
     }
 
     /** @return array{status: 'App\Enums\VettingStatus', type: 'App\Enums\VettingType'} */
@@ -65,12 +74,5 @@ final class VettingStep extends Model
             'status' => VettingStatus::class,
             'type' => VettingType::class,
         ];
-    }
-
-    private function failureReports(): bool
-    {
-        return $this->vettingReports()
-            ->where('status', VettingStatus::FAILED)
-            ->exists();
     }
 }

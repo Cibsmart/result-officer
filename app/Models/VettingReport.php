@@ -27,9 +27,16 @@ final class VettingReport extends Model
             ->where('vettable_id', $model->id)
             ->where('vettable_type', $vettableType)
             ->where('vetting_step_id', $vettingStep->id)
+            ->withTrashed()
             ->first();
 
         if ($vettingReport) {
+            $vettingReport->restore();
+
+            $vettingReport->message = $message;
+            $vettingReport->status = $vettingStatus;
+            $vettingReport->save();
+
             return $vettingReport;
         }
 
@@ -46,6 +53,10 @@ final class VettingReport extends Model
 
     public static function clearFailedReportForStep(VettingStep $vettingStep): void
     {
+        if (! $vettingStep->failureReportExists()) {
+            return;
+        }
+
         self::query()
             ->where('vetting_step_id', $vettingStep->id)
             ->where('status', VettingStatus::FAILED)
