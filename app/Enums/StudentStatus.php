@@ -17,7 +17,21 @@ enum StudentStatus: string
     case TRANSFERRED = 'transferred';
     case FINAL_YEAR = 'final';
     case EXTRA_YEAR = 'extra';
-    case CHECKED = 'checked';
+    case VETTING = 'vetting';
+    case VETTED = 'vetted';
     case CLEARED = 'cleared';
     case GRADUATED = 'graduated';
+
+    /** @return array<int, \App\Enums\StudentStatus> */
+    public static function vettableStates(): array
+    {
+        return [self::FINAL_YEAR, self::EXTRA_YEAR, self::VETTING, self::VETTED];
+    }
+
+    /** @return array<int, \App\Enums\StudentStatus> */
+    public static function clearableStates(): array
+    {
+        return [self::VETTED];
+    }
+
 }
