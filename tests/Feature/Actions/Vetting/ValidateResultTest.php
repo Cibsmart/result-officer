@@ -169,5 +169,5 @@ it('reports unchecked for student with registration without result', function ()
 
     $status = $validation->execute($student);
 
-    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED);
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED);
 });
