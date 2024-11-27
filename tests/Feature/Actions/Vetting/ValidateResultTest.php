@@ -5,6 +5,10 @@ declare(strict_types=1);
 use App\Actions\Vetting\ValidateResults;
 use App\Enums\VettingStatus;
 use App\Models\VettingReport;
+use Tests\Factories\RegistrationFactory;
+use Tests\Factories\SemesterEnrollmentFactory;
+use Tests\Factories\SessionEnrollmentFactory;
+use Tests\Factories\StudentFactory;
 use Tests\Factories\VettingEventFactory;
 
 use function Pest\Laravel\assertDatabaseCount;
@@ -137,4 +141,33 @@ it('reports all cases of tampered students results', function (): void {
     ]);
 
     assertDatabaseCount(VettingReport::class, 2);
+});
+
+it('reports unchecked for student without registration', function (): void {
+    $student = StudentFactory::new()->createOne();
+
+    VettingEventFactory::new()->for($student)->createOne();
+
+    $validation = new ValidateResults();
+
+    $status = $validation->execute($student);
+
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::UNCHECKED);
+});
+
+it('reports unchecked for student with registration without result', function (): void {
+    $student = StudentFactory::new()->createOne();
+
+    SessionEnrollmentFactory::new()->for($student)
+        ->has(SemesterEnrollmentFactory::new()
+            ->has(RegistrationFactory::new()))
+        ->createOne();
+
+    VettingEventFactory::new()->for($student)->createOne();
+
+    $validation = new ValidateResults();
+
+    $status = $validation->execute($student);
+
+    expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED);
 });

@@ -6,6 +6,7 @@ namespace App\Actions\Vetting;
 
 use App\Enums\VettingStatus;
 use App\Enums\VettingType;
+use App\Models\Registration;
 use App\Models\Result;
 use App\Models\SemesterEnrollment;
 use App\Models\Session;
@@ -18,7 +19,9 @@ final class ValidateResults extends ReportVettingStep
     {
         $this->createVettingStep($student, VettingType::VALIDATE_RESULTS);
 
-        $sessionEnrollments = $student->sessionEnrollments()->with(['session', 'semesterEnrollments.semester'])->get();
+        $sessionEnrollments = $student->sessionEnrollments()
+            ->with(['session', 'semesterEnrollments.semester'])
+            ->get();
 
         $passed = true;
         $status = VettingStatus::UNCHECKED;
@@ -53,17 +56,12 @@ final class ValidateResults extends ReportVettingStep
         foreach ($registrations as $registration) {
             $result = $registration->result;
 
-            if ($this->passCheck($result)) {
+            if ($result !== null && $this->passCheck($result)) {
                 continue;
             }
 
-            $code = $registration->course->code;
-            $semester = $semesterEnrollment->semester;
-
             $passed = false;
-            $message = "{$code} - {$session->name} {$semester->name} semester";
-
-            $this->report($result, $message);
+            $this->reportFailedCheck($registration, $semesterEnrollment, $session, $result);
         }
 
         return $passed;
@@ -82,5 +80,28 @@ final class ValidateResults extends ReportVettingStep
         return $result->getData() === $resultDetailValue
             && $resultDetailHash !== ''
             && Hash::check($resultDetailValue, $resultDetailHash);
+    }
+
+    private function reportFailedCheck(
+        Registration $registration,
+        SemesterEnrollment $semesterEnrollment,
+        Session $session,
+        ?Result $result,
+    ): void {
+        $code = $registration->course->code;
+        $semester = $semesterEnrollment->semester;
+
+        $message = "{$code} - {$session->name} {$semester->name} semester";
+
+        $model = $result;
+
+        if (is_null($result)) {
+            $model = $registration;
+            $message .= ' (no result)';
+        }
+
+        assert(! is_null($model));
+
+        $this->report($model, $message);
     }
 }
