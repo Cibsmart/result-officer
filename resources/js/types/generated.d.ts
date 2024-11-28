@@ -399,8 +399,6 @@ declare namespace App.Enums {
     | "transferred"
     | "final"
     | "extra"
-    | "vetting"
-    | "vetted"
     | "cleared"
     | "graduated";
   export type VettingEventStatus = "new" | "pending" | "vetting" | "failed" | "passed";

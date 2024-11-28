@@ -14,7 +14,7 @@ final class ClearStudent
     /** @throws \Exception */
     public function execute(Student $student): void
     {
-        if (! in_array($student->status, StudentStatus::clearableStates(), true)) {
+        if (! $student->canBeCleared()) {
             throw new Exception('Student has not been vetted and cannot be cleared');
         }
 
