@@ -26,10 +26,11 @@ final class VerifyFailedCourses extends ReportVettingStep
         }
 
         $failedCourses = $this->getFailedCourses($courses);
+        $sortedFailedCourses = $failedCourses->sortBy(['session', 'semester', 'course_code'])->values();
 
         $passed = true;
 
-        foreach ($failedCourses as $failedCourse) {
+        foreach ($sortedFailedCourses as $failedCourse) {
             $message = "{$failedCourse->courseCode} - {$failedCourse->session} {$failedCourse->semester} semester";
 
             $registration = Registration::query()->find($failedCourse->registrationId);
