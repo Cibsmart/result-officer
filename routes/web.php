@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\ClearanceController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Download\Courses\DownloadCoursesController;
 use App\Http\Controllers\Download\Courses\DownloadCoursesPageController;
@@ -124,6 +125,9 @@ Route::middleware(['auth'])->group(static function (): void {
         Route::get('{department?}', [VettingController::class, 'index'])->name('vetting.index');
         Route::get('create/{student}', [VettingController::class, 'create'])->name('vetting.create');
     });
+
+    Route::post('students/{student}/clearance', [ClearanceController::class, 'store'])
+        ->name('students.clearance.store');
 });
 
 require __DIR__ . '/auth.php';
