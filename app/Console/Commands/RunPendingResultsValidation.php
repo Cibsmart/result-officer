@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
+use App\Actions\Results\ValidatePendingResults;
 use Illuminate\Console\Command;
 
-class ValidateResults extends Command
+final class RunPendingResultsValidation extends Command
 {
     /**
      * The name and signature of the console command.
@@ -21,8 +24,10 @@ class ValidateResults extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(ValidatePendingResults $action): int
     {
-        //
+        $action->execute();
+
+        return Command::SUCCESS;
     }
 }
