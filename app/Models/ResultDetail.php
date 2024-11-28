@@ -13,11 +13,12 @@ final class ResultDetail extends Model
     /** @var array<int, string> */
     protected $hidden = ['data'];
 
-    /** @return array{data: 'hashed'} */
+    /** @return array{data: 'hashed', validate: 'boolean'} */
     protected function casts(): array
     {
         return [
             'data' => 'hashed',
+            'validate' => 'boolean',
         ];
     }
 }
