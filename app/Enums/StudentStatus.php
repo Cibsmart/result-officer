@@ -33,5 +33,4 @@ enum StudentStatus: string
     {
         return [self::VETTED];
     }
-
 }
