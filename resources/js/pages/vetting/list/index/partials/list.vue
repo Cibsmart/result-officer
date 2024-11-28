@@ -9,6 +9,10 @@ import axios from "axios";
 import { useToast } from "vue-toastification";
 import Card from "@/components/cards/card.vue";
 import CardHeading from "@/components/cards/cardHeading.vue";
+import Modal from "@/components/modal.vue";
+import PrimaryButton from "@/components/buttons/primaryButton.vue";
+import SecondaryButton from "@/components/buttons/secondaryButton.vue";
+import { useForm } from "@inertiajs/vue3";
 
 const props = defineProps<{
   data: App.Data.Vetting.VettingListData;
@@ -16,6 +20,23 @@ const props = defineProps<{
 
 const toast = useToast();
 
+const confirmingStudentClearance = ref(false);
+const clearanceStudent = ref<App.Data.Vetting.VettingStudentData>();
+
+const form = useForm({});
+
+const confirmStudentClearance = (student: App.Data.Vetting.VettingStudentData) => {
+  clearanceStudent.value = student;
+  confirmingStudentClearance.value = true;
+};
+const clearStudent = () => {
+  form.post(route("students.clearance.store", { student: clearanceStudent.value?.id }), {
+    preserveScroll: true,
+    onSuccess: () => closeModal(),
+  });
+};
+
+const closeModal = () => (confirmingStudentClearance.value = false);
 const showReport = ref(false);
 const currentStudent = ref<App.Data.Vetting.VettingStudentData>();
 const vettingSteps = ref<App.Data.Vetting.VettingStepListData>();
@@ -105,7 +126,8 @@ const openDrawer = (studentId: number) => {
                 <StudentRow
                   :index="index"
                   :student="student"
-                  @show-report="openDrawer" />
+                  @show-report="openDrawer"
+                  @show-clearance="confirmStudentClearance" />
               </template>
             </tbody>
           </table>
@@ -120,6 +142,35 @@ const openDrawer = (studentId: number) => {
       </EmptyState>
     </div>
   </div>
+
+  <Modal
+    :show="confirmingStudentClearance"
+    @close="closeModal">
+    <div class="p-6">
+      <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Clearance Confirmation</h2>
+
+      <p class="mt-1 text-base text-gray-600 dark:text-gray-300">
+        You are confirming that
+        <span class="font-bold">{{ clearanceStudent?.name }}</span>
+        with Registration Number
+        <span class="font-bold">{{ clearanceStudent?.registrationNumber }}</span>
+        has satisfy
+        <span class="font-bold">ALL</span> academic requirement for graduation.
+      </p>
+
+      <div class="mt-6 flex justify-end">
+        <SecondaryButton @click="closeModal"> Cancel</SecondaryButton>
+
+        <PrimaryButton
+          :class="{ 'opacity-25': form.processing }"
+          :disabled="form.processing"
+          class="ms-3"
+          @click="clearStudent">
+          Clear Student
+        </PrimaryButton>
+      </div>
+    </div>
+  </Modal>
 
   <Drawer
     :show="showReport"
