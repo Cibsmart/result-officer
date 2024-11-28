@@ -3,6 +3,7 @@ import { computed } from "vue";
 import PrimaryLinkSmall from "@/components/links/primaryLinkSmall.vue";
 import Badge from "@/components/badge.vue";
 import SecondaryButtonSmall from "@/components/buttons/secondaryButtonSmall.vue";
+import PrimaryButtonSmall from "@/components/buttons/primaryButtonSmall.vue";
 
 const props = defineProps<{
   index: number;
@@ -11,6 +12,7 @@ const props = defineProps<{
 
 defineEmits<{
   (e: "showReport", id: number): void;
+  (e: "showClearance", student: App.Data.Vetting.VettingStudentData): void;
 }>();
 
 const passed = computed(() => props.student.vettingStatus === "passed");
@@ -51,12 +53,11 @@ const vetted = computed(() => props.student.vettingStatus !== "pending");
 
     <td
       class="border-t border-gray-200 px-3 py-2 text-center text-sm text-gray-700 dark:border-gray-700 dark:text-gray-300">
-      <PrimaryLinkSmall
+      <PrimaryButtonSmall
         v-if="passed"
-        :href="route('students.clearance.store', { student: student.id })"
-        method="post">
+        @click="$emit('showClearance', student)">
         clear
-      </PrimaryLinkSmall>
+      </PrimaryButtonSmall>
 
       <PrimaryLinkSmall
         v-else
