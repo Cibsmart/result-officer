@@ -30,7 +30,7 @@ it('redirects back to the vetting page', function (): void {
 
     actingAs($user)->fromRoute('vetting.index')
         ->post(route('students.clearance.store', $student))
-        ->assertRedirect(route('vetting.index'));
+        ->assertRedirect(route('vetting.index', $student->department()));
 });
 
 it('redirect guest to login', function (): void {
