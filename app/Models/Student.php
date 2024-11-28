@@ -198,6 +198,10 @@ final class Student extends Model
             return false;
         }
 
+        if ($this->vettingEvent === null) {
+            return false;
+        }
+
         return $this->vettingEvent->status === VettingEventStatus::PASSED;
     }
 
