@@ -26,8 +26,7 @@ final class ResultFactory extends Factory
 
         return [
             'grade' => $grade->name,
-            'grade_point' => fn (array $attributes,
-            ) => $grade->point() * Registration::find($attributes['registration_id'])->credit_unit->value,
+            'grade_point' => $this->gradePoint(...),
             'registration_id' => RegistrationFactory::new(),
             'scores' => json_encode($scores),
             'total_score' => $score->value,
@@ -38,7 +37,16 @@ final class ResultFactory extends Factory
     {
         return $this->afterCreating(function (Result $result): void {
             $data = $result->getData();
-            $result->resultDetail()->create(['value' => $data, 'data' => $data, 'validate' => false]);
+            $result->resultDetail()->create(['value' => $data, 'data' => '', 'validate' => true]);
         });
+    }
+
+    /** @param array<string, string> $values */
+    private function gradePoint(array $values): int
+    {
+        $grade = Grade::from($values['grade']);
+        $registration = Registration::find($values['registration_id']);
+
+        return $grade->point() * $registration->credit_unit->value;
     }
 }
