@@ -135,7 +135,10 @@ final class Student extends Model
 
     public function department(): Department
     {
-        return $this->program->department;
+        $department = $this->program->department;
+        assert($department instanceof Department);
+
+        return $department;
     }
 
     /**
