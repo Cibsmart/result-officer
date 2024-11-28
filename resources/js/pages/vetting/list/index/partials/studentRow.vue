@@ -53,14 +53,15 @@ const vetted = computed(() => props.student.vettingStatus !== "pending");
       class="border-t border-gray-200 px-3 py-2 text-center text-sm text-gray-700 dark:border-gray-700 dark:text-gray-300">
       <PrimaryLinkSmall
         v-if="passed"
-        :href="route('vetting.create', { student: student.id })"
-        >clear
+        :href="route('students.clearance.store', { student: student.id })"
+        method="post">
+        clear
       </PrimaryLinkSmall>
 
       <PrimaryLinkSmall
         v-else
-        :href="route('vetting.create', { student: student.id })"
-        >vet
+        :href="route('vetting.create', { student: student.id })">
+        vet
       </PrimaryLinkSmall>
     </td>
   </tr>

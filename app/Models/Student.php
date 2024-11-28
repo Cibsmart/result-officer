@@ -133,6 +133,11 @@ final class Student extends Model
         return $this->belongsTo(Program::class);
     }
 
+    public function department(): Department
+    {
+        return $this->program->department;
+    }
+
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\SemesterEnrollment, \App\Models\SessionEnrollment, \App\Models\Student>
