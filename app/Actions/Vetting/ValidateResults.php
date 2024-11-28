@@ -10,7 +10,6 @@ use App\Models\Result;
 use App\Models\SemesterEnrollment;
 use App\Models\Session;
 use App\Models\Student;
-use Illuminate\Support\Facades\Hash;
 
 final class ValidateResults extends ReportVettingStep
 {
@@ -76,16 +75,14 @@ final class ValidateResults extends ReportVettingStep
 
     private function passCheck(Result $result): bool
     {
+        $resultData = $result->getData();
         $resultDetail = $result->resultDetail;
         $resultDetailValue = $resultDetail->value;
         $resultDetailHash = $resultDetail->data;
 
-        if ($resultDetail->validate) {
-            return $result->getData() === $resultDetailValue;
-        }
+        $validated = $resultDetail->validate === false && $resultDetailHash !== '';
+        $consistentData = $resultData === $resultDetailValue;
 
-        return $result->getData() === $resultDetailValue
-            && $resultDetailHash !== ''
-            && Hash::check($resultDetailValue, $resultDetailHash);
+        return $validated && $consistentData;
     }
 }
