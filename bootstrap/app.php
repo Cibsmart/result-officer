@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use App\Console\Commands\RunPendingResultsValidation;
 use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 
@@ -17,7 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withSchedule(function (Schedule $schedule): void {
-        $schedule->command(RunPendingResultsValidation::class)->everyThirtyMinutes();
+        $schedule->command('rp:results-validate')->everyThirtyMinutes();
     })
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [
