@@ -9,6 +9,7 @@ use App\Enums\Gender;
 use App\Enums\ProgramDuration;
 use App\Enums\RecordSource;
 use App\Enums\StudentStatus;
+use App\Enums\VettingEventStatus;
 use App\Values\DateValue;
 use App\Values\RegistrationNumber;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -189,6 +190,15 @@ final class Student extends Model
         }
 
         return StudentStatus::ACTIVE;
+    }
+
+    public function canBeCleared(): bool
+    {
+        if (! in_array($this->status, StudentStatus::vettableStates(), true)) {
+            return false;
+        }
+
+        return $this->vettingEvent->status === VettingEventStatus::PASSED;
     }
 
     /**
