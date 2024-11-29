@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Vetting;
 
 use App\Data\Department\DepartmentListData;
 use App\Data\Vetting\VettingListData;
+use App\Data\Vetting\VettingStepListData;
 use App\Models\Department;
 use App\Models\Student;
 use App\Models\User;
@@ -21,11 +22,14 @@ use function assert;
 
 final class VettingController
 {
-    public function index(?Department $department = null): Response
+    public function index(Request $request, ?Department $department = null): Response
     {
+        $student = Student::find($request->query('student'));
+
         return Inertia::render('vetting/list/index/page', new VettingIndexPage(
             departments: DepartmentListData::new(),
             data: fn () => $department ? VettingListData::fromModel($department) : null,
+            steps: fn () => $student ? VettingStepListData::from($student) : null,
         ));
     }
 
