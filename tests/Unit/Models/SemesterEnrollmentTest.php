@@ -11,6 +11,18 @@ use function Pest\Laravel\assertDatabaseHas;
 
 covers(SemesterEnrollment::class);
 
+it('computes the number of courses', function (): void {
+    $enrollment = SemesterEnrollmentFactory::new()
+        ->has(RegistrationFactory::new()
+            ->state(['credit_unit' => 3])
+            ->count(5),
+        )->createOne();
+
+    $count = $enrollment->courseCount();
+
+    expect($count)->toBe(5);
+});
+
 it('computes credit unit sum', function (): void {
     $enrollment = SemesterEnrollmentFactory::new()
         ->has(RegistrationFactory::new()
@@ -46,7 +58,7 @@ it('computes grade point average', function (): void {
 
     $gpa = $enrollment->gradePointAverage();
 
-    expect($gpa)->toBe(3000);
+    expect($gpa)->toBe(3.000);
 });
 
 it('returns zero grade point for registrations without result', function (): void {
@@ -68,13 +80,15 @@ it('updates the credit unit, grade point sum and average columns', function (): 
             ->has(ResultFactory::new()->state(['grade' => 'C'])),
         )->createOne();
 
+    $count = $enrollment->courseCount();
     $cus = $enrollment->creditUnitSum();
     $gps = $enrollment->gradePointSum();
-    $gpa = $enrollment->gradePointAverage();
+    $gpa = $enrollment->gradePointAverage() * 1000;
 
     $enrollment->updateSumsAndAverage();
 
     assertDatabaseHas(SemesterEnrollment::class, [
+        'course_count' => $count,
         'cus' => $cus,
         'gpa' => $gpa,
         'gps' => $gps,
