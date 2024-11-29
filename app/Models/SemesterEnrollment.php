@@ -85,7 +85,7 @@ final class SemesterEnrollment extends Model
     {
         return Attribute::make(
             get: static fn (int $value): float => $value / 1000,
-            set: static fn (float $value): int => (int) $value * 1000,
+            set: static fn (float $value): int => (int) ($value * 1000),
         );
     }
 }

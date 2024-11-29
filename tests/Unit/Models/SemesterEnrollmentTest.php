@@ -77,20 +77,20 @@ it('updates the credit unit, grade point sum and average columns', function (): 
         ->has(RegistrationFactory::new()
             ->state(['credit_unit' => 3])
             ->count(5)
-            ->has(ResultFactory::new()->state(['grade' => 'C'])),
+            ->has(ResultFactory::new()->sequence(['grade' => 'C'], ['grade' => 'D'])),
         )->createOne();
 
     $count = $enrollment->courseCount();
     $cus = $enrollment->creditUnitSum();
     $gps = $enrollment->gradePointSum();
-    $gpa = $enrollment->gradePointAverage() * 1000;
+    $gpa = $enrollment->gradePointAverage();
 
     $enrollment->updateSumsAndAverage();
 
     assertDatabaseHas(SemesterEnrollment::class, [
         'course_count' => $count,
         'cus' => $cus,
-        'gpa' => $gpa,
+        'gpa' => $gpa * 1000,
         'gps' => $gps,
         'id' => $enrollment->id,
     ]);
