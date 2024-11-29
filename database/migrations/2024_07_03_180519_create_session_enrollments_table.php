@@ -22,6 +22,10 @@ return new class extends Migration
             $table->foreignIdFor(Session::class)->constrained('academic_sessions');
             $table->foreignIdFor(Level::class)->constrained();
             $table->unsignedSmallInteger('year')->default(1);
+            $table->unsignedSmallInteger('cus')->default(0);
+            $table->unsignedSmallInteger('gps')->default(0);
+            $table->unsignedSmallInteger('gpas')->default(0);
+            $table->unsignedSmallInteger('cgpa')->default(0);
             $table->timestamps();
 
             $table->unique(['student_id', 'session_id']);
