@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\CumulativeComputationStrategy;
 use App\Enums\EntryMode;
 use App\Enums\Gender;
 use App\Enums\ProgramDuration;
@@ -24,28 +25,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 final class Student extends Model
 {
     use SoftDeletes;
-
-    /** @var array<int, string> */
-    protected $fillable = [
-        'registration_number',
-        'last_name',
-        'first_name',
-        'other_names',
-        'gender',
-        'date_of_birth',
-        'state_id',
-        'program_id',
-        'entry_session_id',
-        'entry_level_id',
-        'entry_mode',
-        'jamb_registration_number',
-        'online_id',
-        'email',
-        'local_government',
-        'phone_number',
-        'source',
-        'status',
-    ];
 
     /** @throws \Exception */
     public static function createFromRawStudent(RawStudent $rawStudent): self
@@ -205,6 +184,47 @@ final class Student extends Model
         return $this->vettingEvent->status === VettingEventStatus::PASSED;
     }
 
+    public function courseCount(): int
+    {
+        return $this->sessionEnrollments->sum('course_count');
+    }
+
+    public function creditUnitSum(): int
+    {
+        return $this->sessionEnrollments->sum('cus');
+    }
+
+    public function gradePointSum(): int
+    {
+        return $this->sessionEnrollments->sum('gps');
+    }
+
+    public function cumulativeGradePointAverageSum(): float
+    {
+        return $this->sessionEnrollments->sum('cgpa');
+    }
+
+    public function finalCumulativeGradePointAverage(): float
+    {
+        $institution = Institution::first();
+
+        if ($institution->strategy === CumulativeComputationStrategy::SEMESTER) {
+            return round($this->cumulativeGradePointAverageSum() / $this->sessionEnrollments->count(), 3);
+        }
+
+        return round($this->gradePointSum() / $this->creditUnitSum(), 3);
+    }
+
+    public function updateCountSumAndAverages(): void
+    {
+        $this->cus = $this->creditUnitSum();
+        $this->gps = $this->gradePointSum();
+        $this->cgpas = $this->cumulativeGradePointAverageSum();
+        $this->fcgpa = $this->finalCumulativeGradePointAverage();
+        $this->course_count = $this->courseCount();
+        $this->save();
+    }
+
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return array{date_of_birth: 'date', entry_mode: 'App\Enums\EntryMode', gender: 'App\Enums\Gender', source: 'App\Enums\RecordSource', status: 'App\Enums\StudentStatus'}
@@ -269,6 +289,24 @@ final class Student extends Model
     {
         return Attribute::make(
             set: static fn (string $value): string => strtoupper($value),
+        );
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<int, float> */
+    protected function cgpas(): Attribute
+    {
+        return Attribute::make(
+            get: static fn (int $value): float => $value / 1000,
+            set: static fn (float $value): int => (int) ($value * 1000),
+        );
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<int, float> */
+    protected function fcgpa(): Attribute
+    {
+        return Attribute::make(
+            get: static fn (int $value): float => $value / 1000,
+            set: static fn (float $value): int => (int) ($value * 1000),
         );
     }
 
