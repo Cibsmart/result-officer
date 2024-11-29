@@ -12,6 +12,7 @@ final class DatabaseSeeder extends Seeder
     {
         $this->call([
             UserSeeder::class,
+            InstitutionSeeder::class,
             ProgramTypeSeeder::class,
             SessionSeeder::class,
             SemesterSeeder::class,
