@@ -114,9 +114,10 @@ const clearStudent = () => {
 
             <tbody>
               <template
-                v-for="student in data.graduands"
+                v-for="(student, index) in data.graduands"
                 :key="student.id">
                 <StudentRow
+                  :index="index"
                   :student="student"
                   @show-report="openDrawer"
                   @show-clearance="confirmStudentClearance" />
