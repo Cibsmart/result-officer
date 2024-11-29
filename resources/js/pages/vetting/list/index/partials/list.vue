@@ -5,56 +5,49 @@ import IconLink from "@/components/links/iconLink.vue";
 import StudentRow from "@/pages/vetting/list/index/partials/studentRow.vue";
 import Drawer from "@/components/drawer.vue";
 import Disclosure from "@/components/baseDisclosure.vue";
-import axios from "axios";
-import { useToast } from "vue-toastification";
 import Card from "@/components/cards/card.vue";
 import CardHeading from "@/components/cards/cardHeading.vue";
 import Modal from "@/components/modal.vue";
 import PrimaryButton from "@/components/buttons/primaryButton.vue";
 import SecondaryButton from "@/components/buttons/secondaryButton.vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 
 const props = defineProps<{
   data: App.Data.Vetting.VettingListData;
+  steps: App.Data.Vetting.VettingStepListData;
 }>();
 
-const toast = useToast();
-
+const showReport = ref(false);
 const confirmingStudentClearance = ref(false);
 const clearanceStudent = ref<App.Data.Vetting.VettingStudentData>();
+const registrationNumber = ref("");
 
-const form = useForm({});
+const hasRows = computed(() => props.data.graduands.length > 0);
 
+const clearForm = useForm({});
+const viewForm = useForm({ student: 0 });
+
+const closeDrawer = () => (showReport.value = false);
+const openDrawer = (student: App.Data.Vetting.VettingStudentData) => {
+  registrationNumber.value = student.registrationNumber;
+
+  viewForm.student = student.id;
+
+  viewForm.get(usePage().url, { only: ["steps"], preserveScroll: true, preserveState: true });
+
+  showReport.value = true;
+};
+
+const closeModal = () => (confirmingStudentClearance.value = false);
 const confirmStudentClearance = (student: App.Data.Vetting.VettingStudentData) => {
   clearanceStudent.value = student;
   confirmingStudentClearance.value = true;
 };
 const clearStudent = () => {
-  form.post(route("students.clearance.store", { student: clearanceStudent.value?.id }), {
+  clearForm.post(route("students.clearance.store", { student: clearanceStudent.value?.id }), {
     preserveScroll: true,
     onSuccess: () => closeModal(),
   });
-};
-
-const closeModal = () => (confirmingStudentClearance.value = false);
-const showReport = ref(false);
-const currentStudent = ref<App.Data.Vetting.VettingStudentData>();
-const vettingSteps = ref<App.Data.Vetting.VettingStepListData>();
-
-const hasRows = computed(() => props.data.graduands.length > 0);
-
-const closeDrawer = () => (showReport.value = false);
-const openDrawer = (studentId: number) => {
-  currentStudent.value = props.data.graduands.find((student) => student.id === studentId);
-
-  axios
-    .get(route("api.vetting_steps.index", { student: studentId }))
-    .then((response) => {
-      vettingSteps.value = response.data;
-    })
-    .catch((error) => toast(error.message));
-
-  showReport.value = true;
 };
 </script>
 
@@ -121,10 +114,9 @@ const openDrawer = (studentId: number) => {
 
             <tbody>
               <template
-                v-for="(student, index) in data.graduands"
+                v-for="student in data.graduands"
                 :key="student.id">
                 <StudentRow
-                  :index="index"
                   :student="student"
                   @show-report="openDrawer"
                   @show-clearance="confirmStudentClearance" />
@@ -162,8 +154,8 @@ const openDrawer = (studentId: number) => {
         <SecondaryButton @click="closeModal"> Cancel</SecondaryButton>
 
         <PrimaryButton
-          :class="{ 'opacity-25': form.processing }"
-          :disabled="form.processing"
+          :class="{ 'opacity-25': clearForm.processing }"
+          :disabled="clearForm.processing"
           class="ms-3"
           @click="clearStudent">
           Clear Student
@@ -174,12 +166,12 @@ const openDrawer = (studentId: number) => {
 
   <Drawer
     :show="showReport"
-    :title="currentStudent?.registrationNumber"
+    :title="registrationNumber"
     size="medium"
     sub="Vetting Report"
     @close="closeDrawer">
     <div
-      v-for="vettingStep in vettingSteps?.items"
+      v-for="vettingStep in steps?.items"
       :key="vettingStep.id">
       <Disclosure
         :badge="vettingStep.status"
