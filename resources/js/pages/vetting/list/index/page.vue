@@ -12,6 +12,7 @@ import List from "@/pages/vetting/list/index/partials/list.vue";
 const props = defineProps<{
   departments: App.Data.Department.DepartmentListData;
   data: App.Data.Vetting.VettingListData;
+  steps: App.Data.Vetting.VettingStepListData;
 }>();
 
 const hasData = computed(() => props.data !== null);
@@ -34,7 +35,9 @@ const pages: BreadcrumbItem[] = [
     </BaseSection>
 
     <BaseSection v-if="hasData">
-      <List :data="data" />
+      <List
+        :data="data"
+        :steps="steps" />
     </BaseSection>
   </BasePage>
 </template>
