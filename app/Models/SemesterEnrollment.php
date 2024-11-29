@@ -49,4 +49,27 @@ final class SemesterEnrollment extends Model
     {
         return $this->hasMany(Registration::class);
     }
+
+    public function creditUnitSum(): int
+    {
+        return (int) $this->registrations->sum('credit_unit.value');
+    }
+
+    public function gradePointSum(): int
+    {
+        return (int) $this->registrations->sum('result.grade_point');
+    }
+
+    public function gradePointAverage(): int
+    {
+        return (int) round($this->gradePointSum() / $this->creditUnitSum(), 3) * 1000;
+    }
+
+    public function updateSumsAndAverage(): void
+    {
+        $this->cus = $this->creditUnitSum();
+        $this->gps = $this->gradePointSum();
+        $this->gpa = $this->gradePointAverage();
+        $this->save();
+    }
 }
