@@ -39,6 +39,7 @@ return new class extends Migration
             $table->string('status')->default(StudentStatus::NEW->value);
             $table->string('online_id')->nullable();
             $table->string('source')->default(RecordSource::LEGACY->value);
+            $table->unsignedSmallInteger('fcgpa')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
