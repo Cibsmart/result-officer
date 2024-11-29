@@ -467,5 +467,6 @@ declare namespace App.ViewModels.Vetting {
   export type VettingIndexPage = {
     departments: App.Data.Department.DepartmentListData;
     data: App.Data.Vetting.VettingListData;
+    steps: App.Data.Vetting.VettingStepListData;
   };
 }
