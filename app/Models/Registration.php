@@ -26,6 +26,8 @@ final class Registration extends Model
         'course_status',
     ];
 
+    protected $with = ['result'];
+
     public static function createFromRawRegistration(
         RawRegistration $rawRegistration,
         SemesterEnrollment $semesterEnrollment,
