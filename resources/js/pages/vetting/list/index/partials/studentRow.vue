@@ -6,6 +6,7 @@ import SecondaryButtonSmall from "@/components/buttons/secondaryButtonSmall.vue"
 import PrimaryButtonSmall from "@/components/buttons/primaryButtonSmall.vue";
 
 const props = defineProps<{
+  index: number;
   student: App.Data.Vetting.VettingStudentData;
 }>();
 
@@ -22,7 +23,7 @@ const vetted = computed(() => props.student.vettingStatus !== "pending");
   <tr>
     <td
       class="hidden border-t border-gray-200 px-3 py-2 text-center text-sm text-gray-700 lg:table-cell dark:border-gray-700 dark:text-gray-300">
-      {{ student.id }}
+      {{ index + 1 }}
     </td>
 
     <td class="relative border-t border-gray-200 py-2 text-left text-sm dark:border-gray-700">
