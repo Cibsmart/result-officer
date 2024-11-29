@@ -6,12 +6,11 @@ import SecondaryButtonSmall from "@/components/buttons/secondaryButtonSmall.vue"
 import PrimaryButtonSmall from "@/components/buttons/primaryButtonSmall.vue";
 
 const props = defineProps<{
-  index: number;
   student: App.Data.Vetting.VettingStudentData;
 }>();
 
 defineEmits<{
-  (e: "showReport", id: number): void;
+  (e: "showReport", student: App.Data.Vetting.VettingStudentData): void;
   (e: "showClearance", student: App.Data.Vetting.VettingStudentData): void;
 }>();
 
@@ -23,7 +22,7 @@ const vetted = computed(() => props.student.vettingStatus !== "pending");
   <tr>
     <td
       class="hidden border-t border-gray-200 px-3 py-2 text-center text-sm text-gray-700 lg:table-cell dark:border-gray-700 dark:text-gray-300">
-      {{ index + 1 }}
+      {{ student.id }}
     </td>
 
     <td class="relative border-t border-gray-200 py-2 text-left text-sm dark:border-gray-700">
@@ -44,7 +43,7 @@ const vetted = computed(() => props.student.vettingStatus !== "pending");
       class="border-t border-gray-200 px-3 py-2 text-center text-sm text-gray-700 dark:border-gray-700 dark:text-gray-300">
       <SecondaryButtonSmall
         v-if="vetted"
-        @click="$emit('showReport', student.id)">
+        @click="$emit('showReport', student)">
         view
       </SecondaryButtonSmall>
 
