@@ -37,7 +37,7 @@ final class ResultFactory extends Factory
     {
         return $this->afterCreating(function (Result $result): void {
             $data = $result->getData();
-            $result->resultDetail()->create(['value' => $data, 'data' => '', 'validate' => true]);
+            $result->resultDetail()->create(['value' => $data, 'data' => $data, 'validate' => false]);
         });
     }
 
