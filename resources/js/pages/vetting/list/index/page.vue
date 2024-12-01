@@ -31,7 +31,7 @@ const pages: BreadcrumbItem[] = [
 
   <BasePage>
     <BaseSection>
-      <VettingForm :departments="departments.departments" />
+      <VettingForm :departments="departments.data" />
     </BaseSection>
 
     <BaseSection v-if="hasData">

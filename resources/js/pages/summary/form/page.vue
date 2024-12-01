@@ -28,7 +28,7 @@ const pages: BreadcrumbItem[] = [
   <BasePage>
     <BaseSection>
       <ResultSummaryForm
-        :departments="department.departments"
+        :departments="department.data"
         :levels="level.levels"
         :sessions="session.sessions" />
     </BaseSection>

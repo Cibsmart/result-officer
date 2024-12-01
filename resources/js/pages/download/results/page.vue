@@ -55,14 +55,14 @@ const tabs: TabItem[] = [
 
         <BaseTabPanel>
           <DepartmentSessionLevel
-            :departments="departments.departments"
+            :departments="departments.data"
             :levels="levels.levels"
             :sessions="sessions.sessions" />
         </BaseTabPanel>
 
         <BaseTabPanel>
           <DepartmentSessionSemester
-            :departments="departments.departments"
+            :departments="departments.data"
             :semesters="semesters.semesters"
             :sessions="sessions.sessions" />
         </BaseTabPanel>
