@@ -26,6 +26,7 @@ use App\Http\Controllers\Imports\CancelImportEventController;
 use App\Http\Controllers\Imports\ContinueImportEventController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Reports\CompositeSheetController;
+use App\Http\Controllers\Reports\DepartmentClearedController;
 use App\Http\Controllers\Result\ViewStudentResultController;
 use App\Http\Controllers\Summary\DepartmentResultSummaryController;
 use App\Http\Controllers\Vetting\VettingController;
@@ -128,6 +129,9 @@ Route::middleware(['auth'])->group(static function (): void {
 
     Route::post('students/{student}/clearance', [ClearanceController::class, 'store'])
         ->name('students.clearance.store');
+
+    Route::get('department/cleared/students/{department?}', [DepartmentClearedController::class, 'index'])
+        ->name('department.cleared.index');
 });
 
 require __DIR__ . '/auth.php';
