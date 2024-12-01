@@ -14,7 +14,8 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScriptType;
 final class VettingIndexPage extends Data
 {
     public function __construct(
-        public readonly DepartmentListData $departments,
+        #[TypeScriptType(DepartmentListData::class)]
+        public readonly Closure $departments,
         #[TypeScriptType(VettingListData::class)]
         public readonly Closure $data,
         #[TypeScriptType(VettingStepListData::class)]
