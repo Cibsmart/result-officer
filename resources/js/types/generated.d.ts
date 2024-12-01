@@ -45,7 +45,7 @@ declare namespace App.Data.Department {
     name: string;
   };
   export type DepartmentListData = {
-    departments: Array<App.Data.Department.DepartmentData>;
+    data: Array<App.Data.Department.DepartmentData>;
   };
 }
 declare namespace App.Data.Download {

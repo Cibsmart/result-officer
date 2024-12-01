@@ -9,10 +9,10 @@ test('department list dto is correct', function (): void {
     $count = 5;
     DepartmentFactory::new()->active()->count($count)->create();
 
-    $data = DepartmentListData::new();
+    $departments = DepartmentListData::new();
 
-    expect($data)->toBeInstanceOf(DepartmentListData::class)
-        ->and($data->departments->count())->toEqual($count + 1);
+    expect($departments)->toBeInstanceOf(DepartmentListData::class)
+        ->and($departments->data->count())->toEqual($count + 1);
 });
 
 test('department list dto contains only active department', function (): void {
@@ -20,8 +20,8 @@ test('department list dto contains only active department', function (): void {
     DepartmentFactory::new()->active()->count($count)->create();
     DepartmentFactory::new()->count($count)->create();
 
-    $data = DepartmentListData::new();
+    $departments = DepartmentListData::new();
 
-    expect($data)->toBeInstanceOf(DepartmentListData::class)
-        ->and($data->departments->count())->toEqual($count + 1);
+    expect($departments)->toBeInstanceOf(DepartmentListData::class)
+        ->and($departments->data->count())->toEqual($count + 1);
 });

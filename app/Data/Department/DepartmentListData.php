@@ -13,7 +13,7 @@ final class DepartmentListData extends Data
 {
     public function __construct(
         /** @var \Illuminate\Support\Collection<int, \App\Data\Department\DepartmentData> */
-        public readonly Collection $departments,
+        public readonly Collection $data,
     ) {
     }
 
@@ -22,7 +22,7 @@ final class DepartmentListData extends Data
         $default = new DepartmentData(id: 0, name: 'Select Department');
 
         return new self(
-            departments: DepartmentData::collect(
+            data: DepartmentData::collect(
                 Department::query()
                     ->tap(new ActiveScope())
                     ->orderBy('name')
