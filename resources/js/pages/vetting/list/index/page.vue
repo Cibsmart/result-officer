@@ -6,8 +6,8 @@ import BaseHeader from "@/layouts/main/partials/baseHeader.vue";
 import Breadcrumb from "@/components/breadcrumb.vue";
 import BasePage from "@/layouts/main/partials/basePage.vue";
 import BaseSection from "@/layouts/main/partials/baseSection.vue";
-import GraduationForm from "@/pages/vetting/list/index/partials/form.vue";
-import List from "@/pages/vetting/list/index/partials/list.vue";
+import VettingForm from "@/pages/vetting/list/index/partials/vettingForm.vue";
+import StudentList from "@/pages/vetting/list/index/partials/studentList.vue";
 
 const props = defineProps<{
   departments: App.Data.Department.DepartmentListData;
@@ -31,11 +31,11 @@ const pages: BreadcrumbItem[] = [
 
   <BasePage>
     <BaseSection>
-      <GraduationForm :departments="departments.departments" />
+      <VettingForm :departments="departments.departments" />
     </BaseSection>
 
     <BaseSection v-if="hasData">
-      <List
+      <StudentList
         :data="data"
         :steps="steps" />
     </BaseSection>
