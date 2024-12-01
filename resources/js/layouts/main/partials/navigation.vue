@@ -70,7 +70,11 @@ const navigation: NavigationItem[] = [
     icon: ChartPieIcon,
     current: false,
     children: [
-      { name: "Cleared", href: route("composite.form"), current: route().current("composite.form") },
+      {
+        name: "Cleared",
+        href: route("department.cleared.index"),
+        current: route().current("department.cleared.index"),
+      },
       { name: "Composite", href: route("composite.form"), current: route().current("composite.form") },
     ],
   },
