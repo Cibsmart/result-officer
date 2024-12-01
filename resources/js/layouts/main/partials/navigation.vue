@@ -6,7 +6,7 @@ import {
   HomeIcon,
   FolderIcon,
   ChartPieIcon,
-  AcademicCapIcon,
+  DocumentCheckIcon,
   AdjustmentsHorizontalIcon,
 } from "@heroicons/vue/24/outline";
 import { Link, usePage } from "@inertiajs/vue3";
@@ -60,23 +60,19 @@ const navigation: NavigationItem[] = [
   {
     name: "Vetting",
     href: "#",
-    icon: AcademicCapIcon,
+    icon: DocumentCheckIcon,
     current: false,
     children: [{ name: "List", href: route("vetting.index"), current: route().current("vetting.index") }],
-  },
-  {
-    name: "Graduation",
-    href: "#",
-    icon: AcademicCapIcon,
-    current: false,
-    children: [{ name: "List", href: "#", current: false }],
   },
   {
     name: "Reports",
     href: "#",
     icon: ChartPieIcon,
     current: false,
-    children: [{ name: "Composite", href: route("composite.form"), current: route().current("composite.form") }],
+    children: [
+      { name: "Cleared", href: route("composite.form"), current: route().current("composite.form") },
+      { name: "Composite", href: route("composite.form"), current: route().current("composite.form") },
+    ],
   },
 ];
 </script>
