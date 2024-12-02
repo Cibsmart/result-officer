@@ -50,7 +50,7 @@ const tabs: TabItem[] = [
 
         <BaseTabPanel>
           <DepartmentSession
-            :departments="department.departments"
+            :departments="department.data"
             :sessions="session.sessions" />
         </BaseTabPanel>
 
