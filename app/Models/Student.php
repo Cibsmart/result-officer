@@ -146,11 +146,7 @@ final class Student extends Model
 
     public function updateStatus(StudentStatus $status): void
     {
-        if ($this->status === StudentStatus::GRADUATED) {
-            return;
-        }
-
-        if ($this->status === $status) {
+        if ($this->status === StudentStatus::GRADUATED || $this->status === $status) {
             return;
         }
 
@@ -173,11 +169,7 @@ final class Student extends Model
 
     public function canBeCleared(): bool
     {
-        if (! in_array($this->status, StudentStatus::vettableStates(), true)) {
-            return false;
-        }
-
-        if ($this->vettingEvent === null) {
+        if (! in_array($this->status, StudentStatus::vettableStates(), true) || $this->vettingEvent === null) {
             return false;
         }
 
@@ -259,17 +251,13 @@ final class Student extends Model
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
     protected function lastName(): Attribute
     {
-        return Attribute::make(
-            set: static fn (string $value): string => strtoupper($value),
-        );
+        return Attribute::make(set: static fn (string $value): string => strtoupper($value));
     }
 
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
     protected function firstName(): Attribute
     {
-        return Attribute::make(
-            set: static fn (string $value): string => strtoupper($value),
-        );
+        return Attribute::make(set: static fn (string $value): string => strtoupper($value));
     }
 
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
@@ -283,9 +271,7 @@ final class Student extends Model
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
     protected function email(): Attribute
     {
-        return Attribute::make(
-            set: static fn (string $value): string => strtolower($value),
-        );
+        return Attribute::make(set: static fn (string $value): string => strtolower($value));
     }
 
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
