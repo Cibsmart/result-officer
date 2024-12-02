@@ -31,6 +31,7 @@ final class VettingReport extends Model
             ->first();
 
         if ($vettingReport) {
+            assert($vettingReport instanceof self);
             $vettingReport->restore();
 
             $vettingReport->message = $message;
