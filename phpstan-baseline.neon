@@ -125,6 +125,20 @@ parameters:
 			count: 1
 			path: app/Models/VettingStep.php
 
+		-
+			message: "#^Call to an undefined method Inertia\\\\Testing\\\\AssertableInertia\\:\\:hasData\\(\\)\\.$#"
+			count: 2
+			path: app/Providers/TestingServiceProvider.php
+
+		-
+			message: "#^Call to an undefined method Inertia\\\\Testing\\\\AssertableInertia\\:\\:hasDataList\\(\\)\\.$#"
+			count: 1
+			path: app/Providers/TestingServiceProvider.php
+
+		-
+			message: "#^Call to protected method prop\\(\\) of class Illuminate\\\\Testing\\\\Fluent\\\\AssertableJson\\.$#"
+			count: 2
+			path: app/Providers/TestingServiceProvider.php
 
 		-
 			message: "#^Method App\\\\Services\\\\Api\\\\PortalServiceFactory\\:\\:resolve\\(\\) return type with generic interface App\\\\Contracts\\\\PortalService does not specify its types\\: T$#"
