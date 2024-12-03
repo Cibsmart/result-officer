@@ -5,7 +5,11 @@ declare namespace App.Data.Cleared {
     registrationNumber: string;
     gender: App.Enums.Gender;
     status: App.Enums.StudentStatus;
+    fcgpa: string;
     dateCleared: string;
+  };
+  export type StudentListData = {
+    data: Array<App.Data.Cleared.StudentData>;
   };
 }
 declare namespace App.Data.Composite {
@@ -448,6 +452,10 @@ declare namespace App.ViewModels.Downloads {
   };
 }
 declare namespace App.ViewModels.Reports {
+  export type ClearedIndexPageData = {
+    departments: App.Data.Department.DepartmentListData;
+    students: App.Data.Cleared.StudentListData;
+  };
   export type CompositeFormPage = {
     program: App.Data.Program.ProgramListData;
     semester: App.Data.Semester.SemesterListData;
