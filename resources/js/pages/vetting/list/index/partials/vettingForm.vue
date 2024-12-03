@@ -27,7 +27,7 @@ const submit = () => {
     <form
       class="mt-6 space-y-6"
       @submit.prevent="submit">
-      <div class="flex w-full items-end space-x-4">
+      <div class="flex w-full items-start space-x-4">
         <div class="flex-1">
           <InputLabel
             for="department"
@@ -44,8 +44,14 @@ const submit = () => {
             class="mt-2" />
         </div>
 
-        <div class="mb-1">
-          <PrimaryButton :disabled="form.processing">View</PrimaryButton>
+        <div class="flex-col">
+          <div>&nbsp;</div>
+
+          <PrimaryButton
+            :disabled="form.processing"
+            class="mt-1"
+            >View</PrimaryButton
+          >
         </div>
       </div>
     </form>
