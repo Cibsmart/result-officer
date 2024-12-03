@@ -130,8 +130,10 @@ Route::middleware(['auth'])->group(static function (): void {
     Route::post('students/{student}/clearance', [ClearanceController::class, 'store'])
         ->name('students.clearance.store');
 
-    Route::get('department/cleared/students/{department?}', [DepartmentClearedController::class, 'index'])
+    Route::get('department/cleared/students/{department?}/{year?}', [DepartmentClearedController::class, 'index'])
         ->name('department.cleared.index');
+    Route::post('department/cleared/students', [DepartmentClearedController::class, 'store'])
+        ->name('department.cleared.store');
 });
 
 require __DIR__ . '/auth.php';
