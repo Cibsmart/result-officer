@@ -1,3 +1,13 @@
+declare namespace App.Data.Cleared {
+  export type StudentData = {
+    id: number;
+    name: string;
+    registrationNumber: string;
+    gender: App.Enums.Gender;
+    status: App.Enums.StudentStatus;
+    dateCleared: string;
+  };
+}
 declare namespace App.Data.Composite {
   export type CompositeCourseData = {
     code: string;
