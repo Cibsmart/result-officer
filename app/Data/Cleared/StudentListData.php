@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Data\Cleared;
 
+use App\Enums\StudentStatus;
 use App\Models\Department;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
 
@@ -19,7 +21,10 @@ final class StudentListData extends Data
     public static function fromModel(Department $department, int $year): self
     {
         $students = $department->students()
-            ->whereRelation('statusChangeEvents', 'status', 'cleared')
+            ->whereHas('statusChangeEvents', function (Builder $query) use ($year): void {
+                $query->where('status', StudentStatus::CLEARED)
+                    ->whereYear('date', $year);
+            })
             ->where('students.status', 'cleared')
             ->get();
 
