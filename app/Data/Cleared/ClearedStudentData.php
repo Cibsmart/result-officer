@@ -28,12 +28,18 @@ final class ClearedStudentData extends Data
             ->where('status', StudentStatus::CLEARED)
             ->first();
 
+        $gender = $student->gender;
+        assert($gender instanceof Gender);
+
+        $status = $student->status;
+        assert($status instanceof StudentStatus);
+
         return new self(
             id: $student->id,
             name: $student->name,
             registrationNumber: $student->registration_number,
-            gender: $student->gender,
-            status: $student->status,
+            gender: $gender,
+            status: $status,
             fcgpa: number_format($student->fcgpa, 2),
             dateCleared: $clearEvent->date->format('jS M, Y'),
         );
