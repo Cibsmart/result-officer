@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Data\Cleared;
 
+use App\Data\Department\DepartmentData;
+use App\Data\Faculty\FacultyData;
 use App\Enums\StudentStatus;
 use App\Models\Department;
+use App\Models\Faculty;
 use App\Models\StatusChangeEvent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
@@ -14,6 +17,8 @@ use Spatie\LaravelData\Data;
 final class ClearedStudentListData extends Data
 {
     public function __construct(
+        public readonly FacultyData $faculty,
+        public readonly DepartmentData $department,
         /** @var \Illuminate\Support\Collection<int, \App\Data\Cleared\ClearedStudentData> */
         public readonly Collection $data,
     ) {
@@ -21,7 +26,7 @@ final class ClearedStudentListData extends Data
 
     public static function fromModel(Department $department, int $year): self
     {
-        $students = $department->students()
+        $clearedStudents = $department->students()
             ->whereHas('statusChangeEvents', function (Builder $query) use ($year): void {
                 $query->where('status', StudentStatus::CLEARED)
                     ->whereYear('date', $year);
@@ -35,6 +40,13 @@ final class ClearedStudentListData extends Data
             )
             ->get();
 
-        return new self(data: ClearedStudentData::collect($students));
+        $faculty = $department->faculty;
+        assert($faculty instanceof Faculty);
+
+        return new self(
+            faculty: FacultyData::fromModel($faculty),
+            department: DepartmentData::fromModel($department),
+            data: ClearedStudentData::collect($clearedStudents),
+        );
     }
 }
