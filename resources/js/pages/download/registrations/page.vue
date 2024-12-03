@@ -34,11 +34,11 @@ const pages: BreadcrumbItem[] = [
 ];
 
 const tabs: TabItem[] = [
-  { name: "By Registration Number" },
-  { name: "By Dept and Entry Session" },
-  { name: "By Dept Session and Level" },
-  { name: "By Dept Session and Semester" },
-  { name: "By Session and Course" },
+  { name: "By Reg. No" },
+  { name: "By Dept & Entry Session" },
+  { name: "By Dept Session & Level" },
+  { name: "By Dept Session & Semester" },
+  { name: "By Session & Course" },
 ];
 </script>
 

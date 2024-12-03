@@ -29,40 +29,48 @@ const submit = () => {
     <form
       class="mt-6 space-y-6"
       @submit.prevent="submit">
-      <div>
-        <InputLabel
-          for="department"
-          value="Department" />
+      <div class="w-full items-start md:flex md:space-x-4">
+        <div class="flex-1">
+          <InputLabel
+            for="department"
+            value="Department" />
 
-        <SelectInput
-          id="department"
-          v-model="form.department"
-          :items="departments"
-          class="mt-1 block w-full" />
+          <SelectInput
+            id="department"
+            v-model="form.department"
+            :items="departments"
+            class="mt-1 block w-full" />
 
-        <InputError
-          :message="form.errors.department"
-          class="mt-2" />
-      </div>
+          <InputError
+            :message="form.errors.department"
+            class="mt-2" />
+        </div>
 
-      <div>
-        <InputLabel
-          for="session"
-          value="Entry Session" />
+        <div class="flex-1">
+          <InputLabel
+            for="session"
+            value="Entry Session" />
 
-        <SelectInput
-          id="session"
-          v-model="form.session"
-          :items="sessions"
-          class="mt-1 block w-full" />
+          <SelectInput
+            id="session"
+            v-model="form.session"
+            :items="sessions"
+            class="mt-1 block w-full" />
 
-        <InputError
-          :message="form.errors.session"
-          class="mt-2" />
-      </div>
+          <InputError
+            :message="form.errors.session"
+            class="mt-2" />
+        </div>
 
-      <div>
-        <PrimaryButton :disabled="form.processing">Download</PrimaryButton>
+        <div class="flex-col">
+          <div class="sm:hidden md:block">&nbsp;</div>
+
+          <PrimaryButton
+            :disabled="form.processing"
+            class="mt-1">
+            Download
+          </PrimaryButton>
+        </div>
       </div>
     </form>
   </BaseFormSection>
