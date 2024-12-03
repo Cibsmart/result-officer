@@ -12,6 +12,7 @@ import DepartmentSessionSemester from "@/pages/download/registrations/tabs/depar
 import SessionCourse from "@/pages/download/registrations/tabs/sessionCourse.vue";
 import BaseTabPanel from "@/components/tabs/baseTabPanel.vue";
 import ImportEvents from "@/pages/download/components/importEvents.vue";
+import DepartmentEntrySession from "@/pages/download/registrations/tabs/departmentEntrySession.vue";
 
 defineProps<{
   departments: App.Data.Department.DepartmentListData;
@@ -34,8 +35,9 @@ const pages: BreadcrumbItem[] = [
 
 const tabs: TabItem[] = [
   { name: "By Registration Number" },
-  { name: "By Department Session and Level" },
-  { name: "By Department Session and Semester" },
+  { name: "By Dept and Entry Session" },
+  { name: "By Dept Session and Level" },
+  { name: "By Dept Session and Semester" },
   { name: "By Session and Course" },
 ];
 </script>
@@ -54,6 +56,12 @@ const tabs: TabItem[] = [
         :tabs="tabs">
         <BaseTabPanel>
           <RegistrationNumber />
+        </BaseTabPanel>
+
+        <BaseTabPanel>
+          <DepartmentEntrySession
+            :departments="departments.data"
+            :sessions="sessions.sessions" />
         </BaseTabPanel>
 
         <BaseTabPanel>
