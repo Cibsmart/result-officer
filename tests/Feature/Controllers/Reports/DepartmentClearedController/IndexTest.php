@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Data\Cleared\StudentListData;
+use App\Data\Cleared\ClearedStudentListData;
 use App\Data\Department\DepartmentListData;
 use Inertia\Testing\AssertableInertia;
 use Tests\Factories\DepartmentFactory;
@@ -54,7 +54,7 @@ it('passes cleared students data to the view when department and year parameter 
         'department' => $department,
         'year' => $year,
     ]))
-        ->assertHasDataList('students', StudentListData::fromModel($department, $year));
+        ->assertHasDataList('students', ClearedStudentListData::fromModel($department, $year));
 });
 
 it('fails when supplied invalid department parameter', function (): void {

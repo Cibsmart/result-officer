@@ -1,5 +1,5 @@
 declare namespace App.Data.Cleared {
-  export type StudentData = {
+  export type ClearedStudentData = {
     id: number;
     name: string;
     registrationNumber: string;
@@ -8,8 +8,8 @@ declare namespace App.Data.Cleared {
     fcgpa: string;
     dateCleared: string;
   };
-  export type StudentListData = {
-    data: Array<App.Data.Cleared.StudentData>;
+  export type ClearedStudentListData = {
+    data: Array<App.Data.Cleared.ClearedStudentData>;
   };
 }
 declare namespace App.Data.Composite {
@@ -454,7 +454,7 @@ declare namespace App.ViewModels.Downloads {
 declare namespace App.ViewModels.Reports {
   export type ClearedIndexPageData = {
     departments: App.Data.Department.DepartmentListData;
-    students: App.Data.Cleared.StudentListData;
+    students: App.Data.Cleared.ClearedStudentListData;
   };
   export type CompositeFormPage = {
     program: App.Data.Program.ProgramListData;

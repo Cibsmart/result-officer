@@ -10,10 +10,10 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
 
-final class StudentListData extends Data
+final class ClearedStudentListData extends Data
 {
     public function __construct(
-        /** @var \Illuminate\Support\Collection<int, \App\Data\Cleared\StudentData> */
+        /** @var \Illuminate\Support\Collection<int, \App\Data\Cleared\ClearedStudentData> */
         public readonly Collection $data,
     ) {
     }
@@ -28,6 +28,6 @@ final class StudentListData extends Data
             ->where('students.status', 'cleared')
             ->get();
 
-        return new self(data: StudentData::collect($students));
+        return new self(data: ClearedStudentData::collect($students));
     }
 }

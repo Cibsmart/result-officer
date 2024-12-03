@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Reports;
 
-use App\Data\Cleared\StudentListData;
+use App\Data\Cleared\ClearedStudentListData;
 use App\Data\Department\DepartmentListData;
 use App\Http\Requests\ClearedIndexRequest;
 use App\Models\Department;
@@ -26,7 +26,7 @@ final class DepartmentClearedController
         return Inertia::render('reports/cleared/index/page', new ClearedIndexPageData(
             departments: fn () => DepartmentListData::new(),
             students: fn () => $department !== null && $year !== null
-                ? StudentListData::fromModel($department, $year)
+                ? ClearedStudentListData::fromModel($department, $year)
                 : null,
         ));
     }
