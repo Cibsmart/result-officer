@@ -4,23 +4,30 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Reports;
 
+use App\Data\Cleared\StudentListData;
 use App\Data\Department\DepartmentListData;
 use App\Http\Requests\ClearedIndexRequest;
 use App\Models\Department;
 use App\ViewModels\Reports\ClearedIndexPageData;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 final class DepartmentClearedController
 {
     public function index(
+        Request $request,
         ?Department $department = null,
         ?int $year = null,
     ): Response|RedirectResponse {
+        $request->validate(['year' => 'nullable|int']);
 
         return Inertia::render('reports/cleared/index/page', new ClearedIndexPageData(
             departments: fn () => DepartmentListData::new(),
+            students: fn () => $department !== null && $year !== null
+                ? StudentListData::fromModel($department, $year)
+                : null,
         ));
     }
 
