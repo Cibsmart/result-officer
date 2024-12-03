@@ -30,6 +30,7 @@ use App\Http\Controllers\Reports\DepartmentClearedController;
 use App\Http\Controllers\Result\ViewStudentResultController;
 use App\Http\Controllers\Summary\DepartmentResultSummaryController;
 use App\Http\Controllers\Vetting\VettingController;
+use App\Http\Middleware\ValidateYearParameter;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', DashboardController::class)->middleware(['auth'])->name('dashboard');
@@ -131,7 +132,8 @@ Route::middleware(['auth'])->group(static function (): void {
         ->name('students.clearance.store');
 
     Route::get('department/cleared/students/{department?}/{year?}', [DepartmentClearedController::class, 'index'])
-        ->name('department.cleared.index');
+        ->name('department.cleared.index')
+        ->middleware([ValidateYearParameter::class]);
     Route::post('department/cleared/students', [DepartmentClearedController::class, 'store'])
         ->name('department.cleared.store');
 });
