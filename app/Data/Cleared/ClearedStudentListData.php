@@ -6,6 +6,7 @@ namespace App\Data\Cleared;
 
 use App\Enums\StudentStatus;
 use App\Models\Department;
+use App\Models\StatusChangeEvent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
@@ -26,6 +27,12 @@ final class ClearedStudentListData extends Data
                     ->whereYear('date', $year);
             })
             ->where('students.status', 'cleared')
+            ->orderByDesc(StatusChangeEvent::query()->select('date')
+                ->where('status', StudentStatus::CLEARED)
+                ->whereColumn('students.id', 'student_id')
+                ->latest()
+                ->take(1),
+            )
             ->get();
 
         return new self(data: ClearedStudentData::collect($students));
