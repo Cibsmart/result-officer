@@ -130,6 +130,12 @@ final class Student extends Model
         return $this->hasManyThrough(SemesterEnrollment::class, SessionEnrollment::class);
     }
 
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\StatusChangeEvent, \App\Models\Student> */
+    public function statusChangeEvents(): HasMany
+    {
+        return $this->hasMany(StatusChangeEvent::class);
+    }
+
     public function programCurriculum(): ?ProgramCurriculum
     {
         return ProgramCurriculum::query()
