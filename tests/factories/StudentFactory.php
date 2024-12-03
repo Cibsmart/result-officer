@@ -37,4 +37,13 @@ final class StudentFactory extends Factory
             'status' => StudentStatus::NEW,
         ];
     }
+
+    public function cleared(): self
+    {
+        // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
+        return $this->state(fn (array $attributes) => [
+            'fcgpa' => fake()->randomFloat(2, 0, 5),
+            'status' => StudentStatus::CLEARED,
+        ]);
+    }
 }
