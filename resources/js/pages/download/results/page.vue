@@ -21,12 +21,13 @@ defineProps<{
   levels: App.Data.Level.LevelListData;
   events: Array<App.Data.Import.ImportEventData>;
   pending: App.Data.Import.PendingImportEventData;
+  selectedIndex: number;
 }>();
 
 const pages: BreadcrumbItem[] = [
   {
     name: "Results Download",
-    href: route("download.results.page"),
+    href: route("download.results.page", { selectedIndex: 0 }),
     current: route().current("download.results.page"),
   },
 ];
@@ -48,7 +49,9 @@ const tabs: TabItem[] = [
 
   <BasePage>
     <BaseSection>
-      <BaseTabs :tabs="tabs">
+      <BaseTabs
+        :selectedIndex="selectedIndex"
+        :tabs="tabs">
         <BaseTabPanel>
           <RegistrationNumber />
         </BaseTabPanel>

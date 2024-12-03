@@ -31,17 +31,17 @@ const navigation: NavigationItem[] = [
       },
       {
         name: "Students",
-        href: route("download.students.page"),
+        href: route("download.students.page", { selectedIndex: 0 }),
         current: route().current("download.students.page"),
       },
       {
         name: "Registrations",
-        href: route("download.registrations.page"),
+        href: route("download.registrations.page", { selectedIndex: 0 }),
         current: route().current("download.registrations.page"),
       },
       {
         name: "Results",
-        href: route("download.results.page"),
+        href: route("download.results.page", { selectedIndex: 0 }),
         current: route().current("download.results.page"),
       },
     ],

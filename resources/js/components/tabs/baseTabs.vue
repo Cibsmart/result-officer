@@ -1,17 +1,30 @@
 <script lang="ts" setup>
 import { Tab, TabGroup, TabList, TabPanels } from "@headlessui/vue";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { TabItem } from "@/types";
+import { router, usePage } from "@inertiajs/vue3";
 
 const props = defineProps<{
   tabs: TabItem[];
+  selectedIndex: number;
 }>();
 
+const page = usePage();
+
 const width = computed(() => `w-1/${props.tabs.length}`);
+const indexSelected = ref(props.selectedIndex);
+
+const updateTab = (index: number) => {
+  indexSelected.value = index;
+
+  router.get(page.url, { selectedIndex: index }, { preserveState: true, preserveScroll: true, only: ["errors"] });
+};
 </script>
 
 <template>
-  <TabGroup>
+  <TabGroup
+    :selectedIndex="indexSelected"
+    @change="updateTab">
     <TabList class="flex justify-between rounded ring-1 ring-gray-300 dark:ring-0">
       <Tab
         v-for="(tab, index) in tabs"
