@@ -21,6 +21,8 @@ final class DownloadResultsPageController
 {
     public function __invoke(Request $request): Response
     {
+        $selectedIndex = $request->integer('selectedIndex');
+
         $user = $request->user();
 
         $searchTerm = $request->string('search')->value();
@@ -32,7 +34,8 @@ final class DownloadResultsPageController
             courses: fn () => CourseListData::new($searchTerm),
             levels: LevelListData::new(),
             events: fn () => ImportEventData::new($user, ImportEventType::RESULTS),
-            pending: fn () => PendingImportEventData::new($user, ImportEventType::RESULTS)),
+            pending: fn () => PendingImportEventData::new($user, ImportEventType::RESULTS),
+            selectedIndex: $selectedIndex),
         );
     }
 }

@@ -18,13 +18,16 @@ final readonly class DownloadStudentsPageController
 {
     public function __invoke(Request $request): Response
     {
+        $selectedIndex = $request->integer('selectedIndex');
+
         $user = $request->user();
 
         return Inertia::render('download/students/page', new DownloadStudentPage(
             department: DepartmentListData::new(),
             session: SessionListData::new(),
             events: fn () => ImportEventData::new($user, ImportEventType::STUDENTS),
-            pending: fn () => PendingImportEventData::new($user, ImportEventType::STUDENTS)),
+            pending: fn () => PendingImportEventData::new($user, ImportEventType::STUDENTS),
+            selectedIndex: $selectedIndex),
         );
     }
 }

@@ -21,6 +21,8 @@ final readonly class DownloadRegistrationPageController
 {
     public function __invoke(Request $request): Response
     {
+        $selectedIndex = $request->integer('selectedIndex');
+
         $user = $request->user();
 
         $searchTerm = $request->string('search')->value();
@@ -32,7 +34,8 @@ final readonly class DownloadRegistrationPageController
             courses: fn () => CourseListData::new($searchTerm),
             levels: LevelListData::new(),
             events: fn () => ImportEventData::new($user, ImportEventType::REGISTRATIONS),
-            pending: fn () => PendingImportEventData::new($user, ImportEventType::REGISTRATIONS)),
+            pending: fn () => PendingImportEventData::new($user, ImportEventType::REGISTRATIONS),
+            selectedIndex: $selectedIndex),
         );
     }
 }

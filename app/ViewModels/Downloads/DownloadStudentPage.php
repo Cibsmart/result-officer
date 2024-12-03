@@ -21,6 +21,7 @@ final class DownloadStudentPage extends Data
         public readonly Closure $events,
         #[TypeScriptType(PendingImportEventData::class)]
         public readonly Closure $pending,
+        public readonly int $selectedIndex,
     ) {
     }
 }
