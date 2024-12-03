@@ -46,6 +46,11 @@ parameters:
 			path: app/Http/Clients/ApiClient.php
 
 		-
+			message: "#^Parameter \\#2 \\$subject of function preg_match expects string, object\\|string given\\.$#"
+			count: 1
+			path: app/Http/Middleware/ValidateYearParameter.php
+
+		-
 			message: "#^Property App\\\\Models\\\\Registration\\:\\:\\$course_status \\(string\\) does not accept App\\\\Enums\\\\CourseStatus\\:\\:FRESH\\.$#"
 			count: 1
 			path: app/Models/Registration.php
