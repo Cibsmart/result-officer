@@ -9,6 +9,7 @@ use App\Http\Controllers\Download\Courses\DownloadCoursesPageController;
 use App\Http\Controllers\Download\Departments\DownloadDepartmentsController;
 use App\Http\Controllers\Download\Departments\DownloadDepartmentsPageController;
 use App\Http\Controllers\Download\Registrations\DownloadRegistrationPageController;
+use App\Http\Controllers\Download\Registrations\DownloadRegistrationsByDepartmentSessionController;
 use App\Http\Controllers\Download\Registrations\DownloadRegistrationsByDepartmentSessionLevelController;
 use App\Http\Controllers\Download\Registrations\DownloadRegistrationsByDepartmentSessionSemesterController;
 use App\Http\Controllers\Download\Registrations\DownloadRegistrationsByRegistrationNumberController;
@@ -100,6 +101,8 @@ Route::middleware(['auth'])->group(static function (): void {
     Route::prefix('download/registrations')->group(static function (): void {
         Route::get('page', DownloadRegistrationPageController::class)
             ->name('download.registrations.page');
+        Route::post('department-session', DownloadRegistrationsByDepartmentSessionController::class)
+            ->name('download.registrations.department-session.store');
         Route::post('registration-number', DownloadRegistrationsByRegistrationNumberController::class)
             ->name('download.registrations.registration-number.store');
         Route::post('department-session-level', DownloadRegistrationsByDepartmentSessionLevelController::class)
