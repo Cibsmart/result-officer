@@ -24,5 +24,5 @@ it('creates cleared student data from student model', function (): void {
         ->registrationNumber->toBe($student->registration_number)
         ->status->toBe(StudentStatus::CLEARED)
         ->fcgpa->toBe(number_format($student->fcgpa, 2))
-        ->dateCleared->toBe($student->statusChangeEvents->first()->date->format('jS F, Y'));
+        ->dateCleared->toBe($student->statusChangeEvents->first()->date->format('jS M, Y'));
 });

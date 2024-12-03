@@ -35,7 +35,7 @@ final class ClearedStudentData extends Data
             gender: $student->gender,
             status: $student->status,
             fcgpa: number_format($student->fcgpa, 2),
-            dateCleared: $clearEvent->date->format('jS F, Y'),
+            dateCleared: $clearEvent->date->format('jS M, Y'),
         );
     }
 }
