@@ -9,6 +9,8 @@ declare namespace App.Data.Cleared {
     dateCleared: string;
   };
   export type ClearedStudentListData = {
+    faculty: App.Data.Faculty.FacultyData;
+    department: App.Data.Department.DepartmentData;
     data: Array<App.Data.Cleared.ClearedStudentData>;
   };
 }
