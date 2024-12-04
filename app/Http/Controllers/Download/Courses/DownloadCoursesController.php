@@ -20,7 +20,7 @@ final readonly class DownloadCoursesController
 
         $event = ImportEvent::new($user, ImportEventType::COURSES, ImportEventMethod::ALL, ['course' => 'all']);
 
-        Artisan::queue('portal-data:import', ['eventId' => $event->id]);
+        Artisan::queue('rp:import-portal-data', ['eventId' => $event->id]);
 
         return redirect()->back()->success('Course Import Started...');
     }

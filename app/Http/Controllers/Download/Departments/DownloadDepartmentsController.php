@@ -19,7 +19,7 @@ final readonly class DownloadDepartmentsController
 
         $event = ImportEvent::new($user, ImportEventType::DEPARTMENTS, ImportEventMethod::ALL, ['department' => 'all']);
 
-        Artisan::queue('portal-data:import', ['eventId' => $event->id]);
+        Artisan::queue('rp:import-portal-data', ['eventId' => $event->id]);
 
         return redirect()->back()->success('Department Import Started...');
     }

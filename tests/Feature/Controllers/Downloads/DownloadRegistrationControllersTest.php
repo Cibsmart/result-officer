@@ -64,7 +64,7 @@ it('can start download of registrations by registration number', function (): vo
     Queue::assertPushed(function (QueuedCommand $command) use ($event): bool {
         $data = getQueuedCommandProtectedDataProperty($command);
 
-        return $data[0] === 'portal-data:import' && $data[1]['eventId'] === $event->id;
+        return $data[0] === 'rp:import-portal-data' && $data[1]['eventId'] === $event->id;
     });
 });
 
@@ -101,7 +101,7 @@ it('can start download of registrations by department, session and level', funct
     Queue::assertPushed(function (QueuedCommand $command) use ($event): bool {
         $data = getQueuedCommandProtectedDataProperty($command);
 
-        return $data[0] === 'portal-data:import' && $data[1]['eventId'] === $event->id;
+        return $data[0] === 'rp:import-portal-data' && $data[1]['eventId'] === $event->id;
     });
 });
 
@@ -138,7 +138,7 @@ it('can start download of registrations by department, session and semester', fu
     Queue::assertPushed(function (QueuedCommand $command) use ($event): bool {
         $data = getQueuedCommandProtectedDataProperty($command);
 
-        return $data[0] === 'portal-data:import' && $data[1]['eventId'] === $event->id;
+        return $data[0] === 'rp:import-portal-data' && $data[1]['eventId'] === $event->id;
     });
 });
 
@@ -172,6 +172,6 @@ it('can start download of registrations by session and course', function (): voi
     Queue::assertPushed(function (QueuedCommand $command) use ($event): bool {
         $data = getQueuedCommandProtectedDataProperty($command);
 
-        return $data[0] === 'portal-data:import' && $data[1]['eventId'] === $event->id;
+        return $data[0] === 'rp:import-portal-data' && $data[1]['eventId'] === $event->id;
     });
 });

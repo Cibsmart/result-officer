@@ -28,7 +28,7 @@ final class DownloadRegistrationsByDepartmentSessionController
             ],
         );
 
-        Artisan::queue('portal-data:import', ['eventId' => $event->id]);
+        Artisan::queue('rp:import-portal-data', ['eventId' => $event->id]);
 
         return redirect()->back()->success('Course Registrations Import Started...');
     }
