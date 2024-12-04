@@ -54,7 +54,7 @@ final class ImportGroupPortalData extends Command
 
                 $service->save($event, $data);
             } catch (Exception $e) {
-                $failedMessage .= ("{$e->getMessage()}\n");
+                $failedMessage .= ("{$student->registration_number}: {$e->getMessage()}\n");
 
                 continue;
             }
