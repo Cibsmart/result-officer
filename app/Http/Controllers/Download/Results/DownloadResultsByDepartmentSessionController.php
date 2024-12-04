@@ -40,6 +40,6 @@ final class DownloadResultsByDepartmentSessionController
             status: ImportEventStatus::QUEUED,
         );
 
-        return redirect()->back()->success("Results Import for {$deptName} {$session} in QUEUED");
+        return redirect()->back()->success("Results Import for {$deptName} {$session} QUEUED");
     }
 }

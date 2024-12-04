@@ -42,8 +42,6 @@ final class DownloadRegistrationsByDepartmentSessionController
             status: ImportEventStatus::QUEUED,
         );
 
-        $message = "Course Registrations Import for {$deptName} {$session} in QUEUED";
-
-        return redirect()->back()->success($message);
+        return redirect()->back()->success("Course Registrations Import for {$deptName} {$session} QUEUED");
     }
 }
