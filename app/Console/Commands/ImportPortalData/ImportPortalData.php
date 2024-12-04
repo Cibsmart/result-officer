@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Artisan;
 
 final class ImportPortalData extends Command
 {
-    protected $signature = 'portal-data:import {eventId}';
+    protected $signature = 'rp:import-portal-data {eventId}';
 
     protected $description = 'Import Data from the Portal and Save in the Raw Data Table in the Database';
 

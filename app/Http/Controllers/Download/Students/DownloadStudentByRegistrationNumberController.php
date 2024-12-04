@@ -20,7 +20,7 @@ final readonly class DownloadStudentByRegistrationNumberController
         $event = ImportEvent::new($user, ImportEventType::STUDENTS, ImportEventMethod::REGISTRATION_NUMBER,
             ['registration_number' => $request->string('registration_number')->value()]);
 
-        Artisan::queue('portal-data:import', ['eventId' => $event->id]);
+        Artisan::queue('rp:import-portal-data', ['eventId' => $event->id]);
 
         return redirect()->back()->success('Students Import Started...');
     }

@@ -30,7 +30,7 @@ final readonly class DownloadResultByDepartmentSessionLevelController
             ],
         );
 
-        Artisan::queue('portal-data:import', ['eventId' => $event->id]);
+        Artisan::queue('rp:import-portal-data', ['eventId' => $event->id]);
 
         return redirect()->back()->success('Results Import Started...');
     }
