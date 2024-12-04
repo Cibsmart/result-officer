@@ -25,4 +25,10 @@ enum StudentStatus: string
     {
         return [self::FINAL_YEAR, self::EXTRA_YEAR];
     }
+
+    /** @return array<int, \App\Enums\StudentStatus> */
+    public static function archivedStates(): array
+    {
+        return [self::CLEARED, self::GRADUATED];
+    }
 }
