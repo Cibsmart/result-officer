@@ -44,7 +44,7 @@ final class ImportPortalData extends Command
 
         $event->updateStatus(ImportEventStatus::SAVED);
 
-        Artisan::call('portal-data:process', ['eventId' => $event->id]);
+        Artisan::call('rp:process-portal-data', ['eventId' => $event->id]);
 
         return Command::SUCCESS;
     }
