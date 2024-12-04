@@ -10,7 +10,7 @@ use Illuminate\Console\Command;
 
 final class Vet extends Command
 {
-    protected $signature = 'app:vet {vettingEventId}';
+    protected $signature = 'rp:vet {vettingEventId}';
 
     protected $description = "Initiate Vetting of Student's Results";
 

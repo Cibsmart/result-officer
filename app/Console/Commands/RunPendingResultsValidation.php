@@ -13,7 +13,7 @@ final class RunPendingResultsValidation extends Command
      * The name and signature of the console command.
      * @var string
      */
-    protected $signature = 'rp:results-validate';
+    protected $signature = 'rp:validate-results';
 
     /**
      * The console command description.
