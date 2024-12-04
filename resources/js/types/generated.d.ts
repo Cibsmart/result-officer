@@ -445,12 +445,14 @@ declare namespace App.ViewModels.Downloads {
     levels: App.Data.Level.LevelListData;
     events: any;
     pending: App.Data.Import.PendingImportEventData;
+    selectedIndex: number;
   };
   export type DownloadStudentPage = {
     department: App.Data.Department.DepartmentListData;
     session: App.Data.Session.SessionListData;
     events: any;
     pending: App.Data.Import.PendingImportEventData;
+    selectedIndex: number;
   };
 }
 declare namespace App.ViewModels.Reports {
