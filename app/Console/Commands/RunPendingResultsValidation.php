@@ -24,7 +24,7 @@ final class RunPendingResultsValidation extends Command
     /**
      * Execute the console command.
      */
-    public function handle(ValidatePendingResults $action): int
+    public function __invoke(ValidatePendingResults $action): int
     {
         $action->execute();
 
