@@ -19,16 +19,38 @@ final class ImportEvent extends Model
         ImportEventType $type,
         ImportEventMethod $method,
         array $data,
+        ImportEventStatus $status = ImportEventStatus::NEW,
     ): self {
         $event = new self();
         $event->user_id = $user->id;
         $event->type = $type;
         $event->method = $method;
         $event->data = $data;
-        $event->status = ImportEventStatus::NEW;
+        $event->status = $status;
         $event->save();
 
         return $event;
+    }
+
+    public static function inQueue(
+        ImportEventType $type,
+        ImportEventMethod $method,
+        string $session,
+        int $onlineId,
+    ): bool {
+        $events = self::query()
+            ->where('type', $type)
+            ->where('method', $method)
+            ->where('status', ImportEventStatus::QUEUED)
+            ->get();
+
+        foreach ($events as $event) {
+            if ($event->data['session'] === $session && $event->data['online_department_id'] === $onlineId) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\ImportEvent> */
@@ -108,6 +130,17 @@ final class ImportEvent extends Model
     public function setMessage(string $message): void
     {
         $this->message = $message;
+        $this->save();
+    }
+
+    public function updateMessageAndCounts(
+        string $message,
+        int $studentCount,
+        int $downloadCount,
+    ): void {
+        $this->message = $message;
+        $this->students = $studentCount;
+        $this->downloaded = $downloadCount;
         $this->save();
     }
 
