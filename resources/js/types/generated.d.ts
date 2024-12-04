@@ -385,6 +385,7 @@ declare namespace App.Enums {
     | "session_course";
   export type ImportEventStatus =
     | "new"
+    | "queued"
     | "started"
     | "downloading"
     | "downloaded"

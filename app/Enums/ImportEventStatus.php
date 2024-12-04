@@ -7,6 +7,7 @@ namespace App\Enums;
 enum ImportEventStatus: string
 {
     case NEW = 'new';
+    case QUEUED = 'queued';
     case STARTED = 'started';
     case DOWNLOADING = 'downloading';
     case DOWNLOADED = 'downloaded';
@@ -32,7 +33,7 @@ enum ImportEventStatus: string
     public function width(): int
     {
         return match ($this) {
-            self::NEW, self::STARTED => 1,
+            self::NEW, self::STARTED, self::QUEUED => 1,
             self::DOWNLOADING, self::DOWNLOADED => 25,
             self::SAVING, self::SAVED => 50,
             self::PROCESSING => 75,
