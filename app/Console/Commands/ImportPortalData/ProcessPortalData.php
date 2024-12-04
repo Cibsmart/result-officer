@@ -11,7 +11,7 @@ use Illuminate\Console\Command;
 
 final class ProcessPortalData extends Command
 {
-    protected $signature = 'portal-data:process {eventId}';
+    protected $signature = 'rp:process-portal-data {eventId}';
 
     protected $description = 'Process all Pending Raw Data associated with the event';
 

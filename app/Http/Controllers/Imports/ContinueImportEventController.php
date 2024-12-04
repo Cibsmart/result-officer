@@ -13,6 +13,6 @@ final class ContinueImportEventController
     public function __invoke(ImportEvent $event): void
     {
         Context::add('event-type', $event->type->value);
-        Artisan::queue('portal-data:process', ['eventId' => $event->id]);
+        Artisan::queue('rp:process-portal-data', ['eventId' => $event->id]);
     }
 }
