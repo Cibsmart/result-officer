@@ -40,7 +40,7 @@ final class VettingController
 
         $vettingEvent = VettingEvent::getOrCreateUsingStudent($student, $user);
 
-        Artisan::queue('app:vet', ['vettingEventId' => $vettingEvent->id]);
+        Artisan::queue('rp:vet', ['vettingEventId' => $vettingEvent->id]);
 
         return redirect()->back()->success("Vetting Started for {$student->registration_number}");
     }
