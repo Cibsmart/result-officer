@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('type');
             $table->string('method');
             $table->json('data');
+            $table->unsignedSmallInteger('students')->default(0);
             $table->unsignedSmallInteger('downloaded')->default(0);
             $table->unsignedSmallInteger('saved')->default(0);
             $table->unsignedSmallInteger('duplicate')->default(0);
