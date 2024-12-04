@@ -11,13 +11,20 @@ final class ValidatePendingResults
     public function execute(): void
     {
         $pendingValidationResults = ResultDetail::query()
+            ->with('result')
             ->where('validate', true)
             ->lazyById();
 
-        foreach ($pendingValidationResults as $result) {
-            $result->data = $result->value;
-            $result->validate = false;
-            $result->save();
+        foreach ($pendingValidationResults as $resultDetail) {
+            $result = $resultDetail->result;
+
+            if ($resultDetail->value !== $result->getData()) {
+                $resultDetail->invalidate();
+
+                continue;
+            }
+
+            $resultDetail->validate();
         }
     }
 }
