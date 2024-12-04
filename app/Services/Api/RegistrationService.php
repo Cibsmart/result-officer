@@ -11,10 +11,7 @@ use App\Contracts\RegistrationClient;
 use App\Data\Download\PortalRegistrationData;
 use App\Enums\ImportEventMethod;
 use App\Enums\RawDataStatus;
-use App\Enums\StudentStatus;
-use App\Models\Department;
 use App\Models\ImportEvent;
-use App\Models\Session;
 use Exception;
 use Illuminate\Support\Collection;
 
@@ -68,28 +65,6 @@ final readonly class RegistrationService implements PortalService
         return PortalRegistrationData::collect(collect($registrations));
     }
 
-    /** @return \Illuminate\Support\Collection<int, \App\Data\Download\PortalRegistrationData> */
-    public function getRegistrationsByDepartmentSession(int $departmentId, string $session): Collection
-    {
-        $department = Department::query()->where('online_id', $departmentId)->firstOrFail();
-        $session = Session::query()->where('name', $session)->firstOrFail();
-
-        $students = $department->students()
-            ->whereNotIn('status', StudentStatus::archivedStates())
-            ->where('entry_session_id', $session->id)
-            ->limit(2)
-            ->get();
-
-        $registrations = [];
-
-        foreach ($students as $student) {
-            $studentRegistrations = $this->client->fetchRegistrationByRegistrationNumber($student->registration_number);
-            $registrations = [...$registrations, ...$studentRegistrations];
-        }
-
-        return PortalRegistrationData::collect(collect($registrations));
-    }
-
     /** {@inheritDoc} */
     public function get(ImportEventMethod $method, array $parameters): Collection
     {
@@ -102,8 +77,8 @@ final readonly class RegistrationService implements PortalService
 
         return match ($method) {
             ImportEventMethod::SESSION_COURSE => $this->getRegistrationsBySessionAndCourse($session, $course),
-            ImportEventMethod::REGISTRATION_NUMBER => $this->getRegistrationsByRegistrationNumber($registrationNumber),
-            ImportEventMethod::DEPARTMENT_SESSION => $this->getRegistrationsByDepartmentSession($department, $session),
+            ImportEventMethod::REGISTRATION_NUMBER,
+            ImportEventMethod::DEPARTMENT_SESSION => $this->getRegistrationsByRegistrationNumber($registrationNumber),
             ImportEventMethod::DEPARTMENT_SESSION_LEVEL => $this->getRegistrationsByDepartmentSessionAndLevel(
                 $department,
                 $session,

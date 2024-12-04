@@ -87,7 +87,8 @@ final readonly class ResultService implements PortalService
 
         return match ($method) {
             ImportEventMethod::SESSION_COURSE => $this->getResultsBySessionAndCourse($session, $course),
-            ImportEventMethod::REGISTRATION_NUMBER => $this->getResultsByRegistrationNumber($registrationNumber),
+            ImportEventMethod::REGISTRATION_NUMBER,
+            ImportEventMethod::DEPARTMENT_SESSION => $this->getResultsByRegistrationNumber($registrationNumber),
             ImportEventMethod::DEPARTMENT_SESSION_LEVEL => $this->getResultsByDepartmentSessionAndLevel(
                 $department,
                 $session,
