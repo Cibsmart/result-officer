@@ -23,8 +23,8 @@ final class DownloadRegistrationsByDepartmentSessionController
             method: ImportEventMethod::DEPARTMENT_SESSION,
             data: [
                 'department' => $request->string('departmentName')->value(),
-                'entry_session' => $request->string('sessionName')->value(),
                 'online_department_id' => $request->integer('onlineDepartmentId'),
+                'session' => $request->string('sessionName')->value(),
             ],
         );
 
