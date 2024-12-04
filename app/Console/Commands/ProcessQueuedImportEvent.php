@@ -1,30 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
+use App\Enums\ImportEventStatus;
+use App\Models\ImportEvent;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 
-class ProcessQueuedImportEvent extends Command
+final class ProcessQueuedImportEvent extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'app:process-queued-import-event';
+    protected $signature = 'rp:process-queued-import';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Command description';
+    protected $description = 'Checks for Queued Import Events and Initiates Processing';
 
-    /**
-     * Execute the console command.
-     */
-    public function handle()
+    public function __invoke(): int
     {
-        //
+        $event = ImportEvent::query()
+            ->where('status', ImportEventStatus::QUEUED)
+            ->orderBy('id')
+            ->first();
+
+        if ($event) {
+            $event->updateStatus(ImportEventStatus::STARTED);
+
+            Artisan::call('rp:import-group-portal-data', ['eventId' => $event->id]);
+        }
+
+        return Command::SUCCESS;
     }
 }
