@@ -20,6 +20,7 @@ final class DepartmentFactory extends Factory
             'faculty_id' => FacultyFactory::new(),
             'is_active' => false,
             'name' => fake()->country(),
+            'slug' => fake()->slug(),
         ];
     }
 

@@ -13,10 +13,12 @@ final class SemesterSeeder extends Seeder
     {
         Semester::query()->create([
             'name' => 'FIRST',
+            'slug' => 'first',
         ]);
 
         Semester::query()->create([
             'name' => 'SECOND',
+            'slug' => 'second',
         ]);
     }
 }

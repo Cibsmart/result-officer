@@ -20,6 +20,7 @@ final class LevelFactory extends Factory
 
         return [
             'name' => $level->value,
+            'slug' => fake()->slug(),
         ];
     }
 }

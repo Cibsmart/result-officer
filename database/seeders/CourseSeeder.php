@@ -20,7 +20,6 @@ final class CourseSeeder extends Seeder
         $courses = $content->sortBy('code');
 
         foreach ($courses as $course) {
-
             $code = Str::trim($course['code']);
             $title = Str::of($course['title'])->replace('  ', ' ')->trim()->value();
 
@@ -34,6 +33,7 @@ final class CourseSeeder extends Seeder
                 'active' => true,
                 'code' => $code,
                 'online_id' => $online_id,
+                'slug' => Str::slug("{$code}-{$title}"),
                 'title' => $title,
             ]);
 

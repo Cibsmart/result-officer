@@ -22,6 +22,7 @@ final class SessionFactory extends Factory
 
         return [
             'name' => $session,
+            'slug' => fake()->slug(),
         ];
     }
 }

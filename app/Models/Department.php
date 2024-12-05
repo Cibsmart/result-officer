@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 final class Department extends Model
 {
@@ -56,14 +57,24 @@ final class Department extends Model
 
     private static function getOrCreate(RawDepartment $rawDepartment, Faculty $faculty): self
     {
-        return self::firstOrCreate(
-            ['name' => $rawDepartment->name],
-            [
-                'code' => $rawDepartment->code,
-                'faculty_id' => $faculty->id,
-                'online_id' => $rawDepartment->online_id,
-            ],
-        );
+        $department = self::query()
+            ->where('name', $rawDepartment->name)
+            ->where('faculty_id', $faculty->id)
+            ->first();
+
+        if ($department) {
+            return $department;
+        }
+
+        $department = new self();
+        $department->name = $rawDepartment->name;
+        $department->code = $rawDepartment->code;
+        $department->faculty_id = $faculty->id;
+        $department->online_id = $rawDepartment->online_id;
+        $department->slug = Str::slug($rawDepartment->code);
+        $department->save();
+
+        return $department;
     }
 
     /** @return array<string, string> */

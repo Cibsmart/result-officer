@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 final class Student extends Model
 {
@@ -51,6 +52,7 @@ final class Student extends Model
         $student->source = RecordSource::PORTAL;
         $student->local_government_id = LocalGovernment::getUsingName($rawStudent->local_government)->id;
         $student->status = StudentStatus::NEW;
+        $student->slug = Str::slug($registrationNumber->value);
 
         $student->save();
 

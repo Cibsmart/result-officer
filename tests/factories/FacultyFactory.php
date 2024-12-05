@@ -18,6 +18,7 @@ final class FacultyFactory extends Factory
         return [
             'code' => fake()->unique()->countryCode(),
             'name' => fake()->country(),
+            'slug' => fake()->slug(),
         ];
     }
 }
