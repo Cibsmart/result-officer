@@ -18,7 +18,7 @@ final class SemesterListData extends Data
 
     public static function new(): self
     {
-        $default = new SemesterData(id: 0, name: 'Select Semester');
+        $default = new SemesterData(id: 0, name: 'Select Semester', slug: '');
 
         return new self(
             semesters: SemesterData::collect(

@@ -18,13 +18,13 @@ final class CourseListData extends Data
 
     public static function new(string $search = ''): self
     {
-        $default = new CourseData(id: 0, name: 'Type and Select course ...');
+        $default = new CourseData(id: 0, name: 'Type and Select course ...', slug: '');
 
         $courses = Course::query()
             ->when($search !== '', function ($query) use ($search): void {
                 $query->whereAny(['title', 'code'], 'like', "$search%");
             })
-            ->select(['id', 'code', 'title'])
+            ->select(['id', 'code', 'title', 'slug'])
             ->orderBy('code')
             ->limit(200)
             ->get();

@@ -12,11 +12,12 @@ final class ProgramData extends Data
     public function __construct(
         public readonly int $id,
         public readonly string $name,
+        public readonly string $slug,
     ) {
     }
 
     public static function fromModel(Program $program): self
     {
-        return new self(id: $program->id, name: $program->name);
+        return new self(id: $program->id, name: $program->name, slug: $program->slug);
     }
 }

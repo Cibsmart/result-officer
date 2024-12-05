@@ -24,6 +24,7 @@ final class StudentData extends Data
         public readonly string $faculty,
         public readonly int $admissionYear,
         public readonly string $nationality,
+        public readonly string $slug,
     ) {
     }
 
@@ -47,6 +48,7 @@ final class StudentData extends Data
             faculty: $student->program->department->faculty->name,
             admissionYear: $student->entrySession->firstYear(),
             nationality: $student->government->state->country->demonym,
+            slug: $student->slug,
         );
     }
 }

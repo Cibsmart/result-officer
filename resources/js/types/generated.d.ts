@@ -7,6 +7,7 @@ declare namespace App.Data.Cleared {
     status: App.Enums.StudentStatus;
     fcgpa: string;
     dateCleared: string;
+    slug: string;
   };
   export type ClearedStudentListData = {
     faculty: App.Data.Faculty.FacultyData;
@@ -50,6 +51,7 @@ declare namespace App.Data.Course {
   export type CourseData = {
     id: number;
     name: string;
+    slug: string;
   };
   export type CourseListData = {
     courses: Array<App.Data.Course.CourseData>;
@@ -59,6 +61,7 @@ declare namespace App.Data.Department {
   export type DepartmentData = {
     id: number;
     name: string;
+    slug: string;
   };
   export type DepartmentListData = {
     data: Array<App.Data.Department.DepartmentData>;
@@ -131,6 +134,7 @@ declare namespace App.Data.Faculty {
   export type FacultyData = {
     id: number;
     name: string;
+    slug: string;
   };
 }
 declare namespace App.Data.Import {
@@ -158,6 +162,7 @@ declare namespace App.Data.Level {
   export type LevelData = {
     id: number;
     name: string;
+    slug: string;
   };
   export type LevelListData = {
     levels: Array<App.Data.Level.LevelData>;
@@ -167,6 +172,7 @@ declare namespace App.Data.Program {
   export type ProgramData = {
     id: number;
     name: string;
+    slug: string;
   };
   export type ProgramListData = {
     programs: Array<App.Data.Program.ProgramData>;
@@ -266,6 +272,7 @@ declare namespace App.Data.Semester {
   export type SemesterData = {
     id: number;
     name: string;
+    slug: string;
   };
   export type SemesterListData = {
     semesters: Array<App.Data.Semester.SemesterData>;
@@ -275,6 +282,7 @@ declare namespace App.Data.Session {
   export type SessionData = {
     id: number;
     name: string;
+    slug: string;
   };
   export type SessionListData = {
     sessions: Array<App.Data.Session.SessionData>;
@@ -310,6 +318,7 @@ declare namespace App.Data.Students {
     faculty: string;
     admissionYear: number;
     nationality: string;
+    slug: string;
   };
 }
 declare namespace App.Data.Summary {
@@ -355,6 +364,7 @@ declare namespace App.Data.Vetting {
     studentStatus: App.Enums.StudentStatus;
     vettingStatus: App.Enums.VettingEventStatus;
     vettingStatusColor: App.Enums.StatusColor;
+    slug: string;
   };
 }
 declare namespace App.Enums {

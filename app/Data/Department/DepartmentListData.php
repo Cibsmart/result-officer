@@ -19,7 +19,7 @@ final class DepartmentListData extends Data
 
     public static function new(): self
     {
-        $default = new DepartmentData(id: 0, name: 'Select Department');
+        $default = new DepartmentData(id: 0, name: 'Select Department', slug: '');
 
         return new self(
             data: DepartmentData::collect(
