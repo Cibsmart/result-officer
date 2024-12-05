@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('semesters', static function (Blueprint $table): void {
             $table->id();
             $table->string('name')->unique();
+            $table->string('slug')->unique();
             $table->timestamps();
         });
     }

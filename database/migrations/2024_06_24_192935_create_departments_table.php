@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('faculty_id')->constrained('faculties');
             $table->string('code')->unique();
             $table->string('name');
+            $table->string('slug')->unique();
             $table->boolean('is_active')->default(true);
             $table->string('online_id')->nullable();
             $table->timestamps();

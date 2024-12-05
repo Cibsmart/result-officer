@@ -106,15 +106,23 @@ final class Program extends Model
         string $programName,
         string $programCode,
     ): void {
-        self::firstOrCreate(
-            ['name' => $programName],
-            [
-                'code' => $programCode,
-                'department_id' => $department->id,
-                'duration' => ProgramDuration::FOUR->value,
-                'program_type_id' => 5,
-            ],
-        );
+        $program = self::query()
+            ->where('name', $programName)
+            ->where('department_id', $department->id)
+            ->first();
+
+        if ($program) {
+            return;
+        }
+
+        $program = new self();
+        $program->name = $programName;
+        $program->code = $programCode;
+        $program->department_id = $department->id;
+        $program->program_type_id = 5;
+        $program->duration = ProgramDuration::FOUR->value;
+        $program->slug = Str::slug($programCode);
+        $program->save();
     }
 
     public static function getFromDepartmentAndName(Department $department, string $programName): self

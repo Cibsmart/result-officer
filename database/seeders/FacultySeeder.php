@@ -11,6 +11,7 @@ use App\Models\Program;
 use App\Models\ProgramType;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 final class FacultySeeder extends Seeder
 {
@@ -30,6 +31,7 @@ final class FacultySeeder extends Seeder
             $faculty = Faculty::query()->firstOrCreate([
                 'code' => $facultyCode,
                 'name' => $facultyName,
+                'slug' => Str::slug($facultyCode),
             ]);
 
             $this->createDepartmentsAndPrograms($faculty, $departments);
@@ -50,6 +52,7 @@ final class FacultySeeder extends Seeder
                 'faculty_id' => $faculty->id,
                 'name' => $departmentName,
                 'online_id' => $departmentOnlineId,
+                'slug' => Str::slug($departmentCode),
             ]);
 
             foreach ($programs as $program) {
@@ -59,6 +62,7 @@ final class FacultySeeder extends Seeder
                     'duration' => $program['duration'],
                     'name' => $program['program_name'],
                     'program_type_id' => ProgramType::getUsingCode($program['program_type'])->id,
+                    'slug' => Str::slug($program['program_code']),
                 ]);
             }
         }

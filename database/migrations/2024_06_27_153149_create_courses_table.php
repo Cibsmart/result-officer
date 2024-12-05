@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('code');
             $table->string('title');
+            $table->string('slug')->unique();
             $table->boolean('active')->default(true);
             $table->string('online_id')->nullable();
             $table->timestamps();

@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('academic_sessions', static function (Blueprint $table): void {
             $table->id();
             $table->string('name')->unique();
+            $table->string('slug')->unique();
             $table->boolean('is_current')->default(false);
             $table->timestamps();
         });

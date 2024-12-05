@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Session;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 final class SessionSeeder extends Seeder
 {
@@ -15,6 +16,7 @@ final class SessionSeeder extends Seeder
             $next = $year + 1;
             Session::query()->create([
                 'name' => "$year/$next",
+                'slug' => Str::slug("$year/$next"),
             ]);
         }
     }

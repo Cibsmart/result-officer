@@ -11,6 +11,7 @@ use App\Models\Session;
 use App\Models\Student;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 final class StudentSeeder extends Seeder
 {
@@ -83,6 +84,7 @@ final class StudentSeeder extends Seeder
                 'other_names' => $student['other_names'],
                 'program_id' => $program->id,
                 'registration_number' => $student['registration_number'],
+                'slug' => Str::slug($student['registration_number']),
             ]);
         }
     }

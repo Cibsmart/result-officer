@@ -22,6 +22,7 @@ final class ProgramFactory extends Factory
             'duration' => ProgramDuration::FOUR->value,
             'name' => fake()->country(),
             'program_type_id' => ProgramTypeFactory::new(),
+            'slug' => fake()->slug(),
         ];
     }
 

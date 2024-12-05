@@ -38,10 +38,19 @@ final class Faculty extends Model
     {
         $facultyCode = self::getCode($facultyName);
 
-        return self::firstOrCreate(
-            ['name' => $facultyName],
-            ['code' => $facultyCode],
-        );
+        $faculty = self::query()->where('name', $facultyName)->first();
+
+        if ($faculty) {
+            return $faculty;
+        }
+
+        $faculty = new self();
+        $faculty->name = $facultyName;
+        $faculty->code = $facultyCode;
+        $faculty->slug = Str::slug($facultyCode);
+        $faculty->save();
+
+        return $faculty;
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Department, \App\Models\Faculty> */

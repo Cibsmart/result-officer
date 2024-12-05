@@ -18,6 +18,7 @@ final class CourseFactory extends Factory
         return [
             'code' => fake()->unique()->countryCode(),
             'title' => fake()->word(),
+            'slug' => fake()->slug(),
         ];
     }
 }

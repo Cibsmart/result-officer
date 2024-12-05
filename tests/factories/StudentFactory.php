@@ -34,6 +34,7 @@ final class StudentFactory extends Factory
             'other_names' => fake()->firstName(),
             'program_id' => ProgramFactory::new(),
             'registration_number' => 'EBSU/' . fake()->year() . '/' . fake()->unique()->randomNumber(5, true),
+            'slug' => fake()->slug(),
             'status' => StudentStatus::NEW,
         ];
     }

@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 final class Course extends Model
 {
@@ -18,6 +19,7 @@ final class Course extends Model
         $course->code = $rawCourse->code;
         $course->title = $rawCourse->title;
         $course->online_id = $rawCourse->online_id;
+        $course->slug = Str::slug("{$rawCourse->code}-{$rawCourse->title}");
 
         $course->save();
 

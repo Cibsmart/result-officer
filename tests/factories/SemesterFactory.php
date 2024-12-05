@@ -17,6 +17,7 @@ final class SemesterFactory extends Factory
     {
         return [
             'name' => fake()->unique()->randomElement(['FIRST', 'SECOND']),
+            'slug' => fake()->slug(),
         ];
     }
 }

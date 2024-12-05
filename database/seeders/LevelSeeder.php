@@ -15,6 +15,7 @@ final class LevelSeeder extends Seeder
         foreach (LevelEnum::cases() as $level) {
             Level::query()->create([
                 'name' => $level->value,
+                'slug' => $level->value,
             ]);
         }
     }

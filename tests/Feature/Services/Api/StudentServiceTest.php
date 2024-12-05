@@ -8,6 +8,8 @@ use App\Data\Download\PortalStudentData;
 use App\Enums\ImportEventMethod;
 use App\Enums\RawDataStatus;
 use App\Http\Clients\Fakes\FakeStudentClient;
+use App\Models\RawStudent;
+use App\Models\Student;
 use App\Services\Api\StudentService;
 use Illuminate\Support\Collection;
 use Tests\Factories\DepartmentFactory;
@@ -111,7 +113,7 @@ test('the save method iterates over a collection of portal student data and call
 
     $this->service->save($event, $data);
 
-    assertDatabaseCount('raw_students', $data->count());
+    assertDatabaseCount(RawStudent::class, $data->count());
 });
 
 test('the process method iterates over a collection of raw students and calls the process action', function (): void {
@@ -131,9 +133,9 @@ test('the process method iterates over a collection of raw students and calls th
 
     $this->service->process($event);
 
-    assertDatabaseCount('students', $data->count());
+    assertDatabaseCount(Student::class, $data->count());
 
-    assertDatabaseHas('raw_students', [
+    assertDatabaseHas(RawStudent::class, [
         'import_event_id' => $event->id,
         'status' => RawDataStatus::PROCESSED,
     ]);
@@ -151,7 +153,7 @@ test('the process method sets status and message for failed processing', functio
 
     $this->service->process($event);
 
-    assertDatabaseHas('raw_students', [
+    assertDatabaseHas(RawStudent::class, [
         'import_event_id' => $event->id,
         'message' => 'No query results for model [App\\Models\\Department].',
         'status' => RawDataStatus::FAILED,
