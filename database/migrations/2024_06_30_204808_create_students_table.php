@@ -39,6 +39,7 @@ return new class extends Migration
             $table->string('status')->default(StudentStatus::NEW->value);
             $table->string('online_id')->nullable();
             $table->string('source')->default(RecordSource::LEGACY->value);
+            $table->string('photo_url')->nullable();
             $table->unsignedTinyInteger('course_count')->default(0);
             $table->unsignedTinyInteger('cus')->default(0);
             $table->unsignedSmallInteger('gps')->default(0);
