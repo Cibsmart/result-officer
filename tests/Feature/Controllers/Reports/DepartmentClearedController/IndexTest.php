@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use App\Data\Cleared\ClearedStudentListData;
 use App\Data\Department\DepartmentListData;
-use Inertia\Testing\AssertableInertia;
 use Tests\Factories\DepartmentFactory;
 use Tests\Factories\ProgramFactory;
 use Tests\Factories\StatusChangeEventFactory;
@@ -17,10 +16,8 @@ use function Pest\Laravel\get;
 it('loads the correct component', function (): void {
     $user = UserFactory::new()->createOne();
 
-    actingAs($user)
-        ->get(route('department.cleared.index'))
-        ->assertInertia(fn (AssertableInertia $inertia) => $inertia
-            ->component('reports/cleared/index/page', true));
+    actingAs($user)->get(route('department.cleared.index'))
+        ->assertHasComponent('reports/cleared/index/page');
 });
 
 it('redirects guest to login', function (): void {
