@@ -12,11 +12,12 @@ final class SessionData extends Data
     public function __construct(
         public readonly int $id,
         public readonly string $name,
+        public readonly string $slug,
     ) {
     }
 
     public static function fromModel(Session $session): self
     {
-        return new self(id: $session->id, name: $session->name);
+        return new self(id: $session->id, name: $session->name, slug: $session->slug);
     }
 }

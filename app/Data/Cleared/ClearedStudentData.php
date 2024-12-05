@@ -19,6 +19,7 @@ final class ClearedStudentData extends Data
         public StudentStatus $status,
         public readonly string $fcgpa,
         public readonly string $dateCleared,
+        public readonly string $slug,
     ) {
     }
 
@@ -42,6 +43,7 @@ final class ClearedStudentData extends Data
             status: $status,
             fcgpa: number_format($student->fcgpa, 2),
             dateCleared: $clearEvent->date->format('jS M, Y'),
+            slug: $student->slug,
         );
     }
 }

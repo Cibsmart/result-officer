@@ -12,11 +12,12 @@ final class SemesterData extends Data
     public function __construct(
         public readonly int $id,
         public readonly string $name,
+        public readonly string $slug,
     ) {
     }
 
     public static function fromModel(Semester $semester): self
     {
-        return new self(id: $semester->id, name: $semester->name);
+        return new self(id: $semester->id, name: $semester->name, slug: $semester->slug);
     }
 }

@@ -19,6 +19,7 @@ final class VettingStudentData extends Data
         public readonly StudentStatus $studentStatus,
         public readonly VettingEventStatus $vettingStatus,
         public readonly StatusColor $vettingStatusColor,
+        public readonly string $slug,
     ) {
     }
 
@@ -40,6 +41,7 @@ final class VettingStudentData extends Data
             studentStatus: $status,
             vettingStatus: $vettingStatus,
             vettingStatusColor: $vettingStatus->color(),
+            slug: $student->slug,
         );
     }
 }

@@ -14,6 +14,7 @@ use Tests\Factories\UserFactory;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseHas;
+use function Pest\Laravel\withoutExceptionHandling;
 
 covers([
     DownloadStudentsPageController::class,
@@ -27,10 +28,10 @@ beforeEach(function (): void {
 });
 
 it('renders the download student page', function (): void {
+    withoutExceptionHandling();
     $user = UserFactory::new()->createOne();
 
     $response = actingAs($user)->get(route('download.students.page'));
-
     $response->assertStatus(200);
 });
 
