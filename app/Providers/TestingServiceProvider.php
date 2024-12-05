@@ -49,5 +49,11 @@ final class TestingServiceProvider extends ServiceProvider
             fn (string $key, Data $data) => $this->assertInertia(fn (AssertableInertia $inertia) => $inertia
                 ->hasDataList($key, $data)),
         );
+
+        TestResponse::macro(
+            'assertHasComponent',
+            fn (string $path) => $this->assertInertia(fn (AssertableInertia $inertia) => $inertia
+                ->component($path, true)),
+        );
     }
 }
