@@ -30,6 +30,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Reports\CompositeSheetController;
 use App\Http\Controllers\Reports\DepartmentClearedController;
 use App\Http\Controllers\Result\ViewStudentResultController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\Summary\DepartmentResultSummaryController;
 use App\Http\Controllers\Vetting\VettingController;
 use App\Http\Middleware\ValidateYearParameter;
@@ -142,6 +143,8 @@ Route::middleware(['auth'])->group(static function (): void {
         ->middleware([ValidateYearParameter::class]);
     Route::post('department/cleared/students', [DepartmentClearedController::class, 'store'])
         ->name('department.cleared.store');
+
+    Route::get('students/{student?}', [StudentController::class, 'show'])->name('students.show');
 });
 
 require __DIR__ . '/auth.php';

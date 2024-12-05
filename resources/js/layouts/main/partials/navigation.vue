@@ -47,6 +47,13 @@ const navigation: NavigationItem[] = [
     ],
   },
   {
+    name: "Students",
+    href: "#",
+    icon: FolderIcon,
+    current: usePage().component.startsWith("students/"),
+    children: [{ name: "View", href: route("students.show"), current: route().current("students.show") }],
+  },
+  {
     name: "Results",
     href: "#",
     icon: FolderIcon,
