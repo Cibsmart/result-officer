@@ -40,8 +40,7 @@ const submit = () => {
           <SelectInput
             id="department"
             v-model="form.department"
-            :items="departments"
-            class="mt-1 block w-full" />
+            :items="departments" />
 
           <InputError :message="form.errors.department" />
         </div>
