@@ -4,7 +4,7 @@ import TextInput from "@/components/inputs/textInput.vue";
 import InputLabel from "@/components/inputs/inputLabel.vue";
 import InputError from "@/components/inputs/inputError.vue";
 import { useForm } from "@inertiajs/vue3";
-import BaseFormSection from "@/components/baseFormSection.vue";
+import BaseFormSection from "@/components/forms/baseFormSection.vue";
 
 const form = useForm({
   registration_number: "",

@@ -5,7 +5,8 @@ import InputError from "@/components/inputs/inputError.vue";
 import { useForm } from "@inertiajs/vue3";
 import SelectInput from "@/components/inputs/selectInput.vue";
 import { SelectItem } from "@/types";
-import BaseFormSection from "@/components/baseFormSection.vue";
+import BaseFormSection from "@/components/forms/baseFormSection.vue";
+import FormGroup from "@/components/forms/formGroup.vue";
 
 defineProps<{
   departments: SelectItem[];

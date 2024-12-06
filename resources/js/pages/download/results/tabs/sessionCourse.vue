@@ -6,7 +6,7 @@ import { useForm } from "@inertiajs/vue3";
 import SelectInput from "@/components/inputs/selectInput.vue";
 import SelectInputSearchable from "@/components/inputs/selectInputSearchable.vue";
 import { SelectItem } from "@/types";
-import BaseFormSection from "@/components/baseFormSection.vue";
+import BaseFormSection from "@/components/forms/baseFormSection.vue";
 
 defineProps<{
   sessions: SelectItem[];
