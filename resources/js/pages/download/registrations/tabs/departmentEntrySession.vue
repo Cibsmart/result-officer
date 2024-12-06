@@ -7,6 +7,7 @@ import SelectInput from "@/components/inputs/selectInput.vue";
 import { SelectItem } from "@/types";
 import BaseFormSection from "@/components/forms/baseFormSection.vue";
 import FormGroup from "@/components/forms/formGroup.vue";
+import AlignButton from "@/components/forms/alignButton.vue";
 
 defineProps<{
   departments: SelectItem[];
@@ -42,9 +43,7 @@ const submit = () => {
             :items="departments"
             class="mt-1 block w-full" />
 
-          <InputError
-            :message="form.errors.department"
-            class="mt-2" />
+          <InputError :message="form.errors.department" />
         </div>
 
         <div class="flex-1">
@@ -55,23 +54,18 @@ const submit = () => {
           <SelectInput
             id="session"
             v-model="form.session"
-            :items="sessions"
-            class="mt-1 block w-full" />
+            :items="sessions" />
 
-          <InputError
-            :message="form.errors.session"
-            class="mt-2" />
+          <InputError :message="form.errors.session" />
         </div>
 
-        <div class="flex-col">
-          <div class="sm:hidden md:block">&nbsp;</div>
-
+        <AlignButton>
           <PrimaryButton
             :disabled="form.processing"
             class="mt-1">
             Download
           </PrimaryButton>
-        </div>
+        </AlignButton>
       </FormGroup>
     </form>
   </BaseFormSection>
