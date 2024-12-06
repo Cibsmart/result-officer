@@ -38,8 +38,7 @@ const submit = () => {
           <SelectInput
             id="session"
             v-model="form.session"
-            :items="sessions"
-            class="mt-1 block w-full" />
+            :items="sessions" />
 
           <InputError
             :message="form.errors.session"
