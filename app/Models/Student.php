@@ -206,13 +206,11 @@ final class Student extends Model
 
     public function finalCumulativeGradePointAverage(): float
     {
-        $institution = Institution::first();
-
         if ($this->sessionEnrollments->count() === 0 && $this->creditUnitSum() === 0) {
             return 0.000;
         }
 
-        if ($institution->strategy === CumulativeComputationStrategy::SEMESTER) {
+        if (Institution::first()->strategy === CumulativeComputationStrategy::SEMESTER) {
             return round($this->cumulativeGradePointAverageSum() / $this->sessionEnrollments->count(), 3);
         }
 
