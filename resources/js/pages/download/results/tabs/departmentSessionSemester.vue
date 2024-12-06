@@ -6,6 +6,7 @@ import { useForm } from "@inertiajs/vue3";
 import SelectInput from "@/components/inputs/selectInput.vue";
 import { SelectItem } from "@/types";
 import BaseFormSection from "@/components/forms/baseFormSection.vue";
+import FormGroup from "@/components/forms/formGroup.vue";
 
 defineProps<{
   departments: SelectItem[];
@@ -31,53 +32,46 @@ const submit = () => {
     <form
       class="mt-6 space-y-6"
       @submit.prevent="submit">
-      <div>
-        <InputLabel
-          for="department"
-          value="Department" />
+      <FormGroup>
+        <div class="flex-1">
+          <InputLabel
+            for="department"
+            value="Department" />
 
-        <SelectInput
-          id="department"
-          v-model="form.department"
-          :items="departments"
-          class="mt-1 block w-full" />
+          <SelectInput
+            id="department"
+            v-model="form.department"
+            :items="departments" />
 
-        <InputError
-          :message="form.errors.department"
-          class="mt-2" />
-      </div>
+          <InputError :message="form.errors.department" />
+        </div>
 
-      <div>
-        <InputLabel
-          for="session"
-          value="Session" />
+        <div class="flex-none">
+          <InputLabel
+            for="session"
+            value="Session" />
 
-        <SelectInput
-          id="session"
-          v-model="form.session"
-          :items="sessions"
-          class="mt-1 block w-full" />
+          <SelectInput
+            id="session"
+            v-model="form.session"
+            :items="sessions" />
 
-        <InputError
-          :message="form.errors.session"
-          class="mt-2" />
-      </div>
+          <InputError :message="form.errors.session" />
+        </div>
 
-      <div>
-        <InputLabel
-          for="semester"
-          value="Session" />
+        <div class="flex-none">
+          <InputLabel
+            for="semester"
+            value="Session" />
 
-        <SelectInput
-          id="semester"
-          v-model="form.semester"
-          :items="semesters"
-          class="mt-1 block w-full" />
+          <SelectInput
+            id="semester"
+            v-model="form.semester"
+            :items="semesters" />
 
-        <InputError
-          :message="form.errors.semester"
-          class="mt-2" />
-      </div>
+          <InputError :message="form.errors.semester" />
+        </div>
+      </FormGroup>
 
       <div>
         <PrimaryButton :disabled="form.processing">Download</PrimaryButton>

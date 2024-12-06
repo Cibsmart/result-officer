@@ -7,6 +7,8 @@ import SelectInput from "@/components/inputs/selectInput.vue";
 import { SelectItem } from "@/types";
 import SelectInputSearchable from "@/components/inputs/selectInputSearchable.vue";
 import BaseFormSection from "@/components/forms/baseFormSection.vue";
+import FormGroup from "@/components/forms/formGroup.vue";
+import AlignButton from "@/components/forms/alignButton.vue";
 
 defineProps<{
   sessions: SelectItem[];
@@ -30,42 +32,38 @@ const submit = () => {
     <form
       class="mt-6 space-y-6"
       @submit.prevent="submit">
-      <div>
-        <InputLabel
-          for="session"
-          value="Session" />
+      <FormGroup>
+        <div class="flex-1">
+          <InputLabel
+            for="session"
+            value="Session" />
 
-        <SelectInput
-          id="session"
-          v-model="form.session"
-          :items="sessions"
-          class="mt-1 block w-full" />
+          <SelectInput
+            id="session"
+            v-model="form.session"
+            :items="sessions" />
 
-        <InputError
-          :message="form.errors.session"
-          class="mt-2" />
-      </div>
+          <InputError :message="form.errors.session" />
+        </div>
 
-      <div>
-        <InputLabel
-          for="course"
-          value="Course" />
+        <div class="flex-1">
+          <InputLabel
+            for="course"
+            value="Course" />
 
-        <SelectInputSearchable
-          id="course"
-          v-model="form.course"
-          :items="courses"
-          class="mt-1 block w-full"
-          name="courses" />
+          <SelectInputSearchable
+            id="course"
+            v-model="form.course"
+            :items="courses"
+            name="courses" />
 
-        <InputError
-          :message="form.errors.course"
-          class="mt-2" />
-      </div>
+          <InputError :message="form.errors.course" />
+        </div>
 
-      <div>
-        <PrimaryButton :disabled="form.processing">Download</PrimaryButton>
-      </div>
+        <AlignButton>
+          <PrimaryButton :disabled="form.processing">Download</PrimaryButton>
+        </AlignButton>
+      </FormGroup>
     </form>
   </BaseFormSection>
 </template>
