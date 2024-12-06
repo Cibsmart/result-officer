@@ -30,7 +30,7 @@ const submit = () => {
     <form
       class="mt-6 space-y-6"
       @submit.prevent="submit">
-      <div class="w-full items-start md:flex md:space-x-4">
+      <FormGroup>
         <div class="flex-1">
           <InputLabel
             for="department"
@@ -72,7 +72,7 @@ const submit = () => {
             Download
           </PrimaryButton>
         </div>
-      </div>
+      </FormGroup>
     </form>
   </BaseFormSection>
 </template>
