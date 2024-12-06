@@ -6,7 +6,7 @@ import BaseSection from "@/layouts/main/partials/baseSection.vue";
 import { BreadcrumbItem } from "@/types";
 import Breadcrumb from "@/components/breadcrumb.vue";
 import PrimaryButton from "@/components/buttons/primaryButton.vue";
-import BaseFormSection from "@/components/baseFormSection.vue";
+import BaseFormSection from "@/components/forms/baseFormSection.vue";
 import { computed } from "vue";
 import ImportEvents from "@/pages/download/components/importEvents.vue";
 

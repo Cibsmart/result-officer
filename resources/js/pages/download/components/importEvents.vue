@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import BaseFormSection from "@/components/baseFormSection.vue";
+import BaseFormSection from "@/components/forms/baseFormSection.vue";
 import SecondaryLink from "@/components/links/secondaryLink.vue";
 import StaticFeeds from "@/components/feeds/staticFeeds.vue";
 import ActiveFeeds from "@/components/feeds/activeFeeds.vue";

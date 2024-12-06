@@ -5,7 +5,7 @@ import InputError from "@/components/inputs/inputError.vue";
 import { useForm } from "@inertiajs/vue3";
 import SelectInput from "@/components/inputs/selectInput.vue";
 import { SelectItem } from "@/types";
-import BaseFormSection from "@/components/baseFormSection.vue";
+import BaseFormSection from "@/components/forms/baseFormSection.vue";
 
 defineProps<{
   departments: SelectItem[];
@@ -50,8 +50,8 @@ const submit = () => {
           <PrimaryButton
             :disabled="form.processing"
             class="mt-1"
-            >View</PrimaryButton
-          >
+            >View
+          </PrimaryButton>
         </div>
       </div>
     </form>
