@@ -6,6 +6,8 @@ import { useForm } from "@inertiajs/vue3";
 import SelectInput from "@/components/inputs/selectInput.vue";
 import { SelectItem } from "@/types";
 import BaseFormSection from "@/components/forms/baseFormSection.vue";
+import FormGroup from "@/components/forms/formGroup.vue";
+import AlignButton from "@/components/forms/alignButton.vue";
 
 defineProps<{
   departments: SelectItem[];
@@ -29,7 +31,7 @@ const submit = () => {
     <form
       class="mt-6 space-y-6"
       @submit.prevent="submit">
-      <div class="w-full items-start md:flex md:space-x-4">
+      <FormGroup>
         <div class="flex-1">
           <InputLabel
             for="department"
@@ -62,16 +64,14 @@ const submit = () => {
             class="mt-2" />
         </div>
 
-        <div class="flex-col">
-          <div class="sm:hidden md:block">&nbsp;</div>
-
+        <AlignButton>
           <PrimaryButton
             :disabled="form.processing"
             class="mt-1">
             Download
           </PrimaryButton>
-        </div>
-      </div>
+        </AlignButton>
+      </FormGroup>
     </form>
   </BaseFormSection>
 </template>
