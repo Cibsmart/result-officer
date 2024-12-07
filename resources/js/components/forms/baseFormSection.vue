@@ -3,21 +3,14 @@ defineProps<{
   header?: string;
   description?: string;
 }>();
+import SectionHeader from "@/components/sectionHeader.vue";
 </script>
 
 <template>
   <section>
-    <header>
-      <template v-if="header">
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ header }}</h2>
-      </template>
-
-      <template v-if="description">
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-          {{ description }}
-        </p>
-      </template>
-    </header>
+    <SectionHeader :description="description">
+      {{ header }}
+    </SectionHeader>
 
     <slot />
   </section>
