@@ -19,6 +19,6 @@ test('transcript pdf page loads', function (): void {
     $student = createStudentWithResults();
 
     actingAs($user)
-        ->get(route('results.transcript', ['student' => $student->id]))
+        ->get(route('results.transcript', ['student' => $student]))
         ->assertOk();
 });
