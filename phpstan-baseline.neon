@@ -21,6 +21,31 @@ parameters:
 			path: app/Data/Import/ImportEventData.php
 
 		-
+			message: "#^Property App\\\\Models\\\\Student\\:\\:\\$date_of_birth \\(string\\|null\\) does not accept Carbon\\\\Carbon\\|null\\.$#"
+			count: 1
+			path: app/Data/Models/StudentModelData.php
+
+		-
+			message: "#^Property App\\\\Models\\\\Student\\:\\:\\$entry_mode \\(string\\) does not accept App\\\\Enums\\\\EntryMode\\.$#"
+			count: 1
+			path: app/Data/Models/StudentModelData.php
+
+		-
+			message: "#^Property App\\\\Models\\\\Student\\:\\:\\$gender \\(string\\) does not accept App\\\\Enums\\\\Gender\\.$#"
+			count: 1
+			path: app/Data/Models/StudentModelData.php
+
+		-
+			message: "#^Property App\\\\Models\\\\Student\\:\\:\\$source \\(string\\) does not accept App\\\\Enums\\\\RecordSource\\.$#"
+			count: 1
+			path: app/Data/Models/StudentModelData.php
+
+		-
+			message: "#^Property App\\\\Models\\\\Student\\:\\:\\$status \\(string\\) does not accept App\\\\Enums\\\\StudentStatus\\.$#"
+			count: 1
+			path: app/Data/Models/StudentModelData.php
+
+		-
 			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Program\\>\\:\\:tap\\(\\) expects callable\\(Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Program\\>\\)\\: mixed, App\\\\Scopes\\\\ActiveScope given\\.$#"
 			count: 1
 			path: app/Data/Program/ProgramListData.php
@@ -86,27 +111,7 @@ parameters:
 			path: app/Models/Result.php
 
 		-
-			message: "#^Property App\\\\Models\\\\Student\\:\\:\\$date_of_birth \\(string\\|null\\) does not accept Carbon\\\\Carbon\\|null\\.$#"
-			count: 1
-			path: app/Models/Student.php
-
-		-
-			message: "#^Property App\\\\Models\\\\Student\\:\\:\\$entry_mode \\(string\\) does not accept App\\\\Enums\\\\EntryMode\\.$#"
-			count: 1
-			path: app/Models/Student.php
-
-		-
-			message: "#^Property App\\\\Models\\\\Student\\:\\:\\$gender \\(string\\) does not accept App\\\\Enums\\\\Gender\\.$#"
-			count: 1
-			path: app/Models/Student.php
-
-		-
-			message: "#^Property App\\\\Models\\\\Student\\:\\:\\$source \\(string\\) does not accept App\\\\Enums\\\\RecordSource\\:\\:PORTAL\\.$#"
-			count: 1
-			path: app/Models/Student.php
-
-		-
-			message: "#^Property App\\\\Models\\\\Student\\:\\:\\$status \\(string\\) does not accept App\\\\Enums\\\\StudentStatus\\:\\:NEW\\.$#"
+			message: "#^Parameter \\#1 \\$status of static method App\\\\Enums\\\\StudentStatus\\:\\:canBeCleared\\(\\) expects App\\\\Enums\\\\StudentStatus, string given\\.$#"
 			count: 1
 			path: app/Models/Student.php
 
