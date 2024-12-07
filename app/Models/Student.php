@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Data\Models\StudentModelData;
 use App\Enums\CumulativeComputationStrategy;
 use App\Enums\EntryMode;
 use App\Enums\Gender;
@@ -11,7 +12,6 @@ use App\Enums\ProgramDuration;
 use App\Enums\RecordSource;
 use App\Enums\StudentStatus;
 use App\Enums\VettingEventStatus;
-use App\Values\DateValue;
 use App\Values\RegistrationNumber;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -21,38 +21,14 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
 
 final class Student extends Model
 {
     use SoftDeletes;
 
-    /** @throws \Exception */
     public static function createFromRawStudent(RawStudent $rawStudent): self
     {
-        $registrationNumber = RegistrationNumber::new($rawStudent->registration_number);
-        $department = Department::getUsingOnlineId($rawStudent->department_id);
-        $dateOfBirth = DateValue::fromString($rawStudent->date_of_birth);
-
-        $student = new self();
-        $student->date_of_birth = $dateOfBirth->value;
-        $student->email = $rawStudent->email;
-        $student->entry_level_id = Level::getUsingName($rawStudent->entry_level)->id;
-        $student->entry_mode = EntryMode::get($rawStudent->entry_mode);
-        $student->entry_session_id = Session::getUsingName($rawStudent->entry_session)->id;
-        $student->first_name = $rawStudent->first_name;
-        $student->gender = Gender::from($rawStudent->gender);
-        $student->jamb_registration_number = $rawStudent->jamb_registration_number;
-        $student->last_name = $rawStudent->last_name;
-        $student->online_id = $rawStudent->online_id;
-        $student->other_names = $rawStudent->other_names;
-        $student->phone_number = $rawStudent->phone_number;
-        $student->program_id = Program::getFromDepartmentAndName($department, $rawStudent->option)->id;
-        $student->registration_number = $registrationNumber->value;
-        $student->source = RecordSource::PORTAL;
-        $student->local_government_id = LocalGovernment::getUsingName($rawStudent->local_government)->id;
-        $student->status = StudentStatus::NEW;
-        $student->slug = Str::of($registrationNumber->value)->replace('/', '-')->slug();
+        $student = StudentModelData::fromRawStudent($rawStudent)->getModel();
 
         $student->save();
 
