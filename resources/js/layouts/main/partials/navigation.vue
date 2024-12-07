@@ -4,6 +4,7 @@ import { ChevronRightIcon, ArrowDownTrayIcon } from "@heroicons/vue/20/solid";
 import { NavigationItem } from "@/types";
 import {
   HomeIcon,
+  UserIcon,
   FolderIcon,
   ChartPieIcon,
   DocumentCheckIcon,
@@ -49,7 +50,7 @@ const navigation: NavigationItem[] = [
   {
     name: "Students",
     href: "#",
-    icon: FolderIcon,
+    icon: UserIcon,
     current: usePage().component.startsWith("students/"),
     children: [{ name: "View", href: route("students.show"), current: route().current("students.show") }],
   },
