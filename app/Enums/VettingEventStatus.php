@@ -12,6 +12,11 @@ enum VettingEventStatus: string
     case FAILED = 'failed';
     case PASSED = 'passed';
 
+    public static function passed(self $status): bool
+    {
+        return $status === self::PASSED;
+    }
+
     public function color(): StatusColor
     {
         return match ($this) {
