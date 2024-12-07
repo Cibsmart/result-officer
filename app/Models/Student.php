@@ -52,7 +52,7 @@ final class Student extends Model
         $student->source = RecordSource::PORTAL;
         $student->local_government_id = LocalGovernment::getUsingName($rawStudent->local_government)->id;
         $student->status = StudentStatus::NEW;
-        $student->slug = Str::slug($registrationNumber->value);
+        $student->slug = Str::of($registrationNumber->value)->replace('/', '-')->slug();
 
         $student->save();
 
