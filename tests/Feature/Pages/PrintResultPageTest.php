@@ -16,7 +16,7 @@ test('view result form loads', function (): void {
     $summary = "CURRENT FINAL CGPA: $fcpga ($degreeClass->value)";
 
     actingAs($user)
-        ->get(route('results.print', ['student' => $student->id]))
+        ->get(route('results.print', ['student' => $student]))
         ->assertStatus(200)
         ->assertViewIs('pdfs.results.view')
         ->assertSeeText($student->registration_number)
