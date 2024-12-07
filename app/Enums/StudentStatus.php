@@ -31,4 +31,9 @@ enum StudentStatus: string
     {
         return [self::CLEARED, self::GRADUATED];
     }
+
+    public static function canBeCleared(self $status): bool
+    {
+        return in_array($status, self::vettableStates(), true);
+    }
 }
