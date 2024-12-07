@@ -145,6 +145,7 @@ Route::middleware(['auth'])->group(static function (): void {
         ->name('department.cleared.store');
 
     Route::get('students/{student?}', [StudentController::class, 'show'])->name('students.show');
+    Route::post('students', [StudentController::class, 'store'])->name('students.store');
 });
 
 require __DIR__ . '/auth.php';
