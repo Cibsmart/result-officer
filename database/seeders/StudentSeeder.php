@@ -84,7 +84,7 @@ final class StudentSeeder extends Seeder
                 'other_names' => $student['other_names'],
                 'program_id' => $program->id,
                 'registration_number' => $student['registration_number'],
-                'slug' => Str::slug($student['registration_number']),
+                'slug' => Str::of($student['registration_number'])->replace('/', '-')->slug(),
             ]);
         }
     }
