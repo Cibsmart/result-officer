@@ -304,6 +304,9 @@ declare namespace App.Data.Shared {
   };
 }
 declare namespace App.Data.Students {
+  export type StudentComprehensiveData = {
+    basic: App.Data.Students.StudentData;
+  };
   export type StudentData = {
     id: number;
     registrationNumber: string;
@@ -485,6 +488,11 @@ declare namespace App.ViewModels.Results {
   export type ResultViewPage = {
     student: App.Data.Students.StudentData;
     results: App.Data.Results.StudentResultData;
+  };
+}
+declare namespace App.ViewModels.Students {
+  export type StudentShowPage = {
+    student: App.Data.Students.StudentComprehensiveData;
   };
 }
 declare namespace App.ViewModels.Summary {
