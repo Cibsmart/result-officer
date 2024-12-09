@@ -3,6 +3,7 @@ import BaseTabPanel from "@/components/tabs/baseTabPanel.vue";
 import BaseTabs from "@/components/tabs/baseTabs.vue";
 import BasicInformation from "@/pages/students/show/partials/tabs/basicInformation.vue";
 import StudentPageHeader from "@/pages/students/show/partials/studentPageHeader.vue";
+import ResultInformation from "@/pages/students/show/partials/tabs/resultInformation.vue";
 
 const tabs = [
   { name: "Details", href: "#", current: true },
@@ -25,7 +26,9 @@ const selectedIndex = 0;
           <BasicInformation />
         </BaseTabPanel>
 
-        <BaseTabPanel>Tab 2</BaseTabPanel>
+        <BaseTabPanel>
+          <ResultInformation />
+        </BaseTabPanel>
 
         <BaseTabPanel>Tab 3</BaseTabPanel>
       </BaseTabs>
