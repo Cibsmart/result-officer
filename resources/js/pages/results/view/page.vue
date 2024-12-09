@@ -33,7 +33,7 @@ const hasResults = computed(() => props.results.sessionEnrollments.length > 0);
 
   <BasePage>
     <BaseSection>
-      <div class="rounded px-4 py-4 sm:px-6 lg:px-8 dark:bg-gray-900">
+      <div class="">
         <div class="sm:flex sm:items-center">
           <div class="sm:flex-auto">
             <h1 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">Student Results</h1>

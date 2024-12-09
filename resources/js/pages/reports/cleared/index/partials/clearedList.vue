@@ -12,7 +12,7 @@ const hasRows = computed(() => props.students.data.length > 0);
 </script>
 
 <template>
-  <div class="rounded px-4 py-4 sm:px-6 lg:px-8 dark:bg-gray-900">
+  <div>
     <div
       class="mt-1 divide-y divide-solid divide-gray-300 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg dark:divide-gray-600 dark:ring-gray-600">
       <div class="grid grid-flow-col">
