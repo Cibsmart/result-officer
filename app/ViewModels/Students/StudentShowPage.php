@@ -14,6 +14,7 @@ final class StudentShowPage extends Data
     public function __construct(
         #[TypeScriptType(StudentComprehensiveData::class)]
         public readonly Closure $student,
+        public readonly int $selectedIndex = 0,
     ) {
     }
 }

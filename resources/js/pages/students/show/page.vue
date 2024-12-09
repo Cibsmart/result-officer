@@ -11,6 +11,7 @@ import { computed } from "vue";
 
 const props = defineProps<{
   student: App.Data.Students.StudentComprehensiveData;
+  selectedIndex: number;
 }>();
 
 const showForm = computed(() => props.student === null);
@@ -33,7 +34,7 @@ const pages: BreadcrumbItem[] = [
     </BaseSection>
 
     <BaseSection v-else>
-      <StudentDetails />
+      <StudentDetails :selectedIndex="selectedIndex" />
     </BaseSection>
   </BasePage>
 </template>
