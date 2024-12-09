@@ -16,7 +16,7 @@ const form = useForm({
 });
 
 const submit = () => {
-  form.get(route("vetting.index", { department: form.department }));
+  form.post(route("vetting.store"));
 };
 </script>
 
