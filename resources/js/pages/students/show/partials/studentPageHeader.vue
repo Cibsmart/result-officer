@@ -1,13 +1,8 @@
 <script lang="ts" setup>
 import Badge from "@/components/badge.vue";
 import SectionHeader from "@/components/sectionHeader.vue";
-import HamburgerMenu from "@/components/hamburgerMenu.vue";
-import { NavigationItem } from "@/types";
-
-const menus: NavigationItem[] = [
-  { name: "Edit", href: "#" },
-  { name: "Delete", href: "#" },
-];
+import HamburgerMenu from "@/components/hamburger/hamburgerMenu.vue";
+import HamburgerMenuItem from "@/components/hamburger/hamburgerMenuItem.vue";
 </script>
 
 <template>
@@ -36,7 +31,15 @@ const menus: NavigationItem[] = [
     <div class="mt-2 flex items-center justify-between sm:ml-6 sm:shrink-0 sm:justify-start">
       <Badge color="green">Active</Badge>
 
-      <HamburgerMenu :menus="menus" />
+      <HamburgerMenu>
+        <HamburgerMenuItem
+          href="#"
+          name="Edit" />
+
+        <HamburgerMenuItem
+          href="#"
+          name="Delete" />
+      </HamburgerMenu>
     </div>
   </div>
 </template>
