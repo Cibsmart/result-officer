@@ -132,6 +132,7 @@ Route::middleware(['auth'])->group(static function (): void {
 
     Route::prefix('vetting')->group(static function (): void {
         Route::get('{department?}', [VettingController::class, 'index'])->name('vetting.index');
+        Route::post('', [VettingController::class, 'store'])->name('vetting.store');
         Route::get('create/{student}', [VettingController::class, 'create'])->name('vetting.create');
     });
 

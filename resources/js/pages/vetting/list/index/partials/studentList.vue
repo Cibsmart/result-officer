@@ -25,13 +25,13 @@ const registrationNumber = ref("");
 const hasRows = computed(() => props.data.graduands.length > 0);
 
 const clearForm = useForm({});
-const viewForm = useForm({ student: 0 });
+const viewForm = useForm({ student: "" });
 
 const closeDrawer = () => (showReport.value = false);
 const openDrawer = (student: App.Data.Vetting.VettingStudentData) => {
   registrationNumber.value = student.registrationNumber;
 
-  viewForm.student = student.id;
+  viewForm.student = student.slug;
 
   viewForm.get(usePage().url, { only: ["steps"], preserveScroll: true, preserveState: true });
 

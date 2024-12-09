@@ -61,7 +61,7 @@ const vetted = computed(() => props.student.vettingStatus !== "pending");
 
       <PrimaryLinkSmall
         v-else
-        :href="route('vetting.create', { student: student.id })">
+        :href="route('vetting.create', { student: student })">
         vet
       </PrimaryLinkSmall>
     </td>
