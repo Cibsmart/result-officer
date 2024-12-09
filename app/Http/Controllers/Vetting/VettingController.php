@@ -24,7 +24,7 @@ final class VettingController
 {
     public function index(Request $request, ?Department $department = null): Response
     {
-        $student = Student::find($request->query('student'));
+        $student = Student::query()->where('slug', $request->query('student'))->first();
 
         return Inertia::render('vetting/list/index/page', new VettingIndexPage(
             departments: fn () => DepartmentListData::new(),
@@ -43,5 +43,18 @@ final class VettingController
         Artisan::queue('rp:vet', ['vettingEventId' => $vettingEvent->id]);
 
         return redirect()->back()->success("Vetting Started for {$student->registration_number}");
+    }
+
+    public function store(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'department.id' => ['required', 'integer', 'exists:departments,id'],
+        ]);
+
+        $department = Department::query()
+            ->where('id', $validated['department']['id'])
+            ->first();
+
+        return redirect()->to(route('vetting.index', ['department' => $department]));
     }
 }
