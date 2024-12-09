@@ -1,8 +1,13 @@
 <script lang="ts" setup>
 import Badge from "@/components/badge.vue";
 import SectionHeader from "@/components/sectionHeader.vue";
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
-import { EllipsisVerticalIcon } from "@heroicons/vue/20/solid";
+import HamburgerMenu from "@/components/hamburgerMenu.vue";
+import { NavigationItem } from "@/types";
+
+const menus: NavigationItem[] = [
+  { name: "Edit", href: "#" },
+  { name: "Delete", href: "#" },
+];
 </script>
 
 <template>
@@ -31,46 +36,7 @@ import { EllipsisVerticalIcon } from "@heroicons/vue/20/solid";
     <div class="mt-2 flex items-center justify-between sm:ml-6 sm:shrink-0 sm:justify-start">
       <Badge color="green">Active</Badge>
 
-      <Menu
-        as="div"
-        class="relative ml-3 inline-block text-left">
-        <div>
-          <MenuButton
-            class="-my-2 flex items-center rounded-full bg-white p-2 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:text-gray-200 dark:hover:text-gray-50">
-            <span class="sr-only">Open options</span>
-
-            <EllipsisVerticalIcon
-              aria-hidden="true"
-              class="size-5" />
-          </MenuButton>
-        </div>
-
-        <transition
-          enter-active-class="transition ease-out duration-100"
-          enter-from-class="transform opacity-0 scale-95"
-          enter-to-class="transform opacity-100 scale-100"
-          leave-active-class="transition ease-in duration-75"
-          leave-from-class="transform opacity-100 scale-100"
-          leave-to-class="transform opacity-0 scale-95">
-          <MenuItems
-            class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none dark:bg-gray-900 dark:ring-white/20">
-            <div class="py-1">
-              <MenuItem v-slot="{ active }">
-                <a
-                  :class="[
-                    active
-                      ? 'bg-gray-100 text-gray-900 outline-none dark:bg-gray-800 dark:text-white'
-                      : 'text-gray-700 dark:text-gray-200',
-                  ]"
-                  class="flex justify-between px-4 py-2 text-sm"
-                  href="#">
-                  <span>Edit</span>
-                </a>
-              </MenuItem>
-            </div>
-          </MenuItems>
-        </transition>
-      </Menu>
+      <HamburgerMenu :menus="menus" />
     </div>
   </div>
 </template>
