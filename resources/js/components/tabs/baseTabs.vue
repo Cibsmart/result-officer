@@ -23,7 +23,7 @@ const updateTab = (index: number) => {
 </script>
 
 <template>
-  <div class="rounded-md border border-gray-400 dark:border-gray-600">
+  <div class="rounded-md border border-gray-300 dark:border-gray-600">
     <div class="grid grid-cols-1 sm:hidden">
       <select
         :value="indexSelected"
