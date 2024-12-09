@@ -2,10 +2,7 @@
 import { MenuItem } from "@headlessui/vue";
 import { Link } from "@inertiajs/vue3";
 
-defineProps<{
-  name: string;
-  href: string;
-}>();
+defineProps<{ href: string }>();
 </script>
 
 <template>
@@ -18,7 +15,9 @@ defineProps<{
       ]"
       :href="href"
       class="flex justify-between px-4 py-2 text-sm">
-      <span>{{ name }}</span>
+      <span>
+        <slot />
+      </span>
     </Link>
   </MenuItem>
 </template>
