@@ -34,6 +34,19 @@ final class Department extends Model
         return self::query()->where('online_id', $departmentOnlineId)->firstOrFail();
     }
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    /** @return array<string, string> */
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'bool',
+        ];
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Faculty, \App\Models\Department> */
     public function faculty(): BelongsTo
     {
@@ -75,14 +88,6 @@ final class Department extends Model
         $department->save();
 
         return $department;
-    }
-
-    /** @return array<string, string> */
-    protected function casts(): array
-    {
-        return [
-            'is_active' => 'bool',
-        ];
     }
 
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */

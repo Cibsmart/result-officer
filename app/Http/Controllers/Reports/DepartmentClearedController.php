@@ -33,10 +33,12 @@ final class DepartmentClearedController
 
     public function store(ClearedIndexRequest $request): RedirectResponse
     {
-        $department = $request->input('department');
+        $departmentId = $request->input('department.id');
         $year = $request->input('year');
 
+        $department = Department::query()->findOrFail($departmentId);
+
         return redirect()->route('department.cleared.index',
-            ['department' => $department['id'], 'year' => $year['id']]);
+            ['department' => $department, 'year' => $year['id']]);
     }
 }
