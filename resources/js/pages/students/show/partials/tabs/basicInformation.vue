@@ -5,13 +5,13 @@ import DataItem from "@/components/data/dataItem.vue";
 
 <template>
   <div>
-    <div class="px-4 sm:px-0">
+    <div class="">
       <h3 class="text-base/7 font-semibold text-gray-900 dark:text-white">Student Information</h3>
 
       <p class="mt-1 max-w-2xl text-sm/6 text-gray-500 dark:text-gray-400">Personal and program details</p>
     </div>
 
-    <div class="mt-6 border-t border-gray-100 dark:border-white/10">
+    <div class="mt-2 border-t border-gray-200 dark:border-white/10">
       <DataList>
         <DataItem title="Full Name">IFEBUDE BARNABAS CHUKWUDIKE</DataItem>
 
