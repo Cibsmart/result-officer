@@ -48,6 +48,7 @@ final class VettingController
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
+            'department' => ['required', 'array'],
             'department.id' => ['required', 'integer', 'exists:departments,id'],
         ]);
 
