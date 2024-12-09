@@ -1,12 +1,18 @@
 <script lang="ts" setup>
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
-import { EllipsisVerticalIcon } from "@heroicons/vue/20/solid";
+import { EllipsisVerticalIcon, EllipsisHorizontalIcon } from "@heroicons/vue/20/solid";
 import { NavigationItem } from "@/types";
 import { Link } from "@inertiajs/vue3";
 
-defineProps<{
-  menus: NavigationItem[];
-}>();
+withDefaults(
+  defineProps<{
+    menus: NavigationItem[];
+    orientation?: "vertical" | "horizontal";
+  }>(),
+  {
+    orientation: "vertical",
+  },
+);
 </script>
 
 <template>
@@ -18,7 +24,13 @@ defineProps<{
         class="-my-2 flex items-center rounded-full bg-white p-2 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:text-gray-200 dark:hover:text-gray-50">
         <span class="sr-only">Open options</span>
 
+        <EllipsisHorizontalIcon
+          v-if="orientation === 'horizontal'"
+          aria-hidden="true"
+          class="size-5" />
+
         <EllipsisVerticalIcon
+          v-else
           aria-hidden="true"
           class="size-5" />
       </MenuButton>
