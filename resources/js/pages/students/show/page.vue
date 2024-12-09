@@ -7,6 +7,13 @@ import BasePage from "@/layouts/main/partials/basePage.vue";
 import { Head } from "@inertiajs/vue3";
 import StudentShowForm from "@/pages/students/show/partials/studentShowForm.vue";
 import StudentDetails from "@/pages/students/show/partials/studentDetails.vue";
+import { computed } from "vue";
+
+const props = defineProps<{
+  student: App.Data.Students.StudentComprehensiveData;
+}>();
+
+const showForm = computed(() => props.student === null);
 
 const pages: BreadcrumbItem[] = [
   { name: "Student", href: route("students.show"), current: route().current("students.show") },
@@ -21,11 +28,11 @@ const pages: BreadcrumbItem[] = [
   <BaseHeader>Student Page</BaseHeader>
 
   <BasePage>
-    <BaseSection>
+    <BaseSection v-if="showForm">
       <StudentShowForm />
     </BaseSection>
 
-    <BaseSection>
+    <BaseSection v-else>
       <StudentDetails />
     </BaseSection>
   </BasePage>
