@@ -5,13 +5,15 @@ import BasicInformation from "@/pages/students/show/partials/tabs/basicInformati
 import StudentPageHeader from "@/pages/students/show/partials/studentPageHeader.vue";
 import ResultInformation from "@/pages/students/show/partials/tabs/resultInformation.vue";
 
+defineProps<{
+  selectedIndex: number;
+}>();
+
 const tabs = [
   { name: "Details", href: "#", current: true },
   { name: "Results", href: "#", current: false },
   { name: "History", href: "#", current: false },
 ];
-
-const selectedIndex = 0;
 </script>
 
 <template>
