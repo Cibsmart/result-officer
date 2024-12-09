@@ -17,7 +17,7 @@ const selectedIndex = 0;
   <div class="relative pb-5 sm:pb-0">
     <StudentPageHeader />
 
-    <div class="broder mt-3 border-gray-400 sm:mt-4">
+    <div class="mt-3 sm:mt-4">
       <BaseTabs
         :selectedIndex="selectedIndex"
         :tabs="tabs">
