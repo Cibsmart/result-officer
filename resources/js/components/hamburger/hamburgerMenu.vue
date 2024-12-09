@@ -1,12 +1,9 @@
 <script lang="ts" setup>
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
+import { Menu, MenuButton, MenuItems } from "@headlessui/vue";
 import { EllipsisVerticalIcon, EllipsisHorizontalIcon } from "@heroicons/vue/20/solid";
-import { NavigationItem } from "@/types";
-import { Link } from "@inertiajs/vue3";
 
 withDefaults(
   defineProps<{
-    menus: NavigationItem[];
     orientation?: "vertical" | "horizontal";
   }>(),
   {
@@ -46,22 +43,7 @@ withDefaults(
       <MenuItems
         class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none dark:bg-gray-900 dark:ring-white/20">
         <div class="py-1">
-          <template
-            v-for="(menu, index) in menus"
-            :key="index">
-            <MenuItem v-slot="{ active }">
-              <Link
-                :class="[
-                  active
-                    ? 'bg-gray-100 text-gray-900 outline-none dark:bg-gray-800 dark:text-white'
-                    : 'text-gray-700 dark:text-gray-200',
-                ]"
-                :href="menu.href"
-                class="flex justify-between px-4 py-2 text-sm">
-                <span>{{ menu.name }}</span>
-              </Link>
-            </MenuItem>
-          </template>
+          <slot />
         </div>
       </MenuItems>
     </transition>
