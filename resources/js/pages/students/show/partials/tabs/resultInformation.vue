@@ -1,4 +1,7 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import HamburgerMenu from "@/components/hamburger/hamburgerMenu.vue";
+import HamburgerMenuItem from "@/components/hamburger/hamburgerMenuItem.vue";
+</script>
 
 <template>
   <div class="-mx-4 mt-5 px-3 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg dark:ring-gray-600">
@@ -57,6 +60,12 @@
               scope="col">
               GPA
             </th>
+
+            <th
+              class="hidden px-3 py-2 text-center text-sm font-semibold text-gray-900 lg:table-cell dark:text-white"
+              scope="col">
+              Actions
+            </th>
           </tr>
         </thead>
 
@@ -102,9 +111,7 @@
 
             <td
               class="border-t border-gray-200 px-3 py-2 text-center text-sm text-gray-700 dark:border-gray-700 dark:text-gray-300">
-              <div class="sm:hidden">A</div>
-
-              <div class="hidden sm:block">A</div>
+              A
             </td>
 
             <td
@@ -114,6 +121,15 @@
 
             <td
               class="hidden border-t border-gray-200 px-3 py-2 text-center text-sm text-gray-700 lg:table-cell dark:border-gray-700 dark:text-gray-300" />
+
+            <td
+              class="border-t border-gray-200 px-3 py-2 text-center text-sm text-gray-700 dark:border-gray-700 dark:text-gray-300">
+              <HamburgerMenu orientation="horizontal">
+                <HamburgerMenuItem href="#">Edit</HamburgerMenuItem>
+
+                <HamburgerMenuItem href="#">Delete</HamburgerMenuItem>
+              </HamburgerMenu>
+            </td>
           </tr>
 
           <tr>
@@ -143,6 +159,9 @@
               class="hidden border-t border-gray-200 px-3 py-2 text-center text-sm font-bold text-gray-700 lg:table-cell dark:border-gray-700 dark:text-gray-300">
               5
             </td>
+
+            <td
+              class="hidden border-t border-gray-200 px-3 py-2 text-center text-sm font-bold text-gray-700 lg:table-cell dark:border-gray-700 dark:text-gray-300" />
           </tr>
         </tbody>
       </table>
@@ -209,6 +228,12 @@
               scope="col">
               GPA
             </th>
+
+            <th
+              class="hidden px-3 py-2 text-center text-sm font-semibold text-gray-900 lg:table-cell dark:text-white"
+              scope="col">
+              Actions
+            </th>
           </tr>
         </thead>
 
@@ -266,6 +291,15 @@
 
             <td
               class="hidden border-t border-gray-200 px-3 py-2 text-center text-sm text-gray-700 lg:table-cell dark:border-gray-700 dark:text-gray-300" />
+
+            <td
+              class="hidden border-t border-gray-200 px-3 py-2 text-center text-sm text-gray-700 lg:table-cell dark:border-gray-700 dark:text-gray-300">
+              <HamburgerMenu orientation="horizontal">
+                <HamburgerMenuItem href="#">Edit</HamburgerMenuItem>
+
+                <HamburgerMenuItem href="#">Delete</HamburgerMenuItem>
+              </HamburgerMenu>
+            </td>
           </tr>
 
           <tr>
@@ -295,6 +329,9 @@
               class="hidden border-t border-gray-200 px-3 py-2 text-center text-sm font-bold text-gray-700 lg:table-cell dark:border-gray-700 dark:text-gray-300">
               5
             </td>
+
+            <td
+              class="hidden border-t border-gray-200 px-3 py-2 text-center text-sm font-bold text-gray-700 lg:table-cell dark:border-gray-700 dark:text-gray-300" />
           </tr>
         </tbody>
       </table>

@@ -493,6 +493,7 @@ declare namespace App.ViewModels.Results {
 declare namespace App.ViewModels.Students {
   export type StudentShowPage = {
     student: App.Data.Students.StudentComprehensiveData;
+    selectedIndex: number;
   };
 }
 declare namespace App.ViewModels.Summary {
