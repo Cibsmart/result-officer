@@ -32,13 +32,9 @@ import HamburgerMenuItem from "@/components/hamburger/hamburgerMenuItem.vue";
       <Badge color="green">Active</Badge>
 
       <HamburgerMenu>
-        <HamburgerMenuItem
-          href="#"
-          name="Edit" />
+        <HamburgerMenuItem href="#">Edit</HamburgerMenuItem>
 
-        <HamburgerMenuItem
-          href="#"
-          name="Delete" />
+        <HamburgerMenuItem href="#">Delete</HamburgerMenuItem>
       </HamburgerMenu>
     </div>
   </div>
