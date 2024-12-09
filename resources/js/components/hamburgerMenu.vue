@@ -2,6 +2,7 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import { EllipsisVerticalIcon } from "@heroicons/vue/20/solid";
 import { NavigationItem } from "@/types";
+import { Link } from "@inertiajs/vue3";
 
 defineProps<{
   menus: NavigationItem[];
@@ -37,7 +38,7 @@ defineProps<{
             v-for="(menu, index) in menus"
             :key="index">
             <MenuItem v-slot="{ active }">
-              <a
+              <Link
                 :class="[
                   active
                     ? 'bg-gray-100 text-gray-900 outline-none dark:bg-gray-800 dark:text-white'
@@ -46,7 +47,7 @@ defineProps<{
                 :href="menu.href"
                 class="flex justify-between px-4 py-2 text-sm">
                 <span>{{ menu.name }}</span>
-              </a>
+              </Link>
             </MenuItem>
           </template>
         </div>
