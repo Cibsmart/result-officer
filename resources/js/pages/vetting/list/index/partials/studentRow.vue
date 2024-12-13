@@ -4,6 +4,7 @@ import PrimaryLinkSmall from "@/components/links/primaryLinkSmall.vue";
 import Badge from "@/components/badge.vue";
 import SecondaryButtonSmall from "@/components/buttons/secondaryButtonSmall.vue";
 import PrimaryButtonSmall from "@/components/buttons/primaryButtonSmall.vue";
+import BaseTD from "@/components/tables/baseTD.vue";
 
 const props = defineProps<{
   index: number;
@@ -20,50 +21,41 @@ const vetted = computed(() => props.student.vettingStatus !== "pending");
 </script>
 
 <template>
-  <tr>
-    <td
-      class="hidden border-t border-gray-200 px-3 py-2 text-center text-sm text-gray-700 lg:table-cell dark:border-gray-700 dark:text-gray-300">
-      {{ index + 1 }}
-    </td>
+  <BaseTD>{{ index + 1 }}</BaseTD>
 
-    <td class="relative border-t border-gray-200 py-2 text-left text-sm dark:border-gray-700">
-      {{ student.name }}
-    </td>
+  <BaseTD
+    mobile
+    position="left">
+    {{ student.name }}
+  </BaseTD>
 
-    <td class="relative border-t border-gray-200 py-2 text-center text-sm dark:border-gray-700">
-      {{ student.registrationNumber }}
-    </td>
+  <BaseTD>{{ student.registrationNumber }}</BaseTD>
 
-    <td class="relative border-t border-gray-200 py-2 text-center text-sm dark:border-gray-700">
-      <Badge :color="student.vettingStatusColor">
-        {{ student.vettingStatus }}
-      </Badge>
-    </td>
+  <BaseTD>
+    <Badge :color="student.vettingStatusColor">{{ student.vettingStatus }}</Badge>
+  </BaseTD>
 
-    <td
-      class="border-t border-gray-200 px-3 py-2 text-center text-sm text-gray-700 dark:border-gray-700 dark:text-gray-300">
-      <SecondaryButtonSmall
-        v-if="vetted"
-        @click="$emit('showReport', student)">
-        view
-      </SecondaryButtonSmall>
+  <BaseTD mobile>
+    <SecondaryButtonSmall
+      v-if="vetted"
+      @click="$emit('showReport', student)">
+      view
+    </SecondaryButtonSmall>
 
-      <span v-else>N/A</span>
-    </td>
+    <span v-else>N/A</span>
+  </BaseTD>
 
-    <td
-      class="border-t border-gray-200 px-3 py-2 text-center text-sm text-gray-700 dark:border-gray-700 dark:text-gray-300">
-      <PrimaryButtonSmall
-        v-if="passed"
-        @click="$emit('showClearance', student)">
-        clear
-      </PrimaryButtonSmall>
+  <BaseTD mobile>
+    <PrimaryButtonSmall
+      v-if="passed"
+      @click="$emit('showClearance', student)">
+      clear
+    </PrimaryButtonSmall>
 
-      <PrimaryLinkSmall
-        v-else
-        :href="route('vetting.create', { student: student })">
-        vet
-      </PrimaryLinkSmall>
-    </td>
-  </tr>
+    <PrimaryLinkSmall
+      v-else
+      :href="route('vetting.create', { student: student })">
+      vet
+    </PrimaryLinkSmall>
+  </BaseTD>
 </template>
