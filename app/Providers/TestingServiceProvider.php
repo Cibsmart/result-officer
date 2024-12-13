@@ -38,6 +38,14 @@ final class TestingServiceProvider extends ServiceProvider
             return $this;
         });
 
+        AssertableInertia::macro('hasPaginatedData', function (string $key, Data $data) {
+
+            expect($this->prop($key))->toHaveKeys(['links', 'data'])
+                ->and($this->prop($key))->toEqual($data->toArray()['paginated']);
+
+            return $this;
+        });
+
         TestResponse::macro(
             'assertHasData',
             fn (string $key, Data $data) => $this->assertInertia(fn (AssertableInertia $inertia) => $inertia
@@ -48,6 +56,12 @@ final class TestingServiceProvider extends ServiceProvider
             'assertHasDataList',
             fn (string $key, Data $data) => $this->assertInertia(fn (AssertableInertia $inertia) => $inertia
                 ->hasDataList($key, $data)),
+        );
+
+        TestResponse::macro(
+            'assertHasPaginatedData',
+            fn (string $key, Data $data) => $this->assertInertia(fn (AssertableInertia $inertia) => $inertia
+                ->hasPaginatedData($key, $data)),
         );
 
         TestResponse::macro(
