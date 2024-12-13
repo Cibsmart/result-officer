@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Data\Students\StudentComprehensiveData;
+use App\Data\Students\StudentListPaginatedData;
 use App\Http\Requests\Results\ResultRequest;
 use App\Models\Student;
+use App\ViewModels\Students\StudentIndexPage;
 use App\ViewModels\Students\StudentShowPage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,7 +19,9 @@ final class StudentController
 {
     public function index(): Response
     {
-        return Inertia::render('students/index/page', []);
+        return Inertia::render('students/index/page', new StudentIndexPage(
+            data: StudentListPaginatedData::new(),
+        ));
     }
 
     public function show(Request $request, ?Student $student = null): Response

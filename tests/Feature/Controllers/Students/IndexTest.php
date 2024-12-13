@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Data\Students\StudentListPaginatedData;
 use Tests\Factories\UserFactory;
 
 use function Pest\Laravel\actingAs;
@@ -17,4 +18,11 @@ it('loads the correct component', function (): void {
 
     actingAs($user)->get(route('students.index'))
         ->assertHasComponent('students/index/page');
+});
+
+it('passes paginated student data to the view', function (): void {
+    $user = UserFactory::new()->createOne();
+
+    actingAs($user)->get(route('students.index'))
+        ->assertHasData('data', StudentListPaginatedData::new());
 });
