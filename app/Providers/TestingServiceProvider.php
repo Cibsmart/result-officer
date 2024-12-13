@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Testing\TestResponse;
 use Inertia\Testing\AssertableInertia;
@@ -38,10 +39,10 @@ final class TestingServiceProvider extends ServiceProvider
             return $this;
         });
 
-        AssertableInertia::macro('hasPaginatedData', function (string $key, Data $data) {
+        AssertableInertia::macro('hasPaginatedData', function (string $key, Paginator $data) {
 
             expect($this->prop($key))->toHaveKeys(['links', 'data'])
-                ->and($this->prop($key))->toEqual($data->toArray()['paginated']);
+                ->and($this->prop($key))->toEqual($data->toArray());
 
             return $this;
         });
@@ -60,7 +61,7 @@ final class TestingServiceProvider extends ServiceProvider
 
         TestResponse::macro(
             'assertHasPaginatedData',
-            fn (string $key, Data $data) => $this->assertInertia(fn (AssertableInertia $inertia) => $inertia
+            fn (string $key, Paginator $data) => $this->assertInertia(fn (AssertableInertia $inertia) => $inertia
                 ->hasPaginatedData($key, $data)),
         );
 
