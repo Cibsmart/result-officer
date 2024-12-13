@@ -15,8 +15,8 @@ import BaseTH from "@/components/tables/baseTH.vue";
 import BaseTBody from "@/components/tables/baseTBody.vue";
 import BaseTR from "@/components/tables/baseTR.vue";
 import BaseTD from "@/components/tables/baseTD.vue";
-import PrimaryLinkSmall from "@/components/links/primaryLinkSmall.vue";
 import Badge from "@/components/badge.vue";
+import SecondaryLinkSmall from "@/components/links/secondaryLinkSmall.vue";
 
 defineProps<{
   paginated: PaginatedStudentListData;
@@ -40,8 +40,6 @@ const pages: BreadcrumbItem[] = [
 
       <BaseTable>
         <BaseTHead>
-          <BaseTH>SN</BaseTH>
-
           <BaseTH
             mobile
             position="left"
@@ -49,6 +47,8 @@ const pages: BreadcrumbItem[] = [
           </BaseTH>
 
           <BaseTH>REGISTRATION NUMBER</BaseTH>
+
+          <BaseTH>GENDER</BaseTH>
 
           <BaseTH>STATUS</BaseTH>
 
@@ -59,10 +59,8 @@ const pages: BreadcrumbItem[] = [
 
         <BaseTBody>
           <BaseTR
-            v-for="(student, index) in paginated.data"
+            v-for="student in paginated.data"
             :key="student.id">
-            <BaseTD>{{ index + 1 }}</BaseTD>
-
             <BaseTD
               mobile
               position="left">
@@ -74,7 +72,7 @@ const pages: BreadcrumbItem[] = [
                 <span class="hidden sm:inline"> || </span>
 
                 <span>
-                  <Badge :color="student.color">{{ student.status }}</Badge>
+                  <Badge :color="student.statuColor">{{ student.status }}</Badge>
                 </span>
 
                 <span class="hidden sm:inline"> || </span>
@@ -85,21 +83,23 @@ const pages: BreadcrumbItem[] = [
 
             <BaseTD>{{ student.registrationNumber }}</BaseTD>
 
+            <BaseTD>{{ student.gender }}</BaseTD>
+
             <BaseTD>
-              <Badge :color="student.color">{{ student.status }}</Badge>
+              <Badge :color="student.statuColor">{{ student.status }}</Badge>
             </BaseTD>
 
             <BaseTD>{{ student.department }}</BaseTD>
 
             <BaseTD mobile>
-              <PrimaryLinkSmall :href="route('students.show', { student: student })">View</PrimaryLinkSmall>
+              <SecondaryLinkSmall :href="route('students.show', { student: student })">View</SecondaryLinkSmall>
             </BaseTD>
           </BaseTR>
         </BaseTBody>
       </BaseTable>
 
       <CardFooter>
-        <Pagination :links="paginated.links" />
+        <Pagination :paginated="paginated" />
       </CardFooter>
     </Card>
   </BasePage>
