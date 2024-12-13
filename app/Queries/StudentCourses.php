@@ -33,6 +33,7 @@ final class StudentCourses
                 'program_curriculum_course_id',
             )
             ->where('students.id', $student->id)
+            ->whereNull('students.deleted_at')
             ->orderBy('academic_sessions.name')
             ->orderBy('semesters.name')
             ->orderBy('courses.code');
