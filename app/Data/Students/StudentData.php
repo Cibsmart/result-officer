@@ -39,6 +39,7 @@ final class StudentData extends Data
             : '';
 
         $status = $student->status;
+        assert($status instanceof StudentStatus);
 
         return new self(
             id: $student->id,
