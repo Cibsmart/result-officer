@@ -322,6 +322,10 @@ declare namespace App.Data.Students {
     admissionYear: number;
     nationality: string;
     slug: string;
+    status: App.Enums.StudentStatus;
+  };
+  export type StudentListPaginatedData = {
+    students: any;
   };
 }
 declare namespace App.Data.Summary {
@@ -491,6 +495,9 @@ declare namespace App.ViewModels.Results {
   };
 }
 declare namespace App.ViewModels.Students {
+  export type StudentIndexPage = {
+    data: App.Data.Students.StudentListPaginatedData;
+  };
   export type StudentShowPage = {
     student: App.Data.Students.StudentComprehensiveData;
     selectedIndex: number;
