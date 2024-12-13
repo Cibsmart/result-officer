@@ -145,6 +145,7 @@ Route::middleware(['auth'])->group(static function (): void {
     Route::post('department/cleared/students', [DepartmentClearedController::class, 'store'])
         ->name('department.cleared.store');
 
+    Route::get('students', [StudentController::class, 'index'])->name('students.index');
     Route::get('students/{student?}', [StudentController::class, 'show'])->name('students.show');
     Route::post('students', [StudentController::class, 'store'])->name('students.store');
 });

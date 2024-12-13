@@ -15,6 +15,11 @@ use Inertia\Response;
 
 final class StudentController
 {
+    public function index(): Response
+    {
+        return Inertia::render('students/index/page', []);
+    }
+
     public function show(Request $request, ?Student $student = null): Response
     {
         $selectedIndex = $request->integer('selectedIndex');
