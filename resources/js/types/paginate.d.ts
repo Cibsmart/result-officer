@@ -19,3 +19,7 @@ export type PaginationLink = {
   label: string;
   url: string | null;
 };
+
+export interface PaginatedStudentListData extends PaginationInterface {
+  data: Array<App.Data.Students.StudentData>;
+}
