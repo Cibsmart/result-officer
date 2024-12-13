@@ -1,23 +1,23 @@
 export interface PaginationInterface {
   currentPage: number;
   data: Array<any>;
-  firstPageUrl: string;
-  from: number | null;
-  lastPage: number;
-  lastPageUrl: string;
+  first_page_url: string;
+  from: number;
+  last_page: number;
+  last_page_url: string;
   links: Array<PaginationLink>;
-  nextPageUrl: string | null;
+  next_page_url: string;
   path: string;
-  perPage: string;
-  previousPageUrl: string | null;
-  to: number | null;
-  totalPages: number;
+  per_page: number;
+  prev_page_url: string;
+  to: number;
+  total: number;
 }
 
 export type PaginationLink = {
   active: boolean;
   label: string;
-  url: string | null;
+  url: string;
 };
 
 export interface PaginatedStudentListData extends PaginationInterface {
