@@ -6,7 +6,7 @@ import StudentRow from "@/pages/vetting/list/index/partials/studentRow.vue";
 import Drawer from "@/components/drawer.vue";
 import Disclosure from "@/components/baseDisclosure.vue";
 import Card from "@/components/cards/card.vue";
-import CardHeading from "@/components/cards/cardHeading.vue";
+import CardHeading from "@/components/cards/cardHeader.vue";
 import Modal from "@/components/modal.vue";
 import PrimaryButton from "@/components/buttons/primaryButton.vue";
 import SecondaryButton from "@/components/buttons/secondaryButton.vue";
