@@ -11,6 +11,11 @@ import Modal from "@/components/modal.vue";
 import PrimaryButton from "@/components/buttons/primaryButton.vue";
 import SecondaryButton from "@/components/buttons/secondaryButton.vue";
 import { useForm, usePage } from "@inertiajs/vue3";
+import BaseTable from "@/components/tables/baseTable.vue";
+import BaseTHead from "@/components/tables/baseTHead.vue";
+import BaseTH from "@/components/tables/baseTH.vue";
+import BaseTBody from "@/components/tables/baseTBody.vue";
+import BaseTR from "@/components/tables/baseTR.vue";
 
 const props = defineProps<{
   data: App.Data.Vetting.VettingListData;
@@ -70,61 +75,37 @@ const clearStudent = () => {
 
     <div>
       <template v-if="hasRows">
-        <div class="-mx-4 mt-4 overflow-auto ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg dark:ring-gray-600">
-          <table class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
-            <thead>
-              <tr>
-                <th
-                  class="hidden px-3 py-2 text-center text-sm font-semibold text-gray-900 lg:table-cell dark:text-white"
-                  scope="col">
-                  SN
-                </th>
+        <BaseTable>
+          <BaseTHead>
+            <BaseTH>SN</BaseTH>
 
-                <th
-                  class="py-2 text-left text-sm font-semibold text-gray-900 dark:text-white"
-                  scope="col">
-                  NAME
-                </th>
+            <BaseTH
+              mobile
+              position="left">
+              NAME
+            </BaseTH>
 
-                <th
-                  class="hidden py-2 text-center text-sm font-semibold text-gray-900 lg:table-cell dark:text-white"
-                  scope="col">
-                  REGISTRATION NUMBER
-                </th>
+            <BaseTH> REGISTRATION NUMBER</BaseTH>
 
-                <th
-                  class="hidden py-2 text-center text-sm font-semibold text-gray-900 lg:table-cell dark:text-white"
-                  scope="col">
-                  STATUS
-                </th>
+            <BaseTH> STATUS</BaseTH>
 
-                <th
-                  class="hidden py-2 text-center text-sm font-semibold text-gray-900 lg:table-cell dark:text-white"
-                  scope="col">
-                  REPORT
-                </th>
+            <BaseTH> REPORT</BaseTH>
 
-                <th
-                  class="py-2 text-center text-sm font-semibold text-gray-900 dark:text-white"
-                  scope="col">
-                  ACTIONS
-                </th>
-              </tr>
-            </thead>
+            <BaseTH mobile> ACTIONS</BaseTH>
+          </BaseTHead>
 
-            <tbody>
-              <template
-                v-for="(student, index) in data.graduands"
-                :key="student.id">
-                <StudentRow
-                  :index="index"
-                  :student="student"
-                  @show-report="openDrawer"
-                  @show-clearance="confirmStudentClearance" />
-              </template>
-            </tbody>
-          </table>
-        </div>
+          <BaseTBody>
+            <BaseTR
+              v-for="(student, index) in data.graduands"
+              :key="student.id">
+              <StudentRow
+                :index="index"
+                :student="student"
+                @show-report="openDrawer"
+                @show-clearance="confirmStudentClearance" />
+            </BaseTR>
+          </BaseTBody>
+        </BaseTable>
       </template>
 
       <EmptyState
