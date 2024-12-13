@@ -323,9 +323,7 @@ declare namespace App.Data.Students {
     nationality: string;
     slug: string;
     status: App.Enums.StudentStatus;
-  };
-  export type StudentListPaginatedData = {
-    students: any;
+    statuColor: App.Enums.StatusColor;
   };
 }
 declare namespace App.Data.Summary {
@@ -431,6 +429,7 @@ declare namespace App.Enums {
     | "expelled"
     | "suspended"
     | "deceased"
+    | "unknown"
     | "transferred"
     | "final"
     | "extra"
@@ -496,7 +495,7 @@ declare namespace App.ViewModels.Results {
 }
 declare namespace App.ViewModels.Students {
   export type StudentIndexPage = {
-    data: App.Data.Students.StudentListPaginatedData;
+    paginated: Array<App.Data.Students.StudentData>;
   };
   export type StudentShowPage = {
     student: App.Data.Students.StudentComprehensiveData;

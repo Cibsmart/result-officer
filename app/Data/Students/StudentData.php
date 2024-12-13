@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Data\Students;
 
 use App\Enums\Gender;
+use App\Enums\StatusColor;
 use App\Enums\StudentStatus;
 use App\Models\Student;
 use Spatie\LaravelData\Data;
@@ -27,6 +28,7 @@ final class StudentData extends Data
         public readonly string $nationality,
         public readonly string $slug,
         public readonly StudentStatus $status,
+        public readonly StatusColor $statuColor,
     ) {
     }
 
@@ -35,6 +37,8 @@ final class StudentData extends Data
         $birthDate = $student->date_of_birth
             ? $student->date_of_birth->format('d/m/Y')
             : '';
+
+        $status = $student->status;
 
         return new self(
             id: $student->id,
@@ -51,7 +55,8 @@ final class StudentData extends Data
             admissionYear: $student->entrySession->firstYear(),
             nationality: $student->government->state->country->demonym,
             slug: $student->slug,
-            status: $student->status,
+            status: $status,
+            statuColor: $status->color(),
         );
     }
 }

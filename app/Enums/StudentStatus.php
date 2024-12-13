@@ -14,6 +14,7 @@ enum StudentStatus: string
     case EXPELLED = 'expelled';
     case SUSPENDED = 'suspended';
     case DECEASED = 'deceased';
+    case UNKNOWN = 'unknown';
     case TRANSFERRED = 'transferred';
     case FINAL_YEAR = 'final';
     case EXTRA_YEAR = 'extra';
@@ -35,5 +36,18 @@ enum StudentStatus: string
     public static function canBeCleared(self $status): bool
     {
         return in_array($status, self::vettableStates(), true);
+    }
+
+    public function color(): StatusColor
+    {
+        return match ($this) {
+            self::NEW, self::UNKNOWN, self::INACTIVE, self::WITHDRAWN => StatusColor::GRAY,
+            self::ACTIVE, self::FINAL_YEAR, => StatusColor::BLUE,
+            self::EXTRA_YEAR => StatusColor::INDIGO,
+            self::EXPELLED, self::DECEASED => StatusColor::RED,
+            self::CLEARED, self::GRADUATED => StatusColor::GREEN,
+            self::PROBATION, self::SUSPENDED => StatusColor::YELLOW,
+            self::TRANSFERRED => StatusColor::PINK,
+        };
     }
 }
