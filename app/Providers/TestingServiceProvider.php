@@ -22,6 +22,13 @@ final class TestingServiceProvider extends ServiceProvider
             return;
         }
 
+        $this->assertableInertiaMacros();
+
+        $this->testResponseMacros();
+    }
+
+    private function assertableInertiaMacros(): void
+    {
         AssertableInertia::macro('hasData', function (string $key, Data $data) {
 
             $this->has($key);
@@ -46,7 +53,10 @@ final class TestingServiceProvider extends ServiceProvider
 
             return $this;
         });
+    }
 
+    private function testResponseMacros(): void
+    {
         TestResponse::macro(
             'assertHasData',
             fn (string $key, Data $data) => $this->assertInertia(fn (AssertableInertia $inertia) => $inertia
@@ -67,8 +77,8 @@ final class TestingServiceProvider extends ServiceProvider
 
         TestResponse::macro(
             'assertHasComponent',
-            fn (string $path) => $this->assertInertia(fn (AssertableInertia $inertia) => $inertia
-                ->component($path, true)),
+            fn (string $path) => $this->assertInertia(fn (AssertableInertia $inertia) => $inertia->component($path,
+                true)),
         );
     }
 }
