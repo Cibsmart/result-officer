@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Data\Students\StudentComprehensiveData;
-use App\Data\Students\StudentListPaginatedData;
+use App\Data\Students\StudentData;
 use App\Http\Requests\Results\ResultRequest;
 use App\Models\Student;
 use App\ViewModels\Students\StudentIndexPage;
@@ -19,8 +19,12 @@ final class StudentController
 {
     public function index(): Response
     {
+        $students = Student::query()
+            ->with('program.department.faculty', 'entrySession', 'government.state.country')
+            ->paginate();
+
         return Inertia::render('students/index/page', new StudentIndexPage(
-            data: StudentListPaginatedData::new(),
+            paginated: StudentData::collect($students),
         ));
     }
 
