@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-use App\Data\Students\StudentListPaginatedData;
+use App\Data\Students\StudentData;
+use App\Models\Student;
+use Tests\Factories\StudentFactory;
 use Tests\Factories\UserFactory;
 
 use function Pest\Laravel\actingAs;
@@ -22,7 +24,13 @@ it('loads the correct component', function (): void {
 
 it('passes paginated student data to the view', function (): void {
     $user = UserFactory::new()->createOne();
+    StudentFactory::new()->count(3)->create();
 
-    actingAs($user)->get(route('students.index'))
-        ->assertHasPaginatedData('paginated', StudentListPaginatedData::new());
+    $students = Student::query()
+        ->with('program.department.faculty', 'entrySession', 'government.state.country')
+        ->paginate();
+
+    actingAs($user)
+        ->get(route('students.index'))
+        ->assertHasPaginatedData('paginated', StudentData::collect($students)->withPath(route('students.index')));
 });
