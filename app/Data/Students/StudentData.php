@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Data\Students;
 
 use App\Enums\Gender;
+use App\Enums\StudentStatus;
 use App\Models\Student;
 use Spatie\LaravelData\Data;
 
@@ -25,6 +26,7 @@ final class StudentData extends Data
         public readonly int $admissionYear,
         public readonly string $nationality,
         public readonly string $slug,
+        public readonly StudentStatus $status,
     ) {
     }
 
@@ -49,6 +51,7 @@ final class StudentData extends Data
             admissionYear: $student->entrySession->firstYear(),
             nationality: $student->government->state->country->demonym,
             slug: $student->slug,
+            status: $student->status,
         );
     }
 }
