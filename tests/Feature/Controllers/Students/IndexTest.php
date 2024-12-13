@@ -24,5 +24,5 @@ it('passes paginated student data to the view', function (): void {
     $user = UserFactory::new()->createOne();
 
     actingAs($user)->get(route('students.index'))
-        ->assertHasData('data', StudentListPaginatedData::new());
+        ->assertHasPaginatedData('paginated', StudentListPaginatedData::new());
 });
