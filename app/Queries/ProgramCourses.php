@@ -40,6 +40,7 @@ final class ProgramCourses
                 'program_curriculum_courses.id as program_course_id',
             )
             ->where('program_curricula.id', $this->programCurriculum->id)
+            ->whereNull('program_curriculum_courses.deleted_at')
             ->orderBy('academic_sessions.name')
             ->orderBy('semesters.name')
             ->orderBy('courses.code');
