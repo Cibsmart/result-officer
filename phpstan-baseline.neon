@@ -71,6 +71,11 @@ parameters:
 			path: app/Http/Clients/ApiClient.php
 
 		-
+			message: "#^Parameter \\$paginated of class App\\\\ViewModels\\\\Students\\\\StudentIndexPage constructor expects Illuminate\\\\Contracts\\\\Pagination\\\\Paginator\\<App\\\\Data\\\\Students\\\\StudentData\\>, Illuminate\\\\Pagination\\\\AbstractPaginator\\|Illuminate\\\\Support\\\\Enumerable\\<\\(int\\|string\\), App\\\\Data\\\\Students\\\\StudentData\\> given\\.$#"
+			count: 1
+			path: app/Http/Controllers/StudentController.php
+
+		-
 			message: "#^Parameter \\#2 \\$subject of function preg_match expects string, object\\|string given\\.$#"
 			count: 1
 			path: app/Http/Middleware/ValidateYearParameter.php
@@ -136,6 +141,11 @@ parameters:
 			path: app/Models/VettingStep.php
 
 		-
+			message: "#^Call to an undefined method Illuminate\\\\Contracts\\\\Pagination\\\\Paginator\\:\\:toArray\\(\\)\\.$#"
+			count: 1
+			path: app/Providers/TestingServiceProvider.php
+
+		-
 			message: "#^Call to an undefined method Inertia\\\\Testing\\\\AssertableInertia\\:\\:hasData\\(\\)\\.$#"
 			count: 2
 			path: app/Providers/TestingServiceProvider.php
@@ -146,8 +156,13 @@ parameters:
 			path: app/Providers/TestingServiceProvider.php
 
 		-
+			message: "#^Call to an undefined method Inertia\\\\Testing\\\\AssertableInertia\\:\\:hasPaginatedData\\(\\)\\.$#"
+			count: 1
+			path: app/Providers/TestingServiceProvider.php
+
+		-
 			message: "#^Call to protected method prop\\(\\) of class Illuminate\\\\Testing\\\\Fluent\\\\AssertableJson\\.$#"
-			count: 2
+			count: 4
 			path: app/Providers/TestingServiceProvider.php
 
 		-
