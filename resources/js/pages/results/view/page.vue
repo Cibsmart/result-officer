@@ -12,7 +12,7 @@ import BaseLink from "@/components/links/baseLink.vue";
 import IconLink from "@/components/links/iconLink.vue";
 
 const props = defineProps<{
-  student: App.Data.Students.StudentData;
+  student: App.Data.Students.StudentBasicData;
   results: App.Data.Results.StudentResultData;
 }>();
 
