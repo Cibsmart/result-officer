@@ -30,6 +30,7 @@ final class StudentBasicData extends Data
         public readonly string $slug,
         public readonly StudentStatus $status,
         public readonly StatusColor $statusColor,
+        public readonly ?string $photoUrl,
     ) {
     }
 
@@ -60,6 +61,7 @@ final class StudentBasicData extends Data
             slug: $student->slug,
             status: $status,
             statusColor: $status->color(),
+            photoUrl: $student->photo_url,
         );
     }
 }
