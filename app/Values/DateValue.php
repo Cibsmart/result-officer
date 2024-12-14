@@ -32,4 +32,13 @@ final class DateValue
 
         return new self($carbonDate);
     }
+
+    public function toString(string $format = 'jS M, Y'): string
+    {
+        if ($this->value === null) {
+            return '';
+        }
+
+        return $this->value->format($format);
+    }
 }
