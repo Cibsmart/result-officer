@@ -6,6 +6,7 @@ import StudentPageHeader from "@/pages/students/show/partials/studentPageHeader.
 import ResultInformation from "@/pages/students/show/partials/tabs/resultInformation.vue";
 
 defineProps<{
+  student: App.Data.Students.StudentData;
   selectedIndex: number;
 }>();
 
@@ -18,14 +19,14 @@ const tabs = [
 
 <template>
   <div class="relative pb-5 sm:pb-0">
-    <StudentPageHeader />
+    <StudentPageHeader :student="student.basic" />
 
     <div class="mt-3 sm:mt-4">
       <BaseTabs
         :selectedIndex="selectedIndex"
         :tabs="tabs">
         <BaseTabPanel>
-          <BasicInformation />
+          <BasicInformation :student="student" />
         </BaseTabPanel>
 
         <BaseTabPanel>
