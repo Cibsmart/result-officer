@@ -6,10 +6,18 @@ import BaseTH from "@/components/tables/baseTH.vue";
 import BaseTHead from "@/components/tables/baseTHead.vue";
 import BaseTable from "@/components/tables/baseTable.vue";
 import { computed } from "vue";
+import HamburgerMenu from "@/components/hamburger/hamburgerMenu.vue";
+import HamburgerMenuItem from "@/components/hamburger/hamburgerMenuItem.vue";
 
-const props = defineProps<{
-  semester: App.Data.Results.SemesterResultData;
-}>();
+const props = withDefaults(
+  defineProps<{
+    semester: App.Data.Results.SemesterResultData;
+    manageable?: true | false;
+  }>(),
+  {
+    manageable: false,
+  },
+);
 
 const title = computed(() => `${props.semester.semester} SEMESTER`);
 </script>
@@ -35,7 +43,13 @@ const title = computed(() => `${props.semester.semester} SEMESTER`);
 
       <BaseTH>GP</BaseTH>
 
-      <BaseTH> GPA</BaseTH>
+      <BaseTH>GPA</BaseTH>
+
+      <template v-if="manageable">
+        <BaseTH>UPDATE DATE</BaseTH>
+
+        <BaseTH>Actions</BaseTH>
+      </template>
     </BaseTHead>
 
     <BaseTBody>
@@ -73,6 +87,18 @@ const title = computed(() => `${props.semester.semester} SEMESTER`);
         <BaseTD>{{ result.gradePoint }}</BaseTD>
 
         <BaseTD />
+
+        <template v-if="manageable">
+          <BaseTD>{{ result.courseCode }}</BaseTD>
+
+          <BaseTD>
+            <HamburgerMenu orientation="horizontal">
+              <HamburgerMenuItem href="#">Edit</HamburgerMenuItem>
+
+              <HamburgerMenuItem href="#">Delete</HamburgerMenuItem>
+            </HamburgerMenu>
+          </BaseTD>
+        </template>
       </BaseTR>
 
       <BaseTR>
@@ -87,6 +113,12 @@ const title = computed(() => `${props.semester.semester} SEMESTER`);
         <BaseTD>{{ semester.formattedGradePointTotal }}</BaseTD>
 
         <BaseTD>{{ semester.formattedGPA }}</BaseTD>
+
+        <template v-if="manageable">
+          <BaseTD />
+
+          <BaseTD />
+        </template>
       </BaseTR>
     </BaseTBody>
   </BaseTable>
