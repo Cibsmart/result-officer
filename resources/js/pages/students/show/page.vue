@@ -35,6 +35,7 @@ const pages: BreadcrumbItem[] = [
 
     <BaseSection v-else>
       <StudentDetails
+        :results="data.results"
         :selectedIndex="selectedIndex"
         :student="data.student" />
     </BaseSection>

@@ -7,6 +7,7 @@ import ResultInformation from "@/pages/students/show/partials/tabs/resultInforma
 
 defineProps<{
   student: App.Data.Students.StudentData;
+  results: App.Data.Results.StudentResultData;
   selectedIndex: number;
 }>();
 
@@ -30,7 +31,7 @@ const tabs = [
         </BaseTabPanel>
 
         <BaseTabPanel>
-          <ResultInformation />
+          <ResultInformation :results="results" />
         </BaseTabPanel>
 
         <BaseTabPanel>Tab 3</BaseTabPanel>
