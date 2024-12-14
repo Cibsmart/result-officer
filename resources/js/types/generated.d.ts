@@ -323,6 +323,7 @@ declare namespace App.Data.Students {
     slug: string;
     status: App.Enums.StudentStatus;
     statusColor: App.Enums.StatusColor;
+    photoUrl: string | null;
   };
   export type StudentComprehensiveData = {
     student: App.Data.Students.StudentData;
