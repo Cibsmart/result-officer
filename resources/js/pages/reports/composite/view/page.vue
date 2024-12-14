@@ -45,10 +45,10 @@ const hasRows = computed(() => props.data.students.length > 0);
             v-show="hasRows"
             :href="
               route('composite.print', {
-                program: data.program.id,
-                session: data.session.id,
-                level: data.level.id,
-                semester: data.semester.id,
+                program: data.program.slug,
+                session: data.session.slug,
+                level: data.level.slug,
+                semester: data.semester.slug,
               })
             ">
             Download

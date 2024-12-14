@@ -46,9 +46,9 @@ const hasResults = computed(() => props.results.sessionEnrollments.length > 0);
           <div
             v-show="hasResults"
             class="mt-4 flex space-x-4">
-            <BaseLink :href="route('results.transcript', { student: student.id })"> Transcript</BaseLink>
+            <BaseLink :href="route('results.transcript', { student: student })"> Transcript</BaseLink>
 
-            <BaseLink :href="route('results.print', { student: student.id })"> Print</BaseLink>
+            <BaseLink :href="route('results.print', { student: student })"> Print</BaseLink>
           </div>
         </div>
 
