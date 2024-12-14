@@ -144,6 +144,20 @@ final class Program extends Model
         return self::query()->where('code', $programCode)->firstOrFail();
     }
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    /** @return array{duration: 'App\Enums\ProgramDuration', is_active: 'bool'} */
+    protected function casts(): array
+    {
+        return [
+            'duration' => ProgramDuration::class,
+            'is_active' => 'bool',
+        ];
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\Program> */
     public function vettingReports(): MorphMany
     {
@@ -199,15 +213,6 @@ final class Program extends Model
         return $words
             ->map(fn ($word) => $word[0])
             ->join('');
-    }
-
-    /** @return array{duration: 'App\Enums\ProgramDuration', is_active: 'bool'} */
-    protected function casts(): array
-    {
-        return [
-            'duration' => ProgramDuration::class,
-            'is_active' => 'bool',
-        ];
     }
 
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */

@@ -31,6 +31,11 @@ final class Session extends Model
             ->value();
     }
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function firstYear(): int
     {
         return SessionValue::new($this->name)->firstYear();

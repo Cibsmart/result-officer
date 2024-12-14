@@ -12,4 +12,9 @@ final class Semester extends Model
     {
         return self::query()->where('name', $semesterName)->firstOrFail();
     }
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 }

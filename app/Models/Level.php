@@ -15,4 +15,9 @@ final class Level extends Model
     {
         return self::query()->where('name', $levelName)->firstOrFail();
     }
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 }
