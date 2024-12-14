@@ -14,7 +14,7 @@ defineProps<{
 
     <div class="mt-2 border-t border-gray-200 dark:border-white/10">
       <DataList>
-        <!--        <DataItem title="Full Name">{{ student.basic.name }}</DataItem>-->
+        <DataItem title="Full Name">{{ student.basic.name }}</DataItem>
 
         <DataItem title="Registration Number">{{ student.basic.registrationNumber }}</DataItem>
 
