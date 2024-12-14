@@ -10,7 +10,7 @@ use Spatie\LaravelData\Data;
 final class StudentIndexPage extends Data
 {
     public function __construct(
-        /** @var \Illuminate\Contracts\Pagination\Paginator<\App\Data\Students\StudentData> $paginated */
+        /** @var \Illuminate\Contracts\Pagination\Paginator<\App\Data\Students\StudentBasicData> $paginated */
         public readonly Paginator $paginated,
     ) {
     }

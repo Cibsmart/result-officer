@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Result;
 
 use App\Data\Results\StudentResultData;
 use App\Data\Results\TranscriptData;
-use App\Data\Students\StudentData;
+use App\Data\Students\StudentBasicData;
 use App\Http\Requests\Results\ResultRequest;
 use App\Models\Student;
 use App\ViewModels\Results\ResultViewPage;
@@ -30,13 +30,13 @@ final readonly class ViewStudentResultController
     {
         return view('pdfs.results.view', [
             'results' => StudentResultData::from($student),
-            'student' => StudentData::from($student),
+            'student' => StudentBasicData::from($student),
         ]);
     }
 
     public function transcript(Student $student): Pdf|PdfBuilder|View
     {
-        $studentData = StudentData::from($student);
+        $studentData = StudentBasicData::from($student);
 
         return Pdf::view('pdfs.results.transcript', [
             'results' => StudentResultData::from($student),
@@ -76,7 +76,7 @@ final readonly class ViewStudentResultController
             ->firstOrFail();
 
         return Inertia::render('results/view/page', new ResultViewPage(
-            student: StudentData::from($studentModel),
+            student: StudentBasicData::from($studentModel),
             results: StudentResultData::from($studentModel),
         ));
     }

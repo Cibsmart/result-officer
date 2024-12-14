@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Data\Students\StudentBasicData;
 use App\Data\Students\StudentComprehensiveData;
-use App\Data\Students\StudentData;
 use App\Http\Requests\Results\ResultRequest;
 use App\Models\Student;
 use App\ViewModels\Students\StudentIndexPage;
@@ -24,7 +24,7 @@ final class StudentController
             ->paginate();
 
         return Inertia::render('students/index/page', new StudentIndexPage(
-            paginated: StudentData::collect($students),
+            paginated: StudentBasicData::collect($students),
         ));
     }
 

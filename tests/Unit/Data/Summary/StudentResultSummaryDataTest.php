@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Data\Students\StudentData;
+use App\Data\Students\StudentBasicData;
 use App\Data\Summary\StudentResultSummaryData;
 
 test('student result summary data is correct', function (): void {
@@ -13,6 +13,6 @@ test('student result summary data is correct', function (): void {
     $fcgpa = computeFCGPA($student);
 
     expect($data)->toBeInstanceOf(StudentResultSummaryData::class)
-        ->and($data->student)->toBeInstanceOf(StudentData::class)
+        ->and($data->student)->toBeInstanceOf(StudentBasicData::class)
         ->and($data->fcgpa)->toEqual($fcgpa);
 });
