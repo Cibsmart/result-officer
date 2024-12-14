@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Data\Students\StudentData;
+use App\Data\Students\StudentBasicData;
 use App\Models\Student;
 use Tests\Factories\StudentFactory;
 use Tests\Factories\UserFactory;
@@ -27,10 +27,10 @@ it('passes paginated student data to the view', function (): void {
     StudentFactory::new()->count(3)->create();
 
     $students = Student::query()
-        ->with('program.department.faculty', 'entrySession', 'government.state.country')
+        ->with('program.department.faculty', 'entrySession', 'lga.state.country')
         ->paginate();
 
     actingAs($user)
         ->get(route('students.index'))
-        ->assertHasPaginatedData('paginated', StudentData::collect($students)->withPath(route('students.index')));
+        ->assertHasPaginatedData('paginated', StudentBasicData::collect($students)->withPath(route('students.index')));
 });
