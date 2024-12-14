@@ -3,10 +3,14 @@ import Badge from "@/components/badge.vue";
 import SectionHeader from "@/components/sectionHeader.vue";
 import HamburgerMenu from "@/components/hamburger/hamburgerMenu.vue";
 import HamburgerMenuItem from "@/components/hamburger/hamburgerMenuItem.vue";
+import { computed } from "vue";
+import Image from "@/components/image.vue";
 
-defineProps<{
+const props = defineProps<{
   student: App.Data.Students.StudentBasicData;
 }>();
+
+const hasImageUrl = computed(() => props.student.photoUrl !== "");
 </script>
 
 <template>
@@ -16,9 +20,12 @@ defineProps<{
         <div class="shrink-0">
           <div class="relative">
             <img
+              v-if="hasImageUrl"
+              :src="student.photoUrl"
               alt=""
-              class="size-16 rounded-full"
-              src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80" />
+              class="size-16 rounded-full" />
+
+            <Image :name="student.name" />
 
             <span
               aria-hidden="true"
