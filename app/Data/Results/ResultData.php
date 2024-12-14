@@ -12,6 +12,7 @@ final class ResultData extends Data
 {
     public function __construct(
         public readonly int $id,
+        public readonly int $resultId,
         public readonly string $courseCode,
         public readonly string $courseTitle,
         public readonly int $creditUnit,
@@ -19,6 +20,7 @@ final class ResultData extends Data
         public readonly string $grade,
         public readonly int $gradePoint,
         public readonly ?string $remark,
+        public readonly ?string $dateUpdated,
     ) {
     }
 
@@ -30,6 +32,7 @@ final class ResultData extends Data
 
         return new self(
             id: $courseRegistration->id,
+            resultId: $result->id ? $result->id : 0,
             courseCode: $courseRegistration->course->code,
             courseTitle: $courseRegistration->course->title,
             creditUnit: $courseRegistration->credit_unit->value,
@@ -37,6 +40,7 @@ final class ResultData extends Data
             grade: $result->grade,
             gradePoint: $result->grade_point,
             remark: $result->remarks,
+            dateUpdated: $result->updated_at ? $result->updated_at->toDateTimeString() : '',
         );
     }
 }

@@ -89,7 +89,7 @@ const title = computed(() => `${props.semester.semester} SEMESTER`);
         <BaseTD />
 
         <template v-if="manageable">
-          <BaseTD>{{ result.courseCode }}</BaseTD>
+          <BaseTD>{{ result.dateUpdated }}</BaseTD>
 
           <BaseTD>
             <HamburgerMenu orientation="horizontal">
