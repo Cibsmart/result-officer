@@ -16,7 +16,7 @@ const initials = computed(() =>
 
 <template>
   <span
-    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white text-[0.625rem] font-medium text-gray-800 hover:border-indigo-600 hover:text-indigo-600 group-hover:border-indigo-600 group-hover:text-indigo-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-50 dark:hover:border-white dark:hover:text-white dark:group-hover:border-gray-600 dark:group-hover:text-white">
+    class="flex size-16 shrink-0 items-center justify-center rounded-full border border-indigo-100 bg-indigo-200/20 text-3xl font-bold text-indigo-600/60 dark:border-indigo-200 dark:bg-indigo-200">
     {{ initials }}
   </span>
 </template>
