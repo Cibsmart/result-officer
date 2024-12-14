@@ -32,9 +32,9 @@ final class StudentOtherData extends Data
             entryMode: $student->entry_mode,
             entrySession: $student->entrySession->name,
             entryLevel: $student->entryLevel->name,
-            jambRegistrationNumber: $student->jambRegistrationNumber,
+            jambRegistrationNumber: $student->jamb_registration_number,
             email: $student->email,
-            phoneNumber: $student->phoneNumber,
+            phoneNumber: $student->phone_number,
 
         );
     }

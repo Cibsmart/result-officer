@@ -54,7 +54,7 @@ final class StudentBasicData extends Data
             department: $student->program->department->name,
             faculty: $student->program->department->faculty->name,
             admissionYear: $student->entrySession->firstYear(),
-            nationality: $student->government->state->country->demonym,
+            nationality: $student->lga->state->country->demonym,
             slug: $student->slug,
             status: $status,
             statusColor: $status->color(),
