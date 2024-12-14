@@ -28,7 +28,7 @@ final class StudentBasicData extends Data
         public readonly string $nationality,
         public readonly string $slug,
         public readonly StudentStatus $status,
-        public readonly StatusColor $statuColor,
+        public readonly StatusColor $statusColor,
     ) {
     }
 
@@ -57,7 +57,7 @@ final class StudentBasicData extends Data
             nationality: $student->government->state->country->demonym,
             slug: $student->slug,
             status: $status,
-            statuColor: $status->color(),
+            statusColor: $status->color(),
         );
     }
 }
