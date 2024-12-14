@@ -21,5 +21,5 @@ export type PaginationLink = {
 };
 
 export interface PaginatedStudentListData extends PaginationInterface {
-  data: Array<App.Data.Students.StudentData>;
+  data: Array<App.Data.Students.StudentBasicData>;
 }
