@@ -2,6 +2,10 @@
 import DataList from "@/components/data/dataList.vue";
 import DataItem from "@/components/data/dataItem.vue";
 import SectionHeader from "@/components/sectionHeader.vue";
+
+defineProps<{
+  student: App.Data.Students.StudentData;
+}>();
 </script>
 
 <template>
@@ -10,23 +14,25 @@ import SectionHeader from "@/components/sectionHeader.vue";
 
     <div class="mt-2 border-t border-gray-200 dark:border-white/10">
       <DataList>
-        <DataItem title="Full Name">IFEBUDE BARNABAS CHUKWUDIKE</DataItem>
+        <!--        <DataItem title="Full Name">{{ student.basic.name }}</DataItem>-->
 
-        <DataItem title="Registration Number">EBSU/2009/51486</DataItem>
+        <DataItem title="Registration Number">{{ student.basic.registrationNumber }}</DataItem>
 
-        <DataItem title="Department and Program">COMPUTER SCIENCE</DataItem>
+        <DataItem title="Department and Program">{{ student.basic.department }}</DataItem>
 
-        <DataItem title="Gender">MALE</DataItem>
+        <DataItem title="Gender">{{ student.basic.gender }}</DataItem>
 
-        <DataItem title="Date of Birth">24th July, 1985</DataItem>
+        <DataItem title="Date of Birth">{{ student.basic.birthDate }}</DataItem>
 
-        <DataItem title="State and Local Government">ANAMBRA (ANAOCHA)</DataItem>
+        <DataItem title="State and Local Government">
+          {{ `${student.others.state} (${student.others.localGovernment})` }}
+        </DataItem>
 
-        <DataItem title="Entry Mode">UTME</DataItem>
+        <DataItem title="Entry Mode">{{ student.others.entryMode }}</DataItem>
 
-        <DataItem title="Entry Session">2009/2010</DataItem>
+        <DataItem title="Entry Session">{{ student.others.entrySession }}</DataItem>
 
-        <DataItem title="Entry Level">100 LEVEL</DataItem>
+        <DataItem title="Entry Level">{{ student.others.entryLevel }}</DataItem>
       </DataList>
     </div>
   </div>
@@ -36,11 +42,11 @@ import SectionHeader from "@/components/sectionHeader.vue";
 
     <div class="mt-2 border-t border-gray-200 dark:border-white/10">
       <DataList>
-        <DataItem title="JAMB Registration Number">950105245HB</DataItem>
+        <DataItem title="JAMB Registration Number">{{ student.others.jambRegistrationNumber }}</DataItem>
 
-        <DataItem title="Email">bifebude@gmail.com</DataItem>
+        <DataItem title="Email">{{ student.others.email }}</DataItem>
 
-        <DataItem title="Phone Number">07032434429</DataItem>
+        <DataItem title="Phone Number">{{ student.others.phoneNumber }}</DataItem>
       </DataList>
     </div>
   </div>
