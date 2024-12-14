@@ -10,12 +10,12 @@ use Spatie\LaravelData\Data;
 final class StudentComprehensiveData extends Data
 {
     public function __construct(
-        public readonly StudentBasicData $basic,
+        public readonly StudentData $student,
     ) {
     }
 
     public static function fromModel(Student $student): self
     {
-        return new self(basic: StudentBasicData::fromModel($student));
+        return new self(student: StudentData::fromModel($student));
     }
 }
