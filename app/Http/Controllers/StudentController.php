@@ -33,7 +33,7 @@ final class StudentController
         $selectedIndex = $request->integer('selectedIndex');
 
         return Inertia::render('students/show/page', new StudentShowPage(
-            student: fn () => $student ? StudentComprehensiveData::fromModel($student) : null,
+            data: fn () => $student ? StudentComprehensiveData::fromModel($student) : null,
             selectedIndex: $selectedIndex,
         ));
     }
