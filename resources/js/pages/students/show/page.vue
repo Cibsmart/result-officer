@@ -10,11 +10,11 @@ import StudentDetails from "@/pages/students/show/partials/studentDetails.vue";
 import { computed } from "vue";
 
 const props = defineProps<{
-  student: App.Data.Students.StudentComprehensiveData;
+  data: App.Data.Students.StudentComprehensiveData;
   selectedIndex: number;
 }>();
 
-const showForm = computed(() => props.student === null);
+const showForm = computed(() => props.data === null);
 
 const pages: BreadcrumbItem[] = [
   { name: "Student", href: route("students.show"), current: route().current("students.show") },
@@ -34,7 +34,9 @@ const pages: BreadcrumbItem[] = [
     </BaseSection>
 
     <BaseSection v-else>
-      <StudentDetails :selectedIndex="selectedIndex" />
+      <StudentDetails
+        :selectedIndex="selectedIndex"
+        :student="data.student" />
     </BaseSection>
   </BasePage>
 </template>
