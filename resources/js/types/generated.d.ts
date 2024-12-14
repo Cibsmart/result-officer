@@ -227,6 +227,7 @@ declare namespace App.Data.Results {
   };
   export type ResultData = {
     id: number;
+    resultId: number;
     courseCode: string;
     courseTitle: string;
     creditUnit: number;
@@ -234,6 +235,7 @@ declare namespace App.Data.Results {
     grade: string;
     gradePoint: number;
     remark: string | null;
+    dateUpdated: string;
   };
   export type SemesterResultData = {
     id: number;

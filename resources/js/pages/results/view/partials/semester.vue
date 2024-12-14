@@ -46,7 +46,7 @@ const title = computed(() => `${props.semester.semester} SEMESTER`);
       <BaseTH>GPA</BaseTH>
 
       <template v-if="manageable">
-        <BaseTH>UPDATE DATE</BaseTH>
+        <BaseTH>Date Updated</BaseTH>
 
         <BaseTH>Actions</BaseTH>
       </template>
