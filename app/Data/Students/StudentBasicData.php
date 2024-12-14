@@ -8,6 +8,7 @@ use App\Enums\Gender;
 use App\Enums\StatusColor;
 use App\Enums\StudentStatus;
 use App\Models\Student;
+use App\Values\DateValue;
 use Spatie\LaravelData\Data;
 
 final class StudentBasicData extends Data
@@ -34,12 +35,13 @@ final class StudentBasicData extends Data
 
     public static function fromModel(Student $student): self
     {
-        $birthDate = $student->date_of_birth
-            ? $student->date_of_birth->format('d/m/Y')
-            : '';
+        $birthDate = DateValue::fromValue($student->date_of_birth)->toString();
 
         $status = $student->status;
         assert($status instanceof StudentStatus);
+
+        $gender = $student->gender;
+        assert($gender instanceof Gender);
 
         return new self(
             id: $student->id,
@@ -48,7 +50,7 @@ final class StudentBasicData extends Data
             firstName: $student->first_name,
             otherNames: $student->other_names,
             name: "$student->last_name $student->first_name $student->other_names",
-            gender: $student->gender,
+            gender: $gender,
             birthDate: $birthDate,
             program: $student->program->name,
             department: $student->program->department->name,
