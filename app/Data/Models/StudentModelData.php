@@ -48,7 +48,7 @@ final readonly class StudentModelData
     {
         $registrationNumber = RegistrationNumber::new($rawStudent->registration_number);
         $department = Department::getUsingOnlineId($rawStudent->department_id);
-        $dateOfBirth = DateValue::fromString($rawStudent->date_of_birth);
+        $dateOfBirth = DateValue::fromValue($rawStudent->date_of_birth);
 
         return new self(
             registrationNumber: $registrationNumber->value,

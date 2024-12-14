@@ -8,7 +8,7 @@ use Carbon\Carbon;
 it('returns correct carbon date for a string date in Y-m-d format', function (): void {
     $input = '2000-01-30';
 
-    $date = DateValue::fromString($input);
+    $date = DateValue::fromValue($input);
 
     expect($date)->toBeInstanceOf(DateValue::class)
         ->and($date->value)->toBeInstanceOf(Carbon::class)
@@ -18,7 +18,7 @@ it('returns correct carbon date for a string date in Y-m-d format', function ():
 it('returns correct carbon date for a string date in d-m-Y format', function (): void {
     $input = '30-12-2000';
 
-    $date = DateValue::fromString($input);
+    $date = DateValue::fromValue($input);
 
     expect($date)->toBeInstanceOf(DateValue::class)
         ->and($date->value)->toBeInstanceOf(Carbon::class)
@@ -28,7 +28,7 @@ it('returns correct carbon date for a string date in d-m-Y format', function ():
 it('returns null for an empty string date', function (): void {
     $date = '';
 
-    $data = DateValue::fromString($date);
+    $data = DateValue::fromValue($date);
 
     expect($data)->toBeInstanceOf(DateValue::class)
         ->and($data->value)->toBeNull();
@@ -37,7 +37,7 @@ it('returns null for an empty string date', function (): void {
 it('returns null for an invalid date', function (): void {
     $date = '2020-2020-2020';
 
-    $data = DateValue::fromString($date);
+    $data = DateValue::fromValue($date);
 
     expect($data)->toBeInstanceOf(DateValue::class)
         ->and($data->value)->toBeNull();

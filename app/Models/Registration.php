@@ -33,7 +33,7 @@ final class Registration extends Model
         SemesterEnrollment $semesterEnrollment,
         Course $course,
     ): self {
-        $registrationDate = DateValue::fromString($rawRegistration->registration_date);
+        $registrationDate = DateValue::fromValue($rawRegistration->registration_date);
         $registration = new self();
 
         $registration->course_id = $course->id;

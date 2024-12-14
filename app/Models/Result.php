@@ -52,7 +52,7 @@ final class Result extends Model
         $result->total_score = $totalScore->value;
         $result->grade = $grade->value;
         $result->grade_point = $gradePoint;
-        $result->upload_date = DateValue::fromString($rawResult->upload_date)->value;
+        $result->upload_date = DateValue::fromValue($rawResult->upload_date)->value;
         $result->remarks = null;
         $result->source = RecordSource::PORTAL;
         $result->lecturer_id = $lecturer;

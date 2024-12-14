@@ -37,7 +37,7 @@ it('can process raw result and save into the results table', function (): void {
         ]),
         'source' => RecordSource::PORTAL,
         'total_score' => $rawResult->total,
-        'upload_date' => DateValue::fromString($rawResult->upload_date)->value,
+        'upload_date' => DateValue::fromValue($rawResult->upload_date)->value,
     ]);
 });
 
