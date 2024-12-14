@@ -26,5 +26,5 @@ it('passes student data to the view when student param is present', function ():
     $student = StudentFactory::new()->createOne();
 
     actingAs($user)->get(route('students.show', $student))
-        ->assertHasData('student', StudentComprehensiveData::fromModel($student));
+        ->assertHasData('data', StudentComprehensiveData::fromModel($student));
 });
