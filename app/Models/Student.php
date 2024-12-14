@@ -82,7 +82,7 @@ final class Student extends Model
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\LocalGovernment, \App\Models\Student> */
-    public function government(): BelongsTo
+    public function lga(): BelongsTo
     {
         return $this->belongsTo(LocalGovernment::class, 'local_government_id');
     }
