@@ -324,6 +324,7 @@ declare namespace App.Data.Students {
   };
   export type StudentComprehensiveData = {
     student: App.Data.Students.StudentData;
+    results: App.Data.Results.StudentResultData;
   };
   export type StudentData = {
     id: number;
@@ -514,7 +515,7 @@ declare namespace App.ViewModels.Students {
     paginated: Array<App.Data.Students.StudentBasicData>;
   };
   export type StudentShowPage = {
-    student: App.Data.Students.StudentComprehensiveData;
+    data: App.Data.Students.StudentComprehensiveData;
     selectedIndex: number;
   };
 }
