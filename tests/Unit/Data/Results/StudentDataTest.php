@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-use App\Data\Students\StudentData;
+use App\Data\Students\StudentBasicData;
 use Tests\Factories\StudentFactory;
 
 test('student data object is correct', function (): void {
     $student = StudentFactory::new()->createOne();
 
-    $studentData = StudentData::from($student);
+    $studentData = StudentBasicData::from($student);
 
-    expect($studentData)->toBeInstanceOf(StudentData::class)
+    expect($studentData)->toBeInstanceOf(StudentBasicData::class)
         ->and($studentData->registrationNumber)->toBe($student->registration_number)
         ->and($studentData->lastName)->toBe($student->last_name)
         ->and($studentData->firstName)->toBe($student->first_name)
@@ -26,8 +26,8 @@ test('student data object is correct', function (): void {
 it('returns blank date for student without date', function (): void {
     $student = StudentFactory::new()->createOne(['date_of_birth' => null]);
 
-    $studentData = StudentData::from($student);
+    $studentData = StudentBasicData::from($student);
 
-    expect($studentData)->toBeInstanceOf(StudentData::class)
+    expect($studentData)->toBeInstanceOf(StudentBasicData::class)
         ->and($studentData->birthDate)->toBe('');
 });

@@ -10,7 +10,7 @@ use App\Enums\StudentStatus;
 use App\Models\Student;
 use Spatie\LaravelData\Data;
 
-final class StudentData extends Data
+final class StudentBasicData extends Data
 {
     public function __construct(
         public readonly int $id,
