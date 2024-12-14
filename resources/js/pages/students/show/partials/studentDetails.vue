@@ -34,7 +34,7 @@ const tabs = [
           <ResultInformation :results="results" />
         </BaseTabPanel>
 
-        <BaseTabPanel>Tab 3</BaseTabPanel>
+        <BaseTabPanel>Student History</BaseTabPanel>
       </BaseTabs>
     </div>
   </div>
