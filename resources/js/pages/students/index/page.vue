@@ -72,7 +72,7 @@ const pages: BreadcrumbItem[] = [
                 <span class="hidden sm:inline"> || </span>
 
                 <span>
-                  <Badge :color="student.statuColor">{{ student.status }}</Badge>
+                  <Badge :color="student.statusColor">{{ student.status }}</Badge>
                 </span>
 
                 <span class="hidden sm:inline"> || </span>
@@ -86,7 +86,7 @@ const pages: BreadcrumbItem[] = [
             <BaseTD>{{ student.gender }}</BaseTD>
 
             <BaseTD>
-              <Badge :color="student.statuColor">{{ student.status }}</Badge>
+              <Badge :color="student.statusColor">{{ student.status }}</Badge>
             </BaseTD>
 
             <BaseTD>{{ student.department }}</BaseTD>
