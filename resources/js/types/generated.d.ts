@@ -304,10 +304,7 @@ declare namespace App.Data.Shared {
   };
 }
 declare namespace App.Data.Students {
-  export type StudentComprehensiveData = {
-    basic: App.Data.Students.StudentData;
-  };
-  export type StudentData = {
+  export type StudentBasicData = {
     id: number;
     registrationNumber: string;
     lastName: string;
@@ -323,7 +320,26 @@ declare namespace App.Data.Students {
     nationality: string;
     slug: string;
     status: App.Enums.StudentStatus;
-    statuColor: App.Enums.StatusColor;
+    statusColor: App.Enums.StatusColor;
+  };
+  export type StudentComprehensiveData = {
+    student: App.Data.Students.StudentData;
+  };
+  export type StudentData = {
+    id: number;
+    basic: App.Data.Students.StudentBasicData;
+    others: App.Data.Students.StudentOtherData;
+  };
+  export type StudentOtherData = {
+    id: number;
+    state: string;
+    localGovernment: string;
+    entryMode: App.Enums.EntryMode;
+    entrySession: string;
+    entryLevel: string;
+    jambRegistrationNumber: string | null;
+    email: string | null;
+    phoneNumber: string | null;
   };
 }
 declare namespace App.Data.Summary {
@@ -334,7 +350,7 @@ declare namespace App.Data.Summary {
     students: Array<App.Data.Summary.StudentResultSummaryData>;
   };
   export type StudentResultSummaryData = {
-    student: App.Data.Students.StudentData;
+    student: App.Data.Students.StudentBasicData;
     fcgpa: number;
   };
 }
@@ -489,13 +505,13 @@ declare namespace App.ViewModels.Reports {
 }
 declare namespace App.ViewModels.Results {
   export type ResultViewPage = {
-    student: App.Data.Students.StudentData;
+    student: App.Data.Students.StudentBasicData;
     results: App.Data.Results.StudentResultData;
   };
 }
 declare namespace App.ViewModels.Students {
   export type StudentIndexPage = {
-    paginated: Array<App.Data.Students.StudentData>;
+    paginated: Array<App.Data.Students.StudentBasicData>;
   };
   export type StudentShowPage = {
     student: App.Data.Students.StudentComprehensiveData;
