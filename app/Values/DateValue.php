@@ -13,14 +13,20 @@ final class DateValue
     {
     }
 
-    public static function fromString(?string $date): self
+    public static function fromValue(Carbon|string|null $date): self
     {
+        if ($date === null || $date === '') {
+            return new self(null);
+        }
+
+        if ($date instanceof Carbon) {
+            return new self($date);
+        }
+
         $carbonDate = null;
 
         try {
-            $carbonDate = $date !== '' && $date !== null
-                ? Carbon::parse($date)
-                : $carbonDate;
+            $carbonDate = Carbon::parse($date);
         } catch (Exception) {
         }
 

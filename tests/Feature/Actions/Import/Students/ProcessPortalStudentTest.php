@@ -31,7 +31,7 @@ it('can process raw student and save into the students table', function (): void
     expect($rawStudent->fresh()->status)->toBe(RawDataStatus::PROCESSED);
 
     assertDatabaseHas('students', [
-        'date_of_birth' => DateValue::fromString($rawStudent->date_of_birth)->value,
+        'date_of_birth' => DateValue::fromValue($rawStudent->date_of_birth)->value,
         'first_name' => strtoupper($rawStudent->first_name),
         'gender' => $rawStudent->gender,
         'last_name' => strtoupper($rawStudent->last_name),
