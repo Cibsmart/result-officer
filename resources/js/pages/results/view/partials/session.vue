@@ -1,9 +1,15 @@
 <script lang="ts" setup>
 import Semester from "@/pages/results/view/partials/semester.vue";
 
-defineProps<{
-  session: App.Data.Results.SessionResultData;
-}>();
+withDefaults(
+  defineProps<{
+    session: App.Data.Results.SessionResultData;
+    manageable?: true | false;
+  }>(),
+  {
+    manageable: false,
+  },
+);
 </script>
 
 <template>
@@ -13,7 +19,9 @@ defineProps<{
     <template
       v-for="semester in session.semesterResults"
       :key="semester.id">
-      <Semester :semester="semester" />
+      <Semester
+        :manageable
+        :semester="semester" />
     </template>
 
     <div class="p-2 text-right">
