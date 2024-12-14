@@ -20,7 +20,7 @@ final class ResultData extends Data
         public readonly string $grade,
         public readonly int $gradePoint,
         public readonly ?string $remark,
-        public readonly ?string $dateUpdated,
+        public readonly string $dateUpdated,
     ) {
     }
 
