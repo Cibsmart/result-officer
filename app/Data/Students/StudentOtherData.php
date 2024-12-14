@@ -25,11 +25,14 @@ final class StudentOtherData extends Data
 
     public static function fromModel(Student $student): self
     {
+        $entryMode = $student->entry_mode;
+        assert($entryMode instanceof EntryMode);
+
         return new self(
             id: $student->id,
             state: $student->lga->state->name,
             localGovernment: $student->lga->name,
-            entryMode: $student->entry_mode,
+            entryMode: $entryMode,
             entrySession: $student->entrySession->name,
             entryLevel: $student->entryLevel->name,
             jambRegistrationNumber: $student->jamb_registration_number,

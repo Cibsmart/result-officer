@@ -61,7 +61,7 @@ final class StudentBasicData extends Data
             slug: $student->slug,
             status: $status,
             statusColor: $status->color(),
-            photoUrl: $student->photo_url ? $student->photo_url->url : '',
+            photoUrl: $student->photo_url ? $student->photo_url : '',
         );
     }
 }
