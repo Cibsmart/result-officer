@@ -56,22 +56,12 @@ parameters:
 			path: app/Data/Results/ResultData.php
 
 		-
-			message: "#^Cannot call method format\\(\\) on string\\.$#"
-			count: 1
-			path: app/Data/Students/StudentData.php
-
-		-
-			message: "#^Parameter \\$gender of class App\\\\Data\\\\Students\\\\StudentData constructor expects App\\\\Enums\\\\Gender, string given\\.$#"
-			count: 1
-			path: app/Data/Students/StudentData.php
-
-		-
 			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(array\\<string, array\\<string, string\\>\\|string\\>\\|string\\)\\: mixed\\)\\|null, 'array_change_key…' given\\.$#"
 			count: 1
 			path: app/Http/Clients/ApiClient.php
 
 		-
-			message: "#^Parameter \\$paginated of class App\\\\ViewModels\\\\Students\\\\StudentIndexPage constructor expects Illuminate\\\\Contracts\\\\Pagination\\\\Paginator\\<App\\\\Data\\\\Students\\\\StudentData\\>, Illuminate\\\\Pagination\\\\AbstractPaginator\\|Illuminate\\\\Support\\\\Enumerable\\<\\(int\\|string\\), App\\\\Data\\\\Students\\\\StudentData\\> given\\.$#"
+			message: "#^Parameter \\$paginated of class App\\\\ViewModels\\\\Students\\\\StudentIndexPage constructor expects Illuminate\\\\Contracts\\\\Pagination\\\\Paginator\\<App\\\\Data\\\\Students\\\\StudentBasicData\\>, Illuminate\\\\Pagination\\\\AbstractPaginator\\|Illuminate\\\\Support\\\\Enumerable\\<\\(int\\|string\\), App\\\\Data\\\\Students\\\\StudentBasicData\\> given\\.$#"
 			count: 1
 			path: app/Http/Controllers/StudentController.php
 
