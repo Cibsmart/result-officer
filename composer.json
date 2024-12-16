@@ -16,6 +16,7 @@
     "laravel/pulse": "^1.2",
     "laravel/sanctum": "^4.0",
     "laravel/tinker": "^2.9",
+    "maatwebsite/excel": "^3.1",
     "predis/predis": "^2.0",
     "spatie/laravel-activitylog": "^4.9",
     "spatie/laravel-backup": "^9.1",
