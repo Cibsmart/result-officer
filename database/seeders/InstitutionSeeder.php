@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Models\Institution;
 use Illuminate\Database\Seeder;
-use Tests\Factories\InstitutionFactory;
 
 final class InstitutionSeeder extends Seeder
 {
@@ -14,13 +14,13 @@ final class InstitutionSeeder extends Seeder
      */
     public function run(): void
     {
-        InstitutionFactory::new()
-            ->state([
+        Institution::query()
+            ->create([
                 'address' => 'ABAKALIKI',
                 'code' => 'EBSU',
+                'domain' => 'ebsu.edu.ng',
                 'name' => 'EBONYI STATE UNIVERSITY',
                 'strategy' => 'semester',
-            ])
-            ->createOne();
+            ]);
     }
 }
