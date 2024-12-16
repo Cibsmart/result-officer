@@ -19,6 +19,7 @@ final class InstitutionFactory extends Factory
         return [
             'address' => fake()->unique()->city(),
             'code' => fake()->unique()->countryCode(),
+            'domain' => fake()->domainName(),
             'name' => fake()->unique()->country(),
             'strategy' => fake()->randomElement(CumulativeComputationStrategy::cases()),
         ];
