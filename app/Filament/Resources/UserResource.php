@@ -6,6 +6,7 @@ namespace App\Filament\Resources;
 
 use App\Enums\Role;
 use App\Filament\Resources\UserResource\Pages;
+use App\Filament\Resources\UserResource\RelationManagers\DepartmentsRelationManager;
 use App\Models\User;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -60,6 +61,14 @@ final class UserResource extends Resource
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
             'index' => Pages\ListUsers::route('/'),
+        ];
+    }
+
+    /** @return array<int, class-string|\Filament\Resources\RelationManagers\RelationGroup> */
+    public static function getRelations(): array
+    {
+        return [
+            DepartmentsRelationManager::class,
         ];
     }
 }
