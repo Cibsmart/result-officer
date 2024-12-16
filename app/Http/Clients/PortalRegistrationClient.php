@@ -14,7 +14,7 @@ final readonly class PortalRegistrationClient extends ApiClient implements Regis
 
     public function __construct()
     {
-        $this->endpoint = Config::string('rp_http.endpoints.registrations');
+        $this->endpoint = Config::string('rp.http.endpoints.registrations');
     }
 
     /** {@inheritDoc}

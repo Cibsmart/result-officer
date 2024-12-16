@@ -44,8 +44,8 @@ final readonly class ViewStudentResultController
             'transcript' => TranscriptData::from($student->allowEGrade()),
         ])
             ->withBrowsershot(static function (Browsershot $browsershot): void {
-                $tempPath = Config::string('rp_pdf.chromium.temp');
-                $browsershot->setChromePath(Config::string('rp_pdf.chromium.path'))
+                $tempPath = Config::string('rp.chromium.temp');
+                $browsershot->setChromePath(Config::string('rp.chromium.path'))
                     ->setOption('args', ['--disable-web-security'])
                     ->ignoreHttpsErrors()
                     ->noSandbox()

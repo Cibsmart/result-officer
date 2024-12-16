@@ -14,7 +14,7 @@ final readonly class PortalStudentClient extends ApiClient implements StudentCli
 
     public function __construct()
     {
-        $this->endpoint = Config::string('rp_http.endpoints.students');
+        $this->endpoint = Config::string('rp.http.endpoints.students');
     }
 
     /**

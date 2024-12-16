@@ -12,7 +12,7 @@ final readonly class CourseClient extends ApiClient
 
     public function __construct()
     {
-        $this->endpoint = Config::string('rp_http.endpoints.courses');
+        $this->endpoint = Config::string('rp.http.endpoints.courses');
     }
 
     /**

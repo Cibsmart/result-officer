@@ -60,7 +60,7 @@ it('throws an exception for invalid registration', function (): void {
     ->group('external');
 
 it('throws an exception when connection is available', function (): void {
-    Config::set('rp_http.base_url', '');
+    Config::set('rp.http.base_url', '');
 
     $this->client->fetchStudentByRegistrationNumber('0');
 })
