@@ -14,7 +14,7 @@ final readonly class PortalResultClient extends ApiClient implements ResultClien
 
     public function __construct()
     {
-        $this->endpoint = Config::string('rp_http.endpoints.results');
+        $this->endpoint = Config::string('rp.http.endpoints.results');
     }
 
     /**
