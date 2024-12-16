@@ -18,6 +18,8 @@ return new class extends Migration
             $table->foreignIdFor(Department::class)->constrained();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->unique(['user_id', 'department_id']);
         });
     }
 
