@@ -72,15 +72,6 @@ final class Student extends Model
         return $this->hasOne(VettingEvent::class);
     }
 
-    /**
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Registration, \Illuminate\Database\Eloquent\Model, \App\Models\Student>
-     */
-    public function registrations(): HasManyThrough
-    {
-        return $this->through('semesterEnrollments')->has('registrations');
-    }
-
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\LocalGovernment, \App\Models\Student> */
     public function lga(): BelongsTo
     {
