@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use App\Enums\EntryMode;
 use App\Enums\Gender;
 use App\Filament\Resources\StudentResource\Pages;
-use App\Filament\Resources\StudentResource\RelationManagers\CoursesRelationManager;
 use App\Filament\Resources\StudentResource\RelationManagers\EnrollmentsRelationManager;
 use App\Filament\Resources\StudentResource\RelationManagers\ProgramRelationManager;
 use App\Models\Student;
@@ -43,18 +43,18 @@ final class StudentResource extends Resource
                     ->relationship('program', 'name')
                     ->searchable()->preload()
                     ->required(),
-                Select::make('state_id')
-                    ->relationship('state', 'name')
+                Select::make('local_government_id')
+                    ->relationship('lga', 'name')
                     ->required(),
                 Select::make('entry_session_id')
                     ->relationship('entrySession', 'name')
                     ->searchable()->preload()
-                    ->required(),
+                    ->required()->label('Entry Session'),
                 Select::make('entry_level_id')
                     ->options([1 => '100', 2 => '200'])
-                    ->required(),
+                    ->required()->label('Entry Level'),
                 Select::make('entry_mode')
-                    ->relationship('entryMode', 'code')
+                    ->options(EntryMode::class)
                     ->required(),
             ])->columns(3);
     }
@@ -70,10 +70,10 @@ final class StudentResource extends Resource
                 TextColumn::make('gender')->sortable(),
                 TextColumn::make('date_of_birth')->date(),
                 TextColumn::make('program.name')->searchable()->sortable(),
-                TextColumn::make('state.name')->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('lga.name')->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('entrySession.name')->searchable()->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('entryLevel.name')->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('entryMode.code')->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('entry_mode')->toggleable(isToggledHiddenByDefault: true),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -85,7 +85,6 @@ final class StudentResource extends Resource
     {
         return [
             EnrollmentsRelationManager::class,
-            CoursesRelationManager::class,
             ProgramRelationManager::class,
         ];
     }
