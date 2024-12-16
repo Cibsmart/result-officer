@@ -18,16 +18,6 @@ final class Result extends Model
 {
     use SoftDeletes;
 
-    /** @var array<int, string> */
-    protected $fillable = [
-        'semester_enrollment_id',
-        'scores',
-        'total_score',
-        'grade',
-        'grade_point',
-        'remarks',
-    ];
-
     public static function createFromRawResult(RawResult $rawResult, Registration $registration): self
     {
         $registrationNumber = RegistrationNumber::new($rawResult->registration_number);

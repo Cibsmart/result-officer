@@ -32,8 +32,6 @@ final class Faculty extends Model
         'Social Science and Humanities' => 'FSSH',
     ];
 
-    protected $fillable = ['code', 'name'];
-
     public static function getOrCreate(string $facultyName): self
     {
         $facultyCode = self::getCode($facultyName);

@@ -8,9 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 
 final class Level extends Model
 {
-    /** @var array<int, string> */
-    protected $fillable = ['name'];
-
     public static function getUsingName(string $levelName): self
     {
         return self::query()->where('name', $levelName)->firstOrFail();

@@ -12,8 +12,6 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 final class SemesterEnrollment extends Model
 {
-    protected $fillable = ['session_enrollment_id', 'semester_id'];
-
     public static function getOrCreate(SessionEnrollment $sessionEnrollment, Semester $semester): self
     {
         return self::query()->firstOrCreate(

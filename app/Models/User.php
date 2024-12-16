@@ -17,14 +17,6 @@ final class User extends Authenticatable
     use SoftDeletes;
 
     /** @var array<int, string> */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'role',
-    ];
-
-    /** @var array<int, string> */
     protected $hidden = [
         'password',
         'remember_token',

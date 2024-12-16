@@ -18,14 +18,6 @@ final class Registration extends Model
 {
     use SoftDeletes;
 
-    /** @var array<int, string> */
-    protected $fillable = [
-        'semester_enrollment_id',
-        'course_id',
-        'credit_unit',
-        'course_status',
-    ];
-
     protected $with = ['result'];
 
     public static function createFromRawRegistration(

@@ -16,8 +16,6 @@ final class Department extends Model
 {
     use softDeletes;
 
-    protected $fillable = ['faculty_id', 'code', 'name', 'online_id'];
-
     public static function createFromRawDepartment(RawDepartment $rawDepartment): self
     {
         $faculty = Faculty::getOrCreate($rawDepartment->faculty);

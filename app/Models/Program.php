@@ -76,8 +76,6 @@ final class Program extends Model
         'Vocational Education' => 'VE',
     ];
 
-    protected $fillable = ['department_id', 'code', 'name', 'program_type_id', 'online_id'];
-
     protected $with = ['department'];
 
     public static function createForDepartment(Department $department, RawDepartment $rawDepartment): void

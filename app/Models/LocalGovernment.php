@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 final class LocalGovernment extends Model
 {
-    protected $fillable = ['state_id', 'name'];
-
     public static function getUsingName(string $localGovernmentName): self
     {
         $lga = self::query()->where('name', $localGovernmentName)->first();

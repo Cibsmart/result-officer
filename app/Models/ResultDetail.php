@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 final class ResultDetail extends Model
 {
-    protected $fillable = ['value'];
-
     /** @var array<int, string> */
     protected $hidden = ['data'];
 
