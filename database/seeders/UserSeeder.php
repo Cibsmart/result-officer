@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Enums\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -12,10 +13,10 @@ final class UserSeeder extends Seeder
     public function run(): void
     {
         User::query()->create([
-            'email' => 'admin@admin.com',
-            'name' => 'Admin User',
+            'email' => 'super@ebsu.edu.ng',
+            'name' => 'Super Admin',
             'password' => 'password',
-            'role' => 'admin',
+            'role' => Role::SUPER_ADMIN,
         ]);
     }
 }
