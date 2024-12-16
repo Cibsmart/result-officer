@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('address');
             $table->string('strategy');
+            $table->string('domain');
             $table->timestamps();
         });
     }
