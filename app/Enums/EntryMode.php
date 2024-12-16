@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
-enum EntryMode: string
+use Filament\Support\Contracts\HasLabel;
+
+enum EntryMode: string implements HasLabel
 {
     case UTME = 'UTME';
     case DENT = 'DENT';
@@ -22,5 +24,15 @@ enum EntryMode: string
         }
 
         return self::UTME;
+    }
+
+    public function getLabel(): ?string
+    {
+        return match ($this) {
+            self::UTME => 'UTME',
+            self::DENT => 'DIRECT ENTRY',
+            self::PD => 'PRE-DEGREE',
+            self::TRAN => 'TRANSFER',
+        };
     }
 }
