@@ -36,6 +36,12 @@ final class User extends Authenticatable
         return $this->hasMany(ImportEvent::class);
     }
 
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\UserDepartment, \App\Models\User> */
+    public function departments(): HasMany
+    {
+        return $this->hasMany(UserDepartment::class);
+    }
+
     /** @return array<string, string> */
     protected function casts(): array
     {
