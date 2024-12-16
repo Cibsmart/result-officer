@@ -10,8 +10,6 @@ use Illuminate\Support\Str;
 
 final class Course extends Model
 {
-    protected $fillable = ['code', 'title', 'online_id', 'active'];
-
     public static function createFromRawCourse(RawCourse $rawCourse): self
     {
         $course = new self();

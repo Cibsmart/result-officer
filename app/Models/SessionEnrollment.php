@@ -14,14 +14,6 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 final class SessionEnrollment extends Model
 {
-    /** @var array<int, string> */
-    protected $fillable = [
-        'student_id',
-        'session_id',
-        'level_id',
-        'year',
-    ];
-
     public static function getOrCreate(
         Student $student,
         Session $session,

@@ -16,13 +16,6 @@ final class ProgramCurriculumCourse extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = [
-        'program_curriculum_id',
-        'course_id',
-        'credit_unit',
-        'course_type',
-    ];
-
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\ProgramCurriculumCourse>

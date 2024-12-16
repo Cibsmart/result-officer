@@ -11,15 +11,6 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 final class ProgramCurriculum extends Model
 {
-    protected $fillable = [
-        'program_id',
-        'curriculum_id',
-        'level_id',
-        'semester_id',
-        'session_id',
-        'minimum_elective_units',
-    ];
-
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Program, \App\Models\ProgramCurriculum> */
     public function program(): BelongsTo
     {

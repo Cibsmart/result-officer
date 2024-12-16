@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 final class State extends Model
 {
-    protected $fillable = ['country_id', 'name'];
-
     public static function getUsingName(string $stateName): self
     {
         $state = self::query()->where('name', $stateName)->first();
