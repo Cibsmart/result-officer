@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Actions\Vetting\ValidateResults;
 use App\Enums\VettingStatus;
 use App\Enums\VettingType;
+use App\Models\Result;
 use App\Services\Vetting\Steps\CheckResultsValidityStep;
 use Tests\Factories\VettingEventFactory;
 
@@ -32,11 +33,10 @@ it('validates students results and passed status', function (): void {
 });
 
 it('validates students tampered results with failed status', function (): void {
-    $student = createStudentWithResults(1, 2);
+    $student = createStudentWithResults();
     $vettingEvent = VettingEventFactory::new()->createOne(['student_id' => $student->id]);
 
-    $registration = $student->registrations()->with('result')->get()->first();
-    $result = $registration->result;
+    $result = Result::first();
     $result->total_score = 120;
     $result->save();
 
