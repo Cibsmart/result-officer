@@ -28,7 +28,7 @@ final class DownloadResultsPageController
         $searchTerm = $request->string('search')->value();
 
         return Inertia::render('download/results/page', new DownloadRegistrationPage(
-            departments: DepartmentListData::new(),
+            departments: DepartmentListData::forUser($user),
             sessions: SessionListData::new(),
             semesters: SemesterListData::new(),
             courses: fn () => CourseListData::new($searchTerm),
