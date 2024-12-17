@@ -5,13 +5,16 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\Role;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Config;
 
-final class User extends Authenticatable
+final class User extends Authenticatable implements FilamentUser
 {
     use Notifiable;
     use SoftDeletes;
@@ -32,6 +35,25 @@ final class User extends Authenticatable
     public function departments(): HasMany
     {
         return $this->hasMany(UserDepartment::class);
+    }
+
+    public function inDomain(): bool
+    {
+        return str_ends_with($this->email, Config::string('rp.domain'));
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->inDomain() && in_array($this->role, [Role::SUPER_ADMIN, Role::ADMIN], true);
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        if ($panel->getId() === 'admin') {
+            return $this->isAdmin();
+        }
+
+        return true;
     }
 
     /** @return array<string, string> */
