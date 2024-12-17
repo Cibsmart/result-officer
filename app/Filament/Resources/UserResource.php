@@ -32,8 +32,8 @@ final class UserResource extends Resource
                     ->password()
                     ->visibleOn('create'),
                 Select::make('role')
-                    ->options(Role::class)
-                    ->required(),
+                    ->options(Role::creatable())
+                    ->required()->native(false),
             ]);
     }
 
