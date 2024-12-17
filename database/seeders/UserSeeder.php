@@ -40,16 +40,6 @@ final class UserSeeder extends Seeder
     public function run(): void
     {
         User::query()->create([
-            'email' => 'super@ebsu.edu.ng', 'name' => 'super Admin', 'password' => 'password',
-            'role' => Role::SUPER_ADMIN,
-        ]);
-
-        User::query()->create([
-            'email' => 'director@ebsu.edu.ng', 'name' => 'DIRECTOR RDB', 'password' => 'director@ebsu.edu.ng',
-            'role' => Role::SUPER_ADMIN,
-        ]);
-
-        User::query()->create([
             'email' => 'oriko.blessing@ebsu.edu.ng', 'name' => 'ORIKO BLESSING',
             'password' => 'oriko.blessing@ebsu.edu.ng',
             'role' => Role::ADMIN,
@@ -75,5 +65,15 @@ final class UserSeeder extends Seeder
                 $newUser->departments()->create(['department_id' => $department->id]);
             }
         }
+
+        User::query()->create([
+            'email' => 'super@ebsu.edu.ng', 'name' => 'Super Admin', 'password' => 'password',
+            'role' => Role::SUPER_ADMIN,
+        ]);
+
+        User::query()->create([
+            'email' => 'director@ebsu.edu.ng', 'name' => 'DIRECTOR RDB', 'password' => 'director@ebsu.edu.ng',
+            'role' => Role::SUPER_ADMIN,
+        ]);
     }
 }
