@@ -47,6 +47,11 @@ final class User extends Authenticatable implements FilamentUser
         return $this->inDomain() && in_array($this->role, [Role::SUPER_ADMIN, Role::ADMIN], true);
     }
 
+    public function isSuperAdmin(): bool
+    {
+        return $this->inDomain() && $this->role === Role::SUPER_ADMIN;
+    }
+
     public function canAccessPanel(Panel $panel): bool
     {
         if ($panel->getId() === 'admin') {
