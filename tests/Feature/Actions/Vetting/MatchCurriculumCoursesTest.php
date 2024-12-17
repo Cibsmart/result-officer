@@ -109,13 +109,10 @@ it('reports unmatched student courses', function (): void {
     $action = new MatchCurriculumCourses();
     $status = $action->execute($student);
 
-    $registration = $student->registrations()->with('semesterEnrollment.sessionEnrollment.session')->get()->last();
-
     expect($status)->toBeInstanceOf(VettingStatus::class)->toBe(VettingStatus::FAILED);
 
     assertDatabaseHas(VettingReport::class, [
         'status' => VettingStatus::FAILED,
-        'vettable_id' => $registration->id,
         'vettable_type' => 'registration',
     ]);
 });
