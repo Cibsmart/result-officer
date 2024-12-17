@@ -33,6 +33,7 @@ use App\Services\Vetting\Vetting;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 final class AppServiceProvider extends ServiceProvider
@@ -69,6 +70,8 @@ final class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Gate::before(fn (User $user) => $user->isSuperAdmin() ? true : null);
+
         Model::unguard();
 
         Model::shouldBeStrict(App::isLocal());
