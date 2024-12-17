@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
-enum Role: string
+use Filament\Support\Contracts\HasLabel;
+
+enum Role: string implements HasLabel
 {
     case SUPER_ADMIN = 'super-admin';
     case ADMIN = 'admin';
@@ -23,5 +25,17 @@ enum Role: string
             self::EXAM_OFFICER->value => 'DESK OFFICER',
             self::USER->value => 'USER',
         ];
+    }
+
+    public function getLabel(): ?string
+    {
+        return match ($this) {
+            self::SUPER_ADMIN => 'SUPER ADMIN',
+            self::ADMIN => 'ADMIN',
+            self::DESK_OFFICER => 'DESK OFFICER',
+            self::EXAM_OFFICER => 'EXAM OFFICER',
+            self::DATABASE_OFFICER => 'DATABASE OFFICER',
+            self::USER => 'USER',
+        };
     }
 }
