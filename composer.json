@@ -13,6 +13,7 @@
     "inertiajs/inertia-laravel": "^2.0",
     "laravel/framework": "^11.30",
     "laravel/horizon": "^5.28",
+    "laravel/pail": "^1.2",
     "laravel/pulse": "^1.2",
     "laravel/sanctum": "^4.0",
     "laravel/tinker": "^2.9",
