@@ -23,7 +23,7 @@ final readonly class DownloadStudentsPageController
         $user = $request->user();
 
         return Inertia::render('download/students/page', new DownloadStudentPage(
-            department: DepartmentListData::new(),
+            department: DepartmentListData::forUser($user),
             session: SessionListData::new(),
             events: fn () => ImportEventData::new($user, ImportEventType::STUDENTS),
             pending: fn () => PendingImportEventData::new($user, ImportEventType::STUDENTS),
