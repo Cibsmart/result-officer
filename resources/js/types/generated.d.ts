@@ -303,6 +303,7 @@ declare namespace App.Data.Shared {
     id: number;
     name: string;
     email: string;
+    isAdmin: boolean;
   };
 }
 declare namespace App.Data.Students {
