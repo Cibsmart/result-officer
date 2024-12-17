@@ -41,7 +41,7 @@ final class DepartmentListData extends Data
         return new self(
             data: DepartmentData::collect(
                 Department::query()
-                    ->when($user->isAdmin(), fn ($query) => $query->whereIn('id', $departmentIds))
+                    ->when(! $user->isAdmin(), fn ($query) => $query->whereIn('id', $departmentIds))
                     ->tap(new ActiveScope())
                     ->orderBy('name')
                     ->get(),
