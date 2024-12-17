@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Data\Department;
 
 use App\Models\Department;
+use App\Models\User;
 use App\Scopes\ActiveScope;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
@@ -24,6 +25,25 @@ final class DepartmentListData extends Data
         return new self(
             data: DepartmentData::collect(
                 Department::query()
+                    ->tap(new ActiveScope())
+                    ->orderBy('name')
+                    ->get(),
+            )->prepend($default),
+        );
+    }
+
+    public static function forUser(User $user): self
+    {
+        $default = new DepartmentData(id: 0, name: 'Select Department', slug: '');
+
+        $departmentIds = $user->departments()->pluck('department_id');
+
+        $userIsNotAdmin = $user && ! $user->isAdmin();
+
+        return new self(
+            data: DepartmentData::collect(
+                Department::query()
+                    ->when($userIsNotAdmin, fn ($query) => $query->whereIn('id', $departmentIds))
                     ->tap(new ActiveScope())
                     ->orderBy('name')
                     ->get(),
