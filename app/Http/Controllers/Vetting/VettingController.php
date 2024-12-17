@@ -26,8 +26,11 @@ final class VettingController
     {
         $student = Student::query()->where('slug', $request->query('student'))->first();
 
+        $user = $request->user();
+        assert($user instanceof User);
+
         return Inertia::render('vetting/list/index/page', new VettingIndexPage(
-            departments: fn () => DepartmentListData::new(),
+            departments: fn () => DepartmentListData::forUser($user),
             data: fn () => $department ? VettingListData::fromModel($department) : null,
             steps: fn () => $student ? VettingStepListData::from($student) : null,
         ));
