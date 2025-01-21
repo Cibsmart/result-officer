@@ -6,23 +6,21 @@ namespace Database\Seeders;
 
 use App\Enums\RawDataStatus;
 use App\Helpers\CSVFile;
-use App\Models\StudentLegacy;
+use App\Models\LegacyStudent;
 use Illuminate\Database\Seeder;
 
-final class StudentLegacySeeder extends Seeder
+final class LegacyStudentSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
+
         /** @var \Illuminate\Support\Collection<int, \Illuminate\Support\Collection<string, string>> $content */
         $content = (new CSVFile('seeders/students_legacy.csv'))->read();
 
         $students = $content->sortBy('registration_number');
 
         foreach ($students as $student) {
-            StudentLegacy::query()->create([
+            LegacyStudent::query()->create([
                 'birth_date' => $student['birth_date'],
                 'email' => $student['email'],
                 'entry_level' => $student['entry_level'],
@@ -42,5 +40,6 @@ final class StudentLegacySeeder extends Seeder
                 'status' => $student['status'],
             ]);
         }
+
     }
 }
