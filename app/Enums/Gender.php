@@ -10,12 +10,14 @@ enum Gender: string implements HasLabel
 {
     case MALE = 'M';
     case FEMALE = 'F';
+    case UNKNOWN = 'U';
 
     public function getLabel(): ?string
     {
         return match ($this) {
             self::MALE => 'MALE',
             self::FEMALE => 'FEMALE',
+            self::UNKNOWN => 'UNKNOWN',
         };
     }
 }
