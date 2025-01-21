@@ -39,7 +39,7 @@ final class CourseSeeder extends Seeder
 
             $alternatives = $course['alternatives'];
 
-            $alternativeIds = Str::of($alternatives)->explode(',')->filter();
+            $alternativeIds = Str::of($alternatives)->explode('#')->filter();
 
             foreach ($alternativeIds as $alternativeId) {
                 RawCourseAlternative::query()->create([
