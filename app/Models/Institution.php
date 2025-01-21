@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Enums\CumulativeComputationStrategy;
+use App\Enums\ComputationStrategy;
 use Illuminate\Database\Eloquent\Model;
 
 final class Institution extends Model
@@ -13,7 +13,7 @@ final class Institution extends Model
     protected function casts(): array
     {
         return [
-            'strategy' => CumulativeComputationStrategy::class,
+            'strategy' => ComputationStrategy::class,
         ];
     }
 }

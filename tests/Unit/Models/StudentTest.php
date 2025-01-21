@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Enums\CumulativeComputationStrategy;
+use App\Enums\ComputationStrategy;
 use App\Models\Student;
 use Tests\Factories\InstitutionFactory;
 use Tests\Factories\SessionEnrollmentFactory;
@@ -57,7 +57,7 @@ it('computes sum of student cumulative grade point averages', function (): void 
 });
 
 it('computes student fcgpa using semester strategy', function (): void {
-    InstitutionFactory::new()->createOne(['strategy' => CumulativeComputationStrategy::SEMESTER->value]);
+    InstitutionFactory::new()->createOne(['strategy' => ComputationStrategy::SEMESTER->value]);
 
     $student = StudentFactory::new()
         ->has(SessionEnrollmentFactory::new()->count(2)
@@ -70,7 +70,7 @@ it('computes student fcgpa using semester strategy', function (): void {
 });
 
 it('computes student fcgpa using universal strategy', function (): void {
-    InstitutionFactory::new()->createOne(['strategy' => CumulativeComputationStrategy::UNIVERSAL->value]);
+    InstitutionFactory::new()->createOne(['strategy' => ComputationStrategy::UNIVERSAL->value]);
 
     $student = StudentFactory::new()
         ->has(SessionEnrollmentFactory::new()->count(2)
@@ -83,7 +83,7 @@ it('computes student fcgpa using universal strategy', function (): void {
 });
 
 it('updates student credit unit, grade point sum and averages', function (): void {
-    InstitutionFactory::new()->createOne(['strategy' => CumulativeComputationStrategy::SEMESTER->value]);
+    InstitutionFactory::new()->createOne(['strategy' => ComputationStrategy::SEMESTER->value]);
 
     $student = StudentFactory::new()
         ->has(SessionEnrollmentFactory::new()->count(2)
