@@ -9,9 +9,12 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        Schema::create('student_legacies', function (Blueprint $table): void {
+        Schema::create('legacy_students', function (Blueprint $table): void {
             $table->id();
             $table->string('registration_number')->unique();
             $table->string('last_name');
@@ -40,6 +43,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('student_legacies');
+        Schema::dropIfExists('legacy_students');
     }
 };
