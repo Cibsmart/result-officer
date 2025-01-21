@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Enums\CumulativeComputationStrategy;
+use App\Enums\ComputationStrategy;
 use App\Enums\Year;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -95,7 +95,7 @@ final class SessionEnrollment extends Model
     {
         $institution = Institution::first();
 
-        if ($institution->strategy === CumulativeComputationStrategy::SEMESTER) {
+        if ($institution->strategy === ComputationStrategy::SEMESTER) {
             return round($this->gradePointAverageSum() / $this->semesterEnrollments->count(), 3);
         }
 
