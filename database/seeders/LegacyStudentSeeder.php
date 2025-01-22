@@ -40,6 +40,5 @@ final class LegacyStudentSeeder extends Seeder
                 'status' => $student['status'],
             ]);
         }
-
     }
 }
