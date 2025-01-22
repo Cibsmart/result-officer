@@ -1,0 +1,78 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Console\Commands;
+
+use App\Models\LegacyResult;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
+
+final class UploadLegacyResult extends Command
+{
+    /**
+     * The name and signature of the console command.
+     * @var string
+     */
+    protected $signature = 'app:upload_legacy_result';
+
+    /**
+     * The console command description.
+     * @var string
+     */
+    protected $description = 'Read CSV and Upload Legacy Results';
+
+    public function handle(): void
+    {
+        $path = Storage::path('seeders/legacy_results.csv');
+
+        $handle = fopen($path, 'r');
+
+        if (! $handle) {
+            return;
+        }
+
+        $bar = $this->output->createProgressBar(6299941);
+
+        $counter = 0;
+
+        $bar->start();
+
+        while (($data = fgetcsv($handle))) {
+            $counter += 1;
+
+            if ($counter === 1) {
+                continue;
+            }
+
+            $this->insertResult($data);
+
+            $bar->advance();
+        }
+
+        $bar->finish();
+    }
+
+    /** @param array<int, string> $result */
+    private function insertResult(array $result): void
+    {
+        LegacyResult::query()->create([
+            'course_code' => $result[11],
+            'course_title' => $result[12],
+            'credit_unit' => $result[7],
+            'department' => $result[13],
+            'exam' => $result[5],
+            'examiner' => $result[14],
+            'exam_date' => $result[15],
+            'inc' => $result[4],
+            'legacy_course_id' => $result[10],
+            'legacy_id' => $result[0],
+            'name' => $result[2],
+            'registration_number' => $result[3],
+            'remark' => $result[6],
+            'semester' => $result[8],
+            'session' => $result[9],
+            'student_id' => $result[1],
+        ]);
+    }
+}
