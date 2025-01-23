@@ -32,7 +32,8 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('phone_number')->nullable();
             $table->unsignedBigInteger('legacy_id');
-            $table->string('process_status');
+            $table->string('process_status')->index();
+            $table->text('message')->nullable();
             $table->foreignIdFor(Student::class)->nullable()->constrained();
             $table->timestamps();
         });

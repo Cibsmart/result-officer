@@ -17,16 +17,16 @@ return new class extends Migration
     {
         Schema::create('legacy_final_results', function (Blueprint $table): void {
             $table->id();
-            $table->unsignedBigInteger('student_id');
+            $table->unsignedBigInteger('student_id')->index();
             $table->string('name');
-            $table->string('registration_number');
+            $table->string('registration_number')->index();
             $table->unsignedTinyInteger('inc');
             $table->unsignedTinyInteger('exam');
             $table->unsignedTinyInteger('credit_unit');
-            $table->string('semester');
-            $table->string('session');
+            $table->string('semester')->index();
+            $table->string('session')->index();
             $table->unsignedBigInteger('legacy_course_id');
-            $table->string('course_code');
+            $table->string('course_code')->index();
             $table->string('course_title');
             $table->string('examiner')->nullable();
             $table->string('exam_date')->nullable();
@@ -37,7 +37,8 @@ return new class extends Migration
             $table->string('exam_officer')->nullable();
             $table->string('old_registration_number')->nullable();
             $table->unsignedBigInteger('legacy_id');
-            $table->string('status')->default(RawDataStatus::PENDING);
+            $table->string('status')->default(RawDataStatus::PENDING)->index();
+            $table->text('message')->nullable();
             $table->foreignIdFor(Registration::class)->nullable()->constrained();
             $table->timestamps();
         });
