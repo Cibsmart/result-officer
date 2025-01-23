@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Console\Commands\ImportPortalData;
+namespace App\Console\Commands;
 
 use App\Enums\CourseStatus;
 use App\Enums\RawDataStatus;
@@ -127,7 +127,7 @@ final class ProcessLegacyFinalResults extends Command
 
                 $status = CourseStatus::REPEAT;
 
-                if (! array_key_exists($course->code, $courses)) {
+                if (!array_key_exists($course->code, $courses)) {
                     $status = CourseStatus::FRESH;
                     $courses[$course->code] = $course->id;
                 }
