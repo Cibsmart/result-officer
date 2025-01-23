@@ -34,6 +34,13 @@ final class Course extends Model
         return self::query()->where('code', $courseCode)->firstOrFail();
     }
 
+    public static function getLegacyCourseId(int $legacyCourseId): self
+    {
+        $alternative = LegacyCourseAlternatives::query()->where('original_course_id', $legacyCourseId)->firstOrFail();
+
+        return self::query()->where('id', $alternative->alternative_course_id)->firstOrFail();
+    }
+
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
     protected function name(): Attribute
     {
