@@ -57,16 +57,17 @@ final class UploadLegacyResult extends Command
     private function insertResult(array $result): void
     {
         LegacyResult::query()->create([
-            'course_code' => $result[11],
-            'course_title' => $result[12],
+            'course_code' => $result[12],
+            'course_title' => $result[13],
             'credit_unit' => $result[7],
-            'department' => $result[13],
+            'department' => $result[14],
             'exam' => $result[5],
-            'examiner' => $result[14],
-            'exam_date' => $result[15],
+            'examiner' => $result[15],
+            'exam_date' => $result[16],
             'inc' => $result[4],
             'legacy_course_id' => $result[10],
             'legacy_id' => $result[0],
+            'level' => $result[11],
             'name' => $result[2],
             'registration_number' => $result[3],
             'remark' => $result[6],
