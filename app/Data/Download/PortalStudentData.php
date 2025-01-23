@@ -58,8 +58,8 @@ final class PortalStudentData extends Data
             entryMode: $data['entry_mode'],
             entryLevel: $data['entry_level'],
             jambRegistrationNumber: $data['jamb_registration_number'],
-            email: $data['email'],
-            phoneNumber: $data['phone_number'],
+            email: $data['email'] ? $data['email'] : '',
+            phoneNumber: $data['phone_number'] ? $data['phone_number'] : '',
         );
     }
 
