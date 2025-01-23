@@ -23,6 +23,10 @@ enum EntryMode: string implements HasLabel
             return self::TRAN;
         }
 
+        if (in_array($entryMode, [self::PD->value, 'PRE-DEGREE'], true)) {
+            return self::PD;
+        }
+
         return self::UTME;
     }
 
