@@ -22,7 +22,7 @@ final readonly class RegistrationModelData
         public Course $course,
         public CreditUnit $creditUnit,
         public CourseStatus $courseStatus,
-        public ?DateValue $registrationDate,
+        public DateValue $registrationDate,
         public ?string $onlineId,
         public RecordSource $source,
     ) {
@@ -56,7 +56,7 @@ final readonly class RegistrationModelData
             course: Course::getUsingLegacyCourseId($result->legacy_course_id),
             creditUnit: CreditUnit::from($result->credit_unit),
             courseStatus: $courseStatus,
-            registrationDate: null,
+            registrationDate: DateValue::fromValue(null),
             onlineId: null,
             source: RecordSource::LEGACY,
         );
