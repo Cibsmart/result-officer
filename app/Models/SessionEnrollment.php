@@ -18,15 +18,12 @@ final class SessionEnrollment extends Model
         Student $student,
         Session $session,
         Level $level,
+        Year $year = Year::FIRST,
     ): self {
-        $sessionEnrollment = self::query()->firstOrCreate(
+        return self::query()->firstOrCreate(
             ['student_id' => $student->id, 'session_id' => $session->id],
-            ['level_id' => $level->id, 'year' => Year::FIRST],
+            ['level_id' => $level->id, 'year' => $year],
         );
-
-        $student->updateStatus($student->getStatus());
-
-        return $sessionEnrollment;
     }
 
     public function updateYear(Year $year): void

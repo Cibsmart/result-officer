@@ -34,6 +34,7 @@ final class ProcessPortalRegistration
         $course = Course::getUsingOnlineId((string) $onlineCourseId);
 
         $sessionEnrollment = SessionEnrollment::getOrCreate($student, $session, $level);
+        $student->updateStatus($student->getStatus());
         $semesterEnrollment = SemesterEnrollment::getOrCreate($sessionEnrollment, $semester);
 
         $exists = Registration::query()
