@@ -14,10 +14,10 @@ final class Lecturer extends Model
     {
         $lecturer = new self();
 
-        $lecturerNmae = $rawResult->lecturer_name;
-        assertNotNull($lecturerNmae);
+        $lecturerName = $rawResult->lecturer_name;
+        assertNotNull($lecturerName);
 
-        $lecturer->name = $lecturerNmae;
+        $lecturer->name = $lecturerName;
         $lecturer->phone = $rawResult->lecturer_phone;
         $lecturer->email = $rawResult->lecturer_email;
         $lecturer->department = $rawResult->lecturer_department;
@@ -50,5 +50,16 @@ final class Lecturer extends Model
         }
 
         return self::createFromRawResult($rawResult);
+    }
+
+    public static function getOrCreateFromUsingName(string $name): self
+    {
+        $lecturer = self::query()->where('name', $name)->first();
+
+        if ($lecturer) {
+            return $lecturer;
+        }
+
+        return self::create(['name' => $name]);
     }
 }
