@@ -10,6 +10,7 @@
     "phpdoc_separation": false,
     "phpdoc_align": false,
     "psr_autoloading": true,
-    "new_with_parentheses": false
+    "new_with_parentheses": false,
+    "single_line_comment_spacing": false
   }
 }
