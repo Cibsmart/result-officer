@@ -16,9 +16,9 @@ final class CourseSeeder extends Seeder
     public function run(): void
     {
         /** @var \Illuminate\Support\Collection<int, \Illuminate\Support\Collection<string, string>> $content */
-        $courses = (new CSVFile('seeders/courses.csv'))->read();
+        $content = (new CSVFile('seeders/courses.csv'))->read();
 
-        foreach ($courses as $course) {
+        foreach ($content as $course) {
             $code = Str::trim($course['code']);
             $title = Str::of($course['title'])->replace('  ', ' ')->trim()->value();
 

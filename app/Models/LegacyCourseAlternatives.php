@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class LegacyCourseAlternatives extends Model
+final class LegacyCourseAlternatives extends Model
 {
-    //
 }
