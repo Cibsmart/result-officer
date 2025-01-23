@@ -36,6 +36,8 @@ final class CourseSeeder extends Seeder
                 'title' => $title,
             ]);
 
+            $this->processLegacyCourses($course['legacy_id'], $dbCourse->id);
+
             $this->processOnlineAlternatives($course['alternatives'], $onlineId);
 
             $this->processLegacyAlternatives($course['legacy_alternatives'], $dbCourse->id);
@@ -72,5 +74,17 @@ final class CourseSeeder extends Seeder
                 'original_course_id' => $alternativeLegacyId,
             ]);
         }
+    }
+
+    private function processLegacyCourses(?string $legacyId, int $dbCourseId): void
+    {
+        if ($legacyId === '' || $legacyId === null) {
+            return;
+        }
+
+        LegacyCourseAlternatives::query()->create([
+            'alternative_course_id' => $dbCourseId,
+            'original_course_id' => $legacyId,
+        ]);
     }
 }
