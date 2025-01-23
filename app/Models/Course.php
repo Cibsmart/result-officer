@@ -34,7 +34,7 @@ final class Course extends Model
         return self::query()->where('code', $courseCode)->firstOrFail();
     }
 
-    public static function getLegacyCourseId(int $legacyCourseId): self
+    public static function getUsingLegacyCourseId(int $legacyCourseId): self
     {
         $alternative = LegacyCourseAlternatives::query()->where('original_course_id', $legacyCourseId)->firstOrFail();
 
