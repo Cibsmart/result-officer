@@ -9,6 +9,7 @@ use App\Enums\Gender;
 use App\Enums\RecordSource;
 use App\Enums\StudentStatus;
 use App\Models\Department;
+use App\Models\LegacyStudent;
 use App\Models\Level;
 use App\Models\LocalGovernment;
 use App\Models\Program;
@@ -69,6 +70,33 @@ final readonly class StudentModelData
             status: StudentStatus::NEW,
             onlineId: $rawStudent->online_id,
             source: RecordSource::PORTAL,
+        );
+    }
+
+    public static function fromLegacyStudent(LegacyStudent $student): self
+    {
+        $registrationNumber = RegistrationNumber::new($student->registration_number);
+        $dateOfBirth = DateValue::fromValue($student->birth_date);
+
+        return new self(
+            registrationNumber: $registrationNumber->value,
+            slug: Str::of($registrationNumber->value)->replace('/', '-')->slug()->value(),
+            lastName: $student->last_name,
+            firstName: $student->first_name,
+            otherNames: $student->other_names ? $student->other_names : '',
+            gender: Gender::from($student->gender),
+            dateOfBirth: $dateOfBirth->value,
+            program: Program::getUsingCode($student->program_code),
+            entrySession: Session::getUsingName(Session::sessionFromYear((int) $student->entry_year)),
+            entryLevel: Level::getUsingName($student->entry_level),
+            entryMode: EntryMode::get($student->entry_mode),
+            localGovernment: LocalGovernment::getUsingName($student->local_government),
+            jambRegistrationNumber: $student->jamb_registration_number ? $student->jamb_registration_number : '',
+            email: $student->email ? $student->email : '',
+            phoneNumber: $student->phone_number ? $student->phone_number : '',
+            status: StudentStatus::from($student->status),
+            onlineId: '',
+            source: RecordSource::LEGACY,
         );
     }
 
