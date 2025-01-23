@@ -25,7 +25,11 @@ final class VerifyElectiveCourses extends ReportVettingStep
         $this->createVettingStep($student, VettingType::CHECK_ELECTIVE_COURSES);
 
         /** @var \Illuminate\Database\Eloquent\Collection<int, \App\Models\Registration> $registrations */
-        $registrations = StudentCourses::for($student)->query()->whereNotNull('program_curriculum_course_id')->get();
+        $registrations = StudentCourses::for($student)
+            ->query()
+            ->whereNotNull('program_curriculum_course_id')
+            ->get();
+
         $registrations = StudentCoursesData::collect($registrations);
 
         if ($registrations->isEmpty()) {
