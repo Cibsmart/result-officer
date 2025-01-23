@@ -33,6 +33,19 @@ final class Registration extends Model
         return $registration;
     }
 
+    public static function createFromLegacyResult(
+        SemesterEnrollment $semesterEnrollment,
+        LegacyResult|LegacyFinalResult $legacyResult,
+        CourseStatus $courseStatus,
+    ): self {
+        $registration = RegistrationModelData::fromLegacyResult($semesterEnrollment, $legacyResult, $courseStatus)
+            ->getModel();
+
+        $registration->save();
+
+        return $registration;
+    }
+
     public static function getUsingOnlineId(string $onlineId): self
     {
         return self::query()->where('online_id', $onlineId)->firstOrFail();
