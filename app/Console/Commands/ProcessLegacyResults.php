@@ -34,7 +34,7 @@ final class ProcessLegacyResults extends Command
         $legacyStudents = LegacyStudent::query()
             ->where('status', StudentStatus::NEW)
             ->where('process_status', RawDataStatus::PROCESSED)
-            ->lazy();
+            ->lazyById();
 
         $bar = $this->output->createProgressBar(count($legacyStudents));
 

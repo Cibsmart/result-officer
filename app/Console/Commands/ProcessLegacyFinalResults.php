@@ -34,7 +34,7 @@ final class ProcessLegacyFinalResults extends Command
         $legacyStudents = LegacyStudent::query()
             ->where('status', StudentStatus::GRADUATED)
             ->where('process_status', RawDataStatus::PROCESSED)
-            ->lazy();
+            ->lazyById();
 
         $bar = $this->output->createProgressBar(count($legacyStudents));
 
@@ -127,7 +127,7 @@ final class ProcessLegacyFinalResults extends Command
 
                 $status = CourseStatus::REPEAT;
 
-                if (!array_key_exists($course->code, $courses)) {
+                if (! array_key_exists($course->code, $courses)) {
                     $status = CourseStatus::FRESH;
                     $courses[$course->code] = $course->id;
                 }
