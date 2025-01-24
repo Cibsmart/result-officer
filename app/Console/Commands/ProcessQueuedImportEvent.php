@@ -17,12 +17,12 @@ final class ProcessQueuedImportEvent extends Command
 
     public function __invoke(): int
     {
-        $events = ImportEvent::query()
+        $event = ImportEvent::query()
             ->where('status', ImportEventStatus::QUEUED)
             ->orderBy('id')
-            ->get();
+            ->first();
 
-        foreach ($events as $event) {
+        if ($event) {
             $event->updateStatus(ImportEventStatus::STARTED);
 
             Artisan::call('rp:import-group-portal-data', ['eventId' => $event->id]);
