@@ -21,31 +21,6 @@ parameters:
 			path: app/Data/Import/ImportEventData.php
 
 		-
-			message: "#^Property App\\\\Models\\\\Student\\:\\:\\$date_of_birth \\(string\\|null\\) does not accept Carbon\\\\Carbon\\|null\\.$#"
-			count: 1
-			path: app/Data/Models/StudentModelData.php
-
-		-
-			message: "#^Property App\\\\Models\\\\Student\\:\\:\\$entry_mode \\(string\\) does not accept App\\\\Enums\\\\EntryMode\\.$#"
-			count: 1
-			path: app/Data/Models/StudentModelData.php
-
-		-
-			message: "#^Property App\\\\Models\\\\Student\\:\\:\\$gender \\(string\\) does not accept App\\\\Enums\\\\Gender\\.$#"
-			count: 1
-			path: app/Data/Models/StudentModelData.php
-
-		-
-			message: "#^Property App\\\\Models\\\\Student\\:\\:\\$source \\(string\\) does not accept App\\\\Enums\\\\RecordSource\\.$#"
-			count: 1
-			path: app/Data/Models/StudentModelData.php
-
-		-
-			message: "#^Property App\\\\Models\\\\Student\\:\\:\\$status \\(string\\) does not accept App\\\\Enums\\\\StudentStatus\\.$#"
-			count: 1
-			path: app/Data/Models/StudentModelData.php
-
-		-
 			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Program\\>\\:\\:tap\\(\\) expects callable\\(Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Program\\>\\)\\: mixed, App\\\\Scopes\\\\ActiveScope given\\.$#"
 			count: 1
 			path: app/Data/Program/ProgramListData.php
@@ -71,41 +46,6 @@ parameters:
 			path: app/Http/Middleware/ValidateYearParameter.php
 
 		-
-			message: "#^Property App\\\\Models\\\\Registration\\:\\:\\$course_status \\(string\\) does not accept App\\\\Enums\\\\CourseStatus\\:\\:FRESH\\.$#"
-			count: 1
-			path: app/Models/Registration.php
-
-		-
-			message: "#^Property App\\\\Models\\\\Registration\\:\\:\\$registration_date \\(string\\|null\\) does not accept Carbon\\\\Carbon\\|null\\.$#"
-			count: 1
-			path: app/Models/Registration.php
-
-		-
-			message: "#^Property App\\\\Models\\\\Registration\\:\\:\\$source \\(string\\) does not accept App\\\\Enums\\\\RecordSource\\:\\:PORTAL\\.$#"
-			count: 1
-			path: app/Models/Registration.php
-
-		-
-			message: "#^Cannot access property \\$value on int\\.$#"
-			count: 1
-			path: app/Models/Result.php
-
-		-
-			message: "#^Property App\\\\Models\\\\Result\\:\\:\\$scores \\(string\\) does not accept array\\<string, string\\>\\.$#"
-			count: 1
-			path: app/Models/Result.php
-
-		-
-			message: "#^Property App\\\\Models\\\\Result\\:\\:\\$source \\(string\\) does not accept App\\\\Enums\\\\RecordSource\\:\\:PORTAL\\.$#"
-			count: 1
-			path: app/Models/Result.php
-
-		-
-			message: "#^Property App\\\\Models\\\\Result\\:\\:\\$upload_date \\(string\\|null\\) does not accept Carbon\\\\Carbon\\|null\\.$#"
-			count: 1
-			path: app/Models/Result.php
-
-		-
 			message: "#^Parameter \\#1 \\$status of static method App\\\\Enums\\\\StudentStatus\\:\\:canBeCleared\\(\\) expects App\\\\Enums\\\\StudentStatus, string given\\.$#"
 			count: 1
 			path: app/Models/Student.php
@@ -117,11 +57,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Models\\\\VettingReport\\:\\:vettable\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\MorphTo\\<Illuminate\\\\Database\\\\Eloquent\\\\Model, App\\\\Models\\\\VettingReport\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\MorphTo\\<Illuminate\\\\Database\\\\Eloquent\\\\Model, \\$this\\(App\\\\Models\\\\VettingReport\\)\\>\\.$#"
-			count: 1
-			path: app/Models/VettingReport.php
-
-		-
-			message: "#^Property App\\\\Models\\\\VettingReport\\:\\:\\$status \\(string\\) does not accept App\\\\Enums\\\\VettingStatus\\.$#"
 			count: 1
 			path: app/Models/VettingReport.php
 

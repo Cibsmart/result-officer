@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Data\Models;
 
+use App\Enums\CreditUnit;
 use App\Enums\Grade;
 use App\Enums\RecordSource;
 use App\Models\Lecturer;
@@ -35,10 +36,13 @@ final readonly class ResultModelData
 
     public static function fromRawResult(Registration $registration, RawResult $result): self
     {
+        $creditUnit = $registration->credit_unit;
+        assert($creditUnit instanceof CreditUnit);
+
         $registrationNumber = RegistrationNumber::new($result->registration_number);
         $totalScore = TotalScore::new((int) $result->in_course + (int) $result->exam);
         $grade = $totalScore->grade($registrationNumber->allowEGrade());
-        $gradePoint = $grade->point() * $registration->credit_unit->value;
+        $gradePoint = $grade->point() * $creditUnit->value;
 
         $lecturer = null;
 
@@ -62,10 +66,13 @@ final readonly class ResultModelData
 
     public static function fromLegacyResult(Registration $registration, LegacyResult|LegacyFinalResult $result): self
     {
+        $creditUnit = $registration->credit_unit;
+        assert($creditUnit instanceof CreditUnit);
+
         $registrationNumber = RegistrationNumber::new($result->registration_number);
         $totalScore = TotalScore::new($result->exam + $result->inc);
         $grade = $totalScore->grade($registrationNumber->allowEGrade());
-        $gradePoint = $grade->point() * $registration->credit_unit->value;
+        $gradePoint = $grade->point() * $creditUnit->value;
 
         $lecturer = null;
 

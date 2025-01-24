@@ -73,7 +73,7 @@ final readonly class RegistrationModelData
         $registration->online_id = $this->onlineId;
         $registration->registration_date = $this->registrationDate->value;
         $registration->semester_enrollment_id = $this->semesterEnrollment->id;
-        $registration->source = RecordSource::PORTAL;
+        $registration->source = $this->source;
 
         return $registration;
     }
