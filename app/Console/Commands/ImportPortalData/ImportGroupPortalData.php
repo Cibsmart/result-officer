@@ -47,12 +47,17 @@ final class ImportGroupPortalData extends Command
 
         [$numberOfData, $numberOfStudent, $failedMessage] = [0, 0, ''];
 
+        $bar = $this->output->createProgressBar($students->count());
+
+        $bar->start();
+
         foreach ($students as $student) {
+            $bar->advance();
+
             try {
                 $data = $service->get($event->method, ['registration_number' => $student->registration_number]);
 
-                $numberOfStudent += 1;
-                $numberOfData += $data->count();
+                [$numberOfStudent, $numberOfData] = [$numberOfStudent + 1, $data->count()];
 
                 $service->save($event, $data);
             } catch (Exception $e) {
@@ -61,6 +66,8 @@ final class ImportGroupPortalData extends Command
                 continue;
             }
         }
+
+        $bar->finish();
 
         $event->updateMessageAndCounts($failedMessage, $numberOfStudent, $numberOfData);
 
