@@ -8,6 +8,7 @@ use Tests\Factories\DepartmentFactory;
 use Tests\Factories\ProgramFactory;
 use Tests\Factories\StatusChangeEventFactory;
 use Tests\Factories\StudentFactory;
+use Tests\Factories\UserDepartmentFactory;
 use Tests\Factories\UserFactory;
 
 use function Pest\Laravel\actingAs;
@@ -27,12 +28,11 @@ it('redirects guest to login', function (): void {
 });
 
 it('passes departments data to the view', function (): void {
-    $user = UserFactory::new()->createOne();
-    DepartmentFactory::new()->active()->count(3)->create();
+    $user = UserFactory::new()->has(UserDepartmentFactory::new()->count(2), 'departments')->createOne();
 
     actingAs($user)->get(route('department.cleared.index'))
-        ->assertHasDataList('departments', DepartmentListData::new());
-})->skip();
+        ->assertHasDataList('departments', DepartmentListData::forUser($user));
+});
 
 it('passes cleared students data to the view when department and year parameter are present', function (): void {
     $user = UserFactory::new()->createOne();
