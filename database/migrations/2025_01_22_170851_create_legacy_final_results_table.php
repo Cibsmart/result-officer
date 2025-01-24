@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('semester')->index();
             $table->string('session')->index();
             $table->unsignedBigInteger('legacy_course_id');
+            $table->string('level');
             $table->string('course_code')->index();
             $table->string('course_title');
             $table->string('examiner')->nullable();
