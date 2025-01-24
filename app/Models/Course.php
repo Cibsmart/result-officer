@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 final class Course extends Model
@@ -26,12 +27,18 @@ final class Course extends Model
 
     public static function getUsingOnlineId(string $onlineId): self
     {
-        return self::query()->where('online_id', $onlineId)->firstOrFail();
+        return
+            Cache::remember($onlineId,
+                now()->addDay(),
+                fn () => self::query()->where('online_id', $onlineId)->firstOrFail());
     }
 
     public static function getUsingCode(string $courseCode): self
     {
-        return self::query()->where('code', $courseCode)->firstOrFail();
+        return
+            Cache::remember($courseCode,
+                now()->addDay(),
+                fn () => self::query()->where('code', $courseCode)->firstOrFail());
     }
 
     public static function getUsingLegacyCourseId(int $legacyCourseId): self

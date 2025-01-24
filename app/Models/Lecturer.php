@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 use function PHPUnit\Framework\assertNotNull;
 
@@ -29,12 +30,18 @@ final class Lecturer extends Model
 
     public static function getUsingName(string $lecturerName): ?self
     {
-        return self::query()->where('name', $lecturerName)->first();
+        return
+            Cache::remember($lecturerName,
+                fn (?self $value) => is_null($value) ? null : now()->addMinutes(5),
+                fn () => self::query()->where('name', $lecturerName)->first());
     }
 
     public static function getUsingPhoneNumber(string $phoneNumber): ?self
     {
-        return self::query()->where('phone', $phoneNumber)->first();
+        return
+            Cache::remember($phoneNumber,
+                fn (?self $value) => is_null($value) ? 0 : now()->addMinutes(5),
+                fn () => self::query()->where('phone', $phoneNumber)->first());
     }
 
     public static function getOrCreateFromRawResult(RawResult $rawResult): self
@@ -54,7 +61,7 @@ final class Lecturer extends Model
 
     public static function getOrCreateFromUsingName(string $name): self
     {
-        $lecturer = self::query()->where('name', $name)->first();
+        $lecturer = self::getUsingName($name);
 
         if ($lecturer) {
             return $lecturer;
