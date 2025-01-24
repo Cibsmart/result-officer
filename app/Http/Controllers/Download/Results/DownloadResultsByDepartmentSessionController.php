@@ -21,7 +21,7 @@ final class DownloadResultsByDepartmentSessionController
         $onlineId = $request->integer('onlineDepartmentId');
         $deptName = $request->string('departmentName')->value();
 
-        $importEventInQueue = ImportEvent::inQueue(
+        $importEventInQueue = ImportEvent::inSessionDepartmentQueue(
             ImportEventType::RESULTS,
             ImportEventMethod::DEPARTMENT_SESSION,
             $session,
