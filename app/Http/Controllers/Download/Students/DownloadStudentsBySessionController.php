@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Download\Students;
 
 use App\Enums\ImportEventMethod;
+use App\Enums\ImportEventStatus;
 use App\Enums\ImportEventType;
 use App\Http\Requests\Download\DownloadStudentsBySessionRequest;
 use App\Models\ImportEvent;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Artisan;
 
 final readonly class DownloadStudentsBySessionController
 {
@@ -17,11 +17,28 @@ final readonly class DownloadStudentsBySessionController
     {
         $user = $request->user();
 
-        $event = ImportEvent::new($user, ImportEventType::STUDENTS, ImportEventMethod::SESSION,
-            ['entry_session' => $request->string('sessionName')->value()]);
+        $session = $request->string('sessionName')->value();
 
-        Artisan::queue('rp:import-portal-data', ['eventId' => $event->id]);
+        $importEventInQueue = ImportEvent::inSessionQueue(
+            ImportEventType::STUDENTS,
+            ImportEventMethod::SESSION,
+            $session,
+        );
 
-        return redirect()->back()->success('Students Import Started...');
+        if ($importEventInQueue) {
+            $message = "Student Import for {$session} is already in queue";
+
+            return redirect()->back()->error($message);
+        }
+
+        ImportEvent::new(
+            user: $user,
+            type: ImportEventType::STUDENTS,
+            method: ImportEventMethod::SESSION,
+            data: ['entry_session' => $session],
+            status: ImportEventStatus::QUEUED,
+        );
+
+        return redirect()->back()->success("Students Import for {$session} session QUEUED");
     }
 }
