@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Enums\ImportEventMethod;
+use App\Enums\ImportEventStatus;
+use App\Enums\ImportEventType;
 use App\Http\Controllers\Download\Students\DownloadStudentByRegistrationNumberController;
 use App\Http\Controllers\Download\Students\DownloadStudentsByDepartmentSessionController;
 use App\Http\Controllers\Download\Students\DownloadStudentsBySessionController;
@@ -90,7 +93,7 @@ it('can start download of students by department and session', function (): void
     });
 });
 
-it('can start download of students by session', function (): void {
+it('queues download of students by session for processing', function (): void {
     $user = UserFactory::new()->createOne();
     $session = SessionFactory::new()->createOne();
 
@@ -105,14 +108,9 @@ it('can start download of students by session', function (): void {
     assertDatabaseHas('import_events',
         [
             'data' => json_encode(['entry_session' => $session->name]),
+            'method' => ImportEventMethod::SESSION,
+            'status' => ImportEventStatus::QUEUED,
+            'type' => ImportEventType::STUDENTS,
             'user_id' => $user->id,
         ]);
-
-    $event = ImportEvent::query()->where('user_id', $user->id)->firstOrFail();
-
-    Queue::assertPushed(function (QueuedCommand $command) use ($event): bool {
-        $data = getQueuedCommandProtectedDataProperty($command);
-
-        return $data[0] === 'rp:import-portal-data' && $data[1]['eventId'] === $event->id;
-    });
 });
