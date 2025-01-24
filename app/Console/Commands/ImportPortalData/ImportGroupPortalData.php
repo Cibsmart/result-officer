@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Console\Commands\ImportPortalData;
 
+use App\Enums\ImportEventMethod;
 use App\Enums\ImportEventStatus;
 use App\Enums\ImportEventType;
 use App\Enums\StudentStatus;
 use App\Models\Department;
 use App\Models\ImportEvent;
 use App\Models\Session;
+use App\Models\Student;
 use App\Services\Api\PortalServiceFactory;
 use Exception;
 use Illuminate\Console\Command;
@@ -72,19 +74,42 @@ final class ImportGroupPortalData extends Command
     /** @return \Illuminate\Database\Eloquent\Collection<int, \App\Models\Student> */
     private function getStudents(ImportEvent $event): Collection
     {
-        $department = Department::query()->where('online_id', $event->data['online_department_id'])->firstOrFail();
         $session = Session::query()->where('name', $event->data['session'])->firstOrFail();
 
-        $students = $department->students()
-            ->whereNotIn('status', StudentStatus::archivedStates())
-            ->where('entry_session_id', $session->id)
-            ->get();
+        $students = $event->method === ImportEventMethod::DEPARTMENT_SESSION
+            ? $this->getStudentsByEntrySessionAndDepartment($event, $session)
+            : $this->getStudentsByEntrySession($session);
 
         if ($students->isEmpty()) {
-            $event->setMessage("No students found admitted in {$session->name} for {$department->name} ");
+            $event->setMessage('No students found admitted');
             $event->updateStatus(ImportEventStatus::FAILED);
         }
 
         return $students;
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Collection<int, \App\Models\Student> */
+    private function getStudentsByEntrySession(Session $session): Collection
+    {
+        return Student::query()
+            ->whereNotIn('status', StudentStatus::archivedStates())
+            ->where('entry_session_id', $session->id)
+            ->get();
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Collection<int, \App\Models\Student> */
+    private function getStudentsByEntrySessionAndDepartment(
+        ImportEvent $event,
+        Session $session,
+    ): Collection {
+
+        $department = Department::query()
+            ->where('online_id', $event->data['online_department_id'])
+            ->firstOrFail();
+
+        return $department->students()
+            ->whereNotIn('status', StudentStatus::archivedStates())
+            ->where('entry_session_id', $session->id)
+            ->get();
     }
 }
