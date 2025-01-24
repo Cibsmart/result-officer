@@ -31,9 +31,15 @@ final class ProcessLegacyResults extends Command
 
     public function handle(): void
     {
+        $pendingStudents = LegacyResult::query()
+            ->where('status', RawDataStatus::PENDING)
+            ->distinct()
+            ->pluck('student_id');
+
         $legacyStudents = LegacyStudent::query()
             ->where('status', StudentStatus::NEW)
             ->where('process_status', RawDataStatus::PROCESSED)
+            ->whereIn('legacy_id', $pendingStudents)
             ->lazyById();
 
         $bar = $this->output->createProgressBar(count($legacyStudents));
