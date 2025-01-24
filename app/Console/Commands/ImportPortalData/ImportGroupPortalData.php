@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Console\Commands\ImportPortalData;
 
 use App\Enums\ImportEventStatus;
+use App\Enums\ImportEventType;
 use App\Enums\StudentStatus;
 use App\Models\Department;
 use App\Models\ImportEvent;
@@ -12,6 +13,7 @@ use App\Models\Session;
 use App\Services\Api\PortalServiceFactory;
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Artisan;
 
 final class ImportGroupPortalData extends Command
@@ -24,22 +26,20 @@ final class ImportGroupPortalData extends Command
     {
         $event = ImportEvent::findOrFail($this->argument('eventId'));
 
+        if ($event->type === ImportEventType::STUDENTS) {
+
+            Artisan::call('rp:import-portal-data', ['eventId' => $event->id]);
+
+            return Command::SUCCESS;
+        }
+
         $service = $factory->resolve($event->type);
 
         $event->updateStatus(ImportEventStatus::DOWNLOADING);
 
-        $department = Department::query()->where('online_id', $event->data['online_department_id'])->firstOrFail();
-        $session = Session::query()->where('name', $event->data['session'])->firstOrFail();
-
-        $students = $department->students()
-            ->whereNotIn('status', StudentStatus::archivedStates())
-            ->where('entry_session_id', $session->id)
-            ->get();
+        $students = $this->getStudents($event);
 
         if ($students->isEmpty()) {
-            $event->setMessage("No students found admitted in {$session->name} for {$department->name} ");
-            $event->updateStatus(ImportEventStatus::FAILED);
-
             return Command::FAILURE;
         }
 
@@ -67,5 +67,24 @@ final class ImportGroupPortalData extends Command
         Artisan::call('rp:process-portal-data', ['eventId' => $event->id]);
 
         return Command::SUCCESS;
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Collection<int, \App\Models\Student> */
+    private function getStudents(ImportEvent $event): Collection
+    {
+        $department = Department::query()->where('online_id', $event->data['online_department_id'])->firstOrFail();
+        $session = Session::query()->where('name', $event->data['session'])->firstOrFail();
+
+        $students = $department->students()
+            ->whereNotIn('status', StudentStatus::archivedStates())
+            ->where('entry_session_id', $session->id)
+            ->get();
+
+        if ($students->isEmpty()) {
+            $event->setMessage("No students found admitted in {$session->name} for {$department->name} ");
+            $event->updateStatus(ImportEventStatus::FAILED);
+        }
+
+        return $students;
     }
 }
