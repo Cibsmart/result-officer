@@ -20,7 +20,7 @@ final class Session extends Model
         $sessionName = Str::replace('-', '/', $sessionName);
 
         return
-            Cache::remember($sessionName,
+            Cache::remember("session_{$sessionName}",
                 now()->addDay(),
                 fn () => self::query()->where('name', $sessionName)->firstOrFail());
     }

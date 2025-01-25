@@ -12,7 +12,7 @@ final class Level extends Model
     public static function getUsingName(string $levelName): self
     {
         return
-            Cache::remember($levelName,
+            Cache::remember("level_{$levelName}",
                 now()->addDay(),
                 fn () => self::query()->where('name', $levelName)->firstOrFail());
     }

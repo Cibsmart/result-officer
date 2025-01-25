@@ -12,8 +12,8 @@ final class RawCourseAlternative extends Model
     public static function getAlternativeOnlineCourseId(string $originalOnlineCourseId): ?self
     {
         return
-            Cache::remember($originalOnlineCourseId,
-                fn ($value) => is_null($value) ? null : now()->addHour(),
+            Cache::remember("raw_course_alternative_{$originalOnlineCourseId}",
+                fn (?self $value) => is_null($value) ? null : now()->addHour(),
                 fn () => self::query()->firstWhere('original_course_id', $originalOnlineCourseId));
     }
 }

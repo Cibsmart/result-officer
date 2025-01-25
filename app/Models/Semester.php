@@ -12,7 +12,7 @@ final class Semester extends Model
     public static function getUsingName(string $semesterName): self
     {
         return
-            Cache::remember($semesterName,
+            Cache::remember("semester_{$semesterName}",
                 now()->addDay(),
                 fn () => self::query()->where('name', $semesterName)->firstOrFail());
     }

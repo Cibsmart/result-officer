@@ -50,7 +50,7 @@ final class Registration extends Model
     public static function getUsingOnlineId(string $onlineId): self
     {
         return
-            Cache::remember($onlineId,
+            Cache::remember("registration_online_id_{$onlineId}",
                 now()->addHour(),
                 fn () => self::query()->where('online_id', $onlineId)->firstOrFail());
     }

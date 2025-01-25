@@ -28,7 +28,7 @@ final class Course extends Model
     public static function getUsingOnlineId(string $onlineId): self
     {
         return
-            Cache::remember($onlineId,
+            Cache::remember("course_online_id_{$onlineId}",
                 now()->addDay(),
                 fn () => self::query()->where('online_id', $onlineId)->firstOrFail());
     }

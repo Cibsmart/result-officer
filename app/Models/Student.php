@@ -39,7 +39,7 @@ final class Student extends Model
     public static function getUsingRegistrationNumber(string $registrationNumber): self
     {
         return
-            Cache::remember($registrationNumber,
+            Cache::remember("student_{$registrationNumber}",
                 now()->addMinutes(5),
                 fn () => self::query()->where('registration_number', $registrationNumber)->firstOrFail());
     }
