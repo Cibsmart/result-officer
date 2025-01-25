@@ -38,7 +38,7 @@ final readonly class RegistrationModelData
         return new self(
             semesterEnrollment: $semesterEnrollment,
             course: $course,
-            creditUnit: CreditUnit::from($registration->credit_unit),
+            creditUnit: CreditUnit::from((int) $registration->credit_unit),
             courseStatus: CourseStatus::FRESH,
             registrationDate: $registrationDate,
             onlineId: $registration->online_id,
@@ -54,7 +54,7 @@ final readonly class RegistrationModelData
         return new self(
             semesterEnrollment: $semesterEnrollment,
             course: Course::getUsingLegacyCourseId($result->legacy_course_id),
-            creditUnit: CreditUnit::from($result->credit_unit),
+            creditUnit: CreditUnit::from((int) $result->credit_unit),
             courseStatus: $courseStatus,
             registrationDate: DateValue::fromValue(null),
             onlineId: null,
