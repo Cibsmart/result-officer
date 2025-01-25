@@ -57,7 +57,7 @@ final class ImportGroupPortalData extends Command
             try {
                 $data = $service->get($event->method, ['registration_number' => $student->registration_number]);
 
-                [$numberOfStudent, $numberOfData] = [$numberOfStudent + 1, $data->count()];
+                [$numberOfStudent, $numberOfData] = [$numberOfStudent + 1, $numberOfData + $data->count()];
 
                 $service->save($event, $data);
             } catch (Exception $e) {
@@ -73,7 +73,7 @@ final class ImportGroupPortalData extends Command
 
         $event->updateStatus(ImportEventStatus::SAVED);
 
-        Artisan::call('rp:process-portal-data', ['eventId' => $event->id]);
+        //        Artisan::call('rp:process-portal-data', ['eventId' => $event->id]);
 
         return Command::SUCCESS;
     }
@@ -81,7 +81,7 @@ final class ImportGroupPortalData extends Command
     /** @return \Illuminate\Database\Eloquent\Collection<int, \App\Models\Student> */
     private function getStudents(ImportEvent $event): Collection
     {
-        $session = Session::query()->where('name', $event->data['session'])->firstOrFail();
+        $session = Session::getUsingName($event->data['entry_session']);
 
         $students = $event->method === ImportEventMethod::DEPARTMENT_SESSION
             ? $this->getStudentsByEntrySessionAndDepartment($event, $session)
@@ -101,6 +101,7 @@ final class ImportGroupPortalData extends Command
         return Student::query()
             ->whereNotIn('status', StudentStatus::archivedStates())
             ->where('entry_session_id', $session->id)
+            ->orderBy('registration_number')
             ->get();
     }
 
@@ -117,6 +118,7 @@ final class ImportGroupPortalData extends Command
         return $department->students()
             ->whereNotIn('status', StudentStatus::archivedStates())
             ->where('entry_session_id', $session->id)
+            ->orderBy('registration_number')
             ->get();
     }
 }
