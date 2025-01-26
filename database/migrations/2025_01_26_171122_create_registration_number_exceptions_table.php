@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Student;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('wrong_registration_number')->unique();
             $table->string('correct_registration_number');
+            $table->foreignIdFor(Student::class)->nullable()->constrained();
             $table->timestamps();
         });
     }
