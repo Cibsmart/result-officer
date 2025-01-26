@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('course_title');
             $table->string('credit_unit');
             $table->string('registration_date')->nullable();
-            $table->string('status');
+            $table->string('status')->index();
             $table->text('message')->nullable();
             $table->foreignIdFor(Registration::class)->nullable();
             $table->timestamps();

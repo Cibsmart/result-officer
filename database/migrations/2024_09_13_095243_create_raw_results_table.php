@@ -18,7 +18,7 @@ return new class extends Migration
         Schema::create('raw_results', function (Blueprint $table): void {
             $table->id();
             $table->foreignIdFor(ImportEvent::class);
-            $table->string('online_id');
+            $table->string('online_id')->index();
             $table->string('registration_id');
             $table->string('registration_number');
             $table->string('in_course');
@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('lecturer_phone')->nullable();
             $table->string('lecturer_email')->nullable();
             $table->string('lecturer_department')->nullable();
-            $table->string('status');
+            $table->string('status')->index();
             $table->text('message')->nullable();
             $table->foreignIdFor(Result::class)->nullable();
             $table->timestamps();
