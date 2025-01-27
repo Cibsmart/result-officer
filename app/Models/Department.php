@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 final class Department extends Model
@@ -29,7 +30,10 @@ final class Department extends Model
 
     public static function getUsingOnlineId(string $departmentOnlineId): self
     {
-        return self::query()->where('online_id', $departmentOnlineId)->firstOrFail();
+        return
+            Cache::remember("department_online_id.{$departmentOnlineId}",
+                now()->addDay(),
+                fn () => self::query()->where('online_id', $departmentOnlineId)->firstOrFail());
     }
 
     public function getRouteKeyName(): string
