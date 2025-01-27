@@ -34,8 +34,8 @@ final class RawRegistration extends Model
     {
         $registrationNumber =
             Cache::remember("reg_number_exception.{$this->registration_number}",
-                fn (?RegistrationNumberException $value) => is_null($value) ? 0 : now()->addMinutes(30),
-                fn () => RegistrationNumberException::query()
+                fn (?RegistrationNumberAlternative $value) => is_null($value) ? 0 : now()->addMinutes(30),
+                fn () => RegistrationNumberAlternative::query()
                     ->where('wrong_registration_number', $this->registration_number)
                     ->first());
 

@@ -14,7 +14,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('program_exceptions', function (Blueprint $table): void {
+        Schema::create('program_alternatives', function (Blueprint $table): void {
             $table->id();
             $table->string('wrong_program_name')->unique();
             $table->string('correct_program_name');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('program_exceptions');
+        Schema::dropIfExists('program_alternatives');
     }
 };

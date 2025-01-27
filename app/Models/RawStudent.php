@@ -42,8 +42,8 @@ final class RawStudent extends Model
     {
         $registrationNumber =
             Cache::remember("reg_number_exception.{$this->registration_number}",
-                fn (?RegistrationNumberException $value) => is_null($value) ? 0 : now()->addMinutes(30),
-                fn () => RegistrationNumberException::query()
+                fn (?RegistrationNumberAlternative $value) => is_null($value) ? 0 : now()->addMinutes(30),
+                fn () => RegistrationNumberAlternative::query()
                     ->where('wrong_registration_number', $this->registration_number)
                     ->first());
 
@@ -56,8 +56,8 @@ final class RawStudent extends Model
     {
         $program =
             Cache::remember("program_exception.{$this->option}",
-                fn (?ProgramException $value) => is_null($value) ? 0 : now()->addMinutes(30),
-                fn () => ProgramException::query()
+                fn (?ProgramAlternative $value) => is_null($value) ? 0 : now()->addMinutes(30),
+                fn () => ProgramAlternative::query()
                     ->where('wrong_program_name', $this->option)
                     ->first());
 
