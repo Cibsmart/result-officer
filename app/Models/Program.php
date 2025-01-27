@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 final class Program extends Model
@@ -134,12 +135,17 @@ final class Program extends Model
 
     public static function getUsingName(string $programName): self
     {
-        return self::query()->where('name', $programName)->firstOrFail();
+        return
+            Cache::remember("program_name.{$programName}",
+                now()->addDay(),
+                fn () => self::query()->where('name', $programName)->firstOrFail());
     }
 
     public static function getUsingCode(string $programCode): self
     {
-        return self::query()->where('code', $programCode)->firstOrFail();
+        return Cache::remember("program_code.{$programCode}",
+            now()->addDay(),
+            fn () => self::query()->where('code', $programCode)->firstOrFail());
     }
 
     public function getRouteKeyName(): string
