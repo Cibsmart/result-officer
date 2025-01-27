@@ -6,7 +6,6 @@ namespace App\Console\Commands\ImportPortalData;
 
 use App\Enums\ImportEventMethod;
 use App\Enums\ImportEventStatus;
-use App\Enums\ImportEventType;
 use App\Enums\StudentStatus;
 use App\Models\Department;
 use App\Models\ImportEvent;
@@ -27,13 +26,6 @@ final class ImportGroupPortalData extends Command
     public function handle(PortalServiceFactory $factory): int
     {
         $event = ImportEvent::findOrFail($this->argument('eventId'));
-
-        if ($event->type === ImportEventType::STUDENTS) {
-
-            Artisan::call('rp:import-portal-data', ['eventId' => $event->id]);
-
-            return Command::SUCCESS;
-        }
 
         $service = $factory->resolve($event->type);
 
@@ -81,7 +73,7 @@ final class ImportGroupPortalData extends Command
     /** @return \Illuminate\Database\Eloquent\Collection<int, \App\Models\Student> */
     private function getStudents(ImportEvent $event): Collection
     {
-        $session = Session::getUsingName($event->data['entry_session']);
+        $session = Session::getUsingName($event->data['session']);
 
         $students = $event->method === ImportEventMethod::DEPARTMENT_SESSION
             ? $this->getStudentsByEntrySessionAndDepartment($event, $session)
