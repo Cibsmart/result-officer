@@ -18,6 +18,12 @@ enum ImportEventType: string
     case STUDENTS = 'students';
     case REGISTRATIONS = 'registrations';
 
+    /** @return array<int, self> */
+    public static function canBeGrouped(): array
+    {
+        return [self::REGISTRATIONS, self::RESULTS];
+    }
+
     /** @return class-string */
     public function service(): string
     {
