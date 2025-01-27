@@ -39,7 +39,7 @@ final readonly class ResultModelData
         $creditUnit = $registration->credit_unit;
         assert($creditUnit instanceof CreditUnit);
 
-        $registrationNumber = RegistrationNumber::new($result->registration_number);
+        $registrationNumber = RegistrationNumber::new($result->getRegistrationNumber());
         $totalScore = TotalScore::new((int) $result->in_course + (int) $result->exam);
         $grade = $totalScore->grade($registrationNumber->allowEGrade());
         $gradePoint = $grade->point() * $creditUnit->value;

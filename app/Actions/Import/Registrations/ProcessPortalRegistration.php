@@ -27,7 +27,7 @@ final class ProcessPortalRegistration
             ? $rawRegistration->course_id
             : $alternativeOnlineCourseId->alternative_course_id;
 
-        $student = Student::getUsingRegistrationNumber($rawRegistration->registration_number);
+        $student = Student::getUsingRegistrationNumber($rawRegistration->getRegistrationNumber());
         $session = Session::getUsingName($rawRegistration->session);
         $level = Level::getUsingName($rawRegistration->level);
         $semester = Semester::getUsingName($rawRegistration->semester);

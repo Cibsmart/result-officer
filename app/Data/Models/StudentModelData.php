@@ -47,7 +47,7 @@ final readonly class StudentModelData
 
     public static function fromRawStudent(RawStudent $rawStudent): self
     {
-        $registrationNumber = RegistrationNumber::new($rawStudent->registration_number);
+        $registrationNumber = RegistrationNumber::new($rawStudent->getRegistrationNumber());
         $department = Department::getUsingOnlineId($rawStudent->department_id);
         $dateOfBirth = DateValue::fromValue($rawStudent->date_of_birth);
 
@@ -59,7 +59,7 @@ final readonly class StudentModelData
             otherNames: $rawStudent->other_names,
             gender: Gender::from($rawStudent->gender),
             dateOfBirth: $dateOfBirth->value,
-            program: Program::getFromDepartmentAndName($department, $rawStudent->option),
+            program: Program::getFromDepartmentAndName($department, $rawStudent->getProgramName()),
             entrySession: Session::getUsingName($rawStudent->entry_session),
             entryLevel: Level::getUsingName($rawStudent->entry_level),
             entryMode: EntryMode::get($rawStudent->entry_mode),

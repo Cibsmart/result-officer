@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Data\Download\PortalRegistrationData;
 use App\Enums\RawDataStatus;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 final class RawRegistration extends Model
 {
@@ -27,6 +28,20 @@ final class RawRegistration extends Model
         $rawRegistration->status = RawDataStatus::PENDING;
 
         $rawRegistration->save();
+    }
+
+    public function getRegistrationNumber(): string
+    {
+        $registrationNumber =
+            Cache::remember("reg_number_exception.{$this->registration_number}",
+                fn (?RegistrationNumberException $value) => is_null($value) ? 0 : now()->addMinutes(30),
+                fn () => RegistrationNumberException::query()
+                    ->where('wrong_registration_number', $this->registration_number)
+                    ->first());
+
+        return $registrationNumber === null
+            ? $this->registration_number
+            : $registrationNumber->correct_registration_number;
     }
 
     public function updateStatus(RawDataStatus $status): void
