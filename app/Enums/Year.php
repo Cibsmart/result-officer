@@ -18,6 +18,8 @@ enum Year: int
     case TENTH = 10;
     case ELEVENTH = 11;
     case TWELFTH = 12;
+    case THIRTEENTH = 13;
+    case FOURTEENTH = 14;
 
     public function next(): self
     {
@@ -32,7 +34,9 @@ enum Year: int
             self::EIGHT => self::NINTH,
             self::NINTH => self::TENTH,
             self::TENTH => self::ELEVENTH,
-            self::ELEVENTH, self::TWELFTH => self::TWELFTH,
+            self::ELEVENTH => self::TWELFTH,
+            self::TWELFTH => self::THIRTEENTH,
+            self::THIRTEENTH, self::FOURTEENTH => self::FOURTEENTH,
         };
     }
 }

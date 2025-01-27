@@ -27,21 +27,19 @@ final class ProcessPortalRegistration
             ? $rawRegistration->course_id
             : $alternativeOnlineCourseId->alternative_course_id;
 
-        $student = Student::getUsingRegistrationNumber($rawRegistration->registration_number);
+        $student = Student::getUsingRegistrationNumber($rawRegistration->getRegistrationNumber());
         $session = Session::getUsingName($rawRegistration->session);
         $level = Level::getUsingName($rawRegistration->level);
         $semester = Semester::getUsingName($rawRegistration->semester);
         $course = Course::getUsingOnlineId((string) $onlineCourseId);
 
         $sessionEnrollment = SessionEnrollment::getOrCreate($student, $session, $level);
+        $student->updateStatus($student->getStatus());
         $semesterEnrollment = SemesterEnrollment::getOrCreate($sessionEnrollment, $semester);
 
-        $exists = Registration::query()
-            ->where('semester_enrollment_id', $semesterEnrollment->id)
-            ->where('course_id', $course->id)
-            ->exists();
+        $duplicate = $this->checkForDuplicate($semesterEnrollment, $course);
 
-        if ($exists) {
+        if ($duplicate) {
             $rawRegistration->updateStatus(RawDataStatus::DUPLICATE);
 
             return;
@@ -50,5 +48,14 @@ final class ProcessPortalRegistration
         $registration = Registration::createFromRawRegistration($rawRegistration, $semesterEnrollment, $course);
 
         $rawRegistration->updateStatusAndRegistration(RawDataStatus::PROCESSED, $registration);
+    }
+
+    private function checkForDuplicate(SemesterEnrollment $semesterEnrollment, Course $course): bool
+    {
+        $courses = Course::query()
+            ->whereIn('id', $semesterEnrollment->registrations()->pluck('course_id'))
+            ->get();
+
+        return $courses->contains('id', $course->id) || $courses->contains('code', $course->code);
     }
 }

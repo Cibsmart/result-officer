@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Data\Models\ResultModelData;
 use App\Enums\RecordSource;
-use App\Values\DateValue;
-use App\Values\RegistrationNumber;
-use App\Values\TotalScore;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -20,32 +18,20 @@ final class Result extends Model
 
     public static function createFromRawResult(RawResult $rawResult, Registration $registration): self
     {
-        $registrationNumber = RegistrationNumber::new($rawResult->registration_number);
-        $totalScore = TotalScore::new((int) $rawResult->in_course + (int) $rawResult->exam);
-        $grade = $totalScore->grade($registrationNumber->allowEGrade());
-        $gradePoint = $grade->point() * $registration->credit_unit->value;
+        $result = ResultModelData::fromRawResult($registration, $rawResult)->getModel();
 
-        $lecturer = null;
+        $result->save();
 
-        if (! is_null($rawResult->lecturer_name)) {
-            $lecturer = Lecturer::getOrCreateFromRawResult($rawResult)->id;
-        }
+        $result->resultDetail()->create(['value' => $result->getData()]);
 
-        $scores = [
-            'exam' => $rawResult->exam,
-            'in_course' => $rawResult->in_course,
-        ];
+        return $result;
+    }
 
-        $result = new self();
-        $result->registration_id = $registration->id;
-        $result->scores = $scores;
-        $result->total_score = $totalScore->value;
-        $result->grade = $grade->value;
-        $result->grade_point = $gradePoint;
-        $result->upload_date = DateValue::fromValue($rawResult->upload_date)->value;
-        $result->remarks = null;
-        $result->source = RecordSource::PORTAL;
-        $result->lecturer_id = $lecturer;
+    public static function createFromLegacyResult(
+        Registration $registration,
+        LegacyResult|LegacyFinalResult $result,
+    ): self {
+        $result = ResultModelData::fromLegacyResult($registration, $result)->getModel();
 
         $result->save();
 

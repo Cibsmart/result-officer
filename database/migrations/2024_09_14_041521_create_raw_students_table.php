@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('first_name');
             $table->string('other_names');
-            $table->string('registration_number');
+            $table->string('registration_number')->index();
             $table->string('gender');
             $table->string('date_of_birth');
             $table->string('department_id');
@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('phone_number');
             $table->string('email');
             $table->string('jamb_registration_number');
-            $table->string('status');
+            $table->string('status')->index();
             $table->text('message')->nullable();
             $table->foreignIdFor(Student::class)->nullable();
             $table->timestamps();

@@ -18,7 +18,7 @@ final class ProcessLegacyStudents extends Command
 
     public function handle(): void
     {
-        $students = LegacyStudent::query()->where('process_status', RawDataStatus::PENDING)->lazy();
+        $students = LegacyStudent::query()->where('process_status', RawDataStatus::PENDING)->lazyById();
 
         $bar = $this->output->createProgressBar(count($students));
 

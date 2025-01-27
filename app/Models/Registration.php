@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Data\Models\RegistrationModelData;
 use App\Enums\CourseStatus;
 use App\Enums\CreditUnit;
 use App\Enums\RecordSource;
-use App\Values\DateValue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -25,16 +25,21 @@ final class Registration extends Model
         SemesterEnrollment $semesterEnrollment,
         Course $course,
     ): self {
-        $registrationDate = DateValue::fromValue($rawRegistration->registration_date);
-        $registration = new self();
+        $registration = RegistrationModelData::fromRawRegistration($rawRegistration, $semesterEnrollment, $course)
+            ->getModel();
 
-        $registration->course_id = $course->id;
-        $registration->credit_unit = CreditUnit::from((int) $rawRegistration->credit_unit)->value;
-        $registration->course_status = CourseStatus::FRESH;
-        $registration->online_id = $rawRegistration->online_id;
-        $registration->registration_date = $registrationDate->value;
-        $registration->semester_enrollment_id = $semesterEnrollment->id;
-        $registration->source = RecordSource::PORTAL;
+        $registration->save();
+
+        return $registration;
+    }
+
+    public static function createFromLegacyResult(
+        SemesterEnrollment $semesterEnrollment,
+        LegacyResult|LegacyFinalResult $legacyResult,
+        CourseStatus $courseStatus,
+    ): self {
+        $registration = RegistrationModelData::fromLegacyResult($semesterEnrollment, $legacyResult, $courseStatus)
+            ->getModel();
 
         $registration->save();
 

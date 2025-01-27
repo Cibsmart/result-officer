@@ -14,7 +14,7 @@ final class ProcessPortalStudent
     public function execute(RawStudent $rawStudent): void
     {
         $exists = Student::query()
-            ->where('registration_number', $rawStudent->registration_number)
+            ->where('registration_number', $rawStudent->getRegistrationNumber())
             ->exists();
 
         if ($exists) {

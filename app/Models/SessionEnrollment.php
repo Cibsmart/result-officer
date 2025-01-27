@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Support\Facades\Cache;
 
 final class SessionEnrollment extends Model
 {
@@ -18,15 +19,15 @@ final class SessionEnrollment extends Model
         Student $student,
         Session $session,
         Level $level,
+        Year $year = Year::FIRST,
     ): self {
-        $sessionEnrollment = self::query()->firstOrCreate(
-            ['student_id' => $student->id, 'session_id' => $session->id],
-            ['level_id' => $level->id, 'year' => Year::FIRST],
-        );
-
-        $student->updateStatus($student->getStatus());
-
-        return $sessionEnrollment;
+        return
+            Cache::remember("session_enrollment_{$student->id}_{$session->id}",
+                now()->addMinutes(5),
+                fn () => self::query()->firstOrCreate(
+                    ['student_id' => $student->id, 'session_id' => $session->id],
+                    ['level_id' => $level->id, 'year' => $year],
+                ));
     }
 
     public function updateYear(Year $year): void

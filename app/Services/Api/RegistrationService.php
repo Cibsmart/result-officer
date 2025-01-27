@@ -77,6 +77,7 @@ final readonly class RegistrationService implements PortalService
 
         return match ($method) {
             ImportEventMethod::SESSION_COURSE => $this->getRegistrationsBySessionAndCourse($session, $course),
+            ImportEventMethod::SESSION,
             ImportEventMethod::REGISTRATION_NUMBER,
             ImportEventMethod::DEPARTMENT_SESSION => $this->getRegistrationsByRegistrationNumber($registrationNumber),
             ImportEventMethod::DEPARTMENT_SESSION_LEVEL => $this->getRegistrationsByDepartmentSessionAndLevel(
@@ -103,7 +104,9 @@ final readonly class RegistrationService implements PortalService
 
     public function process(ImportEvent $event): void
     {
-        $rawData = $event->registrations()->where('status', RawDataStatus::PENDING)->get();
+        $rawData = $event->registrations()
+            ->where('status', RawDataStatus::PENDING)
+            ->lazyById();
 
         foreach ($rawData as $registration) {
             try {

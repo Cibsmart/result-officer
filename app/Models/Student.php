@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 
 final class Student extends Model
 {
@@ -37,7 +38,10 @@ final class Student extends Model
 
     public static function getUsingRegistrationNumber(string $registrationNumber): self
     {
-        return self::query()->where('registration_number', $registrationNumber)->firstOrFail();
+        return
+            Cache::remember("student_{$registrationNumber}",
+                now()->addMinutes(5),
+                fn () => self::query()->where('registration_number', $registrationNumber)->firstOrFail());
     }
 
     public function getRouteKeyName(): string

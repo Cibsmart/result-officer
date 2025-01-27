@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Enums\ImportEventMethod;
 use App\Enums\ImportEventStatus;
 use App\Enums\ImportEventType;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -32,17 +33,29 @@ final class ImportEvent extends Model
         return $event;
     }
 
-    public static function inQueue(
+    public static function inSessionQueue(
+        ImportEventType $type,
+        ImportEventMethod $method,
+        string $session,
+    ): bool {
+        $events = self::getEventsFor($type, $method);
+
+        foreach ($events as $event) {
+            if ($event->data['session'] === $session) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static function inSessionDepartmentQueue(
         ImportEventType $type,
         ImportEventMethod $method,
         string $session,
         int $onlineId,
     ): bool {
-        $events = self::query()
-            ->where('type', $type)
-            ->where('method', $method)
-            ->where('status', ImportEventStatus::QUEUED)
-            ->get();
+        $events = self::getEventsFor($type, $method);
 
         foreach ($events as $event) {
             if ($event->data['session'] === $session && $event->data['online_department_id'] === $onlineId) {
@@ -142,6 +155,18 @@ final class ImportEvent extends Model
         $this->students = $studentCount;
         $this->downloaded = $downloadCount;
         $this->save();
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Collection<int, \App\Models\ImportEvent> */
+    private static function getEventsFor(
+        ImportEventType $type,
+        ImportEventMethod $method,
+    ): Collection {
+        return self::query()
+            ->where('type', $type)
+            ->where('method', $method)
+            ->where('status', ImportEventStatus::QUEUED)
+            ->get();
     }
 
     /**

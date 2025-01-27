@@ -55,6 +55,7 @@ final class ResultSeeder extends Seeder
             $session = Session::getUsingName($sessionName);
 
             $sessionEnrollment = SessionEnrollment::getOrCreate($student, $session, $level);
+            $student->updateStatus($student->getStatus());
 
             $student->updateStatus($student->getStatus());
 

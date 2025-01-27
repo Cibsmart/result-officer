@@ -20,6 +20,7 @@ enum CreditUnit: int
     case ELEVEN = 11;
     case TWELVE = 12;
     case FIFTY = 15;
+    case SIXTEEN = 16;
     case EIGHTEEN = 18;
     case TWENTYFOUR = 24;
 

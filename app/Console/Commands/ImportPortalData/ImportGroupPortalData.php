@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace App\Console\Commands\ImportPortalData;
 
+use App\Enums\ImportEventMethod;
 use App\Enums\ImportEventStatus;
 use App\Enums\StudentStatus;
 use App\Models\Department;
 use App\Models\ImportEvent;
 use App\Models\Session;
+use App\Models\Student;
 use App\Services\Api\PortalServiceFactory;
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Artisan;
 
 final class ImportGroupPortalData extends Command
@@ -28,29 +31,25 @@ final class ImportGroupPortalData extends Command
 
         $event->updateStatus(ImportEventStatus::DOWNLOADING);
 
-        $department = Department::query()->where('online_id', $event->data['online_department_id'])->firstOrFail();
-        $session = Session::query()->where('name', $event->data['session'])->firstOrFail();
-
-        $students = $department->students()
-            ->whereNotIn('status', StudentStatus::archivedStates())
-            ->where('entry_session_id', $session->id)
-            ->get();
+        $students = $this->getStudents($event);
 
         if ($students->isEmpty()) {
-            $event->setMessage("No students found admitted in {$session->name} for {$department->name} ");
-            $event->updateStatus(ImportEventStatus::FAILED);
-
             return Command::FAILURE;
         }
 
         [$numberOfData, $numberOfStudent, $failedMessage] = [0, 0, ''];
 
+        $bar = $this->output->createProgressBar($students->count());
+
+        $bar->start();
+
         foreach ($students as $student) {
+            $bar->advance();
+
             try {
                 $data = $service->get($event->method, ['registration_number' => $student->registration_number]);
 
-                $numberOfStudent += 1;
-                $numberOfData += $data->count();
+                [$numberOfStudent, $numberOfData] = [$numberOfStudent + 1, $numberOfData + $data->count()];
 
                 $service->save($event, $data);
             } catch (Exception $e) {
@@ -60,6 +59,8 @@ final class ImportGroupPortalData extends Command
             }
         }
 
+        $bar->finish();
+
         $event->updateMessageAndCounts($failedMessage, $numberOfStudent, $numberOfData);
 
         $event->updateStatus(ImportEventStatus::SAVED);
@@ -67,5 +68,49 @@ final class ImportGroupPortalData extends Command
         Artisan::call('rp:process-portal-data', ['eventId' => $event->id]);
 
         return Command::SUCCESS;
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Collection<int, \App\Models\Student> */
+    private function getStudents(ImportEvent $event): Collection
+    {
+        $session = Session::getUsingName($event->data['session']);
+
+        $students = $event->method === ImportEventMethod::DEPARTMENT_SESSION
+            ? $this->getStudentsByEntrySessionAndDepartment($event, $session)
+            : $this->getStudentsByEntrySession($session);
+
+        if ($students->isEmpty()) {
+            $event->setMessage('No students found admitted');
+            $event->updateStatus(ImportEventStatus::FAILED);
+        }
+
+        return $students;
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Collection<int, \App\Models\Student> */
+    private function getStudentsByEntrySession(Session $session): Collection
+    {
+        return Student::query()
+            ->whereNotIn('status', StudentStatus::archivedStates())
+            ->where('entry_session_id', $session->id)
+            ->orderBy('registration_number')
+            ->get();
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Collection<int, \App\Models\Student> */
+    private function getStudentsByEntrySessionAndDepartment(
+        ImportEvent $event,
+        Session $session,
+    ): Collection {
+
+        $department = Department::query()
+            ->where('online_id', $event->data['online_department_id'])
+            ->firstOrFail();
+
+        return $department->students()
+            ->whereNotIn('status', StudentStatus::archivedStates())
+            ->where('entry_session_id', $session->id)
+            ->orderBy('registration_number')
+            ->get();
     }
 }

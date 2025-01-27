@@ -9,14 +9,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Facades\Cache;
 
 final class SemesterEnrollment extends Model
 {
     public static function getOrCreate(SessionEnrollment $sessionEnrollment, Semester $semester): self
     {
-        return self::query()->firstOrCreate(
-            ['session_enrollment_id' => $sessionEnrollment->id, 'semester_id' => $semester->id],
-        );
+        return
+            Cache::remember("semester_enrollment_{$sessionEnrollment->id}_{$semester->id}",
+                now()->addMinutes(5),
+                fn () => self::query()->firstOrCreate(
+                    ['session_enrollment_id' => $sessionEnrollment->id, 'semester_id' => $semester->id],
+                ));
     }
 
     /**

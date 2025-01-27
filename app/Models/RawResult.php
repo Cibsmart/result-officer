@@ -8,6 +8,7 @@ use App\Data\Download\PortalResultData;
 use App\Enums\RawDataStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 final class RawResult extends Model
@@ -59,6 +60,20 @@ final class RawResult extends Model
         $this->status = $status;
         $this->result_id = $result->id;
         $this->save();
+    }
+
+    public function getRegistrationNumber(): string
+    {
+        $registrationNumber =
+            Cache::remember("reg_number_exception.{$this->registration_number}",
+                fn (?RegistrationNumberAlternative $value) => is_null($value) ? 0 : now()->addMinutes(30),
+                fn () => RegistrationNumberAlternative::query()
+                    ->where('wrong_registration_number', $this->registration_number)
+                    ->first());
+
+        return $registrationNumber === null
+            ? $this->registration_number
+            : $registrationNumber->correct_registration_number;
     }
 
     /** @return array{status: 'App\Enums\RawDataStatus'} */

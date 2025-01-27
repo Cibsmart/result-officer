@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Values\SessionValue;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 final class Session extends Model
@@ -18,7 +19,10 @@ final class Session extends Model
     {
         $sessionName = Str::replace('-', '/', $sessionName);
 
-        return self::query()->where('name', $sessionName)->firstOrFail();
+        return
+            Cache::remember("session_{$sessionName}",
+                now()->addDay(),
+                fn () => self::query()->where('name', $sessionName)->firstOrFail());
     }
 
     public static function sessionFromYear(int $year): string

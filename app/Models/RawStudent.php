@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Data\Download\PortalStudentData;
 use App\Enums\RawDataStatus;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 final class RawStudent extends Model
 {
@@ -35,6 +36,34 @@ final class RawStudent extends Model
         $rawStudent->status = RawDataStatus::PENDING;
 
         $rawStudent->save();
+    }
+
+    public function getRegistrationNumber(): string
+    {
+        $registrationNumber =
+            Cache::remember("reg_number_exception.{$this->registration_number}",
+                fn (?RegistrationNumberAlternative $value) => is_null($value) ? 0 : now()->addMinutes(30),
+                fn () => RegistrationNumberAlternative::query()
+                    ->where('wrong_registration_number', $this->registration_number)
+                    ->first());
+
+        return $registrationNumber === null
+            ? $this->registration_number
+            : $registrationNumber->correct_registration_number;
+    }
+
+    public function getProgramName(): string
+    {
+        $program =
+            Cache::remember("program_exception.{$this->option}",
+                fn (?ProgramAlternative $value) => is_null($value) ? 0 : now()->addMinutes(30),
+                fn () => ProgramAlternative::query()
+                    ->where('wrong_program_name', $this->option)
+                    ->first());
+
+        return $program === null
+            ? $this->option
+            : $program->correct_program_name;
     }
 
     public function updateStatus(RawDataStatus $status): void
