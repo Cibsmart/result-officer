@@ -25,7 +25,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('credit_unit');
             $table->string('course_status', 1)->default(CourseStatus::FRESH->value);
             $table->date('registration_date')->nullable();
-            $table->string('online_id')->nullable();
+            $table->string('online_id')->nullable()->index();
             $table->string('source')->default(RecordSource::LEGACY->value);
             $table->foreignIdFor(ProgramCurriculumCourse::class)->nullable()->constrained();
             $table->timestamps();
