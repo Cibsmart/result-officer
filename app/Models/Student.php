@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Data\Models\StudentModelData;
-use App\Enums\CumulativeComputationStrategy;
+use App\Enums\ComputationStrategy;
 use App\Enums\EntryMode;
 use App\Enums\Gender;
 use App\Enums\ProgramDuration;
@@ -195,7 +195,7 @@ final class Student extends Model
             return 0.000;
         }
 
-        if (Institution::first()->strategy === CumulativeComputationStrategy::SEMESTER) {
+        if (Institution::first()->strategy === ComputationStrategy::SEMESTER) {
             return round($this->cumulativeGradePointAverageSum() / $this->sessionEnrollments->count(), 3);
         }
 

@@ -8,16 +8,12 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('academic_sessions', static function (Blueprint $table): void {
+        Schema::create('legacy_course_alternatives', function (Blueprint $table): void {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('slug')->unique();
-            $table->boolean('is_current')->default(false);
+            $table->unsignedBigInteger('original_course_id')->unique();
+            $table->unsignedBigInteger('alternative_course_id');
             $table->timestamps();
         });
     }
@@ -27,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('academic_sessions');
+        Schema::dropIfExists('legacy_course_alternatives');
     }
 };

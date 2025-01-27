@@ -44,7 +44,7 @@ final class ProgramCurriculumSeeder extends Seeder
             }
         }
 
-        $this->call([CourseAlternativeSeeder::class]);
+        //        $this->call([CourseAlternativeSeeder::class]);
     }
 
     /** @param \Illuminate\Support\Collection<int, \Illuminate\Support\Collection<string, string>> $curriculumCourses */

@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Helpers\CSVFile;
 use App\Models\Course;
+use App\Models\LegacyCourseAlternatives;
 use App\Models\RawCourseAlternative;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -17,9 +18,7 @@ final class CourseSeeder extends Seeder
         /** @var \Illuminate\Support\Collection<int, \Illuminate\Support\Collection<string, string>> $content */
         $content = (new CSVFile('seeders/courses.csv'))->read();
 
-        $courses = $content->sortBy('code');
-
-        foreach ($courses as $course) {
+        foreach ($content as $course) {
             $code = Str::trim($course['code']);
             $title = Str::of($course['title'])->replace('  ', ' ')->trim()->value();
 
@@ -27,26 +26,51 @@ final class CourseSeeder extends Seeder
                 continue;
             }
 
-            $online_id = $course['online_id'];
+            $onlineId = $course['online_id'];
 
-            Course::query()->create([
+            $dbCourse = Course::query()->create([
                 'active' => true,
                 'code' => $code,
-                'online_id' => $online_id,
+                'online_id' => $onlineId,
                 'slug' => Str::slug("{$code}-{$title}"),
                 'title' => $title,
             ]);
 
-            $alternatives = $course['alternatives'];
+            $this->processOnlineAlternatives($course['alternatives'], $onlineId);
 
-            $alternativeIds = Str::of($alternatives)->explode(',')->filter();
+            $this->processLegacyAlternatives($course['legacy_alternatives'], $dbCourse->id);
+        }
+    }
 
-            foreach ($alternativeIds as $alternativeId) {
-                RawCourseAlternative::query()->create([
-                    'alternative_course_id' => $online_id,
-                    'original_course_id' => $alternativeId,
-                ]);
-            }
+    private function processOnlineAlternatives(?string $alternatives, ?string $onlineId): void
+    {
+        if ($alternatives === null || $alternatives === '' || $onlineId === null) {
+            return;
+        }
+
+        $alternativeIds = Str::of($alternatives)->explode('#')->filter();
+
+        foreach ($alternativeIds as $alternativeId) {
+            RawCourseAlternative::query()->create([
+                'alternative_course_id' => $onlineId,
+                'original_course_id' => $alternativeId,
+            ]);
+        }
+    }
+
+    private function processLegacyAlternatives(?string $legacyAlternatives, int $dbCourseId): void
+    {
+        if ($legacyAlternatives === '' || $legacyAlternatives === null) {
+            return;
+        }
+
+        $alternativeLegacyIds = Str::of($legacyAlternatives)->explode('#')->filter();
+
+        foreach ($alternativeLegacyIds as $alternativeLegacyId) {
+            LegacyCourseAlternatives::query()->create([
+                'alternative_course_id' => $dbCourseId,
+                'original_course_id' => $alternativeLegacyId,
+            ]);
         }
     }
 }

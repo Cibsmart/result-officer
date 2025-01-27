@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Factories;
 
-use App\Enums\CumulativeComputationStrategy;
+use App\Enums\ComputationStrategy;
 use App\Models\Institution;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -21,7 +21,7 @@ final class InstitutionFactory extends Factory
             'code' => fake()->unique()->countryCode(),
             'domain' => fake()->domainName(),
             'name' => fake()->unique()->country(),
-            'strategy' => fake()->randomElement(CumulativeComputationStrategy::cases()),
+            'strategy' => fake()->randomElement(ComputationStrategy::cases()),
         ];
     }
 }
