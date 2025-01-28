@@ -21,27 +21,19 @@ final class DownloadRegistrationsByDepartmentSessionController
         $onlineId = $request->integer('onlineDepartmentId');
         $deptName = $request->string('departmentName')->value();
 
-        $importEventInQueue = ImportEvent::inSessionDepartmentQueue(
-            ImportEventType::REGISTRATIONS,
-            ImportEventMethod::DEPARTMENT_SESSION,
-            $session,
-            $onlineId,
-        );
+        $data = ['department' => $deptName, 'online_department_id' => $onlineId, 'session' => $session];
 
-        if ($importEventInQueue) {
-            $message = "Course Registrations Import for {$deptName} {$session} is already in queue";
+        $type = ImportEventType::REGISTRATIONS;
+        $method = ImportEventMethod::DEPARTMENT_SESSION;
+
+        if (ImportEvent::inQueue($type, $method, $data)) {
+            $message = "Course Registration Download for {$deptName} {$session} session already queued";
 
             return redirect()->back()->error($message);
         }
 
-        ImportEvent::new(
-            user: $user,
-            type: ImportEventType::REGISTRATIONS,
-            method: ImportEventMethod::DEPARTMENT_SESSION,
-            data: ['department' => $deptName, 'online_department_id' => $onlineId, 'session' => $session],
-            status: ImportEventStatus::QUEUED,
-        );
+        ImportEvent::new(user: $user, type: $type, method: $method, data: $data, status: ImportEventStatus::QUEUED);
 
-        return redirect()->back()->success("Course Registrations Import for {$deptName} {$session} QUEUED");
+        return redirect()->back()->success("Course Registration Download for {$deptName} {$session} session QUEUED");
     }
 }

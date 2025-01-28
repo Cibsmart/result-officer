@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Download\Registrations;
 
 use App\Enums\ImportEventMethod;
+use App\Enums\ImportEventStatus;
 use App\Enums\ImportEventType;
 use App\Http\Requests\Download\DownloadRegistrationsByDepartmentSessionSemesterRequest;
 use App\Models\ImportEvent;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Artisan;
 
 final readonly class DownloadRegistrationsByDepartmentSessionSemesterController
 {
@@ -17,21 +17,28 @@ final readonly class DownloadRegistrationsByDepartmentSessionSemesterController
     {
         $user = $request->user();
 
-        $event = ImportEvent::new(
-            user: $user,
-            type: ImportEventType::REGISTRATIONS,
-            method: ImportEventMethod::DEPARTMENT_SESSION_SEMESTER,
-            data: [
-                'department' => $request->string('departmentName')->value(),
-                'online_department_id' => $request->integer('onlineDepartmentId'),
-                'semester' => $request->string('semesterName')->value(),
-                'session' => $request->string('sessionName')->value(),
-            ],
+        $deptName = $request->string('departmentName')->value();
+        $onlineId = $request->integer('onlineDepartmentId');
+        $session = $request->string('sessionName')->value();
+        $semester = $request->string('semesterName')->value();
 
-        );
+        $data = [
+            'department' => $deptName, 'online_department_id' => $onlineId,
+            'semester' => $semester, 'session' => $session,
+        ];
 
-        Artisan::queue('rp:import-portal-data', ['eventId' => $event->id]);
+        $type = ImportEventType::REGISTRATIONS;
+        $method = ImportEventMethod::DEPARTMENT_SESSION_SEMESTER;
 
-        return redirect()->back()->success('Course Registrations Import Started...');
+        if (ImportEvent::inQueue($type, $method, $data)) {
+            $message = "Course Registration Download for {$deptName} {$session} session {$semester} semester already queued";
+
+            return redirect()->back()->error($message);
+        }
+
+        ImportEvent::new(user: $user, type: $type, method: $method, data: $data, status: ImportEventStatus::QUEUED);
+
+        return redirect()->back()
+            ->success("Course Registration Download for {$deptName} {$session} session {$semester} semester QUEUED");
     }
 }

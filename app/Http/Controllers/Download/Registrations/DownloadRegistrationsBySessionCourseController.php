@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Download\Registrations;
 
 use App\Enums\ImportEventMethod;
+use App\Enums\ImportEventStatus;
 use App\Enums\ImportEventType;
 use App\Http\Requests\Download\DownloadRegistrationsBySessionCourseRequest;
 use App\Models\ImportEvent;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Artisan;
 
 final readonly class DownloadRegistrationsBySessionCourseController
 {
@@ -17,19 +17,23 @@ final readonly class DownloadRegistrationsBySessionCourseController
     {
         $user = $request->user();
 
-        $event = ImportEvent::new(
-            user: $user,
-            type: ImportEventType::REGISTRATIONS,
-            method: ImportEventMethod::SESSION_COURSE,
-            data: [
-                'course' => $request->string('courseName')->value(),
-                'online_course_id' => $request->integer('onlineCourseId'),
-                'session' => $request->string('sessionName')->value(),
-            ],
-        );
+        $course = $request->string('courseName')->value();
+        $onlineId = $request->integer('onlineCourseId');
+        $session = $request->string('sessionName')->value();
 
-        Artisan::queue('rp:import-portal-data', ['eventId' => $event->id]);
+        $data = ['course' => $course, 'online_course_id' => $onlineId, 'session' => $session];
 
-        return redirect()->back()->success('Course Registrations Import Started...');
+        $type = ImportEventType::REGISTRATIONS;
+        $method = ImportEventMethod::SESSION_COURSE;
+
+        if (ImportEvent::inQueue($type, $method, $data)) {
+            $message = "Course Registration Download for {$course} {$session} session already queued";
+
+            return redirect()->back()->error($message);
+        }
+
+        ImportEvent::new(user: $user, type: $type, method: $method, data: $data, status: ImportEventStatus::QUEUED);
+
+        return redirect()->back()->success("Course Registration Download for {$course} {$session} session QUEUED");
     }
 }

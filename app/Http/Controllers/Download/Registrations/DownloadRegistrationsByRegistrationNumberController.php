@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Download\Registrations;
 
 use App\Enums\ImportEventMethod;
+use App\Enums\ImportEventStatus;
 use App\Enums\ImportEventType;
 use App\Http\Requests\Results\ResultRequest;
 use App\Models\ImportEvent;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Artisan;
 
 final readonly class DownloadRegistrationsByRegistrationNumberController
 {
@@ -17,11 +17,21 @@ final readonly class DownloadRegistrationsByRegistrationNumberController
     {
         $user = $request->user();
 
-        $event = ImportEvent::new($user, ImportEventType::REGISTRATIONS, ImportEventMethod::REGISTRATION_NUMBER,
-            ['registration_number' => $request->string('registration_number')->value()]);
+        $registrationNumber = $request->string('registration_number')->value();
 
-        Artisan::queue('rp:import-portal-data', ['eventId' => $event->id]);
+        $data = ['registration_number' => $registrationNumber];
 
-        return redirect()->back()->success('Course Registrations Import Started...');
+        $type = ImportEventType::REGISTRATIONS;
+        $method = ImportEventMethod::REGISTRATION_NUMBER;
+
+        if (ImportEvent::inQueue($type, $method, $data)) {
+            $message = "Course Registration Download for {$registrationNumber} already queued";
+
+            return redirect()->back()->error($message);
+        }
+
+        ImportEvent::new(user: $user, type: $type, method: $method, data: $data, status: ImportEventStatus::QUEUED);
+
+        return redirect()->back()->success("Course Registration Download for {$registrationNumber} QUEUED");
     }
 }
