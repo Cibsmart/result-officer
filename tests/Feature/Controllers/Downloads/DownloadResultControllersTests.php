@@ -57,8 +57,8 @@ it('can start download of results by registration number', function (): void {
         [
             'data' => json_encode(['registration_number' => $student->registration_number]),
             'method' => ImportEventMethod::REGISTRATION_NUMBER,
-            'type' => ImportEventType::RESULTS,
             'status' => ImportEventStatus::QUEUED,
+            'type' => ImportEventType::RESULTS,
             'user_id' => $user->id,
         ]);
 });
@@ -88,8 +88,8 @@ it('can start download of results by department, session and level', function ()
                 'session' => $session->name,
             ]),
             'method' => ImportEventMethod::DEPARTMENT_SESSION_LEVEL,
-            'type' => ImportEventType::RESULTS,
             'status' => ImportEventStatus::QUEUED,
+            'type' => ImportEventType::RESULTS,
             'user_id' => $user->id,
         ]);
 });
@@ -119,8 +119,8 @@ it('can start download of results by department, session and semester', function
                 'session' => $session->name,
             ]),
             'method' => ImportEventMethod::DEPARTMENT_SESSION_SEMESTER,
-            'type' => ImportEventType::RESULTS,
             'status' => ImportEventStatus::QUEUED,
+            'type' => ImportEventType::RESULTS,
             'user_id' => $user->id,
         ]);
 });
@@ -147,8 +147,8 @@ it('can start download of results by session and course', function (): void {
                 'session' => $session->name,
             ]),
             'method' => ImportEventMethod::SESSION_COURSE,
-            'type' => ImportEventType::RESULTS,
             'status' => ImportEventStatus::QUEUED,
+            'type' => ImportEventType::RESULTS,
             'user_id' => $user->id,
         ]);
 });
