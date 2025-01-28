@@ -33,32 +33,19 @@ final class ImportEvent extends Model
         return $event;
     }
 
-    public static function inSessionQueue(
+    /** @param array<string, int|string> $data */
+    public static function inQueue(
         ImportEventType $type,
         ImportEventMethod $method,
-        string $session,
+        array $data,
     ): bool {
         $events = self::getEventsFor($type, $method);
 
         foreach ($events as $event) {
-            if ($event->data['session'] === $session) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public static function inSessionDepartmentQueue(
-        ImportEventType $type,
-        ImportEventMethod $method,
-        string $session,
-        int $onlineId,
-    ): bool {
-        $events = self::getEventsFor($type, $method);
-
-        foreach ($events as $event) {
-            if ($event->data['session'] === $session && $event->data['online_department_id'] === $onlineId) {
+            if (count($event->data) === count($data)
+                && ! array_diff_assoc($event->data, $data)
+                && ! array_diff_assoc($data, $event->data)
+            ) {
                 return true;
             }
         }
