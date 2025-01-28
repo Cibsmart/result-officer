@@ -27,8 +27,8 @@ final class ProcessQueuedImportEvent extends Command
         foreach ($events as $event) {
             $event->updateStatus(ImportEventStatus::STARTED);
 
-            if ($event->method !== ImportEventMethod::DEPARTMENT_SESSION
-                || ! in_array($event->type, ImportEventType::canBeGrouped(), true)) {
+            if ($event->method === ImportEventMethod::DEPARTMENT_SESSION
+                || in_array($event->type, ImportEventType::canBeGrouped(), true)) {
 
                 Artisan::call('rp:import-group-portal-data', ['eventId' => $event->id]);
 
