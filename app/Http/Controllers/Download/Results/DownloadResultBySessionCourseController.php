@@ -17,9 +17,9 @@ final readonly class DownloadResultBySessionCourseController
     {
         $user = $request->user();
 
+        $session = $request->string('sessionName')->value();
         $course = $request->string('courseName')->value();
         $onlineId = $request->integer('onlineCourseId');
-        $session = $request->string('sessionName')->value();
         $data = ['course' => $course, 'online_course_id' => $onlineId, 'session' => $session];
 
         $type = ImportEventType::RESULTS;

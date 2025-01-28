@@ -19,9 +19,9 @@ final readonly class DownloadResultByDepartmentSessionLevelController
         $user = $request->user();
 
         $department = $request->string('departmentName')->value();
-        $level = $request->integer('levelName');
-        $session = $request->string('sessionName')->value();
         $onlineId = $request->integer('onlineDepartmentId');
+        $session = $request->string('sessionName')->value();
+        $level = $request->integer('levelName');
         $data = [
             'department' => $department, 'level' => $level, 'online_department_id' => $onlineId, 'session' => $session,
         ];

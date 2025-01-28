@@ -19,9 +19,9 @@ final readonly class DownloadResultByDepartmentSessionSemesterController
         $user = $request->user();
 
         $department = $request->string('departmentName')->value();
-        $semester = $request->string('semesterName')->value();
-        $session = $request->string('sessionName')->value();
         $onlineId = $request->integer('onlineDepartmentId');
+        $session = $request->string('sessionName')->value();
+        $semester = $request->string('semesterName')->value();
         $data = [
             'department' => $department, 'online_department_id' => $onlineId, 'semester' => $semester,
             'session' => $session,

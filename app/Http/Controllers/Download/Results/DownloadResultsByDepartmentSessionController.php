@@ -17,9 +17,9 @@ final class DownloadResultsByDepartmentSessionController
     {
         $user = $request->user();
 
-        $session = $request->string('sessionName')->value();
-        $onlineId = $request->integer('onlineDepartmentId');
         $deptName = $request->string('departmentName')->value();
+        $onlineId = $request->integer('onlineDepartmentId');
+        $session = $request->string('sessionName')->value();
         $data = ['department' => $deptName, 'online_department_id' => $onlineId, 'session' => $session];
 
         $type = ImportEventType::RESULTS;
