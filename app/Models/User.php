@@ -61,6 +61,11 @@ final class User extends Authenticatable implements FilamentUser
         return true;
     }
 
+    public function canViewHorizon(): bool
+    {
+        return $this->isAdmin();
+    }
+
     /** @return array<string, string> */
     protected function casts(): array
     {
