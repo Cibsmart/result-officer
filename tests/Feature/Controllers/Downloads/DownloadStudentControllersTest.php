@@ -10,7 +10,6 @@ use App\Http\Controllers\Download\Students\DownloadStudentsByDepartmentSessionCo
 use App\Http\Controllers\Download\Students\DownloadStudentsBySessionController;
 use App\Http\Controllers\Download\Students\DownloadStudentsPageController;
 use App\Models\ImportEvent;
-use Illuminate\Foundation\Console\QueuedCommand;
 use Tests\Factories\DepartmentFactory;
 use Tests\Factories\SessionFactory;
 use Tests\Factories\UserFactory;
@@ -48,16 +47,14 @@ it('can start download of student by registration number', function (): void {
 
     $response->assertRedirect(route('download.students.page'));
 
-    assertDatabaseHas('import_events',
-        ['user_id' => $user->id, 'data' => json_encode(['registration_number' => $registrationNumber])]);
-
-    $event = ImportEvent::query()->where('user_id', $user->id)->firstOrFail();
-
-    Queue::assertPushed(function (QueuedCommand $command) use ($event): bool {
-        $data = getQueuedCommandProtectedDataProperty($command);
-
-        return $data[0] === 'rp:import-portal-data' && $data[1]['eventId'] === $event->id;
-    });
+    assertDatabaseHas(ImportEvent::class,
+        [
+            'data' => json_encode(['registration_number' => $registrationNumber]),
+            'method' => ImportEventMethod::REGISTRATION_NUMBER,
+            'status' => ImportEventStatus::QUEUED,
+            'type' => ImportEventType::STUDENTS,
+            'user_id' => $user->id,
+        ]);
 });
 
 it('can start download of students by department and session', function (): void {
@@ -74,23 +71,18 @@ it('can start download of students by department and session', function (): void
 
     $response->assertRedirect(route('download.students.page'));
 
-    assertDatabaseHas('import_events',
+    assertDatabaseHas(ImportEvent::class,
         [
             'data' => json_encode([
                 'department' => $department->name,
                 'entry_session' => $session->name,
                 'online_department_id' => $department->online_id,
             ]),
+            'method' => ImportEventMethod::DEPARTMENT_SESSION,
+            'status' => ImportEventStatus::QUEUED,
+            'type' => ImportEventType::STUDENTS,
             'user_id' => $user->id,
         ]);
-
-    $event = ImportEvent::query()->where('user_id', $user->id)->firstOrFail();
-
-    Queue::assertPushed(function (QueuedCommand $command) use ($event): bool {
-        $data = getQueuedCommandProtectedDataProperty($command);
-
-        return $data[0] === 'rp:import-portal-data' && $data[1]['eventId'] === $event->id;
-    });
 });
 
 it('queues download of students by session for processing', function (): void {
@@ -105,7 +97,7 @@ it('queues download of students by session for processing', function (): void {
 
     $response->assertRedirect(route('download.students.page'));
 
-    assertDatabaseHas('import_events',
+    assertDatabaseHas(ImportEvent::class,
         [
             'data' => json_encode(['entry_session' => $session->name]),
             'method' => ImportEventMethod::SESSION,
