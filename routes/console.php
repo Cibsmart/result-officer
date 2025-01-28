@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Console\Commands\ProcessQueuedImportEvent;
-use App\Console\Commands\RunPendingResultsValidation;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 
@@ -12,4 +11,3 @@ Artisan::command('inspire', function (): void {
 })->purpose('Display an inspiring quote')->hourly();
 
 Schedule::command(ProcessQueuedImportEvent::class)->everyMinute()->withoutOverlapping();
-Schedule::command(RunPendingResultsValidation::class)->everyThirtyMinutes()->withoutOverlapping();
