@@ -17,29 +17,20 @@ final class DownloadResultsByDepartmentSessionController
     {
         $user = $request->user();
 
-        $session = $request->string('sessionName')->value();
-        $onlineId = $request->integer('onlineDepartmentId');
         $deptName = $request->string('departmentName')->value();
+        $onlineId = $request->integer('onlineDepartmentId');
+        $session = $request->string('sessionName')->value();
+        $data = ['department' => $deptName, 'online_department_id' => $onlineId, 'session' => $session];
 
-        $importEventInQueue = ImportEvent::inSessionDepartmentQueue(
-            ImportEventType::RESULTS,
-            ImportEventMethod::DEPARTMENT_SESSION,
-            $session,
-            $onlineId,
-        );
+        $type = ImportEventType::RESULTS;
+        $method = ImportEventMethod::DEPARTMENT_SESSION;
 
-        if ($importEventInQueue) {
-            return redirect()->back()->error("Results Import for {$deptName} {$session} is already in queue");
+        if (ImportEvent::inQueue($type, $method, $data)) {
+            return redirect()->back()->error("Results Import for {$deptName} {$session} session is already in queue");
         }
 
-        ImportEvent::new(
-            user: $user,
-            type: ImportEventType::RESULTS,
-            method: ImportEventMethod::DEPARTMENT_SESSION,
-            data: ['department' => $deptName, 'online_department_id' => $onlineId, 'session' => $session],
-            status: ImportEventStatus::QUEUED,
-        );
+        ImportEvent::new(user: $user, type: $type, method: $method, data: $data, status: ImportEventStatus::QUEUED);
 
-        return redirect()->back()->success("Results Import for {$deptName} {$session} QUEUED");
+        return redirect()->back()->success("Results Download for {$deptName} {$session} session QUEUED");
     }
 }

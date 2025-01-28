@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Download\Students;
 
 use App\Enums\ImportEventMethod;
+use App\Enums\ImportEventStatus;
 use App\Enums\ImportEventType;
 use App\Http\Requests\Download\DownloadStudentsByDepartmentSessionRequest;
 use App\Models\ImportEvent;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Artisan;
 
 final readonly class DownloadStudentsByDepartmentSessionController
 {
@@ -17,15 +17,23 @@ final readonly class DownloadStudentsByDepartmentSessionController
     {
         $user = $request->user();
 
-        $event = ImportEvent::new($user, ImportEventType::STUDENTS, ImportEventMethod::DEPARTMENT_SESSION,
-            [
-                'department' => $request->string('departmentName')->value(),
-                'entry_session' => $request->string('sessionName')->value(),
-                'online_department_id' => $request->integer('onlineDepartmentId'),
-            ]);
+        $department = $request->string('departmentName')->value();
+        $onlineId = $request->integer('onlineDepartmentId');
+        $session = $request->string('sessionName')->value();
 
-        Artisan::queue('rp:import-portal-data', ['eventId' => $event->id]);
+        $data = ['department' => $department, 'entry_session' => $session, 'online_department_id' => $onlineId];
 
-        return redirect()->back()->success('Students Import Started...');
+        $type = ImportEventType::STUDENTS;
+        $method = ImportEventMethod::DEPARTMENT_SESSION;
+
+        if (ImportEvent::inQueue($type, $method, $data)) {
+            $message = "Student Download for {$department} {$session} session is already in queue";
+
+            return redirect()->back()->error($message);
+        }
+
+        ImportEvent::new(user: $user, type: $type, method: $method, data: $data, status: ImportEventStatus::QUEUED);
+
+        return redirect()->back()->success("Students Download for {$department} {$session} session QUEUED");
     }
 }

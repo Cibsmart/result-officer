@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
+use App\Enums\ImportEventMethod;
+use App\Enums\ImportEventStatus;
+use App\Enums\ImportEventType;
 use App\Http\Controllers\Download\Departments\DownloadDepartmentsController;
 use App\Http\Controllers\Download\Departments\DownloadDepartmentsPageController;
 use App\Models\ImportEvent;
-use Illuminate\Foundation\Console\QueuedCommand;
 use Tests\Factories\UserFactory;
 
 use function Pest\Laravel\actingAs;
@@ -34,14 +36,13 @@ it('can start download of all departments', function (): void {
 
     $response->assertRedirect(route('download.departments.page'));
 
-    assertDatabaseHas('import_events',
-        ['user_id' => $user->id, 'data' => json_encode(['department' => 'all'])]);
+    assertDatabaseHas(ImportEvent::class,
+        [
+            'data' => json_encode(['department' => 'all']),
+            'method' => ImportEventMethod::ALL,
+            'status' => ImportEventStatus::QUEUED,
+            'type' => ImportEventType::DEPARTMENTS,
+            'user_id' => $user->id,
+        ]);
 
-    $event = ImportEvent::query()->where('user_id', $user->id)->firstOrFail();
-
-    Queue::assertPushed(function (QueuedCommand $command) use ($event): bool {
-        $data = getQueuedCommandProtectedDataProperty($command);
-
-        return $data[0] === 'rp:import-portal-data' && $data[1]['eventId'] === $event->id;
-    });
 });

@@ -18,27 +18,19 @@ final readonly class DownloadStudentsBySessionController
         $user = $request->user();
 
         $session = $request->string('sessionName')->value();
+        $data = ['entry_session' => $session];
 
-        $importEventInQueue = ImportEvent::inSessionQueue(
-            ImportEventType::STUDENTS,
-            ImportEventMethod::SESSION,
-            $session,
-        );
+        $type = ImportEventType::STUDENTS;
+        $method = ImportEventMethod::SESSION;
 
-        if ($importEventInQueue) {
-            $message = "Student Import for {$session} is already in queue";
+        if (ImportEvent::inQueue($type, $method, $data)) {
+            $message = "Student Download for {$session} session is already in queue";
 
             return redirect()->back()->error($message);
         }
 
-        ImportEvent::new(
-            user: $user,
-            type: ImportEventType::STUDENTS,
-            method: ImportEventMethod::SESSION,
-            data: ['entry_session' => $session],
-            status: ImportEventStatus::QUEUED,
-        );
+        ImportEvent::new(user: $user, type: $type, method: $method, data: $data, status: ImportEventStatus::QUEUED);
 
-        return redirect()->back()->success("Students Import for {$session} session QUEUED");
+        return redirect()->back()->success("Students Download for {$session} session QUEUED");
     }
 }

@@ -78,11 +78,7 @@ final class ValidateResults extends ReportVettingStep
         $resultData = $result->getData();
         $resultDetail = $result->resultDetail;
         $resultDetailValue = $resultDetail->value;
-        $resultDetailHash = $resultDetail->data;
 
-        $validated = $resultDetail->validate === false && $resultDetailHash !== '';
-        $consistentData = $resultData === $resultDetailValue;
-
-        return $validated && $consistentData;
+        return $resultData === $resultDetailValue;
     }
 }

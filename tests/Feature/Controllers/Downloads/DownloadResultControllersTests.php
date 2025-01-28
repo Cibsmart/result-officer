@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Enums\ImportEventMethod;
+use App\Enums\ImportEventStatus;
 use App\Enums\ImportEventType;
 use App\Http\Controllers\Download\Results\DownloadResultByDepartmentSessionLevelController;
 use App\Http\Controllers\Download\Results\DownloadResultByDepartmentSessionSemesterController;
@@ -10,7 +11,6 @@ use App\Http\Controllers\Download\Results\DownloadResultByRegistrationNumberCont
 use App\Http\Controllers\Download\Results\DownloadResultBySessionCourseController;
 use App\Http\Controllers\Download\Results\DownloadResultsPageController;
 use App\Models\ImportEvent;
-use Illuminate\Foundation\Console\QueuedCommand;
 use Tests\Factories\CourseFactory;
 use Tests\Factories\DepartmentFactory;
 use Tests\Factories\LevelFactory;
@@ -53,21 +53,14 @@ it('can start download of results by registration number', function (): void {
 
     $response->assertRedirect(route('download.results.page'));
 
-    assertDatabaseHas('import_events',
+    assertDatabaseHas(ImportEvent::class,
         [
             'data' => json_encode(['registration_number' => $student->registration_number]),
-            'method' => ImportEventMethod::REGISTRATION_NUMBER->value,
-            'type' => ImportEventType::RESULTS->value,
+            'method' => ImportEventMethod::REGISTRATION_NUMBER,
+            'status' => ImportEventStatus::QUEUED,
+            'type' => ImportEventType::RESULTS,
             'user_id' => $user->id,
         ]);
-
-    $event = ImportEvent::query()->where('user_id', $user->id)->firstOrFail();
-
-    Queue::assertPushed(function (QueuedCommand $command) use ($event): bool {
-        $data = getQueuedCommandProtectedDataProperty($command);
-
-        return $data[0] === 'rp:import-portal-data' && $data[1]['eventId'] === $event->id;
-    });
 });
 
 it('can start download of results by department, session and level', function (): void {
@@ -86,7 +79,7 @@ it('can start download of results by department, session and level', function ()
 
     $response->assertRedirect(route('download.results.page'));
 
-    assertDatabaseHas('import_events',
+    assertDatabaseHas(ImportEvent::class,
         [
             'data' => json_encode([
                 'department' => $department->name,
@@ -94,18 +87,11 @@ it('can start download of results by department, session and level', function ()
                 'online_department_id' => $department->online_id,
                 'session' => $session->name,
             ]),
-            'method' => ImportEventMethod::DEPARTMENT_SESSION_LEVEL->value,
-            'type' => ImportEventType::RESULTS->value,
+            'method' => ImportEventMethod::DEPARTMENT_SESSION_LEVEL,
+            'status' => ImportEventStatus::QUEUED,
+            'type' => ImportEventType::RESULTS,
             'user_id' => $user->id,
         ]);
-
-    $event = ImportEvent::query()->where('user_id', $user->id)->firstOrFail();
-
-    Queue::assertPushed(function (QueuedCommand $command) use ($event): bool {
-        $data = getQueuedCommandProtectedDataProperty($command);
-
-        return $data[0] === 'rp:import-portal-data' && $data[1]['eventId'] === $event->id;
-    });
 });
 
 it('can start download of results by department, session and semester', function (): void {
@@ -124,7 +110,7 @@ it('can start download of results by department, session and semester', function
 
     $response->assertRedirect(route('download.results.page'));
 
-    assertDatabaseHas('import_events',
+    assertDatabaseHas(ImportEvent::class,
         [
             'data' => json_encode([
                 'department' => $department->name,
@@ -132,18 +118,11 @@ it('can start download of results by department, session and semester', function
                 'semester' => $semester->name,
                 'session' => $session->name,
             ]),
-            'method' => ImportEventMethod::DEPARTMENT_SESSION_SEMESTER->value,
-            'type' => ImportEventType::RESULTS->value,
+            'method' => ImportEventMethod::DEPARTMENT_SESSION_SEMESTER,
+            'status' => ImportEventStatus::QUEUED,
+            'type' => ImportEventType::RESULTS,
             'user_id' => $user->id,
         ]);
-
-    $event = ImportEvent::query()->where('user_id', $user->id)->firstOrFail();
-
-    Queue::assertPushed(function (QueuedCommand $command) use ($event): bool {
-        $data = getQueuedCommandProtectedDataProperty($command);
-
-        return $data[0] === 'rp:import-portal-data' && $data[1]['eventId'] === $event->id;
-    });
 });
 
 it('can start download of results by session and course', function (): void {
@@ -160,23 +139,16 @@ it('can start download of results by session and course', function (): void {
 
     $response->assertRedirect(route('download.results.page'));
 
-    assertDatabaseHas('import_events',
+    assertDatabaseHas(ImportEvent::class,
         [
             'data' => json_encode([
                 'course' => $course->name,
                 'online_course_id' => $course->online_id,
                 'session' => $session->name,
             ]),
-            'method' => ImportEventMethod::SESSION_COURSE->value,
-            'type' => ImportEventType::RESULTS->value,
+            'method' => ImportEventMethod::SESSION_COURSE,
+            'status' => ImportEventStatus::QUEUED,
+            'type' => ImportEventType::RESULTS,
             'user_id' => $user->id,
         ]);
-
-    $event = ImportEvent::query()->where('user_id', $user->id)->firstOrFail();
-
-    Queue::assertPushed(function (QueuedCommand $command) use ($event): bool {
-        $data = getQueuedCommandProtectedDataProperty($command);
-
-        return $data[0] === 'rp:import-portal-data' && $data[1]['eventId'] === $event->id;
-    });
 });

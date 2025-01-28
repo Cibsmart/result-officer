@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Download\Results;
 
 use App\Enums\ImportEventMethod;
+use App\Enums\ImportEventStatus;
 use App\Enums\ImportEventType;
 use App\Http\Requests\Download\DownloadRegistrationsBySessionCourseRequest;
 use App\Models\ImportEvent;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Artisan;
 
 final readonly class DownloadResultBySessionCourseController
 {
@@ -17,19 +17,20 @@ final readonly class DownloadResultBySessionCourseController
     {
         $user = $request->user();
 
-        $event = ImportEvent::new(
-            user: $user,
-            type: ImportEventType::RESULTS,
-            method: ImportEventMethod::SESSION_COURSE,
-            data: [
-                'course' => $request->string('courseName')->value(),
-                'online_course_id' => $request->integer('onlineCourseId'),
-                'session' => $request->string('sessionName')->value(),
-            ],
-        );
+        $session = $request->string('sessionName')->value();
+        $course = $request->string('courseName')->value();
+        $onlineId = $request->integer('onlineCourseId');
+        $data = ['course' => $course, 'online_course_id' => $onlineId, 'session' => $session];
 
-        Artisan::queue('rp:import-portal-data', ['eventId' => $event->id]);
+        $type = ImportEventType::RESULTS;
+        $method = ImportEventMethod::SESSION_COURSE;
 
-        return redirect()->back()->success('Results Import Started...');
+        if (ImportEvent::inQueue($type, $method, $data)) {
+            return redirect()->back()->error("Results Import for {$course} {$session} session is already in queue");
+        }
+
+        ImportEvent::new(user: $user, type: $type, method: $method, data: $data, status: ImportEventStatus::QUEUED);
+
+        return redirect()->back()->success("Results Download for {$course} {$session} session QUEUED");
     }
 }
