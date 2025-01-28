@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Download\Departments;
 
 use App\Enums\ImportEventMethod;
+use App\Enums\ImportEventStatus;
 use App\Enums\ImportEventType;
 use App\Models\ImportEvent;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
 
 final readonly class DownloadDepartmentsController
 {
@@ -17,10 +17,19 @@ final readonly class DownloadDepartmentsController
     {
         $user = $request->user();
 
-        $event = ImportEvent::new($user, ImportEventType::DEPARTMENTS, ImportEventMethod::ALL, ['department' => 'all']);
+        $data = ['department' => 'all'];
 
-        Artisan::queue('rp:import-portal-data', ['eventId' => $event->id]);
+        $type = ImportEventType::DEPARTMENTS;
+        $method = ImportEventMethod::ALL;
 
-        return redirect()->back()->success('Department Import Started...');
+        if (ImportEvent::inQueue($type, $method, $data)) {
+            $message = 'Department Download is already in queue';
+
+            return redirect()->back()->error($message);
+        }
+
+        ImportEvent::new(user: $user, type: $type, method: $method, data: $data, status: ImportEventStatus::QUEUED);
+
+        return redirect()->back()->success('Department Download QUEUED');
     }
 }
