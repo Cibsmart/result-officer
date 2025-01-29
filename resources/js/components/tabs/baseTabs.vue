@@ -28,7 +28,7 @@ const updateTab = (index: number) => {
       <select
         :value="indexSelected"
         aria-label="Select a tab"
-        class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 dark:bg-gray-900 dark:text-white dark:ring-gray-700">
+        class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pr-8 pl-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 dark:bg-gray-900 dark:text-white dark:ring-gray-700">
         <option
           v-for="(tab, index) in tabs"
           :key="tab.name"
@@ -46,7 +46,7 @@ const updateTab = (index: number) => {
     <TabGroup
       :selectedIndex="indexSelected"
       @change="updateTab">
-      <TabList class="hidden justify-between rounded ring-1 ring-gray-300 sm:flex dark:ring-gray-600">
+      <TabList class="hidden justify-between rounded-sm ring-1 ring-gray-300 sm:flex dark:ring-gray-600">
         <Tab
           v-for="(tab, index) in tabs"
           :key="index"

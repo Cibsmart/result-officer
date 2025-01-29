@@ -50,7 +50,7 @@ const closeSidebar = () => {
               leave="ease-in-out duration-300"
               leave-from="opacity-100"
               leave-to="opacity-0">
-              <div class="absolute left-full top-0 flex w-16 justify-center pt-5">
+              <div class="absolute top-0 left-full flex w-16 justify-center pt-5">
                 <button
                   class="-m-2.5 p-2.5"
                   type="button"

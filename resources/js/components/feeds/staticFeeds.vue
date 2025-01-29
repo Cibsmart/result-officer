@@ -29,7 +29,7 @@ const settings = (status: string) => {
           <span
             v-if="eventIdx !== events.length - 1"
             aria-hidden="true"
-            class="absolute left-2 top-2 -ml-px h-full w-0.5 bg-gray-200 dark:bg-gray-500" />
+            class="absolute top-2 left-2 -ml-px h-full w-0.5 bg-gray-200 dark:bg-gray-500" />
 
           <div class="relative flex space-x-2">
             <div>
@@ -54,7 +54,7 @@ const settings = (status: string) => {
                 </p>
               </div>
 
-              <div class="whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400">
+              <div class="text-right text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">
                 {{ event.date }}
               </div>
             </div>

@@ -19,7 +19,7 @@ const userNavigation: UserNavigationItem[] = [
     class="relative">
     <MenuButton
       v-slot="{ open }"
-      class="group -m-1.5 flex w-full items-center gap-x-4 p-1.5 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800">
+      class="group -m-1.5 flex w-full items-center gap-x-4 p-1.5 py-3 text-sm leading-6 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800">
       <span class="sr-only">Open user menu</span>
 
       <ProfileImage />
@@ -42,7 +42,7 @@ const userNavigation: UserNavigationItem[] = [
       leave-from-class="transform opacity-100 scale-100"
       leave-to-class="transform opacity-0 scale-95">
       <MenuItems
-        class="absolute bottom-12 right-0 z-10 mt-2.5 w-40 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none dark:bg-gray-900">
+        class="absolute right-0 bottom-12 z-10 mt-2.5 w-40 origin-top-right rounded-md bg-white py-2 ring-1 shadow-lg ring-gray-900/5 focus:outline-hidden dark:bg-gray-900">
         <MenuItem
           v-for="item in userNavigation"
           :key="item.name"

@@ -11,7 +11,7 @@ const openSidebar = () => {
 
 <template>
   <div
-    class="sticky top-0 z-40 flex items-center gap-x-6 bg-white px-4 py-4 shadow-sm sm:px-6 lg:hidden dark:dark:bg-gray-900">
+    class="sticky top-0 z-40 flex items-center gap-x-6 bg-white px-4 py-4 shadow-xs sm:px-6 lg:hidden dark:dark:bg-gray-900">
     <button
       class="-m-2.5 p-2.5 text-gray-700 lg:hidden dark:text-white"
       type="button"
@@ -23,7 +23,7 @@ const openSidebar = () => {
         class="h-6 w-6" />
     </button>
 
-    <div class="flex-1 text-sm font-semibold leading-6 text-gray-900 dark:text-white">ResultPro</div>
+    <div class="flex-1 text-sm leading-6 font-semibold text-gray-900 dark:text-white">ResultPro</div>
 
     <a href="#">
       <span class="sr-only">Your profile</span>

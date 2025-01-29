@@ -34,7 +34,7 @@ const hasRows = computed(() => props.data.students.length > 0);
       <div>
         <div class="sm:flex sm:items-center">
           <div class="sm:flex-auto">
-            <h1 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">Composite Sheet</h1>
+            <h1 class="text-base leading-6 font-semibold text-gray-900 dark:text-white">Composite Sheet</h1>
 
             <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">
               This page shows Composite Sheet for {{ data.program.name }}
@@ -94,7 +94,7 @@ const hasRows = computed(() => props.data.students.length > 0);
                         <th />
 
                         <th
-                          class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                          class="bg-opacity-75 sticky top-0 z-10 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur-sm dark:text-white"
                           colspan="2"
                           scope="col">
                           COURSE CODE
@@ -103,7 +103,7 @@ const hasRows = computed(() => props.data.students.length > 0);
                         <th
                           v-for="(course, index) in data.courses"
                           :key="index"
-                          class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                          class="bg-opacity-75 sticky top-0 z-10 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur-sm dark:text-white"
                           colspan="2"
                           scope="col">
                           {{ course.unit }}
@@ -111,13 +111,13 @@ const hasRows = computed(() => props.data.students.length > 0);
 
                         <th
                           v-if="data.hasOtherCourses"
-                          class="sticky top-0 z-10 whitespace-nowrap bg-opacity-75 p-1 text-center align-bottom text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                          class="bg-opacity-75 sticky top-0 z-10 p-1 text-center align-bottom text-xs font-semibold whitespace-nowrap text-gray-900 backdrop-blur-sm dark:text-white"
                           scope="col">
                           OTHER
                         </th>
 
                         <th
-                          class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                          class="bg-opacity-75 sticky top-0 z-10 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur-sm dark:text-white"
                           colspan="3"
                           scope="col">
                           TOTALS
@@ -128,19 +128,19 @@ const hasRows = computed(() => props.data.students.length > 0);
 
                       <tr class="divide-x divide-gray-200 dark:divide-gray-600">
                         <th
-                          class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                          class="bg-opacity-75 sticky top-0 z-10 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur-sm dark:text-white"
                           scope="col">
                           SN
                         </th>
 
                         <th
-                          class="sticky top-0 z-10 border-t bg-opacity-75 p-1 text-center text-xs font-semibold backdrop-blur"
+                          class="bg-opacity-75 sticky top-0 z-10 border-t p-1 text-center text-xs font-semibold backdrop-blur-sm"
                           scope="col">
                           NAME
                         </th>
 
                         <th
-                          class="sticky top-0 z-10 whitespace-nowrap border-t bg-opacity-75 p-1 text-center text-xs font-semibold"
+                          class="bg-opacity-75 sticky top-0 z-10 border-t p-1 text-center text-xs font-semibold whitespace-nowrap"
                           scope="col">
                           REGISTRATION NUMBER
                         </th>
@@ -148,7 +148,7 @@ const hasRows = computed(() => props.data.students.length > 0);
                         <th
                           v-for="(course, index) in data.courses"
                           :key="index"
-                          class="sticky top-0 z-10 border-t p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                          class="sticky top-0 z-10 border-t p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur-sm dark:text-white"
                           colspan="2"
                           scope="col">
                           {{ course.code }}
@@ -156,31 +156,31 @@ const hasRows = computed(() => props.data.students.length > 0);
 
                         <th
                           v-if="data.hasOtherCourses"
-                          class="sticky top-0 z-10 whitespace-nowrap bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                          class="bg-opacity-75 sticky top-0 z-10 p-1 text-center text-xs font-semibold whitespace-nowrap text-gray-900 backdrop-blur-sm dark:text-white"
                           scope="col">
                           COURSES
                         </th>
 
                         <th
-                          class="sticky top-0 z-10 border-t bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                          class="bg-opacity-75 sticky top-0 z-10 border-t p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur-sm dark:text-white"
                           scope="col">
                           TCL
                         </th>
 
                         <th
-                          class="sticky top-0 z-10 border-t bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                          class="bg-opacity-75 sticky top-0 z-10 border-t p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur-sm dark:text-white"
                           scope="col">
                           TGP
                         </th>
 
                         <th
-                          class="sticky top-0 z-10 border-t bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                          class="bg-opacity-75 sticky top-0 z-10 border-t p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur-sm dark:text-white"
                           scope="col">
                           GPA
                         </th>
 
                         <th
-                          class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                          class="bg-opacity-75 sticky top-0 z-10 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur-sm dark:text-white"
                           scope="col">
                           REMARKS
                         </th>
@@ -197,12 +197,12 @@ const hasRows = computed(() => props.data.students.length > 0);
                           {{ index + 1 }}
                         </td>
 
-                        <td class="whitespace-nowrap border-t border-gray-200 p-1 text-xs dark:border-gray-700">
+                        <td class="border-t border-gray-200 p-1 text-xs whitespace-nowrap dark:border-gray-700">
                           {{ student.studentName }}
                         </td>
 
                         <td
-                          class="whitespace-nowrap border-t border-gray-200 p-1 text-center text-xs text-gray-700 dark:border-gray-700 dark:text-gray-300">
+                          class="border-t border-gray-200 p-1 text-center text-xs whitespace-nowrap text-gray-700 dark:border-gray-700 dark:text-gray-300">
                           {{ student.registrationNumber }}
                         </td>
 

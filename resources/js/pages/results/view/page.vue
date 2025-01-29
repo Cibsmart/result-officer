@@ -36,7 +36,7 @@ const hasResults = computed(() => props.results.sessionEnrollments.length > 0);
       <div class="">
         <div class="sm:flex sm:items-center">
           <div class="sm:flex-auto">
-            <h1 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">Student Results</h1>
+            <h1 class="text-base leading-6 font-semibold text-gray-900 dark:text-white">Student Results</h1>
 
             <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">
               This page shows all results for the selected student
@@ -86,7 +86,7 @@ const hasResults = computed(() => props.results.sessionEnrollments.length > 0);
 
         <div
           v-if="hasResults"
-          class="mt-2 flex flex-col p-2 text-center text-xl font-bold uppercase text-black lg:block dark:text-white">
+          class="mt-2 flex flex-col p-2 text-center text-xl font-bold text-black uppercase lg:block dark:text-white">
           <span>
             Current Final CGPA:
             <span>{{ results.formattedFCGPA }} </span>

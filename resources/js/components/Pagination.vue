@@ -46,14 +46,14 @@ defineProps<{
       <div>
         <nav
           aria-label="Pagination"
-          class="isolate inline-flex -space-x-px rounded-md shadow-sm">
+          class="isolate inline-flex -space-x-px rounded-md shadow-xs">
           <Link
             v-for="(link, index) in paginated.links"
             :key="index"
             :class="{
               'z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600':
                 link.active,
-              'text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0 dark:text-gray-100 dark:ring-gray-400 dark:hover:bg-gray-600':
+              'text-gray-900 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:outline-offset-0 dark:text-gray-100 dark:ring-gray-400 dark:hover:bg-gray-600':
                 !link.active,
             }"
             :href="link.url"

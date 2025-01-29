@@ -16,7 +16,7 @@ defineProps<{
           </th>
 
           <th
-            class="py-2 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 dark:text-white"
+            class="py-2 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-6 dark:text-white"
             scope="col">
             STUDENTS' NAME
           </th>
@@ -44,11 +44,11 @@ defineProps<{
             {{ index + 1 }}
           </td>
 
-          <td class="relative border-t border-gray-200 py-2 pl-4 pr-3 text-sm sm:pl-6 dark:border-gray-700">
+          <td class="relative border-t border-gray-200 py-2 pr-3 pl-4 text-sm sm:pl-6 dark:border-gray-700">
             {{ student.student.name }}
           </td>
 
-          <td class="relative border-t border-gray-200 py-2 pl-4 pr-3 text-sm sm:pl-6 dark:border-gray-700">
+          <td class="relative border-t border-gray-200 py-2 pr-3 pl-4 text-sm sm:pl-6 dark:border-gray-700">
             {{ student.student.registrationNumber }}
           </td>
 
