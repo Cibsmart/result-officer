@@ -17,7 +17,7 @@ const selected = ref(props.items[0]);
     as="div">
     <div class="relative mt-2">
       <ListboxButton
-        class="relative w-full cursor-default rounded-md bg-white py-2 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-900 dark:text-white dark:ring-gray-700">
+        class="relative w-full cursor-default rounded-md bg-white py-2 pl-3 pr-10 text-left text-gray-900 shadow-xs ring-1 ring-inset ring-gray-300 focus:outline-hidden focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-900 dark:text-white dark:ring-gray-700">
         <span class="block truncate">{{ selected.name }}</span>
 
         <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
@@ -32,7 +32,7 @@ const selected = ref(props.items[0]);
         leave-from-class="opacity-100"
         leave-to-class="opacity-0">
         <ListboxOptions
-          class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm dark:bg-gray-900 dark:ring-gray-700">
+          class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-hidden sm:text-sm dark:bg-gray-900 dark:ring-gray-700">
           <ListboxOption
             v-for="item in items"
             :key="item.id"

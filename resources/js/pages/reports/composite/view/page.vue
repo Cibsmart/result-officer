@@ -94,7 +94,7 @@ const hasRows = computed(() => props.data.students.length > 0);
                         <th />
 
                         <th
-                          class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                          class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur-sm dark:text-white"
                           colspan="2"
                           scope="col">
                           COURSE CODE
@@ -103,7 +103,7 @@ const hasRows = computed(() => props.data.students.length > 0);
                         <th
                           v-for="(course, index) in data.courses"
                           :key="index"
-                          class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                          class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur-sm dark:text-white"
                           colspan="2"
                           scope="col">
                           {{ course.unit }}
@@ -111,13 +111,13 @@ const hasRows = computed(() => props.data.students.length > 0);
 
                         <th
                           v-if="data.hasOtherCourses"
-                          class="sticky top-0 z-10 whitespace-nowrap bg-opacity-75 p-1 text-center align-bottom text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                          class="sticky top-0 z-10 whitespace-nowrap bg-opacity-75 p-1 text-center align-bottom text-xs font-semibold text-gray-900 backdrop-blur-sm dark:text-white"
                           scope="col">
                           OTHER
                         </th>
 
                         <th
-                          class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                          class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur-sm dark:text-white"
                           colspan="3"
                           scope="col">
                           TOTALS
@@ -128,13 +128,13 @@ const hasRows = computed(() => props.data.students.length > 0);
 
                       <tr class="divide-x divide-gray-200 dark:divide-gray-600">
                         <th
-                          class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                          class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur-sm dark:text-white"
                           scope="col">
                           SN
                         </th>
 
                         <th
-                          class="sticky top-0 z-10 border-t bg-opacity-75 p-1 text-center text-xs font-semibold backdrop-blur"
+                          class="sticky top-0 z-10 border-t bg-opacity-75 p-1 text-center text-xs font-semibold backdrop-blur-sm"
                           scope="col">
                           NAME
                         </th>
@@ -148,7 +148,7 @@ const hasRows = computed(() => props.data.students.length > 0);
                         <th
                           v-for="(course, index) in data.courses"
                           :key="index"
-                          class="sticky top-0 z-10 border-t p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                          class="sticky top-0 z-10 border-t p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur-sm dark:text-white"
                           colspan="2"
                           scope="col">
                           {{ course.code }}
@@ -156,31 +156,31 @@ const hasRows = computed(() => props.data.students.length > 0);
 
                         <th
                           v-if="data.hasOtherCourses"
-                          class="sticky top-0 z-10 whitespace-nowrap bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                          class="sticky top-0 z-10 whitespace-nowrap bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur-sm dark:text-white"
                           scope="col">
                           COURSES
                         </th>
 
                         <th
-                          class="sticky top-0 z-10 border-t bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                          class="sticky top-0 z-10 border-t bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur-sm dark:text-white"
                           scope="col">
                           TCL
                         </th>
 
                         <th
-                          class="sticky top-0 z-10 border-t bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                          class="sticky top-0 z-10 border-t bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur-sm dark:text-white"
                           scope="col">
                           TGP
                         </th>
 
                         <th
-                          class="sticky top-0 z-10 border-t bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                          class="sticky top-0 z-10 border-t bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur-sm dark:text-white"
                           scope="col">
                           GPA
                         </th>
 
                         <th
-                          class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur dark:text-white"
+                          class="sticky top-0 z-10 bg-opacity-75 p-1 text-center text-xs font-semibold text-gray-900 backdrop-blur-sm dark:text-white"
                           scope="col">
                           REMARKS
                         </th>

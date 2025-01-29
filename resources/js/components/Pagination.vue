@@ -46,7 +46,7 @@ defineProps<{
       <div>
         <nav
           aria-label="Pagination"
-          class="isolate inline-flex -space-x-px rounded-md shadow-sm">
+          class="isolate inline-flex -space-x-px rounded-md shadow-xs">
           <Link
             v-for="(link, index) in paginated.links"
             :key="index"

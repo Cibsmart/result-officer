@@ -13,7 +13,7 @@ defineProps<{
     aria-label="Breadcrumb"
     class="flex border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
     <ol
-      class="mx-auto flex w-full max-w-screen-xl space-x-2 px-4 sm:px-6 lg:px-8"
+      class="mx-auto flex w-full max-w-(--breakpoint-xl) space-x-2 px-4 sm:px-6 lg:px-8"
       role="list">
       <li class="flex">
         <div class="flex items-center">
@@ -22,7 +22,7 @@ defineProps<{
             class="py-3 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
             <HomeIcon
               aria-hidden="true"
-              class="h-5 w-5 flex-shrink-0" />
+              class="h-5 w-5 shrink-0" />
 
             <span class="sr-only">Home</span>
           </Link>
@@ -36,7 +36,7 @@ defineProps<{
         <div class="flex items-center">
           <svg
             aria-hidden="true"
-            class="h-full w-6 flex-shrink-0 text-gray-200 dark:text-gray-700"
+            class="h-full w-6 shrink-0 text-gray-200 dark:text-gray-700"
             fill="currentColor"
             preserveAspectRatio="none"
             viewBox="0 0 24 44">

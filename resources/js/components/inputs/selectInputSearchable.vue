@@ -36,11 +36,11 @@ watch(
     by="id">
     <div class="relative mt-2">
       <div
-        class="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+        class="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
         <ComboboxInput
           :displayValue="(item: any) => item.name"
           autocomplete="off"
-          class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600"
+          class="w-full rounded-md border-gray-300 shadow-xs focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600"
           @change="query = $event.target.value" />
 
         <ComboboxButton class="absolute inset-y-0 right-0 flex items-center pr-2">
@@ -56,7 +56,7 @@ watch(
         leave-to-class="opacity-0"
         @after-leave="query = ''">
         <ComboboxOptions
-          class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm dark:bg-gray-900 dark:ring-gray-700">
+          class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-hidden sm:text-sm dark:bg-gray-900 dark:ring-gray-700">
           <div
             v-if="empty"
             class="relative cursor-default select-none px-4 py-2 text-gray-700">

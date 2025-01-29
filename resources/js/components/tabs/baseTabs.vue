@@ -46,7 +46,7 @@ const updateTab = (index: number) => {
     <TabGroup
       :selectedIndex="indexSelected"
       @change="updateTab">
-      <TabList class="hidden justify-between rounded ring-1 ring-gray-300 sm:flex dark:ring-gray-600">
+      <TabList class="hidden justify-between rounded-sm ring-1 ring-gray-300 sm:flex dark:ring-gray-600">
         <Tab
           v-for="(tab, index) in tabs"
           :key="index"

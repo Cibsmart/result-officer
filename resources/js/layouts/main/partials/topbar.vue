@@ -11,7 +11,7 @@ const openSidebar = () => {
 
 <template>
   <div
-    class="sticky top-0 z-40 flex items-center gap-x-6 bg-white px-4 py-4 shadow-sm sm:px-6 lg:hidden dark:dark:bg-gray-900">
+    class="sticky top-0 z-40 flex items-center gap-x-6 bg-white px-4 py-4 shadow-xs sm:px-6 lg:hidden dark:dark:bg-gray-900">
     <button
       class="-m-2.5 p-2.5 text-gray-700 lg:hidden dark:text-white"
       type="button"

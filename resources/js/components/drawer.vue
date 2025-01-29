@@ -93,7 +93,7 @@ const maxWidthClass = computed(() => {
 
                       <div class="ml-3 flex h-7 items-center">
                         <button
-                          class="relative rounded-md text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-100 dark:hover:text-white"
+                          class="relative rounded-md text-gray-700 hover:text-gray-900 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-100 dark:hover:text-white"
                           type="button"
                           @click="close">
                           <span class="absolute -inset-2.5" />
