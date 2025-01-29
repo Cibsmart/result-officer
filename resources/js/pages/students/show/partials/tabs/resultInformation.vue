@@ -30,7 +30,7 @@ const hasResults = computed(() => props.results.sessionEnrollments.length > 0);
 
     <div
       v-if="hasResults"
-      class="mt-2 flex flex-col p-2 text-center text-xl font-bold uppercase text-black lg:block dark:text-white">
+      class="mt-2 flex flex-col p-2 text-center text-xl font-bold text-black uppercase lg:block dark:text-white">
       <span>
         Current Final CGPA:
         <span>{{ results.formattedFCGPA }} </span>

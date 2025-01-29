@@ -44,7 +44,7 @@ watch(hasPendingEvent, () => {
         <PrimaryLink
           v-if="pending.canBeContinued"
           :href="route('import.event.continue', { event: pending.id })"
-          class="ml-4 mt-4">
+          class="mt-4 ml-4">
           Continue
         </PrimaryLink>
       </BaseFormSection>

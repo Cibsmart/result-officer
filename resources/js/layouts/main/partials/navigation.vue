@@ -110,7 +110,7 @@ const isAdmin = computed(() => usePage().props.user.isAdmin);
             : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white',
         ]"
         :href="item.href"
-        class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6">
+        class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
         <component
           :is="item.icon"
           :class="[
@@ -129,7 +129,7 @@ const isAdmin = computed(() => usePage().props.user.isAdmin);
         as="div">
         <DisclosureButton
           :class="[item.current ? 'bg-gray-50 dark:bg-gray-800' : 'hover:bg-gray-50 dark:hover:bg-gray-800']"
-          class="flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm font-semibold leading-6 text-gray-700 dark:text-gray-400">
+          class="flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm leading-6 font-semibold text-gray-700 dark:text-gray-400">
           <component
             :is="item.icon"
             :class="[
@@ -156,7 +156,7 @@ const isAdmin = computed(() => usePage().props.user.isAdmin);
             <Link
               :class="[subItem.current ? 'bg-gray-50 dark:bg-gray-800' : 'hover:bg-gray-50 dark:hover:bg-gray-800']"
               :href="subItem.href"
-              class="block rounded-md py-2 pl-9 pr-2 text-sm leading-6 text-gray-700 dark:text-gray-300">
+              class="block rounded-md py-2 pr-2 pl-9 text-sm leading-6 text-gray-700 dark:text-gray-300">
               {{ subItem.name }}
             </Link>
           </li>
@@ -166,7 +166,7 @@ const isAdmin = computed(() => usePage().props.user.isAdmin);
 
     <li v-if="isAdmin">
       <a
-        class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
+        class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
         href="/admin"
         target="_blank">
         <component

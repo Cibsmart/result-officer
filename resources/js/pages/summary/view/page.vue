@@ -35,7 +35,7 @@ const hasSummary = computed(() => props.department.students.length > 0);
       <div>
         <div class="sm:flex sm:items-center">
           <div class="sm:flex-auto">
-            <h1 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">Department Results Summary</h1>
+            <h1 class="text-base leading-6 font-semibold text-gray-900 dark:text-white">Department Results Summary</h1>
 
             <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">
               List of {{ department.level.name }} level {{ department.department.name }} students in

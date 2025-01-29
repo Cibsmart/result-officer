@@ -23,7 +23,7 @@ const openSidebar = () => {
         class="h-6 w-6" />
     </button>
 
-    <div class="flex-1 text-sm font-semibold leading-6 text-gray-900 dark:text-white">ResultPro</div>
+    <div class="flex-1 text-sm leading-6 font-semibold text-gray-900 dark:text-white">ResultPro</div>
 
     <a href="#">
       <span class="sr-only">Your profile</span>
