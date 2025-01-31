@@ -18,7 +18,7 @@ final class UserSeeder extends Seeder
         'iloke.veronica@ebsu.edu.ng' => ['name' => 'ILOKE VERONICA', 'departments' => ['CSC', 'PHY', 'ICH', 'GEX']],
         'mbam.chinyere@ebsu.edu.ng' => ['name' => 'MBAM CHINYERE', 'departments' => ['MAC', 'PSY', 'BTE', 'LIB']],
         'mbam.christiana@ebsu.edu.ng' => ['name' => 'MBAM CHRISTIANA', 'departments' => ['EDU', 'SED', 'TVE']],
-        'mbam.simon@ebsau.edu.ng' => [
+        'mbam.simon@ebsu.edu.ng' => [
             'departments' => ['AEM', 'ANS', 'FAQ', 'CLM', 'FST', 'SEM'],
             'name' => 'MBAM SIMON',
         ],
