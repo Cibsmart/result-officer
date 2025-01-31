@@ -149,7 +149,7 @@ final class Student extends Model
             return;
         }
 
-        $this->status = $status->value;
+        $this->status = $status;
         $this->save();
     }
 
@@ -220,7 +220,7 @@ final class Student extends Model
     protected function name(): Attribute
     {
         return Attribute::make(
-            /** @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter */
+        /** @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter */
             get: fn (
                 ?string $value,
                 array $attributes,

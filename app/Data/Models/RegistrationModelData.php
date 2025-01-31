@@ -68,8 +68,8 @@ final readonly class RegistrationModelData
         $registration = new Registration();
 
         $registration->course_id = $this->course->id;
-        $registration->credit_unit = $this->creditUnit->value;
-        $registration->course_status = $this->courseStatus->value;
+        $registration->credit_unit = $this->creditUnit;
+        $registration->course_status = $this->courseStatus;
         $registration->online_id = $this->onlineId;
         $registration->registration_date = $this->registrationDate->value;
         $registration->semester_enrollment_id = $this->semesterEnrollment->id;
