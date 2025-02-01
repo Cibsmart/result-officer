@@ -80,7 +80,7 @@ final readonly class ResultsExport implements FromQuery, ShouldAutoSize, WithEve
     }
 
     /** @return array<int, string> */
-    public function map($row): array
+    public function map(mixed $row): array
     {
         $department = $row->department === $row->program
             ? $row->department
