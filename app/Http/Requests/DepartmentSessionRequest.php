@@ -1,12 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
-use App\Models\Department;
-use App\Models\Session;
 use Illuminate\Foundation\Http\FormRequest;
 
-class DepartmentSessionRequest extends FormRequest
+final class DepartmentSessionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,10 +16,7 @@ class DepartmentSessionRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
+    /** @return array<string, array<int, string>> */
     public function rules(): array
     {
         return [

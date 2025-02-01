@@ -5,13 +5,10 @@ namespace App\Http\Controllers\Exports\Results;
 
 use App\Exports\ResultsExport;
 use App\Http\Requests\DepartmentSessionRequest;
-use App\Http\Requests\Download\DownloadStudentsByDepartmentSessionRequest;
-use App\Http\Requests\Results\ResultRequest;
 use App\Models\Department;
 use App\Models\Session;
-use App\Models\Student;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ExportResultsByDepartmentSessionController
@@ -24,13 +21,13 @@ class ExportResultsByDepartmentSessionController
         return redirect()->back()->success("Result export for {$department} {$session} session started...");
     }
 
-    public function download(Department $department, Session $session): BinaryFileResponse
+    public function download(Department $department, Session $session): Response|BinaryFileResponse
     {
         $studentIds = $department->students()
             ->where('entry_session_id', $session->id)
             ->pluck('students.id')
             ->toArray();
 
-        return new ResultsExport($studentIds)->download("{$department->slug}-{$session->slug}-results.xlsx");
+        return ResultsExport::forStudents($studentIds)->download("{$department->slug}-{$session->slug}-results.xlsx");
     }
 }

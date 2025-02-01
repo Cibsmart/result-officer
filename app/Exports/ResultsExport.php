@@ -9,21 +9,25 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-final readonly class ResultsExport implements FromQuery, WithHeadings, WithMapping, WithColumnFormatting, ShouldAutoSize, WithStyles, WithEvents
+final readonly class ResultsExport implements FromQuery, ShouldAutoSize, WithEvents, WithHeadings, WithMapping
 {
     use Exportable;
 
+    /** @param array<int, int> $studentIds */
     public function __construct(private array $studentIds)
     {
+    }
+
+    /** @param array<int, int> $studentIds */
+    public static function forStudents(array $studentIds): self
+    {
+        return new self($studentIds);
     }
 
     public function query(): Builder
@@ -56,11 +60,11 @@ final readonly class ResultsExport implements FromQuery, WithHeadings, WithMappi
             ->orderBy('courses.code');
     }
 
-    /** @inheritDoc */
+    /** @return array<int, string> */
     public function headings(): array
     {
         return [
-            "#",
+            '#',
             'Name',
             'Registration Number',
             'In Course',
@@ -75,51 +79,44 @@ final readonly class ResultsExport implements FromQuery, WithHeadings, WithMappi
         ];
     }
 
-    /** @inheritDoc */
+    /** @return array<int, string> */
     public function map($row): array
     {
+        $department = $row->department === $row->program
+            ? $row->department
+            : "{$row->department} ({$row->program})";
+
+        $scores = json_decode($row->scores);
+
         return [
             $row->id,
             "{$row->last_name} {$row->first_name} {$row->other_names}",
             $row->registration_number,
-            json_decode($row->scores)->in_course,
-            json_decode($row->scores)->exam,
+            $scores->in_course,
+            $scores->exam,
             $row->total_score,
             $row->grade,
             $row->course_code,
             $row->course_title,
-            $row->department,
+            $department,
             $row->examiner,
             $row->exam_date,
         ];
     }
 
-    /** @inheritDoc */
-    public function columnFormats(): array
-    {
-        return [
-            'D' => NumberFormat::FORMAT_NUMBER,
-            'E' => NumberFormat::FORMAT_NUMBER,
-            'F' => NumberFormat::FORMAT_NUMBER,
-            'L' => NumberFormat::FORMAT_TEXT,
-        ];
-    }
-
-    public function styles(Worksheet $sheet): array
-    {
-        return [1 => ['font' => ['bold' => true]]];
-    }
-
-    /** @inheritDoc */
+    /** @return array<string, \Closure> */
     public function registerEvents(): array
     {
         return [
-            AfterSheet::class => function (AfterSheet $event) {
+            AfterSheet::class => function (AfterSheet $event): void {
                 $sheet = $event->getSheet();
+
+                $sheet->getStyle('A1:L1')->getFont()->setBold(true);
 
                 $sheet->formatColumn('D', '00');
                 $sheet->formatColumn('E', '00');
                 $sheet->formatColumn('F', '00');
+                $sheet->formatColumn('L', NumberFormat::FORMAT_TEXT);
             },
         ];
     }

@@ -8,6 +8,7 @@ use App\Http\Requests\Results\ResultRequest;
 use App\Models\Student;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ExportResultsByRegistrationNumberController
@@ -19,12 +20,12 @@ class ExportResultsByRegistrationNumberController
         return redirect()->back()->success("Result export for {$registrationNumber} started...");
     }
 
-    public function download(Request $request): BinaryFileResponse
+    public function download(Request $request): Response|BinaryFileResponse
     {
         $registrationNumber = $request->string('registration_number')->value();
 
         $student = Student::where('registration_number', $registrationNumber)->firstOrFail();
 
-        return new ResultsExport([$student->id])->download("{$student->slug}-results.xlsx");
+        return ResultsExport::forStudents([$student->id])->download("{$student->slug}-results.xlsx");
     }
 }
