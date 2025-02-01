@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import {Head} from "@inertiajs/vue3";
-import {BreadcrumbItem, TabItem} from "@/types";
+import { Head } from "@inertiajs/vue3";
+import { BreadcrumbItem, TabItem } from "@/types";
 import RegistrationNumber from "@/pages/export/results/tabs/registrationNumber.vue";
 import BaseTabPanel from "@/components/tabs/baseTabPanel.vue";
 import DepartmentEntrySession from "@/pages/export/results/tabs/departmentEntrySession.vue";
@@ -19,37 +19,34 @@ defineProps<{
 const pages: BreadcrumbItem[] = [
   {
     name: "Results Export",
-    href: route("export.results.page", {selectedIndex: 0}),
+    href: route("export.results.page", { selectedIndex: 0 }),
     current: route().current("export.results.page"),
   },
 ];
 
-const tabs: TabItem[] = [
-  {name: "By Registration Number"},
-  {name: "By Dept and Entry Session"},
-];
+const tabs: TabItem[] = [{ name: "By Registration Number" }, { name: "By Dept and Entry Session" }];
 </script>
 
 <template>
-  <Head title="Export Result Records"/>
+  <Head title="Export Result Records" />
 
-  <Breadcrumb :pages="pages"/>
+  <Breadcrumb :pages="pages" />
 
   <BaseHeader>Export Result Records</BaseHeader>
 
   <BasePage>
     <BaseSection>
       <BaseTabs
-          :selectedIndex="selectedIndex"
-          :tabs="tabs">
+        :selectedIndex="selectedIndex"
+        :tabs="tabs">
         <BaseTabPanel>
-          <RegistrationNumber/>
+          <RegistrationNumber />
         </BaseTabPanel>
 
         <BaseTabPanel>
           <DepartmentEntrySession
-              :departments="departments.data"
-              :sessions="sessions.sessions"/>
+            :departments="departments.data"
+            :sessions="sessions.sessions" />
         </BaseTabPanel>
       </BaseTabs>
     </BaseSection>

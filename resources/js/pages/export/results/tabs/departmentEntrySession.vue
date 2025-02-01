@@ -2,9 +2,9 @@
 import InputLabel from "@/components/inputs/inputLabel.vue";
 import PrimaryButton from "@/components/buttons/primaryButton.vue";
 import InputError from "@/components/inputs/inputError.vue";
-import {useForm} from "@inertiajs/vue3";
+import { useForm } from "@inertiajs/vue3";
 import SelectInput from "@/components/inputs/selectInput.vue";
-import {SelectItem} from "@/types";
+import { SelectItem } from "@/types";
 import BaseFormSection from "@/components/forms/baseFormSection.vue";
 import FormGroup from "@/components/forms/formGroup.vue";
 import AlignButton from "@/components/forms/alignButton.vue";
@@ -20,61 +20,61 @@ const form = useForm({
 });
 
 const submit = () => {
-  form.post(route("export.results.department-session.store"), {onSuccess: () => download()})
+  form.post(route("export.results.department-session.store"), { onSuccess: () => download() });
 };
 
 const download = () => {
-  window.location.href = route('export.results.department-session.download', {
-    department: form.department.id,
-    session: form.session.id
-  })
-}
+  window.location.href = route("export.results.department-session.download", {
+    department: form.department,
+    session: form.session,
+  });
+};
 </script>
 
 <template>
   <BaseFormSection
-      description="Select Department and Entry Session to download results records"
-      header="Download Result Information">
+    description="Select Department and Entry Session to download results records"
+    header="Download Result Information">
     <form
-        class="mt-6 space-y-6"
-        @submit.prevent="submit">
+      class="mt-6 space-y-6"
+      @submit.prevent="submit">
       <FormGroup>
         <div class="flex-1">
           <InputLabel
-              for="department"
-              value="Department"/>
+            for="department"
+            value="Department" />
 
           <SelectInput
-              id="department"
-              v-model="form.department"
-              :items="departments"
-              class="mt-1 block w-full"/>
+            id="department"
+            v-model="form.department"
+            :items="departments"
+            class="mt-1 block w-full" />
 
           <InputError
-              :message="form.errors.department"
-              class="mt-2"/>
+            :message="form.errors.department"
+            class="mt-2" />
         </div>
 
         <div class="flex-1">
           <InputLabel
-              for="session"
-              value="Entry Session"/>
+            for="session"
+            value="Entry Session" />
 
           <SelectInput
-              id="session"
-              v-model="form.session"
-              :items="sessions"
-              class="mt-1 block w-full"/>
+            id="session"
+            v-model="form.session"
+            :items="sessions"
+            class="mt-1 block w-full" />
 
           <InputError
-              :message="form.errors.session"
-              class="mt-2"/>
+            :message="form.errors.session"
+            class="mt-2" />
         </div>
 
         <AlignButton>
           <PrimaryButton
-              :disabled="form.processing"
-              class="mt-1">
+            :disabled="form.processing"
+            class="mt-1">
             Export
           </PrimaryButton>
         </AlignButton>
