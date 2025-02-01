@@ -24,6 +24,9 @@ use App\Http\Controllers\Download\Students\DownloadStudentByRegistrationNumberCo
 use App\Http\Controllers\Download\Students\DownloadStudentsByDepartmentSessionController;
 use App\Http\Controllers\Download\Students\DownloadStudentsBySessionController;
 use App\Http\Controllers\Download\Students\DownloadStudentsPageController;
+use App\Http\Controllers\Exports\Results\ExportResultsByDepartmentSessionController;
+use App\Http\Controllers\Exports\Results\ExportResultsByRegistrationNumberController;
+use App\Http\Controllers\Exports\Results\ExportResultsPageController;
 use App\Http\Controllers\Imports\CancelImportEventController;
 use App\Http\Controllers\Imports\ContinueImportEventController;
 use App\Http\Controllers\ProfileController;
@@ -136,18 +139,36 @@ Route::middleware(['auth'])->group(static function (): void {
         Route::get('create/{student}', [VettingController::class, 'create'])->name('vetting.create');
     });
 
-    Route::post('students/{student}/clearance', [ClearanceController::class, 'store'])
-        ->name('students.clearance.store');
+    Route::prefix('department/cleared/students')->group(static function (): void {
+        Route::get('{department?}/{year?}', [DepartmentClearedController::class, 'index'])
+            ->name('department.cleared.index')
+            ->middleware([ValidateYearParameter::class]);
+        Route::post('', [DepartmentClearedController::class, 'store'])->name('department.cleared.store');
+    });
 
-    Route::get('department/cleared/students/{department?}/{year?}', [DepartmentClearedController::class, 'index'])
-        ->name('department.cleared.index')
-        ->middleware([ValidateYearParameter::class]);
-    Route::post('department/cleared/students', [DepartmentClearedController::class, 'store'])
-        ->name('department.cleared.store');
-
-    Route::get('students', [StudentController::class, 'index'])->name('students.index');
     Route::get('student/{student?}', [StudentController::class, 'show'])->name('students.show');
-    Route::post('student', [StudentController::class, 'store'])->name('students.store');
+    Route::prefix('students')->group(static function (): void {
+        Route::get('', [StudentController::class, 'index'])->name('students.index');
+        Route::post('', [StudentController::class, 'store'])->name('students.store');
+        Route::post('/{student}/clearance', [ClearanceController::class, 'store'])->name('students.clearance.store');
+    });
+
+    Route::prefix('export')->group(static function (): void {
+        Route::prefix('results')->group(static function (): void {
+            Route::get('page', ExportResultsPageController::class)->name('export.results.page');
+
+            Route::post('registration-number', [ExportResultsByRegistrationNumberController::class, 'store'])
+                ->name('export.results.registration-number.store');
+            Route::get('registration-number', [ExportResultsByRegistrationNumberController::class, 'download'])
+                ->name('export.results.registration-number.download');
+
+            Route::post('department-session', [ExportResultsByDepartmentSessionController::class, 'store'])
+                ->name('export.results.department-session.store');
+            Route::get('department/{department}/session/{session}',
+                [ExportResultsByDepartmentSessionController::class, 'download'])
+                ->name('export.results.department-session.download');
+        });
+    });
 });
 
 require __DIR__ . '/auth.php';
