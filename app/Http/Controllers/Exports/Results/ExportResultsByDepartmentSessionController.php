@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers\Exports\Results;
@@ -11,7 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class ExportResultsByDepartmentSessionController
+final class ExportResultsByDepartmentSessionController
 {
     public function store(DepartmentSessionRequest $request): RedirectResponse
     {
