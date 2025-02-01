@@ -493,6 +493,13 @@ declare namespace App.ViewModels.Downloads {
     selectedIndex: number;
   };
 }
+declare namespace App.ViewModels.Exports {
+  export type ExportResultsPage = {
+    departments: App.Data.Department.DepartmentListData;
+    sessions: App.Data.Session.SessionListData;
+    selectedIndex: number;
+  };
+}
 declare namespace App.ViewModels.Reports {
   export type ClearedIndexPageData = {
     departments: App.Data.Department.DepartmentListData;
