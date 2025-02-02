@@ -17,7 +17,6 @@ it('loads the correct component', function (): void {
 });
 
 it('redirects guest to login', function (): void {
-
     get(route('students.show'))->assertRedirect('login');
 });
 

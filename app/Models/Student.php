@@ -149,7 +149,7 @@ final class Student extends Model
             return;
         }
 
-        $this->status = $status->value;
+        $this->status = $status;
         $this->save();
     }
 

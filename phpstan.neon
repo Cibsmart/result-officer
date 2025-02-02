@@ -18,7 +18,6 @@ parameters:
         -   '#^Method App\\Models\\\w+\:\:\w+\(\) should return Illuminate\\Database\\Eloquent\\Relations\\\w+\<(?:App\\Models\\\w+(?:, )?){1,3}\> but returns Illuminate\\Database\\Eloquent\\Relations\\\w+\<(?:App\\Models\\\w+(?:, )?){1,2}\$this\(App\\Models\\\w+\)\>\.$#'
         -   '#^Method App\\Models\\\w+\:\:\w+\(\) should return Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\\w+\> but returns Illuminate\\Database\\Eloquent\\Collection\<int, \$this\(App\\Models\\\w+\)\>\.$#'
         -   '#^Method App\\Models\\\w+\:\:\w+\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasManyThrough\<App\\Models\\\w+, Illuminate\\Database\\Eloquent\\Model, App\\Models\\\w+\> but returns Illuminate\\Database\\Eloquent\\Relations\\HasManyThrough\<Illuminate\\Database\\Eloquent\\Model, Illuminate\\Database\\Eloquent\\Model, \$this\(App\\Models\\\w+\)\>\|Illuminate\\Database\\Eloquent\\Relations\\HasOneThrough\<Illuminate\\Database\\Eloquent\\Model, Illuminate\\Database\\Eloquent\\Model, \$this\(App\\Models\\\w+\)\>\.$#'
-        -   '#^Property App\\Models\\\w+\:\:\$\w+ \(string\) does not accept array\<string, string\>\.$#'
         -   '#^Property App\\Models\\\w+\:\:\$\w+ \(string\|null\) does not accept Carbon\\Carbon\|null\.$#'
         -   '#^Property App\\Models\\\w+\:\:\$\w+ \(string\) does not accept App\\Enums\\\w+\.$#'
 

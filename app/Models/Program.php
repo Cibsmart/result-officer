@@ -119,7 +119,7 @@ final class Program extends Model
         $program->code = $programCode;
         $program->department_id = $department->id;
         $program->program_type_id = 5;
-        $program->duration = ProgramDuration::FOUR->value;
+        $program->duration = ProgramDuration::FOUR;
         $program->slug = Str::slug($programCode);
         $program->save();
     }

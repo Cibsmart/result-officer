@@ -11,7 +11,6 @@ use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
 
 it('redirects guest to login', function (): void {
-
     get(route('students.index'))->assertRedirect('login');
 });
 

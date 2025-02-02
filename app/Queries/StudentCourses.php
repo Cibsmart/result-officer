@@ -34,6 +34,7 @@ final class StudentCourses
             )
             ->where('students.id', $student->id)
             ->whereNull('students.deleted_at')
+            ->whereNull('registrations.deleted_at')
             ->orderBy('academic_sessions.name')
             ->orderBy('semesters.name')
             ->orderBy('courses.code');

@@ -66,7 +66,7 @@ const navigation: NavigationItem[] = [
     children: [
       { name: "View", href: route("results.form"), current: route().current("results.form") },
       { name: "Summary", href: route("summary.form"), current: route().current("summary.form") },
-      { name: "Transcript", href: route("results.form"), current: route().current("results.form") },
+      { name: "Export", href: route("export.results.page"), current: route().current("export.results.page") },
     ],
   },
   {
