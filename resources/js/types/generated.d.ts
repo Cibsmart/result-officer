@@ -359,7 +359,8 @@ declare namespace App.Data.Summary {
   };
   export type StudentResultSummaryData = {
     student: App.Data.Students.StudentBasicData;
-    fcgpa: number;
+    fcgpa: string;
+    resultsCount: number;
   };
 }
 declare namespace App.Data.Vetting {

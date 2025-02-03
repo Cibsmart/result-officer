@@ -13,15 +13,19 @@ final class StudentResultSummaryData extends Data
 {
     public function __construct(
         public readonly StudentBasicData $student,
-        public readonly float $fcgpa,
+        public readonly string $fcgpa,
+        public readonly int $resultsCount,
     ) {
     }
 
     public static function fromModel(Student $student): self
     {
+        $studentResultData = StudentResultData::from($student);
+
         return new self(
             student: StudentBasicData::fromModel($student),
-            fcgpa: StudentResultData::from($student)->finalCumulativeGradePointAverage,
+            fcgpa: $studentResultData->formattedFCGPA,
+            resultsCount: $studentResultData->resultsCount,
         );
     }
 }
