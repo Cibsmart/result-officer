@@ -23,6 +23,7 @@ final class SemesterResultData extends Data
         public readonly string $formattedCreditUnitTotal,
         public readonly string $formattedGradePointTotal,
         public readonly string $formattedGPA,
+        public readonly int $resultsCount,
     ) {
     }
 
@@ -51,6 +52,7 @@ final class SemesterResultData extends Data
             formattedCreditUnitTotal: Str::of((string) $totalCreditUnit)->padLeft(2, '0')->value(),
             formattedGradePointTotal: Str::of((string) $totalGradePoint)->padLeft(2, '0')->value(),
             formattedGPA: number_format($gpa, 3),
+            resultsCount: $resultData->count(),
         );
     }
 }

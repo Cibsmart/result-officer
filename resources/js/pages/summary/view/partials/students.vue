@@ -30,6 +30,12 @@ defineProps<{
           <th
             class="px-3 py-2 text-center text-sm font-semibold text-gray-900 dark:text-white"
             scope="col">
+            No. of Results
+          </th>
+
+          <th
+            class="px-3 py-2 text-center text-sm font-semibold text-gray-900 dark:text-white"
+            scope="col">
             CGPA
           </th>
         </tr>
@@ -50,6 +56,11 @@ defineProps<{
 
           <td class="relative border-t border-gray-200 py-2 pr-3 pl-4 text-sm sm:pl-6 dark:border-gray-700">
             {{ student.student.registrationNumber }}
+          </td>
+
+          <td
+            class="border-t border-gray-200 px-3 py-2 text-center text-sm text-gray-700 dark:border-gray-700 dark:text-gray-300">
+            {{ student.resultsCount }}
           </td>
 
           <td

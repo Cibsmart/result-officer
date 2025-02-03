@@ -247,6 +247,7 @@ declare namespace App.Data.Results {
     formattedCreditUnitTotal: string;
     formattedGradePointTotal: string;
     formattedGPA: string;
+    resultsCount: number;
   };
   export type SessionResultData = {
     id: number;
@@ -255,6 +256,7 @@ declare namespace App.Data.Results {
     year: string;
     cumulativeGradePointAverage: number;
     formattedCGPA: string;
+    resultsCount: number;
   };
   export type StudentResultData = {
     id: number;
@@ -264,6 +266,7 @@ declare namespace App.Data.Results {
     degreeClass: string;
     degreeAwarded: string;
     graduationYear: number;
+    resultsCount: number;
   };
   export type TranscriptData = {
     recordsUnitHead: string;
@@ -356,7 +359,8 @@ declare namespace App.Data.Summary {
   };
   export type StudentResultSummaryData = {
     student: App.Data.Students.StudentBasicData;
-    fcgpa: number;
+    fcgpa: string;
+    resultsCount: number;
   };
 }
 declare namespace App.Data.Vetting {
