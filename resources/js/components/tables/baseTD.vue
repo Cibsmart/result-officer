@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import {computed} from "vue";
+import { computed } from "vue";
 
 const props = withDefaults(
-    defineProps<{
-      position?: "center" | "right" | "left";
-      mobile?: true | false;
-    }>(),
-    {
-      position: "center",
-      mobile: false,
-    },
+  defineProps<{
+    position?: "center" | "right" | "left";
+    mobile?: true | false;
+  }>(),
+  {
+    position: "center",
+    mobile: false,
+  },
 );
 
 const textPosition = computed(() => {
@@ -23,8 +23,8 @@ const textPosition = computed(() => {
 
 <template>
   <td
-      :class="[mobile ? '' : 'hidden', textPosition]"
-      class="relative border-t border-gray-200 py-2 text-sm lg:table-cell dark:border-gray-700">
-    <slot/>
+    :class="[mobile ? '' : 'hidden', textPosition]"
+    class="relative border-t border-gray-200 py-2 text-sm lg:table-cell dark:border-gray-700">
+    <slot />
   </td>
 </template>

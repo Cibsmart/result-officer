@@ -19,7 +19,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 
 use function assert;
-use function Illuminate\Support\defer as defer;
+use function Illuminate\Support\defer;
 
 final class VettingController
 {
