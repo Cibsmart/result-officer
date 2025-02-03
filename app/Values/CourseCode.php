@@ -14,7 +14,7 @@ final readonly class CourseCode
     {
         $codes = Str::of($this->value)->explode('/');
 
-        if (!$this->matchCodes($codes)) {
+        if (! $this->matchCodes($codes)) {
             throw new InvalidArgumentException('Invalid course code');
         }
     }
