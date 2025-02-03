@@ -28,57 +28,57 @@ const form = useForm({
     </header>
 
     <form
-        class="mt-6 space-y-6"
-        @submit.prevent="form.patch(route('profile.update'))">
+      class="mt-6 space-y-6"
+      @submit.prevent="form.patch(route('profile.update'))">
       <div>
         <InputLabel
-            for="name"
-            value="Name"/>
+          for="name"
+          value="Name" />
 
         <TextInput
-            id="name"
-            v-model="form.name"
-            autocomplete="name"
-            autofocus
-            class="mt-1 block w-full"
-            disabled
-            required
-            type="text"/>
+          id="name"
+          v-model="form.name"
+          autocomplete="name"
+          autofocus
+          class="mt-1 block w-full"
+          disabled
+          required
+          type="text" />
 
         <InputError
-            :message="form.errors.name"
-            class="mt-2"/>
+          :message="form.errors.name"
+          class="mt-2" />
       </div>
 
       <div>
         <InputLabel
-            for="email"
-            value="Email"/>
+          for="email"
+          value="Email" />
 
         <TextInput
-            id="email"
-            v-model="form.email"
-            autocomplete="username"
-            class="mt-1 block w-full"
-            required
-            type="email"/>
+          id="email"
+          v-model="form.email"
+          autocomplete="username"
+          class="mt-1 block w-full"
+          required
+          type="email" />
 
         <InputError
-            :message="form.errors.email"
-            class="mt-2"/>
+          :message="form.errors.email"
+          class="mt-2" />
       </div>
 
       <div class="flex items-center gap-4">
         <PrimaryButton :disabled="form.processing"> Save</PrimaryButton>
 
         <Transition
-            enter-active-class="transition ease-in-out"
-            enter-from-class="opacity-0"
-            leave-active-class="transition ease-in-out"
-            leave-to-class="opacity-0">
+          enter-active-class="transition ease-in-out"
+          enter-from-class="opacity-0"
+          leave-active-class="transition ease-in-out"
+          leave-to-class="opacity-0">
           <p
-              v-if="form.recentlySuccessful"
-              class="text-sm text-gray-600 dark:text-gray-400">
+            v-if="form.recentlySuccessful"
+            class="text-sm text-gray-600 dark:text-gray-400">
             Saved.
           </p>
         </Transition>
