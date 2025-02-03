@@ -23,9 +23,16 @@ final readonly class ProfileController
 
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        $email = $request->user()->email;
+
         $request->user()->fill($request->validated());
 
         if ($request->user()->isDirty('email')) {
+            activity()
+                ->causedBy($request->user())
+                ->withProperties(['former_email' => $email])
+                ->log('updated email');
+
             $request->user()->email_verified_at = null;
         }
 
