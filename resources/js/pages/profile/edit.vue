@@ -40,8 +40,8 @@ const pages: BreadcrumbItem[] = [
       <UpdatePasswordForm class="max-w-xl" />
     </BaseSection>
 
-    <BaseSection>
-      <DeleteUserForm class="max-w-xl" />
-    </BaseSection>
+    <!--    <BaseSection>-->
+    <!--      <DeleteUserForm class="max-w-xl" />-->
+    <!--    </BaseSection>-->
   </BasePage>
 </template>

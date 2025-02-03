@@ -39,18 +39,18 @@ final readonly class ProfileController
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $request->validate([
-            'password' => ['required', 'current_password'],
-        ]);
+        $request->validate(['password' => ['required', 'current_password']]);
 
-        $user = $request->user();
+        activity()
+            ->causedBy($request->user())
+            ->log('attempted to delete account');
 
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+//        Auth::logout();
+//
+//        $user->delete();
+//
+//        $request->session()->invalidate();
+//        $request->session()->regenerateToken();
 
         return Redirect::to('/');
     }
