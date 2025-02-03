@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Values;
@@ -9,10 +10,6 @@ use InvalidArgumentException;
 
 final readonly class CourseCode
 {
-
-    /**
-     * @param string $string
-     */
     public function __construct(public string $value)
     {
         $codes = Str::of($this->value)->explode('/');
@@ -20,10 +17,6 @@ final readonly class CourseCode
         if (!$this->matchCodes($codes)) {
             throw new InvalidArgumentException('Invalid course code');
         }
-
-//        if (!$this->matches(Str::trim($this->value))) {
-//            throw new InvalidArgumentException('Invalid course code');
-//        }
     }
 
     public static function new(string $code): self
@@ -31,7 +24,7 @@ final readonly class CourseCode
         return new self(Str::of($code)->trim()->upper()->value());
     }
 
-    /** @param Collection<int, string> $codes */
+    /** @param \Illuminate\Support\Collection<int, string> $codes */
     private function matchCodes(Collection $codes): bool
     {
         $passed = true;
@@ -43,7 +36,7 @@ final readonly class CourseCode
         return $passed;
     }
 
-    private function matches($code): bool
+    private function matches(string $code): bool
     {
         $cleanCode = $this->getCleanCode($code);
 
