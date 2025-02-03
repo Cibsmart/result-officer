@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed } from "vue";
+import {computed} from "vue";
 import PrimaryLinkSmall from "@/components/links/primaryLinkSmall.vue";
 import Badge from "@/components/badge.vue";
 import SecondaryButtonSmall from "@/components/buttons/secondaryButtonSmall.vue";
@@ -24,38 +24,38 @@ const vetted = computed(() => props.student.vettingStatus !== "pending");
   <BaseTD>{{ index + 1 }}</BaseTD>
 
   <BaseTD
-    mobile
-    position="left">
+      mobile
+      position="left">
     {{ student.name }}
   </BaseTD>
 
-  <BaseTD>{{ student.registrationNumber }}</BaseTD>
+  <BaseTD position="left">{{ student.registrationNumber }}</BaseTD>
 
-  <BaseTD>
+  <BaseTD position="left">
     <Badge :color="student.vettingStatusColor">{{ student.vettingStatus }}</Badge>
   </BaseTD>
 
-  <BaseTD mobile>
+  <BaseTD mobile position="left">
     <SecondaryButtonSmall
-      v-if="vetted"
-      @click="$emit('showReport', student)">
+        v-if="vetted"
+        @click="$emit('showReport', student)">
       view
     </SecondaryButtonSmall>
 
     <span v-else>N/A</span>
   </BaseTD>
 
-  <BaseTD mobile>
+  <BaseTD mobile position="left">
     <PrimaryButtonSmall
-      v-if="passed"
-      @click="$emit('showClearance', student)">
+        v-if="passed"
+        @click="$emit('showClearance', student)">
       clear
     </PrimaryButtonSmall>
 
     <PrimaryLinkSmall
-      v-else
-      :href="route('vetting.create', { student: student })">
-      vet
+        v-else
+        :href="route('vetting.create', { student: student })">
+      {{ vetted ? 're-vet' : 'vet' }}
     </PrimaryLinkSmall>
   </BaseTD>
 </template>
