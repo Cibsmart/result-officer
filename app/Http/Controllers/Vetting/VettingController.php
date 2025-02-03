@@ -19,6 +19,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 
 use function assert;
+use function Illuminate\Support\defer as defer;
 
 final class VettingController
 {
@@ -43,7 +44,7 @@ final class VettingController
 
         $vettingEvent = VettingEvent::getOrCreateUsingStudent($student, $user);
 
-        Artisan::queue('rp:vet', ['vettingEventId' => $vettingEvent->id]);
+        defer(fn () => Artisan::call('rp:vet', ['vettingEventId' => $vettingEvent->id]));
 
         return redirect()->back()->success("Vetting Started for {$student->registration_number}");
     }
