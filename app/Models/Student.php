@@ -220,7 +220,7 @@ final class Student extends Model
     protected function name(): Attribute
     {
         return Attribute::make(
-            /** @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter */
+        /** @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter */
             get: fn (
                 ?string $value,
                 array $attributes,
@@ -252,14 +252,6 @@ final class Student extends Model
     protected function email(): Attribute
     {
         return Attribute::make(set: static fn (string $value): string => strtolower($value));
-    }
-
-    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
-    protected function localGovernment(): Attribute
-    {
-        return Attribute::make(
-            set: static fn (string $value): string => strtoupper($value),
-        );
     }
 
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<int, float> */
