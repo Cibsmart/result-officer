@@ -13,7 +13,8 @@ test('view result form loads', function (): void {
 
     $fcpga = computeFCGPA($student);
     $degreeClass = ClassOfDegree::for($fcpga);
-    $summary = "CURRENT FINAL CGPA: $fcpga ($degreeClass->value)";
+    $formattedFCGPA = number_format($fcpga, 2);
+    $summary = "CURRENT FINAL CGPA: $formattedFCGPA ($degreeClass->value)";
 
     actingAs($user)
         ->get(route('results.print', ['student' => $student]))

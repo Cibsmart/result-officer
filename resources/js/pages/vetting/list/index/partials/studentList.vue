@@ -85,13 +85,17 @@ const clearStudent = () => {
               NAME
             </BaseTH>
 
-            <BaseTH> REGISTRATION NUMBER</BaseTH>
+            <BaseTH position="left"> REGISTRATION NUMBER</BaseTH>
 
-            <BaseTH> STATUS</BaseTH>
+            <BaseTH position="left"> STATUS</BaseTH>
 
-            <BaseTH> REPORT</BaseTH>
+            <BaseTH position="left"> REPORT</BaseTH>
 
-            <BaseTH mobile> ACTIONS</BaseTH>
+            <BaseTH
+              mobile
+              position="left">
+              ACTIONS</BaseTH
+            >
           </BaseTHead>
 
           <BaseTBody>

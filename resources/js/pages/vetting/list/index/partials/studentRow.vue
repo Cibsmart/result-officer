@@ -29,13 +29,15 @@ const vetted = computed(() => props.student.vettingStatus !== "pending");
     {{ student.name }}
   </BaseTD>
 
-  <BaseTD>{{ student.registrationNumber }}</BaseTD>
+  <BaseTD position="left">{{ student.registrationNumber }}</BaseTD>
 
-  <BaseTD>
+  <BaseTD position="left">
     <Badge :color="student.vettingStatusColor">{{ student.vettingStatus }}</Badge>
   </BaseTD>
 
-  <BaseTD mobile>
+  <BaseTD
+    mobile
+    position="left">
     <SecondaryButtonSmall
       v-if="vetted"
       @click="$emit('showReport', student)">
@@ -45,7 +47,9 @@ const vetted = computed(() => props.student.vettingStatus !== "pending");
     <span v-else>N/A</span>
   </BaseTD>
 
-  <BaseTD mobile>
+  <BaseTD
+    mobile
+    position="left">
     <PrimaryButtonSmall
       v-if="passed"
       @click="$emit('showClearance', student)">
@@ -55,7 +59,7 @@ const vetted = computed(() => props.student.vettingStatus !== "pending");
     <PrimaryLinkSmall
       v-else
       :href="route('vetting.create', { student: student })">
-      vet
+      {{ vetted ? "re-vet" : "vet" }}
     </PrimaryLinkSmall>
   </BaseTD>
 </template>
