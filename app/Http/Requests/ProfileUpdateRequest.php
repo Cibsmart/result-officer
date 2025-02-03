@@ -21,7 +21,7 @@ final class ProfileUpdateRequest extends FormRequest
                 'required', 'string', 'lowercase', 'email', 'max:255', "ends_with:@{$domain}",
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
-//            'name' => ['required', 'string', 'max:255'],
+            //            'name' => ['required', 'string', 'max:255'],
         ];
     }
 }
