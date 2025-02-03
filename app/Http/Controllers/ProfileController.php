@@ -7,7 +7,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -23,9 +22,16 @@ final readonly class ProfileController
 
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        $email = $request->user()->email;
+
         $request->user()->fill($request->validated());
 
         if ($request->user()->isDirty('email')) {
+            activity()
+                ->causedBy($request->user())
+                ->withProperties(['former_email' => $email])
+                ->log('updated email');
+
             $request->user()->email_verified_at = null;
         }
 
@@ -39,18 +45,18 @@ final readonly class ProfileController
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $request->validate([
-            'password' => ['required', 'current_password'],
-        ]);
+        $request->validate(['password' => ['required', 'current_password']]);
 
-        $user = $request->user();
+        activity()
+            ->causedBy($request->user())
+            ->log('attempted to delete account');
 
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+//        Auth::logout();
+//
+//        $user->delete();
+//
+//        $request->session()->invalidate();
+//        $request->session()->regenerateToken();
 
         return Redirect::to('/');
     }

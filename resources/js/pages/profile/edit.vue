@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import DeleteUserForm from "@/pages/profile/partials/deleteUserForm.vue";
 import UpdatePasswordForm from "@/pages/profile/partials/updatePasswordForm.vue";
 import UpdateProfileInformationForm from "@/pages/profile/partials/updateProfileInformationForm.vue";
 import { Head } from "@inertiajs/vue3";
@@ -40,8 +39,8 @@ const pages: BreadcrumbItem[] = [
       <UpdatePasswordForm class="max-w-xl" />
     </BaseSection>
 
-    <BaseSection>
-      <DeleteUserForm class="max-w-xl" />
-    </BaseSection>
+    <!--    <BaseSection>-->
+    <!--      <DeleteUserForm class="max-w-xl" />-->
+    <!--    </BaseSection>-->
   </BasePage>
 </template>

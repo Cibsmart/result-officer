@@ -254,14 +254,6 @@ final class Student extends Model
         return Attribute::make(set: static fn (string $value): string => strtolower($value));
     }
 
-    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
-    protected function localGovernment(): Attribute
-    {
-        return Attribute::make(
-            set: static fn (string $value): string => strtoupper($value),
-        );
-    }
-
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<int, float> */
     protected function cgpas(): Attribute
     {

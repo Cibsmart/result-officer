@@ -41,6 +41,7 @@ const form = useForm({
           autocomplete="name"
           autofocus
           class="mt-1 block w-full"
+          disabled
           required
           type="text" />
 
