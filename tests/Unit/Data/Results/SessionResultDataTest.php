@@ -93,3 +93,29 @@ test('session enrollment without semester enrollments returns zeroes', function 
         ->and($sessionData->formattedCGPA)->toBe('0.000')->toBeString();
 
 });
+
+it('student without enrollment returns zero sessional results count', function (): void {
+    $sessionEnrollment = SessionEnrollmentFactory::new()->createOne();
+
+    $sessionData = SessionResultData::from($sessionEnrollment);
+
+    expect($sessionData->resultsCount)->toBe(0);
+});
+
+it('returns students sessional results count', function (): void {
+    $student = StudentFactory::new()->createOne();
+
+    $sessionEnrollment = SessionEnrollmentFactory::new(['student_id' => $student->id])
+        ->has(SemesterEnrollmentFactory::new()
+            ->has(RegistrationFactory::new()
+                ->has(ResultFactory::new())
+                ->count(5),
+                'registrations')
+            ->count(2),
+            'semesterEnrollments')
+        ->createOne();
+
+    $sessionData = SessionResultData::from($sessionEnrollment);
+
+    expect($sessionData->resultsCount)->toBe($sessionEnrollment->registrations->count());
+});

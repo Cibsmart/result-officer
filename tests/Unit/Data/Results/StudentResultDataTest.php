@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Data\Results\StudentResultData;
 use App\Enums\ClassOfDegree;
+use App\Models\Registration;
 use Tests\Factories\StudentFactory;
 
 test('student result data is correct', function (): void {
@@ -36,4 +37,20 @@ test('student without enrollment return an empty state with zero fcgpa', functio
         ->and($resultData->sessionEnrollments->count())->toBe($student->sessionEnrollments->count())
         ->and($resultData->finalCumulativeGradePointAverage)->toBe(0.0)
         ->and($resultData->graduationYear)->toBe(0);
+});
+
+it('student without enrollment returns zero results count', function (): void {
+    $student = StudentFactory::new()->create();
+
+    $resultData = StudentResultData::from($student);
+
+    expect($resultData->resultsCount)->toBe(0);
+});
+
+it('returns the number of results a student has', function (): void {
+    $student = createStudentWithResults();
+
+    $resultData = StudentResultData::from($student);
+
+    expect($resultData->resultsCount)->toBe(Registration::count());
 });

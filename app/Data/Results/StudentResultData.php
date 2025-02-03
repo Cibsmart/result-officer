@@ -22,6 +22,7 @@ final class StudentResultData extends Data
         public readonly string $degreeClass,
         public readonly string $degreeAwarded,
         public readonly int $graduationYear,
+        public readonly int $resultsCount,
     ) {
     }
 
@@ -54,6 +55,7 @@ final class StudentResultData extends Data
             degreeClass: $degreeClass->value,
             degreeAwarded: "$programType->name ($programType->code)",
             graduationYear: $graduationYear,
+            resultsCount: $sessionEnrollments->sum('resultsCount'),
         );
     }
 }

@@ -51,3 +51,23 @@ test('semester enrollment without result data returns zeroes', function (): void
         ->and($semesterData->gradePointAverage)->toBe(0.000)->toBeFloat()
         ->and($semesterData->formattedGPA)->toBeString('0.000');
 });
+
+it('student without enrollment returns zero semester results count', function (): void {
+    $semesterEnrollment = SemesterEnrollmentFactory::new()->create();
+
+    $semesterData = SemesterResultData::from($semesterEnrollment);
+
+    expect($semesterData->resultsCount)->toBe(0);
+});
+
+it('returns students semester results count', function (): void {
+    $semesterEnrollment = SemesterEnrollmentFactory::new()
+        ->has(RegistrationFactory::new()
+            ->has(ResultFactory::new())
+            ->count(5), 'registrations')
+        ->create();
+
+    $semesterData = SemesterResultData::from($semesterEnrollment);
+
+    expect($semesterData->resultsCount)->toBe($semesterEnrollment->registrations->count());
+});

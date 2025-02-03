@@ -19,29 +19,31 @@ final class SessionResultData extends Data
         public readonly string $year,
         public readonly float $cumulativeGradePointAverage,
         public readonly string $formattedCGPA,
+        public readonly int $resultsCount,
     ) {
     }
 
     public static function fromModel(SessionEnrollment $sessionEnrollment): self
     {
-        $semesterData = SemesterResultData::collect(
+        $semesterEnrollments = SemesterResultData::collect(
             $sessionEnrollment->semesterEnrollments()->with('semester')->get(),
         );
 
         $cumulativeGradePointAverage = ComputeAverage::new(
-            $semesterData->sum('gradePointAverage'),
-            $semesterData->count(),
+            $semesterEnrollments->sum('gradePointAverage'),
+            $semesterEnrollments->count(),
         )->value();
 
         $formattedCGPA = number_format($cumulativeGradePointAverage, 3);
 
         return new self(
             id: $sessionEnrollment->id,
-            semesterResults: $semesterData,
+            semesterResults: $semesterEnrollments,
             session: $sessionEnrollment->session->name,
             year: $sessionEnrollment->year->name,
             cumulativeGradePointAverage: $cumulativeGradePointAverage,
             formattedCGPA: $formattedCGPA,
+            resultsCount: $semesterEnrollments->sum('resultsCount'),
         );
     }
 }
