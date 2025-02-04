@@ -28,7 +28,7 @@ it('checks students semester credit unit within credit limit with passed status'
         ->has(SessionEnrollmentFactory::new()
             ->has(SemesterEnrollmentFactory::new()->count(2)->state(new Sequence(
                 ['semester_id' => $firstSemester->id],
-                ['semester_id' => $secondSemester->id],))
+                ['semester_id' => $secondSemester->id], ))
                 ->has(RegistrationFactory::new()->count(8)->state(['credit_unit' => 3])),
             ),
         )->createOne();
@@ -59,8 +59,8 @@ it('checks students semester results below minimum credit limit with failed stat
         ->has(SessionEnrollmentFactory::new()
             ->has(SemesterEnrollmentFactory::new()->count(2)
                 ->state(new Sequence(
-                    ['semester_id' => $firstSemester->id, 'program_curriculum_semester_id' => $firstProgram->id,],
-                    ['semester_id' => $secondSemester->id, 'program_curriculum_semester_id' => $secondProgram->id,],
+                    ['semester_id' => $firstSemester->id, 'program_curriculum_semester_id' => $firstProgram->id],
+                    ['semester_id' => $secondSemester->id, 'program_curriculum_semester_id' => $secondProgram->id],
                 ))
                 ->has(RegistrationFactory::new()->count(9)->state(['credit_unit' => 3])),
             ),

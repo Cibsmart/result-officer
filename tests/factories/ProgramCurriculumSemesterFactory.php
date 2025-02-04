@@ -19,10 +19,10 @@ final class ProgramCurriculumSemesterFactory extends Factory
     public function definition(): array
     {
         return [
+            'maximum_credit_units' => CreditUnit::TWENTYFOUR->value,
+            'minimum_credit_units' => CreditUnit::FIFTEEN->value,
             'program_curriculum_level_id' => ProgramCurriculumLevelFactory::new(),
             'semester_id' => SemesterFactory::new(),
-            'minimum_credit_units' => CreditUnit::FIFTEEN->value,
-            'maximum_credit_units' => CreditUnit::TWENTYFOUR->value,
         ];
     }
 }

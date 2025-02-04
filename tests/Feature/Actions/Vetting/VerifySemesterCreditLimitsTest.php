@@ -27,7 +27,7 @@ it('checks and reports passed for student credit unit within limit', function ()
         ->has(SessionEnrollmentFactory::new()
             ->has(SemesterEnrollmentFactory::new()->count(2)->state(new Sequence(
                 ['semester_id' => $firstSemester->id],
-                ['semester_id' => $secondSemester->id],))
+                ['semester_id' => $secondSemester->id], ))
                 ->has(RegistrationFactory::new()->count(8)->state(['credit_unit' => 3])),
             ),
         )->has(VettingEventFactory::new())->createOne();
