@@ -53,6 +53,12 @@ final class SemesterEnrollment extends Model
         return $this->hasMany(Registration::class);
     }
 
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumSemester, \App\Models\SemesterEnrollment> */
+    public function programCurriculumSemester(): BelongsTo
+    {
+        return $this->belongsTo(ProgramCurriculumSemester::class);
+    }
+
     public function courseCount(): int
     {
         return $this->registrations->count();
