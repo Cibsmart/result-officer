@@ -29,6 +29,7 @@ use App\Services\Vetting\Steps\CheckResultsValidityStep;
 use App\Services\Vetting\Steps\CheckSemesterCreditLimitsStep;
 use App\Services\Vetting\Steps\CheckStudyYearStep;
 use App\Services\Vetting\Steps\MatchCurriculumCoursesStep;
+use App\Services\Vetting\Steps\MatchCurriculumSemestersStep;
 use App\Services\Vetting\Vetting;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -52,6 +53,7 @@ final class AppServiceProvider extends ServiceProvider
             $steps = [
                 VettingType::ORGANIZE_STUDY_YEAR->value => $app->make(CheckStudyYearStep::class),
                 VettingType::VALIDATE_RESULTS->value => $app->make(CheckResultsValidityStep::class),
+                VettingType::MATCH_SEMESTERS->value => $app->make(MatchCurriculumSemestersStep::class),
                 VettingType::CHECK_SEMESTER_CREDIT_LOADS->value => $app->make(CheckSemesterCreditLimitsStep::class),
                 VettingType::MATCH_COURSES->value => $app->make(MatchCurriculumCoursesStep::class),
                 VettingType::CHECK_CREDIT_UNITS->value => $app->make(CheckCreditUnitsStep::class),
