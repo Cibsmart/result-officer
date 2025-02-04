@@ -8,6 +8,7 @@ enum VettingType: string
 {
     case ORGANIZE_STUDY_YEAR = 'organize_year';
     case VALIDATE_RESULTS = 'validate_result';
+    case MATCH_SEMESTERS = 'match_semesters';
     case CHECK_SEMESTER_CREDIT_LOADS = 'semester_credit';
     case MATCH_COURSES = 'match_courses';
     case CHECK_CREDIT_UNITS = 'credit_units';
@@ -21,6 +22,7 @@ enum VettingType: string
         return match ($this) {
             self::ORGANIZE_STUDY_YEAR => $this->getOrganizeStudyYearMessage($status),
             self::VALIDATE_RESULTS => $this->getValidateResultMessage($status),
+            self::MATCH_SEMESTERS => $this->getMatchSemesterMessage($status),
             self::CHECK_SEMESTER_CREDIT_LOADS => $this->getSemesterLoadCheckMessage($status),
             self::MATCH_COURSES => $this->getMatchCourseMessage($status),
             self::CHECK_FIRST_YEAR_COURSES => $this->getFirstYearCheckMessage($status),
@@ -47,6 +49,16 @@ enum VettingType: string
             VettingStatus::PASSED => 'Results are valid',
             VettingStatus::FAILED => 'The following results are invalid:',
             VettingStatus::UNCHECKED => 'Results not found',
+            default => 'pending',
+        };
+    }
+
+    private function getMatchSemesterMessage(VettingStatus $status): string
+    {
+        return match ($status) {
+            VettingStatus::PASSED => 'Semester matches a semester in the curriculum',
+            VettingStatus::FAILED => 'The following semesters do not match any curriculum semester:',
+            VettingStatus::UNCHECKED => 'Curriculum not found',
             default => 'pending',
         };
     }
