@@ -7,6 +7,7 @@ use App\Enums\VettingStatus;
 use App\Enums\VettingType;
 use App\Services\Vetting\Steps\CheckSemesterCreditLimitsStep;
 use Illuminate\Database\Eloquent\Factories\Sequence;
+use Tests\Factories\ProgramCurriculumSemesterFactory;
 use Tests\Factories\RegistrationFactory;
 use Tests\Factories\SemesterEnrollmentFactory;
 use Tests\Factories\SemesterFactory;
@@ -27,7 +28,7 @@ it('checks students semester credit unit within credit limit with passed status'
         ->has(SessionEnrollmentFactory::new()
             ->has(SemesterEnrollmentFactory::new()->count(2)->state(new Sequence(
                 ['semester_id' => $firstSemester->id],
-                ['semester_id' => $secondSemester->id], ))
+                ['semester_id' => $secondSemester->id],))
                 ->has(RegistrationFactory::new()->count(8)->state(['credit_unit' => 3])),
             ),
         )->createOne();
@@ -51,12 +52,16 @@ it('checks students semester credit unit within credit limit with passed status'
 it('checks students semester results below minimum credit limit with failed status', function (): void {
     $firstSemester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
     $secondSemester = SemesterFactory::new(['name' => 'SECOND'])->createOne();
+    $firstProgram = ProgramCurriculumSemesterFactory::new()->createOne(['semester_id' => $firstSemester->id]);
+    $secondProgram = ProgramCurriculumSemesterFactory::new()->createOne(['semester_id' => $secondSemester->id]);
 
     $student = StudentFactory::new()
         ->has(SessionEnrollmentFactory::new()
-            ->has(SemesterEnrollmentFactory::new()->count(2)->state(new Sequence(
-                ['semester_id' => $firstSemester->id],
-                ['semester_id' => $secondSemester->id], ))
+            ->has(SemesterEnrollmentFactory::new()->count(2)
+                ->state(new Sequence(
+                    ['semester_id' => $firstSemester->id, 'program_curriculum_semester_id' => $firstProgram->id,],
+                    ['semester_id' => $secondSemester->id, 'program_curriculum_semester_id' => $secondProgram->id,],
+                ))
                 ->has(RegistrationFactory::new()->count(9)->state(['credit_unit' => 3])),
             ),
         )->createOne();
