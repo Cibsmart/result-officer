@@ -17,7 +17,9 @@ final class VerifySemesterCreditLimits extends ReportVettingStep
     {
         $this->createVettingStep($student, VettingType::CHECK_SEMESTER_CREDIT_LOADS);
 
-        $sessionEnrollments = $student->sessionEnrollments()->with(['session', 'semesterEnrollments.semester'])->get();
+        $sessionEnrollments = $student->sessionEnrollments()
+            ->with(['session', 'semesterEnrollments.semester', 'semesterEnrollments.programCurriculumSemester'])
+            ->get();
 
         $passed = true;
         $status = VettingStatus::UNCHECKED;
@@ -45,10 +47,17 @@ final class VerifySemesterCreditLimits extends ReportVettingStep
     ): bool {
         $creditUnitSum = $semesterEnrollment->registrations()->sum('credit_unit');
 
+        $programSemester = $semesterEnrollment->programCurriculumSemester;
+
         $semester = $semesterEnrollment->semester;
 
-        $minSemesterTotalCreditUnit = CreditUnit::minSemesterUnit()->value;
-        $maxSemesterTotalCreditUnit = CreditUnit::maxSemesterUnit()->value;
+        $minSemesterTotalCreditUnit = $programSemester
+            ? $programSemester->minimum_credit_units
+            : CreditUnit::minSemesterUnit()->value;
+
+        $maxSemesterTotalCreditUnit = $programSemester
+            ? $programSemester->maximum_credit_units
+            : CreditUnit::maxSemesterUnit()->value;
 
         $minCheck = $creditUnitSum >= $minSemesterTotalCreditUnit;
         $maxCheck = $creditUnitSum <= $maxSemesterTotalCreditUnit;

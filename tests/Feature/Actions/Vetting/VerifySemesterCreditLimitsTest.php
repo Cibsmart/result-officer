@@ -6,6 +6,7 @@ use App\Actions\Vetting\VerifySemesterCreditLimits;
 use App\Enums\VettingStatus;
 use App\Models\VettingReport;
 use Illuminate\Database\Eloquent\Factories\Sequence;
+use Tests\Factories\ProgramCurriculumSemesterFactory;
 use Tests\Factories\RegistrationFactory;
 use Tests\Factories\SemesterEnrollmentFactory;
 use Tests\Factories\SemesterFactory;
@@ -18,7 +19,7 @@ use function Pest\Laravel\assertDatabaseEmpty;
 
 covers(VerifySemesterCreditLimits::class);
 
-it('checks and reports passed for student result semester total unit within limit', function (): void {
+it('checks and reports passed for student credit unit within limit', function (): void {
     $firstSemester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
     $secondSemester = SemesterFactory::new(['name' => 'SECOND'])->createOne();
 
@@ -26,7 +27,7 @@ it('checks and reports passed for student result semester total unit within limi
         ->has(SessionEnrollmentFactory::new()
             ->has(SemesterEnrollmentFactory::new()->count(2)->state(new Sequence(
                 ['semester_id' => $firstSemester->id],
-                ['semester_id' => $secondSemester->id], ))
+                ['semester_id' => $secondSemester->id],))
                 ->has(RegistrationFactory::new()->count(8)->state(['credit_unit' => 3])),
             ),
         )->has(VettingEventFactory::new())->createOne();
@@ -40,12 +41,14 @@ it('checks and reports passed for student result semester total unit within limi
     assertDatabaseEmpty(VettingReport::class);
 });
 
-it('checks and report failed for student result semester total unit above limit', function (): void {
+it('checks and report failed for student semester credit unit above limit', function (): void {
     $firstSemester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
+    $programSemester = ProgramCurriculumSemesterFactory::new()->createOne(['semester_id' => $firstSemester->id]);
 
     $student = StudentFactory::new()
         ->has(SessionEnrollmentFactory::new()
-            ->has(SemesterEnrollmentFactory::new()->state(['semester_id' => $firstSemester->id])
+            ->has(SemesterEnrollmentFactory::new()
+                ->state(['semester_id' => $firstSemester->id, 'program_curriculum_semester_id' => $programSemester->id])
                 ->has(RegistrationFactory::new()->count(9)->state(['credit_unit' => 3])),
             ),
         )->has(VettingEventFactory::new())->createOne();
@@ -59,12 +62,14 @@ it('checks and report failed for student result semester total unit above limit'
     assertDatabaseCount(VettingReport::class, 1);
 });
 
-it('checks and report failed for student result semester total unit below limit', function (): void {
+it('checks and report failed for student credit unit below limit', function (): void {
     $firstSemester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
+    $programSemester = ProgramCurriculumSemesterFactory::new()->createOne(['semester_id' => $firstSemester->id]);
 
     $student = StudentFactory::new()
         ->has(SessionEnrollmentFactory::new()
-            ->has(SemesterEnrollmentFactory::new()->state(['semester_id' => $firstSemester->id])
+            ->has(SemesterEnrollmentFactory::new()
+                ->state(['semester_id' => $firstSemester->id, 'program_curriculum_semester_id' => $programSemester->id])
                 ->has(RegistrationFactory::new()->count(10)->state(['credit_unit' => 1])),
             ),
         )->has(VettingEventFactory::new())->createOne();
