@@ -12,7 +12,7 @@ defineProps<{
   departments: SelectItem[];
 }>();
 
-const form = useForm({ department: "", year: "" });
+const form = useForm({department: "", year: "", month: ""});
 
 const submit = () => {
   form.post(route("department.cleared.store"));
@@ -22,13 +22,29 @@ const years = computed(() => {
   const startYear = 2009;
   const currentYear = new Date().getFullYear();
   return [
-    { id: 0, name: "Select Year" },
-    ...Array.from({ length: currentYear - startYear + 2 }, (_, i) => {
+    {id: 0, name: "Select Year"},
+    ...Array.from({length: currentYear - startYear + 2}, (_, i) => {
       const year = currentYear - i;
-      return { id: year, name: year.toString() };
+      return {id: year, name: year.toString()};
     }),
   ];
 });
+
+const months = [
+  {id: 0, name: 'Select Month'},
+  {id: 1, name: 'January'},
+  {id: 2, name: 'February'},
+  {id: 3, name: 'March'},
+  {id: 4, name: 'April'},
+  {id: 5, name: 'May'},
+  {id: 6, name: 'June'},
+  {id: 7, name: 'July'},
+  {id: 8, name: 'August'},
+  {id: 9, name: 'September'},
+  {id: 10, name: 'October'},
+  {id: 11, name: 'November'},
+  {id: 12, name: 'December'}
+]
 </script>
 
 <template>
@@ -71,13 +87,29 @@ const years = computed(() => {
             class="mt-2" />
         </div>
 
+        <div class="flex-1">
+          <InputLabel
+            for="month"
+            value="Month" />
+
+          <SelectInput
+            id="month"
+            v-model="form.month"
+            :items="months"
+            class="mt-1 block w-full" />
+
+          <InputError
+            :message="form.errors.month"
+            class="mt-2" />
+        </div>
+
         <div class="flex-col">
           <div>&nbsp;</div>
 
           <PrimaryButton
             :disabled="form.processing"
-            class="mt-1"
-            >View
+            class="mt-1">
+            View
           </PrimaryButton>
         </div>
       </div>
