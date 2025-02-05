@@ -173,54 +173,11 @@ final class Student extends Model
             && VettingEventStatus::passed($this->vettingEvent->status);
     }
 
-    public function courseCount(): int
-    {
-        return $this->sessionEnrollments->sum('course_count');
-    }
-
-    public function creditUnitSum(): int
-    {
-        return $this->sessionEnrollments->sum('cus');
-    }
-
-    public function gradePointSum(): int
-    {
-        return $this->sessionEnrollments->sum('gps');
-    }
-
-    public function cumulativeGradePointAverageSum(): float
-    {
-        return $this->sessionEnrollments->sum('cgpa');
-    }
-
-    public function finalCumulativeGradePointAverage(): float
-    {
-        if ($this->sessionEnrollments->count() === 0 && $this->creditUnitSum() === 0) {
-            return 0.000;
-        }
-
-        if (Institution::first()->strategy === ComputationStrategy::SEMESTER) {
-            return round($this->cumulativeGradePointAverageSum() / $this->sessionEnrollments->count(), 3);
-        }
-
-        return round($this->gradePointSum() / $this->creditUnitSum(), 3);
-    }
-
-    public function updateCountSumAndAverages(): void
-    {
-        $this->cus = $this->creditUnitSum();
-        $this->gps = $this->gradePointSum();
-        $this->cgpas = $this->cumulativeGradePointAverageSum();
-        $this->fcgpa = $this->finalCumulativeGradePointAverage();
-        $this->course_count = $this->courseCount();
-        $this->save();
-    }
-
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
     protected function name(): Attribute
     {
         return Attribute::make(
-            /** @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter */
+        /** @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter */
             get: fn (
                 ?string $value,
                 array $attributes,
