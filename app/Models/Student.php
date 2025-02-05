@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Data\Models\StudentModelData;
-use App\Enums\ComputationStrategy;
 use App\Enums\EntryMode;
 use App\Enums\Gender;
 use App\Enums\ProgramDuration;
@@ -177,7 +176,7 @@ final class Student extends Model
     protected function name(): Attribute
     {
         return Attribute::make(
-        /** @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter */
+            /** @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter */
             get: fn (
                 ?string $value,
                 array $attributes,

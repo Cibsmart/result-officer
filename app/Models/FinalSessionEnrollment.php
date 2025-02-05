@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 final class FinalSessionEnrollment extends Model
 {
-
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, \App\Models\SessionEnrollment> */
     public function session(): BelongsTo
     {
@@ -84,7 +83,6 @@ final class FinalSessionEnrollment extends Model
         $this->result_count = $this->getResultCount();
         $this->save();
     }
-
 
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<int, float> */
     protected function gradePointAverageSum(): Attribute

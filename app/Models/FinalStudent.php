@@ -18,7 +18,10 @@ final class FinalStudent extends Model
         return $this->belongsTo(Student::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\FinalSessionEnrollment, \App\Models\FinalStudent> */
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\FinalSessionEnrollment, \App\Models\FinalStudent>
+     */
     public function finalSessionEnrollments(): HasMany
     {
         return $this->hasMany(FinalSessionEnrollment::class);
@@ -66,7 +69,6 @@ final class FinalStudent extends Model
         $this->result_count = $this->getCourseCount();
         $this->save();
     }
-
 
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<int, float> */
     protected function cummulativeGradePointAverageSum(): Attribute
