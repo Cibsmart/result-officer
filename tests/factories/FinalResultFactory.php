@@ -25,23 +25,26 @@ final class FinalResultFactory extends Factory
     {
         $inCourse = fake()->numberBetween(0, 30);
         $exam = fake()->numberBetween(0, 70);
-        $scores = ['in_course' => $inCourse, 'exam' => $exam];
-        $score = TotalScore::new($inCourse + $exam);
-        $grade = Grade::for(score: $score);
-        $creditUnit = CreditUnit::THREE->value;
-        $gradePoint = $grade->point() * $creditUnit;
-
 
         return [
             'final_course_id' => FinalCourseFactory::new(),
             'course_status' => CourseStatus::FRESH->value,
-            'credit_unit' => $creditUnit,
+            'credit_unit' => CreditUnit::THREE->value,
             'final_semester_enrollment_id' => FinalSemesterEnrollmentFactory::new(),
-            'grade' => $grade->name,
-            'grade_point' => $gradePoint,
-            'scores' => json_encode($scores),
-            'total_score' => $score->value,
+            'grade' => Grade::for(score: TotalScore::new($inCourse + $exam))->name,
+            'grade_point' => $this->gradePoint(...),
+            'scores' => json_encode(['in_course' => $inCourse, 'exam' => $exam]),
+            'total_score' => TotalScore::new($inCourse + $exam)->value,
             'source' => RecordSource::SYSTEM->value,
         ];
+    }
+
+    /** @param array<string, int|string> $values */
+    private function gradePoint(array $values): int
+    {
+        $grade = Grade::from($values['grade']);
+        $creditUnit = CreditUnit::from($values['credit_unit']);
+
+        return $grade->point() * $creditUnit->value;
     }
 }

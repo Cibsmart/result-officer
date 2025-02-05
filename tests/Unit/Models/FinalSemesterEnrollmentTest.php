@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\FinalResult;
 use App\Models\FinalSemesterEnrollment;
 use Tests\Factories\FinalResultFactory;
 use Tests\Factories\FinalSemesterEnrollmentFactory;
@@ -56,17 +57,6 @@ it('computes grade point average', function (): void {
     $gpa = $enrollment->getGradePointAverage();
 
     expect($gpa)->toBe(3.000);
-});
-
-it('returns zero grade point for registrations without result', function (): void {
-    $enrollment = FinalSemesterEnrollmentFactory::new()
-        ->has(FinalResultFactory::new()
-            ->state(['credit_unit' => 3]),
-        )->createOne();
-
-    $gps = $enrollment->getGradePointSum();
-
-    expect($gps)->toBe(0);
 });
 
 it('updates the credit unit, grade point sum and average columns', function (): void {

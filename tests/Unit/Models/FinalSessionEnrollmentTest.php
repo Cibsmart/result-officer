@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use App\Enums\ComputationStrategy;
 use App\Models\FinalSessionEnrollment;
-use App\Models\SessionEnrollment;
 use Tests\Factories\InstitutionFactory;
 use Tests\Factories\FinalSemesterEnrollmentFactory;
 use Tests\Factories\FinalSessionEnrollmentFactory;
