@@ -105,6 +105,12 @@ final class Student extends Model
         return $this->belongsTo(Program::class);
     }
 
+    /** @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\FinalStudent, \App\Models\Student> */
+    public function FinalStudent(): HasOne
+    {
+        return $this->hasOne(FinalStudent::class);
+    }
+
     public function department(): Department
     {
         $department = $this->program->department;
