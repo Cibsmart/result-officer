@@ -18,24 +18,21 @@ use Exception;
 final class ClearStudent
 {
     /** @throws \Exception */
-    public function execute(Student $student): void
+    public function execute(Student $student, FinalStudent $finalStudent): void
     {
         if (!$student->canBeCleared()) {
             throw new Exception('Student has not been vetted and cannot be cleared');
         }
 
-        $this->archiveResultsFor($student);
+        $this->archiveResultsFor($student, $finalStudent);
 
         StatusChangeEvent::recordStudentStatusChange($student, StudentStatus::CLEARED);
 
         $student->updateStatus(StudentStatus::CLEARED);
     }
 
-    private function archiveResultsFor(Student $student): void
+    private function archiveResultsFor(Student $student, FinalStudent $finalStudent): void
     {
-        $finalStudent = $student->FinalStudent;
-        assert($finalStudent instanceof FinalStudent);
-
         $sessionEnrollments = $student->sessionEnrollments()
             ->with('semesterEnrollments.registrations.course')
             ->orderBy('year')
