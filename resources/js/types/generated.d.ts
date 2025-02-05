@@ -593,7 +593,7 @@ declare namespace App.ViewModels.Summary {
 declare namespace App.ViewModels.Vetting {
   export type VettingIndexPage = {
     departments: App.Data.Department.DepartmentListData;
-    clearanceFormData: App.ViewModels.Clearance.ClearanceFormPage;
+    clearance: App.ViewModels.Clearance.ClearanceFormPage;
     data: App.Data.Vetting.VettingListData;
     steps: App.Data.Vetting.VettingStepListData;
   };

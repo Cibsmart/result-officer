@@ -21,11 +21,11 @@ covers(ClearStudent::class);
 it('can mark a student as cleared', function (): void {
     $student = StudentFactory::new()->createOne(['status' => StudentStatus::FINAL_YEAR]);
     VettingEventFactory::new()->for($student)->createOne(['status' => VettingEventStatus::PASSED]);
-    FinalStudentFactory::new()->createOne(['student_id' => $student->id]);
+    $finalStudent = FinalStudentFactory::new()->createOne(['student_id' => $student->id]);
 
     $action = new ClearStudent();
 
-    $action->execute($student);
+    $action->execute($student, $finalStudent);
 
     expect($student->status)->toBe(StudentStatus::CLEARED);
 });
@@ -34,11 +34,11 @@ it('archives results of a cleared student', function (): void {
     InstitutionFactory::new()->createOne(['strategy' => ComputationStrategy::SEMESTER->value]);
     $student = createStudentWithResults(attributes: ['status' => StudentStatus::FINAL_YEAR]);
     VettingEventFactory::new()->for($student)->createOne(['status' => VettingEventStatus::PASSED]);
-    FinalStudentFactory::new()->createOne(['student_id' => $student->id]);
+    $finalStudent = FinalStudentFactory::new()->createOne(['student_id' => $student->id]);
 
     $action = new ClearStudent();
 
-    $action->execute($student);
+    $action->execute($student, $finalStudent);
 
     expect($student->status)->toBe(StudentStatus::CLEARED)
         ->and(FinalResult::count())->toBe(Registration::count());
@@ -47,11 +47,11 @@ it('archives results of a cleared student', function (): void {
 it('records status change event', function (): void {
     $student = StudentFactory::new()->createOne(['status' => StudentStatus::FINAL_YEAR]);
     VettingEventFactory::new()->for($student)->createOne(['status' => VettingEventStatus::PASSED]);
-    FinalStudentFactory::new()->createOne(['student_id' => $student->id]);
+    $finalStudent = FinalStudentFactory::new()->createOne(['student_id' => $student->id]);
 
     $action = new ClearStudent();
 
-    $action->execute($student);
+    $action->execute($student, $finalStudent);
 
     assertDatabaseHas(StatusChangeEvent::class, [
         'status' => StudentStatus::CLEARED,
@@ -61,10 +61,11 @@ it('records status change event', function (): void {
 
 it('throws exception for a student not in clearable state', function (StudentStatus $status): void {
     $student = StudentFactory::new()->createOne(['status' => $status]);
+    $finalStudent = FinalStudentFactory::new()->createOne(['student_id' => $student->id]);
 
     $action = new ClearStudent();
 
-    $action->execute($student);
+    $action->execute($student, $finalStudent);
 
 })->with([
     [StudentStatus::NEW],
