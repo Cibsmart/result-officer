@@ -6,6 +6,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-final class StudentClearance extends Model
+final class FinalStudent extends Model
 {
 }

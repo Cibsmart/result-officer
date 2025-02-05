@@ -16,7 +16,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('student_clearances', function (Blueprint $table): void {
+        Schema::create('final_students', function (Blueprint $table): void {
             $table->id();
             $table->foreignIdFor(Student::class)->constrained();
             $table->year('year');
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('student_clearances');
+        Schema::dropIfExists('final_students');
     }
 };
