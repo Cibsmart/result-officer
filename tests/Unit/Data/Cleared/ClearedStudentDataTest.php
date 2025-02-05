@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Data\Cleared\ClearedStudentData;
 use App\Enums\StudentStatus;
+use Tests\Factories\FinalStudentFactory;
 use Tests\Factories\StatusChangeEventFactory;
 use Tests\Factories\StudentFactory;
 
@@ -14,6 +15,8 @@ it('creates cleared student data from student model', function (): void {
         ->has(StatusChangeEventFactory::new()->cleared())
         ->createOne();
 
+    FinalStudentFactory::new()->for($student)->createOne();
+
     $data = ClearedStudentData::fromModel($student);
 
     expect($data)->toBeInstanceOf(ClearedStudentData::class)
@@ -23,6 +26,6 @@ it('creates cleared student data from student model', function (): void {
         ->gender->toBe($student->gender)
         ->registrationNumber->toBe($student->registration_number)
         ->status->toBe(StudentStatus::CLEARED)
-        ->fcgpa->toBe(number_format($student->fcgpa, 2))
+        ->fcgpa->toBe(number_format($student->finalStudent->final_cummulative_grade_point_average, 2))
         ->dateCleared->toBe($student->statusChangeEvents->first()->date->format('jS M, Y'));
 });
