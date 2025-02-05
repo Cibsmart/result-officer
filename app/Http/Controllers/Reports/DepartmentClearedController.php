@@ -21,16 +21,18 @@ final class DepartmentClearedController
         Request $request,
         ?Department $department = null,
         ?int $year = null,
+        ?string $month = null,
     ): Response|RedirectResponse {
         $request->validate(['year' => ['nullable', 'int']]);
+        $request->validate(['month' => ['nullable', 'string']]);
 
         $user = $request->user();
         assert($user instanceof User);
 
         return Inertia::render('reports/cleared/index/page', new ClearedIndexPageData(
             departments: fn () => DepartmentListData::forUser($user),
-            students: fn () => $department !== null && $year !== null
-                ? ClearedStudentListData::fromModel($department, $year)
+            students: fn () => $department !== null && $year !== null && $month !== null
+                ? ClearedStudentListData::fromModel($department, $year, $month)
                 : null,
         ));
     }

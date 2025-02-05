@@ -140,7 +140,7 @@ Route::middleware(['auth'])->group(static function (): void {
     });
 
     Route::prefix('department/cleared/students')->group(static function (): void {
-        Route::get('{department?}/{year?}', [DepartmentClearedController::class, 'index'])
+        Route::get('{department?}/{year?}/{month?}', [DepartmentClearedController::class, 'index'])
             ->name('department.cleared.index')
             ->middleware([ValidateYearParameter::class]);
         Route::post('', [DepartmentClearedController::class, 'store'])->name('department.cleared.store');
