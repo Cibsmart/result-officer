@@ -11,6 +11,7 @@ import StudentList from "@/pages/vetting/list/index/partials/studentList.vue";
 
 const props = defineProps<{
   departments: App.Data.Department.DepartmentListData;
+  clearance: App.ViewModels.Clearance.ClearanceFormPage;
   data: App.Data.Vetting.VettingListData;
   steps: App.Data.Vetting.VettingStepListData;
 }>();
@@ -18,7 +19,7 @@ const props = defineProps<{
 const hasData = computed(() => props.data !== null);
 
 const pages: BreadcrumbItem[] = [
-  { name: "Vetting", href: route("vetting.index"), current: route().current("vetting.index") },
+  {name: "Vetting", href: route("vetting.index"), current: route().current("vetting.index")},
 ];
 </script>
 
@@ -36,6 +37,7 @@ const pages: BreadcrumbItem[] = [
 
     <BaseSection v-if="hasData">
       <StudentList
+        :clearance="clearance"
         :data="data"
         :steps="steps" />
     </BaseSection>
