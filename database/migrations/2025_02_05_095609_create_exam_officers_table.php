@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use Illuminate\Database\Migrations\Migration;
@@ -9,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('exam_officers', function (Blueprint $table) {
+        Schema::create('exam_officers', function (Blueprint $table): void {
             $table->id();
             $table->string('name');
             $table->string('email')->nullable()->unique();

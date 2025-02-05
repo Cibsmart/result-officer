@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use Illuminate\Database\Migrations\Migration;
@@ -9,15 +10,15 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('students', function (Blueprint $table) {
+        Schema::table('students', function (Blueprint $table): void {
             $table->dropColumn(['course_count', 'cus', 'gps', 'cgpas', 'fcgpa']);
         });
 
-        Schema::table('session_enrollments', function (Blueprint $table) {
+        Schema::table('session_enrollments', function (Blueprint $table): void {
             $table->dropColumn(['course_count', 'cus', 'gps', 'gpas', 'cgpa']);
         });
 
-        Schema::table('semester_enrollments', function (Blueprint $table) {
+        Schema::table('semester_enrollments', function (Blueprint $table): void {
             $table->dropColumn(['course_count', 'cus', 'gps', 'gpa']);
         });
     }

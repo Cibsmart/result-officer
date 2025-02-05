@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use App\Models\Level;
@@ -12,7 +13,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('final_session_enrollments', function (Blueprint $table) {
+        Schema::create('final_session_enrollments', function (Blueprint $table): void {
             $table->id();
             $table->foreignIdFor(Student::class)->constrained();
             $table->foreignIdFor(Session::class)->constrained('academic_sessions');

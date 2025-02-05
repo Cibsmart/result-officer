@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\FinalSessionEnrollment;
 use App\Models\Semester;
 use Illuminate\Database\Migrations\Migration;
@@ -13,7 +15,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('final_semester_enrollments', function (Blueprint $table) {
+        Schema::create('final_semester_enrollments', function (Blueprint $table): void {
             $table->id();
             $table->foreignIdFor(FinalSessionEnrollment::class)->constrained();
             $table->foreignIdFor(Semester::class)->constrained();

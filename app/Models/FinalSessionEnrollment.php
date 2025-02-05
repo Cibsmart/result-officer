@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class FinalSessionEnrollment extends Model
+final class FinalSessionEnrollment extends Model
 {
-    //
 }

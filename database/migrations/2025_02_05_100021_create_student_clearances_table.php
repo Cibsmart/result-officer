@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\ExamOfficer;
 use App\Models\Student;
 use App\Models\User;
@@ -14,7 +16,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('student_clearances', function (Blueprint $table) {
+        Schema::create('student_clearances', function (Blueprint $table): void {
             $table->id();
             $table->foreignIdFor(Student::class)->constrained();
             $table->year('year');
