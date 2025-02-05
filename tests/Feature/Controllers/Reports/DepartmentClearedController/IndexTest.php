@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Data\Cleared\ClearedStudentListData;
 use App\Data\Department\DepartmentListData;
 use Tests\Factories\DepartmentFactory;
+use Tests\Factories\FinalStudentFactory;
 use Tests\Factories\ProgramFactory;
 use Tests\Factories\StatusChangeEventFactory;
 use Tests\Factories\StudentFactory;
@@ -39,19 +40,22 @@ it('passes cleared students data to the view when department and year parameter 
     $program = ProgramFactory::new()->createOne();
     $department = $program->department;
     $year = now()->year;
+    $month = now()->monthName;
 
     StudentFactory::new()
         ->for($program)
         ->cleared()
         ->count(3)
         ->has(StatusChangeEventFactory::new()->cleared())
+        ->has(FinalStudentFactory::new())
         ->create();
 
     actingAs($user)->get(route('department.cleared.index', [
         'department' => $department,
         'year' => $year,
+        'month' => $month,
     ]))
-        ->assertHasDataList('students', ClearedStudentListData::fromModel($department, $year));
+        ->assertHasDataList('students', ClearedStudentListData::fromModel($department, $year, $month));
 });
 
 it('fails when supplied invalid department parameter', function (): void {
