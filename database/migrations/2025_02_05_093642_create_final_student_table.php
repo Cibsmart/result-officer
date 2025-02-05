@@ -18,7 +18,7 @@ return new class extends Migration
     {
         Schema::create('final_students', function (Blueprint $table): void {
             $table->id();
-            $table->foreignIdFor(Student::class)->constrained();
+            $table->foreignIdFor(Student::class)->unique()->constrained();
             $table->year('year');
             $table->string('month');
             $table->unsignedTinyInteger('result_count')->default(0);
