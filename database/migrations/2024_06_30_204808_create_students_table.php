@@ -41,6 +41,11 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->string('online_id')->nullable();
             $table->string('source')->default(RecordSource::LEGACY->value);
+            $table->unsignedTinyInteger('course_count')->default(0);
+            $table->unsignedTinyInteger('cus')->default(0);
+            $table->unsignedSmallInteger('gps')->default(0);
+            $table->unsignedSmallInteger('cgpas')->default(0);
+            $table->unsignedSmallInteger('fcgpa')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
