@@ -12,6 +12,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class FinalStudent extends Model
 {
+    /** @param array<string, array<string, string>> $data */
+    public static function fromStudent(Student $student, array $data): self
+    {
+        $finalStudent = new self();
+        $data = [...$data, 'student_id' => $student->id];
+
+        $finalStudent->fill($data)->save();
+
+        return $finalStudent;
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, \App\Models\FinalStudent> */
     public function student(): BelongsTo
     {
