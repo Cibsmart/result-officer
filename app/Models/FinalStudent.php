@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\ComputationStrategy;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -64,5 +65,24 @@ final class FinalStudent extends Model
         $this->final_cummulative_grade_point_average = $this->getFinalCumulativeGradePointAverage();
         $this->result_count = $this->getCourseCount();
         $this->save();
+    }
+
+
+    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<int, float> */
+    protected function cummulativeGradePointAverageSum(): Attribute
+    {
+        return Attribute::make(
+            get: static fn (int $value): float => $value / 1000,
+            set: static fn (float $value): int => (int) ($value * 1000),
+        );
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<int, float> */
+    protected function finalCummulativeGradePointAverage(): Attribute
+    {
+        return Attribute::make(
+            get: static fn (int $value): float => $value / 1000,
+            set: static fn (float $value): int => (int) ($value * 1000),
+        );
     }
 }

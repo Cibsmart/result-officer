@@ -211,24 +211,6 @@ final class Student extends Model
         return Attribute::make(set: static fn (string $value): string => strtolower($value));
     }
 
-    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<int, float> */
-    protected function cgpas(): Attribute
-    {
-        return Attribute::make(
-            get: static fn (int $value): float => $value / 1000,
-            set: static fn (float $value): int => (int) ($value * 1000),
-        );
-    }
-
-    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<int, float> */
-    protected function fcgpa(): Attribute
-    {
-        return Attribute::make(
-            get: static fn (int $value): float => $value / 1000,
-            set: static fn (float $value): int => (int) ($value * 1000),
-        );
-    }
-
     private function inFinalYear(): bool
     {
         if ($this->status === StudentStatus::FINAL_YEAR) {
