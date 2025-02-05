@@ -10,6 +10,21 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class FinalSemesterEnrollment extends Model
 {
+    public static function fromSemesterEnrollment(
+        SemesterEnrollment $semesterEnrollment,
+        FinalSessionEnrollment $finalSessionEnrollment,
+    ): self {
+
+        $finalSemesterEnrollment = new self();
+
+        $finalSemesterEnrollment->final_session_enrollment_id = $finalSessionEnrollment->id;
+        $finalSemesterEnrollment->semester_id = $semesterEnrollment->semester_id;
+
+        $finalSemesterEnrollment->save();
+
+        return $finalSemesterEnrollment;
+    }
+
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\FinalResult, \App\Models\FinalSemesterEnrollment>
@@ -36,7 +51,13 @@ final class FinalSemesterEnrollment extends Model
 
     public function getGradePointAverage(): float
     {
-        return round($this->getGradePointSum() / $this->getCreditUnitSum(), 3);
+        $creditUnitSum = $this->getCreditUnitSum();
+
+        $average = $creditUnitSum === 0
+            ? 0
+            : $this->getGradePointSum() / $creditUnitSum;
+
+        return round($average, 3);
     }
 
     public function updateSumsAndAverage(): void

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\ComputationStrategy;
+use App\Enums\Year;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,6 +14,21 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 final class FinalSessionEnrollment extends Model
 {
+    public static function fromSessionEnrollment(SessionEnrollment $sessionEnrollment, FinalStudent $finalStudent): self
+    {
+        $finalSessionEnrollment = new self();
+
+        $finalSessionEnrollment->student_id = $sessionEnrollment->student_id;
+        $finalSessionEnrollment->final_student_id = $finalStudent->id;
+        $finalSessionEnrollment->session_id = $sessionEnrollment->session_id;
+        $finalSessionEnrollment->level_id = $sessionEnrollment->level_id;
+        $finalSessionEnrollment->year = $sessionEnrollment->year;
+
+        $finalSessionEnrollment->save();
+
+        return $finalSessionEnrollment;
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, \App\Models\SessionEnrollment> */
     public function session(): BelongsTo
     {
@@ -82,6 +98,14 @@ final class FinalSessionEnrollment extends Model
         $this->cummulative_grade_point_average = $this->getCumulativeGradePointAverage();
         $this->result_count = $this->getResultCount();
         $this->save();
+    }
+
+    /** @return array{year: 'App\Enums\Year'} */
+    protected function casts(): array
+    {
+        return [
+            'year' => Year::class,
+        ];
     }
 
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<int, float> */
