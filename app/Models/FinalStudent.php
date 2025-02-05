@@ -49,7 +49,7 @@ final class FinalStudent extends Model
 
     public function getFinalCumulativeGradePointAverage(): float
     {
-        if ($this->finalSessionEnrollments->count() === 0 && $this->creditUnitSum() === 0) {
+        if ($this->finalSessionEnrollments->count() === 0 && $this->getCreditUnitSum() === 0) {
             return 0.000;
         }
 
@@ -66,7 +66,7 @@ final class FinalStudent extends Model
         $this->grade_point_sum = $this->getGradePointSum();
         $this->cummulative_grade_point_average_sum = $this->getCumulativeGradePointAverageSum();
         $this->final_cummulative_grade_point_average = $this->getFinalCumulativeGradePointAverage();
-        $this->result_count = $this->getCourseCount();
+        $this->result_count = $this->getResultCount();
         $this->save();
     }
 
