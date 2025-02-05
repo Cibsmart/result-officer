@@ -23,7 +23,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('credit_unit_sum')->default(0);
             $table->unsignedSmallInteger('grade_point_sum')->default(0);
             $table->unsignedSmallInteger('grade_point_average_sum')->default(0);
-            $table->unsignedSmallInteger('grade_point_cummulative')->default(0);
+            $table->unsignedSmallInteger('cummulative_grade_point_average')->default(0);
             $table->timestamps();
 
             $table->unique(['student_id', 'session_id']);

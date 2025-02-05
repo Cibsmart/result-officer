@@ -80,8 +80,8 @@ final class FinalSessionEnrollment extends Model
         $this->credit_unit_sum = $this->getCreditUnitSum();
         $this->grade_point_sum = $this->getGradePointSum();
         $this->grade_point_average_sum = $this->getGradePointAverageSum();
-        $this->grade_point_cummulative = $this->getCumulativeGradePointAverage();
-        $this->result_count_count = $this->getResultCount();
+        $this->cummulative_grade_point_average = $this->getCumulativeGradePointAverage();
+        $this->result_count = $this->getResultCount();
         $this->save();
     }
 
@@ -96,7 +96,7 @@ final class FinalSessionEnrollment extends Model
     }
 
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<int, float> */
-    protected function gradePointAverageCummulative(): Attribute
+    protected function cummulativeGradePointAverage(): Attribute
     {
         return Attribute::make(
             get: static fn (int $value): float => $value / 1000,

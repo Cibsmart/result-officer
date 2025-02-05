@@ -36,7 +36,7 @@ final class FinalSemesterEnrollment extends Model
 
     public function getGradePointAverage(): float
     {
-        return round($this->gradePointSum() / $this->creditUnitSum(), 3);
+        return round($this->getGradePointSum() / $this->getCreditUnitSum(), 3);
     }
 
     public function updateSumsAndAverage(): void
