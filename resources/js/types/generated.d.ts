@@ -1,3 +1,19 @@
+declare namespace App.Data.Clearance {
+  export type ClearanceMonthData = {
+    id: number;
+    name: string;
+  };
+  export type ClearanceMonthListData = {
+    months: Array<App.Data.Clearance.ClearanceMonthData>;
+  };
+  export type ClearanceYearData = {
+    id: number;
+    name: string;
+  };
+  export type ClearanceYearListData = {
+    years: Array<App.Data.Clearance.ClearanceYearData>;
+  };
+}
 declare namespace App.Data.Cleared {
   export type ClearedStudentData = {
     id: number;
@@ -128,6 +144,15 @@ declare namespace App.Data.Download {
     jambRegistrationNumber: string;
     email: string;
     phoneNumber: string;
+  };
+}
+declare namespace App.Data.ExamOfficer {
+  export type ExamOfficerData = {
+    id: number;
+    name: string;
+  };
+  export type ExamOfficerListData = {
+    officers: Array<App.Data.ExamOfficer.ExamOfficerData>;
   };
 }
 declare namespace App.Data.Faculty {
@@ -437,6 +462,19 @@ declare namespace App.Enums {
     | "completed";
   export type ImportEventType = "results" | "courses" | "departments" | "students" | "registrations";
   export type LevelEnum = "100" | "200" | "300" | "400" | "500" | "600";
+  export type Months =
+    | "January"
+    | "February"
+    | "March"
+    | "April"
+    | "May"
+    | "June"
+    | "July"
+    | "August"
+    | "September"
+    | "October"
+    | "November"
+    | "December";
   export type NotificationType = "success" | "error" | "warning" | "info";
   export type ProgramDuration = 3 | 4 | 5 | 6;
   export type RawDataStatus = "pending" | "duplicate" | "failed" | "processed";
@@ -474,6 +512,13 @@ declare namespace App.Enums {
     | "elective_courses"
     | "failed_courses";
   export type Year = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14;
+}
+declare namespace App.ViewModels.Clearance {
+  export type ClearanceFormPage = {
+    examOfficers: App.Data.ExamOfficer.ExamOfficerListData;
+    years: App.Data.Clearance.ClearanceYearListData;
+    months: App.Data.Clearance.ClearanceMonthListData;
+  };
 }
 declare namespace App.ViewModels.Downloads {
   export type DownloadCoursesPage = {
@@ -548,6 +593,7 @@ declare namespace App.ViewModels.Summary {
 declare namespace App.ViewModels.Vetting {
   export type VettingIndexPage = {
     departments: App.Data.Department.DepartmentListData;
+    clearanceFormData: App.ViewModels.Clearance.ClearanceFormPage;
     data: App.Data.Vetting.VettingListData;
     steps: App.Data.Vetting.VettingStepListData;
   };
