@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Enums\CourseStatus;
-use App\Enums\RecordSource;
 use App\Models\FinalCourse;
 use App\Models\FinalSemesterEnrollment;
 use App\Models\Lecturer;
@@ -20,15 +18,15 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(FinalSemesterEnrollment::class)->constrained();
             $table->foreignIdFor(FinalCourse::class)->constrained();
+            $table->string('course_status', 1);
             $table->unsignedTinyInteger('credit_unit');
-            $table->string('course_status', 1)->default(CourseStatus::FRESH->value);
             $table->json('scores');
             $table->unsignedTinyInteger('total_score');
             $table->string('grade', 1);
             $table->unsignedTinyInteger('grade_point');
             $table->date('exam_date')->nullable();
             $table->string('remarks')->nullable();
-            $table->string('source')->default(RecordSource::LEGACY->value);
+            $table->string('source');
             $table->foreignIdFor(Lecturer::class)->nullable();
             $table->foreignIdFor(Session::class, 'originating_session')->nullable();
             $table->timestamps();
