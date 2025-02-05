@@ -18,10 +18,12 @@ use Tests\Factories\SessionEnrollmentFactory;
 use Tests\Factories\SessionFactory;
 use Tests\Factories\StudentFactory;
 
+/** @param array<string, string> $attributes */
 function createStudentWithResults(
     int $numberOfSessions = 4,
     int $numberOfSemesters = 2,
     int $numberOfCourses = 5,
+    array $attributes = [],
 ): Student {
     $firstSemester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
     $secondSemester = SemesterFactory::new(['name' => 'SECOND'])->createOne();
@@ -40,7 +42,7 @@ function createStudentWithResults(
                         ['semester_id' => $secondSemester->id]),
                     ), 'semesterEnrollments')
                 ->count($numberOfSessions),
-        )->createOne();
+        )->createOne($attributes);
 }
 
 function createMultipleStudentsWithResults(
