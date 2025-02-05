@@ -55,7 +55,7 @@ final class FinalStudent extends Model
 
     public function getCumulativeGradePointAverageSum(): float
     {
-        return $this->finalSessionEnrollments->sum('cummulative_grade_point_average_sum');
+        return $this->finalSessionEnrollments->sum('cummulative_grade_point_average');
     }
 
     public function getFinalCumulativeGradePointAverage(): float

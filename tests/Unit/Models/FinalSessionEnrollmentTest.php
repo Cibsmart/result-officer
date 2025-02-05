@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Enums\ComputationStrategy;
+use App\Models\FinalSemesterEnrollment;
 use App\Models\FinalSessionEnrollment;
 use Tests\Factories\InstitutionFactory;
 use Tests\Factories\FinalSemesterEnrollmentFactory;
