@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -60,43 +59,5 @@ final class SemesterEnrollment extends Model
     public function programCurriculumSemester(): BelongsTo
     {
         return $this->belongsTo(ProgramCurriculumSemester::class);
-    }
-
-    public function courseCount(): int
-    {
-        return $this->registrations->count();
-    }
-
-    public function creditUnitSum(): int
-    {
-        return (int) $this->registrations->sum('credit_unit.value');
-    }
-
-    public function gradePointSum(): int
-    {
-        return (int) $this->registrations->sum('result.grade_point');
-    }
-
-    public function gradePointAverage(): float
-    {
-        return round($this->gradePointSum() / $this->creditUnitSum(), 3);
-    }
-
-    public function updateSumsAndAverage(): void
-    {
-        $this->cus = $this->creditUnitSum();
-        $this->gps = $this->gradePointSum();
-        $this->gpa = $this->gradePointAverage();
-        $this->course_count = $this->courseCount();
-        $this->save();
-    }
-
-    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<int, float> */
-    protected function gpa(): Attribute
-    {
-        return Attribute::make(
-            get: static fn (int $value): float => $value / 1000,
-            set: static fn (float $value): int => (int) ($value * 1000),
-        );
     }
 }
