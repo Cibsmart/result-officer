@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
-import { ChevronRightIcon, ArrowDownTrayIcon } from "@heroicons/vue/20/solid";
+import { ChevronRightIcon, ArrowDownTrayIcon, ArrowUpTrayIcon } from "@heroicons/vue/20/solid";
 import { NavigationItem } from "@/types";
 import {
   HomeIcon,
@@ -88,6 +88,19 @@ const navigation: NavigationItem[] = [
         current: route().current("department.cleared.index"),
       },
       { name: "Composite", href: route("composite.form"), current: route().current("composite.form") },
+    ],
+  },
+  {
+    name: "Uploads",
+    href: "#",
+    icon: ArrowUpTrayIcon,
+    current: false,
+    children: [
+      {
+        name: "Final Results",
+        href: route("import.final-results.page"),
+        current: route().current("import.final-results.page"),
+      },
     ],
   },
 ];
