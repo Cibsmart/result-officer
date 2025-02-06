@@ -23,8 +23,6 @@ final class DepartmentClearedController
         ?int $year = null,
         ?string $month = null,
     ): Response|RedirectResponse {
-        $request->validate(['year' => ['nullable', 'int']]);
-        $request->validate(['month' => ['nullable', 'string']]);
 
         $user = $request->user();
         assert($user instanceof User);
@@ -41,10 +39,14 @@ final class DepartmentClearedController
     {
         $departmentId = $request->input('department.id');
         $year = $request->input('year');
+        $month = $request->input('month');
 
         $department = Department::query()->findOrFail($departmentId);
 
-        return redirect()->route('department.cleared.index',
-            ['department' => $department, 'year' => $year['id']]);
+        return redirect()->route('department.cleared.index', [
+            'department' => $department,
+            'month' => $month['name'],
+            'year' => $year['id'],
+        ]);
     }
 }
