@@ -18,7 +18,7 @@ final class ValidateYearParameter
     {
         $year = $request->route('year');
 
-        if ($year !== null && !preg_match('/^20\d{2}$/', $year)) {
+        if ($year !== null && ! preg_match('/^20\d{2}$/', $year)) {
             abort(404, 'Invalid Year');
         }
 

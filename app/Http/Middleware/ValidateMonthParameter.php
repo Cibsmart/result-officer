@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Middleware;
 
 use App\Enums\Months;
@@ -9,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
-class ValidateMonthParameter
+final class ValidateMonthParameter
 {
     /**
      * Handle an incoming request.
