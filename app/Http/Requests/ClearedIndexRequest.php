@@ -27,6 +27,8 @@ final class ClearedIndexRequest extends FormRequest
             'department.id' => ['required', 'integer', 'exists:departments,id'],
             'year' => ['required', 'array'],
             'year.id' => ['required', 'integer'],
+            'month' => ['required', 'array'],
+            'month.name' => ['required', 'string'],
         ];
     }
 }
