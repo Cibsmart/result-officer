@@ -40,9 +40,9 @@ use App\Http\Middleware\ValidateMonthParameter;
 use App\Http\Middleware\ValidateYearParameter;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', DashboardController::class)->middleware(['auth'])->name('dashboard');
-
 Route::middleware(['auth'])->group(static function (): void {
+    Route::get('/', DashboardController::class)->name('dashboard');
+
     Route::prefix('profile')->group(static function (): void {
         Route::get('', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('', [ProfileController::class, 'update'])->name('profile.update');
