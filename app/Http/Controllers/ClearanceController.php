@@ -15,24 +15,26 @@ use Throwable;
 
 final class ClearanceController
 {
-    public function store(Student $student, Request $request, ClearStudent $action): RedirectResponse
-    {
+    public function store(
+        Student $student,
+        Request $request,
+        ClearStudent $action,
+    ): RedirectResponse {
         $request->validate([
-            'year' => ['required', 'array'],
-            'year.name' => ['required', 'integer'],
-            'month' => ['required', 'array'],
-            'month.name' => ['required', 'string'],
             'exam_officer' => ['required', 'array'],
             'exam_officer.id' => ['required', 'integer'],
+            'month' => ['required', 'array'],
+            'month.name' => ['required', 'string'],
+            'year' => ['required', 'array'],
+            'year.name' => ['required', 'integer'],
         ]);
 
         $data = [
+            'exam_officer_id' => $request->exam_officer['id'],
+            'month' => $request->month['name'],
             'user_id' => $request->user()->id,
             'year' => $request->year['name'],
-            'month' => $request->month['name'],
-            'exam_officer_id' => $request->exam_officer['id'],
         ];
-
 
         try {
             DB::beginTransaction();

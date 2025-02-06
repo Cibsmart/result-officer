@@ -35,8 +35,8 @@ const registrationNumber = ref("");
 
 const hasRows = computed(() => props.data.graduands.length > 0);
 
-const clearForm = useForm({year: '', month: '', exam_officer: ''});
-const viewForm = useForm({student: ""});
+const form = useForm({ year: "", month: "", exam_officer: "" });
+const viewForm = useForm({ student: "" });
 
 const closeDrawer = () => (showReport.value = false);
 const openDrawer = (student: App.Data.Vetting.VettingStudentData) => {
@@ -44,7 +44,7 @@ const openDrawer = (student: App.Data.Vetting.VettingStudentData) => {
 
   viewForm.student = student.slug;
 
-  viewForm.get(usePage().url, {only: ["steps"], preserveScroll: true, preserveState: true});
+  viewForm.get(usePage().url, { only: ["steps"], preserveScroll: true, preserveState: true });
 
   showReport.value = true;
 };
@@ -55,7 +55,7 @@ const confirmStudentClearance = (student: App.Data.Vetting.VettingStudentData) =
   confirmingStudentClearance.value = true;
 };
 const clearStudent = () => {
-  clearForm.post(route("students.clearance.store", {student: clearanceStudent.value?.slug}), {
+  form.post(route("students.clearance.store", { student: clearanceStudent.value?.slug }), {
     preserveScroll: true,
     onSuccess: () => closeModal(),
   });
@@ -101,8 +101,7 @@ const clearStudent = () => {
               mobile
               position="left">
               ACTIONS
-            </BaseTH
-            >
+            </BaseTH>
           </BaseTHead>
 
           <BaseTBody>
@@ -135,9 +134,7 @@ const clearStudent = () => {
       <BaseFormSection
         description="Select Clearance Batch and Exam Officer"
         header="Clearance Confirmation">
-        <form
-          class="mt-6 space-y-6"
-          @submit.prevent="submit">
+        <form class="mt-6 space-y-6">
           <FormGroup>
             <div class="flex w-full items-start space-x-4">
               <div class="flex-1">
@@ -147,15 +144,16 @@ const clearStudent = () => {
 
                 <SelectInput
                   id="year"
-                  v-model="clearForm.year"
+                  v-model="form.year"
                   :items="clearance.years.years"
                   class="mt-1 block w-full" />
 
                 <InputError
-                  :message="clearForm.errors.year"
+                  :message="form.errors.year"
                   class="mt-2" />
               </div>
             </div>
+
             <div class="flex w-full items-start space-x-4">
               <div class="flex-1">
                 <InputLabel
@@ -164,16 +162,17 @@ const clearStudent = () => {
 
                 <SelectInput
                   id="month"
-                  v-model="clearForm.month"
+                  v-model="form.month"
                   :items="clearance.months.months"
                   class="mt-1 block w-full" />
 
                 <InputError
-                  :message="clearForm.errors.month"
+                  :message="form.errors.month"
                   class="mt-2" />
               </div>
             </div>
           </FormGroup>
+
           <div class="flex w-full items-start space-x-4">
             <div class="flex-1">
               <InputLabel
@@ -182,17 +181,16 @@ const clearStudent = () => {
 
               <SelectInput
                 id="exam_officer"
-                v-model="clearForm.exam_officer"
+                v-model="form.exam_officer"
                 :items="clearance.examOfficers.officers"
                 class="mt-1 block w-full" />
 
               <InputError
-                :message="clearForm.errors.exam_officer"
+                :message="form.errors.exam_officer"
                 class="mt-2" />
             </div>
           </div>
         </form>
-
 
         <p class="mt-4 text-base text-red-600">
           You are confirming that
@@ -207,8 +205,8 @@ const clearStudent = () => {
           <SecondaryButton @click="closeModal"> Cancel</SecondaryButton>
 
           <PrimaryButton
-            :class="{ 'opacity-25': clearForm.processing }"
-            :disabled="clearForm.processing"
+            :class="{ 'opacity-25': form.processing }"
+            :disabled="form.processing"
             class="ms-3"
             @click="clearStudent">
             Clear Student

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Factories;
 
-use App\Models\Course;
 use App\Models\FinalCourse;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

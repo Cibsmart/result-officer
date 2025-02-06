@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Models\FinalResult;
 use App\Models\FinalSemesterEnrollment;
 use Tests\Factories\FinalResultFactory;
 use Tests\Factories\FinalSemesterEnrollmentFactory;
@@ -75,10 +74,10 @@ it('updates the credit unit, grade point sum and average columns', function (): 
     $enrollment->updateSumsAndAverage();
 
     assertDatabaseHas(FinalSemesterEnrollment::class, [
-        'result_count' => $count,
         'credit_unit_sum' => $cus,
         'grade_point_average' => $gpa * 1000,
         'grade_point_sum' => $gps,
         'id' => $enrollment->id,
+        'result_count' => $count,
     ]);
 });

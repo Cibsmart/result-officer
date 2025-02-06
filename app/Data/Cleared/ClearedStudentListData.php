@@ -9,7 +9,6 @@ use App\Data\Faculty\FacultyData;
 use App\Enums\StudentStatus;
 use App\Models\Department;
 use App\Models\Faculty;
-use App\Models\StatusChangeEvent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
@@ -24,8 +23,11 @@ final class ClearedStudentListData extends Data
     ) {
     }
 
-    public static function fromModel(Department $department, int $year, string $month): self
-    {
+    public static function fromModel(
+        Department $department,
+        int $year,
+        string $month,
+    ): self {
         $clearedStudents = $department->students()->with('finalStudent')
             ->whereHas('finalStudent', function (Builder $query) use ($year, $month): void {
                 $query->where('year', $year)->where('month', $month);

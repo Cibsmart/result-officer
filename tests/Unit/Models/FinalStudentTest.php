@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 use App\Enums\ComputationStrategy;
 use App\Models\FinalStudent;
-use Tests\Factories\InstitutionFactory;
 use Tests\Factories\FinalSessionEnrollmentFactory;
 use Tests\Factories\FinalStudentFactory;
+use Tests\Factories\InstitutionFactory;
 
 use function Pest\Laravel\assertDatabaseHas;
 
@@ -99,11 +99,11 @@ it('updates student credit unit, grade point sum and averages', function (): voi
     $student->updateCountSumAndAverages();
 
     assertDatabaseHas(FinalStudent::class, [
-        'cummulative_grade_point_average_sum' => $cgpas * 1000,
-        'result_count' => $count,
         'credit_unit_sum' => $cus,
+        'cummulative_grade_point_average_sum' => $cgpas * 1000,
         'final_cummulative_grade_point_average' => $fcgpa * 1000,
         'grade_point_sum' => $gps,
         'id' => $student->id,
+        'result_count' => $count,
     ]);
 });

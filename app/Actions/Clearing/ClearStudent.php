@@ -20,7 +20,7 @@ final class ClearStudent
     /** @throws \Exception */
     public function execute(Student $student, FinalStudent $finalStudent): void
     {
-        if (!$student->canBeCleared()) {
+        if (! $student->canBeCleared()) {
             throw new Exception('Student has not been vetted and cannot be cleared');
         }
 
@@ -75,6 +75,7 @@ final class ClearStudent
         FinalSemesterEnrollment $finalSemesterEnrollment,
     ): void {
         $registrations = $semesterEnrollment->registrations;
+
         foreach ($registrations as $registration) {
             FinalResult::fromRegistration($registration, $finalSemesterEnrollment);
         }

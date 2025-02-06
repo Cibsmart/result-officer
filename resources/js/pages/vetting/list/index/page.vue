@@ -19,7 +19,7 @@ const props = defineProps<{
 const hasData = computed(() => props.data !== null);
 
 const pages: BreadcrumbItem[] = [
-  {name: "Vetting", href: route("vetting.index"), current: route().current("vetting.index")},
+  { name: "Vetting", href: route("vetting.index"), current: route().current("vetting.index") },
 ];
 </script>
 

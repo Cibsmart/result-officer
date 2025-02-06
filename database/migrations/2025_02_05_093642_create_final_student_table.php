@@ -21,8 +21,8 @@ return new class extends Migration
             $table->foreignIdFor(Student::class)->unique()->constrained();
             $table->year('year');
             $table->string('month');
-            $table->unsignedTinyInteger('result_count')->default(0);
-            $table->unsignedTinyInteger('credit_unit_sum')->default(0);
+            $table->unsignedSmallInteger('result_count')->default(0);
+            $table->unsignedSmallInteger('credit_unit_sum')->default(0);
             $table->unsignedSmallInteger('grade_point_sum')->default(0);
             $table->unsignedSmallInteger('cummulative_grade_point_average_sum')->default(0);
             $table->unsignedSmallInteger('final_cummulative_grade_point_average')->default(0);

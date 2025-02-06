@@ -52,8 +52,8 @@ it('passes cleared students data to the view when department and year parameter 
 
     actingAs($user)->get(route('department.cleared.index', [
         'department' => $department,
-        'year' => $year,
         'month' => $month,
+        'year' => $year,
     ]))
         ->assertHasDataList('students', ClearedStudentListData::fromModel($department, $year, $month));
 });

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use App\Data\Cleared\ClearedStudentData;
 use App\Data\Cleared\ClearedStudentListData;
-use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Tests\Factories\FinalStudentFactory;
 use Tests\Factories\ProgramFactory;

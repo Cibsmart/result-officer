@@ -19,6 +19,7 @@ enum Months: string
     case NOVEMBER = 'November';
     case DECEMBER = 'December';
 
+    /** @return array<int, array<int, self>> */
     public static function all(): array
     {
         return [

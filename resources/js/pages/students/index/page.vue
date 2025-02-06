@@ -23,7 +23,7 @@ defineProps<{
 }>();
 
 const pages: BreadcrumbItem[] = [
-  {name: "Student", href: route("students.index"), current: route().current("students.index")},
+  { name: "Student", href: route("students.index"), current: route().current("students.index") },
 ];
 </script>
 
@@ -43,7 +43,7 @@ const pages: BreadcrumbItem[] = [
           <BaseTH
             mobile
             position="left"
-          >NAME
+            >NAME
           </BaseTH>
 
           <BaseTH position="left">REGISTRATION NUMBER</BaseTH>
@@ -89,9 +89,15 @@ const pages: BreadcrumbItem[] = [
               <Badge :color="student.statusColor">{{ student.status }}</Badge>
             </BaseTD>
 
-            <BaseTD class="w-80" position="left">{{ student.department }}</BaseTD>
+            <BaseTD
+              class="w-80"
+              position="left"
+              >{{ student.department }}</BaseTD
+            >
 
-            <BaseTD class="px-2" mobile>
+            <BaseTD
+              class="px-2"
+              mobile>
               <SecondaryLinkSmall :href="route('students.show', { student: student })">View</SecondaryLinkSmall>
             </BaseTD>
           </BaseTR>

@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Data\Clearance;
 
 use Spatie\LaravelData\Data;
 
-class ClearanceYearData extends Data
+final class ClearanceYearData extends Data
 {
     public function __construct(
         public readonly int $id,
@@ -16,6 +18,8 @@ class ClearanceYearData extends Data
     public static function fromArray(array $year): self
     {
         $key = key($year);
+        assert($key !== null);
+
         return new self(id: $key, name: $year[$key]);
     }
 }

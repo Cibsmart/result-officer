@@ -21,8 +21,8 @@ return new class extends Migration
             $table->foreignIdFor(Session::class)->constrained('academic_sessions');
             $table->foreignIdFor(Level::class)->constrained();
             $table->unsignedTinyInteger('year')->default(1);
-            $table->unsignedTinyInteger('result_count')->default(0);
-            $table->unsignedTinyInteger('credit_unit_sum')->default(0);
+            $table->unsignedSmallInteger('result_count')->default(0);
+            $table->unsignedSmallInteger('credit_unit_sum')->default(0);
             $table->unsignedSmallInteger('grade_point_sum')->default(0);
             $table->unsignedSmallInteger('grade_point_average_sum')->default(0);
             $table->unsignedSmallInteger('cummulative_grade_point_average')->default(0);
