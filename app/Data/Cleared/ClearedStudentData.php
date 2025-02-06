@@ -41,7 +41,7 @@ final class ClearedStudentData extends Data
             registrationNumber: $student->registration_number,
             gender: $gender,
             status: $status,
-            fcgpa: number_format($student->fcgpa, 2),
+            fcgpa: number_format($student->finalStudent->final_cummulative_grade_point_average, 2),
             dateCleared: $clearEvent->date->format('jS M, Y'),
             slug: $student->slug,
         );

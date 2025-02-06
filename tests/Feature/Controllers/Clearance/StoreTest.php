@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Enums\StudentStatus;
 use App\Enums\VettingEventStatus;
 use App\Models\Student;
+use Tests\Factories\ExamOfficerFactory;
 use Tests\Factories\StudentFactory;
 use Tests\Factories\UserFactory;
 use Tests\Factories\VettingEventFactory;
@@ -18,8 +19,13 @@ it('can clear a student', function (): void {
 
     $student = StudentFactory::new()->createOne(['status' => StudentStatus::FINAL_YEAR]);
     VettingEventFactory::new()->for($student)->createOne(['status' => VettingEventStatus::PASSED]);
+    $examOfficer = ExamOfficerFactory::new()->createOne();
 
-    actingAs($user)->post(route('students.clearance.store', $student));
+    actingAs($user)->post(route('students.clearance.store', $student), [
+        'exam_officer' => ['id' => $examOfficer->id],
+        'month' => ['name' => now()->monthName],
+        'year' => ['name' => now()->year],
+    ]);
 
     assertDatabaseHas(Student::class, [
         'id' => $student->id,
@@ -32,9 +38,14 @@ it('redirects back to the vetting page', function (): void {
 
     $student = StudentFactory::new()->createOne(['status' => StudentStatus::FINAL_YEAR]);
     VettingEventFactory::new()->for($student)->createOne(['status' => VettingEventStatus::PASSED]);
+    $examOfficer = ExamOfficerFactory::new()->createOne();
 
     actingAs($user)->fromRoute('vetting.index')
-        ->post(route('students.clearance.store', $student))
+        ->post(route('students.clearance.store', $student), [
+            'exam_officer' => ['id' => $examOfficer->id],
+            'month' => ['name' => now()->monthName],
+            'year' => ['name' => now()->year],
+        ])
         ->assertRedirect(route('vetting.index', $student->department()));
 });
 

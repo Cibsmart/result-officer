@@ -16,10 +16,16 @@ import BaseTHead from "@/components/tables/baseTHead.vue";
 import BaseTH from "@/components/tables/baseTH.vue";
 import BaseTBody from "@/components/tables/baseTBody.vue";
 import BaseTR from "@/components/tables/baseTR.vue";
+import InputLabel from "@/components/inputs/inputLabel.vue";
+import InputError from "@/components/inputs/inputError.vue";
+import BaseFormSection from "@/components/forms/baseFormSection.vue";
+import SelectInput from "@/components/inputs/selectInput.vue";
+import FormGroup from "@/components/forms/formGroup.vue";
 
 const props = defineProps<{
   data: App.Data.Vetting.VettingListData;
   steps: App.Data.Vetting.VettingStepListData;
+  clearance: App.ViewModels.Clearance.ClearanceFormPage;
 }>();
 
 const showReport = ref(false);
@@ -29,7 +35,7 @@ const registrationNumber = ref("");
 
 const hasRows = computed(() => props.data.graduands.length > 0);
 
-const clearForm = useForm({});
+const form = useForm({ year: "", month: "", exam_officer: "" });
 const viewForm = useForm({ student: "" });
 
 const closeDrawer = () => (showReport.value = false);
@@ -49,7 +55,7 @@ const confirmStudentClearance = (student: App.Data.Vetting.VettingStudentData) =
   confirmingStudentClearance.value = true;
 };
 const clearStudent = () => {
-  clearForm.post(route("students.clearance.store", { student: clearanceStudent.value?.id }), {
+  form.post(route("students.clearance.store", { student: clearanceStudent.value?.slug }), {
     preserveScroll: true,
     onSuccess: () => closeModal(),
   });
@@ -94,8 +100,8 @@ const clearStudent = () => {
             <BaseTH
               mobile
               position="left">
-              ACTIONS</BaseTH
-            >
+              ACTIONS
+            </BaseTH>
           </BaseTHead>
 
           <BaseTBody>
@@ -125,28 +131,88 @@ const clearStudent = () => {
     :show="confirmingStudentClearance"
     @close="closeModal">
     <div class="p-6">
-      <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Clearance Confirmation</h2>
+      <BaseFormSection
+        description="Select Clearance Batch and Exam Officer"
+        header="Clearance Confirmation">
+        <form class="mt-6 space-y-6">
+          <FormGroup>
+            <div class="flex w-full items-start space-x-4">
+              <div class="flex-1">
+                <InputLabel
+                  for="year"
+                  value="Year" />
 
-      <p class="mt-1 text-base text-gray-600 dark:text-gray-300">
-        You are confirming that
-        <span class="font-bold">{{ clearanceStudent?.name }}</span>
-        with Registration Number
-        <span class="font-bold">{{ clearanceStudent?.registrationNumber }}</span>
-        has satisfy
-        <span class="font-bold">ALL</span> academic requirement for graduation.
-      </p>
+                <SelectInput
+                  id="year"
+                  v-model="form.year"
+                  :items="clearance.years.years"
+                  class="mt-1 block w-full" />
 
-      <div class="mt-6 flex justify-end">
-        <SecondaryButton @click="closeModal"> Cancel</SecondaryButton>
+                <InputError
+                  :message="form.errors.year"
+                  class="mt-2" />
+              </div>
+            </div>
 
-        <PrimaryButton
-          :class="{ 'opacity-25': clearForm.processing }"
-          :disabled="clearForm.processing"
-          class="ms-3"
-          @click="clearStudent">
-          Clear Student
-        </PrimaryButton>
-      </div>
+            <div class="flex w-full items-start space-x-4">
+              <div class="flex-1">
+                <InputLabel
+                  for="month"
+                  value="Month" />
+
+                <SelectInput
+                  id="month"
+                  v-model="form.month"
+                  :items="clearance.months.months"
+                  class="mt-1 block w-full" />
+
+                <InputError
+                  :message="form.errors.month"
+                  class="mt-2" />
+              </div>
+            </div>
+          </FormGroup>
+
+          <div class="flex w-full items-start space-x-4">
+            <div class="flex-1">
+              <InputLabel
+                for="exam_officer"
+                value="Exam Officer" />
+
+              <SelectInput
+                id="exam_officer"
+                v-model="form.exam_officer"
+                :items="clearance.examOfficers.officers"
+                class="mt-1 block w-full" />
+
+              <InputError
+                :message="form.errors.exam_officer"
+                class="mt-2" />
+            </div>
+          </div>
+        </form>
+
+        <p class="mt-4 text-base text-red-600">
+          You are confirming that
+          <span class="font-bold">{{ clearanceStudent?.name }}</span>
+          with Registration Number
+          <span class="font-bold">{{ clearanceStudent?.registrationNumber }}</span>
+          has satisfy
+          <span class="font-bold">ALL</span> academic requirement for graduation.
+        </p>
+
+        <div class="mt-6 flex justify-end">
+          <SecondaryButton @click="closeModal"> Cancel</SecondaryButton>
+
+          <PrimaryButton
+            :class="{ 'opacity-25': form.processing }"
+            :disabled="form.processing"
+            class="ms-3"
+            @click="clearStudent">
+            Clear Student
+          </PrimaryButton>
+        </div>
+      </BaseFormSection>
     </div>
   </Modal>
 

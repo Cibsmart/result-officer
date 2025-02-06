@@ -9,4 +9,5 @@ enum RecordSource: string
     case PORTAL = 'portal';
     case EXCEL = 'excel';
     case LEGACY = 'legacy';
+    case SYSTEM = 'system';
 }

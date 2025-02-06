@@ -5,29 +5,52 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Actions\Clearing\ClearStudent;
+use App\Models\FinalStudent;
 use App\Models\Student;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 final class ClearanceController
 {
-    public function __construct(public ClearStudent $action)
-    {
-    }
+    public function store(
+        Student $student,
+        Request $request,
+        ClearStudent $action,
+    ): RedirectResponse {
+        $request->validate([
+            'exam_officer' => ['required', 'array'],
+            'exam_officer.id' => ['required', 'integer'],
+            'month' => ['required', 'array'],
+            'month.name' => ['required', 'string'],
+            'year' => ['required', 'array'],
+            'year.name' => ['required', 'integer'],
+        ]);
 
-    public function store(Student $student, Request $request): RedirectResponse
-    {
+        $data = [
+            'exam_officer_id' => $request->exam_officer['id'],
+            'month' => $request->month['name'],
+            'user_id' => $request->user()->id,
+            'year' => $request->year['name'],
+        ];
+
+        try {
+            DB::beginTransaction();
+            $finalStudent = FinalStudent::fromStudent($student, $data);
+            $action->execute($student, $finalStudent);
+            DB::commit();
+        } catch (Exception $e) {
+            return redirect()->back()->error($e->getMessage());
+        } catch (Throwable $e) {
+            return redirect()->back()->error($e->getMessage());
+        }
+
         activity()
             ->causedBy($request->user())
             ->performedOn($student)
             ->log('cleared student');
-
-        try {
-            $this->action->execute($student);
-        } catch (Exception $e) {
-            return redirect()->back()->error($e->getMessage());
-        }
 
         return to_route('vetting.index', $student->department())->success("{$student->registration_number} Cleared");
     }

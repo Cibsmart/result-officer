@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Enums\ComputationStrategy;
 use App\Enums\Year;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -72,70 +70,11 @@ final class SessionEnrollment extends Model
         return $this->belongsTo(Student::class);
     }
 
-    public function courseCount(): int
-    {
-        return $this->semesterEnrollments->sum('course_count');
-    }
-
-    public function creditUnitSum(): int
-    {
-        return $this->semesterEnrollments->sum('cus');
-    }
-
-    public function gradePointSum(): int
-    {
-        return $this->semesterEnrollments->sum('gps');
-    }
-
-    public function gradePointAverageSum(): float
-    {
-        return $this->semesterEnrollments->sum('gpa');
-    }
-
-    public function cumulativeGradePointAverage(): float
-    {
-        $institution = Institution::first();
-
-        if ($institution->strategy === ComputationStrategy::SEMESTER) {
-            return round($this->gradePointAverageSum() / $this->semesterEnrollments->count(), 3);
-        }
-
-        return round($this->gradePointSum() / $this->creditUnitSum(), 3);
-    }
-
-    public function updateCountSumAndAverages(): void
-    {
-        $this->cus = $this->creditUnitSum();
-        $this->gps = $this->gradePointSum();
-        $this->gpas = $this->gradePointAverageSum();
-        $this->cgpa = $this->cumulativeGradePointAverage();
-        $this->course_count = $this->courseCount();
-        $this->save();
-    }
-
     /** @return array{year: 'App\Enums\Year'} */
     protected function casts(): array
     {
         return [
             'year' => Year::class,
         ];
-    }
-
-    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<int, float> */
-    protected function gpas(): Attribute
-    {
-        return Attribute::make(
-            get: static fn (int $value): float => $value / 1000,
-            set: static fn (float $value): int => (int) ($value * 1000),
-        );
-    }
-
-    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<int, float> */
-    protected function cgpa(): Attribute
-    {
-        return Attribute::make(
-            get: static fn (int $value): float => $value / 1000,
-            set: static fn (float $value): int => (int) ($value * 1000),
-        );
     }
 }

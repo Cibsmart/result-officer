@@ -36,6 +36,7 @@ use App\Http\Controllers\Result\ViewStudentResultController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\Summary\DepartmentResultSummaryController;
 use App\Http\Controllers\Vetting\VettingController;
+use App\Http\Middleware\ValidateMonthParameter;
 use App\Http\Middleware\ValidateYearParameter;
 use Illuminate\Support\Facades\Route;
 
@@ -140,9 +141,9 @@ Route::middleware(['auth'])->group(static function (): void {
     });
 
     Route::prefix('department/cleared/students')->group(static function (): void {
-        Route::get('{department?}/{year?}', [DepartmentClearedController::class, 'index'])
+        Route::get('{department?}/{year?}/{month?}', [DepartmentClearedController::class, 'index'])
             ->name('department.cleared.index')
-            ->middleware([ValidateYearParameter::class]);
+            ->middleware([ValidateYearParameter::class, ValidateMonthParameter::class]);
         Route::post('', [DepartmentClearedController::class, 'store'])->name('department.cleared.store');
     });
 

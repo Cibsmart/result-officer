@@ -21,16 +21,16 @@ final class DepartmentClearedController
         Request $request,
         ?Department $department = null,
         ?int $year = null,
+        ?string $month = null,
     ): Response|RedirectResponse {
-        $request->validate(['year' => ['nullable', 'int']]);
 
         $user = $request->user();
         assert($user instanceof User);
 
         return Inertia::render('reports/cleared/index/page', new ClearedIndexPageData(
             departments: fn () => DepartmentListData::forUser($user),
-            students: fn () => $department !== null && $year !== null
-                ? ClearedStudentListData::fromModel($department, $year)
+            students: fn () => $department !== null && $year !== null && $month !== null
+                ? ClearedStudentListData::fromModel($department, $year, $month)
                 : null,
         ));
     }
@@ -39,10 +39,14 @@ final class DepartmentClearedController
     {
         $departmentId = $request->input('department.id');
         $year = $request->input('year');
+        $month = $request->input('month');
 
         $department = Department::query()->findOrFail($departmentId);
 
-        return redirect()->route('department.cleared.index',
-            ['department' => $department, 'year' => $year['id']]);
+        return redirect()->route('department.cleared.index', [
+            'department' => $department,
+            'month' => $month['name'],
+            'year' => $year['id'],
+        ]);
     }
 }

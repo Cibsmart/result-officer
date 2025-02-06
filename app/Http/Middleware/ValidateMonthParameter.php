@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\Enums\Months;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
-final class ValidateYearParameter
+final class ValidateMonthParameter
 {
     /**
      * Handle an incoming request.
@@ -16,10 +19,14 @@ final class ValidateYearParameter
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $year = $request->route('year');
+        $month = $request->route('month');
 
-        if ($year !== null && ! preg_match('/^20\d{2}$/', $year)) {
-            abort(404, 'Invalid Year');
+        $validator = Validator::make(['month' => $month], [
+            'month' => [Rule::enum(Months::class)],
+        ]);
+
+        if ($month !== null && $validator->fails()) {
+            abort(404, 'Invalid Month');
         }
 
         return $next($request);

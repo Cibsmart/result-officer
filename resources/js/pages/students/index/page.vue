@@ -46,13 +46,13 @@ const pages: BreadcrumbItem[] = [
             >NAME
           </BaseTH>
 
-          <BaseTH>REGISTRATION NUMBER</BaseTH>
+          <BaseTH position="left">REGISTRATION NUMBER</BaseTH>
 
           <BaseTH>GENDER</BaseTH>
 
           <BaseTH>STATUS</BaseTH>
 
-          <BaseTH>DEPARTMENT</BaseTH>
+          <BaseTH position="left">DEPARTMENT</BaseTH>
 
           <BaseTH mobile>ACTION</BaseTH>
         </BaseTHead>
@@ -81,7 +81,7 @@ const pages: BreadcrumbItem[] = [
               </div>
             </BaseTD>
 
-            <BaseTD>{{ student.registrationNumber }}</BaseTD>
+            <BaseTD position="left">{{ student.registrationNumber }}</BaseTD>
 
             <BaseTD>{{ student.gender }}</BaseTD>
 
@@ -89,9 +89,15 @@ const pages: BreadcrumbItem[] = [
               <Badge :color="student.statusColor">{{ student.status }}</Badge>
             </BaseTD>
 
-            <BaseTD>{{ student.department }}</BaseTD>
+            <BaseTD
+              class="w-80"
+              position="left"
+              >{{ student.department }}</BaseTD
+            >
 
-            <BaseTD mobile>
+            <BaseTD
+              class="px-2"
+              mobile>
               <SecondaryLinkSmall :href="route('students.show', { student: student })">View</SecondaryLinkSmall>
             </BaseTD>
           </BaseTR>
