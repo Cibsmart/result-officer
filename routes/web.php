@@ -27,7 +27,7 @@ use App\Http\Controllers\Download\Students\DownloadStudentsPageController;
 use App\Http\Controllers\Exports\Results\ExportResultsByDepartmentSessionController;
 use App\Http\Controllers\Exports\Results\ExportResultsByRegistrationNumberController;
 use App\Http\Controllers\Exports\Results\ExportResultsPageController;
-use App\Http\Controllers\FinalResults\ImportFinalResultPageController;
+use App\Http\Controllers\FinalResults\ImportFinalResultController;
 use App\Http\Controllers\Imports\CancelImportEventController;
 use App\Http\Controllers\Imports\ContinueImportEventController;
 use App\Http\Controllers\ProfileController;
@@ -175,7 +175,8 @@ Route::middleware(['auth'])->group(static function (): void {
 
     Route::prefix('import')->group(static function (): void {
         Route::prefix('final-results')->group(static function (): void {
-            Route::get('page', ImportFinalResultPageController::class)->name('import.final-results.page');
+            Route::get('', [ImportFinalResultController::class, 'create'])->name('import.final-results.create');
+            Route::post('', [ImportFinalResultController::class, 'store'])->name('import.final-results.store');
         });
     });
 });
