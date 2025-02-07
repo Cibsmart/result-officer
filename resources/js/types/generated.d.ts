@@ -162,7 +162,16 @@ declare namespace App.Data.Faculty {
     slug: string;
   };
 }
-declare namespace App.Data.Import {
+declare namespace App.Data.Imports {
+  export type ExcelImportEventData = {
+    id: number;
+    fileName: string;
+    status: App.Enums.ImportEventStatus;
+    statusColor: App.Enums.StatusColor;
+  };
+  export type ExcelImportEventListData = {
+    events: Array<App.Data.Imports.ExcelImportEventData>;
+  };
   export type ImportEventData = {
     id: number;
     target: string;
@@ -455,6 +464,8 @@ declare namespace App.Enums {
     | "started"
     | "downloading"
     | "downloaded"
+    | "uploading"
+    | "uploaded"
     | "saving"
     | "saved"
     | "processing"
@@ -524,7 +535,7 @@ declare namespace App.ViewModels.Clearance {
 declare namespace App.ViewModels.Downloads {
   export type DownloadCoursesPage = {
     events: any;
-    pending: App.Data.Import.PendingImportEventData;
+    pending: App.Data.Imports.PendingImportEventData;
   };
   export type DownloadRegistrationPage = {
     departments: App.Data.Department.DepartmentListData;
@@ -533,14 +544,14 @@ declare namespace App.ViewModels.Downloads {
     courses: App.Data.Course.CourseListData;
     levels: App.Data.Level.LevelListData;
     events: any;
-    pending: App.Data.Import.PendingImportEventData;
+    pending: App.Data.Imports.PendingImportEventData;
     selectedIndex: number;
   };
   export type DownloadStudentPage = {
     department: App.Data.Department.DepartmentListData;
     session: App.Data.Session.SessionListData;
     events: any;
-    pending: App.Data.Import.PendingImportEventData;
+    pending: App.Data.Imports.PendingImportEventData;
     selectedIndex: number;
   };
 }
@@ -549,6 +560,11 @@ declare namespace App.ViewModels.Exports {
     departments: App.Data.Department.DepartmentListData;
     sessions: App.Data.Session.SessionListData;
     selectedIndex: number;
+  };
+}
+declare namespace App.ViewModels.Imports {
+  export type ImportFinalResultPage = {
+    data: App.Data.Imports.ExcelImportEventListData;
   };
 }
 declare namespace App.ViewModels.Reports {
