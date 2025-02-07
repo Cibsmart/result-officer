@@ -31,6 +31,7 @@ final class RawFinalResult extends Model
         $rawFinalResult->credit_unit = (int) Str::trim($row[$headings['credit_unit']]);
         $rawFinalResult->semester = Str::trim($row[$headings['semester']]);
         $rawFinalResult->session = Str::trim($row[$headings['session']]);
+        $rawFinalResult->level = Str::of($row[$headings['course_code']])->trim()->afterLast(' ')[0] . '00';
         $rawFinalResult->course_code = Str::trim($row[$headings['course_code']]);
         $rawFinalResult->course_title = Str::trim($row[$headings['course_title']]);
         $rawFinalResult->department = Str::trim($row[$headings['department']]);
@@ -53,8 +54,12 @@ final class RawFinalResult extends Model
         return $rawFinalResult;
     }
 
-    private static function cleanDate(string $date): ?string
+    private static function cleanDate(string|int|null $date): ?string
     {
+        if (! is_string($date)) {
+            return null;
+        }
+
         $value = Str::of($date)
             ->replace('/', '-')
             ->replace('(', '')
