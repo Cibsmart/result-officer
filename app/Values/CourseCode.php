@@ -12,7 +12,9 @@ final readonly class CourseCode
 {
     public function __construct(public string $value)
     {
-        $codes = Str::of($this->value)->explode('/');
+        $codes = Str::of($this->value)
+            ->explode('/')
+            ->map(fn (string $code) => Str::trim($code));
 
         if (! $this->matchCodes($codes)) {
             throw new InvalidArgumentException('Invalid course code');
