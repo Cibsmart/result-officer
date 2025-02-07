@@ -29,15 +29,15 @@ return new class extends Migration
             $table->string('course_title');
             $table->string('department');
             $table->string('examiner');
-            $table->string('examiner_department');
+            $table->string('examiner_department')->nullable();
             $table->string('exam_date')->nullable();
             $table->year('year');
             $table->string('month');
-            $table->string('originating_session');
+            $table->string('originating_session')->nullable();
             $table->string('database_officer');
             $table->string('exam_officer');
             $table->string('old_registration_number')->nullable();
-            $table->string('status')->default(RawDataStatus::PENDING);
+            $table->string('status')->default(RawDataStatus::PENDING)->index();
             $table->text('message')->nullable();
             $table->timestamps();
         });
