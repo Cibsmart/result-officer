@@ -25,6 +25,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('credit_unit');
             $table->string('semester');
             $table->string('session');
+            $table->string('level');
             $table->string('course_code');
             $table->string('course_title');
             $table->string('department');
