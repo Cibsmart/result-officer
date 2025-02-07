@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('file_name');
             $table->string('file_path');
             $table->string('status');
+            $table->text('message')->nullable();
             $table->timestamps();
         });
     }
