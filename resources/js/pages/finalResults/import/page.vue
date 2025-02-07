@@ -9,6 +9,20 @@ import InputLabel from "@/components/inputs/inputLabel.vue";
 import FormGroup from "@/components/forms/formGroup.vue";
 import BaseFormSection from "@/components/forms/baseFormSection.vue";
 import InputError from "@/components/inputs/inputError.vue";
+import { computed } from "vue";
+import EmptyState from "@/components/emptyState.vue";
+import BaseTable from "@/components/tables/baseTable.vue";
+import BaseTHead from "@/components/tables/baseTHead.vue";
+import BaseTH from "@/components/tables/baseTH.vue";
+import BaseTBody from "@/components/tables/baseTBody.vue";
+import BaseTD from "@/components/tables/baseTD.vue";
+import BaseTR from "@/components/tables/baseTR.vue";
+import Badge from "@/components/badge.vue";
+import SecondaryLinkSmall from "@/components/links/secondaryLinkSmall.vue";
+
+const props = defineProps<{
+  data: App.Data.Imports.ExcelImportEventListData;
+}>();
 
 const form = useForm({ file: null });
 
@@ -23,6 +37,8 @@ const pages: BreadcrumbItem[] = [
     current: route().current("import.final-results.index"),
   },
 ];
+
+const hasEvent = computed(() => props.data.events.length > 0);
 </script>
 
 <template>
@@ -66,6 +82,46 @@ const pages: BreadcrumbItem[] = [
           </FormGroup>
         </form>
       </BaseFormSection>
+    </BaseSection>
+
+    <BaseSection>
+      <template v-if="hasEvent">
+        <BaseTable>
+          <BaseTHead>
+            <BaseTH position="left">FileName</BaseTH>
+
+            <BaseTH position="left">Status</BaseTH>
+
+            <BaseTH>Actions</BaseTH>
+          </BaseTHead>
+
+          <BaseTBody>
+            <BaseTR
+              v-for="event in data.events"
+              :key="event.id">
+              <BaseTD position="left">{{ event.fileName }}</BaseTD>
+
+              <BaseTD position="left">
+                <Badge :color="event.statusColor">{{ event.status }}</Badge>
+              </BaseTD>
+
+              <BaseTD>
+                <SecondaryLinkSmall
+                  :href="route('import.final-results.delete', { event: event.id })"
+                  method="post">
+                  Delete
+                </SecondaryLinkSmall>
+              </BaseTD>
+            </BaseTR>
+          </BaseTBody>
+        </BaseTable>
+      </template>
+
+      <template v-else>
+        <EmptyState
+          description="Start by selecting a file to upload and click Upload"
+          title="No Final Result Upload Found" />
+      </template>
     </BaseSection>
   </BasePage>
 </template>
