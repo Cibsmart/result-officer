@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 final class RawFinalResult extends Model
 {
@@ -20,29 +21,29 @@ final class RawFinalResult extends Model
         $rawFinalResult = new self();
 
         $rawFinalResult->excel_import_event_id = $event->id;
-        $rawFinalResult->sn = (int) $row[$headings['sn']];
-        $rawFinalResult->name = $row[$headings['name']];
-        $rawFinalResult->registration_number = $row[$headings['registration_number']];
-        $rawFinalResult->in_course = (int) $row[$headings['in_course']];
-        $rawFinalResult->exam = (int) $row[$headings['exam']];
-        $rawFinalResult->total = (int) $row[$headings['total']];
-        $rawFinalResult->grade = $row[$headings['grade']];
-        $rawFinalResult->credit_unit = (int) $row[$headings['credit_unit']];
-        $rawFinalResult->semester = $row[$headings['semester']];
-        $rawFinalResult->session = $row[$headings['session']];
-        $rawFinalResult->course_code = $row[$headings['course_code']];
-        $rawFinalResult->course_title = $row[$headings['course_title']];
-        $rawFinalResult->department = $row[$headings['department']];
-        $rawFinalResult->examiner = $row[$headings['examiner']];
-        $rawFinalResult->examiner_department = $row[$headings['examiner_department']];
-        $rawFinalResult->exam_date = $row[$headings['exam_date']];
-        $rawFinalResult->year = $row[$headings['year']];
-        $rawFinalResult->month = $row[$headings['month']];
-        $rawFinalResult->originating_session = $row[$headings['originating_session']];
-        $rawFinalResult->database_officer = $row[$headings['database_officer']];
-        $rawFinalResult->exam_officer = $row[$headings['exam_officer']];
+        $rawFinalResult->sn = (int) Str::trim($row[$headings['sn']]);
+        $rawFinalResult->name = Str::trim($row[$headings['name']]);
+        $rawFinalResult->registration_number = Str::trim($row[$headings['registration_number']]);
+        $rawFinalResult->in_course = (int) Str::trim($row[$headings['in_course']]);
+        $rawFinalResult->exam = (int) Str::trim($row[$headings['exam']]);
+        $rawFinalResult->total = (int) Str::trim($row[$headings['total']]);
+        $rawFinalResult->grade = Str::trim($row[$headings['grade']]);
+        $rawFinalResult->credit_unit = (int) Str::trim($row[$headings['credit_unit']]);
+        $rawFinalResult->semester = Str::trim($row[$headings['semester']]);
+        $rawFinalResult->session = Str::trim($row[$headings['session']]);
+        $rawFinalResult->course_code = Str::trim($row[$headings['course_code']]);
+        $rawFinalResult->course_title = Str::trim($row[$headings['course_title']]);
+        $rawFinalResult->department = Str::trim($row[$headings['department']]);
+        $rawFinalResult->examiner = Str::trim($row[$headings['examiner']]);
+        $rawFinalResult->exam_date = self::cleanDate($row[$headings['exam_date']]);
+        $rawFinalResult->examiner_department = Str::trim($row[$headings['examiner_department']]);
+        $rawFinalResult->year = Str::trim($row[$headings['year']]);
+        $rawFinalResult->month = Str::trim($row[$headings['month']]);
+        $rawFinalResult->originating_session = Str::trim($row[$headings['originating_session']]);
+        $rawFinalResult->database_officer = Str::trim($row[$headings['database_officer']]);
+        $rawFinalResult->exam_officer = Str::trim($row[$headings['exam_officer']]);
 
-        $oldRegistrationNumber = $row[$headings['old_registration_number']];
+        $oldRegistrationNumber = Str::trim($row[$headings['old_registration_number']]);
         $rawFinalResult->old_registration_number = $oldRegistrationNumber === 'NIL' || $oldRegistrationNumber === ''
             ? null
             : $oldRegistrationNumber;
@@ -50,5 +51,21 @@ final class RawFinalResult extends Model
         $rawFinalResult->save();
 
         return $rawFinalResult;
+    }
+
+    private static function cleanDate(string $date): ?string
+    {
+        $value = Str::of($date)
+            ->replace('/', '-')
+            ->replace('(', '')
+            ->replace(')', '')
+            ->replace('"', '')
+            ->replace("\'", '')
+            ->replace('.', '')
+            ->replace(' ', '')
+            ->trim()
+            ->value();
+
+        return $value === '' ? null : $value;
     }
 }
