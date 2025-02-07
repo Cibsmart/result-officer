@@ -71,6 +71,8 @@ final class RawFinalResult extends Model
             ->trim()
             ->value();
 
-        return $value === '' ? null : $value;
+        return $value === ''
+            ? null
+            : $value;
     }
 }
