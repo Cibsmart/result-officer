@@ -31,6 +31,12 @@ final class User extends Authenticatable implements FilamentUser
         return $this->hasMany(ImportEvent::class);
     }
 
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExcelImportEvent, \App\Models\User> */
+    public function excelImportEvents(): HasMany
+    {
+        return $this->hasMany(ExcelImportEvent::class);
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\UserDepartment, \App\Models\User> */
     public function departments(): HasMany
     {
