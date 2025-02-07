@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
+use Illuminate\Support\Str;
+
 enum Months: string
 {
     case JANUARY = 'January';
@@ -36,5 +38,10 @@ enum Months: string
             [11 => self::NOVEMBER],
             [12 => self::DECEMBER],
         ];
+    }
+
+    public static function fromName(string $month): ?string
+    {
+        return Str::of($month)->lower()->title()->value();
     }
 }
