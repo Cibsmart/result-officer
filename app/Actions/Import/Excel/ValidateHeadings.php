@@ -23,7 +23,7 @@ final class ValidateHeadings
         $validatedHeadings = [];
 
         foreach ($headings as $heading) {
-            $validatedHeadingKey = $this->getValidHeadingKey($heading, $expectedHeadings);
+            $validatedHeadingKey = $this->getBestMatchingValidHeadingKey($heading, $expectedHeadings);
 
             if ($validatedHeadingKey === null) {
                 continue;
@@ -40,15 +40,32 @@ final class ValidateHeadings
     }
 
     /** @param array<string, array<int, string>> $expectedHeadings */
-    private function getValidHeadingKey(string $heading, array $expectedHeadings): ?string
+    private function getBestMatchingValidHeadingKey(string $heading, array $expectedHeadings): ?string
     {
-        return array_find_key($expectedHeadings, fn (array $alternatives) => $this->hasMatch($heading, $alternatives));
+        $bestMatch = null;
+        $bestMatchPercentage = 0.0;
+
+        foreach ($expectedHeadings as $key => $possibleNames) {
+            [$hasMatch, $highestMatchScore] = $this->getMatches($heading, $possibleNames);
+
+            if (! $hasMatch || $highestMatchScore <= $bestMatchPercentage) {
+                continue;
+            }
+
+            $bestMatch = $key;
+            $bestMatchPercentage = $highestMatchScore;
+        }
+
+        return $bestMatch;
     }
 
-    /** @param array<int, string> $possibleNames */
-    private function hasMatch(string $heading, array $possibleNames): bool
+    /**
+     * @param array<int, string> $possibleNames
+     * @return array<int, bool|float>
+     */
+    private function getMatches(string $heading, array $possibleNames): array
     {
-        $highestSimilarity = 0;
+        $highestSimilarity = 0.0;
 
         foreach ($possibleNames as $name) {
             similar_text($heading, $name, $percent);
@@ -60,6 +77,6 @@ final class ValidateHeadings
             $highestSimilarity = $percent;
         }
 
-        return $highestSimilarity >= self::THRESHOLD;
+        return [$highestSimilarity >= self::THRESHOLD, $highestSimilarity];
     }
 }
