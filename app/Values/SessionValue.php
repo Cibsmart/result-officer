@@ -11,7 +11,11 @@ final readonly class SessionValue
 {
     public function __construct(public string $value)
     {
-        if (! preg_match('/^\d{4}\/\d{4}$/i', Str::trim($this->value))) {
+        if (! preg_match('/^(\d{4})\/(\d{4})$/i', Str::trim($this->value), $matches)) {
+            throw new InvalidArgumentException('Invalid session');
+        }
+
+        if ((int) $matches[2] !== (int) $matches[1] + 1) {
             throw new InvalidArgumentException('Invalid session');
         }
     }
