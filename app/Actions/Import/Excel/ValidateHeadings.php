@@ -12,7 +12,7 @@ final class ValidateHeadings
 
     /**
      * @param array<int, int|string> $headings
-     * @return array{bool, array<string, string>, string}
+     * @return array{passed: bool, validated: array<string, string>, missing: string}
      */
     public function execute(array $headings, ExcelImportType $type): array
     {
@@ -36,7 +36,11 @@ final class ValidateHeadings
 
         $passedValidation = count($validatedHeadings) === count($expectedHeadings);
 
-        return [$passedValidation, $validatedHeadings, collect($missingHeadings)->join(', ')];
+        return [
+            'missing' => collect($missingHeadings)->join(', '),
+            'passed' => $passedValidation,
+            'validated' => $validatedHeadings,
+        ];
     }
 
     /** @param array<string, array<int, string>> $expectedHeadings */
