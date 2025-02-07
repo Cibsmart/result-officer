@@ -23,6 +23,18 @@ final class FinalStudent extends Model
         return $finalStudent;
     }
 
+    /** @param array<string, array<string, string>> $data */
+    public static function getOrCreate(Student $student, array $data): self
+    {
+        $finalStudent = self::query()->where('student_id', $student->id)->first();
+
+        if ($finalStudent) {
+            return $finalStudent;
+        }
+
+        return self::fromStudent($student, $data);
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, \App\Models\FinalStudent> */
     public function student(): BelongsTo
     {
