@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Data\Import;
+namespace App\Data\Imports;
 
 use App\Enums\ImportEventStatus;
 use App\Enums\ImportEventType;
