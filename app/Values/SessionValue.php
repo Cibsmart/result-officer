@@ -18,6 +18,8 @@ final readonly class SessionValue
 
     public static function new(string $session): self
     {
+        $session = Str::replace('-', '/', $session);
+
         return new self($session);
     }
 
