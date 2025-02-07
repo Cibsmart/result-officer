@@ -39,6 +39,7 @@ use App\Http\Controllers\Summary\DepartmentResultSummaryController;
 use App\Http\Controllers\Vetting\VettingController;
 use App\Http\Middleware\ValidateMonthParameter;
 use App\Http\Middleware\ValidateYearParameter;
+use App\Models\ExcelImportEvent;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(static function (): void {
@@ -177,6 +178,9 @@ Route::middleware(['auth'])->group(static function (): void {
         Route::prefix('final-results')->group(static function (): void {
             Route::get('', [ImportFinalResultController::class, 'index'])->name('import.final-results.index');
             Route::post('', [ImportFinalResultController::class, 'store'])->name('import.final-results.store');
+            Route::post('delete/{event}', [ImportFinalResultController::class, 'delete'])
+                ->can('delete', ExcelImportEvent::class)
+                ->name('import.final-results.delete');
         });
     });
 });
