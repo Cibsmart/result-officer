@@ -20,6 +20,7 @@ final class RawFinalResult extends Model
         $rawFinalResult = new self();
 
         $rawFinalResult->excel_import_event_id = $event->id;
+        $rawFinalResult->sn = (int) $row[$headings['sn']];
         $rawFinalResult->name = $row[$headings['name']];
         $rawFinalResult->registration_number = $row[$headings['registration_number']];
         $rawFinalResult->in_course = (int) $row[$headings['in_course']];
@@ -40,7 +41,11 @@ final class RawFinalResult extends Model
         $rawFinalResult->originating_session = $row[$headings['originating_session']];
         $rawFinalResult->database_officer = $row[$headings['database_officer']];
         $rawFinalResult->exam_officer = $row[$headings['exam_officer']];
-        $rawFinalResult->old_registration_number = $row[$headings['old_registration_number']];
+
+        $oldRegistrationNumber = $row[$headings['old_registration_number']];
+        $rawFinalResult->old_registration_number = $oldRegistrationNumber === 'NIL' || $oldRegistrationNumber === ''
+            ? null
+            : $oldRegistrationNumber;
 
         $rawFinalResult->save();
 
