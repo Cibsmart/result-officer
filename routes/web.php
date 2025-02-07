@@ -175,7 +175,7 @@ Route::middleware(['auth'])->group(static function (): void {
 
     Route::prefix('import')->group(static function (): void {
         Route::prefix('final-results')->group(static function (): void {
-            Route::get('', [ImportFinalResultController::class, 'create'])->name('import.final-results.create');
+            Route::get('', [ImportFinalResultController::class, 'index'])->name('import.final-results.index');
             Route::post('', [ImportFinalResultController::class, 'store'])->name('import.final-results.store');
         });
     });

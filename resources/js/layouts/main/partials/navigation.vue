@@ -98,8 +98,8 @@ const navigation: NavigationItem[] = [
     children: [
       {
         name: "Final Results",
-        href: route("import.final-results.create"),
-        current: route().current("import.final-results.create"),
+        href: route("import.final-results.index"),
+        current: route().current("import.final-results.index"),
       },
     ],
   },
