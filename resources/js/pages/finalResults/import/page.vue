@@ -138,6 +138,7 @@ const fileInput = ref<HTMLInputElement | null>(null);
 
               <BaseTD>
                 <SecondaryLinkSmall
+                  v-if="event.status !== 'completed'"
                   :href="route('import.final-results.delete', { event: event.id })"
                   method="post"
                   preserveScroll="true">
