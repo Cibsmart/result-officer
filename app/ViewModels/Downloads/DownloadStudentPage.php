@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\ViewModels\Downloads;
 
 use App\Data\Department\DepartmentListData;
-use App\Data\Import\PendingImportEventData;
+use App\Data\Imports\PendingImportEventData;
 use App\Data\Session\SessionListData;
 use Closure;
 use Illuminate\Support\Collection;

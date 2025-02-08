@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Support\Facades\Cache;
 
 final class FinalSessionEnrollment extends Model
 {
@@ -27,6 +28,22 @@ final class FinalSessionEnrollment extends Model
         $finalSessionEnrollment->save();
 
         return $finalSessionEnrollment;
+    }
+
+    public static function getOrCreate(
+        Student $student,
+        FinalStudent $finalStudent,
+        Session $session,
+        Level $level,
+        Year $year = Year::FIRST,
+    ): self {
+        return
+            Cache::remember("final_session_enrollment_{$student->id}_{$session->id}",
+                now()->addMinutes(5),
+                fn () => self::query()->firstOrCreate(
+                    ['student_id' => $student->id, 'session_id' => $session->id],
+                    ['final_student_id' => $finalStudent->id, 'level_id' => $level->id, 'year' => $year],
+                ));
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, \App\Models\SessionEnrollment> */

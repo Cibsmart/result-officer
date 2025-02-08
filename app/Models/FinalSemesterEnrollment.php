@@ -6,7 +6,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Cache;
 
 final class FinalSemesterEnrollment extends Model
 {
@@ -25,6 +27,16 @@ final class FinalSemesterEnrollment extends Model
         return $finalSemesterEnrollment;
     }
 
+    public static function getOrCreate(FinalSessionEnrollment $sessionEnrollment, Semester $semester): self
+    {
+        return
+            Cache::remember("final_semester_enrollment_{$sessionEnrollment->id}_{$semester->id}",
+                now()->addMinutes(5),
+                fn () => self::query()->firstOrCreate(
+                    ['final_session_enrollment_id' => $sessionEnrollment->id, 'semester_id' => $semester->id],
+                ));
+    }
+
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\FinalResult, \App\Models\FinalSemesterEnrollment>
@@ -32,6 +44,23 @@ final class FinalSemesterEnrollment extends Model
     public function finalResults(): HasMany
     {
         return $this->hasMany(FinalResult::class);
+    }
+
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FinalSessionEnrollment, \App\Models\FinalSemesterEnrollment>
+     */
+    public function finalSessionEnrollment(): BelongsTo
+    {
+        return $this->belongsTo(FinalSessionEnrollment::class);
+    }
+
+    public function session(): Session
+    {
+        $session = $this->finalSessionEnrollment->session;
+        assert($session instanceof Session);
+
+        return $session;
     }
 
     public function getResultCount(): int

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Download\Students;
 
 use App\Data\Department\DepartmentListData;
-use App\Data\Import\ImportEventData;
-use App\Data\Import\PendingImportEventData;
+use App\Data\Imports\ImportEventData;
+use App\Data\Imports\PendingImportEventData;
 use App\Data\Session\SessionListData;
 use App\Enums\ImportEventType;
 use App\Models\User;

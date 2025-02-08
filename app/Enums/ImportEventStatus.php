@@ -11,6 +11,8 @@ enum ImportEventStatus: string
     case STARTED = 'started';
     case DOWNLOADING = 'downloading';
     case DOWNLOADED = 'downloaded';
+    case UPLOADING = 'uploading';
+    case UPLOADED = 'uploaded';
     case SAVING = 'saving';
     case SAVED = 'saved';
     case PROCESSING = 'processing';
@@ -34,10 +36,22 @@ enum ImportEventStatus: string
     {
         return match ($this) {
             self::NEW, self::STARTED, self::QUEUED => 1,
-            self::DOWNLOADING, self::DOWNLOADED => 25,
+            self::DOWNLOADING, self::DOWNLOADED, self::UPLOADING, self::UPLOADED => 25,
             self::SAVING, self::SAVED => 50,
             self::PROCESSING => 75,
             self::CANCELLED, self::FAILED, self::COMPLETED => 100,
+        };
+    }
+
+    public function color(): StatusColor
+    {
+        return match ($this) {
+            self::NEW, self::STARTED, self::QUEUED, self::CANCELLED => StatusColor::GRAY,
+            self::DOWNLOADING, self::DOWNLOADED, self::UPLOADING, self::UPLOADED => StatusColor::INDIGO,
+            self::SAVING, self::SAVED => StatusColor::PINK,
+            self::PROCESSING => StatusColor::PURPLE,
+            self::FAILED => StatusColor::RED,
+            self::COMPLETED => StatusColor::GREEN,
         };
     }
 }

@@ -27,6 +27,7 @@ use App\Http\Controllers\Download\Students\DownloadStudentsPageController;
 use App\Http\Controllers\Exports\Results\ExportResultsByDepartmentSessionController;
 use App\Http\Controllers\Exports\Results\ExportResultsByRegistrationNumberController;
 use App\Http\Controllers\Exports\Results\ExportResultsPageController;
+use App\Http\Controllers\FinalResults\ImportFinalResultController;
 use App\Http\Controllers\Imports\CancelImportEventController;
 use App\Http\Controllers\Imports\ContinueImportEventController;
 use App\Http\Controllers\ProfileController;
@@ -38,11 +39,12 @@ use App\Http\Controllers\Summary\DepartmentResultSummaryController;
 use App\Http\Controllers\Vetting\VettingController;
 use App\Http\Middleware\ValidateMonthParameter;
 use App\Http\Middleware\ValidateYearParameter;
+use App\Models\ExcelImportEvent;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', DashboardController::class)->middleware(['auth'])->name('dashboard');
-
 Route::middleware(['auth'])->group(static function (): void {
+    Route::get('/', DashboardController::class)->name('dashboard');
+
     Route::prefix('profile')->group(static function (): void {
         Route::get('', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('', [ProfileController::class, 'update'])->name('profile.update');
@@ -148,6 +150,7 @@ Route::middleware(['auth'])->group(static function (): void {
     });
 
     Route::get('student/{student?}', [StudentController::class, 'show'])->name('students.show');
+
     Route::prefix('students')->group(static function (): void {
         Route::get('', [StudentController::class, 'index'])->name('students.index');
         Route::post('', [StudentController::class, 'store'])->name('students.store');
@@ -168,6 +171,16 @@ Route::middleware(['auth'])->group(static function (): void {
             Route::get('department/{department}/session/{session}',
                 [ExportResultsByDepartmentSessionController::class, 'download'])
                 ->name('export.results.department-session.download');
+        });
+    });
+
+    Route::prefix('import')->group(static function (): void {
+        Route::prefix('final-results')->group(static function (): void {
+            Route::get('', [ImportFinalResultController::class, 'index'])->name('import.final-results.index');
+            Route::post('', [ImportFinalResultController::class, 'store'])->name('import.final-results.store');
+            Route::post('delete/{event}', [ImportFinalResultController::class, 'delete'])
+                ->can('delete', ExcelImportEvent::class)
+                ->name('import.final-results.delete');
         });
     });
 });

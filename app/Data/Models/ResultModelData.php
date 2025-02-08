@@ -41,7 +41,7 @@ final readonly class ResultModelData
 
         $registrationNumber = RegistrationNumber::new($result->getRegistrationNumber());
         $totalScore = TotalScore::new((int) $result->in_course + (int) $result->exam);
-        $grade = $totalScore->grade($registrationNumber->allowEGrade());
+        $grade = $totalScore->grade($registrationNumber->allowEGrade() || $registration->session()->allowsEGrade());
         $gradePoint = $grade->point() * $creditUnit->value;
 
         $lecturer = null;
@@ -71,13 +71,13 @@ final readonly class ResultModelData
 
         $registrationNumber = RegistrationNumber::new($result->registration_number);
         $totalScore = TotalScore::new($result->exam + $result->inc);
-        $grade = $totalScore->grade($registrationNumber->allowEGrade());
+        $grade = $totalScore->grade($registrationNumber->allowEGrade() || $registration->session()->allowsEGrade());
         $gradePoint = $grade->point() * $creditUnit->value;
 
         $lecturer = null;
 
         if (! is_null($result->examiner)) {
-            $lecturer = Lecturer::getOrCreateFromUsingName($result->examiner);
+            $lecturer = Lecturer::getOrCreateUsingName($result->examiner);
         }
 
         return new self(

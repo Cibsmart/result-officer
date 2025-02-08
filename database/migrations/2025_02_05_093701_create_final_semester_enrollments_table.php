@@ -17,7 +17,7 @@ return new class extends Migration
     {
         Schema::create('final_semester_enrollments', function (Blueprint $table): void {
             $table->id();
-            $table->foreignIdFor(FinalSessionEnrollment::class)->constrained();
+            $table->foreignIdFor(FinalSessionEnrollment::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Semester::class)->constrained();
             $table->unsignedSmallInteger('result_count')->default(0);
             $table->unsignedSmallInteger('credit_unit_sum')->default(0);

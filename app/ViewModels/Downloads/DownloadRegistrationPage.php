@@ -6,7 +6,7 @@ namespace App\ViewModels\Downloads;
 
 use App\Data\Course\CourseListData;
 use App\Data\Department\DepartmentListData;
-use App\Data\Import\PendingImportEventData;
+use App\Data\Imports\PendingImportEventData;
 use App\Data\Level\LevelListData;
 use App\Data\Semester\SemesterListData;
 use App\Data\Session\SessionListData;

@@ -11,8 +11,8 @@ import { computed } from "vue";
 import ImportEvents from "@/pages/download/components/importEvents.vue";
 
 const props = defineProps<{
-  events: Array<App.Data.Import.ImportEventData>;
-  pending: App.Data.Import.PendingImportEventData;
+  events: Array<App.Data.Imports.ImportEventData>;
+  pending: App.Data.Imports.PendingImportEventData;
 }>();
 
 const hasPendingEvent = computed(() => props.pending !== null);

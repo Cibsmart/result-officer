@@ -59,7 +59,7 @@ final class Lecturer extends Model
         return self::createFromRawResult($rawResult);
     }
 
-    public static function getOrCreateFromUsingName(string $name): self
+    public static function getOrCreateUsingName(string $name, ?string $department = null): self
     {
         $lecturer = self::getUsingName($name);
 
@@ -67,6 +67,6 @@ final class Lecturer extends Model
             return $lecturer;
         }
 
-        return self::create(['name' => $name]);
+        return self::create(['name' => $name, 'department' => $department]);
     }
 }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Download\Courses;
 
-use App\Data\Import\ImportEventData;
-use App\Data\Import\PendingImportEventData;
+use App\Data\Imports\ImportEventData;
+use App\Data\Imports\PendingImportEventData;
 use App\Enums\ImportEventType;
 use App\ViewModels\Downloads\DownloadCoursesPage;
 use Illuminate\Http\Request;

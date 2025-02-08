@@ -23,6 +23,7 @@ it('throws exception for invalid session value', function ($stringSession): void
         ['2009/201'],
         ['20001/2010'],
         ['20092010'],
+        ['2009/2011'],
     ])
     ->throws(InvalidArgumentException::class);
 

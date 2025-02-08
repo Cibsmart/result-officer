@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Data\Import;
+namespace App\Data\Imports;
 
 use App\Enums\ImportEventStatus;
 use App\Enums\ImportEventType;
@@ -46,7 +46,7 @@ final class ImportEventData extends Data
         );
     }
 
-    /** @return \Illuminate\Support\Collection<int, \App\Data\Import\ImportEventData> */
+    /** @return \Illuminate\Support\Collection<int, \App\Data\Imports\ImportEventData> */
     public static function new(User $user, ImportEventType $type): Collection
     {
         return self::collect($user->imports()
@@ -63,7 +63,10 @@ final class ImportEventData extends Data
     public static function getDescription(ImportEvent $event): string
     {
         if ($event->status === ImportEventStatus::FAILED) {
-            return $event->message;
+            $message = $event->message;
+            assert(is_string($message));
+
+            return $message;
         }
 
         $description = "downloaded: {$event->downloaded}";

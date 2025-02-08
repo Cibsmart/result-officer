@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ViewModels\Downloads;
 
-use App\Data\Import\PendingImportEventData;
+use App\Data\Imports\PendingImportEventData;
 use Closure;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;

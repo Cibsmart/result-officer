@@ -128,6 +128,15 @@ final class Student extends Model
         return $this->hasManyThrough(SemesterEnrollment::class, SessionEnrollment::class);
     }
 
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\FinalSemesterEnrollment, \App\Models\FinalSessionEnrollment, \App\Models\Student>
+     */
+    public function finalSemesterEnrollments(): HasManyThrough
+    {
+        return $this->hasManyThrough(FinalSemesterEnrollment::class, FinalSessionEnrollment::class);
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\StatusChangeEvent, \App\Models\Student> */
     public function statusChangeEvents(): HasMany
     {

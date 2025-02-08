@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Data\Import\ImportEventData;
+use App\Data\Imports\ImportEventData;
 use App\Enums\ImportEventStatus;
 use App\Enums\ImportEventType;
 use Tests\Factories\ImportEventFactory;
