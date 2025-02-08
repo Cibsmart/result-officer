@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\RawDataStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -52,6 +53,12 @@ final class RawFinalResult extends Model
         $rawFinalResult->save();
 
         return $rawFinalResult;
+    }
+
+    public function updateStatus(RawDataStatus $status): void
+    {
+        $this->status = $status;
+        $this->save();
     }
 
     private static function cleanDate(string|int|null $date): ?string
