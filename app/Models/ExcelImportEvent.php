@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Enums\ImportEventStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
 final class ExcelImportEvent extends Model
 {
@@ -48,6 +49,27 @@ final class ExcelImportEvent extends Model
         $this->status = ImportEventStatus::FAILED;
         $this->message = $message;
         $this->save();
+    }
+
+    /** @return \Illuminate\Support\Collection<int, string> */
+    public function getUniqueRegistrationNumbers(): Collection
+    {
+        return $this->rawFinalResults()
+            ->orderBy('registration_number')
+            ->pluck('registration_number')
+            ->unique();
+    }
+
+    /** @return \Illuminate\Support\Collection<int, \App\Models\RawFinalResult> */
+    public function getPendingRawFinalResultsFor(string $registrationNumber): Collection
+    {
+        return $this->rawFinalResults()
+            ->where('status', 'pending')
+            ->where('registration_number', $registrationNumber)
+            ->orderBy('session')
+            ->orderBy('semester')
+            ->orderBy('course_code')
+            ->get();
     }
 
     /** @return array{status: 'App\Enums\ImportEventStatus' } */
