@@ -9,7 +9,7 @@ import InputLabel from "@/components/inputs/inputLabel.vue";
 import FormGroup from "@/components/forms/formGroup.vue";
 import BaseFormSection from "@/components/forms/baseFormSection.vue";
 import InputError from "@/components/inputs/inputError.vue";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import EmptyState from "@/components/emptyState.vue";
 import BaseTable from "@/components/tables/baseTable.vue";
 import BaseTHead from "@/components/tables/baseTHead.vue";
@@ -25,7 +25,7 @@ const props = defineProps<{
   data: App.Data.Imports.ExcelImportEventListData;
 }>();
 
-const form = useForm({ file: null });
+const form = useForm({ file: null as File | null });
 
 const submit = () => {
   form.post(route("import.final-results.store"));
@@ -40,6 +40,14 @@ const pages: BreadcrumbItem[] = [
 ];
 
 const hasEvent = computed(() => props.data.events.length > 0);
+
+const onFileChange = () => {
+  if (fileInput.value?.files?.length) {
+    form.file = fileInput.value.files[0];
+  }
+};
+
+const fileInput = ref<HTMLInputElement | null>(null);
 </script>
 
 <template>
@@ -64,8 +72,9 @@ const hasEvent = computed(() => props.data.events.length > 0);
                 value="Excel File" />
 
               <input
+                ref="fileInput"
                 type="file"
-                @input="form.file = $event.target.files[0]" />
+                @change="onFileChange" />
 
               <progress
                 v-if="form.progress"
