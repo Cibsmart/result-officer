@@ -432,6 +432,18 @@ declare namespace App.Data.Vetting {
   };
 }
 declare namespace App.Enums {
+  export type ChecklistType =
+    | "registration_number"
+    | "in_course"
+    | "exam"
+    | "total"
+    | "grade"
+    | "credit_unit"
+    | "semester"
+    | "session"
+    | "course_code"
+    | "year"
+    | "month";
   export type ClassOfDegree =
     | "FIRST CLASS HONOURS"
     | "SECOND CLASS HONOURS (UPPER DIVISION)"
