@@ -57,7 +57,10 @@ final class FinalSemesterEnrollment extends Model
 
     public function session(): Session
     {
-        return $this->finalSessionEnrollment()->session;
+        $session = $this->finalSessionEnrollment->session;
+        assert($session instanceof Session);
+
+        return $session;
     }
 
     public function getResultCount(): int
