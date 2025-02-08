@@ -2,7 +2,7 @@
 import { computed } from "vue";
 
 const props = defineProps<{
-  data: App.Data.Import.PendingImportEventData;
+  data: App.Data.Imports.PendingImportEventData;
 }>();
 
 const progressWidth = computed(() => `width: ${props.data.width}%`);

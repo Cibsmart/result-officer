@@ -15,8 +15,8 @@ import ImportEvents from "@/pages/download/components/importEvents.vue";
 defineProps<{
   department: App.Data.Department.DepartmentListData;
   session: App.Data.Session.SessionListData;
-  events: Array<App.Data.Import.ImportEventData>;
-  pending: App.Data.Import.PendingImportEventData;
+  events: Array<App.Data.Imports.ImportEventData>;
+  pending: App.Data.Imports.PendingImportEventData;
   selectedIndex: number;
 }>();
 

@@ -19,6 +19,7 @@ import BaseTD from "@/components/tables/baseTD.vue";
 import BaseTR from "@/components/tables/baseTR.vue";
 import Badge from "@/components/badge.vue";
 import SecondaryLinkSmall from "@/components/links/secondaryLinkSmall.vue";
+import { BreadcrumbItem } from "@/types";
 
 const props = defineProps<{
   data: App.Data.Imports.ExcelImportEventListData;

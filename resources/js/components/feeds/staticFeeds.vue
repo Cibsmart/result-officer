@@ -2,7 +2,7 @@
 import { CheckIcon, XMarkIcon, ExclamationCircleIcon } from "@heroicons/vue/20/solid";
 
 defineProps<{
-  events: Array<App.Data.Import.ImportEventData>;
+  events: Array<App.Data.Imports.ImportEventData>;
 }>();
 
 const settings = (status: string) => {

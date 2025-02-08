@@ -20,8 +20,8 @@ defineProps<{
   semesters: App.Data.Semester.SemesterListData;
   courses: App.Data.Course.CourseListData;
   levels: App.Data.Level.LevelListData;
-  events: Array<App.Data.Import.ImportEventData>;
-  pending: App.Data.Import.PendingImportEventData;
+  events: Array<App.Data.Imports.ImportEventData>;
+  pending: App.Data.Imports.PendingImportEventData;
   selectedIndex: number;
 }>();
 
