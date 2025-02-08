@@ -7,6 +7,7 @@ namespace App\Http\Controllers\FinalResults;
 use App\Actions\Import\Excel\ValidateHeadings;
 use App\Data\Imports\ExcelImportEventListData;
 use App\Enums\ExcelImportType;
+use App\Enums\ImportEventStatus;
 use App\Models\ExcelImportEvent;
 use App\Models\User;
 use App\ViewModels\Imports\ImportFinalResultPage;
@@ -55,6 +56,10 @@ final class ImportFinalResultController
 
     public function delete(ExcelImportEvent $event): RedirectResponse
     {
+        if ($event->status === ImportEventStatus::COMPLETED) {
+            return redirect()->back()->warning('Completed Import cannot be deleted.');
+        }
+
         Storage::delete($event->file_path);
         $event->delete();
 

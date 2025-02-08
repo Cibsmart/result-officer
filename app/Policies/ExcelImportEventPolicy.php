@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\Enums\ImportEventStatus;
 use App\Models\ExcelImportEvent;
 use App\Models\User;
 
@@ -29,6 +30,10 @@ final class ExcelImportEventPolicy
 
     public function delete(User $user, ExcelImportEvent $excelImportEvent): bool
     {
+        if ($excelImportEvent->status === ImportEventStatus::COMPLETED) {
+            return false;
+        }
+
         if ($user->isAdmin()) {
             return true;
         }
