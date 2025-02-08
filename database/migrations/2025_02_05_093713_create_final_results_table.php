@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('remarks')->nullable();
             $table->string('source');
             $table->foreignIdFor(Lecturer::class)->nullable();
-            $table->foreignIdFor(Session::class, 'originating_session')->nullable();
+            $table->foreignIdFor(Session::class, 'original_session_id')->nullable();
             $table->timestamps();
 
             $table->unique(['final_semester_enrollment_id', 'final_course_id'], 'unique_final_semester_results');
