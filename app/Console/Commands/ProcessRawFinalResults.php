@@ -61,13 +61,10 @@ final class ProcessRawFinalResults extends Command
                     ->map(fn (array $value, string $key) => "{$key}: " . collect($value)->join(', '))
                     ->join("\n");
 
-                dd($message);
-
                 $event->setMessage($message);
 
-                return Command::FAILURE;
+                continue;
             }
-            dd('here');
 
             $registrationNumbers = $event->rawFinalResults()
                 ->orderBy('registration_number')
@@ -91,7 +88,12 @@ final class ProcessRawFinalResults extends Command
                     continue;
                 }
 
-                //Handle Old Registration Number
+                $oldRegistrationNumber = $pendingResults->pluck('old_registration_number')->unique()->filter()->first();
+
+                if ($oldRegistrationNumber !== null) {
+                    $student->old_registration_number = $oldRegistrationNumber;
+                    $student->save();
+                }
 
                 $first = $pendingResults->first();
                 assert($first !== null);
