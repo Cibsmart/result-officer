@@ -18,7 +18,7 @@ final class ExcelImportEventListData extends Data
 
     public static function forUser(User $user): self
     {
-        $importEvents = $user->excelImportEvents()->limit(15)->get();
+        $importEvents = $user->excelImportEvents()->latest()->limit(15)->get();
 
         return new self(events: ExcelImportEventData::collect($importEvents));
     }
