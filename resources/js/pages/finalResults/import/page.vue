@@ -9,7 +9,6 @@ import InputLabel from "@/components/inputs/inputLabel.vue";
 import FormGroup from "@/components/forms/formGroup.vue";
 import BaseFormSection from "@/components/forms/baseFormSection.vue";
 import InputError from "@/components/inputs/inputError.vue";
-import { computed, ref } from "vue";
 import EmptyState from "@/components/emptyState.vue";
 import BaseTable from "@/components/tables/baseTable.vue";
 import BaseTHead from "@/components/tables/baseTHead.vue";
@@ -19,11 +18,15 @@ import BaseTD from "@/components/tables/baseTD.vue";
 import BaseTR from "@/components/tables/baseTR.vue";
 import Badge from "@/components/badge.vue";
 import SecondaryLinkSmall from "@/components/links/secondaryLinkSmall.vue";
+import { computed, ref, watch, onMounted } from "vue";
 import { BreadcrumbItem } from "@/types";
+import { usePoll } from "@inertiajs/vue3";
 
 const props = defineProps<{
   data: App.Data.Imports.ExcelImportEventListData;
 }>();
+
+const { start, stop } = usePoll(10000, {}, { autoStart: false });
 
 const form = useForm({ file: null as File | null });
 
@@ -40,6 +43,24 @@ const pages: BreadcrumbItem[] = [
 ];
 
 const hasEvent = computed(() => props.data.events.length > 0);
+
+const hasUnfinishedImport = computed(() =>
+  props.data.events.some((importEvent) => importEvent.status !== "completed" && importEvent.status !== "failed"),
+);
+
+onMounted(() => {
+  if (hasUnfinishedImport.value) {
+    start();
+  }
+});
+
+watch(hasUnfinishedImport, () => {
+  if (hasUnfinishedImport.value) {
+    start();
+  } else {
+    stop();
+  }
+});
 
 const onFileChange = () => {
   if (fileInput.value?.files?.length) {
@@ -118,7 +139,8 @@ const fileInput = ref<HTMLInputElement | null>(null);
               <BaseTD>
                 <SecondaryLinkSmall
                   :href="route('import.final-results.delete', { event: event.id })"
-                  method="post">
+                  method="post"
+                  preserveScroll="true">
                   Delete
                 </SecondaryLinkSmall>
               </BaseTD>
