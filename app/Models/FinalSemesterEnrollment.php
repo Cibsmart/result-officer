@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Cache;
 
@@ -43,6 +44,20 @@ final class FinalSemesterEnrollment extends Model
     public function finalResults(): HasMany
     {
         return $this->hasMany(FinalResult::class);
+    }
+
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FinalSessionEnrollment, \App\Models\FinalSemesterEnrollment>
+     */
+    public function finalSessionEnrollment(): BelongsTo
+    {
+        return $this->belongsTo(FinalSessionEnrollment::class);
+    }
+
+    public function session(): Session
+    {
+        return $this->finalSessionEnrollment()->session;
     }
 
     public function getResultCount(): int
