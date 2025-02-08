@@ -47,10 +47,10 @@ final class ProcessRawFinalResults extends Command
             return Command::SUCCESS;
         }
 
-//        $importEvents->toQuery()->update(['status' => ImportEventStatus::PROCESSING->value]);
+        $importEvents->toQuery()->update(['status' => ImportEventStatus::PROCESSING->value]);
 
         foreach ($importEvents as $event) {
-            $messages = collect($this->preProcess($event))->filter();
+            $messages = collect($this->preprocess($event))->filter();
 
             if ($messages->isNotEmpty()) {
                 $message = $messages
@@ -163,8 +163,8 @@ final class ProcessRawFinalResults extends Command
         return $courses->contains('id', $course->id) || $courses->contains('code', $course->code);
     }
 
-    /** @return array<string, string> */
-    private function preProcess(ExcelImportEvent $event): array
+    /** @return array<string, array<int, string>> */
+    private function preprocess(ExcelImportEvent $event): array
     {
         $messages = [];
 

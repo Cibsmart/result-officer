@@ -6,11 +6,6 @@ parameters:
 			path: app/Data/Department/DepartmentListData.php
 
 		-
-			message: "#^Method App\\\\Data\\\\Import\\\\ImportEventData\\:\\:getDescription\\(\\) should return string but returns string\\|null\\.$#"
-			count: 1
-			path: app/Data/Import/ImportEventData.php
-
-		-
 			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Program\\>\\:\\:tap\\(\\) expects callable\\(Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Program\\>\\)\\: mixed, App\\\\Scopes\\\\ActiveScope given\\.$#"
 			count: 1
 			path: app/Data/Program/ProgramListData.php
