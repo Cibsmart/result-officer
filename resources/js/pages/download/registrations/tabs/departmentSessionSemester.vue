@@ -7,6 +7,7 @@ import SelectInput from "@/components/inputs/selectInput.vue";
 import { SelectItem } from "@/types";
 import BaseFormSection from "@/components/forms/baseFormSection.vue";
 import FormGroup from "@/components/forms/formGroup.vue";
+import AlignButton from "@/components/forms/alignButton.vue";
 
 defineProps<{
   departments: SelectItem[];
@@ -32,21 +33,21 @@ const submit = () => {
     <form
       class="mt-6 space-y-6"
       @submit.prevent="submit">
+      <div class="flex-1">
+        <InputLabel
+          for="department"
+          value="Department" />
+
+        <SelectInput
+          id="department"
+          v-model="form.department"
+          :items="departments" />
+
+        <InputError :message="form.errors.department" />
+      </div>
+
       <FormGroup>
         <div class="flex-1">
-          <InputLabel
-            for="department"
-            value="Department" />
-
-          <SelectInput
-            id="department"
-            v-model="form.department"
-            :items="departments" />
-
-          <InputError :message="form.errors.department" />
-        </div>
-
-        <div class="flex-none">
           <InputLabel
             for="session"
             value="Session" />
@@ -59,7 +60,7 @@ const submit = () => {
           <InputError :message="form.errors.session" />
         </div>
 
-        <div class="flex-none">
+        <div class="flex-1">
           <InputLabel
             for="semester"
             value="Session" />
@@ -71,11 +72,11 @@ const submit = () => {
 
           <InputError :message="form.errors.semester" />
         </div>
-      </FormGroup>
 
-      <div>
-        <PrimaryButton :disabled="form.processing">Download</PrimaryButton>
-      </div>
+        <AlignButton>
+          <PrimaryButton :disabled="form.processing">Download</PrimaryButton>
+        </AlignButton>
+      </FormGroup>
     </form>
   </BaseFormSection>
 </template>
