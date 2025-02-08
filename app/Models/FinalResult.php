@@ -59,9 +59,12 @@ final class FinalResult extends Model
         $exam = ExamScore::new($result->exam);
         $total = TotalScore::new($result->total);
         $total2 = TotalScore::fromInCourseAndExam($inCourse, $exam);
+        $grade2 = $total->grade(
+            $registrationNumber->allowEGrade() || $finalSemesterEnrollment->session()->allowsEGrade(),
+        );
 
         self::checkAndReportTotalDifference($total, $total2, $result);
-        self::checkAndReportGradeDifference($grade, $total->grade($registrationNumber->allowEGrade()), $result);
+        self::checkAndReportGradeDifference($grade, $grade2, $result);
 
         $session = self::getResultOriginalSession($result);
 
