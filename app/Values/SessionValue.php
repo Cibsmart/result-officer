@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Values;
 
+use App\Models\Session;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 
@@ -35,5 +36,10 @@ final readonly class SessionValue
     public function lastYear(): int
     {
         return (int) Str::of($this->value)->explode('/')->last();
+    }
+
+    public function getSession(): Session
+    {
+        return Session::getUsingName($this->value);
     }
 }
