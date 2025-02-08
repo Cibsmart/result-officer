@@ -40,8 +40,8 @@ enum Months: string
         ];
     }
 
-    public static function fromName(string $month): ?string
+    public static function fromName(string $month): ?self
     {
-        return Str::of($month)->lower()->title()->value();
+        return self::tryFrom(Str::of($month)->lower()->title()->value());
     }
 }
