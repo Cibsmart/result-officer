@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class FinalStudent extends Model
 {
-    /** @param array<string, array<string, int|string>> $data */
+    /** @param array<string, int|string> $data */
     public static function fromStudent(Student $student, array $data): self
     {
         $finalStudent = new self();
@@ -23,7 +23,7 @@ final class FinalStudent extends Model
         return $finalStudent;
     }
 
-    /** @param array<string, array<string, int|string>> $data */
+    /** @param array<string, int|string> $data */
     public static function getOrCreate(Student $student, array $data): self
     {
         $finalStudent = self::query()->where('student_id', $student->id)->first();
