@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('final_results', function (Blueprint $table): void {
             $table->id();
-            $table->foreignIdFor(FinalSemesterEnrollment::class)->constrained();
+            $table->foreignIdFor(FinalSemesterEnrollment::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(FinalCourse::class)->constrained();
             $table->string('course_status', 1);
             $table->unsignedTinyInteger('credit_unit');
