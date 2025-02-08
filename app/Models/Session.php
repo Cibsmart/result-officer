@@ -64,7 +64,7 @@ final class Session extends Model
         return self::getUsingName($sessionName);
     }
 
-    public function allowEGrade(): bool
+    public function allowsEGrade(): bool
     {
         $sessionEGradeWasRestored = self::getUsingName('2018/2019');
 
