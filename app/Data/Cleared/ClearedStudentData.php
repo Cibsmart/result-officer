@@ -18,22 +18,21 @@ final class ClearedStudentData extends Data
         public readonly Gender $gender,
         public StudentStatus $status,
         public readonly string $fcgpa,
-        public readonly string $dateCleared,
         public readonly string $slug,
+        public readonly string $batch,
+        public readonly int $numberOfResults,
     ) {
     }
 
     public static function fromModel(Student $student): self
     {
-        $clearEvent = $student->statusChangeEvents()
-            ->where('status', StudentStatus::CLEARED)
-            ->first();
-
         $gender = $student->gender;
         assert($gender instanceof Gender);
 
         $status = $student->status;
         assert($status instanceof StudentStatus);
+
+        $finalStudent = $student->finalStudent;
 
         return new self(
             id: $student->id,
@@ -41,9 +40,10 @@ final class ClearedStudentData extends Data
             registrationNumber: $student->registration_number,
             gender: $gender,
             status: $status,
-            fcgpa: number_format($student->finalStudent->final_cummulative_grade_point_average, 2),
-            dateCleared: $clearEvent->date->format('jS M, Y'),
+            fcgpa: number_format($finalStudent->final_cummulative_grade_point_average, 2),
             slug: $student->slug,
+            batch: "{$finalStudent->month} {$finalStudent->year}",
+            numberOfResults: $finalStudent->result_count,
         );
     }
 }

@@ -2,7 +2,12 @@
 import EmptyState from "@/components/emptyState.vue";
 import IconLink from "@/components/links/iconLink.vue";
 import { computed } from "vue";
-import PrimaryButtonSmall from "@/components/buttons/primaryButtonSmall.vue";
+import BaseTable from "@/components/tables/baseTable.vue";
+import BaseTHead from "@/components/tables/baseTHead.vue";
+import BaseTH from "@/components/tables/baseTH.vue";
+import BaseTBody from "@/components/tables/baseTBody.vue";
+import BaseTR from "@/components/tables/baseTR.vue";
+import BaseTD from "@/components/tables/baseTD.vue";
 
 const props = defineProps<{
   students: App.Data.Cleared.ClearedStudentListData;
@@ -31,82 +36,47 @@ const hasRows = computed(() => props.students.data.length > 0);
     <div>
       <template v-if="hasRows">
         <div class="-mx-4 mt-4 overflow-auto ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg dark:ring-gray-600">
-          <table class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
-            <thead>
-              <tr>
-                <th
-                  class="hidden px-3 py-2 text-center text-sm font-semibold text-gray-900 lg:table-cell dark:text-white"
-                  scope="col">
-                  SN
-                </th>
+          <BaseTable>
+            <BaseTHead>
+              <BaseTH> SN</BaseTH>
 
-                <th
-                  class="py-2 text-left text-sm font-semibold text-gray-900 dark:text-white"
-                  scope="col">
-                  NAME
-                </th>
+              <BaseTH position="left"> NAME</BaseTH>
 
-                <th
-                  class="hidden py-2 text-center text-sm font-semibold text-gray-900 lg:table-cell dark:text-white"
-                  scope="col">
-                  REGISTRATION NUMBER
-                </th>
+              <BaseTH position="left"> REGISTRATION NUMBER</BaseTH>
 
-                <th
-                  class="hidden py-2 text-center text-sm font-semibold text-gray-900 lg:table-cell dark:text-white"
-                  scope="col">
-                  FCGPA
-                </th>
+              <BaseTH> FCGPA</BaseTH>
 
-                <th
-                  class="hidden py-2 text-center text-sm font-semibold text-gray-900 lg:table-cell dark:text-white"
-                  scope="col">
-                  DATE CLEARED
-                </th>
+              <BaseTH position="left"> DATE CLEARED</BaseTH>
 
-                <th
-                  class="py-2 text-center text-sm font-semibold text-gray-900 dark:text-white"
-                  scope="col">
-                  ACTIONS
-                </th>
-              </tr>
-            </thead>
+              <!--              <BaseTH> ACTIONS</BaseTH>-->
+            </BaseTHead>
 
-            <tbody>
+            <BaseTBody>
               <template
                 v-for="(student, index) in students.data"
                 :key="student.id">
-                <tr>
-                  <td
-                    class="hidden border-t border-gray-200 px-3 py-2 text-center text-sm text-gray-700 lg:table-cell dark:border-gray-700 dark:text-gray-300">
-                    {{ index + 1 }}
-                  </td>
+                <BaseTR>
+                  <BaseTD>{{ index + 1 }}</BaseTD>
 
-                  <td class="relative border-t border-gray-200 py-2 text-left text-sm dark:border-gray-700">
-                    {{ student.name }}
-                  </td>
+                  <BaseTD
+                    mobile
+                    position="left"
+                    >{{ student.name }}
+                  </BaseTD>
 
-                  <td class="relative border-t border-gray-200 py-2 text-center text-sm dark:border-gray-700">
-                    {{ student.registrationNumber }}
-                  </td>
+                  <BaseTD position="left"> {{ student.registrationNumber }}</BaseTD>
 
-                  <td class="relative border-t border-gray-200 py-2 text-center text-sm dark:border-gray-700">
-                    {{ student.fcgpa }}
-                  </td>
+                  <BaseTD mobile> {{ student.fcgpa }}</BaseTD>
 
-                  <td
-                    class="border-t border-gray-200 px-3 py-2 text-center text-sm text-gray-700 dark:border-gray-700 dark:text-gray-300">
-                    {{ student.dateCleared }}
-                  </td>
+                  <BaseTD position="left">{{ student.batch }}</BaseTD>
 
-                  <td
-                    class="border-t border-gray-200 px-3 py-2 text-center text-sm text-gray-700 dark:border-gray-700 dark:text-gray-300">
-                    <PrimaryButtonSmall> graduate</PrimaryButtonSmall>
-                  </td>
-                </tr>
+                  <!--                  <BaseTD>-->
+                  <!--                    <PrimaryButtonSmall> graduate</PrimaryButtonSmall>-->
+                  <!--                  </BaseTD>-->
+                </BaseTR>
               </template>
-            </tbody>
-          </table>
+            </BaseTBody>
+          </BaseTable>
         </div>
       </template>
 
