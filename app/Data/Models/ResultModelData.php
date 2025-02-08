@@ -77,7 +77,7 @@ final readonly class ResultModelData
         $lecturer = null;
 
         if (! is_null($result->examiner)) {
-            $lecturer = Lecturer::getOrCreateFromUsingName($result->examiner);
+            $lecturer = Lecturer::getOrCreateUsingName($result->examiner);
         }
 
         return new self(

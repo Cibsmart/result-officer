@@ -58,6 +58,6 @@ final class ImportFinalResultController
         Storage::delete($event->file_path);
         $event->delete();
 
-        return redirect()->back()->success('Import deleted.');
+        return redirect()->back()->info('Import deleted.');
     }
 }
