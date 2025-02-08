@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\CourseStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
@@ -38,6 +39,21 @@ final class FinalCourse extends Model
             ->get();
 
         return $courses->contains('id', $this->id) || $courses->contains('code', $this->code);
+    }
+
+    public function getCourseStatus(Student $student): CourseStatus
+    {
+        $semesterEnrollmentIds = $student->finalSemesterEnrollments->pluck('id');
+
+        $finalResultCourseIds = FinalResult::query()
+            ->whereIn('final_semester_enrollment_id', $semesterEnrollmentIds)
+            ->pluck('final_course_id');
+
+        $courses = self::query()->whereIn('id', $finalResultCourseIds)->get();
+
+        return $courses->contains('id', $this->id) || $courses->contains('code', $this->code)
+            ? CourseStatus::REPEAT
+            : CourseStatus::FRESH;
     }
 
     private static function getUsingSlug(string $slug): ?self
