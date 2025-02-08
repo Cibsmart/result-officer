@@ -5,8 +5,8 @@ import StaticFeeds from "@/components/feeds/staticFeeds.vue";
 import ActiveFeeds from "@/components/feeds/activeFeeds.vue";
 import BaseSection from "@/layouts/main/partials/baseSection.vue";
 import PrimaryLink from "@/components/links/primaryLink.vue";
-import { usePoll } from "@/composables/usePoll";
-import { computed, watch } from "vue";
+import { computed, onMounted, watch } from "vue";
+import { usePoll } from "@inertiajs/vue3";
 
 const props = defineProps<{
   events: Array<App.Data.Imports.ImportEventData>;
@@ -17,11 +17,16 @@ const hasPendingEvent = computed(() => props.pending !== null);
 const hasEvent = computed(() => props.events.length > 0);
 const pendingDescription = computed(() => (hasPendingEvent.value ? `Pending ${props.pending.type} Download` : ""));
 const historyDescription = computed(() => (hasEvent.value ? `Recent ${props.events[0].type} Download History` : ""));
+const { start, stop } = usePoll(10000, { only: ["pending", "events"] }, { autoStart: false });
 
-const { start, stop } = usePoll(hasPendingEvent, ["pending", "events"]);
+onMounted(() => {
+  if (hasPendingEvent.value) {
+    start();
+  }
+});
 
 watch(hasPendingEvent, () => {
-  if (hasPendingEvent.value === true) {
+  if (hasPendingEvent.value) {
     start();
   } else {
     stop();

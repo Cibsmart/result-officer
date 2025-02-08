@@ -22,8 +22,9 @@ declare namespace App.Data.Cleared {
     gender: App.Enums.Gender;
     status: App.Enums.StudentStatus;
     fcgpa: string;
-    dateCleared: string;
     slug: string;
+    batch: string;
+    numberOfResults: number;
   };
   export type ClearedStudentListData = {
     faculty: App.Data.Faculty.FacultyData;

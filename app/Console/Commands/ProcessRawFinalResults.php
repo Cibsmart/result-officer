@@ -7,6 +7,7 @@ namespace App\Console\Commands;
 use App\Enums\ImportEventStatus;
 use App\Enums\Months;
 use App\Enums\RawDataStatus;
+use App\Enums\StudentStatus;
 use App\Enums\Year;
 use App\Models\ExamOfficer;
 use App\Models\ExcelImportEvent;
@@ -114,9 +115,15 @@ final class ProcessRawFinalResults extends Command
                 continue;
             }
 
+            $finalStudent = $this->getFinalStudent($pendingResults->firstOrFail(), $event, $student);
+
             $this->checkAndUpdateOldRegistrationNumber($student, $pendingResults);
 
-            $this->processFinalSessionResults($event, $pendingResults, $student);
+            $this->processFinalSessionResults($pendingResults, $student, $finalStudent);
+
+            $finalStudent->updateCountSumAndAverages();
+
+            $student->updateStatus(StudentStatus::CLEARED);
         }
     }
 
@@ -155,12 +162,10 @@ final class ProcessRawFinalResults extends Command
 
     /** @param \Illuminate\Support\Collection<int, \App\Models\RawFinalResult> $results */
     private function processFinalSessionResults(
-        ExcelImportEvent $event,
         Collection $results,
         Student $student,
+        FinalStudent $finalStudent,
     ): void {
-        $finalStudent = $this->getFinalStudent($results->firstOrFail(), $event, $student);
-
         $sessionCount = 1;
 
         foreach ($results->groupBy('session') as $sessionName => $sessionResults) {
@@ -179,6 +184,8 @@ final class ProcessRawFinalResults extends Command
 
             $this->processSemesterResults($sessionEnrollment, $sessionResults, $student);
 
+            $sessionEnrollment->updateCountSumAndAverages();
+
             $sessionCount += 1;
         }
     }
@@ -195,6 +202,8 @@ final class ProcessRawFinalResults extends Command
             $semesterEnrollment = FinalSemesterEnrollment::getOrCreate($sessionEnrollment, $semester);
 
             $this->processFinalResults($semesterEnrollment, $semesterResults, $student);
+
+            $semesterEnrollment->updateSumsAndAverage();
         }
     }
 

@@ -92,13 +92,13 @@ const pages: BreadcrumbItem[] = [
             <BaseTD
               class="w-80"
               position="left"
-              >{{ student.department }}</BaseTD
-            >
+              >{{ student.department }}
+            </BaseTD>
 
             <BaseTD
               class="px-2"
               mobile>
-              <SecondaryLinkSmall :href="route('students.show', { student: student })">View</SecondaryLinkSmall>
+              <SecondaryLinkSmall :href="route('students.show', { student: student.slug })">View</SecondaryLinkSmall>
             </BaseTD>
           </BaseTR>
         </BaseTBody>

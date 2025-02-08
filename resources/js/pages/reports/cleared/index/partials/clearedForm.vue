@@ -7,6 +7,7 @@ import SelectInput from "@/components/inputs/selectInput.vue";
 import { SelectItem } from "@/types";
 import BaseFormSection from "@/components/forms/baseFormSection.vue";
 import { computed } from "vue";
+import FormGroup from "@/components/forms/formGroup.vue";
 
 defineProps<{
   departments: SelectItem[];
@@ -54,23 +55,23 @@ const months = [
     <form
       class="mt-6 space-y-6"
       @submit.prevent="submit">
-      <div class="flex w-full items-start space-x-4">
+      <div class="flex-1">
+        <InputLabel
+          for="department"
+          value="Department" />
+
+        <SelectInput
+          id="department"
+          v-model="form.department"
+          :items="departments" />
+
+        <InputError
+          :message="form.errors.department"
+          class="mt-2" />
+      </div>
+
+      <FormGroup>
         <div class="flex-1">
-          <InputLabel
-            for="department"
-            value="Department" />
-
-          <SelectInput
-            id="department"
-            v-model="form.department"
-            :items="departments" />
-
-          <InputError
-            :message="form.errors.department"
-            class="mt-2" />
-        </div>
-
-        <div>
           <InputLabel
             for="year"
             value="Year" />
@@ -85,7 +86,7 @@ const months = [
             class="mt-2" />
         </div>
 
-        <div>
+        <div class="flex-1">
           <InputLabel
             for="month"
             value="Month" />
@@ -110,7 +111,7 @@ const months = [
             View
           </PrimaryButton>
         </div>
-      </div>
+      </FormGroup>
     </form>
   </BaseFormSection>
 </template>
