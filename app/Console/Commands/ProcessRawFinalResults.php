@@ -30,7 +30,6 @@ use App\Values\SessionValue;
 use App\Values\TotalScore;
 use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
 
 final class ProcessRawFinalResults extends Command
 {
@@ -81,6 +80,10 @@ final class ProcessRawFinalResults extends Command
                     ->orderBy('course_code')
                     ->get();
 
+                if ($pendingResults->isEmpty()) {
+                    continue;
+                }
+
                 //Handle Old Registration Number
 
                 $first = $pendingResults->first();
@@ -119,8 +122,14 @@ final class ProcessRawFinalResults extends Command
 
                             $course = FinalCourse::getOrCreateUsingCodeAndTitle(
                                 CourseCode::new($result->course_code)->value,
-                                Str::replace(' ', ' ', $result->course_title),
+                                $result->course_title,
                             );
+
+                            if ($this->checkForCourseDuplicate($semesterEnrollment, $course)) {
+                                $result->updateStatus(RawDataStatus::DUPLICATE);
+
+                                continue;
+                            }
 
                             $status = CourseStatus::REPEAT;
 
@@ -143,6 +152,15 @@ final class ProcessRawFinalResults extends Command
         }
 
         return Command::SUCCESS;
+    }
+
+    private function checkForCourseDuplicate(FinalSemesterEnrollment $semesterEnrollment, FinalCourse $course): bool
+    {
+        $courses = FinalCourse::query()
+            ->whereIn('id', $semesterEnrollment->finalResults()->pluck('final_course_id'))
+            ->get();
+
+        return $courses->contains('id', $course->id) || $courses->contains('code', $course->code);
     }
 
     /** @return array<string, string> */

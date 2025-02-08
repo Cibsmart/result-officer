@@ -21,6 +21,7 @@ final class FinalCourse extends Model
 
     public static function getOrCreateUsingCodeAndTitle(string $courseCode, string $courseTitle): self
     {
+        $courseTitle = Str::replace(' ', ' ', $courseTitle);
         $slug = Str::slug("{$courseCode}-{$courseTitle}");
 
         $finalCourse = self::getUsingSlug($slug);
@@ -30,7 +31,7 @@ final class FinalCourse extends Model
             : self::createFinalCourse($courseCode, $courseTitle);
     }
 
-    public static function getUsingSlug(string $slug): ?self
+    private static function getUsingSlug(string $slug): ?self
     {
         return
             Cache::remember("final_course_{$slug}",
