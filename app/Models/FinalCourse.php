@@ -31,6 +31,15 @@ final class FinalCourse extends Model
             : self::createFinalCourse($courseCode, $courseTitle);
     }
 
+    public function checkForDuplicateInFinalSemesterEnrollment(FinalSemesterEnrollment $semesterEnrollment): bool
+    {
+        $courses = self::query()
+            ->whereIn('id', $semesterEnrollment->finalResults()->pluck('final_course_id'))
+            ->get();
+
+        return $courses->contains('id', $this->id) || $courses->contains('code', $this->code);
+    }
+
     private static function getUsingSlug(string $slug): ?self
     {
         return

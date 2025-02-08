@@ -125,7 +125,7 @@ final class ProcessRawFinalResults extends Command
                                 $result->course_title,
                             );
 
-                            if ($this->checkForCourseDuplicate($semesterEnrollment, $course)) {
+                            if ($course->checkForDuplicateInFinalSemesterEnrollment($semesterEnrollment)) {
                                 $result->updateStatus(RawDataStatus::DUPLICATE);
 
                                 continue;
@@ -152,15 +152,6 @@ final class ProcessRawFinalResults extends Command
         }
 
         return Command::SUCCESS;
-    }
-
-    private function checkForCourseDuplicate(FinalSemesterEnrollment $semesterEnrollment, FinalCourse $course): bool
-    {
-        $courses = FinalCourse::query()
-            ->whereIn('id', $semesterEnrollment->finalResults()->pluck('final_course_id'))
-            ->get();
-
-        return $courses->contains('id', $course->id) || $courses->contains('code', $course->code);
     }
 
     /** @return array<string, array<int, string>> */
