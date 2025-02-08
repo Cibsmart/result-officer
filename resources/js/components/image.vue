@@ -8,7 +8,7 @@ const props = defineProps<{
 const initials = computed(() =>
   props.name
     .split(" ")
-    .map((word) => word[0].toUpperCase())
+    .map((word) => word[0])
     .join("")
     .slice(0, 2),
 );
