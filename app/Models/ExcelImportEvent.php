@@ -12,11 +12,13 @@ use Illuminate\Support\Collection;
 
 final class ExcelImportEvent extends Model
 {
+    /** @param array<string, int|string> $data */
     public static function new(
         User $user,
         ExcelImportType $type,
         string $filePath,
         string $fileName,
+        array $data = [],
         ImportEventStatus $status = ImportEventStatus::QUEUED,
     ): self {
         $importEvent = new self();
@@ -26,6 +28,7 @@ final class ExcelImportEvent extends Model
         $importEvent->file_name = $fileName;
         $importEvent->file_path = $filePath;
         $importEvent->status = $status;
+        $importEvent->data = $data;
 
         $importEvent->save();
 
@@ -76,10 +79,11 @@ final class ExcelImportEvent extends Model
             ->get();
     }
 
-    /** @return array{status: 'App\Enums\ImportEventStatus' } */
+    /** @return array{data: 'array', status: 'App\Enums\ImportEventStatus' } */
     protected function casts(): array
     {
         return [
+            'data' => 'array',
             'status' => ImportEventStatus::class,
         ];
     }
