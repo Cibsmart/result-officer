@@ -30,6 +30,7 @@ use App\Http\Controllers\Exports\Results\ExportResultsPageController;
 use App\Http\Controllers\Imports\CancelImportEventController;
 use App\Http\Controllers\Imports\ContinueImportEventController;
 use App\Http\Controllers\Imports\FinalResultImportController;
+use App\Http\Controllers\Imports\ProgramCurriculumImportController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Reports\CompositeSheetController;
 use App\Http\Controllers\Reports\DepartmentClearedController;
@@ -181,6 +182,16 @@ Route::middleware(['auth'])->group(static function (): void {
             Route::post('delete/{event}', [FinalResultImportController::class, 'delete'])
                 ->can('delete', ExcelImportEvent::class)
                 ->name('import.final-results.delete');
+        });
+
+        Route::prefix('curriculum')->group(static function (): void {
+            Route::get('', [ProgramCurriculumImportController::class, 'index'])
+                ->name('import.curriculum.index');
+            Route::post('', [ProgramCurriculumImportController::class, 'store'])
+                ->name('import.curriculum.store');
+            Route::post('delete/{event}', [ProgramCurriculumImportController::class, 'delete'])
+                ->can('delete', ExcelImportEvent::class)
+                ->name('import.curriculum.delete');
         });
     });
 });
