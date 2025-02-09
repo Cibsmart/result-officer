@@ -457,7 +457,7 @@ declare namespace App.Enums {
   export type CourseType = "C" | "E" | "G" | "A" | "R";
   export type CreditUnit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 15 | 16 | 18 | 24 | 30;
   export type EntryMode = "UTME" | "DENT" | "PD" | "TRAN";
-  export type ExcelImportType = "curriculum" | "final_results";
+  export type ExcelImportType = "curriculum" | "final_result";
   export type Gender = "M" | "F" | "U";
   export type Grade = "A" | "B" | "C" | "D" | "E" | "F";
   export type ImportEventMethod =
@@ -576,7 +576,7 @@ declare namespace App.ViewModels.Exports {
   };
 }
 declare namespace App.ViewModels.Imports {
-  export type ImportFinalResultPage = {
+  export type ExcelImportPage = {
     data: App.Data.Imports.ExcelImportEventListData;
   };
 }

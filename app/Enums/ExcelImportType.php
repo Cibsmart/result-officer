@@ -7,14 +7,14 @@ namespace App\Enums;
 enum ExcelImportType: string
 {
     case CURRICULUM = 'curriculum';
-    case FINAL_RESULTS = 'final_results';
+    case FINAL_RESULT = 'final_result';
 
     /** @return array<string, array<int, string>> */
     public function expectedHeadings(): array
     {
         return match ($this) {
             self::CURRICULUM => $this->getCurriculumHeadings(),
-            self::FINAL_RESULTS => $this->getFinalResultsHeadings(),
+            self::FINAL_RESULT => $this->getFinalResultsHeadings(),
         };
     }
 
