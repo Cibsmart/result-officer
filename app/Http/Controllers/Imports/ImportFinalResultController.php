@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\FinalResults;
+namespace App\Http\Controllers\Imports;
 
 use App\Actions\Import\Excel\ValidateHeadings;
 use App\Data\Imports\ExcelImportEventListData;
@@ -40,7 +40,7 @@ final class ImportFinalResultController
 
         $validation = (new ValidateHeadings())->execute($headings, ExcelImportType::FINAL_RESULTS);
 
-        if (! $validation['passed']) {
+        if (!$validation['passed']) {
             $message = "Invalid File: The following headings are missing: {$validation['missing']}.";
 
             return redirect()->back()->error($message);
