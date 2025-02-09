@@ -79,6 +79,7 @@ declare namespace App.Data.Department {
     id: number;
     name: string;
     slug: string;
+    programs: App.Data.Program.ProgramListData | null;
   };
   export type DepartmentListData = {
     data: Array<App.Data.Department.DepartmentData>;
@@ -576,6 +577,10 @@ declare namespace App.ViewModels.Exports {
   };
 }
 declare namespace App.ViewModels.Imports {
+  export type CurriculumImportPage = {
+    data: App.Data.Imports.ExcelImportEventListData;
+    departments: App.Data.Department.DepartmentListData;
+  };
   export type ExcelImportPage = {
     data: App.Data.Imports.ExcelImportEventListData;
   };

@@ -20,7 +20,7 @@ final class DepartmentListData extends Data
 
     public static function new(): self
     {
-        $default = new DepartmentData(id: 0, name: 'Select Department', slug: '');
+        $default = new DepartmentData(id: 0, name: 'Select Department', slug: '', programs: null);
 
         return new self(
             data: DepartmentData::collect(
@@ -34,7 +34,7 @@ final class DepartmentListData extends Data
 
     public static function forUser(User $user): self
     {
-        $default = new DepartmentData(id: 0, name: 'Select Department', slug: '');
+        $default = new DepartmentData(id: 0, name: 'Select Department', slug: '', programs: null);
 
         $departmentIds = $user->departments()->pluck('department_id');
 
