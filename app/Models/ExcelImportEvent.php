@@ -128,12 +128,13 @@ final class ExcelImportEvent extends Model
             ->get();
     }
 
-    /** @return array{data: 'array', status: 'App\Enums\ImportEventStatus' } */
+    /** @return array{data: 'array', status: 'App\Enums\ImportEventStatus', type: 'App\Enums\ExcelImportType' } */
     protected function casts(): array
     {
         return [
             'data' => 'array',
             'status' => ImportEventStatus::class,
+            'type' => ExcelImportType::class,
         ];
     }
 }
