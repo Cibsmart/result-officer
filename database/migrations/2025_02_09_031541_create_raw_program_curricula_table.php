@@ -22,12 +22,13 @@ return new class extends Migration
             $table->string('entry_session');
             $table->string('level');
             $table->string('semester');
+            $table->string('course_type');
+            $table->string('course_code');
+            $table->string('course_title');
+            $table->unsignedTinyInteger('credit_unit');
             $table->unsignedTinyInteger('minimum_elective_unit');
             $table->unsignedTinyInteger('minimum_elective_count');
-            $table->unsignedTinyInteger('elective_group');
-            $table->unsignedTinyInteger('course_code');
-            $table->unsignedTinyInteger('course_title');
-            $table->unsignedTinyInteger('credit_unit');
+            $table->string('elective_group');
             $table->string('status')->default(RawDataStatus::PENDING)->index();
             $table->text('message')->nullable();
             $table->timestamps();
