@@ -18,7 +18,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Maatwebsite\Excel\HeadingRowImport;
 
-final class ImportFinalResultController
+final class FinalResultImportController
 {
     public function index(Request $request): Response
     {
