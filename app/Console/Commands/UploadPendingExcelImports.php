@@ -28,17 +28,20 @@ final class UploadPendingExcelImports extends Command
             return Command::SUCCESS;
         }
 
-        $importEvents->toQuery()->update(['status' => ImportEventStatus::STARTED->value]);
+//        $importEvents->toQuery()->update(['status' => ImportEventStatus::STARTED->value]);
 
         foreach ($importEvents as $event) {
-            $event->updateStatus(ImportEventStatus::UPLOADING);
+//            $event->updateStatus(ImportEventStatus::UPLOADING);
+
+            $type = $event->type;
+            assert($type instanceof ExcelImportType);
 
             $headings = (new HeadingRowImport())->toArray($event->file_path)[0][0];
 
-            $validation = (new ValidateHeadings())->execute($headings, ExcelImportType::FINAL_RESULT);
+            $validation = (new ValidateHeadings())->execute($headings, $type);
 
             try {
-                FinalResultsImport::new($event, $validation['validated'])->import($event->file_path);
+                $type->getImportClass()::new($event, $validation['validated'])->import($event->file_path);
             } catch (Exception $e) {
                 $event->setMessage($e->getMessage());
 

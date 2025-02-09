@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
+use App\Imports\CurriculumCoursesImport;
+use App\Imports\FinalResultsImport;
+
 enum ExcelImportType: string
 {
     case CURRICULUM = 'curriculum';
@@ -15,6 +18,14 @@ enum ExcelImportType: string
         return match ($this) {
             self::CURRICULUM => $this->getCurriculumHeadings(),
             self::FINAL_RESULT => $this->getFinalResultsHeadings(),
+        };
+    }
+
+    public function getImportClass(): string
+    {
+        return match ($this) {
+            self::CURRICULUM => CurriculumCoursesImport::class,
+            self::FINAL_RESULT => FinalResultsImport::class,
         };
     }
 
