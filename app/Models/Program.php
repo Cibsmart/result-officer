@@ -190,10 +190,6 @@ final class Program extends Model
     public function name(): Attribute
     {
         return Attribute::make(
-            get: fn (string $value): string => $this->department->name === $value
-                ? $value
-                : "{$this->department->name} ({$value})",
-
             set: fn (string $value): string => strtoupper(trim($value)),
         );
     }
