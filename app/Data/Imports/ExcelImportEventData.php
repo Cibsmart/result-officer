@@ -16,6 +16,7 @@ final class ExcelImportEventData extends Data
         public readonly string $fileName,
         public readonly ImportEventStatus $status,
         public readonly StatusColor $statusColor,
+        public readonly ?string $message,
     ) {
     }
 
@@ -24,6 +25,12 @@ final class ExcelImportEventData extends Data
         $status = $event->status;
         assert($status instanceof ImportEventStatus);
 
-        return new self(id: $event->id, fileName: $event->file_name, status: $status, statusColor: $status->color());
+        return new self(
+            id: $event->id,
+            fileName: $event->file_name,
+            status: $status,
+            statusColor: $status->color(),
+            message: $event->message,
+        );
     }
 }

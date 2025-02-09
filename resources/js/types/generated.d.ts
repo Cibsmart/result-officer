@@ -170,6 +170,7 @@ declare namespace App.Data.Imports {
     fileName: string;
     status: App.Enums.ImportEventStatus;
     statusColor: App.Enums.StatusColor;
+    message: string;
   };
   export type ExcelImportEventListData = {
     events: Array<App.Data.Imports.ExcelImportEventData>;
