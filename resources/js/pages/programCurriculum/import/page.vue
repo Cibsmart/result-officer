@@ -30,10 +30,10 @@ const props = defineProps<{
 
 const { start, stop } = usePoll(10000, {}, { autoStart: false });
 
-const form = useForm({ department: "", file: null as File | null, program: "" });
+const form = useForm({ department: null, file: null as File | null, program: null });
 
 const submit = () => {
-  form.post(route("import.curriculum.store"), { onSuccess: () => form.reset() });
+  form.post(route("import.curriculum.store"));
 };
 
 const pages: BreadcrumbItem[] = [
