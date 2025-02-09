@@ -63,7 +63,10 @@ const onFileChange = () => {
   }
 };
 
-const loadPrograms = () => (programs.value = form.department.programs.programs);
+const loadPrograms = () => {
+  form.reset("program");
+  programs.value = form.department.programs.programs;
+};
 
 const fileInput = ref<HTMLInputElement | null>(null);
 const programs = ref<App.Data.Program.ProgramListData>([{ id: 0, name: "Select Program" }]);
