@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Imports;
 
-use App\Actions\Import\Excel\ValidateHeadings;
 use App\Data\Imports\ExcelImportEventListData;
 use App\Enums\ExcelImportType;
 use App\Enums\ImportEventStatus;
@@ -16,7 +15,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
-use Maatwebsite\Excel\HeadingRowImport;
 
 final class FinalResultImportController
 {
@@ -32,27 +30,19 @@ final class FinalResultImportController
 
     public function store(Request $request): RedirectResponse
     {
-        $uploadedFile = $request->validate(['file' => ['required', 'file', 'mimes:xlsx']])['file'];
+        $file = $request->validate(['file' => ['required', 'file', 'mimes:xlsx']])['file'];
 
         $type = ExcelImportType::FINAL_RESULT;
 
-        $fileName = $uploadedFile->getClientOriginalName();
+        $fileName = $file->getClientOriginalName();
 
-        $headings = (new HeadingRowImport())->toArray($uploadedFile)[0][0];
+        $checks = ExcelImportEvent::validateExcelFileHeadingsAndCheckQueue($file, $type, $fileName);
 
-        $validation = (new ValidateHeadings())->execute($headings, $type);
-
-        if (! $validation['passed']) {
-            $message = "Invalid File: The following headings are missing: {$validation['missing']}.";
-
-            return redirect()->back()->error($message);
+        if (! $checks['passed']) {
+            return redirect()->back()->error($checks['message']);
         }
 
-        if (ExcelImportEvent::inQueue($type, $fileName)) {
-            return redirect()->back()->error('Excel file already queued for processing');
-        }
-
-        $filePath = Storage::putFile($type->value, $uploadedFile);
+        $filePath = Storage::putFile($type->value, $file);
         assert(is_string($filePath));
 
         ExcelImportEvent::new($request->user(), $type, $filePath, $fileName);

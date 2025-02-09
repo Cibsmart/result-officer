@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Actions\Import\Excel\ValidateHeadings;
 use App\Enums\ExcelImportType;
 use App\Enums\ImportEventStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+use Maatwebsite\Excel\HeadingRowImport;
 
 final class ExcelImportEvent extends Model
 {
@@ -46,6 +49,39 @@ final class ExcelImportEvent extends Model
             ->get();
 
         return $events->isNotEmpty();
+    }
+
+    /** @return array{passed: bool, message: string} */
+    public static function validateExcelFileHeadingsAndCheckQueue(
+        UploadedFile $file,
+        ExcelImportType $type,
+        string $fileName,
+    ): array {
+        $result = ['passed' => true, 'message' => ''];
+
+        $headings = (new HeadingRowImport())->toArray($file)[0][0];
+
+        $validation = (new ValidateHeadings())->execute($headings, $type);
+
+        if (! $validation['passed']) {
+            $message = "Invalid File: The following headings are missing: {$validation['missing']}.";
+
+            $result['passed'] = false;
+            $result['message'] = $message;
+
+            return $result;
+        }
+
+        if (self::inQueue($type, $fileName)) {
+            $message = 'Excel file already queued for processing';
+
+            $result['passed'] = false;
+            $result['message'] = $message;
+
+            return $result;
+        }
+
+        return $result;
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawFinalResult, \App\Models\ExcelImportEvent> */
