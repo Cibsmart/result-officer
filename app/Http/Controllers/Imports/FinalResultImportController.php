@@ -48,6 +48,10 @@ final class FinalResultImportController
             return redirect()->back()->error($message);
         }
 
+        if (ExcelImportEvent::inQueue($type, $fileName)) {
+            return redirect()->back()->error('Excel file already queued for processing');
+        }
+
         $filePath = Storage::putFile($type->value, $uploadedFile);
         assert(is_string($filePath));
 

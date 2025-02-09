@@ -35,6 +35,19 @@ final class ExcelImportEvent extends Model
         return $importEvent;
     }
 
+    public static function inQueue(
+        ExcelImportType $type,
+        string $fileName,
+    ): bool {
+        $events = self::query()
+            ->where('type', $type)
+            ->where('file_name', $fileName)
+            ->where('status', ImportEventStatus::QUEUED)
+            ->get();
+
+        return $events->isNotEmpty();
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawFinalResult, \App\Models\ExcelImportEvent> */
     public function rawFinalResults(): HasMany
     {
