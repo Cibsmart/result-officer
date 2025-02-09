@@ -21,7 +21,20 @@ enum ExcelImportType: string
     /** @return array<string, array<int, string>> */
     private function getCurriculumHeadings(): array
     {
-        return [];
+        return [
+            'course_code' => ['course_code', 'code'],
+            'course_title' => ['course_title', 'title'],
+            'credit_unit' => ['credit_unit', 'credit_load', 'cload', 'cunit', 'credit_unit_load'],
+            'curriculum' => ['curriculum', 'curriculum_name', 'curriculum_type'],
+            'elective_group' => ['elective_group', 'elective_group_name', 'elective_group_code'],
+            'entry_mode' => ['entry_mode', 'mode_of_entry'],
+            'entry_session' => ['session', 'entry_session'],
+            'level' => ['level'],
+            'minimum_elective_count' => ['minimum_elective_count', 'minimum_number_of_elective'],
+            'minimum_elective_unit' => ['minimum_elective_unit', 'minimum_elective_unit_load'],
+            'program' => ['program', 'program_name', 'program_code'],
+            'semester' => ['semester'],
+        ];
     }
 
     /** @return array<string, array<int, string>> */
