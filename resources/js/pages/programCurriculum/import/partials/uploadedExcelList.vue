@@ -46,7 +46,11 @@ const currentEvent = ref(null);
         <BaseTD position="left">{{ event.fileName }}</BaseTD>
 
         <BaseTD position="left">
-          <Badge :color="event.statusColor">{{ event.status }}</Badge>
+          <Badge
+            :class="event.status !== 'completed' && event.status !== 'failed' ? 'animate-pulse' : ''"
+            :color="event.statusColor">
+            {{ event.status }}
+          </Badge>
         </BaseTD>
 
         <BaseTD>

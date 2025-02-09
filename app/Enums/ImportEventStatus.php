@@ -47,9 +47,9 @@ enum ImportEventStatus: string
     {
         return match ($this) {
             self::NEW, self::STARTED, self::QUEUED, self::CANCELLED => StatusColor::GRAY,
-            self::DOWNLOADING, self::DOWNLOADED, self::UPLOADING, self::UPLOADED => StatusColor::INDIGO,
-            self::SAVING, self::SAVED => StatusColor::PINK,
-            self::PROCESSING => StatusColor::PURPLE,
+            self::DOWNLOADING, self::DOWNLOADED, self::UPLOADING => StatusColor::PINK,
+            self::UPLOADED, self::SAVING, self::SAVED => StatusColor::PURPLE,
+            self::PROCESSING => StatusColor::BLUE,
             self::FAILED => StatusColor::RED,
             self::COMPLETED => StatusColor::GREEN,
         };
