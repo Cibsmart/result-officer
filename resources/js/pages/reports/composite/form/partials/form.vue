@@ -16,7 +16,7 @@ defineProps<{
 }>();
 
 const form = useForm({
-  department: "",
+  program: "",
   session: "",
   semester: "",
   level: "",
@@ -38,14 +38,14 @@ const submit = () => {
         <div class="flex-1">
           <InputLabel
             for="program"
-            value="Department" />
+            value="Program" />
 
           <SelectInput
             id="program"
-            v-model="form.department"
+            v-model="form.program"
             :items="programs" />
 
-          <InputError :message="form.errors.department" />
+          <InputError :message="form.errors.program" />
         </div>
 
         <div class="flex-1">

@@ -19,10 +19,10 @@ final class CompositeSheetRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'department' => ['required', 'array'],
-            'department.id' => ['required', 'integer'],
             'level' => ['required', 'array'],
             'level.id' => ['required', 'integer', 'exists:levels,id'],
+            'program' => ['required', 'array'],
+            'program.id' => ['required', 'integer', 'exists:programs,id'],
             'semester' => ['required', 'array'],
             'semester.id' => ['required', 'integer', 'exists:semesters,id'],
             'session' => ['required', 'array'],
@@ -34,7 +34,7 @@ final class CompositeSheetRequest extends FormRequest
     {
         $this->replace([
             'level' => Level::query()->findOrFail($this->input('level.id')),
-            'program' => Program::query()->findOrFail($this->input('department.id')),
+            'program' => Program::query()->findOrFail($this->input('program.id')),
             'semester' => Semester::query()->findOrFail($this->input('semester.id')),
             'session' => Session::query()->findOrFail($this->input('session.id')),
         ]);

@@ -20,7 +20,7 @@ final class ProgramListData extends Data
 
     public static function new(): self
     {
-        $default = new ProgramData(id: 0, name: 'Select Department', slug: '');
+        $default = new ProgramData(id: 0, name: 'Select Program', slug: '');
 
         return new self(
             programs: ProgramData::collect(
