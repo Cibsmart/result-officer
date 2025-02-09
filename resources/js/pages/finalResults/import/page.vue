@@ -31,7 +31,7 @@ const { start, stop } = usePoll(10000, {}, { autoStart: false });
 const form = useForm({ file: null as File | null });
 
 const submit = () => {
-  form.post(route("import.final-results.store"));
+  form.post(route("import.final-results.store"), { onSuccess: () => form.reset() });
 };
 
 const pages: BreadcrumbItem[] = [
