@@ -36,7 +36,7 @@ final class UploadRawFinalResults extends Command
 
             $headings = (new HeadingRowImport())->toArray($event->file_path)[0][0];
 
-            $validation = (new ValidateHeadings())->execute($headings, ExcelImportType::FINAL_RESULTS);
+            $validation = (new ValidateHeadings())->execute($headings, ExcelImportType::FINAL_RESULT);
 
             try {
                 FinalResultsImport::new($event, $validation['validated'])->import($event->file_path);

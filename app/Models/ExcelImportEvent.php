@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\ExcelImportType;
 use App\Enums\ImportEventStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -13,15 +14,18 @@ final class ExcelImportEvent extends Model
 {
     public static function new(
         User $user,
+        ExcelImportType $type,
         string $filePath,
         string $fileName,
+        ImportEventStatus $status = ImportEventStatus::QUEUED,
     ): self {
         $importEvent = new self();
 
         $importEvent->user_id = $user->id;
+        $importEvent->type = $type;
         $importEvent->file_name = $fileName;
         $importEvent->file_path = $filePath;
-        $importEvent->status = ImportEventStatus::QUEUED;
+        $importEvent->status = $status;
 
         $importEvent->save();
 
