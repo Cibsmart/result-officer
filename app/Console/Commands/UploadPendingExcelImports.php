@@ -7,17 +7,16 @@ namespace App\Console\Commands;
 use App\Actions\Import\Excel\ValidateHeadings;
 use App\Enums\ExcelImportType;
 use App\Enums\ImportEventStatus;
-use App\Imports\FinalResultsImport;
 use App\Models\ExcelImportEvent;
 use Exception;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\HeadingRowImport;
 
-final class UploadRawFinalResults extends Command
+final class UploadPendingExcelImports extends Command
 {
-    protected $signature = 'rp:upload-raw-final-results';
+    protected $signature = 'rp:upload-pending-excel-imports';
 
-    protected $description = 'Read uploaded Excel file and store in Raw Final Results';
+    protected $description = 'Read uploaded Excel file and store in the respective raw db table';
 
     public function handle(): int
     {

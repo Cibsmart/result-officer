@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use App\Console\Commands\ProcessQueuedImportEvent;
 use App\Console\Commands\ProcessRawFinalResults;
-use App\Console\Commands\UploadRawFinalResults;
+use App\Console\Commands\UploadPendingExcelImports;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 
@@ -13,7 +13,7 @@ Artisan::command('inspire', function (): void {
 })->purpose('Display an inspiring quote')->hourly();
 
 Schedule::command(ProcessQueuedImportEvent::class)->everyMinute()->runInBackground();
-Schedule::command(UploadRawFinalResults::class)->everyMinute()->runInBackground();
+Schedule::command(UploadPendingExcelImports::class)->everyMinute()->runInBackground();
 Schedule::command(ProcessRawFinalResults::class)->everyMinute()->runInBackground();
 
 Schedule::command('backup:clean')->daily()->at('10:00');
