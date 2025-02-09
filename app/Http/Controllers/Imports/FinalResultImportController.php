@@ -10,7 +10,7 @@ use App\Enums\ExcelImportType;
 use App\Enums\ImportEventStatus;
 use App\Models\ExcelImportEvent;
 use App\Models\User;
-use App\ViewModels\Imports\ImportFinalResultPage;
+use App\ViewModels\Imports\ExcelImportPage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -25,8 +25,8 @@ final class FinalResultImportController
         $user = $request->user();
         assert($user instanceof User);
 
-        return Inertia::render('finalResults/import/page', new ImportFinalResultPage(
-            data: ExcelImportEventListData::forUser($user),
+        return Inertia::render('finalResults/import/page', new ExcelImportPage(
+            data: ExcelImportEventListData::forUser($user, ExcelImportType::FINAL_RESULT),
         ));
     }
 
@@ -34,22 +34,24 @@ final class FinalResultImportController
     {
         $uploadedFile = $request->validate(['file' => ['required', 'file', 'mimes:xlsx']])['file'];
 
+        $type = ExcelImportType::FINAL_RESULT;
+
         $fileName = $uploadedFile->getClientOriginalName();
 
         $headings = (new HeadingRowImport())->toArray($uploadedFile)[0][0];
 
-        $validation = (new ValidateHeadings())->execute($headings, ExcelImportType::FINAL_RESULTS);
+        $validation = (new ValidateHeadings())->execute($headings, $type);
 
-        if (!$validation['passed']) {
+        if (! $validation['passed']) {
             $message = "Invalid File: The following headings are missing: {$validation['missing']}.";
 
             return redirect()->back()->error($message);
         }
 
-        $filePath = Storage::putFile('finalResults', $uploadedFile);
+        $filePath = Storage::putFile($type->value, $uploadedFile);
         assert(is_string($filePath));
 
-        ExcelImportEvent::new($request->user(), $filePath, $fileName);
+        ExcelImportEvent::new($request->user(), $type, $filePath, $fileName);
 
         return redirect()->back()->success('File uploaded and queued for processing.');
     }
