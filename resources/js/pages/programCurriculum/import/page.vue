@@ -23,7 +23,11 @@ const props = defineProps<{
 
 const { start, stop } = usePoll(10000, {}, { autoStart: false });
 
-const form = useForm({ department: null, file: null as File | null, program: null });
+const form = useForm({
+  department: null as App.Data.Department.DepartmentData | null,
+  file: null as File | null,
+  program: "",
+});
 
 const submit = () => {
   form.post(route("import.curriculum.store"));
@@ -65,11 +69,13 @@ const onFileChange = () => {
 
 const loadPrograms = () => {
   form.reset("program");
-  programs.value = form.department.programs.programs;
+  if (form.department !== null && form.department.programs !== null) {
+    programs.value = form.department.programs.programs;
+  }
 };
 
 const fileInput = ref<HTMLInputElement | null>(null);
-const programs = ref<App.Data.Program.ProgramListData>([{ id: 0, name: "Select Program" }]);
+const programs = ref([{ id: 0, name: "Select Program" }]);
 </script>
 
 <template>
