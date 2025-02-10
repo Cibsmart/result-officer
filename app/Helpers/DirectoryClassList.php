@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Helpers;
 
 use FilesystemIterator;
+use SplFileInfo;
 
 final readonly class DirectoryClassList
 {
@@ -23,17 +24,9 @@ final readonly class DirectoryClassList
         $classes = [];
 
         foreach (new FilesystemIterator($this->directory) as $file) {
-            if (is_string($file)) {
-                continue;
-            }
+            $className = $this->getClassName($file);
 
-            if (! $file->isFile() || $file->getExtension() !== 'php') {
-                continue;
-            }
-
-            $className = $this->namespace . '\\' . pathinfo($file->getFilename(), PATHINFO_FILENAME);
-
-            if (! class_exists($className)) {
+            if ($className === null || ! class_exists($className)) {
                 continue;
             }
 
@@ -41,5 +34,18 @@ final readonly class DirectoryClassList
         }
 
         return $classes;
+    }
+
+    private function getClassName(SplFileInfo|string $file): ?string
+    {
+        if (is_string($file)) {
+            return null;
+        }
+
+        if (! $file->isFile() || $file->getExtension() !== 'php') {
+            return null;
+        }
+
+        return $this->namespace . '\\' . pathinfo($file->getFilename(), PATHINFO_FILENAME);
     }
 }
