@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
+use App\Actions\Imports\Excel\ProcessRawCurriculumCourses;
 use App\Actions\Imports\Excel\ProcessRawFinalResults;
 use App\Imports\CurriculumCoursesImport;
 use App\Imports\FinalResultsImport;
@@ -44,7 +45,7 @@ enum ExcelImportType: string
     public function getProcessAction(): string
     {
         return match ($this) {
-            self::CURRICULUM => CurriculumCoursesImport::class,
+            self::CURRICULUM => ProcessRawCurriculumCourses::class,
             self::FINAL_RESULT => ProcessRawFinalResults::class,
         };
     }
