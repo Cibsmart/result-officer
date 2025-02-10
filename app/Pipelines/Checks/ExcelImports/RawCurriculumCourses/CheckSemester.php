@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Pipelines\Checks\ExcelImports\RawProgramCurriculum;
+namespace App\Pipelines\Checks\ExcelImports\RawCurriculumCourses;
 
 use App\Enums\ChecklistType;
-use App\Enums\CreditUnit;
 use App\Models\ExcelImportEvent;
 use Closure;
 
-final class CheckCreditUnit
+final class CheckSemester
 {
-    private string $type = ChecklistType::CREDIT_UNIT->value;
+    private string $type = ChecklistType::SEMESTER->value;
 
     /**
      * @param array{event: 'App\Models\ExcelImportEvent', errors: array<string, string>} $data
@@ -27,7 +26,7 @@ final class CheckCreditUnit
         $values = $event->rawProgramCurricula()->pluck($this->type)->unique();
 
         foreach ($values as $value) {
-            if (CreditUnit::tryFrom($value) !== null) {
+            if (in_array(strtolower($value), ['first', 'second'], true)) {
                 continue;
             }
 

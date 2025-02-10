@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services\Api;
 
-use App\Actions\Import\Departments\ProcessPortalDepartment;
-use App\Actions\Import\Departments\SavePortalDepartment;
+use App\Actions\Imports\Departments\ProcessPortalDepartment;
+use App\Actions\Imports\Departments\SavePortalDepartment;
 use App\Contracts\PortalService;
 use App\Data\Download\PortalDepartmentData;
 use App\Enums\ImportEventMethod;

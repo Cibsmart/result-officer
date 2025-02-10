@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services\Api;
 
-use App\Actions\Import\Students\ProcessPortalStudent;
-use App\Actions\Import\Students\SavePortalStudent;
+use App\Actions\Imports\Students\ProcessPortalStudent;
+use App\Actions\Imports\Students\SavePortalStudent;
 use App\Contracts\PortalService;
 use App\Contracts\StudentClient;
 use App\Data\Download\PortalStudentData;

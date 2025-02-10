@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Pipelines\Checks\ExcelImports\RawProgramCurriculum;
+namespace App\Pipelines\Checks\ExcelImports\RawCurriculumCourses;
 
 use App\Enums\ChecklistType;
+use App\Models\Curriculum;
 use App\Models\ExcelImportEvent;
-use App\Values\SessionValue;
 use Closure;
 use Exception;
 
-final class CheckEntrySession
+final class CheckCurriculum
 {
-    private string $type = ChecklistType::ENTRY_SESSION->value;
+    private string $type = ChecklistType::CURRICULUM->value;
 
     /**
      * @param array{event: 'App\Models\ExcelImportEvent', errors: array<string, string>} $data
@@ -29,7 +29,7 @@ final class CheckEntrySession
 
         foreach ($values as $value) {
             try {
-                SessionValue::new($value);
+                Curriculum::query()->where('code', $value)->firstOrFail();
             } catch (Exception) {
                 $messages[] = $value;
             }

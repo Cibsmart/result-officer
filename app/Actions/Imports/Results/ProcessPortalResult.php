@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Actions\Import\Results;
+namespace App\Actions\Imports\Results;
 
 use App\Enums\RawDataStatus;
 use App\Models\RawResult;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Actions\Import\Registrations\SavePortalRegistration;
+use App\Actions\Imports\Registrations\SavePortalRegistration;
 use App\Data\Download\PortalRegistrationData;
 use App\Enums\ImportEventType;
 use App\Enums\RawDataStatus;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Actions\Import\Departments\ProcessPortalDepartment;
+use App\Actions\Imports\Departments\ProcessPortalDepartment;
 use App\Enums\RawDataStatus;
 use App\Models\Department;
 use App\Models\Faculty;

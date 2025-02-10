@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services\Api;
 
-use App\Actions\Import\Registrations\ProcessPortalRegistration;
-use App\Actions\Import\Registrations\SavePortalRegistration;
+use App\Actions\Imports\Registrations\ProcessPortalRegistration;
+use App\Actions\Imports\Registrations\SavePortalRegistration;
 use App\Contracts\PortalService;
 use App\Contracts\RegistrationClient;
 use App\Data\Download\PortalRegistrationData;

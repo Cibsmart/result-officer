@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services\Api;
 
-use App\Actions\Import\Courses\ProcessPortalCourse;
-use App\Actions\Import\Courses\SavePortalCourse;
+use App\Actions\Imports\Courses\ProcessPortalCourse;
+use App\Actions\Imports\Courses\SavePortalCourse;
 use App\Contracts\PortalService;
 use App\Data\Download\PortalCourseData;
 use App\Enums\ImportEventMethod;

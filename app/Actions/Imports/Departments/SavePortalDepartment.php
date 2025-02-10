@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Actions\Import\Departments;
+namespace App\Actions\Imports\Departments;
 
 use App\Data\Download\PortalDepartmentData;
 use App\Enums\RawDataStatus;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Actions\Import\Results\ProcessPortalResult;
+use App\Actions\Imports\Results\ProcessPortalResult;
 use App\Enums\RawDataStatus;
 use App\Enums\RecordSource;
 use App\Values\DateValue;

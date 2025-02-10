@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Actions\Import\Excel;
+namespace App\Actions\Imports\Excel;
 
 use App\Enums\ExcelImportType;
 

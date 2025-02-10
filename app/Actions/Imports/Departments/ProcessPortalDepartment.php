@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Actions\Import\Departments;
+namespace App\Actions\Imports\Departments;
 
 use App\Enums\RawDataStatus;
 use App\Models\Department;

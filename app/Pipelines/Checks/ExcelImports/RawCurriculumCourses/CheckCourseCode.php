@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Pipelines\Checks\ExcelImports\RawProgramCurriculum;
+namespace App\Pipelines\Checks\ExcelImports\RawCurriculumCourses;
 
 use App\Enums\ChecklistType;
-use App\Models\Curriculum;
 use App\Models\ExcelImportEvent;
+use App\Values\CourseCode;
 use Closure;
 use Exception;
 
-final class CheckCurriculum
+final class CheckCourseCode
 {
-    private string $type = ChecklistType::CURRICULUM->value;
+    private string $type = ChecklistType::COURSE_CODE->value;
 
     /**
      * @param array{event: 'App\Models\ExcelImportEvent', errors: array<string, string>} $data
@@ -29,7 +29,7 @@ final class CheckCurriculum
 
         foreach ($values as $value) {
             try {
-                Curriculum::query()->where('code', $value)->firstOrFail();
+                CourseCode::new($value);
             } catch (Exception) {
                 $messages[] = $value;
             }

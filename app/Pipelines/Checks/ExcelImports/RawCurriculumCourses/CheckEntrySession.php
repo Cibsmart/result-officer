@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Pipelines\Checks\ExcelImports\RawProgramCurriculum;
+namespace App\Pipelines\Checks\ExcelImports\RawCurriculumCourses;
 
 use App\Enums\ChecklistType;
 use App\Models\ExcelImportEvent;
-use App\Models\Level;
+use App\Values\SessionValue;
 use Closure;
 use Exception;
 
-final class CheckLevel
+final class CheckEntrySession
 {
-    private string $type = ChecklistType::LEVEL->value;
+    private string $type = ChecklistType::ENTRY_SESSION->value;
 
     /**
      * @param array{event: 'App\Models\ExcelImportEvent', errors: array<string, string>} $data
@@ -29,7 +29,7 @@ final class CheckLevel
 
         foreach ($values as $value) {
             try {
-                Level::getUsingName($value);
+                SessionValue::new($value);
             } catch (Exception) {
                 $messages[] = $value;
             }

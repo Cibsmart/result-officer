@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Actions\Import\Excel\ValidateHeadings;
+use App\Actions\Imports\Excel\ValidateHeadings;
 use App\Enums\ExcelImportType;
 use App\Enums\ImportEventStatus;
 use App\Models\ExcelImportEvent;

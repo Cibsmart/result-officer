@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Actions\Import\Registrations;
+namespace App\Actions\Imports\Registrations;
 
 use App\Enums\RawDataStatus;
 use App\Models\Course;
