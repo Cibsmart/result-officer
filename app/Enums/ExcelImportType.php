@@ -46,6 +46,7 @@ enum ExcelImportType: string
             'minimum_elective_unit' => ['minimum_elective_unit', 'minimum_elective_unit_load'],
             'program' => ['program', 'program_name', 'program_code'],
             'semester' => ['semester'],
+            'sn' => ['sn', 'serial_number'],
         ];
     }
 
