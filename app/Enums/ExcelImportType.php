@@ -19,6 +19,10 @@ use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckSemester;
 use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckSession;
 use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckTotal;
 use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckYear;
+use App\Pipelines\Checks\ExcelImports\RawProgramCurriculum\CheckCourseType;
+use App\Pipelines\Checks\ExcelImports\RawProgramCurriculum\CheckCurriculum;
+use App\Pipelines\Checks\ExcelImports\RawProgramCurriculum\CheckEntrySession;
+use App\Pipelines\Checks\ExcelImports\RawProgramCurriculum\CheckLevel;
 
 enum ExcelImportType: string
 {
@@ -54,7 +58,15 @@ enum ExcelImportType: string
     public function getPreprocessChecks(): array
     {
         return match ($this) {
-            self::CURRICULUM => [],
+            self::CURRICULUM => [
+                CheckCurriculum::class,
+                CheckEntrySession::class,
+                CheckLevel::class,
+                CheckCourseType::class,
+                \App\Pipelines\Checks\ExcelImports\RawProgramCurriculum\CheckCreditUnit::class,
+                \App\Pipelines\Checks\ExcelImports\RawProgramCurriculum\CheckSemester::class,
+                \App\Pipelines\Checks\ExcelImports\RawProgramCurriculum\CheckCourseCode::class,
+            ],
             self::FINAL_RESULT => [
                 CheckRegistrationNumber::class,
                 CheckInCourse::class,
