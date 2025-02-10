@@ -26,7 +26,7 @@ const showFailedMessage = (event: App.Data.Imports.ExcelImportEventData) => {
 const closeModal = () => (showModal.value = false);
 
 const showModal = ref(false);
-const currentEvent = ref(null);
+const currentEvent = ref<App.Data.Imports.ExcelImportEventData | null>(null);
 </script>
 
 <template>
@@ -78,10 +78,10 @@ const currentEvent = ref(null);
     :show="showModal"
     @close="closeModal">
     <div class="p-6">
-      <CardHeader>Failed Message For: {{ currentEvent.fileName }}</CardHeader>
+      <CardHeader>Failed Message For: {{ currentEvent?.fileName }}</CardHeader>
 
       <Card>
-        <span class="text-base text-gray-700 dark:text-gray-300">{{ currentEvent.message }}</span>
+        <pre class="text-base text-gray-700 dark:text-gray-300">{{ currentEvent?.message }}</pre>
       </Card>
 
       <CardFooter>
