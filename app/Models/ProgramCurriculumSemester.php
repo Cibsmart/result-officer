@@ -12,6 +12,33 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 final class ProgramCurriculumSemester extends Model
 {
+    /** @param array<string, int> $data */
+    public static function getOrCreateFromExcelImport(
+        ProgramCurriculumLevel $curriculumLevel,
+        Semester $semester,
+        array $data,
+    ): self {
+        $curriculumSemester = self::query()
+            ->where('program_curriculum_level_id', $curriculumLevel->id)
+            ->where('semester_id', $semester->id)
+            ->first();
+
+        if ($curriculumSemester) {
+            return $curriculumSemester;
+        }
+
+        $curriculumSemester = new self();
+
+        $curriculumSemester->program_curriculum_level_id = $curriculumLevel->id;
+        $curriculumSemester->semester_id = $semester->id;
+        $curriculumSemester->minimum_elective_count = $data['minimum_elective_count'];
+        $curriculumSemester->minimum_elective_units = CreditUnit::from($data['minimum_elective_unit']);
+
+        $curriculumSemester->save();
+
+        return $curriculumSemester;
+    }
+
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\ProgramCurriculumCourse>

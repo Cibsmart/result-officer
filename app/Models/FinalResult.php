@@ -53,13 +53,13 @@ final class FinalResult extends Model
         CourseStatus $status,
     ): self {
         $registrationNumber = RegistrationNumber::new($result->registration_number);
-        $grade = Grade::from($result->grade);
         $creditUnit = CreditUnit::from($result->credit_unit);
         $inCourse = InCourseScore::new($result->in_course);
         $exam = ExamScore::new($result->exam);
-        $total = TotalScore::new($result->total);
-        $total2 = TotalScore::fromInCourseAndExam($inCourse, $exam);
-        $grade2 = $total->grade(
+        $total = TotalScore::fromInCourseAndExam($inCourse, $exam);
+        $total2 = TotalScore::new($result->total);
+        $grade2 = Grade::from($result->grade);
+        $grade = $total->grade(
             $registrationNumber->allowEGrade() || $finalSemesterEnrollment->session()->allowsEGrade(),
         );
 
@@ -97,7 +97,7 @@ final class FinalResult extends Model
             return;
         }
 
-        $result->message .= "Total score mismatch: Excel: {$total->value}, Computed: {$total2->value}";
+        $result->message .= "Total score mismatch: Computed: {$total->value}, Excel: {$total2->value}";
         $result->save();
     }
 
@@ -110,7 +110,7 @@ final class FinalResult extends Model
             return;
         }
 
-        $result->message .= "Grade mismatch. Excel: {$grade->value}, Computed: {$grade2->value}";
+        $result->message .= "Grade mismatch. Computed: {$grade->value}, Excel: {$grade2->value}";
         $result->save();
     }
 

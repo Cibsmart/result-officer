@@ -11,6 +11,16 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 final class ProgramCurriculumElectiveGroup extends Model
 {
+    public static function getOrCreateUsingName(ProgramCurriculumCourse $curriculumCourse, string $groupName): self
+    {
+        return self::query()->firstOrCreate(
+            [
+                'name' => $groupName,
+                'program_curriculum_semester_id' => $curriculumCourse->program_curriculum_semester_id,
+            ],
+        );
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\Registration> */
     public function vettingReports(): MorphMany
     {

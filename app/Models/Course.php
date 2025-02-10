@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Values\CourseCode;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
@@ -13,16 +15,9 @@ final class Course extends Model
 {
     public static function createFromRawCourse(RawCourse $rawCourse): self
     {
-        $course = new self();
+        $code = CourseCode::new($rawCourse->code);
 
-        $course->code = $rawCourse->code;
-        $course->title = $rawCourse->title;
-        $course->online_id = $rawCourse->online_id;
-        $course->slug = Str::slug("{$rawCourse->code}-{$rawCourse->title}");
-
-        $course->save();
-
-        return $course;
+        return self::createCourse($code->value, $rawCourse->title, $rawCourse->online_id);
     }
 
     public static function getUsingOnlineId(string $onlineId): self
@@ -46,6 +41,85 @@ final class Course extends Model
         $alternative = LegacyCourseAlternatives::query()->where('original_course_id', $legacyCourseId)->firstOrFail();
 
         return self::query()->where('id', $alternative->alternative_course_id)->firstOrFail();
+    }
+
+    public static function getOrCreateUsingCodeAndTitle(CourseCode $code, string $title): self
+    {
+        $courses = self::query()->where('code', $code->value)->get();
+
+        $exactMatch = self::checkExactmatchingCourse($courses, $title);
+
+        if ($exactMatch) {
+            return $exactMatch;
+        }
+
+        $bestMatch = self::getBestMatchingCourse($courses, $title);
+
+        if ($bestMatch) {
+            return $bestMatch;
+        }
+
+        return self::createCourse($code->value, $title);
+    }
+
+    public function checkForDuplicateInCurriculumSemester(ProgramCurriculumSemester $curriculumSemester): bool
+    {
+        $courses = self::query()
+            ->whereIn('id', $curriculumSemester->programCurriculumCourses()->pluck('course_id'))
+            ->get();
+
+        return $courses->contains('id', $this->id) || $courses->contains('code', $this->code);
+    }
+
+    private static function createCourse(
+        string $courseCode,
+        string $courseTitle,
+        ?string $onlineId = null,
+    ): self {
+        $course = new self();
+
+        $course->code = $courseCode;
+        $course->title = $courseTitle;
+        $course->online_id = $onlineId;
+        $course->slug = Str::slug("{$courseCode}-{$courseTitle}");
+
+        $course->save();
+
+        return $course;
+    }
+
+    /** @param \Illuminate\Database\Eloquent\Collection<int, \App\Models\Course> $courses */
+    private static function checkExactMatchingCourse(Collection $courses, string $title): ?self
+    {
+        foreach ($courses as $course) {
+            if ($course->title === $title) {
+                return $course;
+            }
+        }
+
+        return null;
+    }
+
+    /** @param \Illuminate\Database\Eloquent\Collection<int, \App\Models\Course> $courses */
+    private static function getBestMatchingCourse(Collection $courses, string $title): ?self
+    {
+        $bestMatch = null;
+        $bestMatchScore = 0.0;
+
+        foreach ($courses as $course) {
+            similar_text($title, $course->title, $percent);
+
+            if ($percent <= $bestMatchScore) {
+                continue;
+            }
+
+            $bestMatchScore = $percent;
+            $bestMatch = $course;
+        }
+
+        return $bestMatchScore >= 80.0
+            ? $bestMatch
+            : null;
     }
 
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */

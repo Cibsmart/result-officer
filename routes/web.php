@@ -27,9 +27,10 @@ use App\Http\Controllers\Download\Students\DownloadStudentsPageController;
 use App\Http\Controllers\Exports\Results\ExportResultsByDepartmentSessionController;
 use App\Http\Controllers\Exports\Results\ExportResultsByRegistrationNumberController;
 use App\Http\Controllers\Exports\Results\ExportResultsPageController;
-use App\Http\Controllers\FinalResults\ImportFinalResultController;
 use App\Http\Controllers\Imports\CancelImportEventController;
 use App\Http\Controllers\Imports\ContinueImportEventController;
+use App\Http\Controllers\Imports\FinalResultImportController;
+use App\Http\Controllers\Imports\ProgramCurriculumImportController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Reports\CompositeSheetController;
 use App\Http\Controllers\Reports\DepartmentClearedController;
@@ -176,11 +177,21 @@ Route::middleware(['auth'])->group(static function (): void {
 
     Route::prefix('import')->group(static function (): void {
         Route::prefix('final-results')->group(static function (): void {
-            Route::get('', [ImportFinalResultController::class, 'index'])->name('import.final-results.index');
-            Route::post('', [ImportFinalResultController::class, 'store'])->name('import.final-results.store');
-            Route::post('delete/{event}', [ImportFinalResultController::class, 'delete'])
+            Route::get('', [FinalResultImportController::class, 'index'])->name('import.final-results.index');
+            Route::post('', [FinalResultImportController::class, 'store'])->name('import.final-results.store');
+            Route::post('delete/{event}', [FinalResultImportController::class, 'delete'])
                 ->can('delete', ExcelImportEvent::class)
                 ->name('import.final-results.delete');
+        });
+
+        Route::prefix('curriculum')->group(static function (): void {
+            Route::get('', [ProgramCurriculumImportController::class, 'index'])
+                ->name('import.curriculum.index');
+            Route::post('', [ProgramCurriculumImportController::class, 'store'])
+                ->name('import.curriculum.store');
+            Route::post('delete/{event}', [ProgramCurriculumImportController::class, 'delete'])
+                ->can('delete', ExcelImportEvent::class)
+                ->name('import.curriculum.delete');
         });
     });
 });

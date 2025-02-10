@@ -97,6 +97,11 @@ const navigation: NavigationItem[] = [
     current: false,
     children: [
       {
+        name: "Course List",
+        href: route("import.curriculum.index"),
+        current: route().current("import.curriculum.index"),
+      },
+      {
         name: "Final Results",
         href: route("import.final-results.index"),
         current: route().current("import.final-results.index"),

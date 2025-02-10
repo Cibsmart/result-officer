@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Actions\Import\Students\ProcessPortalStudent;
-use App\Actions\Import\Students\SavePortalStudent;
+use App\Actions\Imports\Students\ProcessPortalStudent;
+use App\Actions\Imports\Students\SavePortalStudent;
 use App\Data\Download\PortalStudentData;
 use App\Enums\ImportEventMethod;
 use App\Enums\RawDataStatus;

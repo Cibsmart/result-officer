@@ -1,0 +1,56 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Console\Commands;
+
+use App\Actions\Imports\Excel\ValidateHeadings;
+use App\Enums\ExcelImportType;
+use App\Enums\ImportEventStatus;
+use App\Models\ExcelImportEvent;
+use Exception;
+use Illuminate\Console\Command;
+use Maatwebsite\Excel\HeadingRowImport;
+
+final class UploadPendingExcelImports extends Command
+{
+    protected $signature = 'rp:upload-pending-excel-imports';
+
+    protected $description = 'Read uploaded Excel file and store in the respective raw db table';
+
+    public function handle(): int
+    {
+        $importEvents = ExcelImportEvent::query()
+            ->where('status', ImportEventStatus::QUEUED)
+            ->get();
+
+        if ($importEvents->isEmpty()) {
+            return Command::SUCCESS;
+        }
+
+//        $importEvents->toQuery()->update(['status' => ImportEventStatus::STARTED->value]);
+
+        foreach ($importEvents as $event) {
+//            $event->updateStatus(ImportEventStatus::UPLOADING);
+
+            $type = $event->type;
+            assert($type instanceof ExcelImportType);
+
+            $headings = (new HeadingRowImport())->toArray($event->file_path)[0][0];
+
+            $validation = (new ValidateHeadings())->execute($headings, $type);
+
+            try {
+                $type->getImportClass()::new($event, $validation['validated'])->import($event->file_path);
+            } catch (Exception $e) {
+                $event->setMessage($e->getMessage());
+
+                continue;
+            }
+
+            $event->updateStatus(ImportEventStatus::UPLOADED);
+        }
+
+        return Command::SUCCESS;
+    }
+}

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Actions\Import\Students\ProcessPortalStudent;
+use App\Actions\Imports\Students\ProcessPortalStudent;
 use App\Enums\RawDataStatus;
 use App\Values\DateValue;
 use Tests\Factories\DepartmentFactory;

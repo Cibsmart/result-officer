@@ -4,24 +4,87 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
+use App\Actions\Imports\Excel\ProcessRawCurriculumCourses;
+use App\Actions\Imports\Excel\ProcessRawFinalResults;
+use App\Helpers\DirectoryClassList;
+use App\Imports\CurriculumCoursesImport;
+use App\Imports\FinalResultsImport;
+
 enum ExcelImportType: string
 {
     case CURRICULUM = 'curriculum';
-    case FINAL_RESULTS = 'final_results';
+    case FINAL_RESULT = 'final_result';
 
     /** @return array<string, array<int, string>> */
     public function expectedHeadings(): array
     {
         return match ($this) {
             self::CURRICULUM => $this->getCurriculumHeadings(),
-            self::FINAL_RESULTS => $this->getFinalResultsHeadings(),
+            self::FINAL_RESULT => $this->getFinalResultsHeadings(),
+        };
+    }
+
+    public function getImportClass(): string
+    {
+        return match ($this) {
+            self::CURRICULUM => CurriculumCoursesImport::class,
+            self::FINAL_RESULT => FinalResultsImport::class,
+        };
+    }
+
+    public function getProcessAction(): string
+    {
+        return match ($this) {
+            self::CURRICULUM => ProcessRawCurriculumCourses::class,
+            self::FINAL_RESULT => ProcessRawFinalResults::class,
+        };
+    }
+
+    /** @return array<int, class-string> */
+    public function getPreprocessChecks(): array
+    {
+        return DirectoryClassList::for($this->directory(), $this->namespace())->get();
+    }
+
+    private function directory(): string
+    {
+        $directory = app_path('Pipelines/Checks/ExcelImports');
+
+        return match ($this) {
+            self::CURRICULUM => "{$directory}/RawCurriculumCourses",
+            self::FINAL_RESULT => "{$directory}/RawFinalResults",
+        };
+    }
+
+    private function namespace(): string
+    {
+        $namespace = 'App\\Pipelines\\Checks\\ExcelImports';
+
+        return match ($this) {
+            self::CURRICULUM => "{$namespace}\\RawCurriculumCourses",
+            self::FINAL_RESULT => "{$namespace}\\RawFinalResults",
         };
     }
 
     /** @return array<string, array<int, string>> */
     private function getCurriculumHeadings(): array
     {
-        return [];
+        return [
+            'course_code' => ['course_code', 'code'],
+            'course_title' => ['course_title', 'title'],
+            'course_type' => ['course_type', 'type'],
+            'credit_unit' => ['credit_unit', 'credit_load', 'cload', 'cunit', 'credit_unit_load'],
+            'curriculum' => ['curriculum', 'curriculum_name', 'curriculum_type'],
+            'elective_group' => ['elective_group', 'elective_group_name', 'elective_group_code'],
+            'entry_mode' => ['entry_mode', 'mode_of_entry'],
+            'entry_session' => ['session', 'entry_session'],
+            'level' => ['level'],
+            'minimum_elective_count' => ['minimum_elective_count', 'minimum_number_of_elective'],
+            'minimum_elective_unit' => ['minimum_elective_unit', 'minimum_elective_unit_load'],
+            'program' => ['program', 'program_name', 'program_code'],
+            'semester' => ['semester'],
+            'sn' => ['sn', 'serial_number'],
+        ];
     }
 
     /** @return array<string, array<int, string>> */

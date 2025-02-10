@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-import { computed } from "vue";
+import { computed, onMounted, watch } from "vue";
 import PrimaryLinkSmall from "@/components/links/primaryLinkSmall.vue";
 import Badge from "@/components/badge.vue";
 import SecondaryButtonSmall from "@/components/buttons/secondaryButtonSmall.vue";
 import PrimaryButtonSmall from "@/components/buttons/primaryButtonSmall.vue";
 import BaseTD from "@/components/tables/baseTD.vue";
+import { usePoll } from "@inertiajs/vue3";
 
 const props = defineProps<{
   index: number;
@@ -15,6 +16,23 @@ defineEmits<{
   (e: "showReport", student: App.Data.Vetting.VettingStudentData): void;
   (e: "showClearance", student: App.Data.Vetting.VettingStudentData): void;
 }>();
+
+const { start, stop } = usePoll(10000, {}, { autoStart: false });
+const vetting = computed(() => props.student.vettingStatus === "vetting");
+
+onMounted(() => {
+  if (vetting.value) {
+    start();
+  }
+});
+
+watch(vetting, () => {
+  if (vetting.value) {
+    start();
+  } else {
+    stop();
+  }
+});
 
 const passed = computed(() => props.student.vettingStatus === "passed");
 const vetted = computed(() => props.student.vettingStatus !== "pending");
@@ -32,7 +50,11 @@ const vetted = computed(() => props.student.vettingStatus !== "pending");
   <BaseTD position="left">{{ student.registrationNumber }}</BaseTD>
 
   <BaseTD position="left">
-    <Badge :color="student.vettingStatusColor">{{ student.vettingStatus }}</Badge>
+    <Badge
+      :class="vetting ? 'animate-pulse' : ''"
+      :color="student.vettingStatusColor">
+      {{ student.vettingStatus }}
+    </Badge>
   </BaseTD>
 
   <BaseTD

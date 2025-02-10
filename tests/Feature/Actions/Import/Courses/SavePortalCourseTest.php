@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Actions\Import\Courses\SavePortalCourse;
+use App\Actions\Imports\Courses\SavePortalCourse;
 use App\Data\Download\PortalCourseData;
 use App\Enums\ImportEventType;
 use App\Enums\RawDataStatus;

@@ -10,17 +10,10 @@ import FormGroup from "@/components/forms/formGroup.vue";
 import BaseFormSection from "@/components/forms/baseFormSection.vue";
 import InputError from "@/components/inputs/inputError.vue";
 import EmptyState from "@/components/emptyState.vue";
-import BaseTable from "@/components/tables/baseTable.vue";
-import BaseTHead from "@/components/tables/baseTHead.vue";
-import BaseTH from "@/components/tables/baseTH.vue";
-import BaseTBody from "@/components/tables/baseTBody.vue";
-import BaseTD from "@/components/tables/baseTD.vue";
-import BaseTR from "@/components/tables/baseTR.vue";
-import Badge from "@/components/badge.vue";
-import SecondaryLinkSmall from "@/components/links/secondaryLinkSmall.vue";
 import { computed, ref, watch, onMounted } from "vue";
 import { BreadcrumbItem } from "@/types";
 import { usePoll } from "@inertiajs/vue3";
+import UploadedExcelList from "@/pages/programCurriculum/import/partials/uploadedExcelList.vue";
 
 const props = defineProps<{
   data: App.Data.Imports.ExcelImportEventListData;
@@ -117,37 +110,7 @@ const fileInput = ref<HTMLInputElement | null>(null);
 
     <BaseSection>
       <template v-if="hasEvent">
-        <BaseTable>
-          <BaseTHead>
-            <BaseTH position="left">FileName</BaseTH>
-
-            <BaseTH position="left">Status</BaseTH>
-
-            <BaseTH>Actions</BaseTH>
-          </BaseTHead>
-
-          <BaseTBody>
-            <BaseTR
-              v-for="event in data.events"
-              :key="event.id">
-              <BaseTD position="left">{{ event.fileName }}</BaseTD>
-
-              <BaseTD position="left">
-                <Badge :color="event.statusColor">{{ event.status }}</Badge>
-              </BaseTD>
-
-              <BaseTD>
-                <SecondaryLinkSmall
-                  v-if="event.status !== 'completed'"
-                  :href="route('import.final-results.delete', { event: event.id })"
-                  method="post"
-                  preserveScroll="true">
-                  Delete
-                </SecondaryLinkSmall>
-              </BaseTD>
-            </BaseTR>
-          </BaseTBody>
-        </BaseTable>
+        <UploadedExcelList :data="data" />
       </template>
 
       <template v-else>
