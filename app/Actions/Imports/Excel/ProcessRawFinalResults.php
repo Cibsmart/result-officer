@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\Console\Commands;
+namespace App\Actions\Imports\Excel;
 
-use App\Enums\ImportEventStatus;
 use App\Enums\Months;
 use App\Enums\RawDataStatus;
 use App\Enums\StudentStatus;
@@ -22,67 +21,16 @@ use App\Models\Semester;
 use App\Models\Session;
 use App\Models\Student;
 use App\Values\CourseCode;
-use Illuminate\Console\Command;
-use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
 
-final class ProcessRawFinalResults extends Command
+final class ProcessRawFinalResults
 {
-    protected $signature = 'rp:process-raw-final-results';
-
-    protected $description = 'Process Raw Final Results and Store in Final Results';
-
-    public function handle(): int
+    public static function new(): self
     {
-        $importEvents = ExcelImportEvent::query()
-            ->where('status', ImportEventStatus::UPLOADED)
-            ->get();
-
-        if ($importEvents->isEmpty()) {
-            return Command::SUCCESS;
-        }
-
-        $importEvents->toQuery()->update(['status' => ImportEventStatus::PROCESSING->value]);
-
-        foreach ($importEvents as $event) {
-            assert($event instanceof ExcelImportEvent);
-
-            $messages = collect($this->preprocess($event))->filter();
-
-            if ($messages->isNotEmpty()) {
-                $event->setMessage($this->joinMessages($messages));
-
-                continue;
-            }
-
-            $this->processEventStudents($event);
-
-            $event->updateStatus(ImportEventStatus::COMPLETED);
-        }
-
-        return Command::SUCCESS;
+        return new self();
     }
 
-    /** @return array<string, array<int, string>> */
-    private function preprocess(ExcelImportEvent $event): array
-    {
-        $type = $event->type;
-
-        return app(Pipeline::class)
-            ->send(['event' => $event, 'errors' => []])
-            ->through($type->getPreprocessChecks())
-            ->thenReturn()['errors'];
-    }
-
-    /** @param \Illuminate\Support\Collection<string, non-empty-array<int, string>> $messages */
-    private function joinMessages(Collection $messages): string
-    {
-        return $messages
-            ->map(fn (array $value, string $key) => "{$key}: " . collect($value)->join(', '))
-            ->join("\n");
-    }
-
-    private function processEventStudents(ExcelImportEvent $event): void
+    public function execute(ExcelImportEvent $event): void
     {
         $registrationNumbers = $event->getUniqueRegistrationNumbers();
 
