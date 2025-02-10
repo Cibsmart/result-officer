@@ -31,6 +31,16 @@ parameters:
 			path: app/Http/Middleware/ValidateYearParameter.php
 
 		-
+			message: "#^Parameter \\#1 \\$courses of static method App\\\\Models\\\\Course\\:\\:checkExactMatchingCourse\\(\\) expects Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, App\\\\Models\\\\Course\\>, Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, \\$this\\(App\\\\Models\\\\Course\\)\\> given\\.$#"
+			count: 1
+			path: app/Models/Course.php
+
+		-
+			message: "#^Parameter \\#1 \\$courses of static method App\\\\Models\\\\Course\\:\\:getBestMatchingCourse\\(\\) expects Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, App\\\\Models\\\\Course\\>, Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, \\$this\\(App\\\\Models\\\\Course\\)\\> given\\.$#"
+			count: 1
+			path: app/Models/Course.php
+
+		-
 			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
 			count: 2
 			path: app/Models/VettingReport.php
