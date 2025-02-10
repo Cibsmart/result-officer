@@ -7,7 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-final class RawProgramCurriculum extends Model
+final class RawCurriculumCourse extends Model
 {
     /**
      * @param array<string, string> $row

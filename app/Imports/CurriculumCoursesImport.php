@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Imports;
 
 use App\Models\ExcelImportEvent;
-use App\Models\RawProgramCurriculum;
+use App\Models\RawCurriculumCourse;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
@@ -30,7 +30,7 @@ final class CurriculumCoursesImport implements ToModel, WithCalculatedFormulas, 
      * @param array<string, string> $row
      * {@inheritDoc}
      */
-    public function model(array $row): ?RawProgramCurriculum
+    public function model(array $row): ?RawCurriculumCourse
     {
         if (
             ! isset($row[$this->headings['course_code']])
@@ -39,6 +39,6 @@ final class CurriculumCoursesImport implements ToModel, WithCalculatedFormulas, 
             return null;
         }
 
-        return RawProgramCurriculum::fromExcelRow($row, $this->event, $this->headings);
+        return RawCurriculumCourse::fromExcelRow($row, $this->event, $this->headings);
     }
 }

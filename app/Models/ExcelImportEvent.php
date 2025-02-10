@@ -92,11 +92,11 @@ final class ExcelImportEvent extends Model
 
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawProgramCurriculum, \App\Models\ExcelImportEvent>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawCurriculumCourse, \App\Models\ExcelImportEvent>
      */
     public function rawProgramCurricula(): HasMany
     {
-        return $this->hasMany(RawProgramCurriculum::class);
+        return $this->hasMany(RawCurriculumCourse::class);
     }
 
     public function updateStatus(ImportEventStatus $status): void

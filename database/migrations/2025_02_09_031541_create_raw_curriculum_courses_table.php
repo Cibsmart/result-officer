@@ -12,7 +12,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('raw_program_curricula', function (Blueprint $table): void {
+        Schema::create('raw_curriculum_courses', function (Blueprint $table): void {
             $table->id();
             $table->foreignIdFor(ExcelImportEvent::class)->constrained()->cascadeOnDelete();
             $table->unsignedInteger('sn');
@@ -37,6 +37,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('raw_program_curricula');
+        Schema::dropIfExists('raw_curriculum_courses');
     }
 };
