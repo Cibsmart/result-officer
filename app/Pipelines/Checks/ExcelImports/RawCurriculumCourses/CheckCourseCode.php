@@ -25,7 +25,7 @@ final class CheckCourseCode
         $event = $data['event'];
         assert($event instanceof ExcelImportEvent);
 
-        $values = $event->rawProgramCurricula()->pluck($this->type)->unique();
+        $values = $event->rawCurriculumCourses()->pluck($this->type)->unique();
 
         foreach ($values as $value) {
             try {
