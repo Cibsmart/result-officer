@@ -21,17 +21,6 @@ use App\Models\RawFinalResult;
 use App\Models\Semester;
 use App\Models\Session;
 use App\Models\Student;
-use App\Pipelines\Checks\FinalResultImport\CheckCourseCode;
-use App\Pipelines\Checks\FinalResultImport\CheckCreditUnit;
-use App\Pipelines\Checks\FinalResultImport\CheckExam;
-use App\Pipelines\Checks\FinalResultImport\CheckGrade;
-use App\Pipelines\Checks\FinalResultImport\CheckInCourse;
-use App\Pipelines\Checks\FinalResultImport\CheckMonth;
-use App\Pipelines\Checks\FinalResultImport\CheckRegistrationNumber;
-use App\Pipelines\Checks\FinalResultImport\CheckSemester;
-use App\Pipelines\Checks\FinalResultImport\CheckSession;
-use App\Pipelines\Checks\FinalResultImport\CheckTotal;
-use App\Pipelines\Checks\FinalResultImport\CheckYear;
 use App\Values\CourseCode;
 use Illuminate\Console\Command;
 use Illuminate\Pipeline\Pipeline;
@@ -77,21 +66,12 @@ final class ProcessRawFinalResults extends Command
     /** @return array<string, array<int, string>> */
     private function preprocess(ExcelImportEvent $event): array
     {
+        $type = $event->type;
+
         return app(Pipeline::class)
             ->send(['event' => $event, 'errors' => []])
-            ->through([
-                CheckRegistrationNumber::class,
-                CheckInCourse::class,
-                CheckExam::class,
-                CheckTotal::class,
-                CheckGrade::class,
-                CheckCreditUnit::class,
-                CheckSemester::class,
-                CheckSession::class,
-                CheckCourseCode::class,
-                CheckYear::class,
-                CheckMonth::class,
-            ])->thenReturn()['errors'];
+            ->through($type->getPreprocessChecks())
+            ->thenReturn()['errors'];
     }
 
     /** @param \Illuminate\Support\Collection<string, non-empty-array<int, string>> $messages */

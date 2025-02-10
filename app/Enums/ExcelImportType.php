@@ -6,6 +6,17 @@ namespace App\Enums;
 
 use App\Imports\CurriculumCoursesImport;
 use App\Imports\FinalResultsImport;
+use App\Pipelines\Checks\FinalResultImport\CheckCourseCode;
+use App\Pipelines\Checks\FinalResultImport\CheckCreditUnit;
+use App\Pipelines\Checks\FinalResultImport\CheckExam;
+use App\Pipelines\Checks\FinalResultImport\CheckGrade;
+use App\Pipelines\Checks\FinalResultImport\CheckInCourse;
+use App\Pipelines\Checks\FinalResultImport\CheckMonth;
+use App\Pipelines\Checks\FinalResultImport\CheckRegistrationNumber;
+use App\Pipelines\Checks\FinalResultImport\CheckSemester;
+use App\Pipelines\Checks\FinalResultImport\CheckSession;
+use App\Pipelines\Checks\FinalResultImport\CheckTotal;
+use App\Pipelines\Checks\FinalResultImport\CheckYear;
 
 enum ExcelImportType: string
 {
@@ -26,6 +37,27 @@ enum ExcelImportType: string
         return match ($this) {
             self::CURRICULUM => CurriculumCoursesImport::class,
             self::FINAL_RESULT => FinalResultsImport::class,
+        };
+    }
+
+    /** @return array<int, class-string> */
+    public function getPreprocessChecks(): array
+    {
+        return match ($this) {
+            self::CURRICULUM => [],
+            self::FINAL_RESULT => [
+                CheckRegistrationNumber::class,
+                CheckInCourse::class,
+                CheckExam::class,
+                CheckTotal::class,
+                CheckGrade::class,
+                CheckCreditUnit::class,
+                CheckSemester::class,
+                CheckSession::class,
+                CheckCourseCode::class,
+                CheckYear::class,
+                CheckMonth::class,
+            ],
         };
     }
 
