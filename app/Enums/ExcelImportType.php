@@ -6,23 +6,9 @@ namespace App\Enums;
 
 use App\Actions\Imports\Excel\ProcessRawCurriculumCourses;
 use App\Actions\Imports\Excel\ProcessRawFinalResults;
+use App\Helpers\DirectoryClassList;
 use App\Imports\CurriculumCoursesImport;
 use App\Imports\FinalResultsImport;
-use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckCourseCode;
-use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckCreditUnit;
-use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckExam;
-use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckGrade;
-use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckInCourse;
-use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckMonth;
-use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckRegistrationNumber;
-use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckSemester;
-use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckSession;
-use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckTotal;
-use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckYear;
-use App\Pipelines\Checks\ExcelImports\RawProgramCurriculum\CheckCourseType;
-use App\Pipelines\Checks\ExcelImports\RawProgramCurriculum\CheckCurriculum;
-use App\Pipelines\Checks\ExcelImports\RawProgramCurriculum\CheckEntrySession;
-use App\Pipelines\Checks\ExcelImports\RawProgramCurriculum\CheckLevel;
 
 enum ExcelImportType: string
 {
@@ -57,29 +43,26 @@ enum ExcelImportType: string
     /** @return array<int, class-string> */
     public function getPreprocessChecks(): array
     {
+        return DirectoryClassList::for($this->directory(), $this->namespace())->get();
+    }
+
+    private function directory(): string
+    {
+        $directory = app_path('Pipelines/Checks/ExcelImports');
+
         return match ($this) {
-            self::CURRICULUM => [
-                CheckCurriculum::class,
-                CheckEntrySession::class,
-                CheckLevel::class,
-                CheckCourseType::class,
-                \App\Pipelines\Checks\ExcelImports\RawProgramCurriculum\CheckCreditUnit::class,
-                \App\Pipelines\Checks\ExcelImports\RawProgramCurriculum\CheckSemester::class,
-                \App\Pipelines\Checks\ExcelImports\RawProgramCurriculum\CheckCourseCode::class,
-            ],
-            self::FINAL_RESULT => [
-                CheckRegistrationNumber::class,
-                CheckInCourse::class,
-                CheckExam::class,
-                CheckTotal::class,
-                CheckGrade::class,
-                CheckCreditUnit::class,
-                CheckSemester::class,
-                CheckSession::class,
-                CheckCourseCode::class,
-                CheckYear::class,
-                CheckMonth::class,
-            ],
+            self::CURRICULUM => "{$directory}/RawCurriculumCourses",
+            self::FINAL_RESULT => "{$directory}/RawFinalResults",
+        };
+    }
+
+    private function namespace(): string
+    {
+        $namespace = 'App\\Pipelines\\Checks\\ExcelImports';
+
+        return match ($this) {
+            self::CURRICULUM => "{$namespace}\\RawCurriculumCourses",
+            self::FINAL_RESULT => "{$namespace}\\RawFinalResults",
         };
     }
 
