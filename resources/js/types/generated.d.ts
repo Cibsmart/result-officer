@@ -446,7 +446,12 @@ declare namespace App.Enums {
     | "session"
     | "course_code"
     | "year"
-    | "month";
+    | "month"
+    | "curriculum"
+    | "entry_mode"
+    | "entry_session"
+    | "level"
+    | "course_type";
   export type ClassOfDegree =
     | "FIRST CLASS HONOURS"
     | "SECOND CLASS HONOURS (UPPER DIVISION)"
