@@ -16,6 +16,28 @@ final class ProgramCurriculumCourse extends Model
 {
     use SoftDeletes;
 
+    public static function createFromExcelImport(
+        ProgramCurriculumSemester $curriculumSemester,
+        RawCurriculumCourse $curriculumCourse,
+        Course $course,
+    ): self {
+
+        $creditUnit = CreditUnit::from($curriculumCourse->credit_unit);
+        $courseType = CourseType::fromNameOrCode($curriculumCourse->course_type);
+        assert($courseType instanceof CourseType);
+
+        $programCurriculumCourse = new self();
+
+        $programCurriculumCourse->program_curriculum_semester_id = $curriculumSemester->id;
+        $programCurriculumCourse->course_id = $course->id;
+        $programCurriculumCourse->course_type = $courseType;
+        $programCurriculumCourse->credit_unit = $creditUnit;
+
+        $programCurriculumCourse->save();
+
+        return $programCurriculumCourse;
+    }
+
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\ProgramCurriculumCourse>
