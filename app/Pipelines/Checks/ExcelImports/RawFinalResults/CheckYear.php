@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Pipelines\Checks\FinalResultImport;
+namespace App\Pipelines\Checks\ExcelImports\RawFinalResults;
 
 use App\Enums\ChecklistType;
 use App\Models\ExcelImportEvent;
 use Closure;
 
-final class CheckSemester
+final class CheckYear
 {
-    private string $type = ChecklistType::SEMESTER->value;
+    private string $type = ChecklistType::YEAR->value;
 
     /**
      * @param array{event: 'App\Models\ExcelImportEvent', errors: array<string, string>} $data
@@ -26,7 +26,7 @@ final class CheckSemester
         $values = $event->rawFinalResults()->pluck($this->type)->unique();
 
         foreach ($values as $value) {
-            if (in_array(strtolower($value), ['first', 'second'], true)) {
+            if (preg_match('/^20\d{2}$/i', $value) && $value <= now()->addYear()->year) {
                 continue;
             }
 

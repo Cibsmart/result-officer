@@ -2,16 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Pipelines\Checks\FinalResultImport;
+namespace App\Pipelines\Checks\ExcelImports\RawFinalResults;
 
 use App\Enums\ChecklistType;
-use App\Enums\Months;
 use App\Models\ExcelImportEvent;
+use App\Values\TotalScore;
 use Closure;
+use Exception;
 
-final class CheckMonth
+final class CheckTotal
 {
-    private string $type = ChecklistType::MONTH->value;
+    private string $type = ChecklistType::TOTAL->value;
 
     /**
      * @param array{event: 'App\Models\ExcelImportEvent', errors: array<string, string>} $data
@@ -27,11 +28,11 @@ final class CheckMonth
         $values = $event->rawFinalResults()->pluck($this->type)->unique();
 
         foreach ($values as $value) {
-            if (Months::fromName($value) !== null) {
-                continue;
+            try {
+                TotalScore::new($value);
+            } catch (Exception) {
+                $messages[] = $value;
             }
-
-            $messages[] = $value;
         }
 
         if (count($messages) > 0) {

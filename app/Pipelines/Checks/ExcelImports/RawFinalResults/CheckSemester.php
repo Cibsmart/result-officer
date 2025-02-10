@@ -2,17 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Pipelines\Checks\FinalResultImport;
+namespace App\Pipelines\Checks\ExcelImports\RawFinalResults;
 
 use App\Enums\ChecklistType;
 use App\Models\ExcelImportEvent;
-use App\Values\InCourseScore;
 use Closure;
-use Exception;
 
-final class CheckInCourse
+final class CheckSemester
 {
-    private string $type = ChecklistType::IN_COURSE->value;
+    private string $type = ChecklistType::SEMESTER->value;
 
     /**
      * @param array{event: 'App\Models\ExcelImportEvent', errors: array<string, string>} $data
@@ -28,11 +26,11 @@ final class CheckInCourse
         $values = $event->rawFinalResults()->pluck($this->type)->unique();
 
         foreach ($values as $value) {
-            try {
-                InCourseScore::new($value);
-            } catch (Exception) {
-                $messages[] = $value;
+            if (in_array(strtolower($value), ['first', 'second'], true)) {
+                continue;
             }
+
+            $messages[] = $value;
         }
 
         if (count($messages) > 0) {

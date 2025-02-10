@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Pipelines\Checks\FinalResultImport;
+namespace App\Pipelines\Checks\ExcelImports\RawFinalResults;
 
 use App\Enums\ChecklistType;
 use App\Models\ExcelImportEvent;
-use App\Values\TotalScore;
+use App\Values\SessionValue;
 use Closure;
 use Exception;
 
-final class CheckTotal
+final class CheckSession
 {
-    private string $type = ChecklistType::TOTAL->value;
+    private string $type = ChecklistType::SESSION->value;
 
     /**
      * @param array{event: 'App\Models\ExcelImportEvent', errors: array<string, string>} $data
@@ -29,7 +29,7 @@ final class CheckTotal
 
         foreach ($values as $value) {
             try {
-                TotalScore::new($value);
+                SessionValue::new($value);
             } catch (Exception) {
                 $messages[] = $value;
             }

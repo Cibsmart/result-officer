@@ -8,17 +8,17 @@ use App\Actions\Imports\Excel\ProcessRawCurriculumCourses;
 use App\Actions\Imports\Excel\ProcessRawFinalResults;
 use App\Imports\CurriculumCoursesImport;
 use App\Imports\FinalResultsImport;
-use App\Pipelines\Checks\FinalResultImport\CheckCourseCode;
-use App\Pipelines\Checks\FinalResultImport\CheckCreditUnit;
-use App\Pipelines\Checks\FinalResultImport\CheckExam;
-use App\Pipelines\Checks\FinalResultImport\CheckGrade;
-use App\Pipelines\Checks\FinalResultImport\CheckInCourse;
-use App\Pipelines\Checks\FinalResultImport\CheckMonth;
-use App\Pipelines\Checks\FinalResultImport\CheckRegistrationNumber;
-use App\Pipelines\Checks\FinalResultImport\CheckSemester;
-use App\Pipelines\Checks\FinalResultImport\CheckSession;
-use App\Pipelines\Checks\FinalResultImport\CheckTotal;
-use App\Pipelines\Checks\FinalResultImport\CheckYear;
+use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckCourseCode;
+use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckCreditUnit;
+use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckExam;
+use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckGrade;
+use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckInCourse;
+use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckMonth;
+use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckRegistrationNumber;
+use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckSemester;
+use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckSession;
+use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckTotal;
+use App\Pipelines\Checks\ExcelImports\RawFinalResults\CheckYear;
 
 enum ExcelImportType: string
 {
