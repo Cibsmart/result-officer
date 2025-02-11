@@ -38,6 +38,11 @@ final class ProgramCurriculumCourse extends Model
         return $programCurriculumCourse;
     }
 
+    public static function getUsingId(int $programCourseId): self
+    {
+        return self::query()->where('id', $programCourseId)->firstOrFail();
+    }
+
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\ProgramCurriculumCourse>

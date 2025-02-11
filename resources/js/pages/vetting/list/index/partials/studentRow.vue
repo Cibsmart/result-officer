@@ -80,7 +80,8 @@ const vetted = computed(() => props.student.vettingStatus !== "pending");
 
     <PrimaryLinkSmall
       v-else
-      :href="route('vetting.create', { student: student })">
+      :href="route('vetting.create', { student: student })"
+      preserve-scroll>
       {{ vetted ? "re-vet" : "vet" }}
     </PrimaryLinkSmall>
   </BaseTD>

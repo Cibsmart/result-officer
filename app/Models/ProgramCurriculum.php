@@ -58,7 +58,7 @@ final class ProgramCurriculum extends Model
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session,\App\Models\ProgramCurriculum> */
     public function session(): BelongsTo
     {
-        return $this->belongsTo(Session::class);
+        return $this->belongsTo(Session::class, 'entry_session_id');
     }
 
     /**

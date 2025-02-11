@@ -45,9 +45,14 @@ final class MatchCurriculumSemesters extends ReportVettingStep
 
     private function updateProgramCurriculumId(ProgramCurriculum $curriculum, Student $student): void
     {
-        $programLevels = $curriculum->programCurriculumLevels;
+        $programLevels = $curriculum->programCurriculumLevels()
+            ->with('programCurriculumSemesters')
+            ->get();
 
-        $sessionEnrollments = $student->sessionEnrollments->sortBy('year')->values();
+        $sessionEnrollments = $student->sessionEnrollments()
+            ->with('semesterEnrollments')
+            ->orderBy('year')
+            ->get();
 
         foreach ($programLevels as $programLevel) {
             $sessionEnrollment = $sessionEnrollments->firstWhere('level_id', $programLevel->level_id);
