@@ -61,22 +61,16 @@ final class ProgramCurriculumSemesterResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('programCurriculumLevel.programCurriculum.session.name')
                     ->sortable()->label('Entry Session'),
-                Tables\Columns\TextColumn::make('programCurriculumLevel.level.name')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('semester.name')
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('programCurriculumLevel.level.name')->sortable(),
+                Tables\Columns\TextColumn::make('semester.name')->sortable(),
                 Tables\Columns\TextColumn::make('minimum_elective_count')
-                    ->numeric()
-                    ->sortable()->label('Elective Count'),
+                    ->numeric()->sortable()->label('Elective Count'),
                 Tables\Columns\TextColumn::make('minimum_elective_units.value')
-                    ->numeric()
-                    ->sortable()->label('Elective Units'),
+                    ->numeric()->sortable()->label('Elective Units'),
                 Tables\Columns\TextColumn::make('minimum_credit_units')
-                    ->numeric()
-                    ->sortable()->label('Min CLoad'),
+                    ->numeric()->sortable()->label('Min CLoad'),
                 Tables\Columns\TextColumn::make('maximum_credit_units')
-                    ->numeric()
-                    ->sortable()->label('Max CLoad'),
+                    ->numeric()->sortable()->label('Max CLoad'),
             ])
             ->filters([
             ])
