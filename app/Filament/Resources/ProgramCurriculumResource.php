@@ -4,16 +4,13 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use App\Enums\EntryMode;
 use App\Filament\Resources\ProgramCurriculumResource\Pages;
 use App\Models\ProgramCurriculum;
-use Filament\Forms;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 
 final class ProgramCurriculumResource extends Resource
 {
@@ -27,25 +24,7 @@ final class ProgramCurriculumResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\Select::make('program_id')
-                    ->relationship('program', 'name')
-                    ->required(),
-                Forms\Components\Select::make('curriculum_id')
-                    ->relationship('curriculum', 'name')
-                    ->required(),
-                Forms\Components\Select::make('entry_session_id')
-                    ->relationship('session', 'name',
-                        modifyQueryUsing: fn (Builder $query,
-                        ) => $query->orderBy('name', 'desc'))
-                    ->required()
-                    ->native(false),
-                Select::make('entry_mode')
-                    ->required()
-                    ->options(EntryMode::class)
-                    ->required(),
-            ]);
+        return $form->schema([]);
     }
 
     public static function table(Table $table): Table
@@ -64,18 +43,23 @@ final class ProgramCurriculumResource extends Resource
                 Tables\Columns\TextColumn::make('entry_mode')
                     ->searchable(),
             ])
+            ->filters([
+                SelectFilter::make('program')->relationship('program', 'name'),
+                SelectFilter::make('Entry Session')->relationship('session', 'name'),
+            ])
             ->actions([
                 Tables\Actions\Action::make('levels')
                     ->url(fn ($record) => ProgramCurriculumLevelResource::getUrl('index', ['record' => $record->id])),
             ]);
     }
 
+    /** @return array<int, class-string|\Filament\Resources\RelationManagers\RelationGroup> */
     public static function getRelations(): array
     {
-        return [
-        ];
+        return [];
     }
 
+    /** @return array<string, \Filament\Resources\Pages\PageRegistration> */
     public static function getPages(): array
     {
         return ['index' => Pages\ListProgramCurricula::route('/')];
