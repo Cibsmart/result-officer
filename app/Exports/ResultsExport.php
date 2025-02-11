@@ -71,6 +71,9 @@ final readonly class ResultsExport implements FromQuery, ShouldAutoSize, WithEve
             'Exam',
             'Total Score',
             'Grade',
+            'Credit Unit',
+            'Session',
+            'Semester',
             'Course Code',
             'Course Title',
             'Department',
@@ -96,6 +99,9 @@ final readonly class ResultsExport implements FromQuery, ShouldAutoSize, WithEve
             $scores->exam,
             $row->total_score,
             $row->grade,
+            $row->credit_unit,
+            $row->session,
+            $row->semester,
             $row->course_code,
             $row->course_title,
             $department,
@@ -116,7 +122,7 @@ final readonly class ResultsExport implements FromQuery, ShouldAutoSize, WithEve
                 $sheet->formatColumn('D', '00');
                 $sheet->formatColumn('E', '00');
                 $sheet->formatColumn('F', '00');
-                $sheet->formatColumn('L', NumberFormat::FORMAT_TEXT);
+                $sheet->formatColumn('M', NumberFormat::FORMAT_TEXT);
             },
         ];
     }
