@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
 
 final class Registration extends Model
 {
@@ -49,6 +50,17 @@ final class Registration extends Model
     public static function getUsingOnlineId(string $onlineId): self
     {
         return self::query()->where('online_id', $onlineId)->firstOrFail();
+    }
+
+    /** @param \Illuminate\Support\Collection<int, int> $registrationIds */
+    public static function updateCurriculumCourseId(
+        Collection $registrationIds,
+        ProgramCurriculumCourse $programCourseModel,
+    ): void {
+        self::query()
+            ->whereIn('id', $registrationIds)
+            ->whereNull('program_curriculum_course_id')
+            ->update(['program_curriculum_course_id' => $programCourseModel->id]);
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\Registration> */
