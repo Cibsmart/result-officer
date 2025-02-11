@@ -9,6 +9,7 @@ import BaseTabs from "@/components/tabs/baseTabs.vue";
 import BaseHeader from "@/layouts/main/partials/baseHeader.vue";
 import Breadcrumb from "@/components/breadcrumb.vue";
 import BaseSection from "@/layouts/main/partials/baseSection.vue";
+import RegistrationNumbers from "@/pages/export/results/tabs/registrationNumbers.vue";
 
 defineProps<{
   departments: App.Data.Department.DepartmentListData;
@@ -24,7 +25,11 @@ const pages: BreadcrumbItem[] = [
   },
 ];
 
-const tabs: TabItem[] = [{ name: "By Registration Number" }, { name: "By Dept and Entry Session" }];
+const tabs: TabItem[] = [
+  { name: "By Registration Number" },
+  { name: "By Registration Number List" },
+  { name: "By Dept and Entry Session" },
+];
 </script>
 
 <template>
@@ -41,6 +46,10 @@ const tabs: TabItem[] = [{ name: "By Registration Number" }, { name: "By Dept an
         :tabs="tabs">
         <BaseTabPanel>
           <RegistrationNumber />
+        </BaseTabPanel>
+
+        <BaseTabPanel>
+          <RegistrationNumbers />
         </BaseTabPanel>
 
         <BaseTabPanel>
