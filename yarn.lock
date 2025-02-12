@@ -2177,6 +2177,11 @@ keyv@^4.5.4:
   dependencies:
     json-buffer "3.0.1"
 
+laravel-echo@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/laravel-echo/-/laravel-echo-2.0.0.tgz#3aa41a12b8619e659aa26dccc7cdbd9f76584c96"
+  integrity sha512-ljAzBizPQolXIo1AjdKVladgs3bPv1h2aPhblc6J+Xy/er34mRv07Ix+qjnBk/0LK3S8Yamf83ey3pe+DgWrHQ==
+
 laravel-vite-plugin@^1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/laravel-vite-plugin/-/laravel-vite-plugin-1.1.1.tgz#e909a2df7cad7275dca3f7717f5e3075891045d4"
@@ -2710,6 +2715,13 @@ puppeteer@^22.13.0:
     devtools-protocol "0.0.1312386"
     puppeteer-core "22.15.0"
 
+pusher-js@^8.4.0:
+  version "8.4.0"
+  resolved "https://registry.yarnpkg.com/pusher-js/-/pusher-js-8.4.0.tgz#eb28dca291f553ad9622f4e421d14c23abbaf40f"
+  integrity sha512-wp3HqIIUc1GRyu1XrP6m2dgyE9MoCsXVsWNlohj0rjSkLf+a0jLvEyVubdg58oMk7bhjBWnFClgp8jfAa6Ak4Q==
+  dependencies:
+    tweetnacl "^1.0.3"
+
 qs@^6.9.0:
   version "6.13.1"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.13.1.tgz#3ce5fc72bd3a8171b85c99b93c65dd20b7d1b16e"
@@ -3176,6 +3188,11 @@ tslib@^2.0.1:
   version "2.8.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.8.1.tgz#612efe4ed235d567e8aba5f2a5fab70280ade83f"
   integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==
+
+tweetnacl@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-1.0.3.tgz#ac0af71680458d8a6378d0d0d050ab1407d35596"
+  integrity sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw==
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
