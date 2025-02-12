@@ -32,7 +32,7 @@ final class UploadLegacyResult extends Command
             return;
         }
 
-        $bar = $this->output->createProgressBar(6299941);
+        $bar = $this->output->createProgressBar(6_299_941);
 
         $counter = 0;
 

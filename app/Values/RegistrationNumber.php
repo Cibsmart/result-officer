@@ -55,6 +55,6 @@ final readonly class RegistrationNumber
 
     public function allowEGrade(): bool
     {
-        return ! in_array($this->year(), [2011, 2012, 2013, 2014, 2015, 2016, 2017], true);
+        return ! in_array($this->year(), [2_011, 2_012, 2_013, 2_014, 2_015, 2_016, 2_017], true);
     }
 }

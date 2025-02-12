@@ -129,8 +129,8 @@ final class FinalSessionEnrollment extends Model
     protected function gradePointAverageSum(): Attribute
     {
         return Attribute::make(
-            get: static fn (int $value): float => $value / 1000,
-            set: static fn (float $value): int => (int) ($value * 1000),
+            get: static fn (int $value): float => $value / 1_000,
+            set: static fn (float $value): int => (int) ($value * 1_000),
         );
     }
 
@@ -138,8 +138,8 @@ final class FinalSessionEnrollment extends Model
     protected function cummulativeGradePointAverage(): Attribute
     {
         return Attribute::make(
-            get: static fn (int $value): float => $value / 1000,
-            set: static fn (float $value): int => (int) ($value * 1000),
+            get: static fn (int $value): float => $value / 1_000,
+            set: static fn (float $value): int => (int) ($value * 1_000),
         );
     }
 }

@@ -21,8 +21,8 @@ final class CourseAlternativeSeeder extends Seeder
         ]);
 
         CourseAlternative::query()->create([
-            'alternate_course_id' => 4870,
-            'original_course_id' => 4869,
+            'alternate_course_id' => 4_870,
+            'original_course_id' => 4_869,
         ]);
     }
 }

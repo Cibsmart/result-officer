@@ -75,7 +75,7 @@ it('updates the credit unit, grade point sum and average columns', function (): 
 
     assertDatabaseHas(FinalSemesterEnrollment::class, [
         'credit_unit_sum' => $cus,
-        'grade_point_average' => $gpa * 1000,
+        'grade_point_average' => $gpa * 1_000,
         'grade_point_sum' => $gps,
         'id' => $enrollment->id,
         'result_count' => $count,

@@ -30,11 +30,11 @@ it('throws exception for invalid session value', function ($stringSession): void
 it('extract the first year from session', function (): void {
     $session = SessionValue::new('2009/2010');
 
-    expect($session->firstYear())->toBeInt()->toBe(2009);
+    expect($session->firstYear())->toBeInt()->toBe(2_009);
 });
 
 it('extract the last year from session', function (): void {
     $session = SessionValue::new('2009/2010');
 
-    expect($session->lastYear())->toBeInt()->toBe(2010);
+    expect($session->lastYear())->toBeInt()->toBe(2_010);
 });
