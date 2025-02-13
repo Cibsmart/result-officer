@@ -86,6 +86,14 @@ final class ExcelImportEvent extends Model
         return $result;
     }
 
+    /** @param \Illuminate\Support\Collection<int, \App\Models\ImportEvent> $importEvents */
+    public static function updateStatues(Collection $importEvents, ImportEventStatus $PROCESSING): void
+    {
+        foreach ($importEvents as $importEvent) {
+            $importEvent->updateStatus($PROCESSING);
+        }
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawFinalResult, \App\Models\ExcelImportEvent> */
     public function rawFinalResults(): HasMany
     {

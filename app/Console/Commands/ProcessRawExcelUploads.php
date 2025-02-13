@@ -27,7 +27,7 @@ final class ProcessRawExcelUploads extends Command
             return Command::SUCCESS;
         }
 
-        $importEvents->toQuery()->update(['status' => ImportEventStatus::PROCESSING->value]);
+        ExcelImportEvent::updateStatues($importEvents, ImportEventStatus::PROCESSING);
 
         foreach ($importEvents as $event) {
             assert($event instanceof ExcelImportEvent);
