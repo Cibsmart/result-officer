@@ -8,6 +8,7 @@ use App\Enums\Months;
 use App\Enums\RawDataStatus;
 use App\Enums\StudentStatus;
 use App\Enums\Year;
+use App\Models\Course;
 use App\Models\ExamOfficer;
 use App\Models\ExcelImportEvent;
 use App\Models\FinalCourse;
@@ -17,6 +18,7 @@ use App\Models\FinalSessionEnrollment;
 use App\Models\FinalStudent;
 use App\Models\Level;
 use App\Models\RawFinalResult;
+use App\Models\Registration;
 use App\Models\Semester;
 use App\Models\Session;
 use App\Models\Student;
@@ -156,11 +158,55 @@ final class ProcessRawFinalResults
 
             $status = $course->getCourseStatus($student);
 
-            $finalResults = FinalResult::createFromRawFinalResult($semesterEnrollment, $result, $course, $status);
+            $registration = $this->getRegistration($student, $semesterEnrollment, $result, $course);
+
+            $finalResults = FinalResult::createFromRawFinalResult(
+                finalSemesterEnrollment: $semesterEnrollment,
+                result: $result,
+                finalCourse: $course,
+                status: $status,
+                registration: $registration,
+            );
 
             $result->setFinalResults($finalResults);
 
             $result->updateStatus(RawDataStatus::PROCESSED);
         }
+    }
+
+    private function getRegistration(
+        Student $student,
+        FinalSemesterEnrollment $finalSemesterEnrollment,
+        RawFinalResult $result,
+        FinalCourse $finalCourse,
+    ): ?Registration {
+
+        $registrationId = $result->registration_id;
+
+        $registration = Registration::query()
+            ->with('course')
+            ->where('id', $registrationId)
+            ->first();
+
+        if ($registration !== null && $registration->course->code === $finalCourse->code) {
+            return $registration;
+        }
+
+        $sessionEnrollment = $student->sessionEnrollments()
+            ->with('semesterEnrollments.registrations.course')
+            ->where('session_id', $finalSemesterEnrollment->finalSessionEnrollment->session_id)
+            ->first();
+
+        $semesterEnrollment = $sessionEnrollment->semesterEnrollments
+            ->where('semester_id', $finalSemesterEnrollment->semester_id)
+            ->first();
+
+        $registrations = $semesterEnrollment->registrations;
+
+        $courseId = $registrations->pluck('course_id');
+
+        $course = Course::query()->whereIn('id', $courseId)->where('code', $finalCourse->code)->first();
+
+        return $registrations->where('course_id', $course->id)->first();
     }
 }

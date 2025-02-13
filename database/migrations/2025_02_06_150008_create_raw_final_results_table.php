@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(ExcelImportEvent::class)->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('sn');
-            $table->unsignedBigInteger('registration_id');
+            $table->unsignedBigInteger('registration_id')->default(0);
             $table->string('name');
             $table->string('registration_number')->index();
             $table->unsignedTinyInteger('in_course');

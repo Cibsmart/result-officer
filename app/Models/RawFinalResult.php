@@ -44,6 +44,7 @@ final class RawFinalResult extends Model
         $rawFinalResult->originating_session = Str::trim($row[$headings['originating_session']]);
         $rawFinalResult->database_officer = Str::trim($row[$headings['database_officer']]);
         $rawFinalResult->exam_officer = Str::trim($row[$headings['exam_officer']]);
+        $rawFinalResult->registration_id = self::cleanRegistrationId(Str::trim($row[$headings['id']]));
 
         $oldRegistrationNumber = Str::trim($row[$headings['old_registration_number']]);
         $rawFinalResult->old_registration_number = $oldRegistrationNumber === 'NIL' || $oldRegistrationNumber === ''
@@ -65,6 +66,15 @@ final class RawFinalResult extends Model
     {
         $this->final_result_id = $finalResult->id;
         $this->save();
+    }
+
+    private static function cleanRegistrationId(string|int|null $registrationId): int
+    {
+        if (is_null($registrationId) || $registrationId === '') {
+            return 0;
+        }
+
+        return (int) $registrationId;
     }
 
     private static function cleanDate(string|int|null $date): ?string

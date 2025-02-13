@@ -51,6 +51,7 @@ final class FinalResult extends Model
         RawFinalResult $result,
         FinalCourse $finalCourse,
         CourseStatus $status,
+        ?Registration $registration,
     ): self {
         $registrationNumber = RegistrationNumber::new($result->registration_number);
         $creditUnit = CreditUnit::from($result->credit_unit);
@@ -82,6 +83,9 @@ final class FinalResult extends Model
         $finalResult->source = RecordSource::EXCEL;
         $finalResult->lecturer_id = $lecturer;
         $finalResult->original_session_id = $session;
+        $finalResult->registration_id = $registration
+            ? $registration->id
+            : null;
 
         $finalResult->save();
 
