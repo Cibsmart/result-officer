@@ -56,6 +56,7 @@ const currentEvent = ref<App.Data.Imports.ExcelImportEventData | null>(null);
         <BaseTD>
           <SecondaryButtonSmall
             v-if="event.status === 'failed'"
+            as="button"
             class="mr-2"
             preserveScroll="true"
             @click="showFailedMessage(event)">
@@ -63,8 +64,9 @@ const currentEvent = ref<App.Data.Imports.ExcelImportEventData | null>(null);
           </SecondaryButtonSmall>
 
           <SecondaryLinkSmall
-            v-if="event.status !== 'completed'"
+            v-if="event.status === 'queued' || event.status === 'failed'"
             :href="route('import.curriculum.delete', { event: event.id })"
+            as="button"
             method="post"
             preserveScroll="true">
             Delete
