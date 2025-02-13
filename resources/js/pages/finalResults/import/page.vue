@@ -21,8 +21,6 @@ const props = defineProps<{
 
 const user = usePage().props.user;
 
-// const { start, stop } = usePoll(10000, {}, { autoStart: false });
-
 const form = useForm({ file: null as File | null });
 
 const submit = () => {
@@ -66,7 +64,7 @@ const onFileChange = () => {
 const fileInput = ref<HTMLInputElement | null>(null);
 
 const subscribe = () => {
-  window.Echo.channel(`excelImports.${user.id}`).listen("ExcelImportStatusChanged", (event: any) => {
+  window.Echo.channel(`excelImports.${user.id}`).listen("ExcelImportStatusChanged", () => {
     router.reload();
   });
 };
