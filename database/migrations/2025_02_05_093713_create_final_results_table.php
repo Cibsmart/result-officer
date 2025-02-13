@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Models\FinalCourse;
 use App\Models\FinalSemesterEnrollment;
 use App\Models\Lecturer;
+use App\Models\Registration;
 use App\Models\Session;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -29,6 +30,7 @@ return new class extends Migration
             $table->string('source');
             $table->foreignIdFor(Lecturer::class)->nullable();
             $table->foreignIdFor(Session::class, 'original_session_id')->nullable();
+            $table->foreignIdFor(Registration::class)->nullable()->constrained();
             $table->timestamps();
 
             $table->unique(['final_semester_enrollment_id', 'final_course_id'], 'unique_final_semester_results');

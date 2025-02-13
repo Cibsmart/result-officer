@@ -12,7 +12,7 @@ use Illuminate\Console\Command;
 
 final class ProcessLegacyStudents extends Command
 {
-    protected $signature = 'app:process_legacy_students';
+    protected $signature = 'rp:process-legacy-students';
 
     protected $description = 'Process legacy students';
 

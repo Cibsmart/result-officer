@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Enums\RawDataStatus;
 use App\Models\ExcelImportEvent;
+use App\Models\FinalResult;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -40,6 +41,7 @@ return new class extends Migration
             $table->string('old_registration_number')->nullable();
             $table->string('status')->default(RawDataStatus::PENDING)->index();
             $table->text('message')->nullable();
+            $table->foreignIdFor(FinalResult::class)->nullable();
             $table->timestamps();
         });
     }

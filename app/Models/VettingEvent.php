@@ -6,9 +6,11 @@ namespace App\Models;
 
 use App\Enums\VettingEventStatus;
 use App\Enums\VettingStatus;
+use App\Events\VettingStatusUpdated;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Event;
 
 final class VettingEvent extends Model
 {
@@ -45,6 +47,11 @@ final class VettingEvent extends Model
     {
         $this->status = $status;
         $this->save();
+
+        $student = $this->student;
+        assert($student instanceof Student);
+
+        Event::dispatch(new VettingStatusUpdated($student));
     }
 
     public function updateVettingStatus(): void
@@ -53,9 +60,11 @@ final class VettingEvent extends Model
             ->where('status', VettingStatus::FAILED)
             ->exists();
 
-        $this->status = $failed
+        $status = $failed
             ? VettingEventStatus::FAILED
             : VettingEventStatus::PASSED;
+
+        $this->updateStatus($status);
 
         $this->save();
     }

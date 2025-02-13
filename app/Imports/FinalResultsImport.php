@@ -16,7 +16,7 @@ final class FinalResultsImport implements ToModel, WithCalculatedFormulas, WithC
 {
     use Importable;
 
-    private const int CHUNK_SIZE = 2000;
+    private const int CHUNK_SIZE = 2_000;
 
     /** @param array<string, string> $headings */
     public function __construct(private readonly ExcelImportEvent $event, private readonly array $headings)

@@ -50,6 +50,8 @@ final readonly class ResultsExport implements FromQuery, ShouldAutoSize, WithEve
                 'courses.code as course_code', 'courses.title as course_title', 'registrations.credit_unit',
                 'results.total_score', 'results.grade', 'results.exam_date', 'departments.name as department',
                 'results.scores', 'programs.name as program', 'lecturers.name as examiner',
+                'registrations.id as registration_id', 'lecturers.department as examiner_department',
+                'students.old_registration_number',
             )
             ->whereIn('students.id', $this->studentIds)
             ->whereNull('students.deleted_at')
@@ -64,21 +66,28 @@ final readonly class ResultsExport implements FromQuery, ShouldAutoSize, WithEve
     public function headings(): array
     {
         return [
-            '#',
-            'Name',
+            'SN',
+            'Students Name',
             'Registration Number',
             'In Course',
             'Exam',
-            'Total Score',
+            'Total',
             'Grade',
             'Credit Unit',
-            'Session',
             'Semester',
+            'Session',
             'Course Code',
             'Course Title',
-            'Department',
-            'Examiner',
+            'Students Department',
+            'Examiners Name',
+            'Examiners Department',
             'Exam Date',
+            'Year',
+            'Month',
+            'Originating Session',
+            'Database Officer',
+            'Exam Officer',
+            'Old Registration Number',
         ];
     }
 
@@ -92,7 +101,7 @@ final readonly class ResultsExport implements FromQuery, ShouldAutoSize, WithEve
         $scores = json_decode($row->scores);
 
         return [
-            $row->id,
+            $row->registration_id,
             "{$row->last_name} {$row->first_name} {$row->other_names}",
             $row->registration_number,
             $scores->in_course,
@@ -100,13 +109,20 @@ final readonly class ResultsExport implements FromQuery, ShouldAutoSize, WithEve
             $row->total_score,
             $row->grade,
             $row->credit_unit,
-            $row->session,
             $row->semester,
+            $row->session,
             $row->course_code,
             $row->course_title,
             $department,
             $row->examiner,
+            $row->examiner_department,
             $row->exam_date,
+            '',
+            '',
+            $row->session,
+            '',
+            '',
+            $row->old_registration_number,
         ];
     }
 
@@ -117,7 +133,8 @@ final readonly class ResultsExport implements FromQuery, ShouldAutoSize, WithEve
             AfterSheet::class => function (AfterSheet $event): void {
                 $sheet = $event->getSheet();
 
-                $sheet->getStyle('A1:L1')->getFont()->setBold(true);
+                $sheet->getStyle('A1:V1')->getFont()->setBold(true);
+                $sheet->getStyle('A')->getFont()->setBold(true);
 
                 $sheet->formatColumn('D', '00');
                 $sheet->formatColumn('E', '00');

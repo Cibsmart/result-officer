@@ -100,8 +100,8 @@ it('updates student credit unit, grade point sum and averages', function (): voi
 
     assertDatabaseHas(FinalStudent::class, [
         'credit_unit_sum' => $cus,
-        'cummulative_grade_point_average_sum' => $cgpas * 1000,
-        'final_cummulative_grade_point_average' => $fcgpa * 1000,
+        'cummulative_grade_point_average_sum' => $cgpas * 1_000,
+        'final_cummulative_grade_point_average' => $fcgpa * 1_000,
         'grade_point_sum' => $gps,
         'id' => $student->id,
         'result_count' => $count,

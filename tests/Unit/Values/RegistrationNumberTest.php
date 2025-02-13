@@ -45,7 +45,7 @@ it('can get the year in a registration number', function (): void {
 
     $year = RegistrationNumber::new($registrationNumber)->year();
 
-    expect($year)->toBeInt()->and($year)->toBe(2009);
+    expect($year)->toBeInt()->and($year)->toBe(2_009);
 });
 
 it('can get the session associated with a registration number', function (): void {

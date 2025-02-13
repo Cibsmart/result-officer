@@ -100,8 +100,8 @@ it('updates the credit unit, grade point sum and average columns', function (): 
 
     assertDatabaseHas(FinalSessionEnrollment::class, [
         'credit_unit_sum' => $cus,
-        'cummulative_grade_point_average' => $cgpa * 1000,
-        'grade_point_average_sum' => $gpas * 1000,
+        'cummulative_grade_point_average' => $cgpa * 1_000,
+        'grade_point_average_sum' => $gpas * 1_000,
         'grade_point_sum' => $gps,
         'id' => $enrollment->id,
         'result_count' => $count,

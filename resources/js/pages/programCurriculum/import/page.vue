@@ -12,7 +12,7 @@ import InputError from "@/components/inputs/inputError.vue";
 import EmptyState from "@/components/emptyState.vue";
 import { computed, ref, watch, onMounted } from "vue";
 import { BreadcrumbItem } from "@/types";
-import { usePoll } from "@inertiajs/vue3";
+import { usePage, router } from "@inertiajs/vue3";
 import SelectInput from "@/components/inputs/selectInput.vue";
 import UploadedExcelList from "@/pages/programCurriculum/import/partials/uploadedExcelList.vue";
 
@@ -21,7 +21,7 @@ const props = defineProps<{
   departments: App.Data.Department.DepartmentListData;
 }>();
 
-const { start, stop } = usePoll(10000, {}, { autoStart: false });
+const user = usePage().props.user;
 
 const form = useForm({
   department: null as App.Data.Department.DepartmentData | null,
@@ -49,15 +49,15 @@ const hasUnfinishedImport = computed(() =>
 
 onMounted(() => {
   if (hasUnfinishedImport.value) {
-    start();
+    subscribe();
   }
 });
 
 watch(hasUnfinishedImport, () => {
   if (hasUnfinishedImport.value) {
-    start();
+    subscribe();
   } else {
-    stop();
+    unsubscribe();
   }
 });
 
@@ -76,6 +76,16 @@ const loadPrograms = () => {
 
 const fileInput = ref<HTMLInputElement | null>(null);
 const programs = ref([{ id: 0, name: "Select Program" }]);
+
+const subscribe = () => {
+  window.Echo.channel(`excelImports.${user.id}`).listen("ExcelImportStatusChanged", () => {
+    router.reload();
+  });
+};
+
+const unsubscribe = () => {
+  window.Echo.leaveChannel(`excelImports.${user.id}`);
+};
 </script>
 
 <template>
