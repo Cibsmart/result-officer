@@ -147,6 +147,12 @@ final class ResultsExport implements FromQuery, ShouldAutoSize, WithEvents, With
                 $sheet->formatColumn('F', '00');
                 $sheet->formatColumn('G', '00');
                 $sheet->formatColumn('N', NumberFormat::FORMAT_TEXT);
+
+                $message = 'Do NOT edit values in this column. For any inserted record set the ID to 0';
+
+                $comment = $sheet->getComment('B1');
+                $comment->getText()->createTextRun($message);
+                $comment->setAuthor('System');
             },
         ];
     }
