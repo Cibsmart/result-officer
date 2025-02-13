@@ -103,6 +103,7 @@ enum ExcelImportType: string
             'exam_officer' => ['exam_officer', 'exams_co'],
             'grade' => ['grade'],
             'in_course' => ['in_course', 'in_course_score', 'inc', 'inc_score', 'inc_ass', 'inc_assessment'],
+            'registration_id' => ['id'],
             'month' => ['month'],
             'name' => ['name', 'students_name', 'name_of_students'],
             'old_registration_number' => ['old_registration_number', 'old_reg_number', 'old_reg_no'],
