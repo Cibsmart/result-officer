@@ -10,16 +10,8 @@ use Illuminate\Support\Facades\Storage;
 
 final class UploadLegacyResult extends Command
 {
-    /**
-     * The name and signature of the console command.
-     * @var string
-     */
-    protected $signature = 'app:upload_legacy_result';
+    protected $signature = 'app:upload-legacy-result';
 
-    /**
-     * The console command description.
-     * @var string
-     */
     protected $description = 'Read CSV and Upload Legacy Results';
 
     public function handle(): void

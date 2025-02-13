@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 final class ProcessLegacyFinalResults extends Command
 {
-    protected $signature = 'app:process_legacy_final_results';
+    protected $signature = 'rp:process-legacy-final-results';
 
     protected $description = 'Process legacy final results';
 
