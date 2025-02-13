@@ -97,7 +97,7 @@ enum ExcelImportType: string
             'database_officer' => ['database_officer', 'database_co'],
             'department' => ['department', 'dept', 'students_dept', 'std_dept'],
             'exam' => ['exam', 'exam_score'],
-            'examiner' => ['examiner', 'examiners_name'],
+            'examiner' => ['examiner', 'examiners_name', 'name_of_examiner'],
             'examiner_department' => ['examiners_department', 'examiners_dept', 'exam_dept'],
             'exam_date' => ['exam_date', 'date_of_exam'],
             'exam_officer' => ['exam_officer', 'exams_co'],
