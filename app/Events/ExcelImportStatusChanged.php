@@ -12,7 +12,8 @@ use Illuminate\Queue\SerializesModels;
 
 final class ExcelImportStatusChanged implements ShouldBroadcast
 {
-    use InteractsWithSockets, SerializesModels;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     public function __construct(public ExcelImportEvent $importEvent)
     {
