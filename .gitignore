@@ -24,3 +24,4 @@ _ide_helper_models.php
 coverage
 public/.DS_Store
 .DS_Store
+.nvmrc
