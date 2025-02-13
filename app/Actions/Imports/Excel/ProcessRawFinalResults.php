@@ -156,7 +156,9 @@ final class ProcessRawFinalResults
 
             $status = $course->getCourseStatus($student);
 
-            FinalResult::createFromRawFinalResult($semesterEnrollment, $result, $course, $status);
+            $finalResults = FinalResult::createFromRawFinalResult($semesterEnrollment, $result, $course, $status);
+
+            $result->setFinalResults($finalResults);
 
             $result->updateStatus(RawDataStatus::PROCESSED);
         }

@@ -61,6 +61,12 @@ final class RawFinalResult extends Model
         $this->save();
     }
 
+    public function setFinalResults(FinalResult $finalResult): void
+    {
+        $this->final_result_id = $finalResult->id;
+        $this->save();
+    }
+
     private static function cleanDate(string|int|null $date): ?string
     {
         if (! is_string($date)) {
