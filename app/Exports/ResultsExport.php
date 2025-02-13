@@ -13,14 +13,17 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-final readonly class ResultsExport implements FromQuery, ShouldAutoSize, WithEvents, WithHeadings, WithMapping
+final class ResultsExport implements FromQuery, ShouldAutoSize, WithEvents, WithHeadings, WithMapping
 {
     use Exportable;
 
+    private int $rowNumber = 0;
+
     /** @param array<int, int> $studentIds */
-    public function __construct(private array $studentIds)
+    public function __construct(private readonly array $studentIds)
     {
     }
 
@@ -67,6 +70,7 @@ final readonly class ResultsExport implements FromQuery, ShouldAutoSize, WithEve
     {
         return [
             'SN',
+            'ID',
             'Students Name',
             'Registration Number',
             'In Course',
@@ -94,6 +98,8 @@ final readonly class ResultsExport implements FromQuery, ShouldAutoSize, WithEve
     /** @return array<int, string> */
     public function map(mixed $row): array
     {
+        $this->rowNumber ++;
+
         $department = $row->department === $row->program
             ? $row->department
             : "{$row->department} ({$row->program})";
@@ -101,6 +107,7 @@ final readonly class ResultsExport implements FromQuery, ShouldAutoSize, WithEve
         $scores = json_decode($row->scores);
 
         return [
+            $this->rowNumber,
             $row->registration_id,
             "{$row->last_name} {$row->first_name} {$row->other_names}",
             $row->registration_number,
@@ -133,13 +140,19 @@ final readonly class ResultsExport implements FromQuery, ShouldAutoSize, WithEve
             AfterSheet::class => function (AfterSheet $event): void {
                 $sheet = $event->getSheet();
 
-                $sheet->getStyle('A1:V1')->getFont()->setBold(true);
-                $sheet->getStyle('A')->getFont()->setBold(true);
+                $sheet->getStyle('A1:W1')->getFont()->setBold(true);
+                $sheet->getStyle('B:B')->getFont()->getColor()->setRGB(Color::COLOR_DARKRED);
 
-                $sheet->formatColumn('D', '00');
                 $sheet->formatColumn('E', '00');
                 $sheet->formatColumn('F', '00');
-                $sheet->formatColumn('M', NumberFormat::FORMAT_TEXT);
+                $sheet->formatColumn('G', '00');
+                $sheet->formatColumn('N', NumberFormat::FORMAT_TEXT);
+
+                $message = 'Do NOT edit values in this column. For any inserted record set the ID to 0';
+
+                $comment = $sheet->getComment('B1');
+                $comment->getText()->createTextRun($message);
+                $comment->setAuthor('System');
             },
         ];
     }
