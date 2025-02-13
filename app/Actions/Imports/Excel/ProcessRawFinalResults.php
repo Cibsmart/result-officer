@@ -207,6 +207,8 @@ final class ProcessRawFinalResults
 
         $course = Course::query()->whereIn('id', $courseId)->where('code', $finalCourse->code)->first();
 
-        return $registrations->where('course_id', $course->id)->first();
+        return $course
+            ? $registrations->where('course_id', $course->id)->first()
+            : null;
     }
 }
