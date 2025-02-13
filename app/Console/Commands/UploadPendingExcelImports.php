@@ -31,6 +31,8 @@ final class UploadPendingExcelImports extends Command
 
         ExcelImportEvent::updateStatues($importEvents, ImportEventStatus::STARTED);
 
+        sleep(5);
+
         foreach ($importEvents as $event) {
             $event->updateStatus(ImportEventStatus::UPLOADING);
 

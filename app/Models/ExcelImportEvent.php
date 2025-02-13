@@ -86,11 +86,11 @@ final class ExcelImportEvent extends Model
         return $result;
     }
 
-    /** @param \Illuminate\Support\Collection<int, \App\Models\ImportEvent> $importEvents */
-    public static function updateStatues(Collection $importEvents, ImportEventStatus $PROCESSING): void
+    /** @param \Illuminate\Support\Collection<int, \App\Models\ExcelImportEvent> $importEvents */
+    public static function updateStatues(Collection $importEvents, ImportEventStatus $status): void
     {
         foreach ($importEvents as $importEvent) {
-            $importEvent->updateStatus($PROCESSING);
+            $importEvent->updateStatus($status);
         }
     }
 
