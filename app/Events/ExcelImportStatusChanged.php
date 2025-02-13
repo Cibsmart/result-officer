@@ -10,7 +10,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Queue\SerializesModels;
 
-final class ImportEventStatusChanged implements ShouldBroadcast
+final class ExcelImportStatusChanged implements ShouldBroadcast
 {
     use InteractsWithSockets, SerializesModels;
 
@@ -21,6 +21,6 @@ final class ImportEventStatusChanged implements ShouldBroadcast
 
     public function broadcastOn(): Channel
     {
-        return new Channel("imports.{$this->importEvent->user_id}");
+        return new Channel("excelImports.{$this->importEvent->user_id}");
     }
 }

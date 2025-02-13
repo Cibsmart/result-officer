@@ -7,10 +7,12 @@ namespace App\Models;
 use App\Actions\Imports\Excel\ValidateHeadings;
 use App\Enums\ExcelImportType;
 use App\Enums\ImportEventStatus;
+use App\Events\ExcelImportStatusChanged;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Event;
 use Maatwebsite\Excel\HeadingRowImport;
 
 final class ExcelImportEvent extends Model
@@ -107,13 +109,16 @@ final class ExcelImportEvent extends Model
 
         $this->status = $status;
         $this->save();
+
+        Event::dispatch(new ExcelImportStatusChanged($this));
     }
 
     public function setMessage(string $message): void
     {
-        $this->status = ImportEventStatus::FAILED;
         $this->message = $message;
         $this->save();
+
+        $this->updateStatus(ImportEventStatus::FAILED);
     }
 
     /** @return \Illuminate\Support\Collection<int, string> */

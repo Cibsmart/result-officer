@@ -12,7 +12,7 @@ import InputError from "@/components/inputs/inputError.vue";
 import EmptyState from "@/components/emptyState.vue";
 import { computed, ref, watch, onMounted } from "vue";
 import { BreadcrumbItem } from "@/types";
-import { usePoll, usePage } from "@inertiajs/vue3";
+import { usePage, router } from "@inertiajs/vue3";
 import UploadedExcelList from "@/pages/programCurriculum/import/partials/uploadedExcelList.vue";
 
 const props = defineProps<{
@@ -66,11 +66,13 @@ const onFileChange = () => {
 const fileInput = ref<HTMLInputElement | null>(null);
 
 const subscribe = () => {
-  window.Echo.channel(`imports.${user.id}`);
+  window.Echo.channel(`excelImports.${user.id}`).listen("ExcelImportStatusChanged", (event: any) => {
+    router.reload();
+  });
 };
 
 const unsubscribe = () => {
-  window.Echo.channel(`imports.${user.id}`);
+  window.Echo.leaveChannel(`excelImports.${user.id}`);
 };
 </script>
 
