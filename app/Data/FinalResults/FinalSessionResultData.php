@@ -13,7 +13,7 @@ final class FinalSessionResultData extends Data
     public function __construct(
         public readonly int $id,
         /** @var \Illuminate\Support\Collection<int, \App\Data\FinalResults\FinalSemesterResultData> */
-        public readonly Collection $semesterResults,
+        public readonly Collection $finalSemesterResults,
         public readonly string $session,
         public readonly string $year,
         public readonly float $cumulativeGradePointAverage,
@@ -28,13 +28,13 @@ final class FinalSessionResultData extends Data
             $finalSessionEnrollment->finalSemesterEnrollments()->with('semester')->get(),
         );
 
-        $cumulativeGradePointAverage = $finalSessionEnrollment->cummulative_grade_point_average;
+        $cumulativeGradePointAverage = $finalSessionEnrollment->cumulative_grade_point_average;
 
         $formattedCGPA = number_format($cumulativeGradePointAverage, 3);
 
         return new self(
             id: $finalSessionEnrollment->id,
-            semesterResults: $finalSemesterEnrollments,
+            finalSemesterResults: $finalSemesterEnrollments,
             session: $finalSessionEnrollment->session->name,
             year: $finalSessionEnrollment->year->name,
             cumulativeGradePointAverage: $cumulativeGradePointAverage,
