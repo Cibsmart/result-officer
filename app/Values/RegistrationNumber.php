@@ -57,4 +57,9 @@ final readonly class RegistrationNumber
     {
         return ! in_array($this->year(), [2_011, 2_012, 2_013, 2_014, 2_015, 2_016, 2_017], true);
     }
+
+    public function slug(): string
+    {
+        return Str::of($this->value)->replace('/', '-')->slug()->value();
+    }
 }

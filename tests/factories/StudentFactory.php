@@ -9,6 +9,7 @@ use App\Enums\Gender;
 use App\Enums\StudentStatus;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /** @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Student> */
 final class StudentFactory extends Factory
@@ -22,6 +23,8 @@ final class StudentFactory extends Factory
 
         $gender = fake()->randomElement(Gender::cases());
 
+        $registrationNumber = 'EBSU/' . fake()->year() . '/' . fake()->unique()->randomNumber(5, true);
+
         return [
             'date_of_birth' => fake()->date(max: $maximumDateOfBirth),
             'entry_level_id' => LevelFactory::new(),
@@ -33,8 +36,8 @@ final class StudentFactory extends Factory
             'local_government_id' => LocalGovernmentFactory::new(),
             'other_names' => fake()->firstName(),
             'program_id' => ProgramFactory::new(),
-            'registration_number' => 'EBSU/' . fake()->year() . '/' . fake()->unique()->randomNumber(5, true),
-            'slug' => fake()->slug(),
+            'registration_number' => $registrationNumber,
+            'slug' => Str::of($registrationNumber)->replace('/', '-')->slug()->value(),
             'status' => StudentStatus::NEW,
         ];
     }

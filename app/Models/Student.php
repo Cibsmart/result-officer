@@ -143,6 +143,13 @@ final class Student extends Model
         return $this->hasMany(StatusChangeEvent::class);
     }
 
+    public function updateRegistrationNumber(RegistrationNumber $registrationNumber): void
+    {
+        $this->registration_number = $registrationNumber->value;
+        $this->slug = $registrationNumber->slug();
+        $this->save();
+    }
+
     public function programCurriculum(): ?ProgramCurriculum
     {
         return ProgramCurriculum::query()
