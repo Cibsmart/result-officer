@@ -50,9 +50,9 @@ const hasResults = computed(() => props.results !== null && props.results.finalS
           <div
             v-show="hasResults"
             class="mt-4 flex space-x-4">
-            <BaseLink :href="route('results.transcript', { student: student })"> Transcript</BaseLink>
+            <BaseLink :href="route('finalResults.transcript', { student: student })"> Transcript</BaseLink>
 
-            <BaseLink :href="route('results.print', { student: student })"> Print</BaseLink>
+            <BaseLink :href="route('finalResults.print', { student: student })"> Print</BaseLink>
           </div>
         </div>
 

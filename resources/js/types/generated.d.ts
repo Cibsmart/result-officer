@@ -312,12 +312,6 @@ declare namespace App.Data.Response {
   };
 }
 declare namespace App.Data.Results {
-  export type GradingSchemeData = {
-    range: string;
-    interpretation: string;
-    grade: string;
-    gradePoint: number;
-  };
   export type ResultData = {
     id: number;
     resultId: number;
@@ -363,7 +357,7 @@ declare namespace App.Data.Results {
   };
   export type TranscriptData = {
     recordsUnitHead: string;
-    gradingSchemes: Array<App.Data.Results.GradingSchemeData>;
+    gradingSchemes: Array<App.Data.Grading.GradingSchemeData>;
   };
 }
 declare namespace App.Data.Semester {

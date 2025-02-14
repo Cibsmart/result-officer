@@ -61,8 +61,8 @@
     </table>
   </div>
 
-  @foreach($results->sessionEnrollments as $session)
-    @foreach($session->semesterResults as $semester)
+  @foreach($results->finalSessionEnrollments as $session)
+    @foreach($session->finalSemesterResults as $semester)
       <table class="w-full mt-4 mx-auto divide-y divide-gray-400 ring-1 ring-gray-400">
         <thead>
         <tr class="divide-x divide-gray-400">
@@ -106,10 +106,13 @@
           @endforeach
           <tr class="divide-x divide-gray-400">
             <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900" colspan="4"></td>
-            <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">{{ $semester->formattedCreditUnitTotal }}</td>
+            <td
+              class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">{{ $semester->formattedCreditUnitTotal }}</td>
             <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900"></td>
-            <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">{{ $semester->formattedGradePointTotal }}</td>
-            <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">{{ $semester->formattedGPA }}</td>
+            <td
+              class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">{{ $semester->formattedGradePointTotal }}</td>
+            <td
+              class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">{{ $semester->formattedGPA }}</td>
             <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">
               @if($loop->last)
                 {{ $session->formattedCGPA }}

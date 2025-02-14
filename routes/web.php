@@ -59,16 +59,14 @@ Route::middleware(['auth'])->group(static function (): void {
         Route::post('', [ViewStudentResultController::class, 'view'])->name('results.view');
         Route::get('{student}/print', [ViewStudentResultController::class, 'print'])
             ->name('results.print');
-        Route::get('{student}/transcript', [ViewStudentResultController::class, 'transcript'])
-            ->name('results.transcript');
     });
 
     Route::prefix('final-results/student/')->group(static function (): void {
         Route::get('{student?}', [StudentFinalResultController::class, 'index'])->name('finalResults.index');
         Route::post('', [StudentFinalResultController::class, 'store'])->name('finalResults.store');
-        Route::get('{student}/print', [ViewStudentResultController::class, 'print'])
+        Route::get('{student}/print', [StudentFinalResultController::class, 'print'])
             ->name('finalResults.print');
-        Route::get('{student}/transcript', [ViewStudentResultController::class, 'transcript'])
+        Route::get('{student}/transcript', [StudentFinalResultController::class, 'transcript'])
             ->name('finalResults.transcript');
     });
 

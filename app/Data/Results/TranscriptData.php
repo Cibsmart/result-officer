@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Data\Results;
 
+use App\Data\Grading\GradingSchemeData;
 use App\Enums\Grade;
 use App\Models\RecordsUnitHead;
 use Illuminate\Support\Collection;
@@ -13,7 +14,7 @@ final class TranscriptData extends Data
 {
     public function __construct(
         public readonly string $recordsUnitHead,
-        /** @var \Illuminate\Support\Collection<int, \App\Data\Results\GradingSchemeData> */
+        /** @var \Illuminate\Support\Collection<int, \App\Data\Grading\GradingSchemeData> */
         public readonly Collection $gradingSchemes,
     ) {
     }
