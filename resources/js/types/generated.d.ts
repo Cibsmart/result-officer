@@ -560,6 +560,7 @@ declare namespace App.Enums {
   export type NotificationType = "success" | "error" | "warning" | "info";
   export type ProgramDuration = 3 | 4 | 5 | 6;
   export type RawDataStatus = "pending" | "duplicate" | "failed" | "processed";
+  export type RecordActionType = "create" | "update" | "delete";
   export type RecordSource = "portal" | "excel" | "legacy" | "system";
   export type ResultRemark = "PAS" | "FAL" | "ABS" | "MAL";
   export type Role = "super-admin" | "admin" | "desk-officer" | "exam-officer" | "database-officer" | "user";
