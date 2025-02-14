@@ -27,11 +27,13 @@ final class FinalStudentResultData extends Data
 
     public static function fromModel(Student $student): self
     {
-        $finalSessionEnrollments = FinalSessionResultData::collect(
-            $student->sessionEnrollments()->with(['finalSemesterEnrollments', 'session'])->orderBy('session_id')->get(),
-        );
-
         $finalStudent = $student->finalStudent()->first();
+
+        $finalSessionEnrollments = FinalSessionResultData::collect(
+            $finalStudent->finalSessionEnrollments()->with([
+                'finalSemesterEnrollments', 'session',
+            ])->orderBy('session_id')->get(),
+        );
 
         $finalCGPA = $finalStudent->final_cumulative_grade_point_average;
 

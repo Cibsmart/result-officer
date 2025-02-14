@@ -190,7 +190,7 @@ declare namespace App.Data.FinalResults {
   };
   export type FinalSessionResultData = {
     id: number;
-    semesterResults: Array<App.Data.FinalResults.FinalSemesterResultData>;
+    finalSemesterResults: Array<App.Data.FinalResults.FinalSemesterResultData>;
     session: string;
     year: string;
     cumulativeGradePointAverage: number;
@@ -693,5 +693,11 @@ declare namespace App.ViewModels.Vetting {
     clearance: App.ViewModels.Clearance.ClearanceFormPage;
     data: App.Data.Vetting.VettingListData;
     steps: App.Data.Vetting.VettingStepListData;
+  };
+}
+declare namespace App.ViewModels.finalResults {
+  export type FinalResultsIndexPage = {
+    student: App.Data.Students.StudentBasicData;
+    results: App.Data.FinalResults.FinalStudentResultData;
   };
 }
