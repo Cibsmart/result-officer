@@ -8,6 +8,7 @@ enum ProgramModifiableField: string
 {
     case CODE = 'code';
     case NAME = 'name';
+    case FACULTY = 'faculty';
     case DURATION = 'duration';
     case DEPARTMENT = 'department';
     case PROGRAM_TYPE = 'program_type';

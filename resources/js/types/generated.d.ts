@@ -605,17 +605,17 @@ declare namespace App.Enums.ModifiableFields {
     | "course"
     | "course_type"
     | "credit_unit";
-  export type DepartmentModifiableField = "name" | "code" | "faculty";
-  export type FacultyModifiableField = "name" | "code";
-  export type ProgramModifiableField = "code" | "name" | "duration" | "department" | "program_type";
-  export type RegistrationModifiableField = "course" | "credit_unit";
-  export type ResultModifiableField = "exam" | "in_course";
+  export type ProgramModifiableField = "code" | "name" | "faculty" | "duration" | "department" | "program_type";
   export type StudentModifiableField =
+    | "exam"
     | "name"
+    | "course"
     | "gender"
     | "status"
     | "program"
+    | "in_course"
     | "entry_mode"
+    | "credit_unit"
     | "entry_level"
     | "date_of_birth"
     | "local_government"
