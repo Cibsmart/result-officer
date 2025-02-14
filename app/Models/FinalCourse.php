@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\CourseStatus;
+use App\Values\CourseCode;
+use App\Values\CourseTitle;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
@@ -20,16 +22,15 @@ final class FinalCourse extends Model
             : self::createFinalCourse($course->code, $course->title);
     }
 
-    public static function getOrCreateUsingCodeAndTitle(string $courseCode, string $courseTitle): self
+    public static function getOrCreateUsingCodeAndTitle(CourseCode $code, CourseTitle $title): self
     {
-        $courseTitle = Str::replace(' ', ' ', $courseTitle);
-        $slug = Str::slug("{$courseCode}-{$courseTitle}");
+        $slug = Str::slug("{$code->value}-{$title->value}");
 
         $finalCourse = self::getUsingSlug($slug);
 
         return $finalCourse
             ? $finalCourse
-            : self::createFinalCourse($courseCode, $courseTitle);
+            : self::createFinalCourse($code->value, $title->value);
     }
 
     public function checkForDuplicateInFinalSemesterEnrollment(FinalSemesterEnrollment $semesterEnrollment): bool

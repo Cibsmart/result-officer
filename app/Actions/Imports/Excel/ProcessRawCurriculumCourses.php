@@ -17,6 +17,7 @@ use App\Models\ProgramCurriculumSemester;
 use App\Models\RawCurriculumCourse;
 use App\Models\Semester;
 use App\Values\CourseCode;
+use App\Values\CourseTitle;
 use Illuminate\Database\Eloquent\Collection;
 
 final class ProcessRawCurriculumCourses
@@ -98,7 +99,7 @@ final class ProcessRawCurriculumCourses
         foreach ($semesterCourses as $curriculumCourse) {
             $course = Course::getOrCreateUsingCodeAndTitle(
                 CourseCode::new($curriculumCourse->course_code),
-                $curriculumCourse->course_title,
+                CourseTitle::new($curriculumCourse->course_title),
             );
 
             if ($course->checkForDuplicateInCurriculumSemester($curriculumSemester)) {

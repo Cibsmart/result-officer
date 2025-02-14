@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Values\CourseCode;
+use App\Values\CourseTitle;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -16,8 +17,9 @@ final class Course extends Model
     public static function createFromRawCourse(RawCourse $rawCourse): self
     {
         $code = CourseCode::new($rawCourse->code);
+        $title = CourseTitle::new($rawCourse->title);
 
-        return self::createCourse($code->value, $rawCourse->title, $rawCourse->online_id);
+        return self::createCourse($code->value, $title->value, $rawCourse->online_id);
     }
 
     public static function getUsingOnlineId(string $onlineId): self
@@ -43,23 +45,23 @@ final class Course extends Model
         return self::query()->where('id', $alternative->alternative_course_id)->firstOrFail();
     }
 
-    public static function getOrCreateUsingCodeAndTitle(CourseCode $code, string $title): self
+    public static function getOrCreateUsingCodeAndTitle(CourseCode $code, CourseTitle $title): self
     {
         $courses = self::query()->where('code', $code->value)->get();
 
-        $exactMatch = self::checkExactmatchingCourse($courses, $title);
+        $exactMatch = self::checkExactmatchingCourse($courses, $title->value);
 
         if ($exactMatch) {
             return $exactMatch;
         }
 
-        $bestMatch = self::getBestMatchingCourse($courses, $title);
+        $bestMatch = self::getBestMatchingCourse($courses, $title->value);
 
         if ($bestMatch) {
             return $bestMatch;
         }
 
-        return self::createCourse($code->value, $title);
+        return self::createCourse($code->value, $title->value);
     }
 
     public function checkForDuplicateInCurriculumSemester(ProgramCurriculumSemester $curriculumSemester): bool
