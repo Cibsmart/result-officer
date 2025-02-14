@@ -1,38 +1,42 @@
 <script lang="ts" setup>
-import { Head } from "@inertiajs/vue3";
 import BasePage from "@/layouts/main/partials/basePage.vue";
 import BaseHeader from "@/layouts/main/partials/baseHeader.vue";
 import BaseSection from "@/layouts/main/partials/baseSection.vue";
-import { BreadcrumbItem } from "@/types";
 import Breadcrumb from "@/components/breadcrumb.vue";
-import Session from "@/pages/results/view/partials/session.vue";
-import EmptyState from "@/components/emptyState.vue";
-import { computed } from "vue";
+import { BreadcrumbItem } from "@/types";
+import { Head } from "@inertiajs/vue3";
+import FinalResultForm from "@/pages/finalResults/index/partials/finalResultForm.vue";
 import BaseLink from "@/components/links/baseLink.vue";
+import EmptyState from "@/components/emptyState.vue";
 import IconLink from "@/components/links/iconLink.vue";
+import { computed } from "vue";
+import FinalSessionResultsView from "@/pages/finalResults/index/partials/finalSessionResultsView.vue";
 
 const props = defineProps<{
   student: App.Data.Students.StudentBasicData;
-  results: App.Data.Results.StudentResultData;
+  results: App.Data.FinalResults.FinalStudentResultData;
 }>();
 
 const pages: BreadcrumbItem[] = [
-  { name: "Result Form", href: route("results.form"), current: route().current("results.form") },
-  { name: "Result View", href: route("results.view"), current: route().current("results.view") },
+  { name: "Final Results", href: route("finalResults.index"), current: route().current("finalResults.index") },
 ];
-
-const hasResults = computed(() => props.results.sessionEnrollments.length > 0);
+const hasData = computed(() => props.student !== null);
+const hasResults = computed(() => props.results !== null && props.results.finalSessionEnrollments.length > 0);
 </script>
 
 <template>
-  <Head title="View Student Result" />
+  <Head title="Final Results Page" />
 
   <Breadcrumb :pages="pages" />
 
-  <BaseHeader> View Student Results</BaseHeader>
+  <BaseHeader> View Student's Final Result</BaseHeader>
 
   <BasePage>
     <BaseSection>
+      <FinalResultForm />
+    </BaseSection>
+
+    <BaseSection v-if="hasData">
       <div class="">
         <div class="sm:flex sm:items-center">
           <div class="sm:flex-auto">
@@ -46,7 +50,9 @@ const hasResults = computed(() => props.results.sessionEnrollments.length > 0);
           <div
             v-show="hasResults"
             class="mt-4 flex space-x-4">
-            <BaseLink :href="route('results.print', { student: student })"> Print</BaseLink>
+            <BaseLink :href="route('finalResults.transcript', { student: student })"> Transcript</BaseLink>
+
+            <BaseLink :href="route('finalResults.print', { student: student })"> Print</BaseLink>
           </div>
         </div>
 
@@ -68,17 +74,17 @@ const hasResults = computed(() => props.results.sessionEnrollments.length > 0);
 
         <div>
           <template v-if="hasResults">
-            <Session
-              v-for="session in results.sessionEnrollments"
+            <FinalSessionResultsView
+              v-for="session in results.finalSessionEnrollments"
               :key="session.id"
               :session="session" />
           </template>
 
           <EmptyState
             v-else
-            description="Get started by downloading student's results from the Portal"
-            title="No Result">
-            <IconLink :href="route('download.results.page')">Download Results</IconLink>
+            description="Get started by vetting and clearing student"
+            title="No Final Results">
+            <IconLink :href="route('vetting.index')">Vet Student</IconLink>
           </EmptyState>
         </div>
 

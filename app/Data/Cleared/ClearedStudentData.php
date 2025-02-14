@@ -40,7 +40,7 @@ final class ClearedStudentData extends Data
             registrationNumber: $student->registration_number,
             gender: $gender,
             status: $status,
-            fcgpa: number_format($finalStudent->final_cummulative_grade_point_average, 2),
+            fcgpa: number_format($finalStudent->final_cumulative_grade_point_average, 2),
             slug: $student->slug,
             batch: "{$finalStudent->month} {$finalStudent->year}",
             numberOfResults: $finalStudent->result_count,

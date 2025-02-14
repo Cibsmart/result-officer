@@ -70,6 +70,16 @@ const navigation: NavigationItem[] = [
     ],
   },
   {
+    name: "Final Results",
+    href: "#",
+    icon: FolderIcon,
+    current: usePage().component.startsWith("final-results/"),
+    children: [
+      { name: "View", href: route("finalResults.index"), current: route().current("finalResults.index") },
+      { name: "Summary", href: route("summary.form"), current: route().current("summary.form") },
+    ],
+  },
+  {
     name: "Vetting",
     href: "#",
     icon: DocumentCheckIcon,

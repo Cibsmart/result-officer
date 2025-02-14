@@ -48,7 +48,7 @@ it('computes student grade point sum', function (): void {
 it('computes sum of student cumulative grade point averages', function (): void {
     $student = FinalStudentFactory::new()
         ->has(FinalSessionEnrollmentFactory::new()->count(2)
-            ->sequence(['cummulative_grade_point_average' => 3.111], ['cummulative_grade_point_average' => 2.712]))
+            ->sequence(['cumulative_grade_point_average' => 3.111], ['cumulative_grade_point_average' => 2.712]))
         ->createOne();
 
     $gpas = $student->getCumulativeGradePointAverageSum();
@@ -61,7 +61,7 @@ it('computes student fcgpa using semester strategy', function (): void {
 
     $student = FinalStudentFactory::new()
         ->has(FinalSessionEnrollmentFactory::new()->count(2)
-            ->sequence(['cummulative_grade_point_average' => 3.111], ['cummulative_grade_point_average' => 2.712]))
+            ->sequence(['cumulative_grade_point_average' => 3.111], ['cumulative_grade_point_average' => 2.712]))
         ->createOne();
 
     $cgpa = $student->getFinalCumulativeGradePointAverage();
@@ -87,7 +87,7 @@ it('updates student credit unit, grade point sum and averages', function (): voi
 
     $student = FinalStudentFactory::new()
         ->has(FinalSessionEnrollmentFactory::new()->count(2)
-            ->sequence(['cummulative_grade_point_average' => 3.111], ['cummulative_grade_point_average' => 2.712]))
+            ->sequence(['cumulative_grade_point_average' => 3.111], ['cumulative_grade_point_average' => 2.712]))
         ->createOne();
 
     $count = $student->getResultCount();
@@ -100,8 +100,8 @@ it('updates student credit unit, grade point sum and averages', function (): voi
 
     assertDatabaseHas(FinalStudent::class, [
         'credit_unit_sum' => $cus,
-        'cummulative_grade_point_average_sum' => $cgpas * 1_000,
-        'final_cummulative_grade_point_average' => $fcgpa * 1_000,
+        'cumulative_grade_point_average_sum' => $cgpas * 1_000,
+        'final_cumulative_grade_point_average' => $fcgpa * 1_000,
         'grade_point_sum' => $gps,
         'id' => $student->id,
         'result_count' => $count,

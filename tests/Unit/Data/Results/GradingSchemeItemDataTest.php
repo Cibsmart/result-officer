@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Data\Results\GradingSchemeData;
+use App\Data\Grading\GradingSchemeData;
 use App\Enums\Grade;
 
 test('grading scheme item data is correct for all grades', function (Grade $grade): void {

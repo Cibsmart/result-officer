@@ -164,6 +164,62 @@ declare namespace App.Data.Faculty {
     slug: string;
   };
 }
+declare namespace App.Data.FinalResults {
+  export type FinalResultData = {
+    id: number;
+    courseCode: string;
+    courseTitle: string;
+    creditUnit: number;
+    totalScore: number;
+    grade: string;
+    gradePoint: number;
+    remark: string | null;
+    dateUpdated: string;
+  };
+  export type FinalSemesterResultData = {
+    id: number;
+    results: Array<App.Data.FinalResults.FinalResultData>;
+    semester: string;
+    creditUnitTotal: number;
+    gradePointTotal: number;
+    gradePointAverage: number;
+    formattedCreditUnitTotal: string;
+    formattedGradePointTotal: string;
+    formattedGPA: string;
+    resultsCount: number;
+  };
+  export type FinalSessionResultData = {
+    id: number;
+    finalSemesterResults: Array<App.Data.FinalResults.FinalSemesterResultData>;
+    session: string;
+    year: string;
+    cumulativeGradePointAverage: number;
+    formattedCGPA: string;
+    resultsCount: number;
+  };
+  export type FinalStudentResultData = {
+    id: number;
+    finalSessionEnrollments: Array<App.Data.FinalResults.FinalSessionResultData>;
+    finalCumulativeGradePointAverage: number;
+    formattedFCGPA: string;
+    degreeClass: string;
+    degreeAwarded: string;
+    graduationYear: number;
+    resultsCount: number;
+  };
+  export type FinalTranscriptData = {
+    recordsUnitHead: string;
+    gradingSchemes: Array<App.Data.Grading.GradingSchemeData>;
+  };
+}
+declare namespace App.Data.Grading {
+  export type GradingSchemeData = {
+    range: string;
+    interpretation: string;
+    grade: string;
+    gradePoint: number;
+  };
+}
 declare namespace App.Data.Imports {
   export type ExcelImportEventData = {
     id: number;
@@ -256,12 +312,6 @@ declare namespace App.Data.Response {
   };
 }
 declare namespace App.Data.Results {
-  export type GradingSchemeData = {
-    range: string;
-    interpretation: string;
-    grade: string;
-    gradePoint: number;
-  };
   export type ResultData = {
     id: number;
     resultId: number;
@@ -307,7 +357,7 @@ declare namespace App.Data.Results {
   };
   export type TranscriptData = {
     recordsUnitHead: string;
-    gradingSchemes: Array<App.Data.Results.GradingSchemeData>;
+    gradingSchemes: Array<App.Data.Grading.GradingSchemeData>;
   };
 }
 declare namespace App.Data.Semester {
@@ -637,5 +687,11 @@ declare namespace App.ViewModels.Vetting {
     clearance: App.ViewModels.Clearance.ClearanceFormPage;
     data: App.Data.Vetting.VettingListData;
     steps: App.Data.Vetting.VettingStepListData;
+  };
+}
+declare namespace App.ViewModels.finalResults {
+  export type FinalResultsIndexPage = {
+    student: App.Data.Students.StudentBasicData;
+    results: App.Data.FinalResults.FinalStudentResultData;
   };
 }

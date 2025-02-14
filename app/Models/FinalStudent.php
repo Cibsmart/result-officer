@@ -67,7 +67,7 @@ final class FinalStudent extends Model
 
     public function getCumulativeGradePointAverageSum(): float
     {
-        return $this->finalSessionEnrollments->sum('cummulative_grade_point_average');
+        return $this->finalSessionEnrollments->sum('cumulative_grade_point_average');
     }
 
     public function getFinalCumulativeGradePointAverage(): float
@@ -87,14 +87,14 @@ final class FinalStudent extends Model
     {
         $this->credit_unit_sum = $this->getCreditUnitSum();
         $this->grade_point_sum = $this->getGradePointSum();
-        $this->cummulative_grade_point_average_sum = $this->getCumulativeGradePointAverageSum();
-        $this->final_cummulative_grade_point_average = $this->getFinalCumulativeGradePointAverage();
+        $this->cumulative_grade_point_average_sum = $this->getCumulativeGradePointAverageSum();
+        $this->final_cumulative_grade_point_average = $this->getFinalCumulativeGradePointAverage();
         $this->result_count = $this->getResultCount();
         $this->save();
     }
 
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<int, float> */
-    protected function cummulativeGradePointAverageSum(): Attribute
+    protected function cumulativeGradePointAverageSum(): Attribute
     {
         return Attribute::make(
             get: static fn (int $value): float => $value / 1_000,
@@ -103,7 +103,7 @@ final class FinalStudent extends Model
     }
 
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<int, float> */
-    protected function finalCummulativeGradePointAverage(): Attribute
+    protected function finalCumulativeGradePointAverage(): Attribute
     {
         return Attribute::make(
             get: static fn (int $value): float => $value / 1_000,

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Data\Results;
+namespace App\Data\Grading;
 
 use App\Enums\Grade;
 use Spatie\LaravelData\Data;

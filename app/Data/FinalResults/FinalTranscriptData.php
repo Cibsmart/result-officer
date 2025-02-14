@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Data\Results;
+namespace App\Data\FinalResults;
 
 use App\Data\Grading\GradingSchemeData;
 use App\Enums\Grade;
@@ -10,7 +10,7 @@ use App\Models\RecordsUnitHead;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
 
-final class TranscriptData extends Data
+final class FinalTranscriptData extends Data
 {
     public function __construct(
         public readonly string $recordsUnitHead,
@@ -21,7 +21,7 @@ final class TranscriptData extends Data
 
     public static function fromModel(bool $isEGradeAllowed = true): self
     {
-        $recordHead = RecordsUnitHead::query()->where('is_current', true)->firstOrFail()->name;
+        $recordHead = RecordsUnitHead::query()->where('is_current', true)->latest()->firstOrFail()->name;
 
         $cases = collect([
             GradingSchemeData::from(Grade::A),

@@ -24,8 +24,8 @@ return new class extends Migration
             $table->unsignedSmallInteger('result_count')->default(0);
             $table->unsignedSmallInteger('credit_unit_sum')->default(0);
             $table->unsignedSmallInteger('grade_point_sum')->default(0);
-            $table->unsignedSmallInteger('cummulative_grade_point_average_sum')->default(0);
-            $table->unsignedSmallInteger('final_cummulative_grade_point_average')->default(0);
+            $table->unsignedSmallInteger('cumulative_grade_point_average_sum')->default(0);
+            $table->unsignedSmallInteger('final_cumulative_grade_point_average')->default(0);
             $table->foreignIdFor(User::class)->constrained();
             $table->foreignIdFor(ExamOfficer::class)->constrained();
             $table->timestamps();
