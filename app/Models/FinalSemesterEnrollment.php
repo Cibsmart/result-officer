@@ -55,6 +55,12 @@ final class FinalSemesterEnrollment extends Model
         return $this->belongsTo(FinalSessionEnrollment::class);
     }
 
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Semester, \App\Models\FinalSemesterEnrollment> */
+    public function semester(): BelongsTo
+    {
+        return $this->belongsTo(Semester::class);
+    }
+
     public function session(): Session
     {
         $session = $this->finalSessionEnrollment->session;

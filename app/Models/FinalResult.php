@@ -14,6 +14,7 @@ use App\Values\RegistrationNumber;
 use App\Values\SessionValue;
 use App\Values\TotalScore;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 final class FinalResult extends Model
 {
@@ -116,6 +117,12 @@ final class FinalResult extends Model
 
         $result->message .= "Grade mismatch. Computed: {$grade->value}, Excel: {$grade2->value}";
         $result->save();
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FinalCourse, \App\Models\FinalResult> */
+    public function finalCourse(): BelongsTo
+    {
+        return $this->belongsTo(FinalCourse::class);
     }
 
     private static function getResultOriginalSession(RawFinalResult $result): ?int
