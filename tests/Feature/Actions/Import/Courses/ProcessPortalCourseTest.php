@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Actions\Imports\Courses\ProcessPortalCourse;
 use App\Enums\RawDataStatus;
+use App\Models\Course;
 use Tests\Factories\CourseFactory;
 use Tests\Factories\RawCourseFactory;
 
@@ -18,10 +19,10 @@ it('can process raw course and save into the courses table', function (): void {
 
     expect($rawCourse->fresh()->status)->toBe(RawDataStatus::PROCESSED);
 
-    assertDatabaseHas('courses', [
+    assertDatabaseHas(Course::class, [
         'code' => $rawCourse->code,
         'online_id' => $rawCourse->online_id,
-        'title' => $rawCourse->title,
+        'title' => Str::upper($rawCourse->title),
     ]);
 });
 

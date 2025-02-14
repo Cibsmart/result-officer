@@ -23,6 +23,7 @@ use App\Models\Semester;
 use App\Models\Session;
 use App\Models\Student;
 use App\Values\CourseCode;
+use App\Values\CourseTitle;
 use Illuminate\Support\Collection;
 
 final class ProcessRawFinalResults
@@ -146,8 +147,8 @@ final class ProcessRawFinalResults
         foreach ($semesterResults as $result) {
 
             $course = FinalCourse::getOrCreateUsingCodeAndTitle(
-                CourseCode::new($result->course_code)->value,
-                $result->course_title,
+                CourseCode::new($result->course_code),
+                CourseTitle::new($result->course_title),
             );
 
             if ($course->checkForDuplicateInFinalSemesterEnrollment($semesterEnrollment)) {

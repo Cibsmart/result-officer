@@ -8,6 +8,7 @@ use App\Enums\CourseStatus;
 use App\Enums\CreditUnit;
 use App\Enums\Grade;
 use App\Enums\RecordSource;
+use App\Values\DateValue;
 use App\Values\ExamScore;
 use App\Values\InCourseScore;
 use App\Values\RegistrationNumber;
@@ -82,6 +83,7 @@ final class FinalResult extends Model
         $finalResult->grade = $grade;
         $finalResult->grade_point = $grade->point() * $creditUnit->value;
         $finalResult->source = RecordSource::EXCEL;
+        $finalResult->exam_date = DateValue::fromValue($result->exam_date)->value;
         $finalResult->lecturer_id = $lecturer;
         $finalResult->original_session_id = $session;
         $finalResult->registration_id = $registration
