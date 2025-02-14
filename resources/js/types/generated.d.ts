@@ -596,6 +596,31 @@ declare namespace App.Enums {
     | "failed_courses";
   export type Year = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14;
 }
+declare namespace App.Enums.ModifiableFields {
+  export type CurriculumModifiableField =
+    | "minimum_credit_units"
+    | "maximum_credit_units"
+    | "minimum_elective_count"
+    | "minimum_elective_units"
+    | "course"
+    | "course_type"
+    | "credit_unit";
+  export type DepartmentModifiableField = "name" | "code" | "faculty";
+  export type FacultyModifiableField = "name" | "code";
+  export type ProgramModifiableField = "code" | "name" | "duration" | "department" | "program_type";
+  export type RegistrationModifiableField = "course" | "credit_unit";
+  export type ResultModifiableField = "exam" | "in_course";
+  export type StudentModifiableField =
+    | "name"
+    | "gender"
+    | "status"
+    | "program"
+    | "entry_mode"
+    | "entry_level"
+    | "date_of_birth"
+    | "local_government"
+    | "registration_number";
+}
 declare namespace App.ViewModels.Clearance {
   export type ClearanceFormPage = {
     examOfficers: App.Data.ExamOfficer.ExamOfficerListData;
