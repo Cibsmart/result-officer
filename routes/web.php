@@ -28,6 +28,7 @@ use App\Http\Controllers\Exports\Results\ExportResultsByDepartmentSessionControl
 use App\Http\Controllers\Exports\Results\ExportResultsByRegistrationNumberController;
 use App\Http\Controllers\Exports\Results\ExportResultsByRegistrationNumberListController;
 use App\Http\Controllers\Exports\Results\ExportResultsPageController;
+use App\Http\Controllers\FinalResults\StudentFinalResultController;
 use App\Http\Controllers\Imports\CancelImportEventController;
 use App\Http\Controllers\Imports\ContinueImportEventController;
 use App\Http\Controllers\Imports\FinalResultImportController;
@@ -60,6 +61,15 @@ Route::middleware(['auth'])->group(static function (): void {
             ->name('results.print');
         Route::get('{student}/transcript', [ViewStudentResultController::class, 'transcript'])
             ->name('results.transcript');
+    });
+
+    Route::prefix('final-results/student/')->group(static function (): void {
+        Route::get('{student?}', [StudentFinalResultController::class, 'index'])->name('finalResults.index');
+        Route::post('', [StudentFinalResultController::class, 'store'])->name('finalResults.store');
+        Route::get('{student}/print', [ViewStudentResultController::class, 'print'])
+            ->name('finalResults.print');
+        Route::get('{student}/transcript', [ViewStudentResultController::class, 'transcript'])
+            ->name('finalResults.transcript');
     });
 
     Route::prefix('summary')->group(static function (): void {
