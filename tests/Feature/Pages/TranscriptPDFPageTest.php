@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Spatie\LaravelPdf\Facades\Pdf;
+use Tests\Factories\FinalStudentFactory;
 use Tests\Factories\RecordsUnitHeadFactory;
 use Tests\Factories\UserFactory;
 
@@ -17,8 +18,9 @@ test('transcript pdf page loads', function (): void {
     RecordsUnitHeadFactory::new()->active()->createOne();
 
     $student = createStudentWithResults();
+    FinalStudentFactory::new()->for($student)->createOne();
 
     actingAs($user)
-        ->get(route('results.transcript', ['student' => $student]))
+        ->get(route('finalResults.transcript', ['student' => $student]))
         ->assertOk();
 });

@@ -26,6 +26,6 @@ it('creates cleared student data from student model', function (): void {
         ->gender->toBe($student->gender)
         ->registrationNumber->toBe($student->registration_number)
         ->status->toBe(StudentStatus::CLEARED)
-        ->fcgpa->toBe(number_format($student->finalStudent->final_cummulative_grade_point_average, 2))
+        ->fcgpa->toBe(number_format($student->finalStudent->final_cumulative_grade_point_average, 2))
         ->batch->toBe("{$finalStudent->month} {$finalStudent->year}");
 });
