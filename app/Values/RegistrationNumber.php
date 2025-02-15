@@ -13,9 +13,14 @@ final readonly class RegistrationNumber
 {
     public function __construct(public string $value)
     {
-        if (! preg_match('/^ebsu\/\d{4}\/\d{3,7}[a-z]?$/i', Str::trim($this->value))) {
+        if (! preg_match(self::pattern(), Str::trim($this->value))) {
             throw new InvalidArgumentException('Invalid registration number');
         }
+    }
+
+    public static function pattern(): string
+    {
+        return '/^(ebsu)\/(\d{4})\/(\d{3,7}[a-d]?)$/i';
     }
 
     public static function new(string $value): self
@@ -48,9 +53,16 @@ final readonly class RegistrationNumber
 
     public function year(): int
     {
-        $year = Str::of($this->value)->explode('/')[1];
+        preg_match(self::pattern(), $this->value, $matches);
 
-        return (int) $year;
+        return (int) $matches[2];
+    }
+
+    public function number(): string
+    {
+        preg_match(self::pattern(), $this->value, $matches);
+
+        return $matches[3];
     }
 
     public function allowEGrade(): bool
