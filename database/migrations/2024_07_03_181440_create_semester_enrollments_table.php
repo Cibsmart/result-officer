@@ -19,10 +19,6 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(SessionEnrollment::class)->constrained();
             $table->foreignIdFor(Semester::class)->constrained();
-            $table->unsignedTinyInteger('course_count')->default(0);
-            $table->unsignedTinyInteger('cus')->default(0);
-            $table->unsignedSmallInteger('gps')->default(0);
-            $table->unsignedSmallInteger('gpa')->default(0);
             $table->timestamps();
 
             $table->unique(['session_enrollment_id', 'semester_id']);
