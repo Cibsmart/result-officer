@@ -23,7 +23,7 @@ return new class extends Migration
         Schema::create('students', static function (Blueprint $table): void {
             $table->id();
             $table->string('registration_number')->unique();
-            $table->string('number')->default('');
+            $table->string('number')->unique();
             $table->string('last_name');
             $table->string('first_name');
             $table->string('other_names')->nullable();
