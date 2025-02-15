@@ -10,14 +10,25 @@ use App\Http\Requests\ExistingRegistrationNumberRequest;
 use App\Models\Student;
 use App\ViewModels\Results\ResultViewPage;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
 final readonly class ViewStudentResultController
 {
-    public function form(): Response
+    public function index(?Student $student = null): Response
     {
-        return Inertia::render('results/form/page');
+        return Inertia::render('results/index/page', new ResultViewPage(
+            student: fn () => $student ? StudentBasicData::from($student) : null,
+            results: fn () => $student ? StudentResultData::from($student) : null,
+        ));
+    }
+
+    public function store(ExistingRegistrationNumberRequest $request): RedirectResponse
+    {
+        $student = $request->input('student');
+
+        return redirect()->route('results.index', ['student' => $student]);
     }
 
     public function print(Student $student): View
@@ -26,15 +37,5 @@ final readonly class ViewStudentResultController
             'results' => StudentResultData::from($student),
             'student' => StudentBasicData::from($student),
         ]);
-    }
-
-    public function view(ExistingRegistrationNumberRequest $request): Response
-    {
-        $student = $request->input('student');
-
-        return Inertia::render('results/view/page', new ResultViewPage(
-            student: StudentBasicData::from($student),
-            results: StudentResultData::from($student),
-        ));
     }
 }

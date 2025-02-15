@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import EmptyState from "@/components/emptyState.vue";
 import IconLink from "@/components/links/iconLink.vue";
-import Session from "@/pages/results/view/partials/session.vue";
+import Session from "@/pages/results/index/partials/resultSessionView.vue";
 import { computed } from "vue";
 
 const props = defineProps<{

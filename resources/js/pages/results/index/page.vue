@@ -5,11 +5,12 @@ import BaseHeader from "@/layouts/main/partials/baseHeader.vue";
 import BaseSection from "@/layouts/main/partials/baseSection.vue";
 import { BreadcrumbItem } from "@/types";
 import Breadcrumb from "@/components/breadcrumb.vue";
-import Session from "@/pages/results/view/partials/session.vue";
-import EmptyState from "@/components/emptyState.vue";
 import { computed } from "vue";
 import BaseLink from "@/components/links/baseLink.vue";
+import EmptyState from "@/components/emptyState.vue";
 import IconLink from "@/components/links/iconLink.vue";
+import ResultForm from "@/pages/results/index/partials/resultForm.vue";
+import ResultSessionView from "@/pages/results/index/partials/resultSessionView.vue";
 
 const props = defineProps<{
   student: App.Data.Students.StudentBasicData;
@@ -17,11 +18,11 @@ const props = defineProps<{
 }>();
 
 const pages: BreadcrumbItem[] = [
-  { name: "Result Form", href: route("results.form"), current: route().current("results.form") },
-  { name: "Result View", href: route("results.view"), current: route().current("results.view") },
+  { name: "Result", href: route("results.index"), current: route().current("results.index") },
 ];
 
-const hasResults = computed(() => props.results.sessionEnrollments.length > 0);
+const hasData = computed(() => props.student !== null);
+const hasResults = computed(() => props.results !== null && props.results.sessionEnrollments.length > 0);
 </script>
 
 <template>
@@ -33,6 +34,10 @@ const hasResults = computed(() => props.results.sessionEnrollments.length > 0);
 
   <BasePage>
     <BaseSection>
+      <ResultForm />
+    </BaseSection>
+
+    <BaseSection v-if="hasData">
       <div class="">
         <div class="sm:flex sm:items-center">
           <div class="sm:flex-auto">
@@ -68,7 +73,7 @@ const hasResults = computed(() => props.results.sessionEnrollments.length > 0);
 
         <div>
           <template v-if="hasResults">
-            <Session
+            <ResultSessionView
               v-for="session in results.sessionEnrollments"
               :key="session.id"
               :session="session" />

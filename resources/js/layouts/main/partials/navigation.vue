@@ -64,7 +64,7 @@ const navigation: NavigationItem[] = [
     icon: FolderIcon,
     current: usePage().component.startsWith("results/"),
     children: [
-      { name: "View", href: route("results.form"), current: route().current("results.form") },
+      { name: "View", href: route("results.index"), current: route().current("results.index") },
       { name: "Summary", href: route("summary.form"), current: route().current("summary.form") },
       { name: "Export", href: route("export.results.page"), current: route().current("export.results.page") },
     ],
@@ -74,10 +74,7 @@ const navigation: NavigationItem[] = [
     href: "#",
     icon: FolderIcon,
     current: usePage().component.startsWith("final-results/"),
-    children: [
-      { name: "View", href: route("finalResults.index"), current: route().current("finalResults.index") },
-      { name: "Summary", href: route("summary.form"), current: route().current("summary.form") },
-    ],
+    children: [{ name: "View", href: route("finalResults.index"), current: route().current("finalResults.index") }],
   },
   {
     name: "Vetting",

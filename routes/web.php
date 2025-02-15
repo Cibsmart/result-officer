@@ -55,8 +55,8 @@ Route::middleware(['auth'])->group(static function (): void {
     });
 
     Route::prefix('results')->group(static function (): void {
-        Route::get('', [ViewStudentResultController::class, 'form'])->name('results.form');
-        Route::post('', [ViewStudentResultController::class, 'view'])->name('results.view');
+        Route::get('{student?}', [ViewStudentResultController::class, 'index'])->name('results.index');
+        Route::post('', [ViewStudentResultController::class, 'store'])->name('results.store');
         Route::get('{student}/print', [ViewStudentResultController::class, 'print'])
             ->name('results.print');
     });
