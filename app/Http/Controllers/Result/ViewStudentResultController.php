@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Result;
 
 use App\Data\Results\StudentResultData;
 use App\Data\Students\StudentBasicData;
-use App\Http\Requests\Results\ResultRequest;
+use App\Http\Requests\ExistingRegistrationNumberRequest;
 use App\Models\Student;
 use App\ViewModels\Results\ResultViewPage;
 use Illuminate\Contracts\View\View;
@@ -28,17 +28,13 @@ final readonly class ViewStudentResultController
         ]);
     }
 
-    public function view(ResultRequest $request): Response
+    public function view(ExistingRegistrationNumberRequest $request): Response
     {
-        $registrationNumber = $request->input('registration_number');
-
-        $studentModel = Student::query()
-            ->where('registration_number', $registrationNumber)
-            ->firstOrFail();
+        $student = $request->input('student');
 
         return Inertia::render('results/view/page', new ResultViewPage(
-            student: StudentBasicData::from($studentModel),
-            results: StudentResultData::from($studentModel),
+            student: StudentBasicData::from($student),
+            results: StudentResultData::from($student),
         ));
     }
 }
