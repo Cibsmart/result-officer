@@ -24,6 +24,7 @@ covers(ProcessPortalResult::class);
 it('can process raw result and save into the results table', function (): void {
     $registration = RegistrationFactory::new()->createOne(['online_id' => 1]);
     $rawResult = RawResultFactory::new()->createOne(['registration_id' => $registration->id]);
+    SessionFactory::new()->createOne(['name' => '2018/2019']);
 
     (new ProcessPortalResult())->execute($rawResult);
 
