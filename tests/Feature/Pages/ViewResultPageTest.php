@@ -7,48 +7,57 @@ use Tests\Factories\UserFactory;
 
 use function Pest\Laravel\actingAs;
 
-test('view result form loads', function (): void {
+it('loads the result index page', function (): void {
     $user = UserFactory::new()->create();
 
     actingAs($user)
-        ->get(route('results.form'))
+        ->get(route('results.index'))
         ->assertStatus(200)
         ->assertInertia(fn (Assert $page) => $page
-            ->component('results/form/page'));
+            ->component('results/index/page'));
 });
 
-test('student result view page loads', function (): void {
+it('redirects from student result form to the index page', function (): void {
     $user = UserFactory::new()->createOne();
     $student = createStudentWithResults();
 
     actingAs($user)
-        ->from(route('results.form'))
-        ->post(route('results.view', [
+        ->from(route('results.index'))
+        ->post(route('results.store', [
             'registration_number' => $student->registration_number,
         ]))
-        ->assertStatus(200)
+        ->assertStatus(302)
+        ->assertRedirect(route('results.index', ['student' => $student]));
+});
+
+it('sends student and result data to the view', function (): void {
+    $user = UserFactory::new()->createOne();
+    $student = createStudentWithResults();
+
+    actingAs($user)
+        ->get(route('results.index', ['student' => $student]))
         ->assertInertia(fn (Assert $page) => $page
-            ->component('results/view/page')
+            ->component('results/index/page')
             ->has('student')
             ->has('results'),
         );
 });
 
-test('registration number is required', function (): void {
+it('validates registration number required', function (): void {
     $user = UserFactory::new()->createOne();
 
     actingAs($user)
-        ->from(route('results.form'))
-        ->post(route('results.view'))
+        ->from(route('results.index'))
+        ->post(route('results.store'))
         ->assertSessionHasErrors(['registration_number' => 'The registration number field is required.']);
 });
 
-test('registration number length must be at 14 characters', function (): void {
+it('validates registration number length', function (): void {
     $user = UserFactory::new()->createOne();
 
     actingAs($user)
-        ->from(route('results.form'))
-        ->post(route('results.view', [
+        ->from(route('results.index'))
+        ->post(route('results.store', [
             'registration_number' => '2009/51486',
         ]))
         ->assertSessionHasErrors([
@@ -56,12 +65,12 @@ test('registration number length must be at 14 characters', function (): void {
         ]);
 });
 
-test('registration number must be valid', function (): void {
+it('validates registration number valid', function (): void {
     $user = UserFactory::new()->createOne();
 
     actingAs($user)
-        ->from(route('results.form'))
-        ->post(route('results.view', [
+        ->from(route('results.index'))
+        ->post(route('results.store', [
             'registration_number' => 'EBUS/2009/51486',
         ]))
         ->assertSessionHasErrors(['registration_number' => 'The registration number field format is invalid.']);

@@ -7,13 +7,13 @@ namespace App\Http\Controllers\Download\Registrations;
 use App\Enums\ImportEventMethod;
 use App\Enums\ImportEventStatus;
 use App\Enums\ImportEventType;
-use App\Http\Requests\Results\ResultRequest;
+use App\Http\Requests\ExistingRegistrationNumberRequest;
 use App\Models\ImportEvent;
 use Illuminate\Http\RedirectResponse;
 
 final readonly class DownloadRegistrationsByRegistrationNumberController
 {
-    public function __invoke(ResultRequest $request): RedirectResponse
+    public function __invoke(ExistingRegistrationNumberRequest $request): RedirectResponse
     {
         $user = $request->user();
 

@@ -13,7 +13,7 @@ const form = useForm({
 });
 
 const submit = () => {
-  form.post(route("results.view"));
+  form.post(route("results.store"));
 };
 </script>
 

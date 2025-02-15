@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import Semester from "@/pages/results/view/partials/semester.vue";
+import ResultSemesterView from "@/pages/results/index/partials/resultSemesterView.vue";
 
 withDefaults(
   defineProps<{
@@ -19,7 +19,7 @@ withDefaults(
     <template
       v-for="semester in session.semesterResults"
       :key="semester.id">
-      <Semester
+      <ResultSemesterView
         :manageable
         :semester="semester" />
     </template>

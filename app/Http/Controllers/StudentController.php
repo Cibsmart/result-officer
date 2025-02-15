@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Data\Students\StudentBasicData;
 use App\Data\Students\StudentComprehensiveData;
-use App\Http\Requests\Results\ResultRequest;
+use App\Http\Requests\ExistingRegistrationNumberRequest;
 use App\Models\Student;
 use App\ViewModels\Students\StudentIndexPage;
 use App\ViewModels\Students\StudentShowPage;
@@ -38,11 +38,9 @@ final class StudentController
         ));
     }
 
-    public function store(ResultRequest $request): RedirectResponse
+    public function store(ExistingRegistrationNumberRequest $request): RedirectResponse
     {
-        $student = Student::query()
-            ->where('registration_number', $request->input('registration_number'))
-            ->first();
+        $student = $request->input('student');
 
         return redirect()->to(route('students.show', ['student' => $student]));
     }

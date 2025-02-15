@@ -10,4 +10,5 @@ enum RecordSource: string
     case EXCEL = 'excel';
     case LEGACY = 'legacy';
     case SYSTEM = 'system';
+    case USER = 'user';
 }

@@ -560,7 +560,8 @@ declare namespace App.Enums {
   export type NotificationType = "success" | "error" | "warning" | "info";
   export type ProgramDuration = 3 | 4 | 5 | 6;
   export type RawDataStatus = "pending" | "duplicate" | "failed" | "processed";
-  export type RecordSource = "portal" | "excel" | "legacy" | "system";
+  export type RecordActionType = "create" | "update" | "delete";
+  export type RecordSource = "portal" | "excel" | "legacy" | "system" | "user";
   export type ResultRemark = "PAS" | "FAL" | "ABS" | "MAL";
   export type Role = "super-admin" | "admin" | "desk-officer" | "exam-officer" | "database-officer" | "user";
   export type ScoreType = "course_work" | "exam";
@@ -594,6 +595,31 @@ declare namespace App.Enums {
     | "elective_courses"
     | "failed_courses";
   export type Year = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14;
+}
+declare namespace App.Enums.ModifiableFields {
+  export type CurriculumModifiableField =
+    | "minimum_credit_units"
+    | "maximum_credit_units"
+    | "minimum_elective_count"
+    | "minimum_elective_units"
+    | "course"
+    | "course_type"
+    | "credit_unit";
+  export type ProgramModifiableField = "code" | "name" | "faculty" | "duration" | "department" | "program_type";
+  export type StudentModifiableField =
+    | "exam"
+    | "name"
+    | "course"
+    | "gender"
+    | "status"
+    | "program"
+    | "in_course"
+    | "entry_mode"
+    | "credit_unit"
+    | "entry_level"
+    | "date_of_birth"
+    | "local_government"
+    | "registration_number";
 }
 declare namespace App.ViewModels.Clearance {
   export type ClearanceFormPage = {

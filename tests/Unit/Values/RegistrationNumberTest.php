@@ -48,6 +48,14 @@ it('can get the year in a registration number', function (): void {
     expect($year)->toBeInt()->and($year)->toBe(2_009);
 });
 
+it('can get the number in a registration number', function (): void {
+    $registrationNumber = 'EBSU/2009/00001';
+
+    $number = RegistrationNumber::new($registrationNumber)->number();
+
+    expect($number)->toBeString()->and($number)->toBe('00001');
+});
+
 it('can get the session associated with a registration number', function (): void {
     $registrationNumber = 'EBSU/2009/00001';
 
@@ -61,7 +69,8 @@ it('can check if E grade should be allowed for registration number',
         $allowEGrade = RegistrationNumber::new($registrationNumber)->allowEGrade();
 
         expect($allowEGrade)->toBeBool()->toBe($expected);
-    })->with([
+    })->with(
+    [
         ['EBSU/2006/00001', true],
         ['EBSU/2007/00001', true],
         ['EBSU/2008/00001', true],
@@ -82,4 +91,12 @@ it('can check if E grade should be allowed for registration number',
         ['EBSU/2023/00001', true],
         ['EBSU/2024/00001', true],
         ['EBSU/2025/00001', true],
-    ]);
+    ],
+);
+
+it('throws exception for registration number year greater than the current year', function (): void {
+    $nextYear = now()->addYear()->year;
+    $registrationNumber = "EBSU/{$nextYear}/00001";
+
+    RegistrationNumber::new($registrationNumber);
+})->throws(InvalidArgumentException::class, 'Invalid registration number');

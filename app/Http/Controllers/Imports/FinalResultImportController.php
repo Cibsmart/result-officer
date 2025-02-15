@@ -13,6 +13,7 @@ use App\ViewModels\Imports\ExcelImportPage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\File;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -30,7 +31,7 @@ final class FinalResultImportController
 
     public function store(Request $request): RedirectResponse
     {
-        $file = $request->validate(['file' => ['required', 'file', 'mimes:xlsx']])['file'];
+        $file = $request->validate(['file' => File::types(['xlsx'])->max('5mb')])['file'];
 
         $type = ExcelImportType::FINAL_RESULT;
 

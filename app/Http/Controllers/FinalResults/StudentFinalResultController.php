@@ -37,11 +37,9 @@ final class StudentFinalResultController
 
     public function store(ExistingRegistrationNumberRequest $request): RedirectResponse
     {
-        $student = Student::query()
-            ->where('registration_number', $request->input('registration_number'))
-            ->first();
+        $student = $request->input('student');
 
-        return redirect()->to(route('finalResults.index', ['student' => $student]));
+        return redirect()->route('finalResults.index', ['student' => $student]);
     }
 
     public function print(Student $student): View
