@@ -93,3 +93,10 @@ it('can check if E grade should be allowed for registration number',
         ['EBSU/2025/00001', true],
     ],
 );
+
+it('throws exception for registration number year greater than the current year', function (): void {
+    $nextYear = now()->addYear()->year;
+    $registrationNumber = "EBSU/{$nextYear}/00001";
+
+    RegistrationNumber::new($registrationNumber);
+})->throws(InvalidArgumentException::class, 'Invalid registration number');

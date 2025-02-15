@@ -13,7 +13,11 @@ final readonly class RegistrationNumber
 {
     public function __construct(public string $value)
     {
-        if (! preg_match(self::pattern(), Str::trim($this->value))) {
+        if (! preg_match(self::pattern(), Str::trim($this->value), $matches)) {
+            throw new InvalidArgumentException('Invalid registration number');
+        }
+
+        if ((int) $matches[2] > now()->year) {
             throw new InvalidArgumentException('Invalid registration number');
         }
     }
