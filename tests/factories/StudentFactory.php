@@ -23,7 +23,9 @@ final class StudentFactory extends Factory
 
         $gender = fake()->randomElement(Gender::cases());
 
-        $registrationNumber = 'EBSU/' . fake()->year() . '/' . fake()->unique()->randomNumber(5, true);
+        $randomNumber = fake()->unique()->randomNumber(5, true);
+
+        $registrationNumber = 'EBSU/' . fake()->year() . '/' . $randomNumber;
 
         return [
             'date_of_birth' => fake()->date(max: $maximumDateOfBirth),
@@ -34,6 +36,7 @@ final class StudentFactory extends Factory
             'gender' => $gender->value,
             'last_name' => fake()->lastName(),
             'local_government_id' => LocalGovernmentFactory::new(),
+            'number' => $randomNumber,
             'other_names' => fake()->firstName(),
             'program_id' => ProgramFactory::new(),
             'registration_number' => $registrationNumber,

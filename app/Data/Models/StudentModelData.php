@@ -19,13 +19,11 @@ use App\Models\Student;
 use App\Values\DateValue;
 use App\Values\RegistrationNumber;
 use Carbon\Carbon;
-use Illuminate\Support\Str;
 
 final readonly class StudentModelData
 {
     public function __construct(
-        public string $registrationNumber,
-        public string $slug,
+        public RegistrationNumber $registrationNumber,
         public string $lastName,
         public string $firstName,
         public string $otherNames,
@@ -52,8 +50,7 @@ final readonly class StudentModelData
         $dateOfBirth = DateValue::fromValue($rawStudent->date_of_birth);
 
         return new self(
-            registrationNumber: $registrationNumber->value,
-            slug: Str::of($registrationNumber->value)->replace('/', '-')->slug()->value(),
+            registrationNumber: $registrationNumber,
             lastName: $rawStudent->last_name,
             firstName: $rawStudent->first_name,
             otherNames: $rawStudent->other_names,
@@ -79,8 +76,7 @@ final readonly class StudentModelData
         $dateOfBirth = DateValue::fromValue($student->birth_date);
 
         return new self(
-            registrationNumber: $registrationNumber->value,
-            slug: Str::of($registrationNumber->value)->replace('/', '-')->slug()->value(),
+            registrationNumber: $registrationNumber,
             lastName: $student->last_name,
             firstName: $student->first_name,
             otherNames: $student->other_names ? $student->other_names : '',
@@ -104,8 +100,9 @@ final readonly class StudentModelData
     {
         $student = new Student();
 
-        $student->registration_number = $this->registrationNumber;
-        $student->slug = $this->slug;
+        $student->registration_number = $this->registrationNumber->value;
+        $student->number = $this->registrationNumber->number();
+        $student->slug = $this->registrationNumber->slug();
         $student->last_name = $this->lastName;
         $student->first_name = $this->firstName;
         $student->other_names = $this->otherNames;
