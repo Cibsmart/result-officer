@@ -34,7 +34,7 @@ return new class extends Migration
             $table->unsignedBigInteger('legacy_id');
             $table->string('process_status')->index();
             $table->text('message')->nullable();
-            $table->foreignIdFor(Student::class)->nullable()->constrained();
+            $table->foreignIdFor(Student::class)->nullable();
             $table->timestamps();
         });
     }
