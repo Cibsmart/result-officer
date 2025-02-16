@@ -89,3 +89,13 @@ parameters:
 			message: "#^Method App\\\\Services\\\\Api\\\\PortalServiceFactory\\:\\:resolve\\(\\) return type with generic interface App\\\\Contracts\\\\PortalService does not specify its types\\: T$#"
 			count: 1
 			path: app/Services/Api/PortalServiceFactory.php
+
+		-
+			message: "#^Offset 1 does not exist on array\\{0\\?\\: string, 1\\?\\: non\\-falsy\\-string&numeric\\-string, 2\\?\\: string\\}\\.$#"
+			count: 1
+			path: app/Values/RegistrationNumber.php
+
+		-
+			message: "#^Offset 2 does not exist on array\\{0\\?\\: string, 1\\?\\: non\\-falsy\\-string&numeric\\-string, 2\\?\\: string\\}\\.$#"
+			count: 1
+			path: app/Values/RegistrationNumber.php
