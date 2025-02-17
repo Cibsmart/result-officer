@@ -10,22 +10,14 @@ import FormGroup from "@/components/forms/formGroup.vue";
 import BaseFormSection from "@/components/forms/baseFormSection.vue";
 import InputError from "@/components/inputs/inputError.vue";
 import EmptyState from "@/components/emptyState.vue";
-import { computed, ref, watch, onMounted } from "vue";
+import { computed, ref, watch, onMounted, toRef } from "vue";
 import { BreadcrumbItem } from "@/types";
-import { usePage, router } from "@inertiajs/vue3";
+import { usePage } from "@inertiajs/vue3";
 import UploadedExcelList from "@/pages/programCurriculum/import/partials/uploadedExcelList.vue";
 
 const props = defineProps<{
   data: App.Data.Imports.ExcelImportEventListData;
 }>();
-
-const user = usePage().props.user;
-
-const form = useForm({ file: null as File | null });
-
-const submit = () => {
-  form.post(route("import.final-results.store"));
-};
 
 const pages: BreadcrumbItem[] = [
   {
@@ -34,6 +26,12 @@ const pages: BreadcrumbItem[] = [
     current: route().current("import.final-results.index"),
   },
 ];
+
+const user = usePage().props.user;
+
+const importEventListData = toRef(props.data, "events");
+
+const form = useForm({ file: null as File | null });
 
 const hasEvent = computed(() => props.data.events.length > 0);
 
@@ -61,11 +59,20 @@ const onFileChange = () => {
   }
 };
 
+const submit = () => {
+  form.post(route("import.final-results.store"));
+};
+
 const fileInput = ref<HTMLInputElement | null>(null);
 
 const subscribe = () => {
-  window.Echo.channel(`excelImports.${user.id}`).listen("ExcelImportStatusChanged", () => {
-    router.reload();
+  window.Echo.channel(`excelImports.${user.id}`).listen("ExcelImportStatusChanged", (event: any) => {
+    const index = importEventListData.value.findIndex((importEvent) => importEvent.id === event.importEventData.id);
+
+    if (index > -1) {
+      importEventListData.value[index].status = event.importEventData.status;
+      importEventListData.value[index].statusColor = event.importEventData.statusColor;
+    }
   });
 };
 
