@@ -10,9 +10,9 @@ import FormGroup from "@/components/forms/formGroup.vue";
 import BaseFormSection from "@/components/forms/baseFormSection.vue";
 import InputError from "@/components/inputs/inputError.vue";
 import EmptyState from "@/components/emptyState.vue";
-import { computed, ref, watch, onMounted } from "vue";
+import { computed, ref, watch, onMounted, toRef } from "vue";
 import { BreadcrumbItem } from "@/types";
-import { usePage, router } from "@inertiajs/vue3";
+import { usePage } from "@inertiajs/vue3";
 import SelectInput from "@/components/inputs/selectInput.vue";
 import UploadedExcelList from "@/pages/programCurriculum/import/partials/uploadedExcelList.vue";
 
@@ -22,6 +22,8 @@ const props = defineProps<{
 }>();
 
 const user = usePage().props.user;
+
+const importEventListData = toRef(props.data, "events");
 
 const form = useForm({
   department: null as App.Data.Department.DepartmentData | null,
@@ -78,8 +80,15 @@ const fileInput = ref<HTMLInputElement | null>(null);
 const programs = ref([{ id: 0, name: "Select Program" }]);
 
 const subscribe = () => {
-  window.Echo.channel(`excelImports.${user.id}`).listen("ExcelImportStatusChanged", () => {
-    router.reload();
+  window.Echo.private(`excelImports.${user.id}`).listen("ExcelImportStatusChanged", (event: any) => {
+    const index = importEventListData.value.findIndex(
+      (importEvent: App.Data.Imports.ExcelImportEventData) => importEvent.id === event.importEventData.id,
+    );
+
+    if (index > -1) {
+      importEventListData.value[index].status = event.importEventData.status;
+      importEventListData.value[index].statusColor = event.importEventData.statusColor;
+    }
   });
 };
 

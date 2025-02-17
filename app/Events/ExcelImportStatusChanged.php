@@ -7,6 +7,7 @@ namespace App\Events;
 use App\Data\Imports\ExcelImportEventData;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Queue\SerializesModels;
 
@@ -22,6 +23,6 @@ final class ExcelImportStatusChanged implements ShouldBroadcast
 
     public function broadcastOn(): Channel
     {
-        return new Channel("excelImports.{$this->importEventData->userId}");
+        return new PrivateChannel("excelImports.{$this->importEventData->userId}");
     }
 }

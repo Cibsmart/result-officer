@@ -66,8 +66,10 @@ const submit = () => {
 const fileInput = ref<HTMLInputElement | null>(null);
 
 const subscribe = () => {
-  window.Echo.channel(`excelImports.${user.id}`).listen("ExcelImportStatusChanged", (event: any) => {
-    const index = importEventListData.value.findIndex((importEvent) => importEvent.id === event.importEventData.id);
+  window.Echo.private(`excelImports.${user.id}`).listen("ExcelImportStatusChanged", (event: any) => {
+    const index = importEventListData.value.findIndex(
+      (importEvent: App.Data.Imports.ExcelImportEventData) => importEvent.id === event.importEventData.id,
+    );
 
     if (index > -1) {
       importEventListData.value[index].status = event.importEventData.status;
