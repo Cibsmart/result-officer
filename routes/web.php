@@ -168,7 +168,7 @@ Route::middleware(['auth'])->group(static function (): void {
         Route::post('/{student}/clearance', [ClearanceController::class, 'store'])->name('students.clearance.store');
 
         Route::prefix('{student}/update')->group(static function (): void {
-            Route::patch('registration-number', [RegistrationNumberController::class, 'update'])
+            Route::patch('registration-number', RegistrationNumberController::class)
                 ->name('student.registrationNumber.update');
         });
     });
