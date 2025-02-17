@@ -53,15 +53,15 @@ it('can get the number in a registration number', function (): void {
 
     $number = RegistrationNumber::new($registrationNumber)->number();
 
-    expect($number)->toBeString()->and($number)->toBe('1');
+    expect($number)->toBeString()->and($number)->toBe('00001');
 });
 
-it('strips zeros in numbers and preservers letters', function (): void {
+it('can get the number while preserving the letter suffix', function (): void {
     $registrationNumber = 'EBSU/2009/00001A';
 
     $number = RegistrationNumber::new($registrationNumber)->number();
 
-    expect($number)->toBeString()->and($number)->toBe('1A');
+    expect($number)->toBeString()->and($number)->toBe('00001A');
 });
 
 it('can get the session associated with a registration number', function (): void {
