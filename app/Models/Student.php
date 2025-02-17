@@ -146,6 +146,7 @@ final class Student extends Model
     public function updateRegistrationNumber(RegistrationNumber $registrationNumber): void
     {
         $this->registration_number = $registrationNumber->value;
+        $this->number = $registrationNumber->number();
         $this->slug = $registrationNumber->slug();
         $this->save();
     }

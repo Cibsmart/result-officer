@@ -7,7 +7,6 @@ use App\Enums\ModifiableFields\StudentModifiableField;
 use App\Enums\RecordActionType;
 use App\Models\Student;
 use App\Models\StudentHistory;
-use Illuminate\Support\Str;
 use Tests\Factories\StudentFactory;
 
 use function Pest\Laravel\assertDatabaseHas;
@@ -26,7 +25,7 @@ it('updates student registration number', function (): void {
     expect($student->registration_number)->toBe($newRegistrationNumber);
 });
 
-it('correctly updates student slug along with the registration number', function (): void {
+it('updates student slug along with the registration number', function (): void {
     $student = StudentFactory::new()->createOne();
 
     $newRegistrationNumber = 'EBSU/2009/51486';
@@ -35,7 +34,19 @@ it('correctly updates student slug along with the registration number', function
 
     $student->refresh();
 
-    expect($student->slug)->toBe(Str::of($newRegistrationNumber)->replace('/', '-')->slug()->value());
+    expect($student->slug)->toBe('ebsu-2009-51486');
+});
+
+it('updates student number along with the registration number', function (): void {
+    $student = StudentFactory::new()->createOne();
+
+    $newRegistrationNumber = 'EBSU/2009/51486';
+
+    RegistrationNumberUpdate::execute($student, $newRegistrationNumber);
+
+    $student->refresh();
+
+    expect($student->number)->toBe('51486');
 });
 
 it('throws exception for invalid registration number', function (): void {
