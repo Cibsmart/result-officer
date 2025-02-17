@@ -37,7 +37,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Reports\CompositeSheetController;
 use App\Http\Controllers\Reports\DepartmentClearedController;
 use App\Http\Controllers\Result\ViewStudentResultController;
-use App\Http\Controllers\StudentController;
+use App\Http\Controllers\Students\StudentController;
+use App\Http\Controllers\Students\Updates\RegistrationNumberController;
 use App\Http\Controllers\Summary\DepartmentResultSummaryController;
 use App\Http\Controllers\Vetting\VettingController;
 use App\Http\Middleware\ValidateMonthParameter;
@@ -165,6 +166,11 @@ Route::middleware(['auth'])->group(static function (): void {
         Route::get('', [StudentController::class, 'index'])->name('students.index');
         Route::post('', [StudentController::class, 'store'])->name('students.store');
         Route::post('/{student}/clearance', [ClearanceController::class, 'store'])->name('students.clearance.store');
+
+        Route::prefix('{student}/update')->group(static function (): void {
+            Route::patch('registration-number', [RegistrationNumberController::class, 'update'])
+                ->name('student.registrationNumber.update');
+        });
     });
 
     Route::prefix('export')->group(static function (): void {
