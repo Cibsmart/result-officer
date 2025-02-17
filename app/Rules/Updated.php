@@ -19,7 +19,7 @@ final readonly class Updated implements ValidationRule
         mixed $value,
         Closure $fail,
     ): void {
-        if ($value !== $this->originalValue) {
+        if ($value !== $this->originalValue && $attribute !== '') {
             return;
         }
 
