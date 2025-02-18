@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\DBMail;
 use App\Models\Student;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->json('data')->nullable();
             $table->string('remark');
             $table->string('source');
+            $table->foreignIdFor(DBMail::class)->nullable()->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
