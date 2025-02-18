@@ -25,7 +25,7 @@ return new class extends Migration
             $table->json('data')->nullable();
             $table->string('remark');
             $table->string('source');
-            $table->foreignIdFor(DBMail::class)->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(DBMail::class, 'db_mail_id')->nullable()->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

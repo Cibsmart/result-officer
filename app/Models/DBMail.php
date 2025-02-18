@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 
 final class DBMail extends Model
 {
+    protected $table = 'db_mails';
 }
