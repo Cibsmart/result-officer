@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Students\Updates;
 
+use App\Models\Student;
 use App\Rules\Updated;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
@@ -15,6 +16,7 @@ final class StudentNameRequest extends FormRequest
     public function rules(): array
     {
         $student = $this->route('student');
+        assert($student instanceof Student);
 
         return [
             'first_name' => ['required', 'string', 'min:2'],

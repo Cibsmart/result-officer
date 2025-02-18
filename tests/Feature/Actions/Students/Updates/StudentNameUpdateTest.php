@@ -92,9 +92,9 @@ it('set remark, user and dbmail field in student history', function (): void {
     expect($student->last_name)->toBe($newName);
 
     assertDatabaseHas(StudentHistory::class, [
-        'student_id' => $student->id,
-        'remark' => $remark,
         'db_mail_id' => $dbMail->id,
+        'remark' => $remark,
+        'student_id' => $student->id,
         'user_id' => $user->id,
     ]);
 });

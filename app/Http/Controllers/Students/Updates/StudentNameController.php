@@ -53,7 +53,7 @@ final class StudentNameController
         foreach ($nameFields as $nameField) {
             $newValue = $validated[$nameField];
 
-            $newValue = $newValue === null ? '' : $newValue;
+            $newValue ??= '';
 
             if ($student->{$nameField} === $newValue) {
                 continue;

@@ -19,8 +19,8 @@ final class RegistrationNumberRequest extends FormRequest
     public function rules(): array
     {
         $registrationNumberRegex = RegistrationNumber::pattern();
-        $student = $this->route('student');
 
+        $student = $this->route('student');
         assert($student instanceof Student);
 
         return [
