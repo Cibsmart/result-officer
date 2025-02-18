@@ -48,7 +48,7 @@ final class ExcelImportEvent extends Model
         $events = self::query()
             ->where('type', $type)
             ->where('file_name', $fileName)
-            ->where('status', ImportEventStatus::QUEUED)
+            ->whereNot('status', ImportEventStatus::FAILED)
             ->get();
 
         return $events->isNotEmpty();
@@ -76,7 +76,7 @@ final class ExcelImportEvent extends Model
         }
 
         if (self::inQueue($type, $fileName)) {
-            $message = 'Excel file already queued for processing';
+            $message = 'Excel file already uploaded';
 
             $result['passed'] = false;
             $result['message'] = $message;
