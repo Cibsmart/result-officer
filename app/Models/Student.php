@@ -151,6 +151,12 @@ final class Student extends Model
         $this->save();
     }
 
+    /** @param array{last_name?: string, first_name?: string, other_names?: string} $names */
+    public function updateNames(array $names): void
+    {
+        $this->update($names);
+    }
+
     public function programCurriculum(): ?ProgramCurriculum
     {
         return ProgramCurriculum::query()
