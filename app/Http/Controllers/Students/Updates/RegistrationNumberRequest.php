@@ -12,7 +12,10 @@ use Illuminate\Validation\Rule;
 
 final class RegistrationNumberRequest extends FormRequest
 {
-    /** @return array<string, array<int, \App\Rules\Updated|\Illuminate\Validation\Rules\Unique|string>> */
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return array<string, array<int, \App\Rules\Updated|\Illuminate\Validation\Rules\Unique|\Illuminate\Validation\Rules\Date|string>>
+     */
     public function rules(): array
     {
         $registrationNumberRegex = RegistrationNumber::pattern();
@@ -22,7 +25,12 @@ final class RegistrationNumberRequest extends FormRequest
 
         return [
             'has_mail' => ['required', 'boolean'],
-            'mail_date' => ['exclude_if:has_mail,false', 'required', 'date'],
+            'mail_date' => [
+                'exclude_if:has_mail,false',
+                'required',
+                'regex:/^20\d{2}-\d{2}-\d{2}$/',
+                Rule::date()->todayOrBefore(),
+            ],
             'mail_title' => ['exclude_if:has_mail,false', 'required', 'string', 'min:10', 'max:255'],
             'registration_number' => [
                 'required',
@@ -32,6 +40,7 @@ final class RegistrationNumberRequest extends FormRequest
                 new Updated($student->registration_number),
                 Rule::unique(Student::class)->ignore($student->id),
             ],
+            'remark' => ['required', 'string'],
         ];
     }
 }

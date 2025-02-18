@@ -15,6 +15,7 @@ final class RegistrationNumberUpdate
     public static function execute(
         Student $student,
         string $newRegistrationNumber,
+        string $remark = '',
         ?DBMail $dbMail = null,
     ): void {
 
@@ -23,6 +24,7 @@ final class RegistrationNumberUpdate
             model: $student,
             updatedField: StudentModifiableField::REGISTRATION_NUMBER,
             data: ['new' => $newRegistrationNumber, 'old' => $student->registration_number],
+            remark: $remark,
             dbMail: $dbMail,
         );
 

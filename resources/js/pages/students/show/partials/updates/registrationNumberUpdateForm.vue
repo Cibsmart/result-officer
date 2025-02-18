@@ -19,6 +19,7 @@ const emit = defineEmits<(e: "close") => void>();
 
 const form = useForm({
   registration_number: props.student.registrationNumber,
+  remark: "",
   has_mail: false,
   mail_title: "",
   mail_date: "",
@@ -67,6 +68,19 @@ const submit = () =>
       </div>
 
       <div class="">
+        <InputLabel
+          for="remark"
+          value="Remark (state action performed)" />
+
+        <TextareaInput
+          id="remark"
+          v-model="form.remark"
+          required />
+
+        <InputError :message="form.errors.remark" />
+      </div>
+
+      <div class="">
         <Toggle
           v-model="form.has_mail"
           label="Has mail" />
@@ -81,6 +95,7 @@ const submit = () =>
           <TextareaInput
             id="mail_title"
             v-model="form.mail_title"
+            autocomplete="mail_title"
             required />
 
           <InputError :message="form.errors.mail_title" />
@@ -94,6 +109,8 @@ const submit = () =>
           <TextInput
             id="mail_date"
             v-model="form.mail_date"
+            autocomplete="mail_date"
+            placeholder="YYYY-MM-DD"
             required
             type="text" />
 

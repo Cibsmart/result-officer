@@ -33,7 +33,7 @@ final class RegistrationNumberController
             );
         }
 
-        $action->execute($student, $validated['registration_number'], $dbMail);
+        $action->execute($student, $validated['registration_number'], $validated['remark'], $dbMail);
 
         return redirect()
             ->route('students.show', ['student' => $student])

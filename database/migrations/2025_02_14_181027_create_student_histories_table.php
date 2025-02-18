@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('action');
             $table->string('field')->nullable();
             $table->json('data')->nullable();
-            $table->string('remark');
+            $table->text('remark');
             $table->string('source');
             $table->foreignIdFor(DBMail::class, 'db_mail_id')->nullable()->constrained()->cascadeOnDelete();
             $table->timestamps();
