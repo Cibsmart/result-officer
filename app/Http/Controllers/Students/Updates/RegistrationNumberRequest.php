@@ -21,6 +21,9 @@ final class RegistrationNumberRequest extends FormRequest
         assert($student instanceof Student);
 
         return [
+            'has_mail' => ['required', 'boolean'],
+            'mail_date' => ['exclude_if:has_mail,false', 'required', 'date'],
+            'mail_title' => ['exclude_if:has_mail,false', 'required', 'string', 'min:10', 'max:255'],
             'registration_number' => [
                 'required',
                 'string',

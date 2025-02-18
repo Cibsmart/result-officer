@@ -6,11 +6,9 @@ import InputLabel from "@/components/inputs/inputLabel.vue";
 import PrimaryButton from "@/components/buttons/primaryButton.vue";
 import { useForm } from "@inertiajs/vue3";
 import SecondaryButton from "@/components/buttons/secondaryButton.vue";
-import { computed } from "vue";
+import { computed, watch } from "vue";
 import CardFooter from "@/components/cards/cardFooter.vue";
-import Card from "@/components/cards/card.vue";
 import TextareaInput from "@/components/inputs/textareaInput.vue";
-import Checkbox from "@/components/inputs/checkbox.vue";
 import Toggle from "@/components/inputs/toggle.vue";
 
 const props = defineProps<{
@@ -29,6 +27,15 @@ const form = useForm({
 const title = `Update Student's Registration Number (${props.student.registrationNumber})`;
 
 const canNotUpdate = computed(() => props.student.registrationNumber === form.registration_number || form.processing);
+
+watch(
+  () => form.has_mail,
+  () => {
+    form.mail_title = "";
+    form.mail_date = "";
+    form.clearErrors();
+  },
+);
 
 const submit = () =>
   form.patch(route("student.registrationNumber.update", { student: props.student.slug }), {
@@ -65,7 +72,7 @@ const submit = () =>
           label="Has mail" />
       </div>
 
-      <Card>
+      <template v-if="form.has_mail">
         <div class="">
           <InputLabel
             for="mail_title"
@@ -74,10 +81,7 @@ const submit = () =>
           <TextareaInput
             id="mail_title"
             v-model="form.mail_title"
-            autocomplete="off"
-            autofocus
-            required
-            type="text" />
+            required />
 
           <InputError :message="form.errors.mail_title" />
         </div>
@@ -90,26 +94,24 @@ const submit = () =>
           <TextInput
             id="mail_date"
             v-model="form.mail_date"
-            autocomplete="off"
-            autofocus
             required
             type="text" />
 
           <InputError :message="form.errors.mail_date" />
         </div>
-      </Card>
+      </template>
+
+      <CardFooter class="mt-6">
+        <div class="mt-2 flex justify-end">
+          <SecondaryButton @click="emit('close')">Cancel</SecondaryButton>
+
+          <PrimaryButton
+            :disabled="canNotUpdate"
+            class="ms-3">
+            Update
+          </PrimaryButton>
+        </div>
+      </CardFooter>
     </form>
-
-    <CardFooter class="mt-6">
-      <div class="mt-2 flex justify-end">
-        <SecondaryButton @click="emit('close')">Cancel</SecondaryButton>
-
-        <PrimaryButton
-          :disabled="canNotUpdate"
-          class="ms-3">
-          Update
-        </PrimaryButton>
-      </div>
-    </CardFooter>
   </BaseFormSection>
 </template>
