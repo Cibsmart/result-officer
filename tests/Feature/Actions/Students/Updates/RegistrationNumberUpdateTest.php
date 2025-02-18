@@ -8,6 +8,7 @@ use App\Enums\RecordActionType;
 use App\Models\Student;
 use App\Models\StudentHistory;
 use Tests\Factories\StudentFactory;
+use Tests\Factories\UserFactory;
 
 use function Pest\Laravel\assertDatabaseHas;
 
@@ -59,11 +60,12 @@ it('throws exception for invalid registration number', function (): void {
 
 it('records the update in the student history table', function (): void {
     $student = StudentFactory::new()->createOne();
+    $user = UserFactory::new()->createOne();
 
     $oldRegistrationNumber = $student->registration_number;
     $newRegistrationNumber = 'EBSU/2009/51486';
 
-    RegistrationNumberUpdate::execute($student, $newRegistrationNumber);
+    RegistrationNumberUpdate::execute($student, $newRegistrationNumber, user: $user);
 
     $student->refresh();
 
@@ -74,5 +76,6 @@ it('records the update in the student history table', function (): void {
         'modifiable_id' => $student->id,
         'modifiable_type' => (new Student())->getMorphClass(),
         'student_id' => $student->id,
+        'user_id' => $user->id,
     ]);
 });
