@@ -37,6 +37,6 @@ final class RegistrationNumberController
 
         return redirect()
             ->route('students.show', ['student' => $student])
-            ->success('Registration number updated.');
+            ->success('Registration number updated successfully.');
     }
 }

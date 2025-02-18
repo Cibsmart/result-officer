@@ -404,7 +404,7 @@ declare namespace App.Data.Students {
     registrationNumber: string;
     lastName: string;
     firstName: string;
-    otherNames: string | null;
+    otherNames: string;
     name: string;
     gender: App.Enums.Gender;
     birthDate: string;

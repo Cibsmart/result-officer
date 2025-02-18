@@ -209,7 +209,7 @@ final class Student extends Model
             get: fn (
                 ?string $value,
                 array $attributes,
-            ): string => "{$attributes['last_name']} {$attributes['first_name']} {$attributes['other_names']}",
+            ): string => trim("{$attributes['last_name']} {$attributes['first_name']} {$attributes['other_names']}"),
         );
     }
 

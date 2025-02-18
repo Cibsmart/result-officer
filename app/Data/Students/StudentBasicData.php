@@ -18,7 +18,7 @@ final class StudentBasicData extends Data
         public readonly string $registrationNumber,
         public readonly string $lastName,
         public readonly string $firstName,
-        public readonly ?string $otherNames,
+        public readonly string $otherNames,
         public readonly string $name,
         public readonly Gender $gender,
         public readonly string $birthDate,
@@ -44,13 +44,17 @@ final class StudentBasicData extends Data
         $gender = $student->gender;
         assert($gender instanceof Gender);
 
+        $otherNames = $student->other_names
+            ? $student->other_names
+            : '';
+
         return new self(
             id: $student->id,
             registrationNumber: $student->registration_number,
             lastName: $student->last_name,
             firstName: $student->first_name,
-            otherNames: $student->other_names,
-            name: "$student->last_name $student->first_name $student->other_names",
+            otherNames: $otherNames,
+            name: "$student->last_name $student->first_name $otherNames",
             gender: $gender,
             birthDate: $birthDate,
             program: $student->program->name,
