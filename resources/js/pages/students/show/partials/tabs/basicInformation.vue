@@ -21,8 +21,8 @@ const componentList: Record<
   registration_number: defineAsyncComponent(
     () => import("@/pages/students/show/partials/updates/registrationNumberUpdateForm.vue"),
   ),
+  name: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/nameUpdateForm.vue")),
   // exam: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/examUpdateForm.vue")),
-  // name: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/nameUpdateForm.vue")),
   // course: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/courseUpdateForm.vue")),
   // gender: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/genderUpdateForm.vue")),
   // status: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/statusUpdateForm.vue")),
@@ -51,7 +51,12 @@ const closeEditModal = () => (showEditModal.value = false);
 
     <div class="mt-2 border-t border-gray-200 dark:border-white/10">
       <DataList>
-        <DataItem title="Full Name">{{ student.basic.name }}</DataItem>
+        <DataItem title="Full Name">
+          <div class="flex justify-between">
+            {{ student.basic.name }}
+            <SecondaryButtonSmall @click="openEditModal('name')">Edit</SecondaryButtonSmall>
+          </div>
+        </DataItem>
 
         <DataItem title="Registration Number">
           <div class="flex justify-between">
