@@ -7,6 +7,7 @@ import PrimaryButton from "@/components/buttons/primaryButton.vue";
 import { useForm } from "@inertiajs/vue3";
 import SecondaryButton from "@/components/buttons/secondaryButton.vue";
 import { computed } from "vue";
+import CardFooter from "@/components/cards/cardFooter.vue";
 
 const props = defineProps<{
   student: App.Data.Students.StudentBasicData;
@@ -41,15 +42,17 @@ const submit = () =>
         <TextInput
           id="registration_number"
           v-model="form.registration_number"
-          autocomplete="registration_number"
+          autocomplete="off"
           autofocus
           required
           type="text" />
 
         <InputError :message="form.errors.registration_number" />
       </div>
+    </form>
 
-      <div class="mt-6 flex justify-end">
+    <CardFooter class="mt-6">
+      <div class="mt-2 flex justify-end">
         <SecondaryButton @click="emit('close')">Cancel</SecondaryButton>
 
         <PrimaryButton
@@ -58,6 +61,6 @@ const submit = () =>
           Update
         </PrimaryButton>
       </div>
-    </form>
+    </CardFooter>
   </BaseFormSection>
 </template>
