@@ -39,6 +39,7 @@ use App\Http\Controllers\Reports\DepartmentClearedController;
 use App\Http\Controllers\Result\ViewStudentResultController;
 use App\Http\Controllers\Students\StudentController;
 use App\Http\Controllers\Students\Updates\RegistrationNumberController;
+use App\Http\Controllers\Students\Updates\StudentNameController;
 use App\Http\Controllers\Summary\DepartmentResultSummaryController;
 use App\Http\Controllers\Vetting\VettingController;
 use App\Http\Middleware\ValidateMonthParameter;
@@ -170,6 +171,8 @@ Route::middleware(['auth'])->group(static function (): void {
         Route::prefix('{student}/update')->group(static function (): void {
             Route::patch('registration-number', RegistrationNumberController::class)
                 ->name('student.registrationNumber.update');
+            Route::patch('name', StudentNameController::class)
+                ->name('student.name.update');
         });
     });
 
