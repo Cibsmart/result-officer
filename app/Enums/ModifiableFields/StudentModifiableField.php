@@ -7,7 +7,7 @@ namespace App\Enums\ModifiableFields;
 enum StudentModifiableField: string
 {
 //    case EXAM = 'exam';
-//    case NAME = 'name';
+    case NAME = 'name';
 //    case COURSE = 'course';
 //    case GENDER = 'gender';
 //    case STATUS = 'status';
