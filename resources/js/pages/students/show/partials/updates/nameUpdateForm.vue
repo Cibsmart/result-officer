@@ -26,17 +26,16 @@ const form = useForm({
   has_mail: false,
   mail_title: "",
   mail_date: "",
+  name: "",
 });
 
 const title = `Update Student's Name (${props.student.registrationNumber})`;
-
-const canNotUpdate = computed(
-  () =>
-    (props.student.lastName === form.last_name &&
-      props.student.firstName === form.first_name &&
-      props.student.otherNames === form.other_names) ||
-    form.processing,
+const oldName = computed(
+  () => `${props.student.lastName.trim()}, ${props.student.firstName.trim()} ${props.student.otherNames.trim()}`,
 );
+const newName = computed(() => `${form.last_name.trim()}, ${form.first_name.trim()} ${form.other_names.trim()}`);
+
+const canNotUpdate = computed(() => oldName.value === newName.value || form.processing);
 
 watch(
   () => form.has_mail,
@@ -57,6 +56,8 @@ const submit = () =>
   <BaseFormSection
     :header="title"
     description="Correct student's name and submit">
+    <InputError :message="form.errors.name" />
+
     <form
       class="mt-6 space-y-6"
       @submit.prevent="submit">
@@ -70,6 +71,7 @@ const submit = () =>
           v-model="form.last_name"
           autocomplete="off"
           autofocus
+          class="uppercase"
           required
           type="text" />
 
@@ -86,6 +88,7 @@ const submit = () =>
             id="first_name"
             v-model="form.first_name"
             autocomplete="off"
+            class="uppercase"
             required
             type="text" />
 
@@ -101,6 +104,7 @@ const submit = () =>
             id="other_names"
             v-model="form.other_names"
             autocomplete="off"
+            class="uppercase"
             type="text" />
 
           <InputError :message="form.errors.other_names" />
