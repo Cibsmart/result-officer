@@ -25,6 +25,7 @@ final class StudentBasicData extends Data
         public readonly string $program,
         public readonly string $department,
         public readonly string $faculty,
+        public readonly string $departmentProgram,
         public readonly int $admissionYear,
         public readonly string $nationality,
         public readonly string $slug,
@@ -48,6 +49,13 @@ final class StudentBasicData extends Data
             ? $student->other_names
             : '';
 
+        $program = $student->program;
+        $department = $program->department;
+
+        $departmentProgram = $department->name === $program->name
+            ? $program->name
+            : "{$department->name} ({$program->name})";
+
         return new self(
             id: $student->id,
             registrationNumber: $student->registration_number,
@@ -57,9 +65,10 @@ final class StudentBasicData extends Data
             name: "$student->name",
             gender: $gender,
             birthDate: $birthDate,
-            program: $student->program->name,
-            department: $student->program->department->name,
-            faculty: $student->program->department->faculty->name,
+            program: $program->name,
+            department: $department->name,
+            faculty: $department->faculty->name,
+            departmentProgram: $departmentProgram,
             admissionYear: $student->entrySession->firstYear(),
             nationality: $student->lga->state->country->demonym,
             slug: $student->slug,

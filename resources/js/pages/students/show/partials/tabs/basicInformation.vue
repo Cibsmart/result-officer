@@ -65,7 +65,7 @@ const closeEditModal = () => (showEditModal.value = false);
           </div>
         </DataItem>
 
-        <DataItem title="Department and Program">{{ student.basic.department }}</DataItem>
+        <DataItem title="Department and Program">{{ student.basic.departmentProgram }}</DataItem>
 
         <DataItem title="Gender">{{ student.basic.gender }}</DataItem>
 

@@ -411,6 +411,7 @@ declare namespace App.Data.Students {
     program: string;
     department: string;
     faculty: string;
+    departmentProgram: string;
     admissionYear: number;
     nationality: string;
     slug: string;
