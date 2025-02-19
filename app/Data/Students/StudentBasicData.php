@@ -54,7 +54,7 @@ final class StudentBasicData extends Data
             lastName: $student->last_name,
             firstName: $student->first_name,
             otherNames: $otherNames,
-            name: "$student->last_name $student->first_name $otherNames",
+            name: "$student->name",
             gender: $gender,
             birthDate: $birthDate,
             program: $student->program->name,

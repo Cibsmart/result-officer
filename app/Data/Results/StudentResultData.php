@@ -29,7 +29,9 @@ final class StudentResultData extends Data
     public static function fromModel(Student $student): self
     {
         $sessionEnrollments = SessionResultData::collect(
-            $student->sessionEnrollments()->with(['semesterEnrollments', 'session'])->orderBy('session_id')->get(),
+            $student->sessionEnrollments()->with([
+                'semesterEnrollments.semester', 'session',
+            ])->orderBy('session_id')->get(),
         );
 
         $finalCGPA = round(
