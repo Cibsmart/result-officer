@@ -52,4 +52,12 @@ final class StudentFactory extends Factory
             'status' => StudentStatus::CLEARED,
         ]);
     }
+
+    public function graduated(): self
+    {
+        // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
+        return $this->state(fn (array $attributes) => [
+            'status' => StudentStatus::GRADUATED,
+        ]);
+    }
 }
