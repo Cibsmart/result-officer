@@ -18,7 +18,9 @@ final class StudentHistory extends Model
         StudentModifiableField $updatedField,
         array $data,
         string $remark = '',
+        ?DBMail $dbMail = null,
         RecordSource $source = RecordSource::USER,
+        ?User $user = null,
     ): self {
         $modelName = $model::class;
         $modifiableType = (new $modelName())->getMorphClass();
@@ -33,6 +35,12 @@ final class StudentHistory extends Model
         $history->data = $data;
         $history->remark = $remark;
         $history->source = $source;
+        $history->db_mail_id = $dbMail
+            ? $dbMail->id
+            : null;
+        $history->user_id = $user
+            ? $user->id
+            : null;
 
         $history->save();
 

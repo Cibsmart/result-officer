@@ -223,7 +223,9 @@ declare namespace App.Data.Grading {
 declare namespace App.Data.Imports {
   export type ExcelImportEventData = {
     id: number;
+    userId: number;
     fileName: string;
+    type: App.Enums.ExcelImportType;
     status: App.Enums.ImportEventStatus;
     statusColor: App.Enums.StatusColor;
     message: string | null;
@@ -402,13 +404,14 @@ declare namespace App.Data.Students {
     registrationNumber: string;
     lastName: string;
     firstName: string;
-    otherNames: string | null;
+    otherNames: string;
     name: string;
     gender: App.Enums.Gender;
     birthDate: string;
     program: string;
     department: string;
     faculty: string;
+    departmentProgram: string;
     admissionYear: number;
     nationality: string;
     slug: string;
@@ -606,20 +609,7 @@ declare namespace App.Enums.ModifiableFields {
     | "course_type"
     | "credit_unit";
   export type ProgramModifiableField = "code" | "name" | "faculty" | "duration" | "department" | "program_type";
-  export type StudentModifiableField =
-    | "exam"
-    | "name"
-    | "course"
-    | "gender"
-    | "status"
-    | "program"
-    | "in_course"
-    | "entry_mode"
-    | "credit_unit"
-    | "entry_level"
-    | "date_of_birth"
-    | "local_government"
-    | "registration_number";
+  export type StudentModifiableField = "name" | "registration_number";
 }
 declare namespace App.ViewModels.Clearance {
   export type ClearanceFormPage = {

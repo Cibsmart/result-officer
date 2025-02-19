@@ -66,9 +66,7 @@ final readonly class RegistrationNumber
     {
         preg_match(self::pattern(), $this->value, $matches);
 
-        preg_match('/^(\d{3,7})([a-d]?)$/i', $matches[3], $newMatches);
-
-        return (int) $newMatches[1] . $newMatches[2];
+        return $matches[3];
     }
 
     public function allowEGrade(): bool

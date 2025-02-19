@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Actions\Imports\Excel\ValidateHeadings;
+use App\Data\Imports\ExcelImportEventData;
 use App\Enums\ExcelImportType;
 use App\Enums\ImportEventStatus;
 use App\Events\ExcelImportStatusChanged;
@@ -47,7 +48,7 @@ final class ExcelImportEvent extends Model
         $events = self::query()
             ->where('type', $type)
             ->where('file_name', $fileName)
-            ->where('status', ImportEventStatus::QUEUED)
+            ->whereNot('status', ImportEventStatus::FAILED)
             ->get();
 
         return $events->isNotEmpty();
@@ -75,7 +76,7 @@ final class ExcelImportEvent extends Model
         }
 
         if (self::inQueue($type, $fileName)) {
-            $message = 'Excel file already queued for processing';
+            $message = 'Excel file already uploaded';
 
             $result['passed'] = false;
             $result['message'] = $message;
@@ -118,7 +119,7 @@ final class ExcelImportEvent extends Model
         $this->status = $status;
         $this->save();
 
-        Event::dispatch(new ExcelImportStatusChanged($this));
+        Event::dispatch(new ExcelImportStatusChanged(ExcelImportEventData::fromModel($this)));
     }
 
     public function setMessage(string $message): void

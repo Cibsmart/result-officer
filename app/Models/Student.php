@@ -146,8 +146,15 @@ final class Student extends Model
     public function updateRegistrationNumber(RegistrationNumber $registrationNumber): void
     {
         $this->registration_number = $registrationNumber->value;
+        $this->number = $registrationNumber->number();
         $this->slug = $registrationNumber->slug();
         $this->save();
+    }
+
+    /** @param array{last_name?: string, first_name?: string, other_names?: string} $names */
+    public function updateNames(array $names): void
+    {
+        $this->update($names);
     }
 
     public function programCurriculum(): ?ProgramCurriculum
@@ -202,7 +209,7 @@ final class Student extends Model
             get: fn (
                 ?string $value,
                 array $attributes,
-            ): string => "{$attributes['last_name']} {$attributes['first_name']} {$attributes['other_names']}",
+            ): string => trim("{$attributes['last_name']} {$attributes['first_name']} {$attributes['other_names']}"),
         );
     }
 

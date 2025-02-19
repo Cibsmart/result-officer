@@ -18,13 +18,14 @@ final class StudentBasicData extends Data
         public readonly string $registrationNumber,
         public readonly string $lastName,
         public readonly string $firstName,
-        public readonly ?string $otherNames,
+        public readonly string $otherNames,
         public readonly string $name,
         public readonly Gender $gender,
         public readonly string $birthDate,
         public readonly string $program,
         public readonly string $department,
         public readonly string $faculty,
+        public readonly string $departmentProgram,
         public readonly int $admissionYear,
         public readonly string $nationality,
         public readonly string $slug,
@@ -44,18 +45,30 @@ final class StudentBasicData extends Data
         $gender = $student->gender;
         assert($gender instanceof Gender);
 
+        $otherNames = $student->other_names
+            ? $student->other_names
+            : '';
+
+        $program = $student->program;
+        $department = $program->department;
+
+        $departmentProgram = $department->name === $program->name
+            ? $program->name
+            : "{$department->name} ({$program->name})";
+
         return new self(
             id: $student->id,
             registrationNumber: $student->registration_number,
             lastName: $student->last_name,
             firstName: $student->first_name,
-            otherNames: $student->other_names,
-            name: "$student->last_name $student->first_name $student->other_names",
+            otherNames: $otherNames,
+            name: "$student->name",
             gender: $gender,
             birthDate: $birthDate,
-            program: $student->program->name,
-            department: $student->program->department->name,
-            faculty: $student->program->department->faculty->name,
+            program: $program->name,
+            department: $department->name,
+            faculty: $department->faculty->name,
+            departmentProgram: $departmentProgram,
             admissionYear: $student->entrySession->firstYear(),
             nationality: $student->lga->state->country->demonym,
             slug: $student->slug,
