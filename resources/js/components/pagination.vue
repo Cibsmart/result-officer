@@ -64,7 +64,7 @@ defineProps<{
               class="size-5" />
 
             <ChevronRightIcon
-              v-else-if="index + 1 === paginated.last_page + 2"
+              v-else-if="index === paginated.per_page - 1"
               aria-hidden="true"
               class="size-5" />
 
