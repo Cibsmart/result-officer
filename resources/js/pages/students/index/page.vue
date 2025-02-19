@@ -8,7 +8,7 @@ import Card from "@/components/cards/card.vue";
 import CardHeader from "@/components/cards/cardHeader.vue";
 import CardFooter from "@/components/cards/cardFooter.vue";
 import { PaginatedStudentListData } from "@/types/paginate";
-import Pagination from "@/components/Pagination.vue";
+import Pagination from "@/components/pagination.vue";
 import BaseTable from "@/components/tables/baseTable.vue";
 import BaseTHead from "@/components/tables/baseTHead.vue";
 import BaseTH from "@/components/tables/baseTH.vue";

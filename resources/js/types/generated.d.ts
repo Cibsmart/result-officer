@@ -81,6 +81,10 @@ declare namespace App.Data.Department {
     slug: string;
     programs: App.Data.Program.ProgramListData | null;
   };
+  export type DepartmentInfoData = {
+    faculty: App.Data.Faculty.FacultyData;
+    department: App.Data.Department.DepartmentData;
+  };
   export type DepartmentListData = {
     data: Array<App.Data.Department.DepartmentData>;
   };
@@ -269,6 +273,11 @@ declare namespace App.Data.Program {
     name: string;
     slug: string;
   };
+  export type ProgramInfoData = {
+    programName: string;
+    departmentName: string;
+    facultyName: string;
+  };
   export type ProgramListData = {
     programs: Array<App.Data.Program.ProgramData>;
   };
@@ -454,6 +463,9 @@ declare namespace App.Data.Summary {
   };
 }
 declare namespace App.Data.Vetting {
+  export type PaginatedVettingListData = {
+    paginated: Array<App.Data.Vetting.VettingStudentData>;
+  };
   export type VettingListData = {
     faculty: App.Data.Faculty.FacultyData;
     department: App.Data.Department.DepartmentData;
@@ -701,8 +713,9 @@ declare namespace App.ViewModels.Vetting {
   export type VettingIndexPage = {
     departments: App.Data.Department.DepartmentListData;
     clearance: App.ViewModels.Clearance.ClearanceFormPage;
-    data: App.Data.Vetting.VettingListData;
     steps: App.Data.Vetting.VettingStepListData;
+    department: App.Data.Department.DepartmentInfoData;
+    data: App.Data.Vetting.PaginatedVettingListData;
   };
 }
 declare namespace App.ViewModels.finalResults {

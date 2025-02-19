@@ -12,6 +12,7 @@ use App\ViewModels\Students\StudentIndexPage;
 use App\ViewModels\Students\StudentShowPage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\AbstractPaginator;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -23,9 +24,10 @@ final class StudentController
             ->with('program.department.faculty', 'entrySession', 'lga.state.country')
             ->paginate();
 
-        return Inertia::render('students/index/page', new StudentIndexPage(
-            paginated: StudentBasicData::collect($students),
-        ));
+        $paginated = StudentBasicData::collect($students);
+        assert($paginated instanceof AbstractPaginator);
+
+        return Inertia::render('students/index/page', new StudentIndexPage(paginated: $paginated));
     }
 
     public function show(Request $request, ?Student $student = null): Response

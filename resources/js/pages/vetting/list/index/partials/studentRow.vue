@@ -8,7 +8,6 @@ import BaseTD from "@/components/tables/baseTD.vue";
 import { usePoll } from "@inertiajs/vue3";
 
 const props = defineProps<{
-  index: number;
   student: App.Data.Vetting.VettingStudentData;
 }>();
 
@@ -39,8 +38,6 @@ const vetted = computed(() => props.student.vettingStatus !== "pending");
 </script>
 
 <template>
-  <BaseTD>{{ index + 1 }}</BaseTD>
-
   <BaseTD
     mobile
     position="left">
