@@ -19,7 +19,7 @@ it('updates student registration number', function (): void {
 
     $newRegistrationNumber = 'EBSU/2009/51486';
 
-    RegistrationNumberUpdate::execute($student, $newRegistrationNumber);
+    (new RegistrationNumberUpdate())->execute($student, $newRegistrationNumber);
 
     $student->refresh();
 
@@ -31,7 +31,7 @@ it('updates student slug along with the registration number', function (): void 
 
     $newRegistrationNumber = 'EBSU/2009/51486';
 
-    RegistrationNumberUpdate::execute($student, $newRegistrationNumber);
+    (new RegistrationNumberUpdate())->execute($student, $newRegistrationNumber);
 
     $student->refresh();
 
@@ -43,7 +43,7 @@ it('updates student number along with the registration number', function (): voi
 
     $newRegistrationNumber = 'EBSU/2009/51486';
 
-    RegistrationNumberUpdate::execute($student, $newRegistrationNumber);
+    (new RegistrationNumberUpdate())->execute($student, $newRegistrationNumber);
 
     $student->refresh();
 
@@ -55,7 +55,7 @@ it('throws exception for invalid registration number', function (): void {
 
     $newRegistrationNumber = 'EBSU/209/51486';
 
-    RegistrationNumberUpdate::execute($student, $newRegistrationNumber);
+    (new RegistrationNumberUpdate)->execute($student, $newRegistrationNumber);
 })->throws(InvalidArgumentException::class, 'Invalid registration number');
 
 it('records the update in the student history table', function (): void {
@@ -65,7 +65,7 @@ it('records the update in the student history table', function (): void {
     $oldRegistrationNumber = $student->registration_number;
     $newRegistrationNumber = 'EBSU/2009/51486';
 
-    RegistrationNumberUpdate::execute($student, $newRegistrationNumber, user: $user);
+    (new RegistrationNumberUpdate)->execute($student, $newRegistrationNumber, user: $user);
 
     $student->refresh();
 

@@ -13,7 +13,7 @@ use App\Values\RegistrationNumber;
 
 final class RegistrationNumberUpdate
 {
-    public static function execute(
+    public function execute(
         Student $student,
         string $newRegistrationNumber,
         string $remark = '',
