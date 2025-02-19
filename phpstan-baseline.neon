@@ -21,11 +21,6 @@ parameters:
 			path: app/Http/Clients/ApiClient.php
 
 		-
-			message: "#^Parameter \\$paginated of class App\\\\ViewModels\\\\Students\\\\StudentIndexPage constructor expects Illuminate\\\\Contracts\\\\Pagination\\\\Paginator\\<App\\\\Data\\\\Students\\\\StudentBasicData\\>, Illuminate\\\\Pagination\\\\AbstractPaginator\\|Illuminate\\\\Support\\\\Enumerable\\<\\(int\\|string\\), App\\\\Data\\\\Students\\\\StudentBasicData\\> given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Students/StudentController.php
-
-		-
 			message: "#^Parameter \\#2 \\$subject of function preg_match expects string, object\\|string given\\.$#"
 			count: 1
 			path: app/Http/Middleware/ValidateYearParameter.php
