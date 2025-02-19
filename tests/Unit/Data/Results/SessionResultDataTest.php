@@ -23,6 +23,8 @@ test('session result data is correct', function (): void {
             'semesterEnrollments')
         ->createOne();
 
+    $sessionEnrollment->load('semesterEnrollments.semester');
+
     $sessionData = SessionResultData::from($sessionEnrollment);
 
     $semestersResults = $sessionEnrollment->semesterEnrollments()
@@ -61,6 +63,8 @@ test('session enrollment without result data returns zeroes', function (): void 
             ->count(2),
             'semesterEnrollments')
         ->createOne();
+
+    $sessionEnrollment->load('semesterEnrollments.semester');
 
     $sessionData = SessionResultData::from($sessionEnrollment);
 
@@ -114,6 +118,8 @@ it('returns students sessional results count', function (): void {
             ->count(2),
             'semesterEnrollments')
         ->createOne();
+
+    $sessionEnrollment->load('semesterEnrollments.semester');
 
     $sessionData = SessionResultData::from($sessionEnrollment);
 
