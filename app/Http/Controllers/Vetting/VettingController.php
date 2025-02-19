@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Vetting;
 
+use App\Data\Department\DepartmentInfoData;
 use App\Data\Department\DepartmentListData;
-use App\Data\Vetting\VettingListData;
+use App\Data\Vetting\PaginatedVettingListData;
 use App\Data\Vetting\VettingStepListData;
 use App\Models\Department;
 use App\Models\Student;
@@ -34,8 +35,9 @@ final class VettingController
         return Inertia::render('vetting/list/index/page', new VettingIndexPage(
             departments: fn () => DepartmentListData::forUser($user),
             clearance: fn () => ClearanceFormPage::new(),
-            data: fn () => $department ? VettingListData::fromModel($department) : null,
             steps: fn () => $student ? VettingStepListData::from($student) : null,
+            department: fn () => $department ? DepartmentInfoData::for($department) : null,
+            data: fn () => $department ? PaginatedVettingListData::for($department)->paginated : null,
         ));
     }
 

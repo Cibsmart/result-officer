@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { computed } from "vue";
 import { Head } from "@inertiajs/vue3";
 import { BreadcrumbItem } from "@/types";
 import BaseHeader from "@/layouts/main/partials/baseHeader.vue";
@@ -8,15 +7,15 @@ import BasePage from "@/layouts/main/partials/basePage.vue";
 import BaseSection from "@/layouts/main/partials/baseSection.vue";
 import VettingForm from "@/pages/vetting/list/index/partials/vettingForm.vue";
 import StudentList from "@/pages/vetting/list/index/partials/studentList.vue";
+import { PaginatedVettingListData } from "@/types/paginate";
 
-const props = defineProps<{
+defineProps<{
   departments: App.Data.Department.DepartmentListData;
   clearance: App.ViewModels.Clearance.ClearanceFormPage;
-  data: App.Data.Vetting.VettingListData;
   steps: App.Data.Vetting.VettingStepListData;
+  department: App.Data.Department.DepartmentInfoData;
+  data: PaginatedVettingListData | null;
 }>();
-
-const hasData = computed(() => props.data !== null);
 
 const pages: BreadcrumbItem[] = [
   { name: "Vetting", href: route("vetting.index"), current: route().current("vetting.index") },
@@ -35,11 +34,11 @@ const pages: BreadcrumbItem[] = [
       <VettingForm :departments="departments.data" />
     </BaseSection>
 
-    <BaseSection v-if="hasData">
-      <StudentList
-        :clearance="clearance"
-        :data="data"
-        :steps="steps" />
-    </BaseSection>
+    <StudentList
+      v-if="data !== null"
+      :clearance="clearance"
+      :department="department"
+      :paginated="data"
+      :steps="steps" />
   </BasePage>
 </template>

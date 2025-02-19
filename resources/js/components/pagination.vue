@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { Link } from "@inertiajs/vue3";
-import { PaginatedStudentListData } from "@/types/paginate";
+import { PaginatedStudentListData, PaginatedVettingListData } from "@/types/paginate";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/20/solid";
 
 defineProps<{
-  paginated: PaginatedStudentListData;
+  paginated: PaginatedStudentListData | PaginatedVettingListData;
 }>();
 </script>
 

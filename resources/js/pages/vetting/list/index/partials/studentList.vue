@@ -21,11 +21,15 @@ import InputError from "@/components/inputs/inputError.vue";
 import BaseFormSection from "@/components/forms/baseFormSection.vue";
 import SelectInput from "@/components/inputs/selectInput.vue";
 import FormGroup from "@/components/forms/formGroup.vue";
+import { PaginatedVettingListData } from "@/types/paginate";
+import CardFooter from "@/components/cards/cardFooter.vue";
+import Pagination from "@/components/pagination.vue";
 
 const props = defineProps<{
-  data: App.Data.Vetting.VettingListData;
+  department: App.Data.Department.DepartmentInfoData;
   steps: App.Data.Vetting.VettingStepListData;
   clearance: App.ViewModels.Clearance.ClearanceFormPage;
+  paginated: PaginatedVettingListData;
 }>();
 
 const showReport = ref(false);
@@ -33,7 +37,7 @@ const confirmingStudentClearance = ref(false);
 const clearanceStudent = ref<App.Data.Vetting.VettingStudentData>();
 const registrationNumber = ref("");
 
-const hasRows = computed(() => props.data.graduands.length > 0);
+const hasRows = computed(() => props.paginated.data.length > 0);
 
 const form = useForm({ year: "", month: "", exam_officer: "" });
 const viewForm = useForm({ student: "" });
@@ -63,28 +67,28 @@ const clearStudent = () => {
 </script>
 
 <template>
-  <div>
-    <div
-      class="mt-1 divide-y divide-solid divide-gray-300 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg dark:divide-gray-600 dark:ring-gray-600">
-      <div class="grid grid-flow-col">
-        <div class="p-2">
-          FACULTY: <span class="font-bold text-black dark:text-white">{{ data.faculty.name }}</span>
+  <Card>
+    <CardHeading>
+      <div
+        class="mt-1 divide-y divide-solid divide-gray-300 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg dark:divide-gray-600 dark:ring-gray-600">
+        <div class="grid grid-flow-col">
+          <div class="p-2">
+            FACULTY: <span class="font-bold text-black dark:text-white">{{ department.faculty.name }}</span>
+          </div>
         </div>
-      </div>
 
-      <div class="grid grid-flow-col">
-        <div class="p-2">
-          DEPARTMENT: <span class="font-bold text-black dark:text-white">{{ data.department.name }}</span>
+        <div class="grid grid-flow-col">
+          <div class="p-2">
+            DEPARTMENT: <span class="font-bold text-black dark:text-white">{{ department.department.name }}</span>
+          </div>
         </div>
       </div>
-    </div>
+    </CardHeading>
 
     <div>
       <template v-if="hasRows">
         <BaseTable>
           <BaseTHead>
-            <BaseTH>SN</BaseTH>
-
             <BaseTH
               mobile
               position="left">
@@ -106,10 +110,9 @@ const clearStudent = () => {
 
           <BaseTBody>
             <BaseTR
-              v-for="(student, index) in data.graduands"
+              v-for="student in paginated.data"
               :key="student.id">
               <StudentRow
-                :index="index"
                 :student="student"
                 @show-report="openDrawer"
                 @show-clearance="confirmStudentClearance" />
@@ -125,7 +128,11 @@ const clearStudent = () => {
         <IconLink :href="route('download.students.page')">Download Students</IconLink>
       </EmptyState>
     </div>
-  </div>
+
+    <CardFooter class="mt-4">
+      <Pagination :paginated="paginated" />
+    </CardFooter>
+  </Card>
 
   <Modal
     :show="confirmingStudentClearance"

@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\ViewModels\Vetting;
 
+use App\Data\Department\DepartmentInfoData;
 use App\Data\Department\DepartmentListData;
-use App\Data\Vetting\VettingListData;
+use App\Data\Vetting\PaginatedVettingListData;
 use App\Data\Vetting\VettingStepListData;
 use App\ViewModels\Clearance\ClearanceFormPage;
 use Closure;
@@ -19,10 +20,12 @@ final class VettingIndexPage extends Data
         public readonly Closure $departments,
         #[TypeScriptType(ClearanceFormPage::class)]
         public readonly Closure $clearance,
-        #[TypeScriptType(VettingListData::class)]
-        public readonly Closure $data,
         #[TypeScriptType(VettingStepListData::class)]
         public readonly Closure $steps,
+        #[TypeScriptType(DepartmentInfoData::class)]
+        public readonly Closure $department,
+        #[TypeScriptType(PaginatedVettingListData::class)]
+        public readonly Closure $data,
     ) {
     }
 }
