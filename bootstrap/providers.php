@@ -11,7 +11,7 @@ use App\Providers\TestingServiceProvider;
 return [
     AppServiceProvider::class,
     AdminPanelProvider::class,
+    HorizonServiceProvider::class,
     InertiaServiceProvider::class,
     TestingServiceProvider::class,
-    HorizonServiceProvider::class,
 ];

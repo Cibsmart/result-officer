@@ -36,6 +36,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Telescope\TelescopeServiceProvider as TelescopeServiceProviderAlias;
 
 final class AppServiceProvider extends ServiceProvider
 {
@@ -47,6 +48,11 @@ final class AppServiceProvider extends ServiceProvider
         $this->app->bind(ResultClient::class, PortalResultClient::class);
         $this->app->bind(StudentClient::class, PortalStudentClient::class);
         $this->app->bind(RegistrationClient::class, PortalRegistrationClient::class);
+
+        if ($this->app->environment('local') && class_exists(TelescopeServiceProviderAlias::class)) {
+            $this->app->register(TelescopeServiceProviderAlias::class);
+            $this->app->register(TelescopeServiceProvider::class);
+        }
 
         $this->app->bind(Vetting::class, function ($app) {
             // phpcs:ignore SlevomatCodingStandard.Arrays.AlphabeticallySortedByKeys
@@ -65,6 +71,7 @@ final class AppServiceProvider extends ServiceProvider
 
             return new Vetting($steps);
         });
+
     }
 
     /**
