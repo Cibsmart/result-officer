@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Students\Updates;
 
 use App\Actions\Students\Updates\StudentStatusUpdate;
+use App\Enums\StudentStatus;
 use App\Models\DBMail;
 use App\Models\Student;
 use App\Models\User;
@@ -18,8 +19,6 @@ final class StudentStatusUpdateController
         StudentStatusUpdateRequest $request,
         StudentStatusUpdate $action,
     ): RedirectResponse {
-        dd($request->validated());
-
         $user = $request->user();
         assert($user instanceof User);
 
@@ -34,7 +33,9 @@ final class StudentStatusUpdateController
             );
         }
 
-        $action->execute($student, $validated['status'], $validated['remark'], $dbMail);
+        $status = StudentStatus::from($validated['status']);
+
+        $action->execute($student, $status, $validated['remark'], $dbMail);
 
         return redirect()
             ->route('students.show', ['student' => $student])

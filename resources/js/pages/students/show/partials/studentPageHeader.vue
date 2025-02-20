@@ -10,6 +10,8 @@ const props = defineProps<{
   student: App.Data.Students.StudentBasicData;
 }>();
 
+const emit = defineEmits<(e: "statusUpdate") => void>();
+
 const hasImageUrl = computed(() => props.student.photoUrl !== "");
 </script>
 
@@ -43,7 +45,11 @@ const hasImageUrl = computed(() => props.student.photoUrl !== "");
       <Badge :color="student.statusColor">{{ student.status }}</Badge>
 
       <HamburgerMenu>
-        <HamburgerMenuItem href="#">Edit</HamburgerMenuItem>
+        <HamburgerMenuItem
+          type="button"
+          @click="emit('statusUpdate')">
+          Edit
+        </HamburgerMenuItem>
 
         <HamburgerMenuItem href="#">Delete</HamburgerMenuItem>
       </HamburgerMenu>

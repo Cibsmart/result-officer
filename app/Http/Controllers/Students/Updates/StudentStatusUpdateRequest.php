@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Students\Updates;
 
-use App\Actions\Students\Updates\StudentStatusUpdate;
+use App\Enums\StudentStatus;
 use App\Models\Student;
 use App\Rules\Updated;
 use Illuminate\Foundation\Http\FormRequest;
@@ -33,8 +33,7 @@ final class StudentStatusUpdateRequest extends FormRequest
             'remark' => ['required', 'string'],
             'status' => [
                 'required',
-                'string',
-                Rule::enum(StudentStatusUpdate::class),
+                Rule::enum(StudentStatus::class),
                 new Updated($student->status->value),
             ],
         ];
