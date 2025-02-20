@@ -26,8 +26,8 @@ use App\Http\Controllers\Download\Students\DownloadStudentsBySessionController;
 use App\Http\Controllers\Download\Students\DownloadStudentsPageController;
 use App\Http\Controllers\Exports\Results\ExportResultsByDepartmentSessionController;
 use App\Http\Controllers\Exports\Results\ExportResultsByRegistrationNumberController;
-use App\Http\Controllers\Exports\Results\ExportResultsByRegistrationNumberListController;
 use App\Http\Controllers\Exports\Results\ExportResultsPageController;
+use App\Http\Controllers\Exports\Results\RegistrationNumberListResultsExportController;
 use App\Http\Controllers\FinalResults\StudentFinalResultController;
 use App\Http\Controllers\Imports\CancelImportEventController;
 use App\Http\Controllers\Imports\ContinueImportEventController;
@@ -188,9 +188,9 @@ Route::middleware(['auth'])->group(static function (): void {
             Route::get('registration-number', [ExportResultsByRegistrationNumberController::class, 'download'])
                 ->name('export.results.registration-number.download');
 
-            Route::post('registration-numbers', [ExportResultsByRegistrationNumberListController::class, 'store'])
+            Route::post('registration-numbers', [RegistrationNumberListResultsExportController::class, 'store'])
                 ->name('export.results.registration-numbers.store');
-            Route::get('registration-numbers', [ExportResultsByRegistrationNumberListController::class, 'download'])
+            Route::get('registration-numbers', [RegistrationNumberListResultsExportController::class, 'download'])
                 ->name('export.results.registration-numbers.download');
 
             Route::post('department-session', [ExportResultsByDepartmentSessionController::class, 'store'])

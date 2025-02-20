@@ -11,9 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
-final class ExportResultsByRegistrationNumberListController
+final class RegistrationNumberListResultsExportController
 {
     public function store(RegistrationNumberListResultsExportRequest $request): RedirectResponse
     {
