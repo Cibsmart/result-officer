@@ -32,4 +32,9 @@ export interface SelectItem {
   name: string;
 }
 
+export interface EnumSelectItem {
+  id: string;
+  name: string;
+}
+
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & SharedData;

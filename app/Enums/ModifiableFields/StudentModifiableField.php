@@ -10,7 +10,7 @@ enum StudentModifiableField: string
     case NAME = 'name';
 //    case COURSE = 'course';
 //    case GENDER = 'gender';
-//    case STATUS = 'status';
+    case STATUS = 'status';
 //    case PROGRAM = 'program';
 //    case IN_COURSE = 'in_course';
 //    case ENTRY_MODE = 'entry_mode';

@@ -2,13 +2,16 @@
 import { ref } from "vue";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from "@headlessui/vue";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/vue/20/solid";
-import { SelectItem } from "@/types";
+import { EnumSelectItem, SelectItem } from "@/types";
 
 const props = defineProps<{
-  items: SelectItem[];
+  items: SelectItem[] | EnumSelectItem[];
+  selected?: number | string;
 }>();
 
-const selected = ref(props.items[0]);
+const selectedIndex = props.selected ? props.items.findIndex((item) => item.id === props.selected) : 0;
+
+const selected = ref(props.items[selectedIndex]);
 </script>
 
 <template>

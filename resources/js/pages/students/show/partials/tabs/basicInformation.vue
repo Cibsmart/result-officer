@@ -1,15 +1,19 @@
 <script lang="ts" setup>
 import DataList from "@/components/data/dataList.vue";
-import { ref, defineAsyncComponent } from "vue";
+import { ref, defineAsyncComponent, watch } from "vue";
 import DataItem from "@/components/data/dataItem.vue";
 import SectionHeader from "@/components/sectionHeader.vue";
 import SecondaryButtonSmall from "@/components/buttons/secondaryButtonSmall.vue";
 import Modal from "@/components/modal.vue";
 import BaseSection from "@/layouts/main/partials/baseSection.vue";
 
-defineProps<{
+const props = defineProps<{
   student: App.Data.Students.StudentData;
+  statues: App.Data.Enums.StudentStatusListData;
+  openStatusUpdateForm: boolean;
 }>();
+
+const emit = defineEmits<(e: "closeStatusUpdateForm") => void>();
 
 const editField = ref<App.Enums.ModifiableFields.StudentModifiableField | "">("");
 const showEditModal = ref(false);
@@ -22,10 +26,10 @@ const componentList: Record<
     () => import("@/pages/students/show/partials/updates/registrationNumberUpdateForm.vue"),
   ),
   name: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/nameUpdateForm.vue")),
+  status: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/statusUpdateForm.vue")),
   // exam: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/examUpdateForm.vue")),
   // course: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/courseUpdateForm.vue")),
   // gender: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/genderUpdateForm.vue")),
-  // status: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/statusUpdateForm.vue")),
   // program: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/programUpdateForm.vue")),
   // in_course: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/inCourseUpdateForm.vue")),
   // entry_mode: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/entryModeUpdateForm.vue")),
@@ -37,12 +41,22 @@ const componentList: Record<
   // ),
 };
 
+watch(
+  () => props.openStatusUpdateForm,
+  () => {
+    if (props.openStatusUpdateForm) openEditModal("status");
+  },
+);
+
 const openEditModal = (field: App.Enums.ModifiableFields.StudentModifiableField) => {
   editField.value = field;
   showEditModal.value = true;
 };
 
-const closeEditModal = () => (showEditModal.value = false);
+const closeEditModal = () => {
+  showEditModal.value = false;
+  emit("closeStatusUpdateForm");
+};
 </script>
 
 <template>
@@ -105,6 +119,7 @@ const closeEditModal = () => (showEditModal.value = false);
       <component
         :is="componentList[editField]"
         v-if="editField"
+        :statues="statues"
         :student="student.basic"
         @close="closeEditModal" />
     </BaseSection>

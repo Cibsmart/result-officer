@@ -152,6 +152,15 @@ declare namespace App.Data.Download {
     phoneNumber: string;
   };
 }
+declare namespace App.Data.Enums {
+  export type StudentStatusData = {
+    id: string;
+    name: string;
+  };
+  export type StudentStatusListData = {
+    data: Array<App.Data.Enums.StudentStatusData>;
+  };
+}
 declare namespace App.Data.ExamOfficer {
   export type ExamOfficerData = {
     id: number;
@@ -621,7 +630,7 @@ declare namespace App.Enums.ModifiableFields {
     | "course_type"
     | "credit_unit";
   export type ProgramModifiableField = "code" | "name" | "faculty" | "duration" | "department" | "program_type";
-  export type StudentModifiableField = "name" | "registration_number";
+  export type StudentModifiableField = "name" | "status" | "registration_number";
 }
 declare namespace App.ViewModels.Clearance {
   export type ClearanceFormPage = {
@@ -696,6 +705,7 @@ declare namespace App.ViewModels.Students {
   };
   export type StudentShowPage = {
     data: App.Data.Students.StudentComprehensiveData;
+    statues: App.Data.Enums.StudentStatusListData;
     selectedIndex: number;
   };
 }
