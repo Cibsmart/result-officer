@@ -11,7 +11,12 @@ import TextareaInput from "@/components/inputs/textareaInput.vue";
 const form = useForm({ registration_numbers: "" });
 
 const submit = () => {
-  form.post(route("export.results.registration-numbers.store"), { onSuccess: () => download() });
+  form.post(route("export.results.registration-numbers.store"), {
+    onSuccess: () => {
+      download();
+      form.reset();
+    },
+  });
 };
 
 const download = () => {

@@ -12,20 +12,27 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-final class ExportResultsByRegistrationNumberListController
+final class RegistrationNumberListResultsExportController
 {
-    public function store(Request $request): RedirectResponse
+    public function store(RegistrationNumberListResultsExportRequest $request): RedirectResponse
     {
-        $request->validate(['registration_numbers' => ['required', 'string']]);
+        $registrationNumbersText = $request->validated()['registration_numbers'];
 
-        return redirect()->back()->success('Result export for Registration Number List started...');
+        $count = Str::of($registrationNumbersText)
+            ->replace(' ', '')
+            ->explode(',')
+            ->filter()
+            ->unique()
+            ->count();
+
+        return redirect()->back()->success("Result export for {$count} Registration Numbers started...");
     }
 
     public function download(Request $request): Response|BinaryFileResponse
     {
-        $inputString = $request->string('registration_numbers')->value();
+        $registrationNumbersText = $request->string('registration_numbers')->value();
 
-        $registrationNumbers = Str::of($inputString)
+        $registrationNumbers = Str::of($registrationNumbersText)
             ->replace(' ', '')
             ->explode(',')
             ->filter()
