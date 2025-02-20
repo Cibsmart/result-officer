@@ -11,21 +11,20 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 final class ExportResultsByRegistrationNumberListController
 {
-    public function store(Request $request): RedirectResponse
+    public function store(RegistrationNumberListResultsExportRequest $request): RedirectResponse
     {
-        $request->validate(['registration_numbers' => ['required', 'string']]);
-
         return redirect()->back()->success('Result export for Registration Number List started...');
     }
 
     public function download(Request $request): Response|BinaryFileResponse
     {
-        $inputString = $request->string('registration_numbers')->value();
+        $registrationNumbersText = $request->string('registration_numbers')->value();
 
-        $registrationNumbers = Str::of($inputString)
+        $registrationNumbers = Str::of($registrationNumbersText)
             ->replace(' ', '')
             ->explode(',')
             ->filter()
