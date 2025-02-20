@@ -16,7 +16,16 @@ final class RegistrationNumberListResultsExportController
 {
     public function store(RegistrationNumberListResultsExportRequest $request): RedirectResponse
     {
-        return redirect()->back()->success('Result export for Registration Number List started...');
+        $registrationNumbersText = $request->validated()['registration_numbers'];
+
+        $count = Str::of($registrationNumbersText)
+            ->replace(' ', '')
+            ->explode(',')
+            ->filter()
+            ->unique()
+            ->count();
+
+        return redirect()->back()->success("Result export for {$count} Registration Numbers started...");
     }
 
     public function download(Request $request): Response|BinaryFileResponse
