@@ -152,6 +152,15 @@ declare namespace App.Data.Download {
     phoneNumber: string;
   };
 }
+declare namespace App.Data.Enums {
+  export type StudentStatusData = {
+    id: string;
+    name: string;
+  };
+  export type StudentStatusListData = {
+    data: Array<App.Data.Enums.StudentStatusData>;
+  };
+}
 declare namespace App.Data.ExamOfficer {
   export type ExamOfficerData = {
     id: number;
