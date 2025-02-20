@@ -13,11 +13,7 @@ final readonly class RegistrationNumber
 {
     public function __construct(public string $value)
     {
-        if (! preg_match(self::pattern(), Str::trim($this->value), $matches)) {
-            throw new InvalidArgumentException('Invalid registration number');
-        }
-
-        if ((int) $matches[2] > now()->year) {
+        if (! self::isValid($this->value)) {
             throw new InvalidArgumentException('Invalid registration number');
         }
     }
@@ -30,6 +26,11 @@ final readonly class RegistrationNumber
     public static function new(string $value): self
     {
         return new self(Str::upper($value));
+    }
+
+    public static function isValid(string $value): bool
+    {
+        return preg_match(self::pattern(), Str::trim($value), $matches) && (int) $matches[2] <= now()->year;
     }
 
     /** @throws \Exception */
