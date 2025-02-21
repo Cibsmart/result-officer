@@ -66,7 +66,7 @@ it('can update result in course score', function (): void {
     (new ResultUpdateAction())->execute($student, $registration, $changedValue);
 
     $result->fresh();
-    $scores = $result->scores;
+    $scores = $result->getScores();
 
     expect($scores['in_course'])->toBe($newValue);
 });
@@ -94,7 +94,7 @@ it('can update result exam score', function (): void {
     (new ResultUpdateAction())->execute($student, $registration, $changedValue);
 
     $result->fresh();
-    $scores = $result->scores;
+    $scores = $result->getScores();
 
     expect($scores['exam'])->toBe($newValue);
 });
@@ -120,13 +120,13 @@ it('records the update in student history table', function (): void {
 
     $changedValue = ['credit_unit' => $newValue];
 
-    $scores = json_decode($result->scores);
-    $oldResultDetails = "{$registration->credit_unit->value}-{$scores->in_course}-{$scores->exam}";
+    $scores = $result->getScores();
+    $oldResultDetails = "{$registration->credit_unit->value}-{$scores['in_course']}-{$scores['exam']}";
 
     (new ResultUpdateAction())->execute($student, $registration, $changedValue);
 
     $data = [
-        'new' => "{$newValue}-{$scores->in_course}-{$scores->exam}",
+        'new' => "{$newValue}-{$scores['in_course']}-{$scores['exam']}",
         'old' => $oldResultDetails,
     ];
 
