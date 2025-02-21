@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Result;
+namespace App\Http\Controllers\Results;
 
 use App\Data\Results\StudentResultData;
 use App\Data\Students\StudentBasicData;
