@@ -350,6 +350,8 @@ declare namespace App.Data.Results {
     gradePoint: number;
     remark: string | null;
     dateUpdated: string;
+    inCourseScore: number;
+    examScore: number;
   };
   export type SemesterResultData = {
     id: number;
