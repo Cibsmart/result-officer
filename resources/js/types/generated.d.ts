@@ -153,6 +153,13 @@ declare namespace App.Data.Download {
   };
 }
 declare namespace App.Data.Enums {
+  export type CreditUnitData = {
+    id: number;
+    name: string;
+  };
+  export type CreditUnitListData = {
+    data: Array<App.Data.Enums.StudentStatusData>;
+  };
   export type StudentStatusData = {
     id: string;
     name: string;
@@ -630,7 +637,7 @@ declare namespace App.Enums.ModifiableFields {
     | "course_type"
     | "credit_unit";
   export type ProgramModifiableField = "code" | "name" | "faculty" | "duration" | "department" | "program_type";
-  export type StudentModifiableField = "name" | "status" | "registration_number";
+  export type StudentModifiableField = "name" | "status" | "result" | "registration_number";
 }
 declare namespace App.ViewModels.Clearance {
   export type ClearanceFormPage = {
