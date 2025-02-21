@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Data\Models\ResultModelData;
 use App\Enums\RecordSource;
+use App\Values\TotalScore;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -40,6 +41,40 @@ final class Result extends Model
         return $result;
     }
 
+    public static function updateResult(self $result, array $newScores): void
+    {
+        $oldScores = json_decode($result->scores);
+        $scores = ['in_course' => $oldScores->in_course, 'exam' => $oldScores->exam];
+
+        foreach ($newScores as $key => $value) {
+            $scores[$key] = $value;
+        }
+
+        $result->scores = $scores;
+        $result->save();
+    }
+
+    public function recompute(Student $student): void
+    {
+        $scores = $this->scores;
+
+        $creditUnit = $this->registration->credit_unit;
+        $inCourse = $scores['in_course'];
+        $exam = $scores['exam'];
+
+        $total = TotalScore::new($inCourse + $exam);
+        $grade = $total->grade($student->allowEGrade() || $this->registration->session()->allowsEGrade());
+        $gradePoint = $grade->point() * $creditUnit->value;
+
+        $this->update([
+            'grade' => $grade->value,
+            'grade_point' => $gradePoint,
+            'total_score' => $total->value,
+        ]);
+
+        $this->resultDetail()->update(['value' => $this->getData()]);
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\Result> */
     public function vettingReports(): MorphMany
     {
@@ -63,7 +98,7 @@ final class Result extends Model
         return "{$this->registration_id}-{$this->total_score}-{$this->grade}-{$this->grade_point}";
     }
 
-    /** @return array{scores: 'json', source: 'App\Enums\RecordSource', upload_date: 'date'} */
+    /** @return array{scores: 'array', source: 'App\Enums\RecordSource', upload_date: 'date'} */
     protected function casts(): array
     {
         return [

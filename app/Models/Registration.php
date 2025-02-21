@@ -63,6 +63,28 @@ final class Registration extends Model
             ->update(['program_curriculum_course_id' => $programCourseModel->id]);
     }
 
+    /** @param array{credit_unit?: int, in_course?: int, exam?: int} $newResult */
+    public static function updateRegistrationAndResult(
+        Student $student,
+        self $registration,
+        array $newResult,
+    ): void {
+        if (array_key_exists('credit_unit', $newResult)) {
+            $registration->credit_unit = CreditUnit::from($newResult['credit_unit']);
+            $registration->save();
+        }
+
+        $result = $registration->result;
+
+        if ($result === null) {
+            return;
+        }
+
+        Result::updateResult($result, $newResult);
+
+        $result->recompute($student);
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\Registration> */
     public function vettingReports(): MorphMany
     {
