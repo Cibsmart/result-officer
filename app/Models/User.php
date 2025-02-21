@@ -86,7 +86,7 @@ final class User extends Authenticatable implements FilamentUser
     protected function name(): Attribute
     {
         return Attribute::make(
-            set: static fn (string $value): string => strtoupper($value),
+            set: static fn (string $value): string => mb_strtoupper($value),
         );
     }
 }

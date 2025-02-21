@@ -30,7 +30,7 @@ final class ImportEventData extends Data
         $data = $event->data;
 
         $content = collect($data)
-            ->map(fn (string $value, string $key) => strtoupper("$value $key"))
+            ->map(fn (string $value, string $key) => mb_strtoupper("$value $key"))
             ->join(', ');
 
         $description = self::getDescription($event);

@@ -17,7 +17,7 @@ final class RawCourseFactory extends Factory
     public function definition(): array
     {
         return [
-            'code' => strtoupper(fake()->lexify('???')) . ' ' . fake()->randomNumber(3, true),
+            'code' => mb_strtoupper(fake()->lexify('???')) . ' ' . fake()->randomNumber(3, true),
             'import_event_id' => ImportEventFactory::new(),
             'online_id' => '1',
             'status' => RawDataStatus::PENDING,

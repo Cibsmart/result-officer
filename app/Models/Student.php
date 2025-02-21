@@ -209,34 +209,34 @@ final class Student extends Model
             get: fn (
                 ?string $value,
                 array $attributes,
-            ): string => trim("{$attributes['last_name']} {$attributes['first_name']} {$attributes['other_names']}"),
+            ): string => mb_trim("{$attributes['last_name']} {$attributes['first_name']} {$attributes['other_names']}"),
         );
     }
 
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
     protected function lastName(): Attribute
     {
-        return Attribute::make(set: static fn (string $value): string => strtoupper($value));
+        return Attribute::make(set: static fn (string $value): string => mb_strtoupper($value));
     }
 
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
     protected function firstName(): Attribute
     {
-        return Attribute::make(set: static fn (string $value): string => strtoupper($value));
+        return Attribute::make(set: static fn (string $value): string => mb_strtoupper($value));
     }
 
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
     protected function otherNames(): Attribute
     {
         return Attribute::make(
-            set: static fn (?string $value): ?string => is_null($value) ? null : strtoupper($value),
+            set: static fn (?string $value): ?string => is_null($value) ? null : mb_strtoupper($value),
         );
     }
 
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
     protected function email(): Attribute
     {
-        return Attribute::make(set: static fn (string $value): string => strtolower($value));
+        return Attribute::make(set: static fn (string $value): string => mb_strtolower($value));
     }
 
     private function inFinalYear(): bool

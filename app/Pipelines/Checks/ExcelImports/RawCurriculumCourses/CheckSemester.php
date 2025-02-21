@@ -26,7 +26,7 @@ final class CheckSemester
         $values = $event->rawCurriculumCourses()->pluck($this->type)->unique();
 
         foreach ($values as $value) {
-            if (in_array(strtolower($value), ['first', 'second'], true)) {
+            if (in_array(mb_strtolower($value), ['first', 'second'], true)) {
                 continue;
             }
 

@@ -96,7 +96,7 @@ final class Department extends Model
     protected function name(): Attribute
     {
         return Attribute::make(
-            set: static fn (string $value): string => strtoupper(trim($value)),
+            set: static fn (string $value): string => mb_strtoupper(mb_trim($value)),
         );
     }
 
@@ -104,7 +104,7 @@ final class Department extends Model
     protected function code(): Attribute
     {
         return Attribute::make(
-            set: static fn (string $value): string => strtoupper(trim($value)),
+            set: static fn (string $value): string => mb_strtoupper(mb_trim($value)),
         );
     }
 }
