@@ -73,6 +73,18 @@ final class Course extends Model
         return $courses->contains('id', $this->id) || $courses->contains('code', $this->code);
     }
 
+    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
+    protected function name(): Attribute
+    {
+        return Attribute::make(
+            /** @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter */
+            get: fn (
+                ?string $value,
+                array $attributes,
+            ): string => "({$attributes['code']}) {$attributes['title']}",
+        );
+    }
+
     private static function createCourse(
         string $courseCode,
         string $courseTitle,
@@ -122,17 +134,5 @@ final class Course extends Model
         return $bestMatchScore >= 80.0
             ? $bestMatch
             : null;
-    }
-
-    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
-    protected function name(): Attribute
-    {
-        return Attribute::make(
-            /** @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter */
-            get: fn (
-                ?string $value,
-                array $attributes,
-            ): string => "({$attributes['code']}) {$attributes['title']}",
-        );
     }
 }

@@ -24,19 +24,19 @@ final class ExistingRegistrationNumberRequest extends FormRequest
         ];
     }
 
-    protected function passedValidation(): void
-    {
-        $this->replace([
-            'registration_number' => $this->input('registration_number'),
-            'student' => Student::getUsingRegistrationNumber($this->input('registration_number')),
-        ]);
-    }
-
     /** @return array<string, string> */
     public function messages(): array
     {
         return [
             'exists' => 'The registration number does not exist.',
         ];
+    }
+
+    protected function passedValidation(): void
+    {
+        $this->replace([
+            'registration_number' => $this->input('registration_number'),
+            'student' => Student::getUsingRegistrationNumber($this->input('registration_number')),
+        ]);
     }
 }

@@ -41,14 +41,6 @@ final class Department extends Model
         return 'slug';
     }
 
-    /** @return array<string, string> */
-    protected function casts(): array
-    {
-        return [
-            'is_active' => 'bool',
-        ];
-    }
-
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Faculty, \App\Models\Department> */
     public function faculty(): BelongsTo
     {
@@ -68,6 +60,30 @@ final class Department extends Model
     public function students(): HasManyThrough
     {
         return $this->hasManyThrough(Student::class, Program::class);
+    }
+
+    /** @return array<string, string> */
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'bool',
+        ];
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
+    protected function name(): Attribute
+    {
+        return Attribute::make(
+            set: static fn (string $value): string => mb_strtoupper(mb_trim($value)),
+        );
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
+    protected function code(): Attribute
+    {
+        return Attribute::make(
+            set: static fn (string $value): string => mb_strtoupper(mb_trim($value)),
+        );
     }
 
     private static function getOrCreate(RawDepartment $rawDepartment, Faculty $faculty): self
@@ -90,21 +106,5 @@ final class Department extends Model
         $department->save();
 
         return $department;
-    }
-
-    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
-    protected function name(): Attribute
-    {
-        return Attribute::make(
-            set: static fn (string $value): string => mb_strtoupper(mb_trim($value)),
-        );
-    }
-
-    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
-    protected function code(): Attribute
-    {
-        return Attribute::make(
-            set: static fn (string $value): string => mb_strtoupper(mb_trim($value)),
-        );
     }
 }

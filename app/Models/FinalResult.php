@@ -127,6 +127,20 @@ final class FinalResult extends Model
         return $this->belongsTo(FinalCourse::class);
     }
 
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return array{course_status: 'App\Enums\CourseStatus', credit_unit: 'App\Enums\CreditUnit', scores: 'json', source: 'App\Enums\RecordSource'}
+     */
+    protected function casts(): array
+    {
+        return [
+            'course_status' => CourseStatus::class,
+            'credit_unit' => CreditUnit::class,
+            'scores' => 'json',
+            'source' => RecordSource::class,
+        ];
+    }
+
     private static function getResultOriginalSession(RawFinalResult $result): ?int
     {
         $session = null;
@@ -148,19 +162,5 @@ final class FinalResult extends Model
         return $result->examiner !== null
             ? Lecturer::getOrCreateUsingName($result->examiner, $result->examiner_department)->id
             : null;
-    }
-
-    /**
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return array{course_status: 'App\Enums\CourseStatus', credit_unit: 'App\Enums\CreditUnit', scores: 'json', source: 'App\Enums\RecordSource'}
-     */
-    protected function casts(): array
-    {
-        return [
-            'course_status' => CourseStatus::class,
-            'credit_unit' => CreditUnit::class,
-            'scores' => 'json',
-            'source' => RecordSource::class,
-        ];
     }
 }

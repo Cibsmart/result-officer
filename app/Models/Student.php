@@ -48,21 +48,6 @@ final class Student extends Model
         return 'slug';
     }
 
-    /**
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return array{date_of_birth: 'date', entry_mode: 'App\Enums\EntryMode', gender: 'App\Enums\Gender', source: 'App\Enums\RecordSource', status: 'App\Enums\StudentStatus'}
-     */
-    protected function casts(): array
-    {
-        return [
-            'date_of_birth' => 'date',
-            'entry_mode' => EntryMode::class,
-            'gender' => Gender::class,
-            'source' => RecordSource::class,
-            'status' => StudentStatus::class,
-        ];
-    }
-
     /** @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\Student> */
     public function vettingReports(): MorphMany
     {
@@ -199,6 +184,21 @@ final class Student extends Model
         return $this->vettingEvent !== null
             && StudentStatus::canBeCleared($this->status)
             && VettingEventStatus::passed($this->vettingEvent->status);
+    }
+
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return array{date_of_birth: 'date', entry_mode: 'App\Enums\EntryMode', gender: 'App\Enums\Gender', source: 'App\Enums\RecordSource', status: 'App\Enums\StudentStatus'}
+     */
+    protected function casts(): array
+    {
+        return [
+            'date_of_birth' => 'date',
+            'entry_mode' => EntryMode::class,
+            'gender' => Gender::class,
+            'source' => RecordSource::class,
+            'status' => StudentStatus::class,
+        ];
     }
 
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */

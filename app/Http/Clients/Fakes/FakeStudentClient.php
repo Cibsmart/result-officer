@@ -9,7 +9,7 @@ use App\Contracts\StudentClient;
 /** @phpstan-import-type StudentDetail from \App\Contracts\StudentClient */
 final class FakeStudentClient implements StudentClient
 {
-    public final const STUDENTS = [
+    final public const STUDENTS = [
         [
             'date_of_birth' => '27-08-1985',
             'department_id' => '1',

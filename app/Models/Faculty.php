@@ -57,18 +57,6 @@ final class Faculty extends Model
         return $this->hasMany(Department::class);
     }
 
-    private static function getCode(string $facultyName): string
-    {
-        if (array_key_exists($facultyName, self::CODES)) {
-            return self::CODES[$facultyName];
-        }
-
-        return Str::of($facultyName)->prepend('F ')
-            ->explode(' ')
-            ->map(fn ($word) => $word[0])
-            ->join('');
-    }
-
     /** @return array<string, string> */
     protected function casts(): array
     {
@@ -91,5 +79,17 @@ final class Faculty extends Model
         return Attribute::make(
             set: static fn (string $value): string => mb_strtoupper(mb_trim($value)),
         );
+    }
+
+    private static function getCode(string $facultyName): string
+    {
+        if (array_key_exists($facultyName, self::CODES)) {
+            return self::CODES[$facultyName];
+        }
+
+        return Str::of($facultyName)->prepend('F ')
+            ->explode(' ')
+            ->map(fn ($word) => $word[0])
+            ->join('');
     }
 }
