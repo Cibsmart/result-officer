@@ -25,7 +25,6 @@ function createStudentWithResults(
     int $numberOfCourses = 5,
     array $attributes = [],
 ): Student {
-    SessionFactory::new()->createOne(['name' => '2018/2019']);
     $firstSemester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
     $secondSemester = SemesterFactory::new(['name' => 'SECOND'])->createOne();
 

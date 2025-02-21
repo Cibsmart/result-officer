@@ -8,11 +8,30 @@ use App\Enums\Grade;
 use App\Enums\ModifiableFields\StudentModifiableField;
 use App\Models\Registration;
 use App\Models\StudentHistory;
+use Tests\Factories\RegistrationFactory;
+use Tests\Factories\ResultFactory;
+use Tests\Factories\SemesterEnrollmentFactory;
+use Tests\Factories\SemesterFactory;
+use Tests\Factories\SessionEnrollmentFactory;
+use Tests\Factories\SessionFactory;
+use Tests\Factories\StudentFactory;
 
 use function Pest\Laravel\assertDatabaseHas;
 
 it('can update result credit unit', function (): void {
-    $student = createStudentWithResults(1, 1, 1);
+    SessionFactory::new()->createOne(['name' => '2018/2019']);
+    $session = SessionFactory::new()->createOne(['name' => '2019/2020']);
+
+    $firstSemester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
+
+    $student = StudentFactory::new()->has(
+        SessionEnrollmentFactory::new()->state(['session_id' => $session->id])
+            ->has(SemesterEnrollmentFactory::new()
+                ->has(RegistrationFactory::new()
+                    ->has(ResultFactory::new()), 'registrations')
+                ->state(['semester_id' => $firstSemester->id]), 'semesterEnrollments'),
+    )->createOne(['entry_session_id' => $session->id]);
+
     $registration = Registration::first();
 
     $changedValue = ['credit_unit' => CreditUnit::FIVE->value];
@@ -25,7 +44,19 @@ it('can update result credit unit', function (): void {
 });
 
 it('can update result in course score', function (): void {
-    $student = createStudentWithResults(1, 1, 1);
+    SessionFactory::new()->createOne(['name' => '2018/2019']);
+    $session = SessionFactory::new()->createOne(['name' => '2019/2020']);
+
+    $firstSemester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
+
+    $student = StudentFactory::new()->has(
+        SessionEnrollmentFactory::new()->state(['session_id' => $session->id])
+            ->has(SemesterEnrollmentFactory::new()
+                ->has(RegistrationFactory::new()
+                    ->has(ResultFactory::new()), 'registrations')
+                ->state(['semester_id' => $firstSemester->id]), 'semesterEnrollments'),
+    )->createOne(['entry_session_id' => $session->id]);
+
     $registration = Registration::first();
     $result = $registration->result;
     $newValue = 30;
@@ -41,7 +72,19 @@ it('can update result in course score', function (): void {
 });
 
 it('can update result exam score', function (): void {
-    $student = createStudentWithResults(1, 1, 1);
+    SessionFactory::new()->createOne(['name' => '2018/2019']);
+    $session = SessionFactory::new()->createOne(['name' => '2019/2020']);
+
+    $firstSemester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
+
+    $student = StudentFactory::new()->has(
+        SessionEnrollmentFactory::new()->state(['session_id' => $session->id])
+            ->has(SemesterEnrollmentFactory::new()
+                ->has(RegistrationFactory::new()
+                    ->has(ResultFactory::new()), 'registrations')
+                ->state(['semester_id' => $firstSemester->id]), 'semesterEnrollments'),
+    )->createOne(['entry_session_id' => $session->id]);
+
     $registration = Registration::first();
     $result = $registration->result;
     $newValue = 60;
@@ -57,7 +100,19 @@ it('can update result exam score', function (): void {
 });
 
 it('records the update in student history table', function (): void {
-    $student = createStudentWithResults(1, 1, 1);
+    SessionFactory::new()->createOne(['name' => '2018/2019']);
+    $session = SessionFactory::new()->createOne(['name' => '2019/2020']);
+
+    $firstSemester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
+
+    $student = StudentFactory::new()->has(
+        SessionEnrollmentFactory::new()->state(['session_id' => $session->id])
+            ->has(SemesterEnrollmentFactory::new()
+                ->has(RegistrationFactory::new()
+                    ->has(ResultFactory::new()), 'registrations')
+                ->state(['semester_id' => $firstSemester->id]), 'semesterEnrollments'),
+    )->createOne(['entry_session_id' => $session->id]);
+
     $registration = Registration::first();
     $result = $registration->result;
 
@@ -85,7 +140,19 @@ it('records the update in student history table', function (): void {
 });
 
 it('recomputes total, grade, and grade point after update', function (): void {
-    $student = createStudentWithResults(1, 1, 1);
+    SessionFactory::new()->createOne(['name' => '2018/2019']);
+    $session = SessionFactory::new()->createOne(['name' => '2019/2020']);
+
+    $firstSemester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
+
+    $student = StudentFactory::new()->has(
+        SessionEnrollmentFactory::new()->state(['session_id' => $session->id])
+            ->has(SemesterEnrollmentFactory::new()
+                ->has(RegistrationFactory::new()
+                    ->has(ResultFactory::new()), 'registrations')
+                ->state(['semester_id' => $firstSemester->id]), 'semesterEnrollments'),
+    )->createOne(['entry_session_id' => $session->id]);
+
     $registration = Registration::first();
     $result = $registration->result;
 

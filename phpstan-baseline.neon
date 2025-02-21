@@ -1,6 +1,11 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Parameter \\#1 \\$json of function json_decode expects string, array given\\.$#"
+			count: 1
+			path: app/Actions/Results/ResultUpdateAction.php
+
+		-
 			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Department\\>\\:\\:tap\\(\\) expects callable\\(Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Department\\>\\)\\: mixed, App\\\\Scopes\\\\ActiveScope given\\.$#"
 			count: 2
 			path: app/Data/Department/DepartmentListData.php
@@ -34,6 +39,11 @@ parameters:
 			message: "#^Parameter \\#1 \\$courses of static method App\\\\Models\\\\Course\\:\\:getBestMatchingCourse\\(\\) expects Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, App\\\\Models\\\\Course\\>, Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, \\$this\\(App\\\\Models\\\\Course\\)\\> given\\.$#"
 			count: 1
 			path: app/Models/Course.php
+
+		-
+			message: "#^Parameter \\#1 \\$json of function json_decode expects string, array given\\.$#"
+			count: 1
+			path: app/Models/Result.php
 
 		-
 			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
