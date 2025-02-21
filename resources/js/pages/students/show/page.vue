@@ -12,6 +12,7 @@ import { computed } from "vue";
 const props = defineProps<{
   data: App.Data.Students.StudentComprehensiveData;
   statues: App.Data.Enums.StudentStatusListData;
+  units: App.Data.Enums.CreditUnitListData;
   selectedIndex: number;
 }>();
 
@@ -39,7 +40,8 @@ const pages: BreadcrumbItem[] = [
         :results="data.results"
         :selectedIndex="selectedIndex"
         :statues="statues"
-        :student="data.student" />
+        :student="data.student"
+        :units="units" />
     </BaseSection>
   </BasePage>
 </template>
