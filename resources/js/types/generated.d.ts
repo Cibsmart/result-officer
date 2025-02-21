@@ -715,6 +715,7 @@ declare namespace App.ViewModels.Students {
   export type StudentShowPage = {
     data: App.Data.Students.StudentComprehensiveData;
     statues: App.Data.Enums.StudentStatusListData;
+    units: App.Data.Enums.CreditUnitListData;
     selectedIndex: number;
   };
 }
