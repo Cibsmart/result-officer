@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Data\Enums;
 
-use App\Enums\StudentStatus;
+use App\Enums\CreditUnit;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
 
@@ -20,6 +20,6 @@ final class CreditUnitListData extends Data
     {
         $default = new CreditUnitData(id: 0, name: 'Select Credit Unit');
 
-        return new self(data: CreditUnitData::collect(collect(StudentStatus::cases()))->prepend($default));
+        return new self(data: CreditUnitData::collect(collect(CreditUnit::cases()))->prepend($default));
     }
 }
