@@ -90,7 +90,7 @@ final class Program extends Model
         }
 
         foreach ($programs as $program) {
-            if (strtolower($program) === 'none') {
+            if (mb_strtolower($program) === 'none') {
                 continue;
             }
 
@@ -153,15 +153,6 @@ final class Program extends Model
         return 'slug';
     }
 
-    /** @return array{duration: 'App\Enums\ProgramDuration', is_active: 'bool'} */
-    protected function casts(): array
-    {
-        return [
-            'duration' => ProgramDuration::class,
-            'is_active' => 'bool',
-        ];
-    }
-
     /** @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\Program> */
     public function vettingReports(): MorphMany
     {
@@ -190,7 +181,24 @@ final class Program extends Model
     public function name(): Attribute
     {
         return Attribute::make(
-            set: fn (string $value): string => strtoupper(trim($value)),
+            set: fn (string $value): string => mb_strtoupper(mb_trim($value)),
+        );
+    }
+
+    /** @return array{duration: 'App\Enums\ProgramDuration', is_active: 'bool'} */
+    protected function casts(): array
+    {
+        return [
+            'duration' => ProgramDuration::class,
+            'is_active' => 'bool',
+        ];
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
+    protected function code(): Attribute
+    {
+        return Attribute::make(
+            set: static fn (string $value): string => mb_strtoupper(mb_trim($value)),
         );
     }
 
@@ -213,13 +221,5 @@ final class Program extends Model
         return $words
             ->map(fn ($word) => $word[0])
             ->join('');
-    }
-
-    /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
-    protected function code(): Attribute
-    {
-        return Attribute::make(
-            set: static fn (string $value): string => strtoupper(trim($value)),
-        );
     }
 }

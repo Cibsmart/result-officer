@@ -2,13 +2,29 @@
 import EmptyState from "@/components/emptyState.vue";
 import IconLink from "@/components/links/iconLink.vue";
 import Session from "@/pages/results/index/partials/resultSessionView.vue";
-import { computed } from "vue";
+import { computed, ref } from "vue";
+import Modal from "@/components/modal.vue";
+import BaseSection from "@/layouts/main/partials/baseSection.vue";
+import ResultUpdateForm from "@/pages/students/show/partials/updates/resultUpdateForm.vue";
 
 const props = defineProps<{
+  student: App.Data.Students.StudentBasicData;
   results: App.Data.Results.StudentResultData;
+  units: App.Data.Enums.CreditUnitListData;
 }>();
 
 const hasResults = computed(() => props.results.sessionEnrollments.length > 0);
+
+const selectedResult = ref<App.Data.Results.ResultData | null>(null);
+
+const showEditModal = ref(false);
+
+const handleOpenEditResultModal = (result: App.Data.Results.ResultData) => {
+  selectedResult.value = result;
+  showEditModal.value = true;
+};
+
+const closeEditModal = () => (showEditModal.value = false);
 </script>
 
 <template>
@@ -18,7 +34,9 @@ const hasResults = computed(() => props.results.sessionEnrollments.length > 0);
         v-for="session in results.sessionEnrollments"
         :key="session.id"
         :session="session"
-        manageable />
+        :units="units"
+        manageable
+        @openEditResult="handleOpenEditResultModal" />
     </template>
 
     <EmptyState
@@ -43,4 +61,17 @@ const hasResults = computed(() => props.results.sessionEnrollments.length > 0);
       <span class="hidden lg:inline">)</span>
     </div>
   </div>
+
+  <Modal
+    :show="showEditModal"
+    @close="closeEditModal">
+    <BaseSection>
+      <ResultUpdateForm
+        v-if="selectedResult"
+        :result="selectedResult"
+        :student="student"
+        :units="units.data"
+        @close="closeEditModal" />
+    </BaseSection>
+  </Modal>
 </template>

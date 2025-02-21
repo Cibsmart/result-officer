@@ -144,18 +144,6 @@ final class ImportEvent extends Model
         $this->save();
     }
 
-    /** @return \Illuminate\Database\Eloquent\Collection<int, \App\Models\ImportEvent> */
-    private static function getEventsFor(
-        ImportEventType $type,
-        ImportEventMethod $method,
-    ): Collection {
-        return self::query()
-            ->where('type', $type)
-            ->where('method', $method)
-            ->where('status', ImportEventStatus::QUEUED)
-            ->get();
-    }
-
     /**
      * @return array{data: 'json', status: 'App\Enums\ImportEventStatus',
      *     type: 'App\Enums\ImportEventType', method: 'App\Enums\ImportEventMethod', }
@@ -168,5 +156,17 @@ final class ImportEvent extends Model
             'status' => ImportEventStatus::class,
             'type' => ImportEventType::class,
         ];
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Collection<int, \App\Models\ImportEvent> */
+    private static function getEventsFor(
+        ImportEventType $type,
+        ImportEventMethod $method,
+    ): Collection {
+        return self::query()
+            ->where('type', $type)
+            ->where('method', $method)
+            ->where('status', ImportEventStatus::QUEUED)
+            ->get();
     }
 }

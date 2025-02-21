@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Students;
 
+use App\Data\Enums\CreditUnitListData;
 use App\Data\Enums\StudentStatusListData;
 use App\Data\Students\StudentBasicData;
 use App\Data\Students\StudentComprehensiveData;
@@ -38,6 +39,7 @@ final class StudentController
         return Inertia::render('students/show/page', new StudentShowPage(
             data: fn () => $student ? StudentComprehensiveData::fromModel($student) : null,
             statues: StudentStatusListData::new(),
+            units: CreditUnitListData::new(),
             selectedIndex: $selectedIndex,
         ));
     }

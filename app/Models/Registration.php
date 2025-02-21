@@ -52,6 +52,11 @@ final class Registration extends Model
         return self::query()->where('online_id', $onlineId)->firstOrFail();
     }
 
+    public static function getUsingId(int $id): self
+    {
+        return self::query()->where('id', $id)->firstOrFail();
+    }
+
     /** @param \Illuminate\Support\Collection<int, int> $registrationIds */
     public static function updateCurriculumCourseId(
         Collection $registrationIds,
@@ -61,6 +66,38 @@ final class Registration extends Model
             ->whereIn('id', $registrationIds)
             ->whereNull('program_curriculum_course_id')
             ->update(['program_curriculum_course_id' => $programCourseModel->id]);
+    }
+
+    /** @param array{credit_unit?: int, in_course?: int, exam?: int} $newResult */
+    public static function updateRegistrationAndResult(
+        Student $student,
+        self $registration,
+        array $newResult,
+    ): void {
+        if (array_key_exists('credit_unit', $newResult)) {
+            $registration->credit_unit = CreditUnit::from($newResult['credit_unit']);
+            $registration->save();
+
+            self::checkAndRecomputeResult($student, $registration);
+        }
+
+        if (! array_key_exists('in_course', $newResult)
+            && ! array_key_exists('exam', $newResult)) {
+            return;
+        }
+
+        Result::updateResult($student, $registration, $newResult);
+    }
+
+    public static function checkAndRecomputeResult(Student $student, self $registration): void
+    {
+        $result = $registration->result;
+
+        if ($result === null) {
+            return;
+        }
+
+        $result->recompute($student);
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\Registration> */
@@ -124,6 +161,20 @@ final class Registration extends Model
         assert($session instanceof Session);
 
         return $session;
+    }
+
+    public function getUpdateData(): string
+    {
+        $result = $this->result;
+        $string = "{$this->credit_unit->value}";
+
+        if ($result === null) {
+            return "{$string}-0-0";
+        }
+
+        $scores = $result->getScores();
+
+        return "{$string}-{$scores['in_course']}-{$scores['exam']}";
     }
 
     /**

@@ -10,6 +10,12 @@ withDefaults(
     manageable: false,
   },
 );
+
+const emit = defineEmits<(e: "openEditResult", result: App.Data.Results.ResultData) => void>();
+
+const handleOpenEditResult = (result: App.Data.Results.ResultData) => {
+  emit("openEditResult", result);
+};
 </script>
 
 <template>
@@ -21,7 +27,8 @@ withDefaults(
       :key="semester.id">
       <ResultSemesterView
         :manageable
-        :semester="semester" />
+        :semester="semester"
+        @openEditResult="handleOpenEditResult" />
     </template>
 
     <div class="p-2 text-right">

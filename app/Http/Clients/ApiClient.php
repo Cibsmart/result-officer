@@ -18,7 +18,7 @@ abstract readonly class ApiClient
      * @return array<int|string, string|array<string, string|array<string, string>>>
      * @throws \Exception
      */
-    public function get(string $endpoint, array $parameters = []): array
+    final public function get(string $endpoint, array $parameters = []): array
     {
         $sanitizedParameters = array_map(fn ($value) => is_int($value)
             ? $value

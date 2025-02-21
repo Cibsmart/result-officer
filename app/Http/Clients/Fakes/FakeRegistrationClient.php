@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 /** @phpstan-import-type RegistrationDetail from \App\Data\Download\PortalRegistrationData */
 final readonly class FakeRegistrationClient extends ApiClient implements RegistrationClient
 {
-    public final const REGISTRATIONS = [
+    final public const REGISTRATIONS = [
         [
             'course_id' => '1',
             'credit_unit' => '3',

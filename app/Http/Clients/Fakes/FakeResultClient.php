@@ -9,7 +9,7 @@ use App\Contracts\ResultClient;
 /** @phpstan-import-type ResultDetail from \App\Contracts\ResultClient */
 final readonly class FakeResultClient implements ResultClient
 {
-    public final const RESULTS = [
+    final public const RESULTS = [
         [
             'course_id' => '1',
             'course_registration_id' => '1',

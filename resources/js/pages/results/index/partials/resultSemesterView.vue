@@ -19,6 +19,8 @@ const props = withDefaults(
   },
 );
 
+const emit = defineEmits<(e: "openEditResult", result: App.Data.Results.ResultData) => void>();
+
 const title = computed(() => `${props.semester.semester} SEMESTER`);
 </script>
 
@@ -93,7 +95,11 @@ const title = computed(() => `${props.semester.semester} SEMESTER`);
 
           <BaseTD>
             <HamburgerMenu orientation="horizontal">
-              <HamburgerMenuItem href="#">Edit</HamburgerMenuItem>
+              <HamburgerMenuItem
+                type="button"
+                @click="emit('openEditResult', result)">
+                Edit
+              </HamburgerMenuItem>
 
               <HamburgerMenuItem href="#">Delete</HamburgerMenuItem>
             </HamburgerMenu>

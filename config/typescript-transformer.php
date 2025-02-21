@@ -45,7 +45,6 @@ return [
         Carbon::class => 'string',
         CarbonImmutable::class => 'string',
         CarbonInterface::class => 'string',
-        DateTime::class => 'string',
         DateTimeImmutable::class => 'string',
     ],
 

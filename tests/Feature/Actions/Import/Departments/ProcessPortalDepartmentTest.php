@@ -23,15 +23,15 @@ it('can process raw department and save into the departments table', function ()
 
     expect($rawDepartment->fresh()->status)->toBe(RawDataStatus::PROCESSED);
 
-    assertDatabaseHas(Faculty::class, ['name' => strtoupper($rawDepartment->faculty)]);
+    assertDatabaseHas(Faculty::class, ['name' => mb_strtoupper($rawDepartment->faculty)]);
 
     assertDatabaseHas(Department::class, [
-        'code' => strtoupper($rawDepartment->code),
-        'name' => strtoupper($rawDepartment->name),
+        'code' => mb_strtoupper($rawDepartment->code),
+        'name' => mb_strtoupper($rawDepartment->name),
         'online_id' => $rawDepartment->online_id,
     ]);
 
-    assertDatabaseHas(Program::class, ['name' => strtoupper($rawDepartment->name)]);
+    assertDatabaseHas(Program::class, ['name' => mb_strtoupper($rawDepartment->name)]);
 });
 
 it('does not save save duplicate department into the departments table', function (): void {

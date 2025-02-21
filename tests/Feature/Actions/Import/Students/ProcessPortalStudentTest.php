@@ -32,11 +32,11 @@ it('can process raw student and save into the students table', function (): void
 
     assertDatabaseHas('students', [
         'date_of_birth' => DateValue::fromValue($rawStudent->date_of_birth)->value,
-        'first_name' => strtoupper($rawStudent->first_name),
+        'first_name' => mb_strtoupper($rawStudent->first_name),
         'gender' => $rawStudent->gender,
-        'last_name' => strtoupper($rawStudent->last_name),
+        'last_name' => mb_strtoupper($rawStudent->last_name),
         'online_id' => $rawStudent->online_id,
-        'other_names' => strtoupper($rawStudent->other_names),
+        'other_names' => mb_strtoupper($rawStudent->other_names),
         'registration_number' => $rawStudent->registration_number,
     ]);
 });
