@@ -39,6 +39,7 @@ use App\Http\Controllers\Reports\DepartmentClearedController;
 use App\Http\Controllers\Results\ViewStudentResultController;
 use App\Http\Controllers\Students\StudentController;
 use App\Http\Controllers\Students\Updates\RegistrationNumberController;
+use App\Http\Controllers\Students\Updates\ResultUpdateController;
 use App\Http\Controllers\Students\Updates\StudentNameController;
 use App\Http\Controllers\Students\Updates\StudentStatusUpdateController;
 use App\Http\Controllers\Summary\DepartmentResultSummaryController;
@@ -176,6 +177,7 @@ Route::middleware(['auth'])->group(static function (): void {
                 ->name('student.name.update');
             Route::patch('status', StudentStatusUpdateController::class)
                 ->name('student.status.update');
+            Route::patch('result', ResultUpdateController::class)->name('student.result.update');
         });
     });
 
