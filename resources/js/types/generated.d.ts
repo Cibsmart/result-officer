@@ -158,7 +158,7 @@ declare namespace App.Data.Enums {
     name: string;
   };
   export type CreditUnitListData = {
-    data: Array<App.Data.Enums.StudentStatusData>;
+    data: Array<App.Data.Enums.CreditUnitData>;
   };
   export type StudentStatusData = {
     id: string;

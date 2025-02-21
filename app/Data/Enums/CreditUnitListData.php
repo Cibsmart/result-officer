@@ -11,7 +11,7 @@ use Spatie\LaravelData\Data;
 final class CreditUnitListData extends Data
 {
     public function __construct(
-        /** @var \Illuminate\Support\Collection<int, \App\Data\Enums\StudentStatusData> */
+        /** @var \Illuminate\Support\Collection<int, \App\Data\Enums\CreditUnitData> */
         public readonly Collection $data,
     ) {
     }
