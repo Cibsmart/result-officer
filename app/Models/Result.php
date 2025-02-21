@@ -99,7 +99,7 @@ final class Result extends Model
         return "{$this->registration_id}-{$this->total_score}-{$this->grade}-{$this->grade_point}";
     }
 
-    /** @return array{scores: 'array', source: 'App\Enums\RecordSource', upload_date: 'date'} */
+    /** @return array{scores: 'json', source: 'App\Enums\RecordSource', upload_date: 'date'} */
     protected function casts(): array
     {
         return [
