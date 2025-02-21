@@ -41,6 +41,7 @@ final class Result extends Model
         return $result;
     }
 
+    /** @param array<string, int> $newScores */
     public static function updateResult(self $result, array $newScores): void
     {
         $oldScores = json_decode($result->scores);
