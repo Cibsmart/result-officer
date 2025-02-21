@@ -168,7 +168,19 @@ it('recomputes total, grade, and grade point after update', function (): void {
 });
 
 it('updates result details table after update', function (): void {
-    $student = createStudentWithResults(1, 1, 1);
+    SessionFactory::new()->createOne(['name' => '2018/2019']);
+    $session = SessionFactory::new()->createOne(['name' => '2019/2020']);
+
+    $firstSemester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
+
+    $student = StudentFactory::new()->has(
+        SessionEnrollmentFactory::new()->state(['session_id' => $session->id])
+            ->has(SemesterEnrollmentFactory::new()
+                ->has(RegistrationFactory::new()
+                    ->has(ResultFactory::new()), 'registrations')
+                ->state(['semester_id' => $firstSemester->id]), 'semesterEnrollments'),
+    )->createOne(['entry_session_id' => $session->id]);
+
     $registration = Registration::first();
     $result = $registration->result;
 
