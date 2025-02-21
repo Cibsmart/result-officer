@@ -14,6 +14,8 @@ use App\Models\RawResult;
 use App\Models\Registration;
 use App\Models\Result;
 use App\Values\DateValue;
+use App\Values\ExamScore;
+use App\Values\InCourseScore;
 use App\Values\RegistrationNumber;
 use App\Values\TotalScore;
 
@@ -36,13 +38,12 @@ final readonly class ResultModelData
 
     public static function fromRawResult(Registration $registration, RawResult $result): self
     {
-        $creditUnit = $registration->credit_unit;
-        assert($creditUnit instanceof CreditUnit);
-
-        $registrationNumber = RegistrationNumber::new($result->getRegistrationNumber());
-        $totalScore = TotalScore::new((int) $result->in_course + (int) $result->exam);
-        $grade = $totalScore->grade($registrationNumber->allowEGrade() || $registration->session()->allowsEGrade());
-        $gradePoint = $grade->point() * $creditUnit->value;
+        [$totalScore, $grade, $gradePoint] = self::getTotalAndGrade(
+            registration: $registration,
+            registrationNumber: RegistrationNumber::new($result->getRegistrationNumber()),
+            exam: ExamScore::new((int) $result->exam),
+            inCourse: InCourseScore::new((int) $result->in_course),
+        );
 
         $lecturer = null;
 
@@ -66,13 +67,12 @@ final readonly class ResultModelData
 
     public static function fromLegacyResult(Registration $registration, LegacyResult|LegacyFinalResult $result): self
     {
-        $creditUnit = $registration->credit_unit;
-        assert($creditUnit instanceof CreditUnit);
-
-        $registrationNumber = RegistrationNumber::new($result->registration_number);
-        $totalScore = TotalScore::new($result->exam + $result->inc);
-        $grade = $totalScore->grade($registrationNumber->allowEGrade() || $registration->session()->allowsEGrade());
-        $gradePoint = $grade->point() * $creditUnit->value;
+        [$totalScore, $grade, $gradePoint] = self::getTotalAndGrade(
+            registration: $registration,
+            registrationNumber: RegistrationNumber::new($result->registration_number),
+            exam: ExamScore::new($result->exam),
+            inCourse: InCourseScore::new($result->inc),
+        );
 
         $lecturer = null;
 
@@ -94,6 +94,32 @@ final readonly class ResultModelData
         );
     }
 
+    public static function fromResultUpdateInput(
+        Registration $registration,
+        RegistrationNumber $registrationNumber,
+        ExamScore $exam,
+        InCourseScore $inCourse,
+    ): self {
+        [$totalScore, $grade, $gradePoint] = self::getTotalAndGrade(
+            registration: $registration,
+            registrationNumber: $registrationNumber,
+            exam: $exam, inCourse: $inCourse,
+        );
+
+        return new self(
+            registration: $registration,
+            scores: ['exam' => (string) $exam->value, 'in_course' => (string) $inCourse->value],
+            totalScore: $totalScore,
+            grade: $grade,
+            gradePoint: $gradePoint,
+            examDate: DateValue::fromValue(null),
+            uploadDate: DateValue::fromValue(null),
+            lecturer: null,
+            remarks: null,
+            source: RecordSource::USER,
+        );
+    }
+
     public function getModel(): Result
     {
         $result = new Result();
@@ -112,5 +138,33 @@ final readonly class ResultModelData
             : null;
 
         return $result;
+    }
+
+    public function save(): Result
+    {
+        $result = $this->getModel();
+
+        $result->save();
+
+        $result->resultDetail()->create(['value' => $result->getData()]);
+
+        return $result;
+    }
+
+    /** @return array{\App\Values\TotalScore, \App\Enums\Grade, int} */
+    private static function getTotalAndGrade(
+        Registration $registration,
+        RegistrationNumber $registrationNumber,
+        ExamScore $exam,
+        InCourseScore $inCourse,
+    ): array {
+        $creditUnit = $registration->credit_unit;
+        assert($creditUnit instanceof CreditUnit);
+
+        $totalScore = TotalScore::fromInCourseAndExam($inCourse, $exam);
+        $grade = $totalScore->grade($registrationNumber->allowEGrade() || $registration->session()->allowsEGrade());
+        $gradePoint = $grade->point() * $creditUnit->value;
+
+        return [$totalScore, $grade, $gradePoint];
     }
 }

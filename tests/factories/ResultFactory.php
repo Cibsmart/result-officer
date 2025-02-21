@@ -28,7 +28,7 @@ final class ResultFactory extends Factory
             'grade' => $grade->name,
             'grade_point' => $this->gradePoint(...),
             'registration_id' => RegistrationFactory::new(),
-            'scores' => json_encode($scores),
+            'scores' => $scores,
             'total_score' => $score->value,
         ];
     }

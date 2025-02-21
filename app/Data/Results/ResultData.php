@@ -36,7 +36,7 @@ final class ResultData extends Data
                 'total_score' => 0,
             ]);
 
-        $scores = json_decode($result->scores);
+        $scores = $result->getScores();
 
         return new self(
             id: $courseRegistration->id,
@@ -49,8 +49,8 @@ final class ResultData extends Data
             gradePoint: $result->grade_point,
             remark: $result->remarks,
             dateUpdated: $result->updated_at ? $result->updated_at->toDateTimeString() : '',
-            inCourseScore: $scores->in_course,
-            examScore: $scores->exam,
+            inCourseScore: (int) $scores['in_course'],
+            examScore: (int) $scores['exam'],
         );
     }
 }
