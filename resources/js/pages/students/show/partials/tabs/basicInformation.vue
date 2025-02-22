@@ -23,20 +23,24 @@ const componentList: Record<
   ReturnType<typeof defineAsyncComponent>
 > = {
   registration_number: defineAsyncComponent(
-    () => import("@/pages/students/show/partials/updates/registrationNumberUpdateForm.vue"),
+    () => import("@/pages/students/show/partials/updates/registrationNumberForm.vue"),
   ),
   name: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/nameUpdateForm.vue")),
   status: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/statusUpdateForm.vue")),
   result: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/resultUpdateForm.vue")),
   // course: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/courseUpdateForm.vue")),
-  // gender: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/genderUpdateForm.vue")),
-  // program: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/programUpdateForm.vue")),
-  // entry_mode: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/entryModeUpdateForm.vue")),
-  // entry_level: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/entryLevelUpdateForm.vue")),
-  // date_of_birth: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/dateOfBirthUpdateForm.vue")),
-  // local_government: defineAsyncComponent(
-  //   () => import("@/pages/students/show/partials/updates/localGovernmentUpdateForm.vue"),
-  // ),
+  gender: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/genderForm.vue")),
+  program: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/programForm.vue")),
+  entry_mode: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/entryModeForm.vue")),
+  entry_level: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/entryLevelForm.vue")),
+  entry_session: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/entrySessionForm.vue")),
+  date_of_birth: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/birthDateForm.vue")),
+  local_government: defineAsyncComponent(
+    () => import("@/pages/students/show/partials/updates/localGovernmentForm.vue"),
+  ),
+  email: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/emailForm.vue")),
+  phone_number: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/phoneNumberForm.vue")),
+  jamb_registration_number: defineAsyncComponent(() => import("@/pages/students/show/partials/updates/jambForm.vue")),
 };
 
 watch(
@@ -77,21 +81,59 @@ const closeEditModal = () => {
           </div>
         </DataItem>
 
-        <DataItem title="Department and Program">{{ student.basic.departmentProgram }}</DataItem>
-
-        <DataItem title="Gender">{{ student.basic.gender }}</DataItem>
-
-        <DataItem title="Date of Birth">{{ student.basic.birthDate }}</DataItem>
-
-        <DataItem title="State and Local Government">
-          {{ `${student.others.state} (${student.others.localGovernment})` }}
+        <DataItem title="Department and Program">
+          <div class="flex justify-between">
+            {{ student.basic.departmentProgram }}
+            <SecondaryButtonSmall @click="openEditModal('program')">Edit</SecondaryButtonSmall>
+          </div>
         </DataItem>
 
-        <DataItem title="Entry Mode">{{ student.others.entryMode }}</DataItem>
+        <DataItem title="Gender">
+          <div class="flex justify-between">
+            {{ student.basic.gender }}
+            <SecondaryButtonSmall @click="openEditModal('gender')">Edit</SecondaryButtonSmall>
+          </div>
+        </DataItem>
 
-        <DataItem title="Entry Session">{{ student.others.entrySession }}</DataItem>
+        <DataItem title="Date of Birth">
+          <div class="flex justify-between">
+            <span>{{ student.basic.birthDate }}</span>
 
-        <DataItem title="Entry Level">{{ student.others.entryLevel }}</DataItem>
+            <SecondaryButtonSmall
+              class="end-0"
+              @click="openEditModal('date_of_birth')"
+              >Edit
+            </SecondaryButtonSmall>
+          </div>
+        </DataItem>
+
+        <DataItem title="State and Local Government">
+          <div class="flex justify-between">
+            {{ `${student.others.state} (${student.others.localGovernment})` }}
+            <SecondaryButtonSmall @click="openEditModal('local_government')">Edit</SecondaryButtonSmall>
+          </div>
+        </DataItem>
+
+        <DataItem title="Entry Mode">
+          <div class="flex justify-between">
+            {{ student.others.entryMode }}
+            <SecondaryButtonSmall @click="openEditModal('entry_mode')">Edit</SecondaryButtonSmall>
+          </div>
+        </DataItem>
+
+        <DataItem title="Entry Session">
+          <div class="flex justify-between">
+            {{ student.others.entrySession }}
+            <SecondaryButtonSmall @click="openEditModal('entry_session')">Edit</SecondaryButtonSmall>
+          </div>
+        </DataItem>
+
+        <DataItem title="Entry Level">
+          <div class="flex justify-between">
+            {{ student.others.entryLevel }}
+            <SecondaryButtonSmall @click="openEditModal('entry_level')">Edit</SecondaryButtonSmall>
+          </div>
+        </DataItem>
       </DataList>
     </div>
   </div>
@@ -101,11 +143,29 @@ const closeEditModal = () => {
 
     <div class="mt-2 border-t border-gray-200 dark:border-white/10">
       <DataList>
-        <DataItem title="JAMB Registration Number">{{ student.others.jambRegistrationNumber }}</DataItem>
+        <DataItem title="JAMB Registration Number">
+          <div class="flex justify-between">
+            <span>{{ student.others.jambRegistrationNumber }}</span>
 
-        <DataItem title="Email">{{ student.others.email }}</DataItem>
+            <SecondaryButtonSmall @click="openEditModal('jamb_registration_number')">Edit</SecondaryButtonSmall>
+          </div>
+        </DataItem>
 
-        <DataItem title="Phone Number">{{ student.others.phoneNumber }}</DataItem>
+        <DataItem title="Email">
+          <div class="flex justify-between">
+            <span>{{ student.others.email }}</span>
+
+            <SecondaryButtonSmall @click="openEditModal('email')">Edit</SecondaryButtonSmall>
+          </div>
+        </DataItem>
+
+        <DataItem title="Phone Number">
+          <div class="flex justify-between">
+            <span>{{ student.others.phoneNumber }}</span>
+
+            <SecondaryButtonSmall @click="openEditModal('phone_number')">Edit</SecondaryButtonSmall>
+          </div>
+        </DataItem>
       </DataList>
     </div>
   </div>
