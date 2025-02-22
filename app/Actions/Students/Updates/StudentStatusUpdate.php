@@ -21,16 +21,18 @@ final class StudentStatusUpdate
         ?User $user = null,
     ): void {
 
+        $oldStatus = $student->status->value;
+
+        $student->updateStatus($newStatus);
+
         StudentHistory::createNewUpdate(
             student: $student,
             model: $student,
             updatedField: StudentModifiableField::STATUS,
-            data: ['new' => $newStatus->value, 'old' => $student->status->value],
+            data: ['new' => $newStatus->value, 'old' => $oldStatus],
             remark: $remark,
             dbMail: $dbMail,
             user: $user,
         );
-
-        $student->updateStatus($newStatus);
     }
 }
