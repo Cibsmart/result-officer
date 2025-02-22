@@ -17,9 +17,9 @@ final class StudentOtherData extends Data
         public readonly EntryMode $entryMode,
         public readonly string $entrySession,
         public readonly string $entryLevel,
-        public readonly ?string $jambRegistrationNumber,
-        public readonly ?string $email,
-        public readonly ?string $phoneNumber,
+        public readonly string $jambRegistrationNumber,
+        public readonly string $email,
+        public readonly string $phoneNumber,
     ) {
     }
 
@@ -28,6 +28,21 @@ final class StudentOtherData extends Data
         $entryMode = $student->entry_mode;
         assert($entryMode instanceof EntryMode);
 
+        $jambRegistrationNumber = $student->jamb_registration_number;
+        $jambRegistrationNumber = $jambRegistrationNumber
+            ? $jambRegistrationNumber
+            : '';
+
+        $email = $student->email;
+        $email = $email
+            ? $email
+            : '';
+
+        $phoneNumber = $student->phone_number;
+        $phoneNumber = $phoneNumber
+            ? $phoneNumber
+            : '';
+
         return new self(
             id: $student->id,
             state: $student->lga->state->name,
@@ -35,9 +50,9 @@ final class StudentOtherData extends Data
             entryMode: $entryMode,
             entrySession: $student->entrySession->name,
             entryLevel: $student->entryLevel->name,
-            jambRegistrationNumber: $student->jamb_registration_number,
-            email: $student->email,
-            phoneNumber: $student->phone_number,
+            jambRegistrationNumber: $jambRegistrationNumber,
+            email: $email,
+            phoneNumber: $phoneNumber,
 
         );
     }

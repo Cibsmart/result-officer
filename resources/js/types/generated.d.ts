@@ -462,9 +462,9 @@ declare namespace App.Data.Students {
     entryMode: App.Enums.EntryMode;
     entrySession: string;
     entryLevel: string;
-    jambRegistrationNumber: string | null;
-    email: string | null;
-    phoneNumber: string | null;
+    jambRegistrationNumber: string;
+    email: string;
+    phoneNumber: string;
   };
 }
 declare namespace App.Data.Summary {
