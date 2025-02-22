@@ -9,6 +9,7 @@ use App\Models\DBMail;
 use App\Models\Student;
 use App\Models\User;
 use App\Values\DateValue;
+use App\Values\RegistrationNumber;
 use Illuminate\Http\RedirectResponse;
 
 final class RegistrationNumberController
@@ -33,7 +34,9 @@ final class RegistrationNumberController
             );
         }
 
-        $action->execute($student, $validated['registration_number'], $validated['remark'], $dbMail);
+        $registrationNumber = RegistrationNumber::new($validated['registration_number']);
+
+        $action->execute($student, $registrationNumber, $validated['remark'], $dbMail);
 
         return redirect()
             ->route('students.show', ['student' => $student])
