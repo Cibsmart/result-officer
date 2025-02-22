@@ -1,17 +1,15 @@
 <script lang="ts" setup>
 import BaseFormSection from "@/components/forms/baseFormSection.vue";
-import TextInput from "@/components/inputs/textInput.vue";
 import InputError from "@/components/inputs/inputError.vue";
 import InputLabel from "@/components/inputs/inputLabel.vue";
 import PrimaryButton from "@/components/buttons/primaryButton.vue";
 import { useForm } from "@inertiajs/vue3";
 import SecondaryButton from "@/components/buttons/secondaryButton.vue";
-import { computed, watch } from "vue";
+import { computed } from "vue";
 import CardFooter from "@/components/cards/cardFooter.vue";
 import TextareaInput from "@/components/inputs/textareaInput.vue";
-import Toggle from "@/components/inputs/toggle.vue";
 import SelectInput from "@/components/inputs/selectInput.vue";
-import { EnumSelectItem } from "@/types";
+import { useGenders } from "@/composables/genders";
 
 const props = defineProps<{
   student: App.Data.Students.StudentData;
@@ -19,14 +17,11 @@ const props = defineProps<{
 
 const emit = defineEmits<(e: "close") => void>();
 
-const genders = [
-  { id: "0", name: "Select Gender" },
-  { id: "M", name: "MALE" },
-  { id: "F", name: "FEMALE" },
-];
+const { genders } = useGenders();
+
 const form = useForm({
   gender: props.student.basic.gender,
-  gender_object: genders["0"] as EnumSelectItem,
+  gender_object: genders["0"],
   remark: "",
 });
 
