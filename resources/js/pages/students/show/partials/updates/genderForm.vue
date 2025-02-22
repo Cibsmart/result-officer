@@ -41,7 +41,10 @@ const submit = () =>
       onSuccess: () => emit("close"),
     });
 
-const selected = computed(() => (form.gender === "U" ? "0" : form.gender));
+const selected = computed(() => {
+  const gender = props.student.basic.gender;
+  return gender === "U" ? "0" : props.student.basic.gender;
+});
 </script>
 
 <template>
