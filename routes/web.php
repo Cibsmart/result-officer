@@ -38,9 +38,19 @@ use App\Http\Controllers\Reports\CompositeSheetController;
 use App\Http\Controllers\Reports\DepartmentClearedController;
 use App\Http\Controllers\Results\ViewStudentResultController;
 use App\Http\Controllers\Students\StudentController;
+use App\Http\Controllers\Students\Updates\BirthDateUpdateController;
+use App\Http\Controllers\Students\Updates\EntryLevelUpdateController;
+use App\Http\Controllers\Students\Updates\EntryModeUpdateController;
+use App\Http\Controllers\Students\Updates\EntrySessionUpdateController;
+use App\Http\Controllers\Students\Updates\GenderUpdateController;
+use App\Http\Controllers\Students\Updates\JambRegistrationNumberUpdateController;
+use App\Http\Controllers\Students\Updates\LocalGovernmentUpdateController;
+use App\Http\Controllers\Students\Updates\ProgramUpdateController;
 use App\Http\Controllers\Students\Updates\RegistrationNumberController;
 use App\Http\Controllers\Students\Updates\ResultUpdateController;
+use App\Http\Controllers\Students\Updates\StudentEmailUpdateController;
 use App\Http\Controllers\Students\Updates\StudentNameController;
+use App\Http\Controllers\Students\Updates\StudentPhoneNumberUpdateController;
 use App\Http\Controllers\Students\Updates\StudentStatusUpdateController;
 use App\Http\Controllers\Summary\DepartmentResultSummaryController;
 use App\Http\Controllers\Vetting\VettingController;
@@ -173,10 +183,22 @@ Route::middleware(['auth'])->group(static function (): void {
         Route::prefix('{student}/update')->group(static function (): void {
             Route::patch('registration-number', RegistrationNumberController::class)
                 ->name('student.registrationNumber.update');
-            Route::patch('name', StudentNameController::class)
-                ->name('student.name.update');
-            Route::patch('status', StudentStatusUpdateController::class)
-                ->name('student.status.update');
+            Route::patch('name', StudentNameController::class)->name('student.name.update');
+            Route::patch('status', StudentStatusUpdateController::class)->name('student.status.update');
+            Route::patch('birth-date', BirthDateUpdateController::class)->name('student.birthDate.update');
+            Route::patch('entry-level', EntryLevelUpdateController::class)->name('student.entryLevel.update');
+            Route::patch('entry-mode', EntryModeUpdateController::class)->name('student.entryMode.update');
+            Route::patch('entry-session', EntrySessionUpdateController::class)
+                ->name('student.entrySession.update');
+            Route::patch('gender', GenderUpdateController::class)->name('student.gender.update');
+            Route::patch('jamb-registration-number', JambRegistrationNumberUpdateController::class)
+                ->name('student.jambRegistrationNumber.update');
+            Route::patch('local-government', LocalGovernmentUpdateController::class)
+                ->name('student.localGovernment.update');
+            Route::patch('program', ProgramUpdateController::class)->name('student.program.update');
+            Route::patch('email', StudentEmailUpdateController::class)->name('student.email.update');
+            Route::patch('phone-number', StudentPhoneNumberUpdateController::class)
+                ->name('student.phoneNumber.update');
             Route::patch('result', ResultUpdateController::class)->name('student.result.update');
         });
     });
