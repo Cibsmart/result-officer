@@ -8,8 +8,8 @@ import SecondaryButton from "@/components/buttons/secondaryButton.vue";
 import { computed } from "vue";
 import CardFooter from "@/components/cards/cardFooter.vue";
 import TextareaInput from "@/components/inputs/textareaInput.vue";
-import { SelectItem } from "@/types";
 import SelectInput from "@/components/inputs/selectInput.vue";
+import { useLevels } from "@/composables/levels";
 
 const props = defineProps<{
   student: App.Data.Students.StudentData;
@@ -17,15 +17,11 @@ const props = defineProps<{
 
 const emit = defineEmits<(e: "close") => void>();
 
-const levels = [
-  { id: 0, name: "Select Level" },
-  { id: 1, name: "100" },
-  { id: 2, name: "200" },
-];
+const { levels } = useLevels();
 
 const form = useForm({
   entry_level: props.student.others.entryLevel,
-  entry_level_object: levels[0] as SelectItem,
+  entry_level_object: levels[0],
   remark: "",
 });
 
@@ -41,11 +37,6 @@ const submit = () =>
     .patch(route("student.entryLevel.update", { student: props.student.basic.slug }), {
       onSuccess: () => emit("close"),
     });
-
-const selected = computed(() => {
-  const level = props.student.others.entryLevel;
-  return Number(level[0]);
-});
 </script>
 
 <template>
@@ -64,7 +55,7 @@ const selected = computed(() => {
           id="month"
           v-model="form.entry_level_object"
           :items="levels"
-          :selected="selected"
+          :selected="student.others.entryLevel"
           class="mt-1 block w-full" />
 
         <InputError :message="form.errors.entry_level" />
