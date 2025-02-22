@@ -17,7 +17,10 @@ final class StudentEmailUpdateController
         Request $request,
         StudentEmailUpdateAction $action,
     ): RedirectResponse {
-        $validated = $request->validate(['email' => ['required']]);
+        $validated = $request->validate([
+            'email' => ['required', 'email'],
+            'remark' => ['required', 'string', 'min:3', 'max:255'],
+        ]);
 
         $user = $request->user();
         assert($user instanceof User);
