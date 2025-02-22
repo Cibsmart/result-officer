@@ -18,12 +18,15 @@ final class EntryLevelUpdateController
         Request $request,
         EntryLevelUpdateAction $action,
     ): RedirectResponse {
-        $validated = $request->validate(['entry_level_id' => ['required']]);
+        $validated = $request->validate([
+            'entry_level' => ['required', 'in:100,200'],
+            'remark' => ['required', 'string', 'min:3', 'max:255'],
+        ]);
 
         $user = $request->user();
         assert($user instanceof User);
 
-        $newValue = Level::getUsingId($validated['entry_level_id']);
+        $newValue = Level::getUsingName($validated['entry_level']);
 
         $action->execute($student, $newValue, $validated['remark'], $user);
 
