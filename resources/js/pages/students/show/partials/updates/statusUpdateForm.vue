@@ -66,7 +66,7 @@ const submit = () =>
           id="status"
           v-model="form.status_object"
           :items="statues"
-          :selected="student.status" />
+          :selected="student.basic.status" />
 
         <InputError :message="form.errors.status" />
       </div>
