@@ -17,7 +17,10 @@ final class StudentPhoneNumberUpdateController
         Request $request,
         StudentPhoneNumberUpdateAction $action,
     ): RedirectResponse {
-        $validated = $request->validate(['phone_number' => ['required']]);
+        $validated = $request->validate([
+            'phone_number' => ['required', 'string', 'max:20', 'min:11'],
+            'remark' => ['required', 'string', 'min:3', 'max:255'],
+        ]);
 
         $user = $request->user();
         assert($user instanceof User);
