@@ -10,6 +10,8 @@ import { computed, watch } from "vue";
 import CardFooter from "@/components/cards/cardFooter.vue";
 import TextareaInput from "@/components/inputs/textareaInput.vue";
 import Toggle from "@/components/inputs/toggle.vue";
+import SelectInput from "@/components/inputs/selectInput.vue";
+import { EnumSelectItem } from "@/types";
 
 const props = defineProps<{
   student: App.Data.Students.StudentData;
@@ -17,56 +19,51 @@ const props = defineProps<{
 
 const emit = defineEmits<(e: "close") => void>();
 
+const genders = [
+  { id: "0", name: "Select Gender" },
+  { id: "M", name: "MALE" },
+  { id: "F", name: "FEMALE" },
+];
 const form = useForm({
-  registration_number: props.student.basic.registrationNumber,
+  gender: props.student.basic.gender,
+  gender_object: genders["0"] as EnumSelectItem,
   remark: "",
-  has_mail: false,
-  mail_title: "",
-  mail_date: "",
 });
 
-const title = `Update Student's Registration Number (${props.student.basic.registrationNumber})`;
+const title = `Update Student's Gender (${props.student.basic.registrationNumber})`;
 
-const canNotUpdate = computed(
-  () => props.student.basic.registrationNumber === form.registration_number || form.processing,
-);
-
-watch(
-  () => form.has_mail,
-  () => {
-    form.mail_title = "";
-    form.mail_date = "";
-    form.clearErrors();
-  },
-);
+const canNotUpdate = computed(() => props.student.basic.gender === form.gender_object.id || form.processing);
 
 const submit = () =>
-  form.patch(route("student.registrationNumber.update", { student: props.student.basic.slug }), {
-    onSuccess: () => emit("close"),
-  });
+  form
+    .transform((data) => ({ ...data, gender: data.gender_object.id }))
+    .patch(route("student.gender.update", { student: props.student.basic.slug }), {
+      onSuccess: () => emit("close"),
+    });
+
+const selected = computed(() => (form.gender === "U" ? "0" : form.gender));
 </script>
 
 <template>
   <BaseFormSection
     :header="title"
-    description="Correct student's registration number and submit">
+    description="Update student's gender and submit">
     <form
       class="mt-6 space-y-6"
       @submit.prevent="submit">
       <div class="">
         <InputLabel
-          for="registration_number"
-          value="Registration Number" />
+          for="gender"
+          value="Gender" />
 
-        <TextInput
-          id="registration_number"
-          v-model="form.registration_number"
-          autocomplete="off"
-          autofocus
-          required
-          type="text" />
+        <SelectInput
+          id="month"
+          v-model="form.gender_object"
+          :items="genders"
+          :selected="selected"
+          class="mt-1 block w-full" />
 
-        <InputError :message="form.errors.registration_number" />
+        <InputError :message="form.errors.gender" />
       </div>
 
       <div class="">
@@ -81,44 +78,6 @@ const submit = () =>
 
         <InputError :message="form.errors.remark" />
       </div>
-
-      <div class="">
-        <Toggle
-          v-model="form.has_mail"
-          label="Has mail" />
-      </div>
-
-      <template v-if="form.has_mail">
-        <div class="">
-          <InputLabel
-            for="mail_title"
-            value="Mail Title" />
-
-          <TextareaInput
-            id="mail_title"
-            v-model="form.mail_title"
-            autocomplete="mail_title"
-            required />
-
-          <InputError :message="form.errors.mail_title" />
-        </div>
-
-        <div class="mt-2">
-          <InputLabel
-            for="mail_date"
-            value="Mail Date" />
-
-          <TextInput
-            id="mail_date"
-            v-model="form.mail_date"
-            autocomplete="mail_date"
-            placeholder="YYYY-MM-DD"
-            required
-            type="text" />
-
-          <InputError :message="form.errors.mail_date" />
-        </div>
-      </template>
 
       <CardFooter class="mt-6">
         <div class="mt-2 flex justify-end">

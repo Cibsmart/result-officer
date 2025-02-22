@@ -10,6 +10,7 @@ use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 final class GenderUpdateController
 {
@@ -18,7 +19,10 @@ final class GenderUpdateController
         Request $request,
         GenderUpdateAction $action,
     ): RedirectResponse {
-        $validated = $request->validate(['gender' => ['required']]);
+        $validated = $request->validate([
+            'gender' => ['required', Rule::enum(Gender::class)->except(Gender::UNKNOWN)],
+            'remark' => ['required', 'string', 'min:3', 'max:255'],
+        ]);
 
         $user = $request->user();
         assert($user instanceof User);
