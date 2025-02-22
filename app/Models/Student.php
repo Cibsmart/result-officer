@@ -9,6 +9,7 @@ use App\Enums\EntryMode;
 use App\Enums\Gender;
 use App\Enums\ProgramDuration;
 use App\Enums\RecordSource;
+use App\Enums\StudentField;
 use App\Enums\StudentStatus;
 use App\Enums\VettingEventStatus;
 use App\Values\RegistrationNumber;
@@ -184,6 +185,12 @@ final class Student extends Model
         return $this->vettingEvent !== null
             && StudentStatus::canBeCleared($this->status)
             && VettingEventStatus::passed($this->vettingEvent->status);
+    }
+
+    public function updateField(StudentField $field, string $newValue): void
+    {
+        $this->{$field->value} = $newValue;
+        $this->save();
     }
 
     /**

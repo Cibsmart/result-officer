@@ -599,6 +599,16 @@ declare namespace App.Enums {
   export type Role = "super-admin" | "admin" | "desk-officer" | "exam-officer" | "database-officer" | "user";
   export type ScoreType = "course_work" | "exam";
   export type StatusColor = "gray" | "red" | "yellow" | "green" | "blue" | "purple" | "indigo" | "pink";
+  export type StudentField =
+    | "gender"
+    | "program_id"
+    | "entry_mode"
+    | "entry_level_id"
+    | "date_of_birth"
+    | "local_government_id"
+    | "phone_number"
+    | "email"
+    | "jamb_registration_number";
   export type StudentStatus =
     | "new"
     | "active"
