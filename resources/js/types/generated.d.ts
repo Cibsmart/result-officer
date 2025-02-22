@@ -649,7 +649,14 @@ declare namespace App.Enums.ModifiableFields {
     | "course_type"
     | "credit_unit";
   export type ProgramModifiableField = "code" | "name" | "faculty" | "duration" | "department" | "program_type";
-  export type StudentModifiableField = "name" | "status" | "result" | "registration_number";
+  export type StudentModifiableField =
+    | "name"
+    | "email"
+    | "status"
+    | "result"
+    | "phone_number"
+    | "registration_number"
+    | "jamb_registration_number";
 }
 declare namespace App.ViewModels.Clearance {
   export type ClearanceFormPage = {
