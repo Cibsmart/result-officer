@@ -9,7 +9,6 @@ import BaseSection from "@/layouts/main/partials/baseSection.vue";
 
 const props = defineProps<{
   student: App.Data.Students.StudentData;
-  statues: App.Data.Enums.StudentStatusListData;
   openStatusUpdateForm: boolean;
 }>();
 
@@ -177,7 +176,6 @@ const closeEditModal = () => {
       <component
         :is="componentList[editField]"
         v-if="editField"
-        :statues="statues.data"
         :student="student"
         @close="closeEditModal" />
     </BaseSection>

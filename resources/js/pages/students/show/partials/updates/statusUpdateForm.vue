@@ -4,9 +4,9 @@ import TextInput from "@/components/inputs/textInput.vue";
 import InputError from "@/components/inputs/inputError.vue";
 import InputLabel from "@/components/inputs/inputLabel.vue";
 import PrimaryButton from "@/components/buttons/primaryButton.vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, router, usePage } from "@inertiajs/vue3";
 import SecondaryButton from "@/components/buttons/secondaryButton.vue";
-import { computed, watch } from "vue";
+import { computed, watch, onMounted, ref } from "vue";
 import CardFooter from "@/components/cards/cardFooter.vue";
 import TextareaInput from "@/components/inputs/textareaInput.vue";
 import Toggle from "@/components/inputs/toggle.vue";
@@ -15,14 +15,17 @@ import SelectInput from "@/components/inputs/selectInput.vue";
 
 const props = defineProps<{
   student: App.Data.Students.StudentData;
-  statues: EnumSelectItem[];
 }>();
 
 const emit = defineEmits<(e: "close") => void>();
 
+const page = usePage();
+
+const statues = ref<EnumSelectItem[]>();
+
 const form = useForm({
   status: props.student.basic.status,
-  status_object: props.statues[0] as EnumSelectItem,
+  status_object: null as EnumSelectItem,
   remark: "",
   has_mail: false,
   mail_title: "",
@@ -31,7 +34,7 @@ const form = useForm({
 
 const title = `Update Student's Status (${props.student.basic.registrationNumber})`;
 
-const canNotUpdate = computed(() => props.student.basic.status === form.status_object.id || form.processing);
+const canNotUpdate = computed(() => props.student.basic.status === form.status_object?.id || form.processing);
 
 watch(
   () => form.has_mail,
@@ -42,12 +45,23 @@ watch(
   },
 );
 
+onMounted(() => loadStatues());
+
 const submit = () =>
   form
-    .transform((data) => ({ ...data, status: data.status_object.id }))
+    .transform((data) => ({ ...data, status: data.status_object ? data.status_object.id : data.status }))
     .patch(route("student.status.update", { student: props.student.basic.slug }), {
       onSuccess: () => emit("close"),
     });
+
+const loadStatues = () => {
+  router.reload({
+    only: ["statues"],
+    onSuccess: () => {
+      statues.value = page.props.statues.data as EnumSelectItem[];
+    },
+  });
+};
 </script>
 
 <template>
@@ -63,6 +77,7 @@ const submit = () =>
           value="Status" />
 
         <SelectInput
+          v-if="statues"
           id="status"
           v-model="form.status_object"
           :items="statues"
