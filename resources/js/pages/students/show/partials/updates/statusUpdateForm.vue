@@ -21,11 +21,11 @@ const emit = defineEmits<(e: "close") => void>();
 
 const page = usePage();
 
-const statues = ref<EnumSelectItem[]>();
+const statues = ref<App.Data.Enums.StudentStatusListData>();
 
 const form = useForm({
   status: props.student.basic.status,
-  status_object: null as EnumSelectItem,
+  status_object: { id: "0", name: "Loading..." } as EnumSelectItem,
   remark: "",
   has_mail: false,
   mail_title: "",
@@ -58,7 +58,7 @@ const loadStatues = () => {
   router.reload({
     only: ["statues"],
     onSuccess: () => {
-      statues.value = page.props.statues.data as EnumSelectItem[];
+      statues.value = page.props.statues as App.Data.Enums.StudentStatusListData;
     },
   });
 };
@@ -80,7 +80,7 @@ const loadStatues = () => {
           v-if="statues"
           id="status"
           v-model="form.status_object"
-          :items="statues"
+          :items="statues.data as EnumSelectItem[]"
           :selected="student.basic.status" />
 
         <InputError :message="form.errors.status" />
