@@ -10,6 +10,7 @@ use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 final class EntryModeUpdateController
 {
@@ -18,7 +19,11 @@ final class EntryModeUpdateController
         Request $request,
         EntryModelUpdateAction $action,
     ): RedirectResponse {
-        $validated = $request->validate(['entry_mode' => ['required']]);
+
+        $validated = $request->validate([
+            'entry_mode' => ['required', Rule::enum(EntryMode::class)],
+            'remark' => ['required', 'string', 'min:3', 'max:255'],
+        ]);
 
         $user = $request->user();
         assert($user instanceof User);
