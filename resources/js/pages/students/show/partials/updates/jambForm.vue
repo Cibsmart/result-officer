@@ -17,14 +17,14 @@ const props = defineProps<{
 const emit = defineEmits<(e: "close") => void>();
 
 const form = useForm({
-  jamb_registration_number: props.student.basic.registrationNumber,
+  jamb_registration_number: props.student.others.jambRegistrationNumber,
   remark: "",
 });
 
 const title = `Update Student's JAMB Registration Number (${props.student.basic.registrationNumber})`;
 
 const canNotUpdate = computed(
-  () => props.student.basic.registrationNumber === form.jamb_registration_number || form.processing,
+  () => props.student.others.jambRegistrationNumber === form.jamb_registration_number || form.processing,
 );
 
 const submit = () =>

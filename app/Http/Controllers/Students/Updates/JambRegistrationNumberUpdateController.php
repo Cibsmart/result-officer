@@ -17,7 +17,10 @@ final class JambRegistrationNumberUpdateController
         Request $request,
         JambRegistrationNumberUpdateAction $action,
     ): RedirectResponse {
-        $validated = $request->validate(['jamb_registration_number' => ['required']]);
+        $validated = $request->validate([
+            'jamb_registration_number' => ['required', 'string', 'max:20', 'min:10'],
+            'remark' => ['required', 'string', 'min:3', 'max:255'],
+        ]);
 
         $user = $request->user();
         assert($user instanceof User);
