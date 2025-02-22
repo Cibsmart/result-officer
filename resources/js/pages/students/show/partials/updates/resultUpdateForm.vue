@@ -15,7 +15,7 @@ import { SelectItem } from "@/types";
 import LabelInput from "@/components/inputs/labelInput.vue";
 
 const props = defineProps<{
-  student: App.Data.Students.StudentBasicData;
+  student: App.Data.Students.StudentData;
   result: App.Data.Results.ResultData;
   units: SelectItem[];
 }>();
@@ -34,7 +34,7 @@ const form = useForm({
   result: "",
 });
 
-const title = `Update Student's Result (${props.student.registrationNumber})`;
+const title = `Update Student's Result (${props.student.basic.registrationNumber})`;
 const oldName = computed(() => `${props.result.creditUnit}-${props.result.inCourseScore}-${props.result.examScore}`);
 const newName = computed(() => `${form.credit_unit}-${form.in_course}-${form.exam}`);
 const total = computed(() => `${form.in_course + form.exam}`);
@@ -51,7 +51,7 @@ watch(
 );
 
 const submit = () =>
-  form.patch(route("student.result.update", { student: props.student.slug }), {
+  form.patch(route("student.result.update", { student: props.student.basic.slug }), {
     onSuccess: () => emit("close"),
   });
 </script>

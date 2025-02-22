@@ -14,14 +14,14 @@ import { EnumSelectItem } from "@/types";
 import SelectInput from "@/components/inputs/selectInput.vue";
 
 const props = defineProps<{
-  student: App.Data.Students.StudentBasicData;
+  student: App.Data.Students.StudentData;
   statues: EnumSelectItem[];
 }>();
 
 const emit = defineEmits<(e: "close") => void>();
 
 const form = useForm({
-  status: props.student.status,
+  status: props.student.basic.status,
   status_object: props.statues[0] as EnumSelectItem,
   remark: "",
   has_mail: false,
@@ -29,9 +29,9 @@ const form = useForm({
   mail_date: "",
 });
 
-const title = `Update Student's Status (${props.student.registrationNumber})`;
+const title = `Update Student's Status (${props.student.basic.registrationNumber})`;
 
-const canNotUpdate = computed(() => props.student.status === form.status_object.id || form.processing);
+const canNotUpdate = computed(() => props.student.basic.status === form.status_object.id || form.processing);
 
 watch(
   () => form.has_mail,
@@ -45,7 +45,7 @@ watch(
 const submit = () =>
   form
     .transform((data) => ({ ...data, status: data.status_object.id }))
-    .patch(route("student.status.update", { student: props.student.slug }), {
+    .patch(route("student.status.update", { student: props.student.basic.slug }), {
       onSuccess: () => emit("close"),
     });
 </script>

@@ -178,7 +178,7 @@ const closeEditModal = () => {
         :is="componentList[editField]"
         v-if="editField"
         :statues="statues.data"
-        :student="student.basic"
+        :student="student"
         @close="closeEditModal" />
     </BaseSection>
   </Modal>

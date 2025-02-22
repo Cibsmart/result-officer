@@ -12,22 +12,24 @@ import TextareaInput from "@/components/inputs/textareaInput.vue";
 import Toggle from "@/components/inputs/toggle.vue";
 
 const props = defineProps<{
-  student: App.Data.Students.StudentBasicData;
+  student: App.Data.Students.StudentData;
 }>();
 
 const emit = defineEmits<(e: "close") => void>();
 
 const form = useForm({
-  registration_number: props.student.registrationNumber,
+  registration_number: props.student.basic.registrationNumber,
   remark: "",
   has_mail: false,
   mail_title: "",
   mail_date: "",
 });
 
-const title = `Update Student's Registration Number (${props.student.registrationNumber})`;
+const title = `Update Student's Registration Number (${props.student.basic.registrationNumber})`;
 
-const canNotUpdate = computed(() => props.student.registrationNumber === form.registration_number || form.processing);
+const canNotUpdate = computed(
+  () => props.student.basic.registrationNumber === form.registration_number || form.processing,
+);
 
 watch(
   () => form.has_mail,
@@ -39,7 +41,7 @@ watch(
 );
 
 const submit = () =>
-  form.patch(route("student.registrationNumber.update", { student: props.student.slug }), {
+  form.patch(route("student.registrationNumber.update", { student: props.student.basic.slug }), {
     onSuccess: () => emit("close"),
   });
 </script>
