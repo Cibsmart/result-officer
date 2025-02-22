@@ -25,6 +25,14 @@ final class Session extends Model
                 fn () => self::query()->where('name', $sessionName)->firstOrFail());
     }
 
+    public static function getUsingId(string $sessionId): self
+    {
+        return
+            Cache::remember("session_{$sessionId}",
+                now()->addDay(),
+                fn () => self::query()->where('id', $sessionId)->firstOrFail());
+    }
+
     public static function sessionFromYear(int $year): string
     {
         $next = $year + 1;

@@ -20,6 +20,11 @@ final class LocalGovernment extends Model
         return $lga;
     }
 
+    public static function getUsingId(string $localGovernmentId): self
+    {
+        return self::query()->where('id', $localGovernmentId)->firstOrFail();
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\State, \App\Models\Student> */
     public function state(): BelongsTo
     {
