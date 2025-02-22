@@ -599,16 +599,8 @@ declare namespace App.Enums {
   export type Role = "super-admin" | "admin" | "desk-officer" | "exam-officer" | "database-officer" | "user";
   export type ScoreType = "course_work" | "exam";
   export type StatusColor = "gray" | "red" | "yellow" | "green" | "blue" | "purple" | "indigo" | "pink";
-  export type StudentField =
-    | "gender"
-    | "program_id"
-    | "entry_mode"
-    | "entry_level_id"
-    | "date_of_birth"
-    | "local_government_id"
-    | "phone_number"
-    | "email"
-    | "jamb_registration_number";
+  export type StudentField = "phone_number" | "email" | "jamb_registration_number";
+  export type StudentRelatedField = "program_id" | "entry_level_id" | "entry_session_id" | "local_government_id";
   export type StudentStatus =
     | "new"
     | "active"
@@ -652,9 +644,16 @@ declare namespace App.Enums.ModifiableFields {
   export type StudentModifiableField =
     | "name"
     | "email"
-    | "status"
+    | "gender"
     | "result"
+    | "status"
+    | "program"
+    | "entry_mode"
+    | "entry_level"
     | "phone_number"
+    | "entry_session"
+    | "date_of_birth"
+    | "local_government"
     | "registration_number"
     | "jamb_registration_number";
 }
