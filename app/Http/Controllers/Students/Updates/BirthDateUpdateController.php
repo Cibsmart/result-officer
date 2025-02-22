@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Values\DateValue;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 final class BirthDateUpdateController
 {
@@ -18,7 +19,13 @@ final class BirthDateUpdateController
         Request $request,
         BirthDateUpdateAction $action,
     ): RedirectResponse {
-        $validated = $request->validate(['date_of_birth' => ['required']]);
+        $validated = $request->validate([
+            'date_of_birth' => [
+                'required', 'regex:/^\d{4}-\d{2}-\d{2}$/',
+                Rule::date()->before(now()->subYears(15)),
+            ],
+            'remark' => ['required', 'string', 'min:3', 'max:255'],
+        ]);
 
         $user = $request->user();
         assert($user instanceof User);
