@@ -40,7 +40,7 @@ const selected = ref(props.items[selectedIndex]);
             v-for="item in items"
             :key="item.id"
             v-slot="{ active, selected }"
-            :disabled="item.id === 0"
+            :disabled="item.id === 0 || item.id === '0'"
             :value="item"
             as="template">
             <li
