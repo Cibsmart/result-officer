@@ -15,7 +15,7 @@ export function useDepartments() {
     try {
       const response = await axios.get<DepartmentListData>("/api/departments");
       departments.value = response.data.data as SelectItem[];
-    } catch (e) {
+    } catch (e: any) {
       error.value = e.message;
     } finally {
       isLoading.value = false;

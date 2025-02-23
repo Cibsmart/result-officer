@@ -15,7 +15,7 @@ export function useSessions() {
     try {
       const response = await axios.get<SessionListData>("/api/sessions");
       sessions.value = response.data.sessions as SelectItem[];
-    } catch (e) {
+    } catch (e: any) {
       error.value = e.message;
     } finally {
       isLoading.value = false;

@@ -20,11 +20,13 @@ const props = defineProps<{
 
 const emit = defineEmits<(e: "close") => void>();
 
+import DepartmentData = App.Data.Department.DepartmentData;
+
 const { departments, isLoading, error } = useDepartments();
 const programs = ref<SelectItem[]>([{ id: 0, name: "Loading..." }]);
 
 const originalDepartment = computed(() =>
-  departments.value.find((department) => department.id === props.student.basic.departmentId),
+  departments.value.find((department: SelectItem) => department.id === props.student.basic.departmentId),
 );
 
 const form = useForm({
@@ -55,7 +57,7 @@ watch(
   () => isLoading.value,
   () => {
     if (!isLoading.value && departments.value.length > 1) {
-      loadPrograms(originalDepartment.value);
+      loadPrograms(originalDepartment.value as DepartmentData);
     }
   },
 );
@@ -67,9 +69,9 @@ const submit = () =>
       onSuccess: () => emit("close"),
     });
 
-const loadPrograms = (department) => {
-  form.reset(["program_object", "program"]);
-  if (programs.value !== null) {
+const loadPrograms = (department: App.Data.Department.DepartmentData) => {
+  form.reset("program_object", "program");
+  if (department.programs !== null) {
     programs.value = department.programs.programs;
   }
 };

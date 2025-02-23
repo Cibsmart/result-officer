@@ -15,7 +15,7 @@ export function useStates() {
     try {
       const response = await axios.get<StateListData>("/api/states");
       states.value = response.data.data as SelectItem[];
-    } catch (e) {
+    } catch (e: any) {
       error.value = e.message;
     } finally {
       isLoading.value = false;

@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import BaseFormSection from "@/components/forms/baseFormSection.vue";
-import TextInput from "@/components/inputs/textInput.vue";
 import InputError from "@/components/inputs/inputError.vue";
 import InputLabel from "@/components/inputs/inputLabel.vue";
 import PrimaryButton from "@/components/buttons/primaryButton.vue";
@@ -9,22 +8,24 @@ import SecondaryButton from "@/components/buttons/secondaryButton.vue";
 import { computed, ref, watch } from "vue";
 import CardFooter from "@/components/cards/cardFooter.vue";
 import TextareaInput from "@/components/inputs/textareaInput.vue";
-import Toggle from "@/components/inputs/toggle.vue";
 import { SelectItem } from "@/types";
 import SelectInput from "@/components/inputs/selectInput.vue";
 import { useStates } from "@/composables/states";
 import FormGroup from "@/components/forms/formGroup.vue";
-
 const props = defineProps<{
   student: App.Data.Students.StudentData;
 }>();
 
 const emit = defineEmits<(e: "close") => void>();
 
+import StateData = App.Data.States.StateData;
+
 const { states, isLoading, error } = useStates();
 const localGovernments = ref<SelectItem[]>([{ id: 0, name: "Loading..." }]);
 
-const originalState = computed(() => states.value.find((state) => state.id === props.student.others.stateId));
+const originalState = computed(() =>
+  states.value.find((state: SelectItem) => state.id === props.student.others.stateId),
+);
 
 const form = useForm({
   state: props.student.others.stateId,
@@ -44,7 +45,7 @@ watch(
   () => isLoading.value,
   () => {
     if (!isLoading.value && states.value.length > 1) {
-      loadLocalGovernments(originalState.value);
+      loadLocalGovernments(originalState.value as StateData);
     }
   },
 );
@@ -56,9 +57,9 @@ const submit = () =>
       onSuccess: () => emit("close"),
     });
 
-const loadLocalGovernments = (state) => {
-  form.reset(["local_government_object", "local_government"]);
-  if (localGovernments.value !== null) {
+const loadLocalGovernments = (state: App.Data.States.StateData) => {
+  form.reset("local_government_object", "local_government");
+  if (state.localGovernments !== null) {
     localGovernments.value = state.localGovernments.data;
   }
 };
