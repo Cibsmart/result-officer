@@ -425,6 +425,23 @@ declare namespace App.Data.Shared {
     isAdmin: boolean;
   };
 }
+declare namespace App.Data.States {
+  export type LocalGovernmentData = {
+    id: number;
+    name: string;
+  };
+  export type LocalGovernmentListData = {
+    data: Array<App.Data.States.LocalGovernmentData>;
+  };
+  export type StateData = {
+    id: number;
+    name: string;
+    localGovernments: App.Data.States.LocalGovernmentListData | null;
+  };
+  export type StateListData = {
+    data: Array<App.Data.States.StateData>;
+  };
+}
 declare namespace App.Data.Students {
   export type StudentBasicData = {
     id: number;
