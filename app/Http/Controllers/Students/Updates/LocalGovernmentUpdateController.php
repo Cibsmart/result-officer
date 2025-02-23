@@ -18,12 +18,16 @@ final class LocalGovernmentUpdateController
         Request $request,
         LocalGovernmentUpdateAction $action,
     ): RedirectResponse {
-        $validated = $request->validate(['local_government_id' => ['required']]);
+        $validated = $request->validate([
+            'local_government' => ['required', 'integer', 'exists:local_governments,id'],
+            'remark' => ['required', 'string', 'min:3', 'max:255'],
+            'state' => ['required', 'integer', 'exists:states,id'],
+        ]);
 
         $user = $request->user();
         assert($user instanceof User);
 
-        $newValue = LocalGovernment::getUsingId($validated['local_government_id']);
+        $newValue = LocalGovernment::getUsingId($validated['local_government']);
 
         $action->execute($student, $newValue, $validated['remark'], $user);
 

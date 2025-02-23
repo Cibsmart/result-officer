@@ -20,7 +20,7 @@ final class LocalGovernment extends Model
         return $lga;
     }
 
-    public static function getUsingId(string $localGovernmentId): self
+    public static function getUsingId(int $localGovernmentId): self
     {
         return self::query()->where('id', $localGovernmentId)->firstOrFail();
     }
