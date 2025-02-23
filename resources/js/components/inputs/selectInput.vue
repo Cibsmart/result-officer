@@ -9,7 +9,8 @@ const props = defineProps<{
   selected?: number | string;
 }>();
 
-const selectedIndex = props.selected ? props.items.findIndex((item) => item.id === props.selected) : 0;
+const getSelectedIndexUsingId = props.items.findIndex((item) => item.id === props.selected);
+const selectedIndex = props.selected && getSelectedIndexUsingId !== -1 ? getSelectedIndexUsingId : 0;
 
 const selected = ref(props.items[selectedIndex]);
 </script>
