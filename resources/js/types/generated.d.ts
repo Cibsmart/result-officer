@@ -485,6 +485,8 @@ declare namespace App.Data.Students {
     email: string;
     phoneNumber: string;
     entrySessionId: number;
+    stateId: number;
+    localGovernmentId: number;
   };
 }
 declare namespace App.Data.Summary {

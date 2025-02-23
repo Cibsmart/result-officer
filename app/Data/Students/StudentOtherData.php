@@ -21,6 +21,8 @@ final class StudentOtherData extends Data
         public readonly string $email,
         public readonly string $phoneNumber,
         public readonly int $entrySessionId,
+        public readonly int $stateId,
+        public readonly int $localGovernmentId,
     ) {
     }
 
@@ -44,10 +46,13 @@ final class StudentOtherData extends Data
             ? $phoneNumber
             : '';
 
+        $lga = $student->lga;
+        $state = $lga->state;
+
         return new self(
             id: $student->id,
-            state: $student->lga->state->name,
-            localGovernment: $student->lga->name,
+            state: $state->name,
+            localGovernment: $lga->name,
             entryMode: $entryMode,
             entrySession: $student->entrySession->name,
             entryLevel: $student->entryLevel->name,
@@ -55,6 +60,8 @@ final class StudentOtherData extends Data
             email: $email,
             phoneNumber: $phoneNumber,
             entrySessionId: $student->entry_session_id,
+            stateId: $state->id,
+            localGovernmentId: $lga->id,
         );
     }
 }
