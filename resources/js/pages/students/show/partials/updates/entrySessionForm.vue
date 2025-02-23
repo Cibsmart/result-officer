@@ -1,15 +1,13 @@
 <script lang="ts" setup>
 import BaseFormSection from "@/components/forms/baseFormSection.vue";
-import TextInput from "@/components/inputs/textInput.vue";
 import InputError from "@/components/inputs/inputError.vue";
 import InputLabel from "@/components/inputs/inputLabel.vue";
 import PrimaryButton from "@/components/buttons/primaryButton.vue";
 import { useForm } from "@inertiajs/vue3";
 import SecondaryButton from "@/components/buttons/secondaryButton.vue";
-import { computed, watch } from "vue";
+import { computed } from "vue";
 import CardFooter from "@/components/cards/cardFooter.vue";
 import TextareaInput from "@/components/inputs/textareaInput.vue";
-import Toggle from "@/components/inputs/toggle.vue";
 import SelectInput from "@/components/inputs/selectInput.vue";
 import { useSessions } from "@/composables/sessions";
 import { SelectItem } from "@/types";
