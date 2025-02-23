@@ -4,8 +4,8 @@ import { SelectItem } from "@/types";
 import DepartmentListData = App.Data.Department.DepartmentListData;
 
 export function useDepartments() {
-  const departments = ref<SelectItem[]>([]);
   const isLoading = ref(false);
+  const departments = ref<SelectItem[]>([{ id: 0, name: "Loading..." }]);
   const error = ref<string | null>(null);
 
   const fetchDepartments = async () => {
