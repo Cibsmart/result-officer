@@ -6,10 +6,13 @@ import InputLabel from "@/components/inputs/inputLabel.vue";
 import PrimaryButton from "@/components/buttons/primaryButton.vue";
 import { useForm } from "@inertiajs/vue3";
 import SecondaryButton from "@/components/buttons/secondaryButton.vue";
-import { computed, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import CardFooter from "@/components/cards/cardFooter.vue";
 import TextareaInput from "@/components/inputs/textareaInput.vue";
 import Toggle from "@/components/inputs/toggle.vue";
+import { useDepartments } from "@/composables/departments";
+import { SelectItem } from "@/types";
+import SelectInput from "@/components/inputs/selectInput.vue";
 
 const props = defineProps<{
   student: App.Data.Students.StudentData;
@@ -17,19 +20,27 @@ const props = defineProps<{
 
 const emit = defineEmits<(e: "close") => void>();
 
+const { departments, isLoading, error } = useDepartments();
+const programs = ref<SelectItem[]>([{ id: 0, name: "Loading..." }]);
+
+const originalDepartment = computed(() =>
+  departments.value.find((department) => department.id === props.student.basic.departmentId),
+);
+
 const form = useForm({
-  registration_number: props.student.basic.registrationNumber,
+  department: props.student.basic.departmentId,
+  program: props.student.basic.programId,
+  department_object: { id: props.student.basic.departmentId, name: "" } as SelectItem,
+  program_object: { id: props.student.basic.programId, name: "" } as SelectItem,
   remark: "",
   has_mail: false,
   mail_title: "",
   mail_date: "",
 });
 
-const title = `Update Student's Registration Number (${props.student.basic.registrationNumber})`;
+const title = `Update Student's Department (${props.student.basic.registrationNumber})`;
 
-const canNotUpdate = computed(
-  () => props.student.basic.registrationNumber === form.registration_number || form.processing,
-);
+const canNotUpdate = computed(() => props.student.basic.programId === form.program_object.id || form.processing);
 
 watch(
   () => form.has_mail,
@@ -40,33 +51,82 @@ watch(
   },
 );
 
+watch(
+  () => isLoading.value,
+  () => {
+    if (!isLoading.value && departments.value.length > 1) {
+      loadPrograms(originalDepartment.value);
+    }
+  },
+);
+
 const submit = () =>
-  form.patch(route("student.registrationNumber.update", { student: props.student.basic.slug }), {
-    onSuccess: () => emit("close"),
-  });
+  form
+    .transform((data) => ({ ...data, program: data.program_object.id, department: data.department_object.id }))
+    .patch(route("student.program.update", { student: props.student.basic.slug }), {
+      onSuccess: () => emit("close"),
+    });
+
+const loadPrograms = (department) => {
+  form.reset(["program_object", "program"]);
+  if (programs.value !== null) {
+    programs.value = department.programs.programs;
+  }
+};
 </script>
 
 <template>
   <BaseFormSection
     :header="title"
-    description="Correct student's registration number and submit">
+    description="Update student's department and submit">
+    <p
+      v-if="error"
+      class="text-red-600">
+      {{ error }}
+    </p>
+
     <form
       class="mt-6 space-y-6"
       @submit.prevent="submit">
-      <div class="">
+      <div class="flex-1">
         <InputLabel
-          for="registration_number"
-          value="Registration Number" />
+          for="department"
+          value="Program" />
 
-        <TextInput
-          id="registration_number"
-          v-model="form.registration_number"
-          autocomplete="off"
-          autofocus
-          required
-          type="text" />
+        <SelectInput
+          v-if="!isLoading"
+          id="department"
+          v-model="form.department_object"
+          :items="departments"
+          :selected="student.basic.departmentId"
+          @update:modelValue="loadPrograms" />
 
-        <InputError :message="form.errors.registration_number" />
+        <SelectInput
+          v-else
+          id="department_loading"
+          :items="departments" />
+
+        <InputError :message="form.errors.department" />
+      </div>
+
+      <div class="flex-1">
+        <InputLabel
+          for="program"
+          value="Program" />
+
+        <SelectInput
+          v-if="!isLoading && programs.length > 1"
+          id="program"
+          v-model="form.program_object"
+          :items="programs"
+          :selected="student.basic.programId" />
+
+        <SelectInput
+          v-else
+          id="program_loading"
+          :items="programs" />
+
+        <InputError :message="form.errors.program" />
       </div>
 
       <div class="">
