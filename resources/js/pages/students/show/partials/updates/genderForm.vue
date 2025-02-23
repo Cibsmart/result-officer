@@ -55,11 +55,10 @@ const selected = computed(() => {
           value="Gender" />
 
         <SelectInput
-          id="month"
+          id="gender"
           v-model="form.gender_object"
           :items="genders"
-          :selected="selected"
-          class="mt-1 block w-full" />
+          :selected="selected" />
 
         <InputError :message="form.errors.gender" />
       </div>
