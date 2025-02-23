@@ -10,6 +10,9 @@ import { computed, watch } from "vue";
 import CardFooter from "@/components/cards/cardFooter.vue";
 import TextareaInput from "@/components/inputs/textareaInput.vue";
 import Toggle from "@/components/inputs/toggle.vue";
+import SelectInput from "@/components/inputs/selectInput.vue";
+import { useSessions } from "@/composables/sessions";
+import { SelectItem } from "@/types";
 
 const props = defineProps<{
   student: App.Data.Students.StudentData;
@@ -17,33 +20,26 @@ const props = defineProps<{
 
 const emit = defineEmits<(e: "close") => void>();
 
+const { sessions, isLoading } = useSessions();
+
 const form = useForm({
-  registration_number: props.student.basic.registrationNumber,
+  entry_session: props.student.others.entrySession,
+  entry_session_object: { id: props.student.others.entrySessionId, name: "" } as SelectItem,
   remark: "",
-  has_mail: false,
-  mail_title: "",
-  mail_date: "",
 });
 
 const title = `Update Student's Registration Number (${props.student.basic.registrationNumber})`;
 
 const canNotUpdate = computed(
-  () => props.student.basic.registrationNumber === form.registration_number || form.processing,
-);
-
-watch(
-  () => form.has_mail,
-  () => {
-    form.mail_title = "";
-    form.mail_date = "";
-    form.clearErrors();
-  },
+  () => props.student.others.entrySessionId === form.entry_session_object.id || form.processing,
 );
 
 const submit = () =>
-  form.patch(route("student.registrationNumber.update", { student: props.student.basic.slug }), {
-    onSuccess: () => emit("close"),
-  });
+  form
+    .transform((data) => ({ ...data, entry_session: data.entry_session_object.id }))
+    .patch(route("student.entrySession.update", { student: props.student.basic.slug }), {
+      onSuccess: () => emit("close"),
+    });
 </script>
 
 <template>
@@ -55,18 +51,22 @@ const submit = () =>
       @submit.prevent="submit">
       <div class="">
         <InputLabel
-          for="registration_number"
-          value="Registration Number" />
+          for="entry_session"
+          value="Entry Session" />
 
-        <TextInput
-          id="registration_number"
-          v-model="form.registration_number"
-          autocomplete="off"
-          autofocus
-          required
-          type="text" />
+        <SelectInput
+          v-if="!isLoading"
+          id="entry_session"
+          v-model="form.entry_session_object"
+          :items="sessions"
+          :selected="student.others.entrySessionId" />
 
-        <InputError :message="form.errors.registration_number" />
+        <SelectInput
+          v-else
+          id="entry_session_loading"
+          :items="sessions" />
+
+        <InputError :message="form.errors.entry_session" />
       </div>
 
       <div class="">
@@ -81,44 +81,6 @@ const submit = () =>
 
         <InputError :message="form.errors.remark" />
       </div>
-
-      <div class="">
-        <Toggle
-          v-model="form.has_mail"
-          label="Has mail" />
-      </div>
-
-      <template v-if="form.has_mail">
-        <div class="">
-          <InputLabel
-            for="mail_title"
-            value="Mail Title" />
-
-          <TextareaInput
-            id="mail_title"
-            v-model="form.mail_title"
-            autocomplete="mail_title"
-            required />
-
-          <InputError :message="form.errors.mail_title" />
-        </div>
-
-        <div class="mt-2">
-          <InputLabel
-            for="mail_date"
-            value="Mail Date" />
-
-          <TextInput
-            id="mail_date"
-            v-model="form.mail_date"
-            autocomplete="mail_date"
-            placeholder="YYYY-MM-DD"
-            required
-            type="text" />
-
-          <InputError :message="form.errors.mail_date" />
-        </div>
-      </template>
 
       <CardFooter class="mt-6">
         <div class="mt-2 flex justify-end">

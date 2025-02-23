@@ -18,12 +18,15 @@ final class EntrySessionUpdateController
         Request $request,
         EntrySessionUpdateAction $action,
     ): RedirectResponse {
-        $validated = $request->validate(['entry_session_id' => ['required']]);
+        $validated = $request->validate([
+            'entry_session' => ['required', 'exists:academic_sessions,id'],
+            'remark' => ['required', 'string'],
+        ]);
 
         $user = $request->user();
         assert($user instanceof User);
 
-        $newValue = Session::getUsingId($validated['entry_session_id']);
+        $newValue = Session::getUsingId($validated['entry_session']);
 
         $action->execute($student, $newValue, $validated['remark'], $user);
 
