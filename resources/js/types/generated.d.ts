@@ -445,6 +445,9 @@ declare namespace App.Data.Students {
     status: App.Enums.StudentStatus;
     statusColor: App.Enums.StatusColor;
     photoUrl: string;
+    departmentId: number;
+    programId: number;
+    entrySessionId: number;
   };
   export type StudentComprehensiveData = {
     student: App.Data.Students.StudentData;
