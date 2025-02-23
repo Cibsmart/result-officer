@@ -133,7 +133,7 @@ final class Program extends Model
         return $department->programs()->where('name', $programName)->firstOrFail();
     }
 
-    public static function getUsingId(string $programId): self
+    public static function getUsingId(int $programId): self
     {
         return
             Cache::remember("program_id.{$programId}",
