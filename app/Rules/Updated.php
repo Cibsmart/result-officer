@@ -9,7 +9,7 @@ use Illuminate\Contracts\Validation\ValidationRule;
 
 final readonly class Updated implements ValidationRule
 {
-    public function __construct(private string $originalValue)
+    public function __construct(private string|int $originalValue)
     {
     }
 
