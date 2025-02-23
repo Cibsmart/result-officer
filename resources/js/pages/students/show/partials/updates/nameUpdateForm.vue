@@ -13,15 +13,15 @@ import Toggle from "@/components/inputs/toggle.vue";
 import FormGroup from "@/components/forms/formGroup.vue";
 
 const props = defineProps<{
-  student: App.Data.Students.StudentBasicData;
+  student: App.Data.Students.StudentData;
 }>();
 
 const emit = defineEmits<(e: "close") => void>();
 
 const form = useForm({
-  last_name: props.student.lastName,
-  first_name: props.student.firstName,
-  other_names: props.student.otherNames,
+  last_name: props.student.basic.lastName,
+  first_name: props.student.basic.firstName,
+  other_names: props.student.basic.otherNames,
   remark: "",
   has_mail: false,
   mail_title: "",
@@ -29,9 +29,10 @@ const form = useForm({
   name: "",
 });
 
-const title = `Update Student's Name (${props.student.registrationNumber})`;
+const title = `Update Student's Name (${props.student.basic.registrationNumber})`;
 const oldName = computed(
-  () => `${props.student.lastName.trim()}, ${props.student.firstName.trim()} ${props.student.otherNames.trim()}`,
+  () =>
+    `${props.student.basic.lastName.trim()}, ${props.student.basic.firstName.trim()} ${props.student.basic.otherNames.trim()}`,
 );
 const newName = computed(() => `${form.last_name.trim()}, ${form.first_name.trim()} ${form.other_names.trim()}`);
 
@@ -47,7 +48,7 @@ watch(
 );
 
 const submit = () =>
-  form.patch(route("student.name.update", { student: props.student.slug }), {
+  form.patch(route("student.name.update", { student: props.student.basic.slug }), {
     onSuccess: () => emit("close"),
   });
 </script>

@@ -425,6 +425,23 @@ declare namespace App.Data.Shared {
     isAdmin: boolean;
   };
 }
+declare namespace App.Data.States {
+  export type LocalGovernmentData = {
+    id: number;
+    name: string;
+  };
+  export type LocalGovernmentListData = {
+    data: Array<App.Data.States.LocalGovernmentData>;
+  };
+  export type StateData = {
+    id: number;
+    name: string;
+    localGovernments: App.Data.States.LocalGovernmentListData | null;
+  };
+  export type StateListData = {
+    data: Array<App.Data.States.StateData>;
+  };
+}
 declare namespace App.Data.Students {
   export type StudentBasicData = {
     id: number;
@@ -445,6 +462,8 @@ declare namespace App.Data.Students {
     status: App.Enums.StudentStatus;
     statusColor: App.Enums.StatusColor;
     photoUrl: string;
+    departmentId: number;
+    programId: number;
   };
   export type StudentComprehensiveData = {
     student: App.Data.Students.StudentData;
@@ -462,9 +481,12 @@ declare namespace App.Data.Students {
     entryMode: App.Enums.EntryMode;
     entrySession: string;
     entryLevel: string;
-    jambRegistrationNumber: string | null;
-    email: string | null;
-    phoneNumber: string | null;
+    jambRegistrationNumber: string;
+    email: string;
+    phoneNumber: string;
+    entrySessionId: number;
+    stateId: number;
+    localGovernmentId: number;
   };
 }
 declare namespace App.Data.Summary {
@@ -599,6 +621,8 @@ declare namespace App.Enums {
   export type Role = "super-admin" | "admin" | "desk-officer" | "exam-officer" | "database-officer" | "user";
   export type ScoreType = "course_work" | "exam";
   export type StatusColor = "gray" | "red" | "yellow" | "green" | "blue" | "purple" | "indigo" | "pink";
+  export type StudentField = "phone_number" | "email" | "jamb_registration_number";
+  export type StudentRelatedField = "program_id" | "entry_level_id" | "entry_session_id" | "local_government_id";
   export type StudentStatus =
     | "new"
     | "active"
@@ -639,7 +663,21 @@ declare namespace App.Enums.ModifiableFields {
     | "course_type"
     | "credit_unit";
   export type ProgramModifiableField = "code" | "name" | "faculty" | "duration" | "department" | "program_type";
-  export type StudentModifiableField = "name" | "status" | "result" | "registration_number";
+  export type StudentModifiableField =
+    | "name"
+    | "email"
+    | "gender"
+    | "result"
+    | "status"
+    | "program"
+    | "entry_mode"
+    | "entry_level"
+    | "phone_number"
+    | "entry_session"
+    | "date_of_birth"
+    | "local_government"
+    | "registration_number"
+    | "jamb_registration_number";
 }
 declare namespace App.ViewModels.Clearance {
   export type ClearanceFormPage = {
@@ -715,7 +753,6 @@ declare namespace App.ViewModels.Students {
   export type StudentShowPage = {
     data: App.Data.Students.StudentComprehensiveData;
     statues: App.Data.Enums.StudentStatusListData;
-    units: App.Data.Enums.CreditUnitListData;
     selectedIndex: number;
   };
 }

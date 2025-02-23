@@ -9,8 +9,6 @@ import { ref } from "vue";
 defineProps<{
   student: App.Data.Students.StudentData;
   results: App.Data.Results.StudentResultData;
-  statues: App.Data.Enums.StudentStatusListData;
-  units: App.Data.Enums.CreditUnitListData;
   selectedIndex: number;
 }>();
 
@@ -36,7 +34,6 @@ const openStatusUpdateForm = ref(false);
         <BaseTabPanel>
           <BasicInformation
             :openStatusUpdateForm="openStatusUpdateForm"
-            :statues="statues"
             :student="student"
             @closeStatusUpdateForm="openStatusUpdateForm = false" />
         </BaseTabPanel>
@@ -44,8 +41,7 @@ const openStatusUpdateForm = ref(false);
         <BaseTabPanel>
           <ResultInformation
             :results="results"
-            :student="student.basic"
-            :units="units" />
+            :student="student" />
         </BaseTabPanel>
 
         <BaseTabPanel>Student History</BaseTabPanel>

@@ -15,22 +15,23 @@ final class RegistrationNumberUpdate
 {
     public function execute(
         Student $student,
-        string $newRegistrationNumber,
+        RegistrationNumber $newRegistrationNumber,
         string $remark = '',
         ?DBMail $dbMail = null,
         ?User $user = null,
     ): void {
+        $oldRegistrationNumber = $student->registration_number;
+
+        $student->updateRegistrationNumber($newRegistrationNumber);
 
         StudentHistory::createNewUpdate(
             student: $student,
             model: $student,
             updatedField: StudentModifiableField::REGISTRATION_NUMBER,
-            data: ['new' => $newRegistrationNumber, 'old' => $student->registration_number],
+            data: ['new' => $newRegistrationNumber->value, 'old' => $oldRegistrationNumber],
             remark: $remark,
             dbMail: $dbMail,
             user: $user,
         );
-
-        $student->updateRegistrationNumber(RegistrationNumber::new($newRegistrationNumber));
     }
 }

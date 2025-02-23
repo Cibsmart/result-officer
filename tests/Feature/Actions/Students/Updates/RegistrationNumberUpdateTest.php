@@ -7,6 +7,7 @@ use App\Enums\ModifiableFields\StudentModifiableField;
 use App\Enums\RecordActionType;
 use App\Models\Student;
 use App\Models\StudentHistory;
+use App\Values\RegistrationNumber;
 use Tests\Factories\StudentFactory;
 use Tests\Factories\UserFactory;
 
@@ -17,19 +18,19 @@ covers(RegistrationNumberUpdate::class);
 it('updates student registration number', function (): void {
     $student = StudentFactory::new()->createOne();
 
-    $newRegistrationNumber = 'EBSU/2009/51486';
+    $newRegistrationNumber = RegistrationNumber::new('EBSU/2009/51486');
 
     (new RegistrationNumberUpdate())->execute($student, $newRegistrationNumber);
 
     $student->refresh();
 
-    expect($student->registration_number)->toBe($newRegistrationNumber);
+    expect($student->registration_number)->toBe($newRegistrationNumber->value);
 });
 
 it('updates student slug along with the registration number', function (): void {
     $student = StudentFactory::new()->createOne();
 
-    $newRegistrationNumber = 'EBSU/2009/51486';
+    $newRegistrationNumber = RegistrationNumber::new('EBSU/2009/51486');
 
     (new RegistrationNumberUpdate())->execute($student, $newRegistrationNumber);
 
@@ -41,7 +42,7 @@ it('updates student slug along with the registration number', function (): void 
 it('updates student number along with the registration number', function (): void {
     $student = StudentFactory::new()->createOne();
 
-    $newRegistrationNumber = 'EBSU/2009/51486';
+    $newRegistrationNumber = RegistrationNumber::new('EBSU/2009/51486');
 
     (new RegistrationNumberUpdate())->execute($student, $newRegistrationNumber);
 
@@ -50,20 +51,12 @@ it('updates student number along with the registration number', function (): voi
     expect($student->number)->toBe('51486');
 });
 
-it('throws exception for invalid registration number', function (): void {
-    $student = StudentFactory::new()->createOne();
-
-    $newRegistrationNumber = 'EBSU/209/51486';
-
-    (new RegistrationNumberUpdate())->execute($student, $newRegistrationNumber);
-})->throws(InvalidArgumentException::class, 'Invalid registration number');
-
 it('records the update in the student history table', function (): void {
     $student = StudentFactory::new()->createOne();
     $user = UserFactory::new()->createOne();
 
     $oldRegistrationNumber = $student->registration_number;
-    $newRegistrationNumber = 'EBSU/2009/51486';
+    $newRegistrationNumber = RegistrationNumber::new('EBSU/2009/51486');
 
     (new RegistrationNumberUpdate())->execute($student, $newRegistrationNumber, user: $user);
 
@@ -71,7 +64,7 @@ it('records the update in the student history table', function (): void {
 
     assertDatabaseHas(StudentHistory::class, [
         'action' => RecordActionType::UPDATE,
-        'data' => json_encode(['new' => $newRegistrationNumber, 'old' => $oldRegistrationNumber]),
+        'data' => json_encode(['new' => $newRegistrationNumber->value, 'old' => $oldRegistrationNumber]),
         'field' => StudentModifiableField::REGISTRATION_NUMBER,
         'modifiable_id' => $student->id,
         'modifiable_type' => (new Student())->getMorphClass(),

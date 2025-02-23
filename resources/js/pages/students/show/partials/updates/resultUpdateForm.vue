@@ -11,19 +11,22 @@ import CardFooter from "@/components/cards/cardFooter.vue";
 import TextareaInput from "@/components/inputs/textareaInput.vue";
 import Toggle from "@/components/inputs/toggle.vue";
 import FormGroup from "@/components/forms/formGroup.vue";
-import { SelectItem } from "@/types";
 import LabelInput from "@/components/inputs/labelInput.vue";
+import { useCreditUnits } from "@/composables/creditUnits";
+import SelectInput from "@/components/inputs/selectInput.vue";
 
 const props = defineProps<{
-  student: App.Data.Students.StudentBasicData;
+  student: App.Data.Students.StudentData;
   result: App.Data.Results.ResultData;
-  units: SelectItem[];
 }>();
 
 const emit = defineEmits<(e: "close") => void>();
 
+const { units } = useCreditUnits();
+
 const form = useForm({
   credit_unit: props.result.creditUnit,
+  credit_unit_object: units[0],
   in_course: props.result.inCourseScore,
   exam: props.result.examScore,
   remark: "",
@@ -34,9 +37,9 @@ const form = useForm({
   result: "",
 });
 
-const title = `Update Student's Result (${props.student.registrationNumber})`;
+const title = `Update Student's Result (${props.student.basic.registrationNumber})`;
 const oldName = computed(() => `${props.result.creditUnit}-${props.result.inCourseScore}-${props.result.examScore}`);
-const newName = computed(() => `${form.credit_unit}-${form.in_course}-${form.exam}`);
+const newName = computed(() => `${form.credit_unit_object.id}-${form.in_course}-${form.exam}`);
 const total = computed(() => `${form.in_course + form.exam}`);
 
 const canNotUpdate = computed(() => oldName.value === newName.value || form.processing);
@@ -51,9 +54,11 @@ watch(
 );
 
 const submit = () =>
-  form.patch(route("student.result.update", { student: props.student.slug }), {
-    onSuccess: () => emit("close"),
-  });
+  form
+    .transform((data) => ({ ...data, credit_unit: data.credit_unit_object.id }))
+    .patch(route("student.result.update", { student: props.student.basic.slug }), {
+      onSuccess: () => emit("close"),
+    });
 </script>
 
 <template>
@@ -71,15 +76,11 @@ const submit = () =>
             for="credit_unit"
             value="Credit Unit" />
 
-          <TextInput
-            id="credit_unit"
-            v-model="form.credit_unit"
-            autocomplete="off"
-            autofocus
-            max="15"
-            min="0"
-            required
-            type="number" />
+          <SelectInput
+            id="month"
+            v-model="form.credit_unit_object"
+            :items="units"
+            :selected="result.creditUnit" />
 
           <InputError :message="form.errors.credit_unit" />
         </div>

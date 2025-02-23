@@ -10,7 +10,7 @@ const props = defineProps<{
   student: App.Data.Students.StudentBasicData;
 }>();
 
-const emit = defineEmits<(e: "statusUpdate") => void>();
+const emit = defineEmits<{ (e: "statusUpdate"): void }>();
 
 const hasImageUrl = computed(() => props.student.photoUrl !== "");
 </script>

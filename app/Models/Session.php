@@ -20,9 +20,17 @@ final class Session extends Model
         $sessionName = Str::replace('-', '/', $sessionName);
 
         return
-            Cache::remember("session_{$sessionName}",
+            Cache::remember("session_name.{$sessionName}",
                 now()->addDay(),
                 fn () => self::query()->where('name', $sessionName)->firstOrFail());
+    }
+
+    public static function getUsingId(int $sessionId): self
+    {
+        return
+            Cache::remember("session_id.{$sessionId}",
+                now()->addDay(),
+                fn () => self::query()->where('id', $sessionId)->firstOrFail());
     }
 
     public static function sessionFromYear(int $year): string

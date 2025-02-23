@@ -9,7 +9,8 @@ const props = defineProps<{
   selected?: number | string;
 }>();
 
-const selectedIndex = props.selected ? props.items.findIndex((item) => item.id === props.selected) : 0;
+const getSelectedIndexUsingId = props.items.findIndex((item) => item.id === props.selected);
+const selectedIndex = props.selected && getSelectedIndexUsingId !== -1 ? getSelectedIndexUsingId : 0;
 
 const selected = ref(props.items[selectedIndex]);
 </script>
@@ -40,7 +41,7 @@ const selected = ref(props.items[selectedIndex]);
             v-for="item in items"
             :key="item.id"
             v-slot="{ active, selected }"
-            :disabled="item.id === 0"
+            :disabled="item.id === 0 || item.id === '0'"
             :value="item"
             as="template">
             <li

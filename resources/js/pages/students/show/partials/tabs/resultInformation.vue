@@ -8,9 +8,8 @@ import BaseSection from "@/layouts/main/partials/baseSection.vue";
 import ResultUpdateForm from "@/pages/students/show/partials/updates/resultUpdateForm.vue";
 
 const props = defineProps<{
-  student: App.Data.Students.StudentBasicData;
+  student: App.Data.Students.StudentData;
   results: App.Data.Results.StudentResultData;
-  units: App.Data.Enums.CreditUnitListData;
 }>();
 
 const hasResults = computed(() => props.results.sessionEnrollments.length > 0);
@@ -34,7 +33,6 @@ const closeEditModal = () => (showEditModal.value = false);
         v-for="session in results.sessionEnrollments"
         :key="session.id"
         :session="session"
-        :units="units"
         manageable
         @openEditResult="handleOpenEditResultModal" />
     </template>
@@ -70,7 +68,6 @@ const closeEditModal = () => (showEditModal.value = false);
         v-if="selectedResult"
         :result="selectedResult"
         :student="student"
-        :units="units.data"
         @close="closeEditModal" />
     </BaseSection>
   </Modal>

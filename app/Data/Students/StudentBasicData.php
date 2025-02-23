@@ -32,18 +32,16 @@ final class StudentBasicData extends Data
         public readonly StudentStatus $status,
         public readonly StatusColor $statusColor,
         public readonly string $photoUrl,
+        public readonly int $departmentId,
+        public readonly int $programId,
     ) {
     }
 
     public static function fromModel(Student $student): self
     {
-        $birthDate = DateValue::fromValue($student->date_of_birth)->toString();
-
         $status = $student->status;
-        assert($status instanceof StudentStatus);
 
         $gender = $student->gender;
-        assert($gender instanceof Gender);
 
         $otherNames = $student->other_names
             ? $student->other_names
@@ -64,7 +62,7 @@ final class StudentBasicData extends Data
             otherNames: $otherNames,
             name: "$student->name",
             gender: $gender,
-            birthDate: $birthDate,
+            birthDate: DateValue::fromValue($student->date_of_birth)->toString(),
             program: $program->name,
             department: $department->name,
             faculty: $department->faculty->name,
@@ -75,6 +73,8 @@ final class StudentBasicData extends Data
             status: $status,
             statusColor: $status->color(),
             photoUrl: $student->photo_url ? $student->photo_url : '',
+            departmentId: $department->id,
+            programId: $program->id,
         );
     }
 }

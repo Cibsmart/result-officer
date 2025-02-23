@@ -9,8 +9,11 @@ use App\Enums\EntryMode;
 use App\Enums\Gender;
 use App\Enums\ProgramDuration;
 use App\Enums\RecordSource;
+use App\Enums\StudentField;
+use App\Enums\StudentRelatedField;
 use App\Enums\StudentStatus;
 use App\Enums\VettingEventStatus;
+use App\Values\DateValue;
 use App\Values\RegistrationNumber;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -184,6 +187,36 @@ final class Student extends Model
         return $this->vettingEvent !== null
             && StudentStatus::canBeCleared($this->status)
             && VettingEventStatus::passed($this->vettingEvent->status);
+    }
+
+    public function updateField(StudentField $field, string $newValue): void
+    {
+        $this->{$field->value} = $newValue;
+        $this->save();
+    }
+
+    public function updateRelatedField(StudentRelatedField $field, int $newValue): void
+    {
+        $this->{$field->value} = $newValue;
+        $this->save();
+    }
+
+    public function updateGender(Gender $gender): void
+    {
+        $this->gender = $gender;
+        $this->save();
+    }
+
+    public function updateEntryMode(EntryMode $entryMode): void
+    {
+        $this->entry_mode = $entryMode;
+        $this->save();
+    }
+
+    public function updateBirthDate(DateValue $birthDate): void
+    {
+        $this->date_of_birth = $birthDate->value;
+        $this->save();
     }
 
     /**
