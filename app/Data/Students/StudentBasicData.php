@@ -34,7 +34,6 @@ final class StudentBasicData extends Data
         public readonly string $photoUrl,
         public readonly int $departmentId,
         public readonly int $programId,
-        public readonly int $entrySessionId,
     ) {
     }
 
@@ -76,7 +75,6 @@ final class StudentBasicData extends Data
             photoUrl: $student->photo_url ? $student->photo_url : '',
             departmentId: $department->id,
             programId: $program->id,
-            entrySessionId: $student->entry_session_id,
         );
     }
 }

@@ -20,6 +20,7 @@ final class StudentOtherData extends Data
         public readonly string $jambRegistrationNumber,
         public readonly string $email,
         public readonly string $phoneNumber,
+        public readonly int $entrySessionId,
     ) {
     }
 
@@ -53,7 +54,7 @@ final class StudentOtherData extends Data
             jambRegistrationNumber: $jambRegistrationNumber,
             email: $email,
             phoneNumber: $phoneNumber,
-
+            entrySessionId: $student->entry_session_id,
         );
     }
 }

@@ -464,7 +464,6 @@ declare namespace App.Data.Students {
     photoUrl: string;
     departmentId: number;
     programId: number;
-    entrySessionId: number;
   };
   export type StudentComprehensiveData = {
     student: App.Data.Students.StudentData;
@@ -485,6 +484,7 @@ declare namespace App.Data.Students {
     jambRegistrationNumber: string;
     email: string;
     phoneNumber: string;
+    entrySessionId: number;
   };
 }
 declare namespace App.Data.Summary {
