@@ -11,16 +11,15 @@ use App\Models\Student;
 use App\Models\User;
 use App\Values\DateValue;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 final class ProgramUpdateController
 {
     public function __invoke(
         Student $student,
-        Request $request,
+        ProgramUpdateRequest $request,
         ProgramUpdateAction $action,
     ): RedirectResponse {
-        $validated = $request->validate(['program_id' => ['required', 'exists:programs,id']]);
+        $validated = $request->validated();
 
         $user = $request->user();
         assert($user instanceof User);
@@ -35,7 +34,7 @@ final class ProgramUpdateController
             );
         }
 
-        $newValue = Program::getUsingId($validated['program_id']);
+        $newValue = Program::getUsingId($validated['program']);
 
         $action->execute($student, $newValue, $validated['remark'], $dbMail, $user);
 
