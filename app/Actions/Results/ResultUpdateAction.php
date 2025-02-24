@@ -13,7 +13,8 @@ use App\Models\User;
 
 final class ResultUpdateAction
 {
-    /** @param array{credit_unit?: int, in_course?: int, exam?: int} $newResult
+    /**
+     * @param array{credit_unit?: int, in_course?: int, exam?: int} $newResult
      * @throws \Exception
      */
     public function execute(

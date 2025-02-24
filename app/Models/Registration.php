@@ -70,7 +70,8 @@ final class Registration extends Model
             ->update(['program_curriculum_course_id' => $programCourseModel->id]);
     }
 
-    /** @param array{credit_unit?: int, in_course?: int, exam?: int} $newResult
+    /**
+     * @param array{credit_unit?: int, in_course?: int, exam?: int} $newResult
      * @throws \Exception
      */
     public static function updateRegistrationAndResult(
