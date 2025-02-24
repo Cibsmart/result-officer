@@ -5,6 +5,9 @@ import BasicInformation from "@/pages/students/show/partials/tabs/basicInformati
 import StudentPageHeader from "@/pages/students/show/partials/studentPageHeader.vue";
 import ResultInformation from "@/pages/students/show/partials/tabs/resultInformation.vue";
 import { ref } from "vue";
+import Modal from "@/components/modal.vue";
+import BaseSection from "@/layouts/main/partials/baseSection.vue";
+import StudentDeleteForm from "@/pages/students/show/partials/deletes/studentDeleteForm.vue";
 
 defineProps<{
   student: App.Data.Students.StudentData;
@@ -18,15 +21,24 @@ const tabs = [
   { name: "History", href: "#", current: false },
 ];
 
+const selectedStudent = ref<App.Data.Students.StudentBasicData | null>(null);
+
+const handleOpenDeleteStudentModal = (student: App.Data.Students.StudentBasicData) => {
+  selectedStudent.value = student;
+  openDeleteStudentForm.value = true;
+};
+
 const openStatusUpdateForm = ref(false);
 const openDeleteStudentForm = ref(false);
+
+const closeDeleteModal = () => (openDeleteStudentForm.value = false);
 </script>
 
 <template>
   <div class="relative pb-5 sm:pb-0">
     <StudentPageHeader
       :student="student.basic"
-      @openDeleteStudent="openDeleteStudentForm = true"
+      @openDeleteStudent="handleOpenDeleteStudentModal"
       @openUpdateStatus="openStatusUpdateForm = true" />
 
     <div class="mt-3 sm:mt-4">
@@ -50,4 +62,15 @@ const openDeleteStudentForm = ref(false);
       </BaseTabs>
     </div>
   </div>
+
+  <Modal
+    :show="openDeleteStudentForm"
+    @close="closeDeleteModal">
+    <BaseSection>
+      <StudentDeleteForm
+        v-if="selectedStudent"
+        :student="student.basic"
+        @close="closeDeleteModal" />
+    </BaseSection>
+  </Modal>
 </template>

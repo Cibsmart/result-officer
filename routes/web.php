@@ -58,6 +58,8 @@ use App\Http\Controllers\Vetting\VettingController;
 use App\Http\Middleware\ValidateMonthParameter;
 use App\Http\Middleware\ValidateYearParameter;
 use App\Models\ExcelImportEvent;
+use App\Models\Registration;
+use App\Models\Student;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(static function (): void {
@@ -200,13 +202,18 @@ Route::middleware(['auth'])->group(static function (): void {
             Route::patch('email', StudentEmailUpdateController::class)->name('student.email.update');
             Route::patch('phone-number', StudentPhoneNumberUpdateController::class)
                 ->name('student.phoneNumber.update');
-            Route::patch('result', ResultUpdateController::class)->name('student.result.update');
+            Route::patch('result', ResultUpdateController::class)
+                ->name('student.result.update')
+                ->can('update', Registration::class);
         });
 
         Route::prefix('{student}/delete')->group(static function (): void {
-            Route::delete('', [StudentController::class, 'destroy'])->name('student.destroy');
+            Route::delete('', [StudentController::class, 'destroy'])
+                ->name('student.destroy')
+                ->can('delete', Student::class);
             Route::delete('registration/{registration}', [RegistrationController::class, 'destroy'])
-                ->name('student.registration.destroy');
+                ->name('student.registration.destroy')
+                ->can('delete', Registration::class);
         });
     });
 
