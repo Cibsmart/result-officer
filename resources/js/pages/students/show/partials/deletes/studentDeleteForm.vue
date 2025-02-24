@@ -51,7 +51,7 @@ const submit = () =>
   <BaseFormSection
     :description="description"
     :header="title">
-    <InputError :message="form.errors.result" />
+    <InputError :message="form.errors.student" />
 
     <form
       class="mt-6 space-y-6"
