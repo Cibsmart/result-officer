@@ -15,6 +15,7 @@ use App\Enums\StudentStatus;
 use App\Enums\VettingEventStatus;
 use App\Values\DateValue;
 use App\Values\RegistrationNumber;
+use Exception;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -44,6 +45,16 @@ final class Student extends Model
             Cache::remember("student_{$registrationNumber}",
                 now()->addMinutes(5),
                 fn () => self::query()->where('registration_number', $registrationNumber)->firstOrFail());
+    }
+
+    /** @throws \Exception */
+    public static function deleteRegistration(self $student): void
+    {
+        if (in_array($student->status, StudentStatus::archivedStates(), true)) {
+            throw new Exception("Cannot delete {$student->status->value} student");
+        }
+
+        $student->delete();
     }
 
     public function getRouteKeyName(): string
