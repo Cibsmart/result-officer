@@ -21,7 +21,7 @@ final class StudentHistory extends Model
         ?DBMail $dbMail = null,
         RecordSource $source = RecordSource::USER,
         ?User $user = null,
-        ?RecordActionType $action = RecordActionType::UPDATE,
+        RecordActionType $action = RecordActionType::UPDATE,
     ): self {
         $modelName = $model::class;
         $modifiableType = (new $modelName())->getMorphClass();
