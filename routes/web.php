@@ -34,6 +34,7 @@ use App\Http\Controllers\Imports\ContinueImportEventController;
 use App\Http\Controllers\Imports\FinalResultImportController;
 use App\Http\Controllers\Imports\ProgramCurriculumImportController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Registrations\RegistrationController;
 use App\Http\Controllers\Reports\CompositeSheetController;
 use App\Http\Controllers\Reports\DepartmentClearedController;
 use App\Http\Controllers\Results\ViewStudentResultController;
@@ -200,6 +201,12 @@ Route::middleware(['auth'])->group(static function (): void {
             Route::patch('phone-number', StudentPhoneNumberUpdateController::class)
                 ->name('student.phoneNumber.update');
             Route::patch('result', ResultUpdateController::class)->name('student.result.update');
+        });
+
+        Route::prefix('{student}/delete')->group(static function (): void {
+            Route::delete('', [StudentController::class, 'destroy'])->name('student.destroy');
+            Route::delete('registration/{registration}', [RegistrationController::class, 'destroy'])
+                ->name('student.registration.destroy');
         });
     });
 
