@@ -10,7 +10,7 @@ const props = defineProps<{
   student: App.Data.Students.StudentBasicData;
 }>();
 
-const emit = defineEmits<{ (e: "statusUpdate"): void }>();
+const emit = defineEmits<{ (e: "openUpdateStatus"): void; (e: "openDeleteStudent"): void }>();
 
 const hasImageUrl = computed(() => props.student.photoUrl !== "");
 </script>
@@ -47,11 +47,15 @@ const hasImageUrl = computed(() => props.student.photoUrl !== "");
       <HamburgerMenu>
         <HamburgerMenuItem
           type="button"
-          @click="emit('statusUpdate')">
+          @click="emit('openUpdateStatus')">
           Update Status
         </HamburgerMenuItem>
 
-        <HamburgerMenuItem href="#">Delete Student</HamburgerMenuItem>
+        <HamburgerMenuItem
+          type="button"
+          @click="emit('openDeleteStudent')">
+          Delete Student
+        </HamburgerMenuItem>
       </HamburgerMenu>
     </div>
   </div>
