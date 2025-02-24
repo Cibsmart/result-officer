@@ -34,6 +34,7 @@ final class ResultUpdateRequest extends FormRequest
                 Rule::date()->todayOrBefore(),
             ],
             'mail_title' => ['exclude_if:has_mail,false', 'required', 'string', 'min:10', 'max:255'],
+            'password' => ['required', 'current_password'],
             'registration_id' => ['required', 'integer', 'exists:registrations,id'],
             'remark' => ['required', 'string'],
         ];

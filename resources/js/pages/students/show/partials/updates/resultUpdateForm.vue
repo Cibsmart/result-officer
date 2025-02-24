@@ -35,6 +35,7 @@ const form = useForm({
   mail_date: "",
   registration_id: props.result.id,
   result: "",
+  password: "",
 });
 
 const title = `Update Student's Result (${props.student.basic.registrationNumber})`;
@@ -176,6 +177,22 @@ const submit = () =>
         </div>
       </template>
 
+      <div class="mt-2">
+        <InputLabel
+          for="password"
+          value="Password (for confirmation and signature)" />
+
+        <TextInput
+          id="password"
+          v-model="form.password"
+          autocomplete="off"
+          placeholder="Password"
+          required
+          type="password" />
+
+        <InputError :message="form.errors.password" />
+      </div>
+      
       <CardFooter class="mt-6">
         <div class="mt-2 flex justify-end">
           <SecondaryButton @click="emit('close')">Cancel</SecondaryButton>
