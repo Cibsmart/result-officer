@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Students\Updates;
 
 use App\Actions\Results\ResultUpdateAction;
+use App\Enums\NotificationType;
 use App\Models\DBMail;
 use App\Models\Registration;
 use App\Models\Student;
 use App\Models\User;
 use App\Values\DateValue;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 
 final class ResultUpdateController
@@ -38,11 +40,17 @@ final class ResultUpdateController
 
         $changedResultFields = $this->getChangedResultFields($registration, $validated);
 
-        $action->execute($student, $registration, $changedResultFields, $validated['remark'], $dbMail);
+        try {
+            $action->execute($student, $registration, $changedResultFields, $validated['remark'], $dbMail);
+        } catch (Exception $e) {
+            return redirect()
+                ->route('students.show', $student)
+                ->{NotificationType::ERROR->value}($e->getMessage());
+        }
 
         return redirect()
             ->route('students.show', $student)
-            ->success('Student name updated successfully.');
+            ->{NotificationType::SUCCESS->value}('Student name updated successfully.');
     }
 
     /**

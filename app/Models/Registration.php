@@ -70,12 +70,18 @@ final class Registration extends Model
             ->update(['program_curriculum_course_id' => $programCourseModel->id]);
     }
 
-    /** @param array{credit_unit?: int, in_course?: int, exam?: int} $newResult */
+    /** @param array{credit_unit?: int, in_course?: int, exam?: int} $newResult
+     * @throws \Exception
+     */
     public static function updateRegistrationAndResult(
         Student $student,
         self $registration,
         array $newResult,
     ): void {
+        if (in_array($student->status, StudentStatus::archivedStates(), true)) {
+            throw new Exception("Cannot update results of {$student->status->value} student");
+        }
+
         if (array_key_exists('credit_unit', $newResult)) {
             $registration->credit_unit = CreditUnit::from($newResult['credit_unit']);
             $registration->save();
