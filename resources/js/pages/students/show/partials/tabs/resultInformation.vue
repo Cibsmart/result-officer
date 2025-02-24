@@ -6,6 +6,7 @@ import { computed, ref } from "vue";
 import Modal from "@/components/modal.vue";
 import BaseSection from "@/layouts/main/partials/baseSection.vue";
 import ResultUpdateForm from "@/pages/students/show/partials/updates/resultUpdateForm.vue";
+import ResultDeleteForm from "@/pages/students/show/partials/deletes/resultDeleteForm.vue";
 
 const props = defineProps<{
   student: App.Data.Students.StudentData;
@@ -84,7 +85,7 @@ const closeDeleteModal = () => (showDeleteModal.value = false);
     :show="showDeleteModal"
     @close="closeDeleteModal">
     <BaseSection>
-      <ResultUpdateForm
+      <ResultDeleteForm
         v-if="selectedResult"
         :result="selectedResult"
         :student="student"
