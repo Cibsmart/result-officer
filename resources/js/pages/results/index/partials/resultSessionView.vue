@@ -11,10 +11,17 @@ withDefaults(
   },
 );
 
-const emit = defineEmits<(e: "openEditResult", result: App.Data.Results.ResultData) => void>();
+const emit = defineEmits<{
+  (e: "openEditResult", result: App.Data.Results.ResultData): void;
+  (e: "openDeleteResult", result: App.Data.Results.ResultData): void;
+}>();
 
 const handleOpenEditResult = (result: App.Data.Results.ResultData) => {
   emit("openEditResult", result);
+};
+
+const handleOpenDeleteResult = (result: App.Data.Results.ResultData) => {
+  emit("openDeleteResult", result);
 };
 </script>
 
@@ -28,6 +35,7 @@ const handleOpenEditResult = (result: App.Data.Results.ResultData) => {
       <ResultSemesterView
         :manageable
         :semester="semester"
+        @openDeleteResult="handleOpenDeleteResult"
         @openEditResult="handleOpenEditResult" />
     </template>
 
