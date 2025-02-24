@@ -48,10 +48,10 @@ const hasImageUrl = computed(() => props.student.photoUrl !== "");
         <HamburgerMenuItem
           type="button"
           @click="emit('statusUpdate')">
-          Edit
+          Update Status
         </HamburgerMenuItem>
 
-        <HamburgerMenuItem href="#">Delete</HamburgerMenuItem>
+        <HamburgerMenuItem href="#">Delete Student</HamburgerMenuItem>
       </HamburgerMenu>
     </div>
   </div>
