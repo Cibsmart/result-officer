@@ -9,6 +9,7 @@ use App\Enums\NotificationType;
 use App\Models\DBMail;
 use App\Models\Registration;
 use App\Models\Student;
+use App\Models\User;
 use App\Values\DateValue;
 use Exception;
 use Illuminate\Http\RedirectResponse;
@@ -24,6 +25,7 @@ final class RegistrationController
         $validated = $request->validated();
 
         $user = $request->user();
+        assert($user instanceof User);
 
         $dbMail = DBMail::createFromRecordUpdate(
             user: $user,
