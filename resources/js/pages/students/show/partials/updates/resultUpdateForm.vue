@@ -192,7 +192,7 @@ const submit = () =>
 
         <InputError :message="form.errors.password" />
       </div>
-      
+
       <CardFooter class="mt-6">
         <div class="mt-2 flex justify-end">
           <SecondaryButton @click="emit('close')">Cancel</SecondaryButton>

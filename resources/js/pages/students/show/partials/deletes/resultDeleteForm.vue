@@ -33,7 +33,7 @@ const canNotUpdate = computed(() => form.processing);
 const submit = () =>
   form.delete(
     route("student.registration.destroy", { student: props.student.basic.slug, registration: props.result.id }),
-    { preserveScore: true, onSuccess: () => emit("close") },
+    { preserveScroll: true, onSuccess: () => emit("close") },
   );
 </script>
 
