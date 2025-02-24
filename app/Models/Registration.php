@@ -8,6 +8,8 @@ use App\Data\Models\RegistrationModelData;
 use App\Enums\CourseStatus;
 use App\Enums\CreditUnit;
 use App\Enums\RecordSource;
+use App\Enums\StudentStatus;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -98,6 +100,16 @@ final class Registration extends Model
         }
 
         $result->recompute($student);
+    }
+
+    /** @throws \Exception */
+    public static function deleteRegistration(Student $student, self $registration): void
+    {
+        if (in_array($student->status, StudentStatus::archivedStates(), true)) {
+            throw new Exception("Cannot delete results of {$student->status->value} student");
+        }
+
+        $registration->delete();
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\Registration> */
