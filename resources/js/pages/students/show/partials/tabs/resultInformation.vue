@@ -6,6 +6,7 @@ import { computed, ref } from "vue";
 import Modal from "@/components/modal.vue";
 import BaseSection from "@/layouts/main/partials/baseSection.vue";
 import ResultUpdateForm from "@/pages/students/show/partials/updates/resultUpdateForm.vue";
+import ResultDeleteForm from "@/pages/students/show/partials/deletes/resultDeleteForm.vue";
 
 const props = defineProps<{
   student: App.Data.Students.StudentData;
@@ -17,13 +18,20 @@ const hasResults = computed(() => props.results.sessionEnrollments.length > 0);
 const selectedResult = ref<App.Data.Results.ResultData | null>(null);
 
 const showEditModal = ref(false);
+const showDeleteModal = ref(false);
 
 const handleOpenEditResultModal = (result: App.Data.Results.ResultData) => {
   selectedResult.value = result;
   showEditModal.value = true;
 };
 
+const handleOpenDeleteResultModal = (result: App.Data.Results.ResultData) => {
+  selectedResult.value = result;
+  showDeleteModal.value = true;
+};
+
 const closeEditModal = () => (showEditModal.value = false);
+const closeDeleteModal = () => (showDeleteModal.value = false);
 </script>
 
 <template>
@@ -34,6 +42,7 @@ const closeEditModal = () => (showEditModal.value = false);
         :key="session.id"
         :session="session"
         manageable
+        @openDeleteResult="handleOpenDeleteResultModal"
         @openEditResult="handleOpenEditResultModal" />
     </template>
 
@@ -69,6 +78,18 @@ const closeEditModal = () => (showEditModal.value = false);
         :result="selectedResult"
         :student="student"
         @close="closeEditModal" />
+    </BaseSection>
+  </Modal>
+
+  <Modal
+    :show="showDeleteModal"
+    @close="closeDeleteModal">
+    <BaseSection>
+      <ResultDeleteForm
+        v-if="selectedResult"
+        :result="selectedResult"
+        :student="student"
+        @close="closeDeleteModal" />
     </BaseSection>
   </Modal>
 </template>

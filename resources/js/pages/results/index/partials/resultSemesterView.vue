@@ -19,7 +19,10 @@ const props = withDefaults(
   },
 );
 
-const emit = defineEmits<(e: "openEditResult", result: App.Data.Results.ResultData) => void>();
+const emit = defineEmits<{
+  (e: "openEditResult", result: App.Data.Results.ResultData): void;
+  (e: "openDeleteResult", result: App.Data.Results.ResultData): void;
+}>();
 
 const title = computed(() => `${props.semester.semester} SEMESTER`);
 </script>
@@ -101,7 +104,11 @@ const title = computed(() => `${props.semester.semester} SEMESTER`);
                 Edit
               </HamburgerMenuItem>
 
-              <HamburgerMenuItem href="#">Delete</HamburgerMenuItem>
+              <HamburgerMenuItem
+                type="button"
+                @click="emit('openDeleteResult', result)">
+                Delete
+              </HamburgerMenuItem>
             </HamburgerMenu>
           </BaseTD>
         </template>

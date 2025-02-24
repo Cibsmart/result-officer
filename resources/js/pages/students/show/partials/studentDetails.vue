@@ -19,13 +19,15 @@ const tabs = [
 ];
 
 const openStatusUpdateForm = ref(false);
+const openDeleteStudentForm = ref(false);
 </script>
 
 <template>
   <div class="relative pb-5 sm:pb-0">
     <StudentPageHeader
       :student="student.basic"
-      @statusUpdate="openStatusUpdateForm = true" />
+      @openDeleteStudent="openDeleteStudentForm = true"
+      @openUpdateStatus="openStatusUpdateForm = true" />
 
     <div class="mt-3 sm:mt-4">
       <BaseTabs

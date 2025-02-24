@@ -5,40 +5,37 @@ declare(strict_types=1);
 namespace App\Actions\Results;
 
 use App\Enums\ModifiableFields\StudentModifiableField;
+use App\Enums\RecordActionType;
 use App\Models\DBMail;
 use App\Models\Registration;
 use App\Models\Student;
 use App\Models\StudentHistory;
 use App\Models\User;
 
-final class ResultUpdateAction
+final class ResultDeleteAction
 {
-    /**
-     * @param array{credit_unit?: int, in_course?: int, exam?: int} $newResult
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     public function execute(
         Student $student,
         Registration $registration,
-        array $newResult,
         string $remark = '',
         ?DBMail $dbMail = null,
         ?User $user = null,
     ): void {
         $oldResultData = $registration->getUpdateData();
+        $model = $registration;
 
-        Registration::updateRegistrationAndResult($student, $registration, $newResult);
-
-        $registration->fresh();
+        Registration::deleteRegistration($student, $registration);
 
         StudentHistory::createNewUpdate(
             student: $student,
-            model: $registration,
+            model: $model,
             updatedField: StudentModifiableField::RESULT,
-            data: ['new' => $registration->getUpdateData(), 'old' => $oldResultData],
+            data: ['old' => $oldResultData],
             remark: $remark,
             dbMail: $dbMail,
             user: $user,
+            action: RecordActionType::DELETE,
         );
     }
 }

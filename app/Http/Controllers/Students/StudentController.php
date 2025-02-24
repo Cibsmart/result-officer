@@ -48,4 +48,9 @@ final class StudentController
 
         return redirect()->to(route('students.show', ['student' => $student]));
     }
+
+    public function destroy(): void
+    {
+
+    }
 }

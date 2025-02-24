@@ -8,6 +8,8 @@ use App\Data\Models\RegistrationModelData;
 use App\Enums\CourseStatus;
 use App\Enums\CreditUnit;
 use App\Enums\RecordSource;
+use App\Enums\StudentStatus;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -68,12 +70,19 @@ final class Registration extends Model
             ->update(['program_curriculum_course_id' => $programCourseModel->id]);
     }
 
-    /** @param array{credit_unit?: int, in_course?: int, exam?: int} $newResult */
+    /**
+     * @param array{credit_unit?: int, in_course?: int, exam?: int} $newResult
+     * @throws \Exception
+     */
     public static function updateRegistrationAndResult(
         Student $student,
         self $registration,
         array $newResult,
     ): void {
+        if (in_array($student->status, StudentStatus::archivedStates(), true)) {
+            throw new Exception("Cannot update results of {$student->status->value} student");
+        }
+
         if (array_key_exists('credit_unit', $newResult)) {
             $registration->credit_unit = CreditUnit::from($newResult['credit_unit']);
             $registration->save();
@@ -98,6 +107,16 @@ final class Registration extends Model
         }
 
         $result->recompute($student);
+    }
+
+    /** @throws \Exception */
+    public static function deleteRegistration(Student $student, self $registration): void
+    {
+        if (in_array($student->status, StudentStatus::archivedStates(), true)) {
+            throw new Exception("Cannot delete results of {$student->status->value} student");
+        }
+
+        $registration->delete();
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\Registration> */
