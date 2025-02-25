@@ -9,10 +9,10 @@ import FormGroup from "@/components/forms/formGroup.vue";
 import { useForm } from "@inertiajs/vue3";
 import { useMonths } from "@/composables/months";
 import { useYears } from "@/composables/year";
+import { useExamOfficers } from "@/composables/examOfficers";
 
 const props = defineProps<{
   student: App.Data.Vetting.VettingStudentData;
-  clearance: App.ViewModels.Clearance.ClearanceFormPage;
 }>();
 
 const emit = defineEmits<(e: "close") => void>();
@@ -42,6 +42,7 @@ const clearStudent = () => {
 
 const { months } = useMonths();
 const { years } = useYears();
+const { officers, isLoading } = useExamOfficers();
 </script>
 
 <template>
@@ -94,10 +95,15 @@ const { years } = useYears();
             value="Exam Officer" />
 
           <SelectInput
+            v-if="!isLoading"
             id="exam_officer"
             v-model="form.exam_officer_object"
-            :items="clearance.examOfficers.officers"
-            class="mt-1 block w-full" />
+            :items="officers" />
+
+          <SelectInput
+            v-else
+            id="exam_officer_loading"
+            :items="officers" />
 
           <InputError
             :message="form.errors.exam_officer"

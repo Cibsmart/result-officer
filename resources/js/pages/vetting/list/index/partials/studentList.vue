@@ -23,7 +23,6 @@ import ClearanceConfirmationForm from "@/pages/vetting/list/index/partials/clear
 const props = defineProps<{
   department: App.Data.Department.DepartmentInfoData;
   steps: App.Data.Vetting.VettingStepListData;
-  clearance: App.ViewModels.Clearance.ClearanceFormPage;
   paginated: PaginatedVettingListData;
 }>();
 
@@ -130,7 +129,6 @@ const closeModal = () => (openClearanceForm.value = false);
     @close="closeModal">
     <BaseSection v-if="clearanceStudent">
       <ClearanceConfirmationForm
-        :clearance="clearance"
         :student="clearanceStudent"
         @close="closeModal" />
     </BaseSection>
