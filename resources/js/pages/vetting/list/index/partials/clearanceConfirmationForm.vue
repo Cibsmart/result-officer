@@ -7,6 +7,8 @@ import BaseFormSection from "@/components/forms/baseFormSection.vue";
 import SecondaryButton from "@/components/buttons/secondaryButton.vue";
 import FormGroup from "@/components/forms/formGroup.vue";
 import { useForm } from "@inertiajs/vue3";
+import { useMonths } from "@/composables/months";
+import { useYears } from "@/composables/year";
 
 const props = defineProps<{
   student: App.Data.Vetting.VettingStudentData;
@@ -15,14 +17,31 @@ const props = defineProps<{
 
 const emit = defineEmits<(e: "close") => void>();
 
-const form = useForm({ year: "", month: "", exam_officer: "" });
+const form = useForm({
+  year: "",
+  month: "",
+  exam_officer: "",
+  year_object: { id: "" },
+  month_object: { id: "" },
+  exam_officer_object: { id: "" },
+});
 
 const clearStudent = () => {
-  form.post(route("students.clearance.store", { student: props.student.slug }), {
-    preserveScroll: true,
-    onSuccess: () => emit("close"),
-  });
+  form
+    .transform((data) => ({
+      ...data,
+      year: data.year_object.id,
+      month: data.month_object.id,
+      exam_officer: data.exam_officer_object.id,
+    }))
+    .post(route("students.clearance.store", { student: props.student.slug }), {
+      preserveScroll: true,
+      onSuccess: () => emit("close"),
+    });
 };
+
+const { months } = useMonths();
+const { years } = useYears();
 </script>
 
 <template>
@@ -39,8 +58,8 @@ const clearStudent = () => {
 
             <SelectInput
               id="year"
-              v-model="form.year"
-              :items="clearance.years.years"
+              v-model="form.year_object"
+              :items="years"
               class="mt-1 block w-full" />
 
             <InputError
@@ -57,8 +76,8 @@ const clearStudent = () => {
 
             <SelectInput
               id="month"
-              v-model="form.month"
-              :items="clearance.months.months"
+              v-model="form.month_object"
+              :items="months"
               class="mt-1 block w-full" />
 
             <InputError
@@ -76,7 +95,7 @@ const clearStudent = () => {
 
           <SelectInput
             id="exam_officer"
-            v-model="form.exam_officer"
+            v-model="form.exam_officer_object"
             :items="clearance.examOfficers.officers"
             class="mt-1 block w-full" />
 

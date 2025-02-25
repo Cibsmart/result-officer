@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Actions\Clearing\ClearStudent;
+use App\Enums\Months;
 use App\Models\FinalStudent;
 use App\Models\Student;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Throwable;
 
 final class ClearanceController
@@ -20,20 +23,21 @@ final class ClearanceController
         Request $request,
         ClearStudent $action,
     ): RedirectResponse {
-        $request->validate([
-            'exam_officer' => ['required', 'array'],
-            'exam_officer.id' => ['required', 'integer'],
-            'month' => ['required', 'array'],
-            'month.name' => ['required', 'string'],
-            'year' => ['required', 'array'],
-            'year.name' => ['required', 'integer'],
+        $validated = $request->validate([
+            'exam_officer' => ['required', 'integer'],
+            'month' => ['required', Rule::enum(Months::class)],
+            'year' => ['required', 'integer', 'regex:/^\d{4}$/'],
         ]);
+        dd($validated);
+
+        $user = $request->user();
+        assert($user instanceof User);
 
         $data = [
-            'exam_officer_id' => $request->exam_officer['id'],
-            'month' => $request->month['name'],
-            'user_id' => $request->user()->id,
-            'year' => $request->year['name'],
+            'exam_officer_id' => $validated['exam_officer'],
+            'month' => $validated['month'],
+            'user_id' => $user->id,
+            'year' => $validated['year'],
         ];
 
         try {
