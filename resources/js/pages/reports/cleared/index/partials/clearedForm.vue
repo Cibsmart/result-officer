@@ -6,46 +6,37 @@ import { useForm } from "@inertiajs/vue3";
 import SelectInput from "@/components/inputs/selectInput.vue";
 import { SelectItem } from "@/types";
 import BaseFormSection from "@/components/forms/baseFormSection.vue";
-import { computed } from "vue";
 import FormGroup from "@/components/forms/formGroup.vue";
+import { useMonths } from "@/composables/months";
+import { useYears } from "@/composables/year";
 
 defineProps<{
   departments: SelectItem[];
 }>();
 
-const form = useForm({ department: "", year: "", month: "" });
-
-const submit = () => {
-  form.post(route("department.cleared.store"));
-};
-
-const years = computed(() => {
-  const startYear = 2009;
-  const currentYear = new Date().getFullYear();
-  return [
-    { id: 0, name: "Select Year" },
-    ...Array.from({ length: currentYear - startYear + 2 }, (_, i) => {
-      const year = currentYear - i;
-      return { id: year, name: year.toString() };
-    }),
-  ];
+const form = useForm({
+  department: "",
+  year: "",
+  month: "",
+  department_object: { id: "" },
+  month_object: { id: "" },
+  year_object: { id: "" },
 });
 
-const months = [
-  { id: 0, name: "Select Month" },
-  { id: 1, name: "January" },
-  { id: 2, name: "February" },
-  { id: 3, name: "March" },
-  { id: 4, name: "April" },
-  { id: 5, name: "May" },
-  { id: 6, name: "June" },
-  { id: 7, name: "July" },
-  { id: 8, name: "August" },
-  { id: 9, name: "September" },
-  { id: 10, name: "October" },
-  { id: 11, name: "November" },
-  { id: 12, name: "December" },
-];
+const submit = () => {
+  form
+    .transform((data) => ({
+      ...data,
+      department: data.department_object.id,
+      month: data.month_object.id,
+      year: data.year_object.id,
+    }))
+    .post(route("department.cleared.store"));
+};
+
+const { years } = useYears();
+
+const { months } = useMonths();
 </script>
 
 <template>
@@ -62,7 +53,7 @@ const months = [
 
         <SelectInput
           id="department"
-          v-model="form.department"
+          v-model="form.department_object"
           :items="departments" />
 
         <InputError
@@ -78,7 +69,7 @@ const months = [
 
           <SelectInput
             id="year"
-            v-model="form.year"
+            v-model="form.year_object"
             :items="years" />
 
           <InputError
@@ -93,7 +84,7 @@ const months = [
 
           <SelectInput
             id="month"
-            v-model="form.month"
+            v-model="form.month_object"
             :items="months"
             class="mt-1 block w-full" />
 

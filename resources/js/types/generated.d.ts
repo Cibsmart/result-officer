@@ -1,19 +1,3 @@
-declare namespace App.Data.Clearance {
-  export type ClearanceMonthData = {
-    id: number;
-    name: string;
-  };
-  export type ClearanceMonthListData = {
-    months: Array<App.Data.Clearance.ClearanceMonthData>;
-  };
-  export type ClearanceYearData = {
-    id: number;
-    name: string;
-  };
-  export type ClearanceYearListData = {
-    years: Array<App.Data.Clearance.ClearanceYearData>;
-  };
-}
 declare namespace App.Data.Cleared {
   export type ClearedStudentData = {
     id: number;
@@ -174,7 +158,7 @@ declare namespace App.Data.ExamOfficer {
     name: string;
   };
   export type ExamOfficerListData = {
-    officers: Array<App.Data.ExamOfficer.ExamOfficerData>;
+    data: Array<App.Data.ExamOfficer.ExamOfficerData>;
   };
 }
 declare namespace App.Data.Faculty {
@@ -679,13 +663,6 @@ declare namespace App.Enums.ModifiableFields {
     | "registration_number"
     | "jamb_registration_number";
 }
-declare namespace App.ViewModels.Clearance {
-  export type ClearanceFormPage = {
-    examOfficers: App.Data.ExamOfficer.ExamOfficerListData;
-    years: App.Data.Clearance.ClearanceYearListData;
-    months: App.Data.Clearance.ClearanceMonthListData;
-  };
-}
 declare namespace App.ViewModels.Downloads {
   export type DownloadCoursesPage = {
     events: any;
@@ -769,7 +746,6 @@ declare namespace App.ViewModels.Summary {
 declare namespace App.ViewModels.Vetting {
   export type VettingIndexPage = {
     departments: App.Data.Department.DepartmentListData;
-    clearance: App.ViewModels.Clearance.ClearanceFormPage;
     steps: App.Data.Vetting.VettingStepListData;
     department: App.Data.Department.DepartmentInfoData;
     data: App.Data.Vetting.PaginatedVettingListData;

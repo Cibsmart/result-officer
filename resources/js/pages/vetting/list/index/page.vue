@@ -11,7 +11,6 @@ import { PaginatedVettingListData } from "@/types/paginate";
 
 defineProps<{
   departments: App.Data.Department.DepartmentListData;
-  clearance: App.ViewModels.Clearance.ClearanceFormPage;
   steps: App.Data.Vetting.VettingStepListData;
   department: App.Data.Department.DepartmentInfoData;
   data: PaginatedVettingListData | null;
@@ -36,7 +35,6 @@ const pages: BreadcrumbItem[] = [
 
     <StudentList
       v-if="data !== null"
-      :clearance="clearance"
       :department="department"
       :paginated="data"
       :steps="steps" />

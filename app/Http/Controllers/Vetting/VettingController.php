@@ -12,7 +12,6 @@ use App\Models\Department;
 use App\Models\Student;
 use App\Models\User;
 use App\Models\VettingEvent;
-use App\ViewModels\Clearance\ClearanceFormPage;
 use App\ViewModels\Vetting\VettingIndexPage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -34,7 +33,6 @@ final class VettingController
 
         return Inertia::render('vetting/list/index/page', new VettingIndexPage(
             departments: fn () => DepartmentListData::forUser($user),
-            clearance: fn () => ClearanceFormPage::new(),
             steps: fn () => $student ? VettingStepListData::from($student) : null,
             department: fn () => $department ? DepartmentInfoData::for($department) : null,
             data: fn () => $department ? PaginatedVettingListData::for($department)->paginated : null,
