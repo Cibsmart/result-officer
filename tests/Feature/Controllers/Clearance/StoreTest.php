@@ -22,9 +22,9 @@ it('can clear a student', function (): void {
     $examOfficer = ExamOfficerFactory::new()->createOne();
 
     actingAs($user)->post(route('students.clearance.store', $student), [
-        'exam_officer' => ['id' => $examOfficer->id],
-        'month' => ['name' => now()->monthName],
-        'year' => ['name' => now()->year],
+        'exam_officer' => $examOfficer->id,
+        'month' => now()->monthName,
+        'year' => now()->year,
     ]);
 
     assertDatabaseHas(Student::class, [
@@ -42,9 +42,9 @@ it('redirects back to the vetting page', function (): void {
 
     actingAs($user)->fromRoute('vetting.index')
         ->post(route('students.clearance.store', $student), [
-            'exam_officer' => ['id' => $examOfficer->id],
-            'month' => ['name' => now()->monthName],
-            'year' => ['name' => now()->year],
+            'exam_officer' => $examOfficer->id,
+            'month' => now()->monthName,
+            'year' => now()->year,
         ])
         ->assertRedirect(route('vetting.index', $student->department()));
 });
