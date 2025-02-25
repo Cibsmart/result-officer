@@ -55,6 +55,7 @@ use App\Http\Controllers\Students\Updates\StudentPhoneNumberUpdateController;
 use App\Http\Controllers\Students\Updates\StudentStatusUpdateController;
 use App\Http\Controllers\Summary\DepartmentResultSummaryController;
 use App\Http\Controllers\Vetting\VettingController;
+use App\Http\Controllers\VettingGroupController;
 use App\Http\Middleware\ValidateMonthParameter;
 use App\Http\Middleware\ValidateYearParameter;
 use App\Models\ExcelImportEvent;
@@ -167,6 +168,11 @@ Route::middleware(['auth'])->group(static function (): void {
         Route::get('{department?}', [VettingController::class, 'index'])->name('vetting.index');
         Route::post('', [VettingController::class, 'store'])->name('vetting.store');
         Route::get('create/{student}', [VettingController::class, 'create'])->name('vetting.create');
+
+    });
+
+    Route::prefix('vetting-group')->group(static function (): void {
+        Route::get('', [VettingGroupController::class, 'index'])->name('vetting.group.index');
     });
 
     Route::prefix('department/cleared/students')->group(static function (): void {
