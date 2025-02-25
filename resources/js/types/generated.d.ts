@@ -174,7 +174,7 @@ declare namespace App.Data.ExamOfficer {
     name: string;
   };
   export type ExamOfficerListData = {
-    officers: Array<App.Data.ExamOfficer.ExamOfficerData>;
+    data: Array<App.Data.ExamOfficer.ExamOfficerData>;
   };
 }
 declare namespace App.Data.Faculty {

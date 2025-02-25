@@ -12,7 +12,7 @@ final class ExamOfficerListData extends Data
 {
     public function __construct(
         /** @var \Illuminate\Support\Collection<int, \App\Data\ExamOfficer\ExamOfficerData> */
-        public readonly Collection $officers,
+        public readonly Collection $data,
     ) {
     }
 
@@ -21,7 +21,7 @@ final class ExamOfficerListData extends Data
         $default = new ExamOfficerData(id: 0, name: 'Select Exam Officer');
 
         return new self(
-            officers: ExamOfficerData::collect(
+            data: ExamOfficerData::collect(
                 ExamOfficer::query()->orderBy('name')->get(),
             )->prepend($default),
         );
