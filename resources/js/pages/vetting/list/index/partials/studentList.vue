@@ -8,22 +8,17 @@ import Disclosure from "@/components/baseDisclosure.vue";
 import Card from "@/components/cards/card.vue";
 import CardHeading from "@/components/cards/cardHeader.vue";
 import Modal from "@/components/modal.vue";
-import PrimaryButton from "@/components/buttons/primaryButton.vue";
-import SecondaryButton from "@/components/buttons/secondaryButton.vue";
 import { useForm, usePage } from "@inertiajs/vue3";
 import BaseTable from "@/components/tables/baseTable.vue";
 import BaseTHead from "@/components/tables/baseTHead.vue";
 import BaseTH from "@/components/tables/baseTH.vue";
 import BaseTBody from "@/components/tables/baseTBody.vue";
 import BaseTR from "@/components/tables/baseTR.vue";
-import InputLabel from "@/components/inputs/inputLabel.vue";
-import InputError from "@/components/inputs/inputError.vue";
-import BaseFormSection from "@/components/forms/baseFormSection.vue";
-import SelectInput from "@/components/inputs/selectInput.vue";
-import FormGroup from "@/components/forms/formGroup.vue";
 import { PaginatedVettingListData } from "@/types/paginate";
 import CardFooter from "@/components/cards/cardFooter.vue";
 import Pagination from "@/components/pagination.vue";
+import BaseSection from "@/layouts/main/partials/baseSection.vue";
+import ClearanceConfirmationForm from "@/pages/vetting/list/index/partials/clearanceConfirmationForm.vue";
 
 const props = defineProps<{
   department: App.Data.Department.DepartmentInfoData;
@@ -33,37 +28,33 @@ const props = defineProps<{
 }>();
 
 const showReport = ref(false);
-const confirmingStudentClearance = ref(false);
-const clearanceStudent = ref<App.Data.Vetting.VettingStudentData>();
+
 const registrationNumber = ref("");
 
 const hasRows = computed(() => props.paginated.data.length > 0);
 
-const form = useForm({ year: "", month: "", exam_officer: "" });
-const viewForm = useForm({ student: "" });
+const form = useForm({ student: "" });
 
 const closeDrawer = () => (showReport.value = false);
 const openDrawer = (student: App.Data.Vetting.VettingStudentData) => {
   registrationNumber.value = student.registrationNumber;
 
-  viewForm.student = student.slug;
+  form.student = student.slug;
 
-  viewForm.get(usePage().url, { only: ["steps"], preserveScroll: true, preserveState: true });
+  form.get(usePage().url, { only: ["steps"], preserveScroll: true, preserveState: true });
 
   showReport.value = true;
 };
 
-const closeModal = () => (confirmingStudentClearance.value = false);
+const openClearanceForm = ref(false);
+const clearanceStudent = ref<App.Data.Vetting.VettingStudentData>();
+
 const confirmStudentClearance = (student: App.Data.Vetting.VettingStudentData) => {
   clearanceStudent.value = student;
-  confirmingStudentClearance.value = true;
+  openClearanceForm.value = true;
 };
-const clearStudent = () => {
-  form.post(route("students.clearance.store", { student: clearanceStudent.value?.slug }), {
-    preserveScroll: true,
-    onSuccess: () => closeModal(),
-  });
-};
+
+const closeModal = () => (openClearanceForm.value = false);
 </script>
 
 <template>
@@ -135,92 +126,14 @@ const clearStudent = () => {
   </Card>
 
   <Modal
-    :show="confirmingStudentClearance"
+    :show="openClearanceForm"
     @close="closeModal">
-    <div class="p-6">
-      <BaseFormSection
-        description="Select Clearance Batch and Exam Officer"
-        header="Clearance Confirmation">
-        <form class="mt-6 space-y-6">
-          <FormGroup>
-            <div class="flex w-full items-start space-x-4">
-              <div class="flex-1">
-                <InputLabel
-                  for="year"
-                  value="Year" />
-
-                <SelectInput
-                  id="year"
-                  v-model="form.year"
-                  :items="clearance.years.years"
-                  class="mt-1 block w-full" />
-
-                <InputError
-                  :message="form.errors.year"
-                  class="mt-2" />
-              </div>
-            </div>
-
-            <div class="flex w-full items-start space-x-4">
-              <div class="flex-1">
-                <InputLabel
-                  for="month"
-                  value="Month" />
-
-                <SelectInput
-                  id="month"
-                  v-model="form.month"
-                  :items="clearance.months.months"
-                  class="mt-1 block w-full" />
-
-                <InputError
-                  :message="form.errors.month"
-                  class="mt-2" />
-              </div>
-            </div>
-          </FormGroup>
-
-          <div class="flex w-full items-start space-x-4">
-            <div class="flex-1">
-              <InputLabel
-                for="exam_officer"
-                value="Exam Officer" />
-
-              <SelectInput
-                id="exam_officer"
-                v-model="form.exam_officer"
-                :items="clearance.examOfficers.officers"
-                class="mt-1 block w-full" />
-
-              <InputError
-                :message="form.errors.exam_officer"
-                class="mt-2" />
-            </div>
-          </div>
-        </form>
-
-        <p class="mt-4 text-base text-red-600">
-          You are confirming that
-          <span class="font-bold">{{ clearanceStudent?.name }}</span>
-          with Registration Number
-          <span class="font-bold">{{ clearanceStudent?.registrationNumber }}</span>
-          has satisfy
-          <span class="font-bold">ALL</span> academic requirement for graduation.
-        </p>
-
-        <div class="mt-6 flex justify-end">
-          <SecondaryButton @click="closeModal"> Cancel</SecondaryButton>
-
-          <PrimaryButton
-            :class="{ 'opacity-25': form.processing }"
-            :disabled="form.processing"
-            class="ms-3"
-            @click="clearStudent">
-            Clear Student
-          </PrimaryButton>
-        </div>
-      </BaseFormSection>
-    </div>
+    <BaseSection v-if="clearanceStudent">
+      <ClearanceConfirmationForm
+        :clearance="clearance"
+        :student="clearanceStudent"
+        @close="closeModal" />
+    </BaseSection>
   </Modal>
 
   <Drawer
