@@ -37,16 +37,14 @@ final class DepartmentClearedController
 
     public function store(ClearedIndexRequest $request): RedirectResponse
     {
-        $departmentId = $request->input('department.id');
-        $year = $request->input('year');
-        $month = $request->input('month');
+        $validated = $request->validated();
 
-        $department = Department::query()->findOrFail($departmentId);
+        $department = Department::query()->findOrFail($validated['department']);
 
         return redirect()->route('department.cleared.index', [
             'department' => $department,
-            'month' => $month['name'],
-            'year' => $year['id'],
+            'month' => $validated['month'],
+            'year' => $validated['year'],
         ]);
     }
 }
