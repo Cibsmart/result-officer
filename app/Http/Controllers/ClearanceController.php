@@ -28,8 +28,6 @@ final class ClearanceController
             'month' => ['required', Rule::enum(Months::class)],
             'year' => ['required', 'integer', 'regex:/^\d{4}$/'],
         ]);
-        dd($validated);
-
         $user = $request->user();
         assert($user instanceof User);
 
