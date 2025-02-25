@@ -15,20 +15,16 @@ final class RegistrationNumberListResultsExportRequest extends FormRequest
     /** @return array<string, array<string>|string> */
     public function rules(): array
     {
-        return ['registration_numbers' => ['required', 'string']];
+        return [
+            'registration_numbers' => ['required'],
+        ];
     }
 
     public function withValidator(Validator $validator): void
     {
         $validator->after(function ($validator): void {
 
-            $registrationNumbers = Str::of($this->registration_numbers)
-                ->replace(' ', '')
-                ->explode(',')
-                ->filter()
-                ->unique();
-
-            $invalidNumbers = $this->validateRegistrationNumbers($registrationNumbers);
+            $invalidNumbers = $this->validateRegistrationNumbers($this->registration_numbers);
 
             if ($invalidNumbers->isEmpty()) {
                 return;
@@ -39,6 +35,18 @@ final class RegistrationNumberListResultsExportRequest extends FormRequest
                 "The following registration numbers are invalid: {$invalidNumbersText}",
             );
         });
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'registration_numbers' => Str::of($this->registration_numbers)
+                ->replace("\n", ',')
+                ->replace(' ', '')
+                ->explode(',')
+                ->filter()
+                ->unique(),
+        ]);
     }
 
     /**
