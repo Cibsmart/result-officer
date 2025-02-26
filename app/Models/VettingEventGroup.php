@@ -36,6 +36,19 @@ final class VettingEventGroup extends Model
         }
     }
 
+    /**
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\VettingEvent, \App\Models\VettingEventGroup>
+     */
+    public function vettingEvents(): BelongsToMany
+    {
+        return $this->belongsToMany(VettingEvent::class,
+            'vetting_event_group_vetting_event',
+            'vetting_event_group_id',
+            'vetting_event_id',
+        );
+    }
+
     /** @return array{status: 'App\Enums\VettingEventStatus'} */
     protected function casts(): array
     {
