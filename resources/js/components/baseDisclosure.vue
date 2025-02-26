@@ -9,7 +9,7 @@ const props = withDefaults(
     title: string;
     badge?: string;
     color?: App.Enums.StatusColor;
-    size?: "normal" | "wide";
+    size?: "normal" | "wide" | "full";
   }>(),
   {
     color: "gray",
@@ -21,6 +21,7 @@ const maxWidthClass = computed(() => {
   return {
     normal: "max-w-md",
     wide: "max-w-2xl",
+    full: "max-w-full",
   }[props.size];
 });
 </script>
@@ -34,7 +35,9 @@ const maxWidthClass = computed(() => {
         <DisclosureButton
           class="flex w-full justify-between rounded-lg bg-indigo-100 px-2 py-1.5 text-left text-sm font-medium text-indigo-900 hover:bg-indigo-200 focus:outline-hidden focus-visible:ring-3 focus-visible:ring-indigo-500/75 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">
           <div class="flex flex-1 justify-between text-sm font-black">
-            <span>{{ title }}</span>
+            <span>
+              <slot name="title" />
+            </span>
 
             <Badge
               v-if="badge"
