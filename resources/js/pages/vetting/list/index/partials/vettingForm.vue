@@ -4,26 +4,26 @@ import InputLabel from "@/components/inputs/inputLabel.vue";
 import InputError from "@/components/inputs/inputError.vue";
 import { useForm } from "@inertiajs/vue3";
 import SelectInput from "@/components/inputs/selectInput.vue";
-import { SelectItem } from "@/types";
 import BaseFormSection from "@/components/forms/baseFormSection.vue";
-
-defineProps<{
-  departments: SelectItem[];
-}>();
+import { useDepartments } from "@/composables/departments";
+import AlignButton from "@/components/forms/alignButton.vue";
 
 const form = useForm({
   department: "",
+  department_object: { id: "" },
 });
 
 const submit = () => {
-  form.post(route("vetting.store"));
+  form.transform((data) => ({ ...data, department: data.department_object.id })).post(route("vetting.store"));
 };
+
+const { departments, isLoading } = useDepartments();
 </script>
 
 <template>
   <BaseFormSection
-    description="Select Department to View List of Possible Graduands"
-    header="View List of Possible Graduands">
+    description="Select Department and input Registration Number"
+    header="Vetting List">
     <form
       class="mt-6 space-y-6"
       @submit.prevent="submit">
@@ -34,25 +34,28 @@ const submit = () => {
             value="Department" />
 
           <SelectInput
+            v-if="!isLoading"
             id="department"
-            v-model="form.department"
-            :items="departments"
-            class="mt-1 block w-full" />
+            v-model="form.department_object"
+            :items="departments" />
+
+          <SelectInput
+            v-else
+            id="department_loading"
+            :items="departments" />
 
           <InputError
             :message="form.errors.department"
             class="mt-2" />
         </div>
 
-        <div class="flex-col">
-          <div>&nbsp;</div>
-
+        <AlignButton>
           <PrimaryButton
             :disabled="form.processing"
             class="mt-1"
             >View
           </PrimaryButton>
-        </div>
+        </AlignButton>
       </div>
     </form>
   </BaseFormSection>

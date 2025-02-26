@@ -10,7 +10,6 @@ import StudentList from "@/pages/vetting/list/index/partials/studentList.vue";
 import { PaginatedVettingListData } from "@/types/paginate";
 
 defineProps<{
-  departments: App.Data.Department.DepartmentListData;
   steps: App.Data.Vetting.VettingStepListData;
   department: App.Data.Department.DepartmentInfoData;
   data: PaginatedVettingListData | null;
@@ -30,7 +29,7 @@ const pages: BreadcrumbItem[] = [
 
   <BasePage>
     <BaseSection>
-      <VettingForm :departments="departments.data" />
+      <VettingForm />
     </BaseSection>
 
     <StudentList

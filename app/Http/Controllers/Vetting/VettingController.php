@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Vetting;
 
 use App\Data\Department\DepartmentInfoData;
-use App\Data\Department\DepartmentListData;
 use App\Data\Vetting\PaginatedVettingListData;
 use App\Data\Vetting\VettingStepListData;
 use App\Models\Department;
@@ -28,11 +27,7 @@ final class VettingController
     {
         $student = Student::query()->where('slug', $request->query('student'))->first();
 
-        $user = $request->user();
-        assert($user instanceof User);
-
         return Inertia::render('vetting/list/index/page', new VettingIndexPage(
-            departments: fn () => DepartmentListData::forUser($user),
             steps: fn () => $student ? VettingStepListData::from($student) : null,
             department: fn () => $department ? DepartmentInfoData::for($department) : null,
             data: fn () => $department ? PaginatedVettingListData::for($department)->paginated : null,
@@ -53,14 +48,9 @@ final class VettingController
 
     public function store(Request $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'department' => ['required', 'array'],
-            'department.id' => ['required', 'integer', 'exists:departments,id'],
-        ]);
+        $validated = $request->validate(['department' => ['required', 'integer', 'exists:departments,id']]);
 
-        $department = Department::query()
-            ->where('id', $validated['department']['id'])
-            ->first();
+        $department = Department::query()->where('id', $validated['department'])->first();
 
         return redirect()->to(route('vetting.index', ['department' => $department]));
     }
