@@ -11,6 +11,7 @@ enum VettingEventStatus: string
     case VETTING = 'vetting';
     case FAILED = 'failed';
     case PASSED = 'passed';
+    case QUEUED = 'queued';
 
     public static function passed(self $status): bool
     {
