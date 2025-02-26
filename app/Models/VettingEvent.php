@@ -17,6 +17,7 @@ final class VettingEvent extends Model
     public static function getOrCreateUsingStudent(Student $student, User $user): self
     {
         $programCurriculum = $student->programCurriculum();
+
         $programCurriculumId = $programCurriculum
             ? $programCurriculum->id
             : null;
