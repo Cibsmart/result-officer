@@ -9,7 +9,7 @@ use App\Data\Vetting\PaginatedVettingListData;
 use App\Data\Vetting\VettingStepListData;
 use App\Models\Department;
 use App\Models\Student;
-use App\ViewModels\Vetting\VettingIndexPage;
+use App\ViewModels\Vetting\GraduandIndexPage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -21,7 +21,7 @@ final class GraduandController
     {
         $student = Student::query()->where('slug', $request->query('student'))->first();
 
-        return Inertia::render('graduands/index/page', new VettingIndexPage(
+        return Inertia::render('graduands/index/page', new GraduandIndexPage(
             steps: fn () => $student ? VettingStepListData::from($student) : null,
             department: fn () => $department ? DepartmentInfoData::for($department) : null,
             data: fn () => $department ? PaginatedVettingListData::for($department)->paginated : null,

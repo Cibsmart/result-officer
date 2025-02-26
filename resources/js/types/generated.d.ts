@@ -490,6 +490,17 @@ declare namespace App.Data.Vetting {
   export type PaginatedVettingListData = {
     paginated: Array<App.Data.Vetting.VettingStudentData>;
   };
+  export type VettingEventGroupData = {
+    id: number;
+    slug: string;
+    title: string;
+    status: App.Enums.VettingEventStatus;
+    department: string;
+    message: string;
+  };
+  export type VettingEventGroupListData = {
+    paginated: Array<App.Data.Vetting.VettingEventGroupData>;
+  };
   export type VettingListData = {
     faculty: App.Data.Faculty.FacultyData;
     department: App.Data.Department.DepartmentData;
@@ -745,10 +756,13 @@ declare namespace App.ViewModels.Summary {
   };
 }
 declare namespace App.ViewModels.Vetting {
-  export type VettingIndexPage = {
+  export type GraduandIndexPage = {
     steps: App.Data.Vetting.VettingStepListData;
     department: App.Data.Department.DepartmentInfoData;
     data: App.Data.Vetting.PaginatedVettingListData;
+  };
+  export type VettingIndexPage = {
+    data: App.Data.Vetting.VettingEventGroupListData;
   };
 }
 declare namespace App.ViewModels.finalResults {
