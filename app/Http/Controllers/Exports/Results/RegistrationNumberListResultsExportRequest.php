@@ -24,16 +24,15 @@ final class RegistrationNumberListResultsExportRequest extends FormRequest
     {
         $validator->after(function ($validator): void {
 
-            $invalidNumbers = $this->validateRegistrationNumbers($this->registration_numbers);
+            $invalidNumbers = $this->validateRegistrationNumbers($validator->validated()['registration_numbers']);
 
             if ($invalidNumbers->isEmpty()) {
                 return;
             }
 
-            $invalidNumbersText = $invalidNumbers->join(', ');
-            $validator->errors()->add('registration_numbers',
-                "The following registration numbers are invalid: {$invalidNumbersText}",
-            );
+            $message = "The following registration numbers are invalid: {$invalidNumbers->join(', ')}";
+
+            $validator->errors()->add('registration_numbers', $message);
         });
     }
 
