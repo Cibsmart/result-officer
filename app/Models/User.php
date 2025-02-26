@@ -43,6 +43,12 @@ final class User extends Authenticatable implements FilamentUser
         return $this->hasMany(UserDepartment::class);
     }
 
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\VettingEventGroup, \App\Models\User> */
+    public function vettingEventGroups(): HasMany
+    {
+        return $this->hasMany(VettingEventGroup::class);
+    }
+
     public function inDomain(): bool
     {
         return str_ends_with($this->email, Config::string('rp.domain'));

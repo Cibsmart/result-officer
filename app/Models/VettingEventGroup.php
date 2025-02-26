@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Enums\VettingEventStatus;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
 
@@ -29,6 +30,12 @@ final class VettingEventGroup extends Model
         $group->save();
 
         return $group;
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Department, \App\Models\VettingEventGroup> */
+    public function department(): BelongsTo
+    {
+        return $this->belongsTo(Department::class);
     }
 
     /** @param \Illuminate\Database\Eloquent\Collection<int, \App\Models\Student> $students */
