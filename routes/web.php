@@ -86,6 +86,8 @@ Route::middleware(['auth'])->group(static function (): void {
             ->name('finalResults.print');
         Route::get('{student}/transcript', [StudentFinalResultController::class, 'transcript'])
             ->name('finalResults.transcript');
+        Route::get('{student}/download', [StudentFinalResultController::class, 'download'])
+            ->name('finalResults.download');
     });
 
     Route::prefix('summary')->group(static function (): void {

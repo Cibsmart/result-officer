@@ -50,7 +50,18 @@ final class StudentFinalResultController
         ]);
     }
 
-    public function transcript(Student $student): Pdf|PdfBuilder|View
+    public function transcript(Student $student): View
+    {
+        $studentData = StudentBasicData::from($student);
+
+        return view('pdfs.finalResults.transcript', [
+            'results' => FinalStudentResultData::from($student),
+            'student' => $studentData,
+            'transcript' => TranscriptData::from($student->allowEGrade()),
+        ]);
+    }
+
+    public function download(Student $student): Pdf|PdfBuilder|View
     {
         $studentData = StudentBasicData::from($student);
 
