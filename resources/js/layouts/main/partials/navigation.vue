@@ -66,7 +66,23 @@ const navigation: NavigationItem[] = [
     children: [
       { name: "View", href: route("results.index"), current: route().current("results.index") },
       { name: "Summary", href: route("summary.form"), current: route().current("summary.form") },
+      { name: "Composite", href: route("composite.form"), current: route().current("composite.form") },
       { name: "Export", href: route("export.results.page"), current: route().current("export.results.page") },
+    ],
+  },
+  {
+    name: "Reconciliation",
+    href: "#",
+    icon: DocumentCheckIcon,
+    current: false,
+    children: [
+      { name: "Possible Graduands", href: route("vetting.index"), current: route().current("vetting.index") },
+      { name: "Vetting", href: route("vetting.group.index"), current: route().current("vetting.group.index") },
+      {
+        name: "Cleared Student",
+        href: route("department.cleared.index"),
+        current: route().current("department.cleared.index"),
+      },
     ],
   },
   {
@@ -74,47 +90,25 @@ const navigation: NavigationItem[] = [
     href: "#",
     icon: FolderIcon,
     current: usePage().component.startsWith("final-results/"),
-    children: [{ name: "View", href: route("finalResults.index"), current: route().current("finalResults.index") }],
-  },
-  {
-    name: "Vetting",
-    href: "#",
-    icon: DocumentCheckIcon,
-    current: false,
     children: [
-      { name: "Possible Graduands", href: route("vetting.index"), current: route().current("vetting.index") },
-      { name: "Page", href: route("vetting.group.index"), current: route().current("vetting.group.index") },
-    ],
-  },
-  {
-    name: "Reports",
-    href: "#",
-    icon: ChartPieIcon,
-    current: false,
-    children: [
+      { name: "View", href: route("finalResults.index"), current: route().current("finalResults.index") },
       {
-        name: "Cleared",
-        href: route("department.cleared.index"),
-        current: route().current("department.cleared.index"),
+        name: "Upload",
+        href: route("import.final-results.index"),
+        current: route().current("import.final-results.index"),
       },
-      { name: "Composite", href: route("composite.form"), current: route().current("composite.form") },
     ],
   },
   {
-    name: "Uploads",
+    name: "Course List",
     href: "#",
     icon: ArrowUpTrayIcon,
     current: false,
     children: [
       {
-        name: "Course List",
+        name: "Upload",
         href: route("import.curriculum.index"),
         current: route().current("import.curriculum.index"),
-      },
-      {
-        name: "Final Results",
-        href: route("import.final-results.index"),
-        current: route().current("import.final-results.index"),
       },
     ],
   },
