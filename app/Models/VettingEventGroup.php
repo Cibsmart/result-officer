@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Enums\VettingEventStatus;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 final class VettingEventGroup extends Model
 {
@@ -29,11 +30,14 @@ final class VettingEventGroup extends Model
     /** @param \Illuminate\Database\Eloquent\Collection<int, \App\Models\Student> $students */
     public function addStudents(User $user, Collection $students): void
     {
-        $vettings = [];
+        $vettingIds = [];
 
         foreach ($students as $student) {
-            $vettingEvent = VettingEvent::getOrCreateUsingStudent($student, $user);
+            $vettingIds[] = VettingEvent::getOrCreateUsingStudent($student, $user)->id;
+
         }
+
+        $this->vettingEvents()->sync($vettingIds);
     }
 
     /**
