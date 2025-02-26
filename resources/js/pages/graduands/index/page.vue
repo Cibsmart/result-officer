@@ -5,7 +5,7 @@ import BaseHeader from "@/layouts/main/partials/baseHeader.vue";
 import Breadcrumb from "@/components/breadcrumb.vue";
 import BasePage from "@/layouts/main/partials/basePage.vue";
 import BaseSection from "@/layouts/main/partials/baseSection.vue";
-import VettingForm from "@/pages/graduands/index/partials/vettingForm.vue";
+import VettingForm from "@/pages/graduands/index/partials/graduandForm.vue";
 import StudentList from "@/pages/graduands/index/partials/studentList.vue";
 import { PaginatedVettingListData } from "@/types/paginate";
 

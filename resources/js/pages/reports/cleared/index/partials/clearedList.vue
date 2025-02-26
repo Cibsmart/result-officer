@@ -84,7 +84,7 @@ const hasRows = computed(() => props.students.data.length > 0);
         v-else
         description="Get started by clearing students that are ready for graduation"
         title="No Cleared Student Found in the selected year and month">
-        <IconLink :href="route('vetting.index', { department: students.department.id })">Vet Students</IconLink>
+        <IconLink :href="route('graduand.index', { department: students.department.slug })">Vet Students</IconLink>
       </EmptyState>
     </div>
   </div>

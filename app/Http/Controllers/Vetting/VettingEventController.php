@@ -8,7 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
-final class VettingController
+final class VettingEventController
 {
     public function index(): Response
     {

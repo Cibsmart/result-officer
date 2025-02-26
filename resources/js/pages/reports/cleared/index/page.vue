@@ -38,12 +38,5 @@ const pages: BreadcrumbItem[] = [
     <BaseSection v-if="hasClearedStudents">
       <ClearedList :students="students" />
     </BaseSection>
-
-    <EmptyState
-      v-else
-      description="Get started by vetting and clearing students"
-      title="No Cleared Student Found">
-      <IconLink :href="route('vetting.index')">Vetting Page</IconLink>
-    </EmptyState>
   </BasePage>
 </template>

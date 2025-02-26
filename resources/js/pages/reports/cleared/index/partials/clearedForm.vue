@@ -41,7 +41,7 @@ const { months } = useMonths();
 
 <template>
   <BaseFormSection
-    description="Select Department and Year to View List of Cleared Students"
+    description="Select Department, Year and Month to View List of Cleared Students"
     header="View Cleared Student">
     <form
       class="mt-6 space-y-6"

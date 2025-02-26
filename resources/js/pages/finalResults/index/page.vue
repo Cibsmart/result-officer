@@ -84,7 +84,7 @@ const hasResults = computed(() => props.results !== null && props.results.finalS
             v-else
             description="Get started by vetting and clearing student"
             title="No Final Results">
-            <IconLink :href="route('vetting.index')">Vet Student</IconLink>
+            <IconLink :href="route('vettingEvent.index')">Vet Student</IconLink>
           </EmptyState>
         </div>
 

@@ -55,7 +55,7 @@ use App\Http\Controllers\Students\Updates\StudentPhoneNumberUpdateController;
 use App\Http\Controllers\Students\Updates\StudentStatusUpdateController;
 use App\Http\Controllers\Summary\DepartmentResultSummaryController;
 use App\Http\Controllers\Vetting\GraduandController;
-use App\Http\Controllers\Vetting\VettingController;
+use App\Http\Controllers\Vetting\VettingEventController;
 use App\Http\Middleware\ValidateMonthParameter;
 use App\Http\Middleware\ValidateYearParameter;
 use App\Models\ExcelImportEvent;
@@ -168,14 +168,16 @@ Route::middleware(['auth'])->group(static function (): void {
         Route::get('{department?}', [GraduandController::class, 'index'])
             ->name('graduand.index');
         Route::post('', [GraduandController::class, 'store'])->name('graduand.store');
-        Route::get('create/{student}', [GraduandController::class, 'create'])
-            ->name('graduand.create');
-
     });
 
     Route::prefix('vetting')->group(static function (): void {
-        Route::get('', [VettingController::class, 'index'])->name('vetting.index');
-        Route::post('', [VettingController::class, 'store'])->name('vetting.store');
+        Route::get('create/{student}', [GraduandController::class, 'create'])
+            ->name('vetting.create');
+    });
+
+    Route::prefix('vetting-event')->group(static function (): void {
+        Route::get('', [VettingEventController::class, 'index'])->name('vettingEvent.index');
+        Route::post('', [VettingEventController::class, 'store'])->name('vettingVetting.store');
     });
 
     Route::prefix('department/cleared/students')->group(static function (): void {
