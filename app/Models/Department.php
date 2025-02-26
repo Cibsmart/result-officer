@@ -36,6 +36,14 @@ final class Department extends Model
                 fn () => self::query()->where('online_id', $departmentOnlineId)->firstOrFail());
     }
 
+    public static function getUsingId(int $departmentId): self
+    {
+        return
+            Cache::remember("department_id.{$departmentId}",
+                now()->addDay(),
+                fn () => self::query()->where('id', $departmentId)->firstOrFail());
+    }
+
     public function getRouteKeyName(): string
     {
         return 'slug';
