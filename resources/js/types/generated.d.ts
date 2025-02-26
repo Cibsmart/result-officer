@@ -534,6 +534,7 @@ declare namespace App.Enums {
     | "semester"
     | "session"
     | "course_code"
+    | "course_title"
     | "year"
     | "month"
     | "curriculum"
@@ -745,7 +746,6 @@ declare namespace App.ViewModels.Summary {
 }
 declare namespace App.ViewModels.Vetting {
   export type VettingIndexPage = {
-    departments: App.Data.Department.DepartmentListData;
     steps: App.Data.Vetting.VettingStepListData;
     department: App.Data.Department.DepartmentInfoData;
     data: App.Data.Vetting.PaginatedVettingListData;

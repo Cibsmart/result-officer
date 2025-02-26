@@ -15,6 +15,7 @@ enum ChecklistType: string
     case SEMESTER = 'semester';
     case SESSION = 'session';
     case COURSE_CODE = 'course_code';
+    case COURSE_TITLE = 'course_title';
     case YEAR = 'year';
     case MONTH = 'month';
 
