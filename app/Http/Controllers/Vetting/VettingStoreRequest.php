@@ -58,7 +58,7 @@ final class VettingStoreRequest extends FormRequest
 
     /**
      * @param \Illuminate\Support\Collection<int, non-falsy-string> $registrationNumbers
-     * @return  array{string, \Illuminate\Support\Collection<int, non-falsy-string>}
+     * @return array{string, \Illuminate\Support\Collection<int, non-falsy-string>}
      */
     private function validateRegistrationNumbers(Collection $registrationNumbers): array
     {
@@ -69,10 +69,7 @@ final class VettingStoreRequest extends FormRequest
             : ['', collect()];
     }
 
-    /**
-     * @param \Illuminate\Support\Collection<int, non-falsy-string> $registrationNumbers
-     * @return  \Illuminate\Support\Collection<int, non-falsy-string>
-     */
+    /** @param \Illuminate\Support\Collection<int, non-falsy-string> $registrationNumbers */
     private function checkDepartment(Department $department, Collection $registrationNumbers): string
     {
         $programIdsInDepartment = $department->programs->pluck('id');

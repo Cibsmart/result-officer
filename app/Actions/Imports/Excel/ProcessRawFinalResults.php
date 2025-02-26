@@ -198,17 +198,21 @@ final class ProcessRawFinalResults
             ->where('session_id', $finalSemesterEnrollment->finalSessionEnrollment->session_id)
             ->first();
 
-        $semesterEnrollment = $sessionEnrollment->semesterEnrollments
-            ->where('semester_id', $finalSemesterEnrollment->semester_id)
-            ->first();
+        $registrations = null;
 
-        $registrations = $semesterEnrollment->registrations;
+        if ($sessionEnrollment !== null) {
+            $semesterEnrollment = $sessionEnrollment->semesterEnrollments
+                ->where('semester_id', $finalSemesterEnrollment->semester_id)
+                ->first();
 
-        $courseId = $registrations->pluck('course_id');
+            $registrations = $semesterEnrollment->registrations;
 
-        $course = Course::query()->whereIn('id', $courseId)->where('code', $finalCourse->code)->first();
+            $courseId = $registrations->pluck('course_id');
 
-        return $course
+            $course = Course::query()->whereIn('id', $courseId)->where('code', $finalCourse->code)->first();
+        }
+
+        return $registrations
             ? $registrations->where('course_id', $course->id)->first()
             : null;
     }
