@@ -179,7 +179,7 @@ Route::middleware(['auth'])->group(static function (): void {
 
     Route::prefix('vetting-event')->group(static function (): void {
         Route::get('', [VettingEventController::class, 'index'])->name('vettingEvent.index');
-        Route::post('', [VettingEventController::class, 'store'])->name('vettingVetting.store');
+        Route::post('', [VettingEventController::class, 'store'])->name('vettingEvent.store');
     });
 
     Route::prefix('department/cleared/students')->group(static function (): void {
