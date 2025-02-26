@@ -14,7 +14,7 @@ const form = useForm({
 });
 
 const submit = () => {
-  form.transform((data) => ({ ...data, department: data.department_object.id })).post(route("vetting.store"));
+  form.transform((data) => ({ ...data, department: data.department_object.id })).post(route("graduand.store"));
 };
 
 const { departments, isLoading } = useDepartments();

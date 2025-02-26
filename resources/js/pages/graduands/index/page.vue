@@ -5,8 +5,8 @@ import BaseHeader from "@/layouts/main/partials/baseHeader.vue";
 import Breadcrumb from "@/components/breadcrumb.vue";
 import BasePage from "@/layouts/main/partials/basePage.vue";
 import BaseSection from "@/layouts/main/partials/baseSection.vue";
-import VettingForm from "@/pages/vetting/list/index/partials/vettingForm.vue";
-import StudentList from "@/pages/vetting/list/index/partials/studentList.vue";
+import VettingForm from "@/pages/graduands/index/partials/vettingForm.vue";
+import StudentList from "@/pages/graduands/index/partials/studentList.vue";
 import { PaginatedVettingListData } from "@/types/paginate";
 
 defineProps<{
@@ -16,16 +16,16 @@ defineProps<{
 }>();
 
 const pages: BreadcrumbItem[] = [
-  { name: "Vetting", href: route("vetting.index"), current: route().current("vetting.index") },
+  { name: "Graduands", href: route("graduand.index"), current: route().current("graduand.index") },
 ];
 </script>
 
 <template>
-  <Head title="Vetting Page" />
+  <Head title="Possible Graduands Page" />
 
   <Breadcrumb :pages="pages" />
 
-  <BaseHeader> View Vetting List</BaseHeader>
+  <BaseHeader> View List of Possible Graduands</BaseHeader>
 
   <BasePage>
     <BaseSection>

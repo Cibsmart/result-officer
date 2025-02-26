@@ -2,7 +2,7 @@
 import { ref, computed } from "vue";
 import EmptyState from "@/components/emptyState.vue";
 import IconLink from "@/components/links/iconLink.vue";
-import StudentRow from "@/pages/vetting/list/index/partials/studentRow.vue";
+import StudentRow from "@/pages/graduands/index/partials/studentRow.vue";
 import Drawer from "@/components/drawer.vue";
 import Disclosure from "@/components/baseDisclosure.vue";
 import Card from "@/components/cards/card.vue";
@@ -18,7 +18,7 @@ import { PaginatedVettingListData } from "@/types/paginate";
 import CardFooter from "@/components/cards/cardFooter.vue";
 import Pagination from "@/components/pagination.vue";
 import BaseSection from "@/layouts/main/partials/baseSection.vue";
-import ClearanceConfirmationForm from "@/pages/vetting/list/index/partials/clearanceConfirmationForm.vue";
+import ClearanceConfirmationForm from "@/pages/graduands/index/partials/clearanceConfirmationForm.vue";
 
 const props = defineProps<{
   department: App.Data.Department.DepartmentInfoData;

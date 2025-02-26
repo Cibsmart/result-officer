@@ -76,7 +76,11 @@ const navigation: NavigationItem[] = [
     icon: DocumentCheckIcon,
     current: false,
     children: [
-      { name: "Possible Graduands", href: route("vetting.index"), current: route().current("vetting.index") },
+      {
+        name: "Possible Graduands",
+        href: route("graduand.index"),
+        current: route().current("graduand.index"),
+      },
       { name: "Vetting", href: route("vetting.group.index"), current: route().current("vetting.group.index") },
       {
         name: "Cleared Student",

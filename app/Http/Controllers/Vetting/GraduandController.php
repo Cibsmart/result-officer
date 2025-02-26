@@ -21,13 +21,13 @@ use Inertia\Response;
 use function assert;
 use function Illuminate\Support\defer;
 
-final class VettingController
+final class GraduandController
 {
     public function index(Request $request, ?Department $department = null): Response
     {
         $student = Student::query()->where('slug', $request->query('student'))->first();
 
-        return Inertia::render('vetting/list/index/page', new VettingIndexPage(
+        return Inertia::render('graduands/index/page', new VettingIndexPage(
             steps: fn () => $student ? VettingStepListData::from($student) : null,
             department: fn () => $department ? DepartmentInfoData::for($department) : null,
             data: fn () => $department ? PaginatedVettingListData::for($department)->paginated : null,
@@ -52,6 +52,6 @@ final class VettingController
 
         $department = Department::query()->where('id', $validated['department'])->first();
 
-        return redirect()->to(route('vetting.index', ['department' => $department]));
+        return redirect()->to(route('graduand.index', ['department' => $department]));
     }
 }
