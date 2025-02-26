@@ -14,7 +14,7 @@ use Illuminate\Validation\Validator;
 
 final class VettingStoreRequest extends FormRequest
 {
-    /** @return array<string, array<string>|string> */
+    /** @return array<string, array<string>> */
     public function rules(): array
     {
         return [
@@ -27,11 +27,13 @@ final class VettingStoreRequest extends FormRequest
     {
         $validator->after(function ($validator): void {
 
-            $registrationNumbers = $this->registration_numbers;
+            $validated = $validator->validated();
+
+            $registrationNumbers = $validated['registration_numbers'];
 
             [$invalidMessage, $invalidNumbers] = $this->validateRegistrationNumbers($registrationNumbers);
 
-            $department = Department::getUsingId($this->department);
+            $department = Department::getUsingId($validated['department']);
             $validRegistrationNumbers = $registrationNumbers->diff($invalidNumbers);
 
             $numberNotInDept = $this->checkDepartment($department, $validRegistrationNumbers);
