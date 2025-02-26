@@ -7,15 +7,19 @@ import SelectInput from "@/components/inputs/selectInput.vue";
 import BaseFormSection from "@/components/forms/baseFormSection.vue";
 import { useDepartments } from "@/composables/departments";
 import TextareaInput from "@/components/inputs/textareaInput.vue";
+import TextInput from "@/components/inputs/textInput.vue";
 
 const form = useForm({
+  title: "",
   department: "",
   registration_numbers: "",
   department_object: { id: "" },
 });
 
 const submit = () => {
-  form.transform((data) => ({ ...data, department: data.department_object.id })).post(route("vettingEvent.store"));
+  form
+    .transform((data) => ({ ...data, department: data.department_object.id }))
+    .post(route("vettingEvent.store"), { onSuccess: () => form.reset() });
 };
 
 const { departments, isLoading } = useDepartments(true);
@@ -28,6 +32,22 @@ const { departments, isLoading } = useDepartments(true);
     <form
       class="mt-6 space-y-6"
       @submit.prevent="submit">
+      <div class="flex-1">
+        <InputLabel
+          for="title"
+          value="Title" />
+
+        <TextInput
+          id="title"
+          v-model="form.title"
+          placeholder="CSC 2009 - JULy 2013 or CSC 2019 (SUPPLEMENTARY) - NOV 2024"
+          required />
+
+        <InputError
+          :message="form.errors.title"
+          class="mt-2" />
+      </div>
+
       <div class="flex-1">
         <InputLabel
           for="department"

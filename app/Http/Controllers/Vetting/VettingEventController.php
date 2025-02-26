@@ -31,7 +31,7 @@ final class VettingEventController
 
         $students = Student::query()->whereIn('registration_number', $validated['registration_numbers'])->get();
 
-        $vettingGroup = VettingEventGroup::new($user, $department);
+        $vettingGroup = VettingEventGroup::new($user, $department, $validated['title']);
 
         $vettingGroup->addStudents($user, $students);
 

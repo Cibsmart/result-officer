@@ -16,8 +16,10 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class)->constrained();
             $table->foreignIdFor(Department::class);
+            $table->string('title');
             $table->string('status');
             $table->text('message')->nullable();
+            $table->string('slug')->unique();
             $table->timestamps();
         });
     }
