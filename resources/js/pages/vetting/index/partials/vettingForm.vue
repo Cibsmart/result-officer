@@ -27,8 +27,8 @@ const { departments, isLoading } = useDepartments(true);
 
 <template>
   <BaseFormSection
-    description="Select Department to View List of Possible Graduands"
-    header="View List of Possible Graduands">
+    description="Enter Vetting Title, select Department and enter/paste list of Registration Numbers to be vetted"
+    header="Vet Students' Results">
     <form
       class="mt-6 space-y-6"
       @submit.prevent="submit">
@@ -40,7 +40,7 @@ const { departments, isLoading } = useDepartments(true);
         <TextInput
           id="title"
           v-model="form.title"
-          placeholder="CSC 2009 - JULy 2013 or CSC 2019 (SUPPLEMENTARY) - NOV 2024"
+          placeholder="CSC 2009 - JULY 2013 or CSC 2019 (SUPPLEMENTARY) - NOV 2024"
           required />
 
         <InputError
