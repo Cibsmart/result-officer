@@ -34,6 +34,7 @@ use App\Services\Vetting\Vetting;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Telescope\TelescopeServiceProvider as TelescopeServiceProviderAlias;
@@ -86,6 +87,8 @@ final class AppServiceProvider extends ServiceProvider
         Model::shouldBeStrict(App::isLocal());
 
         Model::preventLazyLoading();
+
+        DB::prohibitDestructiveCommands(App::isProduction());
 
         Relation::enforceMorphMap([
             'program' => Program::class,
