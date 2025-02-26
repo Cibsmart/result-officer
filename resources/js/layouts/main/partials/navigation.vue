@@ -81,7 +81,7 @@ const navigation: NavigationItem[] = [
         href: route("graduand.index"),
         current: route().current("graduand.index"),
       },
-      { name: "Vetting", href: route("vetting.group.index"), current: route().current("vetting.group.index") },
+      { name: "Vetting", href: route("vetting.index"), current: route().current("vetting.index") },
       {
         name: "Cleared Student",
         href: route("department.cleared.index"),

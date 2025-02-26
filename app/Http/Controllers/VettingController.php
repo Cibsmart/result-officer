@@ -7,10 +7,10 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Inertia\Response;
 
-final class VettingGroupController
+final class VettingController
 {
     public function index(): Response
     {
-        return Inertia::render('vetting/group/index/page');
+        return Inertia::render('vetting/index/page');
     }
 }
