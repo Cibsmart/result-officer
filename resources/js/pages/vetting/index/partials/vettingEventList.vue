@@ -8,6 +8,9 @@ import BaseTable from "@/components/tables/baseTable.vue";
 import BaseTHead from "@/components/tables/baseTHead.vue";
 import Badge from "@/components/badge.vue";
 import { PaginatedVettingEventGroupListData } from "@/types/paginate";
+import Card from "@/components/cards/card.vue";
+import Pagination from "@/components/pagination.vue";
+import CardFooter from "@/components/cards/cardFooter.vue";
 
 defineProps<{
   paginated: PaginatedVettingEventGroupListData;
@@ -15,40 +18,46 @@ defineProps<{
 </script>
 
 <template>
-  <BaseTable>
-    <BaseTHead>
-      <BaseTH position="left">FileName</BaseTH>
+  <Card>
+    <BaseTable>
+      <BaseTHead>
+        <BaseTH position="left">Title</BaseTH>
 
-      <BaseTH position="left">Status</BaseTH>
+        <BaseTH position="left">Status</BaseTH>
 
-      <BaseTH>Actions</BaseTH>
-    </BaseTHead>
+        <BaseTH>Actions</BaseTH>
+      </BaseTHead>
 
-    <BaseTBody>
-      <BaseTR
-        v-for="event in paginated.data"
-        :key="event.id">
-        <BaseTD position="left">{{ event.title }}</BaseTD>
+      <BaseTBody>
+        <BaseTR
+          v-for="event in paginated.data"
+          :key="event.id">
+          <BaseTD position="left">{{ event.title }}</BaseTD>
 
-        <BaseTD position="left">
-          <Badge
-            :class="event.status !== 'passed' && event.status !== 'failed' ? 'animate-pulse' : ''"
-            :color="event.statusColor">
-            {{ event.status }}
-          </Badge>
-        </BaseTD>
+          <BaseTD position="left">
+            <Badge
+              :class="event.status !== 'passed' && event.status !== 'failed' ? 'animate-pulse' : ''"
+              :color="event.statusColor">
+              {{ event.status }}
+            </Badge>
+          </BaseTD>
 
-        <BaseTD>
-          <SecondaryLinkSmall
-            v-if="event.status === 'queued' || event.status === 'failed'"
-            :href="route('import.curriculum.delete', { event: event.id })"
-            as="button"
-            method="post"
-            preserveScroll="true">
-            Delete
-          </SecondaryLinkSmall>
-        </BaseTD>
-      </BaseTR>
-    </BaseTBody>
-  </BaseTable>
+          <BaseTD>
+            <SecondaryLinkSmall
+              v-if="event.status === 'queued' || event.status === 'failed'"
+              :href="route('import.curriculum.delete', { event: event.id })"
+              as="button"
+              method="post"
+              preserveScroll="true">
+              Delete
+            </SecondaryLinkSmall>
+          </BaseTD>
+        </BaseTR>
+      </BaseTBody>
+    </BaseTable>
+
+    <CardFooter>
+      <Pagination :paginated="paginated" />
+    </CardFooter>
+  </Card>
 </template>
