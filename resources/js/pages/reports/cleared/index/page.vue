@@ -8,8 +8,6 @@ import { BreadcrumbItem } from "@/types";
 import ClearedForm from "@/pages/reports/cleared/index/partials/clearedForm.vue";
 import { computed } from "vue";
 import ClearedList from "@/pages/reports/cleared/index/partials/clearedList.vue";
-import EmptyState from "@/components/emptyState.vue";
-import IconLink from "@/components/links/iconLink.vue";
 
 const props = defineProps<{
   departments: App.Data.Department.DepartmentListData;
