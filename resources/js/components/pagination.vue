@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { Link } from "@inertiajs/vue3";
-import { PaginatedStudentListData, PaginatedVettingListData } from "@/types/paginate";
+import { PaginatedData } from "@/types/paginate";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/20/solid";
 
 defineProps<{
-  paginated: PaginatedStudentListData | PaginatedVettingListData;
+  paginated: PaginatedData;
 }>();
 </script>
 
@@ -64,7 +64,7 @@ defineProps<{
               class="size-5" />
 
             <ChevronRightIcon
-              v-else-if="index === paginated.per_page - 1"
+              v-else-if="link.label.startsWith('Next')"
               aria-hidden="true"
               class="size-5" />
 
