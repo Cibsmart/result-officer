@@ -34,16 +34,16 @@ const hasEvent = computed(() => props.paginated.data.length > 0);
       <VettingForm />
     </BaseSection>
 
-    <BaseSection>
-      <template v-if="hasEvent">
-        <VettingEventList :paginated="paginated" />
-      </template>
+    <template v-if="hasEvent">
+      <VettingEventList :paginated="paginated" />
+    </template>
 
-      <template v-else>
+    <template v-else>
+      <BaseSection>
         <EmptyState
           description="Start by vetting list of possible graduands above"
           title="No Vetting Found" />
-      </template>
-    </BaseSection>
+      </BaseSection>
+    </template>
   </BasePage>
 </template>
