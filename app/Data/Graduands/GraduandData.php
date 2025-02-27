@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Data\Vetting;
+namespace App\Data\Graduands;
 
 use App\Enums\StatusColor;
 use App\Enums\StudentStatus;
@@ -10,7 +10,7 @@ use App\Enums\VettingEventStatus;
 use App\Models\Student;
 use Spatie\LaravelData\Data;
 
-final class VettingStudentData extends Data
+final class GraduandData extends Data
 {
     public function __construct(
         public readonly int $id,

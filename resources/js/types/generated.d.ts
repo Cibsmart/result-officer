@@ -224,6 +224,25 @@ declare namespace App.Data.Grading {
     gradePoint: number;
   };
 }
+declare namespace App.Data.Graduands {
+  export type GraduandData = {
+    id: number;
+    name: string;
+    registrationNumber: string;
+    studentStatus: App.Enums.StudentStatus;
+    vettingStatus: App.Enums.VettingEventStatus;
+    vettingStatusColor: App.Enums.StatusColor;
+    slug: string;
+  };
+  export type GraduandListData = {
+    faculty: App.Data.Faculty.FacultyData;
+    department: App.Data.Department.DepartmentData;
+    graduands: Array<App.Data.Graduands.GraduandData>;
+  };
+  export type PaginatedGraduandListData = {
+    paginated: Array<App.Data.Graduands.GraduandData>;
+  };
+}
 declare namespace App.Data.Imports {
   export type ExcelImportEventData = {
     id: number;
@@ -490,9 +509,6 @@ declare namespace App.Data.Vetting {
   export type PaginatedVettingEventGroupListData = {
     paginated: Array<App.Data.Vetting.VettingEventGroupData>;
   };
-  export type PaginatedVettingListData = {
-    paginated: Array<App.Data.Vetting.VettingStudentData>;
-  };
   export type VettingEventGroupData = {
     id: number;
     slug: string;
@@ -504,11 +520,6 @@ declare namespace App.Data.Vetting {
   };
   export type VettingEventGroupListData = {
     data: Array<App.Data.Vetting.VettingEventGroupData>;
-  };
-  export type VettingListData = {
-    faculty: App.Data.Faculty.FacultyData;
-    department: App.Data.Department.DepartmentData;
-    graduands: Array<App.Data.Vetting.VettingStudentData>;
   };
   export type VettingReportData = {
     id: number;
@@ -527,15 +538,6 @@ declare namespace App.Data.Vetting {
   };
   export type VettingStepListData = {
     items: Array<App.Data.Vetting.VettingStepData>;
-  };
-  export type VettingStudentData = {
-    id: number;
-    name: string;
-    registrationNumber: string;
-    studentStatus: App.Enums.StudentStatus;
-    vettingStatus: App.Enums.VettingEventStatus;
-    vettingStatusColor: App.Enums.StatusColor;
-    slug: string;
   };
 }
 declare namespace App.Enums {
@@ -709,6 +711,13 @@ declare namespace App.ViewModels.Exports {
     selectedIndex: number;
   };
 }
+declare namespace App.ViewModels.Graduands {
+  export type GraduandIndexPage = {
+    steps: App.Data.Vetting.VettingStepListData;
+    department: App.Data.Department.DepartmentInfoData;
+    data: App.Data.Graduands.PaginatedGraduandListData;
+  };
+}
 declare namespace App.ViewModels.Imports {
   export type CurriculumImportPage = {
     data: App.Data.Imports.ExcelImportEventListData;
@@ -760,11 +769,6 @@ declare namespace App.ViewModels.Summary {
   };
 }
 declare namespace App.ViewModels.Vetting {
-  export type GraduandIndexPage = {
-    steps: App.Data.Vetting.VettingStepListData;
-    department: App.Data.Department.DepartmentInfoData;
-    data: App.Data.Vetting.PaginatedVettingListData;
-  };
   export type VettingIndexPage = {
     paginated: any;
   };

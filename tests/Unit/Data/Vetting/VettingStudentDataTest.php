@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Data\Vetting\VettingStudentData;
+use App\Data\Graduands\GraduandData;
 use App\Enums\StudentStatus;
 use App\Enums\VettingEventStatus;
 use Tests\Factories\StudentFactory;
@@ -10,9 +10,9 @@ use Tests\Factories\VettingEventFactory;
 use Tests\Factories\VettingReportFactory;
 use Tests\Factories\VettingStepFactory;
 
-covers(VettingStudentData::class);
+covers(GraduandData::class);
 
-it('returns valid vetting student data', function (): void {
+it('returns valid vetting graduand data', function (): void {
 
     $student = StudentFactory::new()
         ->has(VettingEventFactory::new()
@@ -20,9 +20,9 @@ it('returns valid vetting student data', function (): void {
                 ->has(VettingReportFactory::new())))
         ->createOne();
 
-    $data = VettingStudentData::fromModel($student);
+    $data = GraduandData::fromModel($student);
 
-    expect($data)->toBeInstanceOf(VettingStudentData::class)
+    expect($data)->toBeInstanceOf(GraduandData::class)
         ->and($data->id)->toBe($student->id)
         ->and($data->name)->toBe($student->name)
         ->and($data->registrationNumber)->toBe($student->registration_number)
@@ -31,12 +31,12 @@ it('returns valid vetting student data', function (): void {
         ->and($data->vettingStatusColor)->toBe(VettingEventStatus::NEW->color());
 });
 
-it('return valid vetting student data', function (): void {
+it('return valid vetting graduand data', function (): void {
 
     $student = StudentFactory::new()->createOne();
 
-    $data = VettingStudentData::fromModel($student);
+    $data = GraduandData::fromModel($student);
 
-    expect($data)->toBeInstanceOf(VettingStudentData::class)
+    expect($data)->toBeInstanceOf(GraduandData::class)
         ->and($data->vettingStatus)->toBe(VettingEventStatus::PENDING);
 });
