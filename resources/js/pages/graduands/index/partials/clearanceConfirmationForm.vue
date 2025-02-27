@@ -12,7 +12,7 @@ import { useYears } from "@/composables/year";
 import { useExamOfficers } from "@/composables/examOfficers";
 
 const props = defineProps<{
-  student: App.Data.Vetting.VettingStudentData;
+  student: App.Data.Graduands.GraduandData;
 }>();
 
 const emit = defineEmits<(e: "close") => void>();

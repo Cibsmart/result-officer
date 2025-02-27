@@ -24,12 +24,12 @@ export interface PaginatedStudentListData extends PaginationInterface {
   data: Array<App.Data.Students.StudentBasicData>;
 }
 
-export interface PaginatedVettingListData extends PaginationInterface {
-  data: Array<App.Data.Vetting.VettingStudentData>;
+export interface PaginatedGraduandListData extends PaginationInterface {
+  data: Array<App.Data.Graduands.GraduandData>;
 }
 
 export interface PaginatedVettingEventGroupListData extends PaginationInterface {
   data: Array<App.Data.Vetting.VettingEventGroupData>;
 }
 
-export type PaginatedData = PaginatedStudentListData | PaginatedVettingListData | PaginatedVettingEventGroupListData;
+export type PaginatedData = PaginatedStudentListData | PaginatedGraduandListData | PaginatedVettingEventGroupListData;

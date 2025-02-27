@@ -6,13 +6,13 @@ import Breadcrumb from "@/components/breadcrumb.vue";
 import BasePage from "@/layouts/main/partials/basePage.vue";
 import BaseSection from "@/layouts/main/partials/baseSection.vue";
 import VettingForm from "@/pages/graduands/index/partials/graduandForm.vue";
-import StudentList from "@/pages/graduands/index/partials/studentList.vue";
-import { PaginatedVettingListData } from "@/types/paginate";
+import StudentList from "@/pages/graduands/index/partials/graduandList.vue";
+import { PaginatedGraduandListData } from "@/types/paginate";
 
 defineProps<{
   steps: App.Data.Vetting.VettingStepListData;
   department: App.Data.Department.DepartmentInfoData;
-  data: PaginatedVettingListData | null;
+  data: PaginatedGraduandListData | null;
 }>();
 
 const pages: BreadcrumbItem[] = [
