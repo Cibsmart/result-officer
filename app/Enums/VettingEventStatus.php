@@ -22,7 +22,8 @@ enum VettingEventStatus: string
     {
         return match ($this) {
             self::NEW, self::PENDING => StatusColor::GRAY,
-            self::VETTING, => StatusColor::INDIGO,
+            self::QUEUED => StatusColor::PINK,
+            self::VETTING, => StatusColor::BLUE,
             self::FAILED => StatusColor::RED,
             self::PASSED => StatusColor::GREEN,
         };
