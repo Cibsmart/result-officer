@@ -61,7 +61,7 @@ final class StudentFinalResultController
         ]);
     }
 
-    public function download(Student $student): Pdf|PdfBuilder|View
+    public function download(Student $student): PdfBuilder|View
     {
         $studentData = StudentBasicData::from($student);
 

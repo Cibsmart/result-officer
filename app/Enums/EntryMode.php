@@ -30,7 +30,7 @@ enum EntryMode: string implements HasLabel
         return self::UTME;
     }
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return match ($this) {
             self::UTME => 'UTME',

@@ -35,7 +35,7 @@ enum CreditUnit: int
         return self::THIRTY;
     }
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return $this->name;
     }

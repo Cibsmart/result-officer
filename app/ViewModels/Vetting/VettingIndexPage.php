@@ -9,8 +9,8 @@ use Spatie\LaravelData\Data;
 
 final class VettingIndexPage extends Data
 {
+    /** @param \Illuminate\Pagination\AbstractPaginator<\App\Data\Vetting\VettingEventGroupData> $paginated */
     public function __construct(
-        /** @param \Illuminate\Pagination\AbstractPaginator<\App\Data\Vetting\VettingEventGroupData> $paginated */
         public readonly AbstractPaginator $paginated,
     ) {
     }

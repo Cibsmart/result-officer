@@ -19,11 +19,8 @@ final class User extends Authenticatable implements FilamentUser
     use Notifiable;
     use SoftDeletes;
 
-    /** @var array<int, string> */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    /** @var list<string> */
+    protected $hidden = ['password', 'remember_token'];
 
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ImportEvent, \App\Models\User> */
     public function imports(): HasMany

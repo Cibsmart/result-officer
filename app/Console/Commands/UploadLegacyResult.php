@@ -45,7 +45,7 @@ final class UploadLegacyResult extends Command
         $bar->finish();
     }
 
-    /** @param array<int, string> $result */
+    /** @param non-empty-list<string|null> $result */
     private function insertResult(array $result): void
     {
         LegacyResult::query()->create([
