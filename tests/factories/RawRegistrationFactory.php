@@ -19,7 +19,9 @@ final class RawRegistrationFactory extends Factory
     {
         $level = LevelFactory::new()->createOne();
         $session = SessionFactory::new()->createOne();
-        $student = StudentFactory::new()->createOne(['entry_level_id' => $level->id]);
+        $student = StudentFactory::new()->createOne([
+            'entry_level_id' => $level->id, 'entry_session_id' => $session->id,
+        ]);
         $semester = SemesterFactory::new()->createOne();
 
         return [
