@@ -14,7 +14,7 @@ import { computed, ref, watch, onMounted } from "vue";
 import { BreadcrumbItem } from "@/types";
 import { usePoll } from "@inertiajs/vue3";
 import SelectInput from "@/components/inputs/selectInput.vue";
-import UploadedExcelList from "@/pages/programCurriculum/import/partials/uploadedExcelList.vue";
+import UploadedExcelList from "@/components/uploadedExcelList.vue";
 
 const props = defineProps<{
   data: App.Data.Imports.ExcelImportEventListData;
