@@ -11,6 +11,8 @@ use Illuminate\Support\Str;
 
 final class Session extends Model
 {
+    private const string SESSION_E_GRADE_WAS_RESTORED = '2018/2019';
+
     protected $table = 'academic_sessions';
 
     protected $fillable = ['name'];
@@ -74,7 +76,7 @@ final class Session extends Model
 
     public function allowsEGrade(): bool
     {
-        $sessionEGradeWasRestored = self::getUsingName('2018/2019');
+        $sessionEGradeWasRestored = self::getUsingName(self::SESSION_E_GRADE_WAS_RESTORED);
 
         return $this->id >= $sessionEGradeWasRestored->id;
     }
