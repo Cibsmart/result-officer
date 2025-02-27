@@ -10,9 +10,9 @@ import FormGroup from "@/components/forms/formGroup.vue";
 import BaseFormSection from "@/components/forms/baseFormSection.vue";
 import InputError from "@/components/inputs/inputError.vue";
 import EmptyState from "@/components/emptyState.vue";
-import { computed, ref, watch, onMounted, toRef } from "vue";
+import { computed, ref, watch, onMounted } from "vue";
 import { BreadcrumbItem } from "@/types";
-import { usePage } from "@inertiajs/vue3";
+import { usePoll } from "@inertiajs/vue3";
 import SelectInput from "@/components/inputs/selectInput.vue";
 import UploadedExcelList from "@/pages/programCurriculum/import/partials/uploadedExcelList.vue";
 
@@ -21,9 +21,7 @@ const props = defineProps<{
   departments: App.Data.Department.DepartmentListData;
 }>();
 
-const user = usePage().props.user;
-
-const importEventListData = toRef(props.data, "events");
+const { start, stop } = usePoll(5000, {}, { autoStart: false });
 
 const form = useForm({
   department: null as App.Data.Department.DepartmentData | null,
@@ -51,15 +49,15 @@ const hasUnfinishedImport = computed(() =>
 
 onMounted(() => {
   if (hasUnfinishedImport.value) {
-    subscribe();
+    start();
   }
 });
 
 watch(hasUnfinishedImport, () => {
   if (hasUnfinishedImport.value) {
-    subscribe();
+    start();
   } else {
-    unsubscribe();
+    stop();
   }
 });
 
@@ -78,23 +76,6 @@ const loadPrograms = () => {
 
 const fileInput = ref<HTMLInputElement | null>(null);
 const programs = ref([{ id: 0, name: "Select Program" }]);
-
-const subscribe = () => {
-  window.Echo.private(`excelImports.${user.id}`).listen("ExcelImportStatusChanged", (event: any) => {
-    const index = importEventListData.value.findIndex(
-      (importEvent: App.Data.Imports.ExcelImportEventData) => importEvent.id === event.importEventData.id,
-    );
-
-    if (index > -1) {
-      importEventListData.value[index].status = event.importEventData.status;
-      importEventListData.value[index].statusColor = event.importEventData.statusColor;
-    }
-  });
-};
-
-const unsubscribe = () => {
-  window.Echo.leaveChannel(`excelImports.${user.id}`);
-};
 </script>
 
 <template>
