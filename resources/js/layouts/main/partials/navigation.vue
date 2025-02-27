@@ -6,7 +6,6 @@ import {
   HomeIcon,
   UserIcon,
   FolderIcon,
-  ChartPieIcon,
   DocumentCheckIcon,
   AdjustmentsHorizontalIcon,
 } from "@heroicons/vue/24/outline";
@@ -81,9 +80,9 @@ const navigation: NavigationItem[] = [
         href: route("graduand.index"),
         current: route().current("graduand.index"),
       },
-      { name: "Vetting", href: route("vettingEvent.index"), current: route().current("vettingEvent.index") },
+      { name: "Vet Students", href: route("vettingEvent.index"), current: route().current("vettingEvent.index") },
       {
-        name: "Cleared Student",
+        name: "Cleared Students",
         href: route("department.cleared.index"),
         current: route().current("department.cleared.index"),
       },
