@@ -252,6 +252,7 @@ declare namespace App.Data.Imports {
     status: App.Enums.ImportEventStatus;
     statusColor: App.Enums.StatusColor;
     message: string | null;
+    date: string;
   };
   export type ExcelImportEventListData = {
     events: Array<App.Data.Imports.ExcelImportEventData>;
