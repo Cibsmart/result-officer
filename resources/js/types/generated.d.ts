@@ -638,7 +638,7 @@ declare namespace App.Enums {
     | "extra"
     | "cleared"
     | "graduated";
-  export type VettingEventStatus = "new" | "pending" | "vetting" | "failed" | "passed" | "queued";
+  export type VettingEventStatus = "new" | "pending" | "queued" | "vetting" | "failed" | "passed" | "completed";
   export type VettingStatus = "new" | "checking" | "unchecked" | "failed" | "passed";
   export type VettingType =
     | "organize_year"
@@ -766,7 +766,7 @@ declare namespace App.ViewModels.Vetting {
     data: App.Data.Vetting.PaginatedVettingListData;
   };
   export type VettingIndexPage = {
-    paginated: App.Data.Vetting.PaginatedVettingEventGroupListData;
+    paginated: any;
   };
 }
 declare namespace App.ViewModels.finalResults {
