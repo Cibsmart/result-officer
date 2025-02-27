@@ -31,3 +31,5 @@ export interface PaginatedVettingListData extends PaginationInterface {
 export interface PaginatedVettingEventGroupListData extends PaginationInterface {
   data: Array<App.Data.Vetting.VettingEventGroupData>;
 }
+
+export type PaginatedData = PaginatedStudentListData | PaginatedVettingListData | PaginatedVettingEventGroupListData;
