@@ -23,7 +23,11 @@ defineProps<{
       <BaseTHead>
         <BaseTH position="left">Title</BaseTH>
 
+        <BaseTH>Number of Students</BaseTH>
+
         <BaseTH position="left">Status</BaseTH>
+
+        <BaseTH position="left">Date</BaseTH>
 
         <BaseTH>Actions</BaseTH>
       </BaseTHead>
@@ -32,7 +36,15 @@ defineProps<{
         <BaseTR
           v-for="event in paginated.data"
           :key="event.id">
-          <BaseTD position="left">{{ event.title }}</BaseTD>
+          <BaseTD position="left">
+            <div>
+              <div>{{ event.title }}</div>
+
+              <div class="text-xs text-gray-400">{{ event.department }}</div>
+            </div>
+          </BaseTD>
+
+          <BaseTD>{{ event.numberOfStudents }}</BaseTD>
 
           <BaseTD position="left">
             <Badge
@@ -41,6 +53,8 @@ defineProps<{
               {{ event.status }}
             </Badge>
           </BaseTD>
+
+          <BaseTD position="left">{{ event.date }}</BaseTD>
 
           <BaseTD>
             <SecondaryLinkSmall

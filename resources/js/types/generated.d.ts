@@ -518,6 +518,8 @@ declare namespace App.Data.Vetting {
     statusColor: App.Enums.StatusColor;
     department: string;
     message: string;
+    numberOfStudents: number;
+    date: string;
   };
   export type VettingEventGroupListData = {
     data: Array<App.Data.Vetting.VettingEventGroupData>;

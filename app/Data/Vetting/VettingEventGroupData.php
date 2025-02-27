@@ -19,6 +19,8 @@ final class VettingEventGroupData extends Data
         public readonly StatusColor $statusColor,
         public readonly string $department,
         public readonly string $message,
+        public readonly int $numberOfStudents,
+        public readonly string $date,
     ) {
     }
 
@@ -36,6 +38,10 @@ final class VettingEventGroupData extends Data
             statusColor: $status->color(),
             department: $vettingEventGroup->department->name,
             message: $message ? $message : '',
+            numberOfStudents: $vettingEventGroup->vettingEvents->count(),
+            date: $vettingEventGroup->created_at ?
+                $vettingEventGroup->created_at->format('M d, Y')
+                : '',
         );
     }
 }

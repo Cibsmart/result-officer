@@ -19,7 +19,7 @@ final class VettingEventGroupListData extends Data
     public static function forUser(User $user): self
     {
         $vettingGroups = $user->vettingEventGroups()
-            ->with('department')
+            ->with('department', 'vettingEvents')
             ->latest()
             ->get();
 
