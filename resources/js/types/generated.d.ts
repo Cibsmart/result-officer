@@ -487,6 +487,9 @@ declare namespace App.Data.Summary {
   };
 }
 declare namespace App.Data.Vetting {
+  export type PaginatedVettingEventGroupListData = {
+    paginated: Array<App.Data.Vetting.VettingEventGroupData>;
+  };
   export type PaginatedVettingListData = {
     paginated: Array<App.Data.Vetting.VettingStudentData>;
   };
@@ -495,11 +498,12 @@ declare namespace App.Data.Vetting {
     slug: string;
     title: string;
     status: App.Enums.VettingEventStatus;
+    statusColor: App.Enums.StatusColor;
     department: string;
     message: string;
   };
   export type VettingEventGroupListData = {
-    paginated: Array<App.Data.Vetting.VettingEventGroupData>;
+    data: Array<App.Data.Vetting.VettingEventGroupData>;
   };
   export type VettingListData = {
     faculty: App.Data.Faculty.FacultyData;
@@ -762,7 +766,7 @@ declare namespace App.ViewModels.Vetting {
     data: App.Data.Vetting.PaginatedVettingListData;
   };
   export type VettingIndexPage = {
-    data: App.Data.Vetting.VettingEventGroupListData;
+    paginated: App.Data.Vetting.PaginatedVettingEventGroupListData;
   };
 }
 declare namespace App.ViewModels.finalResults {

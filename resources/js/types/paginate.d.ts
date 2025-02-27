@@ -27,3 +27,7 @@ export interface PaginatedStudentListData extends PaginationInterface {
 export interface PaginatedVettingListData extends PaginationInterface {
   data: Array<App.Data.Vetting.VettingStudentData>;
 }
+
+export interface PaginatedVettingEventGroupListData extends PaginationInterface {
+  data: Array<App.Data.Vetting.VettingEventGroupData>;
+}
