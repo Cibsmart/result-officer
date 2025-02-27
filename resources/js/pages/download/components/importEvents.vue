@@ -17,7 +17,7 @@ const hasPendingEvent = computed(() => props.pending !== null);
 const hasEvent = computed(() => props.events.length > 0);
 const pendingDescription = computed(() => (hasPendingEvent.value ? `Pending ${props.pending.type} Download` : ""));
 const historyDescription = computed(() => (hasEvent.value ? `Recent ${props.events[0].type} Download History` : ""));
-const { start, stop } = usePoll(10000, { only: ["pending", "events"] }, { autoStart: false });
+const { start, stop } = usePoll(5000, { only: ["pending", "events"] }, { autoStart: false });
 
 onMounted(() => {
   if (hasPendingEvent.value) {

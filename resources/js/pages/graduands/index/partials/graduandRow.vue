@@ -16,7 +16,7 @@ defineEmits<{
   (e: "showClearance", student: App.Data.Graduands.GraduandData): void;
 }>();
 
-const { start, stop } = usePoll(10000, {}, { autoStart: false });
+const { start, stop } = usePoll(5000, {}, { autoStart: false });
 const vetting = computed(() => props.student.vettingStatus === "vetting");
 
 onMounted(() => {
