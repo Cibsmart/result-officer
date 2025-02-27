@@ -159,8 +159,8 @@ final class Student extends Model
     public function programCurriculum(): ?ProgramCurriculum
     {
         return ProgramCurriculum::query()
-            ->where('program_id', $this->program->id)
-            ->where('entry_session_id', $this->entrySession->id)
+            ->where('program_id', $this->program_id)
+            ->where('entry_session_id', $this->entry_session_id)
             ->where('entry_mode', $this->entry_mode)
             ->first();
     }

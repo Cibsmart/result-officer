@@ -8,15 +8,15 @@ import BaseTD from "@/components/tables/baseTD.vue";
 import { usePoll } from "@inertiajs/vue3";
 
 const props = defineProps<{
-  student: App.Data.Vetting.VettingStudentData;
+  student: App.Data.Graduands.GraduandData;
 }>();
 
 defineEmits<{
-  (e: "showReport", student: App.Data.Vetting.VettingStudentData): void;
-  (e: "showClearance", student: App.Data.Vetting.VettingStudentData): void;
+  (e: "showReport", student: App.Data.Graduands.GraduandData): void;
+  (e: "showClearance", student: App.Data.Graduands.GraduandData): void;
 }>();
 
-const { start, stop } = usePoll(10000, {}, { autoStart: false });
+const { start, stop } = usePoll(5000, {}, { autoStart: false });
 const vetting = computed(() => props.student.vettingStatus === "vetting");
 
 onMounted(() => {

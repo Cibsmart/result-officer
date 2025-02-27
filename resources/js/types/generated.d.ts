@@ -224,6 +224,25 @@ declare namespace App.Data.Grading {
     gradePoint: number;
   };
 }
+declare namespace App.Data.Graduands {
+  export type GraduandData = {
+    id: number;
+    name: string;
+    registrationNumber: string;
+    studentStatus: App.Enums.StudentStatus;
+    vettingStatus: App.Enums.VettingEventStatus;
+    vettingStatusColor: App.Enums.StatusColor;
+    slug: string;
+  };
+  export type GraduandListData = {
+    faculty: App.Data.Faculty.FacultyData;
+    department: App.Data.Department.DepartmentData;
+    graduands: Array<App.Data.Graduands.GraduandData>;
+  };
+  export type PaginatedGraduandListData = {
+    paginated: Array<App.Data.Graduands.GraduandData>;
+  };
+}
 declare namespace App.Data.Imports {
   export type ExcelImportEventData = {
     id: number;
@@ -233,6 +252,7 @@ declare namespace App.Data.Imports {
     status: App.Enums.ImportEventStatus;
     statusColor: App.Enums.StatusColor;
     message: string | null;
+    date: string;
   };
   export type ExcelImportEventListData = {
     events: Array<App.Data.Imports.ExcelImportEventData>;
@@ -487,13 +507,22 @@ declare namespace App.Data.Summary {
   };
 }
 declare namespace App.Data.Vetting {
-  export type PaginatedVettingListData = {
-    paginated: Array<App.Data.Vetting.VettingStudentData>;
+  export type PaginatedVettingEventGroupListData = {
+    paginated: Array<App.Data.Vetting.VettingEventGroupData>;
   };
-  export type VettingListData = {
-    faculty: App.Data.Faculty.FacultyData;
-    department: App.Data.Department.DepartmentData;
-    graduands: Array<App.Data.Vetting.VettingStudentData>;
+  export type VettingEventGroupData = {
+    id: number;
+    slug: string;
+    title: string;
+    status: App.Enums.VettingEventStatus;
+    statusColor: App.Enums.StatusColor;
+    department: string;
+    message: string;
+    numberOfStudents: number;
+    date: string;
+  };
+  export type VettingEventGroupListData = {
+    data: Array<App.Data.Vetting.VettingEventGroupData>;
   };
   export type VettingReportData = {
     id: number;
@@ -513,15 +542,6 @@ declare namespace App.Data.Vetting {
   export type VettingStepListData = {
     items: Array<App.Data.Vetting.VettingStepData>;
   };
-  export type VettingStudentData = {
-    id: number;
-    name: string;
-    registrationNumber: string;
-    studentStatus: App.Enums.StudentStatus;
-    vettingStatus: App.Enums.VettingEventStatus;
-    vettingStatusColor: App.Enums.StatusColor;
-    slug: string;
-  };
 }
 declare namespace App.Enums {
   export type ChecklistType =
@@ -534,6 +554,7 @@ declare namespace App.Enums {
     | "semester"
     | "session"
     | "course_code"
+    | "course_title"
     | "year"
     | "month"
     | "curriculum"
@@ -622,7 +643,7 @@ declare namespace App.Enums {
     | "extra"
     | "cleared"
     | "graduated";
-  export type VettingEventStatus = "new" | "pending" | "vetting" | "failed" | "passed";
+  export type VettingEventStatus = "new" | "pending" | "queued" | "vetting" | "failed" | "passed" | "completed";
   export type VettingStatus = "new" | "checking" | "unchecked" | "failed" | "passed";
   export type VettingType =
     | "organize_year"
@@ -693,6 +714,13 @@ declare namespace App.ViewModels.Exports {
     selectedIndex: number;
   };
 }
+declare namespace App.ViewModels.Graduands {
+  export type GraduandIndexPage = {
+    steps: App.Data.Vetting.VettingStepListData;
+    department: App.Data.Department.DepartmentInfoData;
+    data: App.Data.Graduands.PaginatedGraduandListData;
+  };
+}
 declare namespace App.ViewModels.Imports {
   export type CurriculumImportPage = {
     data: App.Data.Imports.ExcelImportEventListData;
@@ -745,10 +773,7 @@ declare namespace App.ViewModels.Summary {
 }
 declare namespace App.ViewModels.Vetting {
   export type VettingIndexPage = {
-    departments: App.Data.Department.DepartmentListData;
-    steps: App.Data.Vetting.VettingStepListData;
-    department: App.Data.Department.DepartmentInfoData;
-    data: App.Data.Vetting.PaginatedVettingListData;
+    paginated: any;
   };
 }
 declare namespace App.ViewModels.finalResults {

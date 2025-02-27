@@ -20,6 +20,7 @@ final class ExcelImportEventData extends Data
         public readonly ImportEventStatus $status,
         public readonly StatusColor $statusColor,
         public readonly ?string $message,
+        public readonly string $date,
     ) {
     }
 
@@ -36,6 +37,9 @@ final class ExcelImportEventData extends Data
             status: $status,
             statusColor: $status->color(),
             message: $event->message,
+            date: $event->created_at
+                ? $event->created_at->format('M d, Y')
+                : '',
         );
     }
 }

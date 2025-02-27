@@ -22,7 +22,7 @@ final class DepartmentClearedController
         ?Department $department = null,
         ?int $year = null,
         ?string $month = null,
-    ): Response|RedirectResponse {
+    ): Response {
 
         $user = $request->user();
         assert($user instanceof User);

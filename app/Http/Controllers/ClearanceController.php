@@ -54,6 +54,6 @@ final class ClearanceController
             ->performedOn($student)
             ->log('cleared student');
 
-        return to_route('vetting.index', $student->department())->success("{$student->registration_number} Cleared");
+        return to_route('graduand.index', $student->department())->success("{$student->registration_number} Cleared");
     }
 }

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 final class ResultDetail extends Model
 {
-    /** @var array<int, string> */
+    /** @var list<string> */
     protected $hidden = ['data'];
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Result, \App\Models\ResultDetail> */

@@ -40,13 +40,13 @@ it('redirects back to the vetting page', function (): void {
     VettingEventFactory::new()->for($student)->createOne(['status' => VettingEventStatus::PASSED]);
     $examOfficer = ExamOfficerFactory::new()->createOne();
 
-    actingAs($user)->fromRoute('vetting.index')
+    actingAs($user)->fromRoute('graduand.index')
         ->post(route('students.clearance.store', $student), [
             'exam_officer' => $examOfficer->id,
             'month' => now()->monthName,
             'year' => now()->year,
         ])
-        ->assertRedirect(route('vetting.index', $student->department()));
+        ->assertRedirect(route('graduand.index', $student->department()));
 });
 
 it('redirect guest to login', function (): void {

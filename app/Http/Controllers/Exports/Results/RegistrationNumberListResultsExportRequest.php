@@ -15,30 +15,37 @@ final class RegistrationNumberListResultsExportRequest extends FormRequest
     /** @return array<string, array<string>|string> */
     public function rules(): array
     {
-        return ['registration_numbers' => ['required', 'string']];
+        return [
+            'registration_numbers' => ['required'],
+        ];
     }
 
     public function withValidator(Validator $validator): void
     {
         $validator->after(function ($validator): void {
 
-            $registrationNumbers = Str::of($this->registration_numbers)
-                ->replace(' ', '')
-                ->explode(',')
-                ->filter()
-                ->unique();
-
-            $invalidNumbers = $this->validateRegistrationNumbers($registrationNumbers);
+            $invalidNumbers = $this->validateRegistrationNumbers($validator->validated()['registration_numbers']);
 
             if ($invalidNumbers->isEmpty()) {
                 return;
             }
 
-            $invalidNumbersText = $invalidNumbers->join(', ');
-            $validator->errors()->add('registration_numbers',
-                "The following registration numbers are invalid: {$invalidNumbersText}",
-            );
+            $message = "The following registration numbers are invalid: {$invalidNumbers->join(', ')}";
+
+            $validator->errors()->add('registration_numbers', $message);
         });
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'registration_numbers' => Str::of($this->registration_numbers)
+                ->replace("\n", ',')
+                ->replace(' ', '')
+                ->explode(',')
+                ->filter()
+                ->unique(),
+        ]);
     }
 
     /**

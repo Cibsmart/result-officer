@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Data\Vetting;
+namespace App\Data\Graduands;
 
 use App\Enums\StudentStatus;
 use App\Models\Department;
 use Illuminate\Pagination\AbstractPaginator;
 use Spatie\LaravelData\Data;
 
-final class PaginatedVettingListData extends Data
+final class PaginatedGraduandListData extends Data
 {
     public function __construct(
-        /** @var \Illuminate\Pagination\AbstractPaginator<\App\Data\Vetting\VettingStudentData> $paginated */
+        /** @var \Illuminate\Pagination\AbstractPaginator<\App\Data\Graduands\GraduandData> $paginated */
         public readonly AbstractPaginator $paginated,
     ) {
     }
@@ -25,7 +25,7 @@ final class PaginatedVettingListData extends Data
             ->orderBy('registration_number')
             ->paginate();
 
-        $paginated = VettingStudentData::collect($graduands);
+        $paginated = GraduandData::collect($graduands);
         assert($paginated instanceof AbstractPaginator);
 
         return new self(paginated: $paginated);

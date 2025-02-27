@@ -20,7 +20,7 @@ defineProps<{
 const pages: BreadcrumbItem[] = [
   {
     name: "Results Export",
-    href: route("export.results.page", { selectedIndex: 0 }),
+    href: route("export.results.page", { selectedIndex: 1 }),
     current: route().current("export.results.page"),
   },
 ];

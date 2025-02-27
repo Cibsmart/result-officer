@@ -10,10 +10,10 @@ import FormGroup from "@/components/forms/formGroup.vue";
 import BaseFormSection from "@/components/forms/baseFormSection.vue";
 import InputError from "@/components/inputs/inputError.vue";
 import EmptyState from "@/components/emptyState.vue";
-import { computed, ref, watch, onMounted, toRef } from "vue";
+import { computed, ref, watch, onMounted } from "vue";
 import { BreadcrumbItem } from "@/types";
-import { usePage } from "@inertiajs/vue3";
-import UploadedExcelList from "@/pages/programCurriculum/import/partials/uploadedExcelList.vue";
+import { usePoll } from "@inertiajs/vue3";
+import UploadedExcelList from "@/components/uploadedExcelList.vue";
 
 const props = defineProps<{
   data: App.Data.Imports.ExcelImportEventListData;
@@ -27,9 +27,7 @@ const pages: BreadcrumbItem[] = [
   },
 ];
 
-const user = usePage().props.user;
-
-const importEventListData = toRef(props.data, "events");
+const { start, stop } = usePoll(5000, {}, { autoStart: false });
 
 const form = useForm({ file: null as File | null });
 
@@ -41,15 +39,15 @@ const hasUnfinishedImport = computed(() =>
 
 onMounted(() => {
   if (hasUnfinishedImport.value) {
-    subscribe();
+    start();
   }
 });
 
 watch(hasUnfinishedImport, () => {
   if (hasUnfinishedImport.value) {
-    subscribe();
+    start();
   } else {
-    unsubscribe();
+    stop();
   }
 });
 
@@ -64,23 +62,6 @@ const submit = () => {
 };
 
 const fileInput = ref<HTMLInputElement | null>(null);
-
-const subscribe = () => {
-  window.Echo.private(`excelImports.${user.id}`).listen("ExcelImportStatusChanged", (event: any) => {
-    const index = importEventListData.value.findIndex(
-      (importEvent: App.Data.Imports.ExcelImportEventData) => importEvent.id === event.importEventData.id,
-    );
-
-    if (index > -1) {
-      importEventListData.value[index].status = event.importEventData.status;
-      importEventListData.value[index].statusColor = event.importEventData.statusColor;
-    }
-  });
-};
-
-const unsubscribe = () => {
-  window.Echo.leaveChannel(`excelImports.${user.id}`);
-};
 </script>
 
 <template>

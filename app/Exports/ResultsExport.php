@@ -107,7 +107,7 @@ final class ResultsExport implements FromQuery, ShouldAutoSize, WithEvents, With
         $scores = json_decode($row->scores);
 
         return [
-            $this->rowNumber,
+            (string) $this->rowNumber,
             $row->registration_id,
             "{$row->last_name} {$row->first_name} {$row->other_names}",
             $row->registration_number,

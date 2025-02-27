@@ -16,7 +16,9 @@ final class ExportResultsPageController
 {
     public function __invoke(Request $request): Response
     {
-        $selectedIndex = $request->integer('selectedIndex');
+        $selectedIndex = $request->has('selectedIndex')
+            ? $request->integer('selectedIndex')
+            : 1;
 
         $user = $request->user();
         assert($user instanceof User);

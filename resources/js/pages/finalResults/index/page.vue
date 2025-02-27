@@ -50,9 +50,11 @@ const hasResults = computed(() => props.results !== null && props.results.finalS
           <div
             v-show="hasResults"
             class="mt-4 flex space-x-4">
-            <BaseLink :href="route('finalResults.transcript', { student: student })"> Transcript</BaseLink>
+            <BaseLink :href="route('finalResults.download', { student: student })"> Download (Official)</BaseLink>
 
-            <BaseLink :href="route('finalResults.print', { student: student })"> Print</BaseLink>
+            <BaseLink :href="route('finalResults.transcript', { student: student })"> Transcript (Draft)</BaseLink>
+
+            <BaseLink :href="route('finalResults.print', { student: student })"> Print (RDB Draft)</BaseLink>
           </div>
         </div>
 
@@ -84,7 +86,7 @@ const hasResults = computed(() => props.results !== null && props.results.finalS
             v-else
             description="Get started by vetting and clearing student"
             title="No Final Results">
-            <IconLink :href="route('vetting.index')">Vet Student</IconLink>
+            <IconLink :href="route('vettingEvent.index')">Vet Student</IconLink>
           </EmptyState>
         </div>
 

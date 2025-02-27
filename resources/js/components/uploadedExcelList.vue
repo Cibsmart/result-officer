@@ -32,7 +32,9 @@ const currentEvent = ref<App.Data.Imports.ExcelImportEventData | null>(null);
 <template>
   <BaseTable>
     <BaseTHead>
-      <BaseTH position="left">FileName</BaseTH>
+      <BaseTH position="left">File Name</BaseTH>
+
+      <BaseTH position="left">Date Uploaded</BaseTH>
 
       <BaseTH position="left">Status</BaseTH>
 
@@ -44,6 +46,8 @@ const currentEvent = ref<App.Data.Imports.ExcelImportEventData | null>(null);
         v-for="event in data.events"
         :key="event.id">
         <BaseTD position="left">{{ event.fileName }}</BaseTD>
+
+        <BaseTD position="left">{{ event.date }}</BaseTD>
 
         <BaseTD position="left">
           <Badge

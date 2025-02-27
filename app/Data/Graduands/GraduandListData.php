@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Data\Vetting;
+namespace App\Data\Graduands;
 
 use App\Data\Department\DepartmentData;
 use App\Data\Faculty\FacultyData;
@@ -12,12 +12,12 @@ use App\Models\Faculty;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
 
-final class VettingListData extends Data
+final class GraduandListData extends Data
 {
     public function __construct(
         public readonly FacultyData $faculty,
         public readonly DepartmentData $department,
-        /** @var \Illuminate\Support\Collection<int, \App\Data\Vetting\VettingStudentData> */
+        /** @var \Illuminate\Support\Collection<int, \App\Data\Graduands\GraduandData> */
         public readonly Collection $graduands,
     ) {
     }
@@ -35,7 +35,7 @@ final class VettingListData extends Data
         return new self(
             faculty: FacultyData::fromModel($faculty),
             department: DepartmentData::fromModel($department),
-            graduands: VettingStudentData::collect($graduands),
+            graduands: GraduandData::collect($graduands),
         );
     }
 }

@@ -2,7 +2,7 @@
 import { ref, computed } from "vue";
 import EmptyState from "@/components/emptyState.vue";
 import IconLink from "@/components/links/iconLink.vue";
-import StudentRow from "@/pages/vetting/list/index/partials/studentRow.vue";
+import StudentRow from "@/pages/graduands/index/partials/graduandRow.vue";
 import Drawer from "@/components/drawer.vue";
 import Disclosure from "@/components/baseDisclosure.vue";
 import Card from "@/components/cards/card.vue";
@@ -14,16 +14,16 @@ import BaseTHead from "@/components/tables/baseTHead.vue";
 import BaseTH from "@/components/tables/baseTH.vue";
 import BaseTBody from "@/components/tables/baseTBody.vue";
 import BaseTR from "@/components/tables/baseTR.vue";
-import { PaginatedVettingListData } from "@/types/paginate";
+import { PaginatedGraduandListData } from "@/types/paginate";
 import CardFooter from "@/components/cards/cardFooter.vue";
 import Pagination from "@/components/pagination.vue";
 import BaseSection from "@/layouts/main/partials/baseSection.vue";
-import ClearanceConfirmationForm from "@/pages/vetting/list/index/partials/clearanceConfirmationForm.vue";
+import ClearanceConfirmationForm from "@/pages/graduands/index/partials/clearanceConfirmationForm.vue";
 
 const props = defineProps<{
   department: App.Data.Department.DepartmentInfoData;
   steps: App.Data.Vetting.VettingStepListData;
-  paginated: PaginatedVettingListData;
+  paginated: PaginatedGraduandListData;
 }>();
 
 const showReport = ref(false);
@@ -35,7 +35,7 @@ const hasRows = computed(() => props.paginated.data.length > 0);
 const form = useForm({ student: "" });
 
 const closeDrawer = () => (showReport.value = false);
-const openDrawer = (student: App.Data.Vetting.VettingStudentData) => {
+const openDrawer = (student: App.Data.Graduands.GraduandData) => {
   registrationNumber.value = student.registrationNumber;
 
   form.student = student.slug;
@@ -46,9 +46,9 @@ const openDrawer = (student: App.Data.Vetting.VettingStudentData) => {
 };
 
 const openClearanceForm = ref(false);
-const clearanceStudent = ref<App.Data.Vetting.VettingStudentData>();
+const clearanceStudent = ref<App.Data.Graduands.GraduandData>();
 
-const confirmStudentClearance = (student: App.Data.Vetting.VettingStudentData) => {
+const confirmStudentClearance = (student: App.Data.Graduands.GraduandData) => {
   clearanceStudent.value = student;
   openClearanceForm.value = true;
 };

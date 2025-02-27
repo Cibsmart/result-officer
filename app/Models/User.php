@@ -19,11 +19,8 @@ final class User extends Authenticatable implements FilamentUser
     use Notifiable;
     use SoftDeletes;
 
-    /** @var array<int, string> */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    /** @var list<string> */
+    protected $hidden = ['password', 'remember_token'];
 
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ImportEvent, \App\Models\User> */
     public function imports(): HasMany
@@ -41,6 +38,12 @@ final class User extends Authenticatable implements FilamentUser
     public function departments(): HasMany
     {
         return $this->hasMany(UserDepartment::class);
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\VettingEventGroup, \App\Models\User> */
+    public function vettingEventGroups(): HasMany
+    {
+        return $this->hasMany(VettingEventGroup::class);
     }
 
     public function inDomain(): bool
