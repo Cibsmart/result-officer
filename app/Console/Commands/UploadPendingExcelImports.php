@@ -10,7 +10,6 @@ use App\Enums\ImportEventStatus;
 use App\Models\ExcelImportEvent;
 use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Artisan;
 use Maatwebsite\Excel\HeadingRowImport;
 
 final class UploadPendingExcelImports extends Command
@@ -31,10 +30,7 @@ final class UploadPendingExcelImports extends Command
 
         ExcelImportEvent::updateStatues($importEvents, ImportEventStatus::STARTED);
 
-        sleep(5);
-
         foreach ($importEvents as $event) {
-            $event->updateStatus(ImportEventStatus::UPLOADING);
 
             $type = $event->type;
             assert($type instanceof ExcelImportType);
@@ -42,6 +38,8 @@ final class UploadPendingExcelImports extends Command
             $headings = (new HeadingRowImport())->toArray($event->file_path)[0][0];
 
             $validation = (new ValidateHeadings())->execute($headings, $type);
+
+            $event->updateStatus(ImportEventStatus::UPLOADING);
 
             try {
                 $type->getImportClass()::new($event, $validation['validated'])->import($event->file_path);
@@ -53,10 +51,6 @@ final class UploadPendingExcelImports extends Command
 
             $event->updateStatus(ImportEventStatus::UPLOADED);
         }
-
-        sleep(5);
-
-        Artisan::call('rp:process-raw-excel-uploads');
 
         return Command::SUCCESS;
     }
