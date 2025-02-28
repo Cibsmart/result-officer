@@ -49,6 +49,12 @@ final class RawResult extends Model
         $this->save();
     }
 
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Result, \App\Models\RawResult> */
+    public function result(): BelongsTo
+    {
+        return $this->belongsTo(Result::class);
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ImportEvent, \App\Models\RawResult> */
     public function event(): BelongsTo
     {
