@@ -624,7 +624,7 @@ declare namespace App.Enums {
   export type RecordSource = "portal" | "excel" | "legacy" | "system" | "user";
   export type ResultRemark = "PAS" | "FAL" | "ABS" | "MAL";
   export type Role = "super-admin" | "admin" | "desk-officer" | "exam-officer" | "database-officer" | "user";
-  export type ScoreType = "course_work" | "exam";
+  export type ScoreType = "in_course_1" | "inc_course_2" | "quiz" | "mid_semester" | "exam";
   export type StatusColor = "gray" | "red" | "yellow" | "green" | "blue" | "purple" | "indigo" | "pink";
   export type StudentField = "phone_number" | "email" | "jamb_registration_number";
   export type StudentRelatedField = "program_id" | "entry_level_id" | "entry_session_id" | "local_government_id";
