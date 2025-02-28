@@ -102,6 +102,12 @@ final class Result extends Model
         return $this->hasOne(ResultDetail::class);
     }
 
+    /** @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\RawResult, \App\Models\Result> */
+    public function rawResult(): HasOne
+    {
+        return $this->hasOne(RawResult::class, 'result_id');
+    }
+
     public function getData(): string
     {
         return "{$this->registration_id}-{$this->total_score}-{$this->grade}-{$this->grade_point}";
