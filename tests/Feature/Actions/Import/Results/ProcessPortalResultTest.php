@@ -34,12 +34,32 @@ it('can process raw result and save into the results table', function (): void {
         'grade' => $rawResult->grade,
         'registration_id' => $rawResult->online_id,
         'scores' => json_encode([
-            'exam' => $rawResult->exam, 'in_course' => $rawResult->in_course,
+            'exam' => $rawResult->exam, 'in_course' => $rawResult->in_course, 'in_course_2' => $rawResult->in_course_2,
         ]),
         'source' => RecordSource::PORTAL,
         'total_score' => $rawResult->total,
         'upload_date' => DateValue::fromValue($rawResult->upload_date)->value,
     ]);
+});
+
+test('that the total is equal to the sum of scores', function (): void {
+    SessionFactory::new()->createOne(['name' => '2018/2019']);
+
+    $registration = RegistrationFactory::new()->createOne(['online_id' => 1]);
+    $exam = 30;
+    $inCourse = 5;
+    $inCourse2 = 10;
+
+    $rawResult = RawResultFactory::new()->createOne([
+        'exam' => $exam,
+        'in_course' => $inCourse,
+        'in_course_2' => $inCourse2,
+        'registration_id' => $registration->id,
+    ]);
+
+    (new ProcessPortalResult())->execute($rawResult);
+
+    expect($registration->result->total_score)->toBe($exam + $inCourse + $inCourse2);
 });
 
 it('does not save save duplicate result into the results table', function (): void {
