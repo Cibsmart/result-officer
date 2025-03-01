@@ -116,6 +116,7 @@ final class FinalResultsImport implements ToModel, WithBatchInserts, WithCalcula
             'excel_import_event_id' => $this->event->id,
             'grade' => Str::trim($row[$this->headings['grade']]),
             'in_course' => (int) Str::trim($row[$this->headings['in_course']]),
+            'in_course_2' => (int) Str::trim($row[$this->headings['in_course_2']]),
             'level' => Str::of($row[$this->headings['course_code']])->trim()->afterLast(' ')[0] . '00',
             'month' => Str::trim($row[$this->headings['month']]),
             'name' => Str::trim($row[$this->headings['name']]),
