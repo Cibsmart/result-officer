@@ -120,9 +120,8 @@ final class ExcelImportEvent extends Model
     public function setMessage(string $message): void
     {
         $this->message = $message;
+        $this->status = ImportEventStatus::FAILED;
         $this->save();
-
-        $this->updateStatus(ImportEventStatus::FAILED);
     }
 
     /** @return \Illuminate\Support\Collection<int, string> */
