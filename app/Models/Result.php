@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Data\Models\ResultModelData;
+use App\Data\Scores\ScoresData;
 use App\Enums\RecordSource;
 use App\Values\ExamScore;
 use App\Values\InCourseScore;
 use App\Values\RegistrationNumber;
-use App\Values\TotalScore;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -42,22 +42,19 @@ final class Result extends Model
 
         if ($result === null) {
             $registrationNumber = RegistrationNumber::new($student->registration_number);
-            $inCourse = InCourseScore::new($newScores['in_course'] ?? 0);
-            $exam = ExamScore::new($newScores['exam'] ?? 0);
 
-            ResultModelData::fromResultUpdateInput($registration, $registrationNumber, $exam, $inCourse)->save();
+            $scores = ScoresData::fromArray($newScores);
+
+            ResultModelData::fromResultUpdateInput(
+                registration: $registration,
+                registrationNumber: $registrationNumber,
+                scores: $scores,
+            )->save();
 
             return;
         }
 
-        $oldScores = $result->getScores();
-        $scores = ['in_course' => $oldScores['in_course'], 'exam' => $oldScores['exam']];
-
-        foreach ($newScores as $key => $value) {
-            $scores[$key] = $value;
-        }
-
-        $result->scores = $scores;
+        $result->scores = ScoresData::update($result->getScores(), $newScores)->value();
         $result->save();
 
         $result->recompute($student);
@@ -65,13 +62,10 @@ final class Result extends Model
 
     public function recompute(Student $student): void
     {
-        $scores = $this->getScores();
+        $total = ScoresData::fromArray($this->getScores())->total;
 
         $creditUnit = $this->registration->credit_unit;
-        $inCourse = $scores['in_course'];
-        $exam = $scores['exam'];
 
-        $total = TotalScore::new($inCourse + $exam);
         $grade = $total->grade($student->allowEGrade() || $this->registration->session()->allowsEGrade());
         $gradePoint = $grade->point() * $creditUnit->value;
 
@@ -102,23 +96,57 @@ final class Result extends Model
         return $this->hasOne(ResultDetail::class);
     }
 
+    /** @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\RawResult, \App\Models\Result> */
+    public function rawResult(): HasOne
+    {
+        return $this->hasOne(RawResult::class, 'result_id');
+    }
+
     public function getData(): string
     {
         return "{$this->registration_id}-{$this->total_score}-{$this->grade}-{$this->grade_point}";
     }
 
-    /** @return array{in_course: int, exam: int} */
+    /** @return array{exam: int, in_course: int, in_course_2: int} */
     public function getScores(): array
     {
         $scores = $this->scores;
 
         if (is_string($scores)) {
             $scores = json_decode($scores);
+            $inCourse2 = property_exists($scores, 'in_course_2')
+                ? $scores->in_course_2
+                : 0;
 
-            return ['in_course' => (int) $scores->in_course, 'exam' => (int) $scores->exam];
+            return [
+                'exam' => (int) $scores->exam,
+                'in_course' => (int) $scores->in_course,
+                'in_course_2' => $inCourse2,
+            ];
         }
 
-        return ['in_course' => (int) $scores['in_course'], 'exam' => (int) $scores['exam']];
+        $inCourse2 = array_key_exists('in_course_2', $scores)
+            ? $scores['in_course_2']
+            : 0;
+
+        return [
+            'exam' => (int) $scores['exam'],
+            'in_course' => (int) $scores['in_course'],
+            'in_course_2' => (int) $inCourse2,
+        ];
+    }
+
+    /** @return array{exam: int, in_course: int, in_course_2: int} */
+    public function prepareScores(
+        ExamScore $examScore,
+        InCourseScore $inCourseScore,
+        InCourseScore $inCourseScore2,
+    ): array {
+        return [
+            'exam' => $examScore->value,
+            'in_course' => $inCourseScore->value,
+            'in_course_2' => $inCourseScore2->value,
+        ];
     }
 
     /** @return array{scores: 'json', source: 'App\Enums\RecordSource', upload_date: 'date'} */

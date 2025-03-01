@@ -50,7 +50,7 @@ final class ResultUpdateController
 
         return redirect()
             ->route('students.show', $student)
-            ->{NotificationType::SUCCESS->value}('Student name updated successfully.');
+            ->{NotificationType::SUCCESS->value}('Student result updated successfully.');
     }
 
     /**
@@ -61,12 +61,18 @@ final class ResultUpdateController
     {
         $result = $registration->result;
 
-        $oldResult = ['credit_unit' => $registration->credit_unit->value, 'in_course' => 0, 'exam' => 0];
+        $oldResult = [
+            'credit_unit' => $registration->credit_unit->value,
+            'exam' => 0,
+            'in_course' => 0,
+            'in_course_2' => 0,
+        ];
 
         if ($result) {
             $scores = $result->getScores();
 
             $oldResult['in_course'] = $scores['in_course'];
+            $oldResult['in_course_2'] = $scores['in_course_2'];
             $oldResult['exam'] = $scores['exam'];
         }
 

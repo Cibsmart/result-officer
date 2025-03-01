@@ -12,7 +12,7 @@ final readonly class TotalScore
     public function __construct(
         public int $value,
     ) {
-        if ($this->value < 0 || $this->value > 100) {
+        if (! self::isValid($value)) {
             throw new InvalidArgumentException('Total score value must be between 0 and 100');
         }
     }
@@ -25,6 +25,11 @@ final readonly class TotalScore
     public static function new(int $value): self
     {
         return new self($value);
+    }
+
+    public static function isValid(int $value): bool
+    {
+        return $value >= 0 && $value <= 100;
     }
 
     public function grade(bool $isEGradeAllowed): Grade

@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Data\Scores\ScoresData;
 use App\Enums\CourseStatus;
 use App\Enums\CreditUnit;
 use App\Enums\Grade;
 use App\Enums\RecordSource;
 use App\Values\DateValue;
-use App\Values\ExamScore;
-use App\Values\InCourseScore;
 use App\Values\RegistrationNumber;
 use App\Values\SessionValue;
 use App\Values\TotalScore;
@@ -52,14 +51,12 @@ final class FinalResult extends Model
         FinalSemesterEnrollment $finalSemesterEnrollment,
         RawFinalResult $result,
         FinalCourse $finalCourse,
-        CourseStatus $status,
         ?Registration $registration,
     ): self {
+        $scores = ScoresData::new($result->exam, $result->in_course, $result->in_course_2);
         $registrationNumber = RegistrationNumber::new($result->registration_number);
         $creditUnit = CreditUnit::from($result->credit_unit);
-        $inCourse = InCourseScore::new($result->in_course);
-        $exam = ExamScore::new($result->exam);
-        $total = TotalScore::fromInCourseAndExam($inCourse, $exam);
+        $total = $scores->total;
         $total2 = TotalScore::new($result->total);
         $grade2 = Grade::from($result->grade);
         $grade = $total->grade(
@@ -76,10 +73,10 @@ final class FinalResult extends Model
         $finalResult = new self();
         $finalResult->final_semester_enrollment_id = $finalSemesterEnrollment->id;
         $finalResult->final_course_id = $finalCourse->id;
-        $finalResult->course_status = $status;
+        $finalResult->course_status = CourseStatus::FRESH;
         $finalResult->credit_unit = $creditUnit;
         $finalResult->total_score = $total->value;
-        $finalResult->scores = ['in_course' => $inCourse->value, 'exam' => $exam->value];
+        $finalResult->scores = $scores->value();
         $finalResult->grade = $grade;
         $finalResult->grade_point = $grade->point() * $creditUnit->value;
         $finalResult->source = RecordSource::EXCEL;

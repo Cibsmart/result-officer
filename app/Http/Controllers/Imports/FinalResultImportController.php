@@ -31,7 +31,7 @@ final class FinalResultImportController
 
     public function store(Request $request): RedirectResponse
     {
-        $file = $request->validate(['file' => File::types(['xlsx'])->max('5mb')])['file'];
+        $file = $request->validate(['file' => File::types(['xlsx'])->max('2mb')])['file'];
 
         $type = ExcelImportType::FINAL_RESULT;
 

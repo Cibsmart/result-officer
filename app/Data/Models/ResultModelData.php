@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Data\Models;
 
+use App\Data\Scores\ScoresData;
 use App\Enums\CreditUnit;
 use App\Enums\Grade;
 use App\Enums\RecordSource;
@@ -14,8 +15,6 @@ use App\Models\RawResult;
 use App\Models\Registration;
 use App\Models\Result;
 use App\Values\DateValue;
-use App\Values\ExamScore;
-use App\Values\InCourseScore;
 use App\Values\RegistrationNumber;
 use App\Values\TotalScore;
 
@@ -23,7 +22,7 @@ final readonly class ResultModelData
 {
     public function __construct(
         public Registration $registration,
-        /** @var array<string, string> $scores */
+        /** @var array<string, int> $scores */
         public array $scores,
         public TotalScore $totalScore,
         public Grade $grade,
@@ -38,11 +37,12 @@ final readonly class ResultModelData
 
     public static function fromRawResult(Registration $registration, RawResult $result): self
     {
-        [$totalScore, $grade, $gradePoint] = self::getTotalAndGrade(
+        $scores = ScoresData::new((int) $result->exam, (int) $result->in_course, (int) $result->in_course_2);
+
+        [$grade, $gradePoint] = self::getGrade(
             registration: $registration,
             registrationNumber: RegistrationNumber::new($result->getRegistrationNumber()),
-            exam: ExamScore::new((int) $result->exam),
-            inCourse: InCourseScore::new((int) $result->in_course),
+            scores: $scores,
         );
 
         $lecturer = null;
@@ -53,8 +53,8 @@ final readonly class ResultModelData
 
         return new self(
             registration: $registration,
-            scores: ['exam' => $result->exam, 'in_course' => $result->in_course],
-            totalScore: $totalScore,
+            scores: $scores->value(),
+            totalScore: $scores->total,
             grade: $grade,
             gradePoint: $gradePoint,
             examDate: DateValue::fromValue($result->exam_date),
@@ -67,11 +67,12 @@ final readonly class ResultModelData
 
     public static function fromLegacyResult(Registration $registration, LegacyResult|LegacyFinalResult $result): self
     {
-        [$totalScore, $grade, $gradePoint] = self::getTotalAndGrade(
+        $scores = ScoresData::new((int) $result->exam, (int) $result->inc, 0);
+
+        [$grade, $gradePoint] = self::getGrade(
             registration: $registration,
             registrationNumber: RegistrationNumber::new($result->registration_number),
-            exam: ExamScore::new($result->exam),
-            inCourse: InCourseScore::new($result->inc),
+            scores: $scores,
         );
 
         $lecturer = null;
@@ -82,8 +83,8 @@ final readonly class ResultModelData
 
         return new self(
             registration: $registration,
-            scores: ['exam' => (string) $result->exam, 'in_course' => (string) $result->inc],
-            totalScore: $totalScore,
+            scores: $scores->value(),
+            totalScore: $scores->total,
             grade: $grade,
             gradePoint: $gradePoint,
             examDate: DateValue::fromValue($result->exam_date),
@@ -97,19 +98,19 @@ final readonly class ResultModelData
     public static function fromResultUpdateInput(
         Registration $registration,
         RegistrationNumber $registrationNumber,
-        ExamScore $exam,
-        InCourseScore $inCourse,
+        ScoresData $scores,
     ): self {
-        [$totalScore, $grade, $gradePoint] = self::getTotalAndGrade(
+
+        [$grade, $gradePoint] = self::getGrade(
             registration: $registration,
             registrationNumber: $registrationNumber,
-            exam: $exam, inCourse: $inCourse,
+            scores: $scores,
         );
 
         return new self(
             registration: $registration,
-            scores: ['exam' => (string) $exam->value, 'in_course' => (string) $inCourse->value],
-            totalScore: $totalScore,
+            scores: $scores->value(),
+            totalScore: $scores->total,
             grade: $grade,
             gradePoint: $gradePoint,
             examDate: DateValue::fromValue(null),
@@ -151,20 +152,19 @@ final readonly class ResultModelData
         return $result;
     }
 
-    /** @return array{\App\Values\TotalScore, \App\Enums\Grade, int} */
-    private static function getTotalAndGrade(
+    /** @return array{\App\Enums\Grade, int} */
+    private static function getGrade(
         Registration $registration,
         RegistrationNumber $registrationNumber,
-        ExamScore $exam,
-        InCourseScore $inCourse,
+        ScoresData $scores,
     ): array {
         $creditUnit = $registration->credit_unit;
         assert($creditUnit instanceof CreditUnit);
 
-        $totalScore = TotalScore::fromInCourseAndExam($inCourse, $exam);
+        $totalScore = $scores->total;
         $grade = $totalScore->grade($registrationNumber->allowEGrade() || $registration->session()->allowsEGrade());
         $gradePoint = $grade->point() * $creditUnit->value;
 
-        return [$totalScore, $grade, $gradePoint];
+        return [$grade, $gradePoint];
     }
 }

@@ -28,6 +28,7 @@ const form = useForm({
   credit_unit: props.result.creditUnit,
   credit_unit_object: units[0],
   in_course: props.result.inCourseScore,
+  in_course_2: props.result.inCourseScore2,
   exam: props.result.examScore,
   remark: "",
   has_mail: false,
@@ -39,11 +40,14 @@ const form = useForm({
 });
 
 const title = `Update Student's Result (${props.student.basic.registrationNumber})`;
-const oldName = computed(() => `${props.result.creditUnit}-${props.result.inCourseScore}-${props.result.examScore}`);
-const newName = computed(() => `${form.credit_unit_object.id}-${form.in_course}-${form.exam}`);
-const total = computed(() => `${form.in_course + form.exam}`);
+const oldValue = computed(
+  () =>
+    `${props.result.creditUnit}-${props.result.inCourseScore}-${props.result.inCourseScore2}-${props.result.examScore}`,
+);
+const newValue = computed(() => `${form.credit_unit_object.id}-${form.in_course}-${form.in_course_2}-${form.exam}`);
+const total = computed(() => `${form.in_course + form.in_course_2 + form.exam}`);
 
-const canNotUpdate = computed(() => oldName.value === newName.value || form.processing);
+const canNotUpdate = computed(() => oldValue.value === newValue.value || form.processing);
 
 watch(
   () => form.has_mail,
@@ -74,22 +78,8 @@ const submit = () =>
       <FormGroup>
         <div class="flex-1">
           <InputLabel
-            for="credit_unit"
-            value="Credit Unit" />
-
-          <SelectInput
-            id="month"
-            v-model="form.credit_unit_object"
-            :items="units"
-            :selected="result.creditUnit" />
-
-          <InputError :message="form.errors.credit_unit" />
-        </div>
-
-        <div class="flex-1">
-          <InputLabel
             for="in_course"
-            value="In Course Score" />
+            value="In Course 1 Score" />
 
           <TextInput
             id="in_course"
@@ -101,6 +91,23 @@ const submit = () =>
             type="number" />
 
           <InputError :message="form.errors.in_course" />
+        </div>
+
+        <div class="flex-1">
+          <InputLabel
+            for="in_course_2"
+            value="In Course 2 Score" />
+
+          <TextInput
+            id="in_course_2"
+            v-model="form.in_course_2"
+            autocomplete="off"
+            max="50"
+            min="0"
+            required
+            type="number" />
+
+          <InputError :message="form.errors.in_course_2" />
         </div>
 
         <div class="flex-1">
@@ -117,6 +124,22 @@ const submit = () =>
             type="number" />
 
           <InputError :message="form.errors.exam" />
+        </div>
+      </FormGroup>
+
+      <FormGroup>
+        <div class="flex-1">
+          <InputLabel
+            for="credit_unit"
+            value="Credit Unit" />
+
+          <SelectInput
+            id="month"
+            v-model="form.credit_unit_object"
+            :items="units"
+            :selected="result.creditUnit" />
+
+          <InputError :message="form.errors.credit_unit" />
         </div>
 
         <div class="flex-1">

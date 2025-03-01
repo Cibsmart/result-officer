@@ -157,15 +157,12 @@ final class ProcessRawFinalResults
                 continue;
             }
 
-            $status = $course->getCourseStatus($student);
-
             $registration = $this->getRegistration($student, $semesterEnrollment, $result, $course);
 
             $finalResults = FinalResult::createFromRawFinalResult(
                 finalSemesterEnrollment: $semesterEnrollment,
                 result: $result,
                 finalCourse: $course,
-                status: $status,
                 registration: $registration,
             );
 
@@ -199,6 +196,7 @@ final class ProcessRawFinalResults
             ->first();
 
         $registrations = null;
+        $course = null;
 
         if ($sessionEnrollment !== null) {
             $semesterEnrollment = $sessionEnrollment->semesterEnrollments
@@ -212,7 +210,7 @@ final class ProcessRawFinalResults
             $course = Course::query()->whereIn('id', $courseId)->where('code', $finalCourse->code)->first();
         }
 
-        return $registrations
+        return $registrations && $course
             ? $registrations->where('course_id', $course->id)->first()
             : null;
     }

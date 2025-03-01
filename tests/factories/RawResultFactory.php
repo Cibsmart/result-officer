@@ -18,9 +18,10 @@ final class RawResultFactory extends Factory
     /** @return array<string, string> */
     public function definition(): array
     {
-        $inCourse = fake()->numberBetween(0, 30);
+        $inCourse = fake()->numberBetween(0, 15);
+        $inCourse2 = fake()->numberBetween(0, 15);
         $exam = fake()->numberBetween(0, 70);
-        $total = TotalScore::new($inCourse + $exam);
+        $total = TotalScore::new($inCourse + $inCourse2 + $exam);
         $grade = Grade::for($total);
 
         return [
@@ -28,6 +29,7 @@ final class RawResultFactory extends Factory
             'grade' => $grade->value,
             'import_event_id' => ImportEventFactory::new(),
             'in_course' => $inCourse,
+            'in_course_2' => $inCourse2,
             'lecturer_department' => fake()->country(),
             'lecturer_email' => fake()->email(),
             'lecturer_name' => fake()->name(),

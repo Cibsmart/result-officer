@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Actions\Imports\Excel\ValidateHeadings;
-use App\Data\Imports\ExcelImportEventData;
 use App\Enums\ExcelImportType;
 use App\Enums\ImportEventStatus;
-use App\Events\ExcelImportStatusChanged;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Event;
 use Maatwebsite\Excel\HeadingRowImport;
 
 final class ExcelImportEvent extends Model
@@ -118,16 +115,13 @@ final class ExcelImportEvent extends Model
 
         $this->status = $status;
         $this->save();
-
-        Event::dispatch(new ExcelImportStatusChanged(ExcelImportEventData::fromModel($this)));
     }
 
     public function setMessage(string $message): void
     {
         $this->message = $message;
+        $this->status = ImportEventStatus::FAILED;
         $this->save();
-
-        $this->updateStatus(ImportEventStatus::FAILED);
     }
 
     /** @return \Illuminate\Support\Collection<int, string> */
@@ -135,8 +129,8 @@ final class ExcelImportEvent extends Model
     {
         return $this->rawFinalResults()
             ->orderBy('registration_number')
-            ->pluck('registration_number')
-            ->unique();
+            ->distinct()
+            ->pluck('registration_number');
     }
 
     /** @return \Illuminate\Support\Collection<int, \App\Models\RawFinalResult> */

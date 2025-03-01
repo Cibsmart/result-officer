@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Enums\CourseStatus;
 use App\Values\CourseCode;
 use App\Values\CourseTitle;
 use Illuminate\Database\Eloquent\Model;
@@ -42,26 +41,11 @@ final class FinalCourse extends Model
         return $courses->contains('id', $this->id) || $courses->contains('code', $this->code);
     }
 
-    public function getCourseStatus(Student $student): CourseStatus
-    {
-        $semesterEnrollmentIds = $student->finalSemesterEnrollments->pluck('id');
-
-        $finalResultCourseIds = FinalResult::query()
-            ->whereIn('final_semester_enrollment_id', $semesterEnrollmentIds)
-            ->pluck('final_course_id');
-
-        $courses = self::query()->whereIn('id', $finalResultCourseIds)->get();
-
-        return $courses->contains('id', $this->id) || $courses->contains('code', $this->code)
-            ? CourseStatus::REPEAT
-            : CourseStatus::FRESH;
-    }
-
     private static function getUsingSlug(string $slug): ?self
     {
         return
-            Cache::remember("final_course_{$slug}",
-                fn (?self $value) => is_null($value) ? 0 : now()->addMinutes(5),
+            Cache::remember("final_course_slug.{$slug}",
+                fn (?self $value) => is_null($value) ? 0 : now()->addDay(),
                 fn () => self::where('slug', $slug)->first(),
             );
     }

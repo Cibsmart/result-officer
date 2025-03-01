@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b34068a326114f316cc5461a99a92326",
+    "content-hash": "d1befb5f555a9f7b8ddae566e10d668b",
     "packages": [
         {
             "name": "amphp/amp",
@@ -12078,6 +12078,65 @@
                 }
             ],
             "time": "2024-12-11T14:50:44+00:00"
+        },
+        {
+            "name": "christophrumpel/artisan-benchmark",
+            "version": "v0.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/christophrumpel/artisan-benchmark.git",
+                "reference": "2458217611849d11d48dcaa663167e1f639234ce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/christophrumpel/artisan-benchmark/zipball/2458217611849d11d48dcaa663167e1f639234ce",
+                "reference": "2458217611849d11d48dcaa663167e1f639234ce",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.3.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.18.1",
+                "orchestra/testbench": "^9.9",
+                "pestphp/pest": "^3.7",
+                "symfony/var-dumper": "^7.1.6"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ChristophRumpel\\ArtisanBenchmark\\ArtisanBenchmarkServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ChristophRumpel\\ArtisanBenchmark\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christoph Rumpel",
+                    "email": "christoph@christoph-rumpel.com"
+                }
+            ],
+            "description": "Benchmark Artisan Commands",
+            "keywords": [
+                "artisan",
+                "benchmark",
+                "laravel",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/christophrumpel/artisan-benchmark/issues",
+                "source": "https://github.com/christophrumpel/artisan-benchmark/tree/v0.0.3"
+            },
+            "time": "2025-02-19T08:11:23+00:00"
         },
         {
             "name": "composer/class-map-generator",

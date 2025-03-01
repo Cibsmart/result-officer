@@ -10,7 +10,6 @@ use App\Enums\ImportEventStatus;
 use App\Models\ExcelImportEvent;
 use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Artisan;
 use Maatwebsite\Excel\HeadingRowImport;
 
 final class UploadPendingExcelImports extends Command
@@ -21,42 +20,35 @@ final class UploadPendingExcelImports extends Command
 
     public function handle(): int
     {
-        $importEvents = ExcelImportEvent::query()
+        $importEvent = ExcelImportEvent::query()
             ->where('status', ImportEventStatus::QUEUED)
-            ->get();
+            ->orderBy('id')
+            ->first();
 
-        if ($importEvents->isEmpty()) {
+        if ($importEvent === null) {
             return Command::SUCCESS;
         }
 
-        ExcelImportEvent::updateStatues($importEvents, ImportEventStatus::STARTED);
+        $importEvent->updateStatus(ImportEventStatus::STARTED);
 
-        sleep(5);
+        $type = $importEvent->type;
+        assert($type instanceof ExcelImportType);
 
-        foreach ($importEvents as $event) {
-            $event->updateStatus(ImportEventStatus::UPLOADING);
+        $headings = (new HeadingRowImport())->toArray($importEvent->file_path)[0][0];
 
-            $type = $event->type;
-            assert($type instanceof ExcelImportType);
+        $validation = (new ValidateHeadings())->execute($headings, $type);
 
-            $headings = (new HeadingRowImport())->toArray($event->file_path)[0][0];
+        $importEvent->updateStatus(ImportEventStatus::UPLOADING);
 
-            $validation = (new ValidateHeadings())->execute($headings, $type);
+        try {
+            $type->getImportClass()::new($importEvent, $validation['validated'])->import($importEvent->file_path);
+        } catch (Exception $e) {
+            $importEvent->setMessage($e->getMessage());
 
-            try {
-                $type->getImportClass()::new($event, $validation['validated'])->import($event->file_path);
-            } catch (Exception $e) {
-                $event->setMessage($e->getMessage());
-
-                continue;
-            }
-
-            $event->updateStatus(ImportEventStatus::UPLOADED);
+            return Command::FAILURE;
         }
 
-        sleep(5);
-
-        Artisan::call('rp:process-raw-excel-uploads');
+        $importEvent->updateStatus(ImportEventStatus::UPLOADED);
 
         return Command::SUCCESS;
     }

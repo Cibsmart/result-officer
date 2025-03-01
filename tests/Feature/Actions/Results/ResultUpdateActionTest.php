@@ -59,7 +59,7 @@ it('can update result in course score', function (): void {
 
     $registration = Registration::first();
     $result = $registration->result;
-    $newValue = 30;
+    $newValue = 15;
 
     $changedValue = ['in_course' => $newValue];
 
@@ -99,6 +99,34 @@ it('can update result exam score', function (): void {
     expect($scores['exam'])->toBe($newValue);
 });
 
+it('can update in_course_2 score', function (): void {
+    SessionFactory::new()->createOne(['name' => '2018/2019']);
+    $session = SessionFactory::new()->createOne(['name' => '2019/2020']);
+
+    $firstSemester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
+
+    $student = StudentFactory::new()->has(
+        SessionEnrollmentFactory::new()->state(['session_id' => $session->id])
+            ->has(SemesterEnrollmentFactory::new()
+                ->has(RegistrationFactory::new()
+                    ->has(ResultFactory::new()), 'registrations')
+                ->state(['semester_id' => $firstSemester->id]), 'semesterEnrollments'),
+    )->createOne(['entry_session_id' => $session->id]);
+
+    $registration = Registration::first();
+    $result = $registration->result;
+    $newValue = 15;
+
+    $changedValue = ['in_course_2' => $newValue];
+
+    (new ResultUpdateAction())->execute($student, $registration, $changedValue);
+
+    $result->fresh();
+    $scores = $result->getScores();
+
+    expect($scores['in_course_2'])->toBe($newValue);
+});
+
 it('records the update in student history table', function (): void {
     SessionFactory::new()->createOne(['name' => '2018/2019']);
     $session = SessionFactory::new()->createOne(['name' => '2019/2020']);
@@ -121,13 +149,13 @@ it('records the update in student history table', function (): void {
     $changedValue = ['credit_unit' => $newValue];
 
     $scores = $result->getScores();
-    $oldResultDetails = "{$registration->credit_unit->value}-{$scores['in_course']}-{$scores['exam']}";
+    $oldDetails = "{$registration->credit_unit->value}-{$scores['in_course']}-{$scores['in_course_2']}-{$scores['exam']}";
 
     (new ResultUpdateAction())->execute($student, $registration, $changedValue);
 
     $data = [
-        'new' => "{$newValue}-{$scores['in_course']}-{$scores['exam']}",
-        'old' => $oldResultDetails,
+        'new' => "{$newValue}-{$scores['in_course']}-{$scores['in_course_2']}-{$scores['exam']}",
+        'old' => $oldDetails,
     ];
 
     assertDatabaseHas(StudentHistory::class, [
@@ -156,7 +184,7 @@ it('recomputes total, grade, and grade point after update', function (): void {
     $registration = Registration::first();
     $result = $registration->result;
 
-    $changedValue = ['credit_unit' => 3, 'in_course' => 30, 'exam' => 70];
+    $changedValue = ['credit_unit' => 3, 'in_course' => 15, 'in_course_2' => 15, 'exam' => 70];
 
     (new ResultUpdateAction())->execute($student, $registration, $changedValue);
 
@@ -184,7 +212,7 @@ it('updates result details table after update', function (): void {
     $registration = Registration::first();
     $result = $registration->result;
 
-    $changedValue = ['credit_unit' => 3, 'in_course' => 30, 'exam' => 70];
+    $changedValue = ['credit_unit' => 3, 'in_course' => 15, 'in_course_2' => 15, 'exam' => 70];
 
     (new ResultUpdateAction())->execute($student, $registration, $changedValue);
 

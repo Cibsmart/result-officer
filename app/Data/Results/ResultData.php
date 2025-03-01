@@ -22,6 +22,7 @@ final class ResultData extends Data
         public readonly ?string $remark,
         public readonly string $dateUpdated,
         public readonly int $inCourseScore,
+        public readonly int $inCourseScore2,
         public readonly int $examScore,
     ) {
     }
@@ -32,7 +33,7 @@ final class ResultData extends Data
             ? $courseRegistration->result
             : new Result([
                 'grade' => 'F', 'grade_point' => 0, 'remarks' => 'NR',
-                'scores' => json_encode(['exam' => 0, 'in_course' => 0]),
+                'scores' => ['exam' => 0, 'in_course' => 0, 'in_course_2' => 0],
                 'total_score' => 0,
             ]);
 
@@ -50,6 +51,7 @@ final class ResultData extends Data
             remark: $result->remarks,
             dateUpdated: $result->updated_at ? $result->updated_at->toDateTimeString() : '',
             inCourseScore: (int) $scores['in_course'],
+            inCourseScore2: (int) $scores['in_course_2'],
             examScore: (int) $scores['exam'],
         );
     }

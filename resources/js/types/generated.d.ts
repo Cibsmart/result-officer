@@ -355,6 +355,7 @@ declare namespace App.Data.Results {
     remark: string | null;
     dateUpdated: string;
     inCourseScore: number;
+    inCourseScore2: number;
     examScore: number;
   };
   export type SemesterResultData = {
@@ -547,6 +548,7 @@ declare namespace App.Enums {
   export type ChecklistType =
     | "registration_number"
     | "in_course"
+    | "in_course_2"
     | "exam"
     | "total"
     | "grade"
@@ -557,6 +559,7 @@ declare namespace App.Enums {
     | "course_title"
     | "year"
     | "month"
+    | "exam_officer"
     | "curriculum"
     | "entry_mode"
     | "entry_session"
@@ -601,7 +604,8 @@ declare namespace App.Enums {
     | "processing"
     | "cancelled"
     | "failed"
-    | "completed";
+    | "completed"
+    | "reprocess";
   export type ImportEventType = "results" | "courses" | "departments" | "students" | "registrations";
   export type LevelEnum = "100" | "200" | "300" | "400" | "500" | "600";
   export type Months =
@@ -619,12 +623,12 @@ declare namespace App.Enums {
     | "December";
   export type NotificationType = "success" | "error" | "warning" | "info";
   export type ProgramDuration = 3 | 4 | 5 | 6;
-  export type RawDataStatus = "pending" | "duplicate" | "failed" | "processed";
+  export type RawDataStatus = "pending" | "updating" | "duplicate" | "failed" | "processed";
   export type RecordActionType = "create" | "update" | "delete";
   export type RecordSource = "portal" | "excel" | "legacy" | "system" | "user";
   export type ResultRemark = "PAS" | "FAL" | "ABS" | "MAL";
   export type Role = "super-admin" | "admin" | "desk-officer" | "exam-officer" | "database-officer" | "user";
-  export type ScoreType = "course_work" | "exam";
+  export type ScoreType = "in_course_1" | "inc_course_2" | "quiz" | "mid_semester" | "exam";
   export type StatusColor = "gray" | "red" | "yellow" | "green" | "blue" | "purple" | "indigo" | "pink";
   export type StudentField = "phone_number" | "email" | "jamb_registration_number";
   export type StudentRelatedField = "program_id" | "entry_level_id" | "entry_session_id" | "local_government_id";
