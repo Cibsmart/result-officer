@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Data\Models\ResultModelData;
+use App\Data\Scores\ScoresData;
 use App\Enums\RecordSource;
 use App\Values\ExamScore;
 use App\Values\InCourseScore;
 use App\Values\RegistrationNumber;
-use App\Values\TotalScore;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -42,34 +42,19 @@ final class Result extends Model
 
         if ($result === null) {
             $registrationNumber = RegistrationNumber::new($student->registration_number);
-            $inCourse = InCourseScore::new($newScores['in_course'] ?? 0);
-            $inCourse2 = InCourseScore::new($newScores['in_course_2'] ?? 0);
-            $exam = ExamScore::new($newScores['exam'] ?? 0);
+
+            $scores = ScoresData::fromArray($newScores);
 
             ResultModelData::fromResultUpdateInput(
                 registration: $registration,
                 registrationNumber: $registrationNumber,
-                exam: $exam,
-                inCourse: $inCourse,
-                inCourse2: $inCourse2,
+                scores: $scores,
             )->save();
 
             return;
         }
 
-        $oldScores = $result->getScores();
-
-        $scores = [
-            'exam' => $oldScores['exam'],
-            'in_course' => $oldScores['in_course'],
-            'in_course_2' => $oldScores['in_course_2'],
-        ];
-
-        foreach ($newScores as $key => $value) {
-            $scores[$key] = $value;
-        }
-
-        $result->scores = $scores;
+        $result->scores = ScoresData::update($result->getScores(), $newScores)->value();
         $result->save();
 
         $result->recompute($student);
@@ -77,13 +62,10 @@ final class Result extends Model
 
     public function recompute(Student $student): void
     {
-        $scores = $this->getScores();
+        $total = ScoresData::fromArray($this->getScores())->total;
 
         $creditUnit = $this->registration->credit_unit;
-        $inCourse = $scores['in_course'];
-        $exam = $scores['exam'];
 
-        $total = TotalScore::new($inCourse + $exam);
         $grade = $total->grade($student->allowEGrade() || $this->registration->session()->allowsEGrade());
         $gradePoint = $grade->point() * $creditUnit->value;
 
@@ -150,7 +132,20 @@ final class Result extends Model
         return [
             'exam' => (int) $scores['exam'],
             'in_course' => (int) $scores['in_course'],
-            'in_course_2' => $inCourse2,
+            'in_course_2' => (int) $inCourse2,
+        ];
+    }
+
+    /** @return array{exam: int, in_course: int, in_course_2: int} */
+    public function prepareScores(
+        ExamScore $examScore,
+        InCourseScore $inCourseScore,
+        InCourseScore $inCourseScore2,
+    ): array {
+        return [
+            'exam' => $examScore->value,
+            'in_course' => $inCourseScore->value,
+            'in_course_2' => $inCourseScore2->value,
         ];
     }
 
