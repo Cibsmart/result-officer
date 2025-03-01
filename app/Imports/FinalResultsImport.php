@@ -128,7 +128,7 @@ final class FinalResultsImport implements ToModel, WithBatchInserts, WithCalcula
             'session' => Str::trim($row[$this->headings['session']]),
             'sn' => (int) Str::trim($row[$this->headings['sn']]),
             'total' => (int) Str::trim($row[$this->headings['total']]),
-            'year' => Str::trim($row[$this->headings['year']]),
+            'year' => (int) Str::trim($row[$this->headings['year']]),
         ];
     }
 }
