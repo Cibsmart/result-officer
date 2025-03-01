@@ -51,7 +51,6 @@ final class FinalResult extends Model
         FinalSemesterEnrollment $finalSemesterEnrollment,
         RawFinalResult $result,
         FinalCourse $finalCourse,
-        CourseStatus $status,
         ?Registration $registration,
     ): self {
         $scores = ScoresData::new($result->exam, $result->in_course, $result->in_course_2);
@@ -74,7 +73,7 @@ final class FinalResult extends Model
         $finalResult = new self();
         $finalResult->final_semester_enrollment_id = $finalSemesterEnrollment->id;
         $finalResult->final_course_id = $finalCourse->id;
-        $finalResult->course_status = $status;
+        $finalResult->course_status = CourseStatus::FRESH;
         $finalResult->credit_unit = $creditUnit;
         $finalResult->total_score = $total->value;
         $finalResult->scores = $scores->value();
