@@ -157,15 +157,12 @@ final class ProcessRawFinalResults
                 continue;
             }
 
-            $status = $course->getCourseStatus($student);
-
             $registration = $this->getRegistration($student, $semesterEnrollment, $result, $course);
 
             $finalResults = FinalResult::createFromRawFinalResult(
                 finalSemesterEnrollment: $semesterEnrollment,
                 result: $result,
                 finalCourse: $course,
-                status: $status,
                 registration: $registration,
             );
 
