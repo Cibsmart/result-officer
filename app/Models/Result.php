@@ -113,18 +113,33 @@ final class Result extends Model
         return "{$this->registration_id}-{$this->total_score}-{$this->grade}-{$this->grade_point}";
     }
 
-    /** @return array{in_course: int, exam: int} */
+    /** @return array{exam: int, in_course: int, in_course_2: int} */
     public function getScores(): array
     {
         $scores = $this->scores;
 
         if (is_string($scores)) {
             $scores = json_decode($scores);
+            $inCourse2 = property_exists($scores, 'in_course_2')
+                ? $scores->in_course_2
+                : 0;
 
-            return ['in_course' => (int) $scores->in_course, 'exam' => (int) $scores->exam];
+            return [
+                'exam' => (int) $scores->exam,
+                'in_course' => (int) $scores->in_course,
+                'in_course_2' => $inCourse2,
+            ];
         }
 
-        return ['in_course' => (int) $scores['in_course'], 'exam' => (int) $scores['exam']];
+        $inCourse2 = array_key_exists('in_course_2', $scores)
+            ? $scores['in_course_2']
+            : 0;
+
+        return [
+            'exam' => (int) $scores['exam'],
+            'in_course' => (int) $scores['in_course'],
+            'in_course_2' => $inCourse2,
+        ];
     }
 
     /** @return array{scores: 'json', source: 'App\Enums\RecordSource', upload_date: 'date'} */
