@@ -7,6 +7,7 @@ namespace App\Console\Commands;
 use App\Enums\ExcelImportType;
 use App\Enums\ImportEventStatus;
 use App\Models\ExcelImportEvent;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
@@ -43,7 +44,14 @@ final class ProcessRawExcelUploads extends Command
             $type = $event->type;
             assert($type instanceof ExcelImportType);
 
-            $type->getProcessAction()::new()->execute($event);
+            try {
+                $type->getProcessAction()::new()->execute($event);
+            } catch (Exception $e) {
+                $event->updateStatus(ImportEventStatus::FAILED);
+                $event->setMessage($e->getMessage());
+
+                continue;
+            }
 
             $event->updateStatus(ImportEventStatus::COMPLETED);
         }
