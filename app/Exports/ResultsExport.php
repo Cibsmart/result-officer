@@ -73,7 +73,8 @@ final class ResultsExport implements FromQuery, ShouldAutoSize, WithEvents, With
             'ID',
             'Students Name',
             'Registration Number',
-            'In Course',
+            'In Course 1',
+            'In Course 2',
             'Exam',
             'Total',
             'Grade',
@@ -105,6 +106,7 @@ final class ResultsExport implements FromQuery, ShouldAutoSize, WithEvents, With
             : "{$row->department} ({$row->program})";
 
         $scores = json_decode($row->scores);
+        $inCourse2 = $scores->in_course_2 ?? '0';
 
         return [
             (string) $this->rowNumber,
@@ -112,6 +114,7 @@ final class ResultsExport implements FromQuery, ShouldAutoSize, WithEvents, With
             "{$row->last_name} {$row->first_name} {$row->other_names}",
             $row->registration_number,
             $scores->in_course,
+            $inCourse2,
             $scores->exam,
             $row->total_score,
             $row->grade,
@@ -140,13 +143,14 @@ final class ResultsExport implements FromQuery, ShouldAutoSize, WithEvents, With
             AfterSheet::class => function (AfterSheet $event): void {
                 $sheet = $event->getSheet();
 
-                $sheet->getStyle('A1:W1')->getFont()->setBold(true);
+                $sheet->getStyle('A1:X1')->getFont()->setBold(true);
                 $sheet->getStyle('B:B')->getFont()->getColor()->setRGB(Color::COLOR_DARKRED);
 
                 $sheet->formatColumn('E', '00');
                 $sheet->formatColumn('F', '00');
                 $sheet->formatColumn('G', '00');
-                $sheet->formatColumn('N', NumberFormat::FORMAT_TEXT);
+                $sheet->formatColumn('H', '00');
+                $sheet->formatColumn('R', NumberFormat::FORMAT_TEXT);
 
                 $message = 'Do NOT edit values in this column. For any inserted record set the ID to 0';
 
