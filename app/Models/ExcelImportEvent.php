@@ -129,8 +129,8 @@ final class ExcelImportEvent extends Model
     {
         return $this->rawFinalResults()
             ->orderBy('registration_number')
-            ->pluck('registration_number')
-            ->unique();
+            ->distinct()
+            ->pluck('registration_number');
     }
 
     /** @return \Illuminate\Support\Collection<int, \App\Models\RawFinalResult> */
