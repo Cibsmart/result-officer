@@ -19,6 +19,7 @@ enum ImportEventStatus: string
     case CANCELLED = 'cancelled';
     case FAILED = 'failed';
     case COMPLETED = 'completed';
+    case REPROCESS = 'reprocess';
 
     /** @return array<\App\Enums\ImportEventStatus> */
     public static function showOnProgressBar(): array
@@ -38,7 +39,7 @@ enum ImportEventStatus: string
             self::NEW, self::STARTED, self::QUEUED => 1,
             self::DOWNLOADING, self::DOWNLOADED, self::UPLOADING, self::UPLOADED => 25,
             self::SAVING, self::SAVED => 50,
-            self::PROCESSING => 75,
+            self::PROCESSING, self::REPROCESS => 75,
             self::CANCELLED, self::FAILED, self::COMPLETED => 100,
         };
     }
@@ -49,6 +50,7 @@ enum ImportEventStatus: string
             self::NEW, self::STARTED, self::QUEUED, self::CANCELLED => StatusColor::GRAY,
             self::DOWNLOADING, self::DOWNLOADED, self::UPLOADING => StatusColor::PINK,
             self::UPLOADED, self::SAVING, self::SAVED => StatusColor::PURPLE,
+            self::REPROCESS => StatusColor::YELLOW,
             self::PROCESSING => StatusColor::BLUE,
             self::FAILED => StatusColor::RED,
             self::COMPLETED => StatusColor::GREEN,
