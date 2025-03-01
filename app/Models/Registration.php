@@ -91,6 +91,7 @@ final class Registration extends Model
         }
 
         if (! array_key_exists('in_course', $newResult)
+            && ! array_key_exists('in_course_2', $newResult)
             && ! array_key_exists('exam', $newResult)) {
             return;
         }

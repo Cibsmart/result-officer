@@ -43,15 +43,27 @@ final class Result extends Model
         if ($result === null) {
             $registrationNumber = RegistrationNumber::new($student->registration_number);
             $inCourse = InCourseScore::new($newScores['in_course'] ?? 0);
+            $inCourse2 = InCourseScore::new($newScores['in_course_2'] ?? 0);
             $exam = ExamScore::new($newScores['exam'] ?? 0);
 
-            ResultModelData::fromResultUpdateInput($registration, $registrationNumber, $exam, $inCourse)->save();
+            ResultModelData::fromResultUpdateInput(
+                registration: $registration,
+                registrationNumber: $registrationNumber,
+                exam: $exam,
+                inCourse: $inCourse,
+                inCourse2: $inCourse2,
+            )->save();
 
             return;
         }
 
         $oldScores = $result->getScores();
-        $scores = ['in_course' => $oldScores['in_course'], 'exam' => $oldScores['exam']];
+
+        $scores = [
+            'exam' => $oldScores['exam'],
+            'in_course' => $oldScores['in_course'],
+            'in_course_2' => $oldScores['in_course_2'],
+        ];
 
         foreach ($newScores as $key => $value) {
             $scores[$key] = $value;

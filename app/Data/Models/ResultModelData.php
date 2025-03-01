@@ -99,11 +99,12 @@ final readonly class ResultModelData
         RegistrationNumber $registrationNumber,
         ExamScore $exam,
         InCourseScore $inCourse,
+        InCourseScore $inCourse2,
     ): self {
         [$totalScore, $grade, $gradePoint] = self::getTotalAndGrade(
             registration: $registration,
             registrationNumber: $registrationNumber,
-            exam: $exam, inCourse: $inCourse,
+            exam: $exam, inCourse: $inCourse, inCourse2: $inCourse2,
         );
 
         return new self(
@@ -157,11 +158,12 @@ final readonly class ResultModelData
         RegistrationNumber $registrationNumber,
         ExamScore $exam,
         InCourseScore $inCourse,
+        InCourseScore $inCourse2,
     ): array {
         $creditUnit = $registration->credit_unit;
         assert($creditUnit instanceof CreditUnit);
 
-        $totalScore = TotalScore::fromInCourseAndExam($inCourse, $exam);
+        $totalScore = TotalScore::new($inCourse->value + $inCourse2->value + $exam->value);
         $grade = $totalScore->grade($registrationNumber->allowEGrade() || $registration->session()->allowsEGrade());
         $gradePoint = $grade->point() * $creditUnit->value;
 

@@ -18,10 +18,11 @@ final class ResultFactory extends Factory
     /** @return array<string, string> */
     public function definition(): array
     {
-        $inCourse = fake()->numberBetween(0, 30);
+        $inCourse = fake()->numberBetween(0, 15);
+        $inCourse2 = fake()->numberBetween(0, 15);
         $exam = fake()->numberBetween(0, 70);
-        $scores = ['in_course' => $inCourse, 'exam' => $exam];
-        $score = TotalScore::new($inCourse + $exam);
+        $scores = ['in_course' => $inCourse, 'in_course_2' => $inCourse2, 'exam' => $exam];
+        $score = TotalScore::new($inCourse + $inCourse2 + $exam);
         $grade = Grade::for($score, fake()->randomElement([true, false]));
 
         return [
