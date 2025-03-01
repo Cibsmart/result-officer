@@ -188,12 +188,12 @@ final class Registration extends Model
         $string = "{$this->credit_unit->value}";
 
         if ($result === null) {
-            return "{$string}-0-0";
+            return "{$string}-0-0-0";
         }
 
         $scores = $result->getScores();
 
-        return "{$string}-{$scores['in_course']}-{$scores['exam']}";
+        return "{$string}-{$scores['in_course']}-{$scores['in_course_2']}-{$scores['exam']}";
     }
 
     /**
