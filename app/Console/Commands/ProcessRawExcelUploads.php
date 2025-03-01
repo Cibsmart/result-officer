@@ -16,45 +16,44 @@ final class ProcessRawExcelUploads extends Command
 {
     protected $signature = 'rp:process-raw-excel-uploads';
 
-    protected $description = 'Process Raw Excel Uploads and Store in respective DB Tables';
+    protected $description = 'Process Raw Excel Uploads and Store in respective DB Tables one at a time';
 
     public function handle(): int
     {
-        $importEvents = ExcelImportEvent::query()
-            ->where('status', ImportEventStatus::UPLOADED)
-            ->get();
+        $importEvent = ExcelImportEvent::query()
+            ->whereIn('status', [ImportEventStatus::UPLOADED, ImportEventStatus::REPROCESS])
+            ->orderBy('id')
+            ->first();
 
-        if ($importEvents->isEmpty()) {
+        if ($importEvent === null) {
             return Command::SUCCESS;
         }
 
-        ExcelImportEvent::updateStatues($importEvents, ImportEventStatus::PROCESSING);
+        $importEvent->updateStatus(ImportEventStatus::PROCESSING);
 
-        foreach ($importEvents as $event) {
-            assert($event instanceof ExcelImportEvent);
+        assert($importEvent instanceof ExcelImportEvent);
 
-            $messages = collect($this->preprocess($event))->filter();
+        $messages = collect($this->preprocess($importEvent))->filter();
 
-            if ($messages->isNotEmpty()) {
-                $event->setMessage($this->joinMessages($messages));
+        if ($messages->isNotEmpty()) {
+            $importEvent->setMessage($this->joinMessages($messages));
 
-                continue;
-            }
-
-            $type = $event->type;
-            assert($type instanceof ExcelImportType);
-
-            try {
-                $type->getProcessAction()::new()->execute($event);
-            } catch (Exception $e) {
-                $event->updateStatus(ImportEventStatus::FAILED);
-                $event->setMessage($e->getMessage());
-
-                continue;
-            }
-
-            $event->updateStatus(ImportEventStatus::COMPLETED);
+            return Command::FAILURE;
         }
+
+        $type = $importEvent->type;
+        assert($type instanceof ExcelImportType);
+
+        try {
+            $type->getProcessAction()::new()->execute($importEvent);
+        } catch (Exception $e) {
+            $importEvent->updateStatus(ImportEventStatus::FAILED);
+            $importEvent->setMessage($e->getMessage());
+
+            return Command::FAILURE;
+        }
+
+        $importEvent->updateStatus(ImportEventStatus::COMPLETED);
 
         return Command::SUCCESS;
     }

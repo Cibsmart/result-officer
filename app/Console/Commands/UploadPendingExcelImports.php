@@ -20,37 +20,35 @@ final class UploadPendingExcelImports extends Command
 
     public function handle(): int
     {
-        $importEvents = ExcelImportEvent::query()
+        $importEvent = ExcelImportEvent::query()
             ->where('status', ImportEventStatus::QUEUED)
-            ->get();
+            ->orderBy('id')
+            ->first();
 
-        if ($importEvents->isEmpty()) {
+        if ($importEvent === null) {
             return Command::SUCCESS;
         }
 
-        ExcelImportEvent::updateStatues($importEvents, ImportEventStatus::STARTED);
+        $importEvent->updateStatus(ImportEventStatus::STARTED);
 
-        foreach ($importEvents as $event) {
+        $type = $importEvent->type;
+        assert($type instanceof ExcelImportType);
 
-            $type = $event->type;
-            assert($type instanceof ExcelImportType);
+        $headings = (new HeadingRowImport())->toArray($importEvent->file_path)[0][0];
 
-            $headings = (new HeadingRowImport())->toArray($event->file_path)[0][0];
+        $validation = (new ValidateHeadings())->execute($headings, $type);
 
-            $validation = (new ValidateHeadings())->execute($headings, $type);
+        $importEvent->updateStatus(ImportEventStatus::UPLOADING);
 
-            $event->updateStatus(ImportEventStatus::UPLOADING);
+        try {
+            $type->getImportClass()::new($importEvent, $validation['validated'])->import($importEvent->file_path);
+        } catch (Exception $e) {
+            $importEvent->setMessage($e->getMessage());
 
-            try {
-                $type->getImportClass()::new($event, $validation['validated'])->import($event->file_path);
-            } catch (Exception $e) {
-                $event->setMessage($e->getMessage());
-
-                continue;
-            }
-
-            $event->updateStatus(ImportEventStatus::UPLOADED);
+            return Command::FAILURE;
         }
+
+        $importEvent->updateStatus(ImportEventStatus::UPLOADED);
 
         return Command::SUCCESS;
     }
