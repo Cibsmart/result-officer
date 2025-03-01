@@ -199,6 +199,7 @@ final class ProcessRawFinalResults
             ->first();
 
         $registrations = null;
+        $course = null;
 
         if ($sessionEnrollment !== null) {
             $semesterEnrollment = $sessionEnrollment->semesterEnrollments
@@ -212,7 +213,7 @@ final class ProcessRawFinalResults
             $course = Course::query()->whereIn('id', $courseId)->where('code', $finalCourse->code)->first();
         }
 
-        return $registrations
+        return $registrations && $course
             ? $registrations->where('course_id', $course->id)->first()
             : null;
     }
