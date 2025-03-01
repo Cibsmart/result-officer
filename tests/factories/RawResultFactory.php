@@ -21,7 +21,7 @@ final class RawResultFactory extends Factory
         $inCourse = fake()->numberBetween(0, 15);
         $inCourse2 = fake()->numberBetween(0, 15);
         $exam = fake()->numberBetween(0, 70);
-        $total = TotalScore::new($inCourse + $exam);
+        $total = TotalScore::new($inCourse + $inCourse2 + $exam);
         $grade = Grade::for($total);
 
         return [
