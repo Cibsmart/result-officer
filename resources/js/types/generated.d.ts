@@ -355,6 +355,7 @@ declare namespace App.Data.Results {
     remark: string | null;
     dateUpdated: string;
     inCourseScore: number;
+    inCourseScore2: number;
     examScore: number;
   };
   export type SemesterResultData = {
