@@ -19,6 +19,7 @@ enum ChecklistType: string
     case COURSE_TITLE = 'course_title';
     case YEAR = 'year';
     case MONTH = 'month';
+    case EXAM_OFFICER = 'exam_officer';
 
     case CURRICULUM = 'curriculum';
     case ENTRY_MODE = 'entry_mode';
