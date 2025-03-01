@@ -548,6 +548,7 @@ declare namespace App.Enums {
   export type ChecklistType =
     | "registration_number"
     | "in_course"
+    | "in_course_2"
     | "exam"
     | "total"
     | "grade"

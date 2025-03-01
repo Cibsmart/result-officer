@@ -8,6 +8,7 @@ enum ChecklistType: string
 {
     case REGISTRATION_NUMBER = 'registration_number';
     case IN_COURSE = 'in_course';
+    case IN_COURSE_2 = 'in_course_2';
     case EXAM = 'exam';
     case TOTAL = 'total';
     case GRADE = 'grade';
