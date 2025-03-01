@@ -50,7 +50,7 @@ final class ResultUpdateController
 
         return redirect()
             ->route('students.show', $student)
-            ->{NotificationType::SUCCESS->value}('Student name updated successfully.');
+            ->{NotificationType::SUCCESS->value}('Student result updated successfully.');
     }
 
     /**
