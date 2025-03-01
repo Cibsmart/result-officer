@@ -559,6 +559,7 @@ declare namespace App.Enums {
     | "course_title"
     | "year"
     | "month"
+    | "exam_officer"
     | "curriculum"
     | "entry_mode"
     | "entry_session"
