@@ -604,7 +604,8 @@ declare namespace App.Enums {
     | "processing"
     | "cancelled"
     | "failed"
-    | "completed";
+    | "completed"
+    | "reprocess";
   export type ImportEventType = "results" | "courses" | "departments" | "students" | "registrations";
   export type LevelEnum = "100" | "200" | "300" | "400" | "500" | "600";
   export type Months =
