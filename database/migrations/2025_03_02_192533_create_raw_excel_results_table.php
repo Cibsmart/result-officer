@@ -24,7 +24,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('in_course_2');
             $table->unsignedTinyInteger('exam');
             $table->unsignedTinyInteger('total');
-            $table->string('grade', 1)->nullable();
+            $table->string('grade', 1);
             $table->unsignedTinyInteger('credit_unit');
             $table->string('semester');
             $table->string('session');
