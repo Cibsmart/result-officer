@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\RawDataStatus;
+use Illuminate\Database\Eloquent\Collection as CollectionAlias;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
@@ -20,9 +21,11 @@ final class RawExcelResult extends Model
             ->pluck('registration_number');
     }
 
-    /** @return \Illuminate\Support\Collection<int, \App\Models\RawExcelResult> */
-    public static function getPendingRawResults(ExcelImportEvent $event, string $registrationNumber): Collection
-    {
+    /** @return \Illuminate\Database\Eloquent\Collection<int, \App\Models\RawExcelResult> */
+    public static function getPendingRawResults(
+        ExcelImportEvent $event,
+        string $registrationNumber,
+    ): CollectionAlias {
         return self::query()
             ->where('excel_import_event_id', $event->id)
             ->where('registration_number', $registrationNumber)
