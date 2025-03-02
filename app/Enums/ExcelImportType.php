@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Enums;
 
 use App\Actions\Imports\Excel\ProcessRawCurriculumCourses;
+use App\Actions\Imports\Excel\ProcessRawExcelResults;
 use App\Actions\Imports\Excel\ProcessRawFinalResults;
 use App\Helpers\DirectoryClassList;
 use App\Imports\CurriculumCoursesImport;
 use App\Imports\FinalResultsImport;
+use App\Imports\ResultsImport;
 
 enum ExcelImportType: string
 {
@@ -31,7 +33,7 @@ enum ExcelImportType: string
         return match ($this) {
             self::CURRICULUM => CurriculumCoursesImport::class,
             self::FINAL_RESULT => FinalResultsImport::class,
-            self::RESULT => FinalResultsImport::class,
+            self::RESULT => ResultsImport::class,
         };
     }
 
@@ -40,7 +42,7 @@ enum ExcelImportType: string
         return match ($this) {
             self::CURRICULUM => ProcessRawCurriculumCourses::class,
             self::FINAL_RESULT => ProcessRawFinalResults::class,
-            self::RESULT => ProcessRawFinalResults::class,
+            self::RESULT => ProcessRawExcelResults::class,
         };
     }
 
@@ -149,7 +151,6 @@ enum ExcelImportType: string
                 'in_course_2', 'incourse_two', 'in_course_2_score', 'inc_2', 'inc2', 'inc_2_score', 'inc_ass_2',
                 'inc_assessment_2',
             ],
-            'level' => ['level'],
             'name' => ['name', 'students_name', 'name_of_students', 'full_name', 'fullname'],
             'registration_number' => ['registration_number', 'reg_number', 'reg_no', 'reg_no'],
             'semester' => ['semester'],
