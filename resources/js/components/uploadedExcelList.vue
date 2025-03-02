@@ -87,7 +87,7 @@ const currentEvent = ref<App.Data.Imports.ExcelImportEventData | null>(null);
       <CardHeader>Failed Message For: {{ currentEvent?.fileName }}</CardHeader>
 
       <Card>
-        <pre class="text-base text-gray-700 dark:text-gray-300">{{ currentEvent?.message }}</pre>
+        <pre class="text-base whitespace-pre-wrap text-gray-700 dark:text-gray-300">{{ currentEvent?.message }}</pre>
       </Card>
 
       <CardFooter>
