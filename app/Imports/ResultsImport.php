@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Imports;
 
 use App\Models\ExcelImportEvent;
-use App\Models\RawFinalResult;
+use App\Models\RawExcelResult;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -35,7 +35,7 @@ final class ResultsImport implements ToModel, WithBatchInserts, WithCalculatedFo
      * @param array<string, string> $row
      * {@inheritDoc}
      */
-    public function model(array $row): ?RawFinalResult
+    public function model(array $row): ?RawExcelResult
     {
         if (
             ! isset($row[$this->headings['registration_number']])
@@ -44,7 +44,7 @@ final class ResultsImport implements ToModel, WithBatchInserts, WithCalculatedFo
             return null;
         }
 
-        return new RawFinalResult($this->mapRowToModel($row));
+        return new RawExcelResult($this->mapRowToModel($row));
     }
 
     /** {@inheritDoc} */
@@ -91,8 +91,19 @@ final class ResultsImport implements ToModel, WithBatchInserts, WithCalculatedFo
             ? Str::of($row['level'])->replace('LEVEL', '')->trim()->value()
             : Str::of($row[$this->headings['course_code']])->trim()->afterLast(' ')->value()[0] . '00';
 
+        $registrationNumber = Str::of($row[$this->headings['registration_number']])
+            ->replace('*', '')
+            ->replace('`', '')
+            ->replace('/DE', '')
+            ->trim()->value();
+
+        $courseCode = Str::of($row[$this->headings['course_code']])
+            ->replace('PHIL', 'PHL')
+            ->replace('ENGL', 'ENG')
+            ->trim()->value();
+
         return [
-            'course_code' => Str::trim($row[$this->headings['course_code']]),
+            'course_code' => $courseCode,
             'course_title' => Str::trim($row[$this->headings['course_title']]),
             'credit_unit' => (int) Str::trim($row[$this->headings['credit_unit']]),
             'department' => Str::of($row[$this->headings['department']])->replace('[None]', '')->trim()->value(),
@@ -106,7 +117,7 @@ final class ResultsImport implements ToModel, WithBatchInserts, WithCalculatedFo
             'in_course_2' => (int) Str::trim($row[$this->headings['in_course_2']]),
             'level' => $level,
             'name' => Str::trim($row[$this->headings['name']]),
-            'registration_number' => Str::trim($row[$this->headings['registration_number']]),
+            'registration_number' => $registrationNumber,
             'semester' => Str::of($row[$this->headings['semester']])->replace('SEMESTER', '')->trim()->value(),
             'session' => Str::trim($row[$this->headings['session']]),
             'sn' => (int) Str::trim($row[$this->headings['sn']]),
