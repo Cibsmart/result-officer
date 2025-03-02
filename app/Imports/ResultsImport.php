@@ -87,11 +87,9 @@ final class ResultsImport implements ToModel, WithBatchInserts, WithCalculatedFo
      */
     private function mapRowToModel(array $row): array
     {
-        $levelInput = Str::of($row[$this->headings['level']])->replace('LEVEL', '')->trim()->value();
-
-        $level = $levelInput === ''
-            ? Str::of($row[$this->headings['course_code']])->trim()->afterLast(' ')->value()[0] . '00'
-            : $levelInput;
+        $level = array_key_exists('level', $row)
+            ? Str::of($row['level'])->replace('LEVEL', '')->trim()->value()
+            : Str::of($row[$this->headings['course_code']])->trim()->afterLast(' ')->value()[0] . '00';
 
         return [
             'course_code' => Str::trim($row[$this->headings['course_code']]),
@@ -100,10 +98,10 @@ final class ResultsImport implements ToModel, WithBatchInserts, WithCalculatedFo
             'department' => Str::of($row[$this->headings['department']])->replace('[None]', '')->trim()->value(),
             'exam' => (int) Str::trim($row[$this->headings['exam']]),
             'examiner' => Str::trim($row[$this->headings['examiner']]),
-            //            'examiner_department' => Str::trim($row[$this->headings['examiner_department']]),
+            'examiner_department' => Str::trim($row[$this->headings['examiner_department']]),
             'exam_date' => self::cleanDate($row[$this->headings['exam_date']]),
             'excel_import_event_id' => $this->event->id,
-            //            'grade' => Str::trim($row[$this->headings['grade']]),
+            'grade' => Str::trim($row[$this->headings['grade']]),
             'in_course' => (int) Str::trim($row[$this->headings['in_course']]),
             'in_course_2' => (int) Str::trim($row[$this->headings['in_course_2']]),
             'level' => $level,
