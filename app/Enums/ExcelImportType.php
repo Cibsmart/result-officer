@@ -149,6 +149,7 @@ enum ExcelImportType: string
                 'in_course_2', 'incourse_two', 'in_course_2_score', 'inc_2', 'inc2', 'inc_2_score', 'inc_ass_2',
                 'inc_assessment_2',
             ],
+            'level' => ['level'],
             'name' => ['name', 'students_name', 'name_of_students', 'full_name', 'fullname'],
             'registration_number' => ['registration_number', 'reg_number', 'reg_no', 'reg_no'],
             'semester' => ['semester'],
