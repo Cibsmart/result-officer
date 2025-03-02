@@ -59,7 +59,7 @@ enum ExcelImportType: string
         return match ($this) {
             self::CURRICULUM => "{$directory}/RawCurriculumCourses",
             self::FINAL_RESULT => "{$directory}/RawFinalResults",
-            self::RESULT => "{$directory}/RawResults",
+            self::RESULT => "{$directory}/RawExcelResults",
         };
     }
 
@@ -70,7 +70,7 @@ enum ExcelImportType: string
         return match ($this) {
             self::CURRICULUM => "{$namespace}\\RawCurriculumCourses",
             self::FINAL_RESULT => "{$namespace}\\RawFinalResults",
-            self::RESULT => "{$namespace}\\RawResults",
+            self::RESULT => "{$namespace}\\RawExcelResults",
         };
     }
 
