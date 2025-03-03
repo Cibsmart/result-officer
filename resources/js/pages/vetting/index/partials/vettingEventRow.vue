@@ -2,6 +2,7 @@
 import SecondaryLinkSmall from "@/components/links/secondaryLinkSmall.vue";
 import Badge from "@/components/badge.vue";
 import BaseTD from "@/components/tables/baseTD.vue";
+import PrimaryLinkSmall from "@/components/links/primaryLinkSmall.vue";
 
 defineProps<{
   event: App.Data.Vetting.VettingEventGroupData;
@@ -30,11 +31,14 @@ defineProps<{
   <BaseTD position="left">{{ event.date }}</BaseTD>
 
   <BaseTD>
+    <PrimaryLinkSmall :href="route('vettingEvent.show', { vettingEvent: event.slug })"> View</PrimaryLinkSmall>
+
     <SecondaryLinkSmall
-      v-if="event.status === 'queued' || event.status === 'failed'"
-      :href="route('import.curriculum.delete', { event: event.id })"
+      v-if="event.status === 'queued'"
+      :href="route('vettingEvent.destroy', { vettingEvent: event.slug })"
       as="button"
-      method="post"
+      class="ml-2"
+      method="delete"
       preserveScroll="true">
       Delete
     </SecondaryLinkSmall>
