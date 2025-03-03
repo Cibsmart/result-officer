@@ -56,6 +56,7 @@ use App\Http\Controllers\Students\Updates\StudentPhoneNumberUpdateController;
 use App\Http\Controllers\Students\Updates\StudentStatusUpdateController;
 use App\Http\Controllers\Summary\DepartmentResultSummaryController;
 use App\Http\Controllers\Vetting\GraduandController;
+use App\Http\Controllers\Vetting\VettingController;
 use App\Http\Controllers\Vetting\VettingEventController;
 use App\Http\Middleware\ValidateMonthParameter;
 use App\Http\Middleware\ValidateYearParameter;
@@ -174,7 +175,7 @@ Route::middleware(['auth'])->group(static function (): void {
     });
 
     Route::prefix('vetting')->group(static function (): void {
-        Route::get('create/{student}', [GraduandController::class, 'create'])
+        Route::get('create/{student}', [VettingController::class, 'create'])
             ->name('vetting.create');
     });
 
