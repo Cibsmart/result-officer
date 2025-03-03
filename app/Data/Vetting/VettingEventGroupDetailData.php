@@ -22,6 +22,7 @@ final class VettingEventGroupDetailData extends Data
     {
         $vettings = $vettingEvent->vettingEvents()
             ->with('student.program.department')
+            ->orderBy('id')
             ->get();
 
         return new self(

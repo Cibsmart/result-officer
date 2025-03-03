@@ -20,7 +20,7 @@ final class ProcessQueuedVettingCommand extends Command
         $event = VettingEventGroup::query()
             ->with('vettingEvents.student.vettingEvent')
             ->where('status', VettingEventStatus::QUEUED)
-            ->oldest()
+            ->orderBy('id')
             ->first();
 
         if ($event === null) {

@@ -40,7 +40,10 @@ final class VettingEventController
 
         $department = Department::getUsingId($validated['department']);
 
-        $students = Student::query()->whereIn('registration_number', $validated['registration_numbers'])->get();
+        $students = Student::query()
+            ->whereIn('registration_number', $validated['registration_numbers'])
+            ->orderBy('registration_number')
+            ->get();
 
         $vettingGroup = VettingEventGroup::new($user, $department, $validated['title']);
 
