@@ -70,6 +70,11 @@ final class VettingEventGroup extends Model
         $this->save();
     }
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     /** @return array{status: 'App\Enums\VettingEventStatus'} */
     protected function casts(): array
     {
