@@ -87,5 +87,3 @@ const hasSummary = computed(() => props.department.students.length > 0);
     </BaseSection>
   </BasePage>
 </template>
-
-<style scoped></style>
