@@ -181,6 +181,9 @@ Route::middleware(['auth'])->group(static function (): void {
     Route::prefix('vetting-event')->group(static function (): void {
         Route::get('', [VettingEventController::class, 'index'])->name('vettingEvent.index');
         Route::post('', [VettingEventController::class, 'store'])->name('vettingEvent.store');
+        Route::get('show/{vettingEvent}', [VettingEventController::class, 'show'])->name('vettingEvent.show');
+        Route::delete('delete/{vettingEvent}', [VettingEventController::class, 'destroy'])
+            ->name('vettingEvent.destroy');
     });
 
     Route::prefix('department/cleared/students')->group(static function (): void {
