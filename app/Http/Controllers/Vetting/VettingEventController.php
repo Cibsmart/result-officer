@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Vetting;
 
 use App\Data\Vetting\PaginatedVettingEventGroupListData;
+use App\Data\Vetting\VettingEventGroupDetailData;
 use App\Enums\NotificationType;
 use App\Enums\VettingEventStatus;
 use App\Models\Department;
@@ -12,6 +13,7 @@ use App\Models\Student;
 use App\Models\User;
 use App\Models\VettingEventGroup;
 use App\ViewModels\Vetting\VettingIndexPage;
+use App\ViewModels\Vetting\VettingShowPage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -47,6 +49,13 @@ final class VettingEventController
         $message = "Vetting of {$students->count()} students in {$department->name} department queued for processing.";
 
         return redirect()->back()->{NotificationType::SUCCESS->value}($message);
+    }
+
+    public function show(VettingEventGroup $vettingEvent): Response
+    {
+        return Inertia::render('vetting/show/page', new VettingShowPage(
+            data: Inertia::defer(fn () => VettingEventGroupDetailData::for($vettingEvent)),
+        ));
     }
 
     public function destroy(VettingEventGroup $vettingEvent): RedirectResponse
