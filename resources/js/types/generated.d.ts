@@ -522,7 +522,7 @@ declare namespace App.Data.Vetting {
   };
   export type VettingData = {
     id: number;
-    status: string;
+    status: App.Enums.VettingEventStatus;
     student: App.Data.Students.StudentBasicInfoData;
   };
   export type VettingEventGroupData = {
@@ -538,7 +538,7 @@ declare namespace App.Data.Vetting {
   };
   export type VettingEventGroupDetailData = {
     event: App.Data.Vetting.VettingEventGroupData;
-    vettings: any;
+    vettings: Array<App.Data.Vetting.VettingData>;
   };
   export type VettingEventGroupListData = {
     data: Array<App.Data.Vetting.VettingEventGroupData>;
@@ -796,6 +796,9 @@ declare namespace App.ViewModels.Summary {
 declare namespace App.ViewModels.Vetting {
   export type VettingIndexPage = {
     paginated: any;
+  };
+  export type VettingShowPage = {
+    data: any;
   };
 }
 declare namespace App.ViewModels.finalResults {
