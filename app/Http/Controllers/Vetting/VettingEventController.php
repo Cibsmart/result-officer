@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Vetting;
 
 use App\Data\Vetting\PaginatedVettingEventGroupListData;
 use App\Enums\NotificationType;
+use App\Enums\VettingEventStatus;
 use App\Models\Department;
 use App\Models\Student;
 use App\Models\User;
@@ -46,5 +47,16 @@ final class VettingEventController
         $message = "Vetting of {$students->count()} students in {$department->name} department queued for processing.";
 
         return redirect()->back()->{NotificationType::SUCCESS->value}($message);
+    }
+
+    public function destroy(VettingEventGroup $vettingEvent): RedirectResponse
+    {
+        if ($vettingEvent->status !== VettingEventStatus::QUEUED) {
+            return redirect()->back()->error('Only queued events can be deleted.');
+        }
+
+        $vettingEvent->delete();
+
+        return redirect()->back()->success('Vetting Deleted successfully.');
     }
 }
