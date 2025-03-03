@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Vetting;
 
 use App\Data\Vetting\PaginatedVettingEventGroupListData;
+use App\Data\Vetting\VettingEventGroupData;
 use App\Data\Vetting\VettingEventGroupDetailData;
 use App\Enums\NotificationType;
 use App\Enums\VettingEventStatus;
@@ -57,6 +58,7 @@ final class VettingEventController
     public function show(VettingEventGroup $vettingEvent): Response
     {
         return Inertia::render('vetting/show/page', new VettingShowPage(
+            event: fn () => VettingEventGroupData::fromModel($vettingEvent),
             data: Inertia::defer(fn () => VettingEventGroupDetailData::for($vettingEvent)),
         ));
     }

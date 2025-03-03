@@ -12,7 +12,6 @@ final class VettingEventGroupDetailData extends Data
 {
     /** @param \Illuminate\Support\Collection<int, \App\Data\Vetting\VettingData> $vettings */
     public function __construct(
-        public readonly VettingEventGroupData $event,
         public readonly Collection $vettings,
 
     ) {
@@ -26,7 +25,6 @@ final class VettingEventGroupDetailData extends Data
             ->get();
 
         return new self(
-            event: VettingEventGroupData::fromModel($vettingEvent),
             vettings: VettingData::collect($vettings),
         );
     }
