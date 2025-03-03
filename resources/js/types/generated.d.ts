@@ -470,6 +470,15 @@ declare namespace App.Data.Students {
     departmentId: number;
     programId: number;
   };
+  export type StudentBasicInfoData = {
+    id: number;
+    registrationNumber: string;
+    name: string;
+    departmentProgram: string;
+    slug: string;
+    status: App.Enums.StudentStatus;
+    statusColor: App.Enums.StatusColor;
+  };
   export type StudentComprehensiveData = {
     student: App.Data.Students.StudentData;
     results: App.Data.Results.StudentResultData;
@@ -511,6 +520,11 @@ declare namespace App.Data.Vetting {
   export type PaginatedVettingEventGroupListData = {
     paginated: Array<App.Data.Vetting.VettingEventGroupData>;
   };
+  export type VettingData = {
+    id: number;
+    status: string;
+    student: App.Data.Students.StudentBasicInfoData;
+  };
   export type VettingEventGroupData = {
     id: number;
     slug: string;
@@ -521,6 +535,10 @@ declare namespace App.Data.Vetting {
     message: string;
     numberOfStudents: number;
     date: string;
+  };
+  export type VettingEventGroupDetailData = {
+    event: App.Data.Vetting.VettingEventGroupData;
+    vettings: any;
   };
   export type VettingEventGroupListData = {
     data: Array<App.Data.Vetting.VettingEventGroupData>;
