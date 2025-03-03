@@ -73,6 +73,15 @@ final class Course extends Model
         return $courses->contains('id', $this->id) || $courses->contains('code', $this->code);
     }
 
+    public function checkForDuplicateInSemesterEnrollment(SemesterEnrollment $semesterEnrollment): bool
+    {
+        $courses = self::query()
+            ->whereIn('id', $semesterEnrollment->registrations()->pluck('course_id'))
+            ->get();
+
+        return $courses->contains('id', $this->id) || $courses->contains('code', $this->code);
+    }
+
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */
     protected function name(): Attribute
     {

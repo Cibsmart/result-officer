@@ -5,13 +5,16 @@ declare(strict_types=1);
 namespace App\Enums;
 
 use App\Actions\Imports\Excel\ProcessRawCurriculumCourses;
+use App\Actions\Imports\Excel\ProcessRawExcelResults;
 use App\Actions\Imports\Excel\ProcessRawFinalResults;
 use App\Helpers\DirectoryClassList;
 use App\Imports\CurriculumCoursesImport;
 use App\Imports\FinalResultsImport;
+use App\Imports\ResultsImport;
 
 enum ExcelImportType: string
 {
+    case RESULT = 'result';
     case CURRICULUM = 'curriculum';
     case FINAL_RESULT = 'final_result';
 
@@ -21,6 +24,7 @@ enum ExcelImportType: string
         return match ($this) {
             self::CURRICULUM => $this->getCurriculumHeadings(),
             self::FINAL_RESULT => $this->getFinalResultsHeadings(),
+            self::RESULT => $this->getResultsHeadings(),
         };
     }
 
@@ -29,6 +33,7 @@ enum ExcelImportType: string
         return match ($this) {
             self::CURRICULUM => CurriculumCoursesImport::class,
             self::FINAL_RESULT => FinalResultsImport::class,
+            self::RESULT => ResultsImport::class,
         };
     }
 
@@ -37,6 +42,7 @@ enum ExcelImportType: string
         return match ($this) {
             self::CURRICULUM => ProcessRawCurriculumCourses::class,
             self::FINAL_RESULT => ProcessRawFinalResults::class,
+            self::RESULT => ProcessRawExcelResults::class,
         };
     }
 
@@ -53,6 +59,7 @@ enum ExcelImportType: string
         return match ($this) {
             self::CURRICULUM => "{$directory}/RawCurriculumCourses",
             self::FINAL_RESULT => "{$directory}/RawFinalResults",
+            self::RESULT => "{$directory}/RawExcelResults",
         };
     }
 
@@ -63,6 +70,7 @@ enum ExcelImportType: string
         return match ($this) {
             self::CURRICULUM => "{$namespace}\\RawCurriculumCourses",
             self::FINAL_RESULT => "{$namespace}\\RawFinalResults",
+            self::RESULT => "{$namespace}\\RawExcelResults",
         };
     }
 
@@ -119,6 +127,36 @@ enum ExcelImportType: string
             'sn' => ['sn', 'serial_number'],
             'total' => ['total', 'total_score'],
             'year' => ['year'],
+        ];
+    }
+
+    /** @return array<string, array<int, string>> */
+    private function getResultsHeadings(): array
+    {
+        return [
+            'course_code' => ['course_code', 'code'],
+            'course_title' => ['course_title', 'title'],
+            'credit_unit' => ['credit_unit', 'credit_load', 'cload', 'cunit', 'unit', 'credit_unit_load'],
+            'department' => ['department', 'dept', 'students_dept', 'std_dept'],
+            'exam' => ['exam', 'exam_score'],
+            'examiner' => ['examiner', 'examiners_name', 'name_of_examiner'],
+            'examiner_department' => ['examiners_department', 'examiners_dept', 'exam_dept'],
+            'exam_date' => ['exam_date', 'date_of_exam'],
+            'grade' => ['grade'],
+            'in_course' => [
+                'in_course', 'in_course_1', 'incourse_one', 'in_course_score', 'inc', 'inc_score', 'inc_ass',
+                'inc_assessment',
+            ],
+            'in_course_2' => [
+                'in_course_2', 'incourse_two', 'in_course_2_score', 'inc_2', 'inc2', 'inc_2_score', 'inc_ass_2',
+                'inc_assessment_2',
+            ],
+            'name' => ['name', 'students_name', 'name_of_students', 'full_name', 'fullname'],
+            'registration_number' => ['registration_number', 'reg_number', 'reg_no', 'reg_no'],
+            'semester' => ['semester'],
+            'session' => ['session'],
+            'sn' => ['sn', 'serial_number'],
+            'total' => ['total', 'total_score'],
         ];
     }
 }

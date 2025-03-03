@@ -11,6 +11,7 @@ use App\Enums\RecordSource;
 use App\Models\Lecturer;
 use App\Models\LegacyFinalResult;
 use App\Models\LegacyResult;
+use App\Models\RawExcelResult;
 use App\Models\RawResult;
 use App\Models\Registration;
 use App\Models\Result;
@@ -62,6 +63,36 @@ final readonly class ResultModelData
             lecturer: $lecturer,
             remarks: null,
             source: RecordSource::PORTAL,
+        );
+    }
+
+    public static function fromRawExcelResult(Registration $registration, RawExcelResult $result): self
+    {
+        $scores = ScoresData::new((int) $result->exam, (int) $result->in_course, (int) $result->in_course_2);
+
+        [$grade, $gradePoint] = self::getGrade(
+            registration: $registration,
+            registrationNumber: RegistrationNumber::new($result->registration_number),
+            scores: $scores,
+        );
+
+        $lecturer = null;
+
+        if (! is_null($result->examiner)) {
+            $lecturer = Lecturer::getOrCreateUsingName($result->examiner);
+        }
+
+        return new self(
+            registration: $registration,
+            scores: $scores->value(),
+            totalScore: $scores->total,
+            grade: $grade,
+            gradePoint: $gradePoint,
+            examDate: DateValue::fromValue($result->exam_date),
+            uploadDate: DateValue::fromValue(null),
+            lecturer: $lecturer,
+            remarks: null,
+            source: RecordSource::EXCEL,
         );
     }
 

@@ -120,6 +120,19 @@ final class Registration extends Model
         $registration->delete();
     }
 
+    public static function createFromRawExcelResult(
+        SemesterEnrollment $semesterEnrollment,
+        RawExcelResult $rawResult,
+        Course $course,
+    ): self {
+        $registration = RegistrationModelData::fromRawExcelResult($semesterEnrollment, $rawResult, $course)
+            ->getModel();
+
+        $registration->save();
+
+        return $registration;
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\Registration> */
     public function vettingReports(): MorphMany
     {

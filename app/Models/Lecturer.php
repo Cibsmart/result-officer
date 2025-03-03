@@ -31,7 +31,7 @@ final class Lecturer extends Model
     public static function getUsingName(string $lecturerName): ?self
     {
         return
-            Cache::remember($lecturerName,
+            Cache::remember("lecturer_name.{$lecturerName}",
                 fn (?self $value) => is_null($value) ? null : now()->addMinutes(5),
                 fn () => self::query()->where('name', $lecturerName)->first());
     }
@@ -39,7 +39,7 @@ final class Lecturer extends Model
     public static function getUsingPhoneNumber(string $phoneNumber): ?self
     {
         return
-            Cache::remember($phoneNumber,
+            Cache::remember("lecturer_phone.{$phoneNumber}",
                 fn (?self $value) => is_null($value) ? 0 : now()->addMinutes(5),
                 fn () => self::query()->where('phone', $phoneNumber)->first());
     }

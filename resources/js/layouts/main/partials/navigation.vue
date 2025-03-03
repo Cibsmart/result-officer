@@ -66,7 +66,8 @@ const navigation: NavigationItem[] = [
       { name: "View", href: route("results.index"), current: route().current("results.index") },
       { name: "Summary", href: route("summary.form"), current: route().current("summary.form") },
       { name: "Composite", href: route("composite.form"), current: route().current("composite.form") },
-      { name: "Export", href: route("export.results.page"), current: route().current("export.results.page") },
+      { name: "Upload Excel", href: route("import.results.index"), current: route().current("import.results.index") },
+      { name: "Export Excel", href: route("export.results.page"), current: route().current("export.results.page") },
     ],
   },
   {

@@ -10,6 +10,7 @@ use App\Enums\RecordSource;
 use App\Models\Course;
 use App\Models\LegacyFinalResult;
 use App\Models\LegacyResult;
+use App\Models\RawExcelResult;
 use App\Models\RawRegistration;
 use App\Models\Registration;
 use App\Models\SemesterEnrollment;
@@ -43,6 +44,22 @@ final readonly class RegistrationModelData
             registrationDate: $registrationDate,
             onlineId: $registration->online_id,
             source: RecordSource::PORTAL,
+        );
+    }
+
+    public static function fromRawExcelResult(
+        SemesterEnrollment $semesterEnrollment,
+        RawExcelResult $rawResult,
+        Course $course,
+    ): self {
+        return new self(
+            semesterEnrollment: $semesterEnrollment,
+            course: $course,
+            creditUnit: CreditUnit::from((int) $rawResult->credit_unit),
+            courseStatus: CourseStatus::FRESH,
+            registrationDate: DateValue::fromValue(null),
+            onlineId: null,
+            source: RecordSource::EXCEL,
         );
     }
 

@@ -60,6 +60,11 @@ final class Result extends Model
         $result->recompute($student);
     }
 
+    public static function createFromRawExcelResult(Registration $registration, RawExcelResult $rawResult): self
+    {
+        return ResultModelData::fromRawExcelResult($registration, $rawResult)->save();
+    }
+
     public function recompute(Student $student): void
     {
         $total = ScoresData::fromArray($this->getScores())->total;

@@ -33,6 +33,7 @@ use App\Http\Controllers\Imports\CancelImportEventController;
 use App\Http\Controllers\Imports\ContinueImportEventController;
 use App\Http\Controllers\Imports\FinalResultImportController;
 use App\Http\Controllers\Imports\ProgramCurriculumImportController;
+use App\Http\Controllers\Imports\ResultImportController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Registrations\RegistrationController;
 use App\Http\Controllers\Reports\CompositeSheetController;
@@ -253,6 +254,14 @@ Route::middleware(['auth'])->group(static function (): void {
     });
 
     Route::prefix('import')->group(static function (): void {
+        Route::prefix('results')->group(static function (): void {
+            Route::get('', [ResultImportController::class, 'index'])->name('import.results.index');
+            Route::post('', [ResultImportController::class, 'store'])->name('import.results.store');
+            Route::post('delete/{event}', [ResultImportController::class, 'delete'])
+                ->can('delete', ExcelImportEvent::class)
+                ->name('import.results.delete');
+        });
+
         Route::prefix('final-results')->group(static function (): void {
             Route::get('', [FinalResultImportController::class, 'index'])->name('import.final-results.index');
             Route::post('', [FinalResultImportController::class, 'store'])->name('import.final-results.store');

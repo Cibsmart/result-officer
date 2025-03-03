@@ -98,6 +98,12 @@ final class ExcelImportEvent extends Model
         return $this->hasMany(RawFinalResult::class);
     }
 
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawExcelResult, \App\Models\ExcelImportEvent> */
+    public function rawExcelResults(): HasMany
+    {
+        return $this->hasMany(RawExcelResult::class);
+    }
+
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawCurriculumCourse, \App\Models\ExcelImportEvent>
