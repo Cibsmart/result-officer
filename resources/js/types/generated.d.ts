@@ -523,6 +523,7 @@ declare namespace App.Data.Vetting {
   export type VettingData = {
     id: number;
     status: App.Enums.VettingEventStatus;
+    statusColor: App.Enums.StatusColor;
     student: App.Data.Students.StudentBasicInfoData;
   };
   export type VettingEventGroupData = {
@@ -537,7 +538,6 @@ declare namespace App.Data.Vetting {
     date: string;
   };
   export type VettingEventGroupDetailData = {
-    event: App.Data.Vetting.VettingEventGroupData;
     vettings: Array<App.Data.Vetting.VettingData>;
   };
   export type VettingEventGroupListData = {
@@ -798,6 +798,7 @@ declare namespace App.ViewModels.Vetting {
     paginated: any;
   };
   export type VettingShowPage = {
+    event: App.Data.Vetting.VettingEventGroupData;
     data: any;
   };
 }
