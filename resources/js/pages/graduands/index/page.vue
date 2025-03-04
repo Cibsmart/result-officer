@@ -10,7 +10,6 @@ import StudentList from "@/pages/graduands/index/partials/graduandList.vue";
 import { PaginatedGraduandListData } from "@/types/paginate";
 
 defineProps<{
-  steps: App.Data.Vetting.VettingStepListData;
   department: App.Data.Department.DepartmentInfoData;
   data: PaginatedGraduandListData | null;
 }>();
@@ -35,7 +34,6 @@ const pages: BreadcrumbItem[] = [
     <StudentList
       v-if="data !== null"
       :department="department"
-      :paginated="data"
-      :steps="steps" />
+      :paginated="data" />
   </BasePage>
 </template>

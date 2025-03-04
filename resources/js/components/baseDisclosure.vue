@@ -2,18 +2,15 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import { computed } from "vue";
 import { ChevronRightIcon } from "@heroicons/vue/20/solid";
-import Badge from "@/components/badge.vue";
 
 const props = withDefaults(
   defineProps<{
-    title: string;
-    badge?: string;
-    color?: App.Enums.StatusColor;
     size?: "normal" | "wide" | "full";
+    defaultOpen?: boolean;
   }>(),
   {
-    color: "gray",
     size: "wide",
+    defaultOpen: false,
   },
 );
 
@@ -31,18 +28,12 @@ const maxWidthClass = computed(() => {
     <div
       :class="maxWidthClass"
       class="mx-auto w-full rounded-sm bg-gray-100 p-2 dark:bg-gray-900">
-      <Disclosure v-slot="{ open }">
+      <Disclosure
+        v-slot="{ open }"
+        :default-open="defaultOpen">
         <DisclosureButton
           class="flex w-full justify-between rounded-lg px-2 py-1.5 text-left text-sm font-medium text-black hover:bg-gray-50 focus:outline-hidden focus-visible:ring-3 focus-visible:ring-indigo-500/75 dark:text-white dark:hover:bg-gray-800">
-          <div class="flex flex-1 justify-between text-sm font-black">
-            <span>{{ title }}</span>
-
-            <Badge
-              v-if="badge"
-              :color="color">
-              {{ badge }}
-            </Badge>
-          </div>
+          <slot name="header" />
 
           <ChevronRightIcon
             :class="open ? 'rotate-90 transform' : ''"

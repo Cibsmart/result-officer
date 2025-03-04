@@ -26,8 +26,7 @@ enum VettingEventStatus: string
             self::QUEUED => StatusColor::YELLOW,
             self::VETTING, => StatusColor::PURPLE,
             self::FAILED => StatusColor::RED,
-            self::COMPLETED => StatusColor::BLUE,
-            self::PASSED => StatusColor::GREEN,
+            self::COMPLETED, self::PASSED => StatusColor::GREEN,
         };
     }
 }
