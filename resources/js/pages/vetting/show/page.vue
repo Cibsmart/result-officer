@@ -17,6 +17,7 @@ import SecondaryButtonSmall from "@/components/buttons/secondaryButtonSmall.vue"
 import SecondaryLinkSmall from "@/components/links/secondaryLinkSmall.vue";
 import VettingDetailDrawer from "@/pages/vetting/show/partials/vettingDetailDrawer.vue";
 import { ref } from "vue";
+import BaseDisclosure from "@/components/baseDisclosure.vue";
 
 const props = defineProps<{
   event: App.Data.Vetting.VettingEventGroupData;
@@ -56,62 +57,70 @@ const openDrawer = ref(false);
         </div>
       </div>
 
-      <BaseTable>
-        <BaseTHead>
-          <BaseTH position="left">Student Name</BaseTH>
+      <Deferred data="data">
+        <template #fallback> Loading...</template>
 
-          <BaseTH position="left">Student Status</BaseTH>
+        <template
+          v-for="group in data.groups"
+          :key="group.id">
+          <BaseDisclosure
+            :title="group.curriculum.name"
+            size="full">
+            <BaseTable>
+              <BaseTHead>
+                <BaseTH position="left">Student Name</BaseTH>
 
-          <BaseTH position="left">Registration Number</BaseTH>
+                <BaseTH position="left">Student Status</BaseTH>
 
-          <BaseTH position="left">Vetting Status</BaseTH>
+                <BaseTH position="left">Registration Number</BaseTH>
 
-          <BaseTH position="right">Actions</BaseTH>
-        </BaseTHead>
+                <BaseTH position="left">Vetting Status</BaseTH>
 
-        <BaseTBody>
-          <Deferred data="data">
-            <template #fallback> Loading...</template>
+                <BaseTH position="right">Actions</BaseTH>
+              </BaseTHead>
 
-            <BaseTR
-              v-for="vetting in data.vettings"
-              :key="vetting.id">
-              <BaseTD position="left">{{ vetting.student.name }}</BaseTD>
+              <BaseTBody>
+                <BaseTR
+                  v-for="vetting in group.vettings"
+                  :key="vetting.id">
+                  <BaseTD position="left">{{ vetting.student.name }}</BaseTD>
 
-              <BaseTD position="left">
-                <Badge :color="vetting.student.statusColor"> {{ vetting.student.status }}</Badge>
-              </BaseTD>
+                  <BaseTD position="left">
+                    <Badge :color="vetting.student.statusColor"> {{ vetting.student.status }}</Badge>
+                  </BaseTD>
 
-              <BaseTD position="left">{{ vetting.student.registrationNumber }}</BaseTD>
+                  <BaseTD position="left">{{ vetting.student.registrationNumber }}</BaseTD>
 
-              <BaseTD position="left">
-                <Badge
-                  :class="event.status === 'vetting' ? 'animate-pulse' : ''"
-                  :color="vetting.statusColor">
-                  {{ vetting.status }}
-                </Badge>
-              </BaseTD>
+                  <BaseTD position="left">
+                    <Badge
+                      :class="event.status === 'vetting' ? 'animate-pulse' : ''"
+                      :color="vetting.statusColor">
+                      {{ vetting.status }}
+                    </Badge>
+                  </BaseTD>
 
-              <BaseTD position="right">
-                <PrimaryButtonSmall @click="handleClick(vetting.student.slug)">View</PrimaryButtonSmall>
+                  <BaseTD position="right">
+                    <PrimaryButtonSmall @click="handleClick(vetting.student.slug)">View</PrimaryButtonSmall>
 
-                <SecondaryButtonSmall
-                  v-if="vetting.status === 'passed'"
-                  class="ml-2">
-                  Clear
-                </SecondaryButtonSmall>
+                    <SecondaryButtonSmall
+                      v-if="vetting.status === 'passed'"
+                      class="ml-2">
+                      Clear
+                    </SecondaryButtonSmall>
 
-                <SecondaryLinkSmall
-                  v-if="vetting.status === 'failed'"
-                  :href="route('vetting.create', { student: vetting.student.slug })"
-                  class="ml-2">
-                  Re-vet
-                </SecondaryLinkSmall>
-              </BaseTD>
-            </BaseTR>
-          </Deferred>
-        </BaseTBody>
-      </BaseTable>
+                    <SecondaryLinkSmall
+                      v-if="vetting.status === 'failed'"
+                      :href="route('vetting.create', { student: vetting.student.slug })"
+                      class="ml-2">
+                      Re-vet
+                    </SecondaryLinkSmall>
+                  </BaseTD>
+                </BaseTR>
+              </BaseTBody>
+            </BaseTable>
+          </BaseDisclosure>
+        </template>
+      </Deferred>
     </BaseSection>
   </BasePage>
 
