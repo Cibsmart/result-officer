@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Api;
 use App\Data\Vetting\VettingStepListData;
 use App\Models\Student;
 
-final class VettingReportController
+final class VettingStepController
 {
     public function __invoke(Student $student): VettingStepListData
     {

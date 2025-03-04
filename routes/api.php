@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\ExamOfficerController;
 use App\Http\Controllers\Api\SessionController;
 use App\Http\Controllers\Api\StateController;
 use App\Http\Controllers\Api\UsersDepartmentController;
-use App\Http\Controllers\Api\VettingReportController;
+use App\Http\Controllers\Api\VettingStepController;
 
 Route::middleware(['auth:sanctum'])->group(static function (): void {
     Route::get('departments', DepartmentController::class);
@@ -15,5 +15,5 @@ Route::middleware(['auth:sanctum'])->group(static function (): void {
     Route::get('sessions', SessionController::class);
     Route::get('states', StateController::class);
     Route::get('exam-officers', ExamOfficerController::class);
-    Route::get('student/{student}/vetting-steps', VettingReportController::class);
+    Route::get('student/{student}/vetting-steps', VettingStepController::class);
 });
