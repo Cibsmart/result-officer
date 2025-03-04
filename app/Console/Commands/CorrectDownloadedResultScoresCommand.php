@@ -24,7 +24,7 @@ final class CorrectDownloadedResultScoresCommand extends Command
         $bar->start();
 
         RawResult::query()
-            ->with('result.registration.semesterEnrollment.sessionEnrollment.session')
+            ->with('result.registration.semesterEnrollment.sessionEnrollment.session', 'result.rawResult')
             ->select('raw_results.id', 'raw_results.in_course_2', 'raw_results.total', 'raw_results.status',
                 'raw_results.result_id', 'raw_results.registration_number')
             ->where('status', RawDataStatus::UPDATING)
@@ -53,6 +53,8 @@ final class CorrectDownloadedResultScoresCommand extends Command
         $result = $rawResult->result;
 
         $registration = $result->registration;
+        $resultDetail = $result->resultDetail;
+
         $registrationNumber = RegistrationNumber::new($rawResult->getRegistrationNumber());
 
         $scores = $result->getScores();
@@ -66,6 +68,8 @@ final class CorrectDownloadedResultScoresCommand extends Command
         $result->update([
             'grade' => $grade->value, 'grade_point' => $gradePoint, 'scores' => $scores, 'total_score' => $total->value,
         ]);
+
+        $resultDetail->update(['value' => "{$registration->id}-{$total->value}-{$grade->value}-{$gradePoint}"]);
 
         $rawResult->updateStatus(RawDataStatus::PROCESSED);
 
