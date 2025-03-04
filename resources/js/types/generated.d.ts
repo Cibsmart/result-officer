@@ -58,6 +58,16 @@ declare namespace App.Data.Course {
     courses: Array<App.Data.Course.CourseData>;
   };
 }
+declare namespace App.Data.Curriculum {
+  export type ProgramCurriculumData = {
+    id: number;
+    name: string;
+    program: string;
+    curriculum: string;
+    entrySession: string;
+    entryMode: string;
+  };
+}
 declare namespace App.Data.Department {
   export type DepartmentData = {
     id: number;
@@ -526,6 +536,13 @@ declare namespace App.Data.Vetting {
     statusColor: App.Enums.StatusColor;
     student: App.Data.Students.StudentBasicInfoData;
   };
+  export type VettingEventCurriculumData = {
+    curriculum: App.Data.Curriculum.ProgramCurriculumData;
+    vettings: Array<App.Data.Vetting.VettingData>;
+  };
+  export type VettingEventCurriculumListData = {
+    curricula: Array<App.Data.Vetting.VettingEventCurriculumData>;
+  };
   export type VettingEventGroupData = {
     id: number;
     slug: string;
@@ -538,7 +555,7 @@ declare namespace App.Data.Vetting {
     date: string;
   };
   export type VettingEventGroupDetailData = {
-    vettings: Array<App.Data.Vetting.VettingData>;
+    groups: Array<App.Data.Vetting.VettingEventCurriculumData>;
   };
   export type VettingEventGroupListData = {
     data: Array<App.Data.Vetting.VettingEventGroupData>;
