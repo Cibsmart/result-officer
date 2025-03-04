@@ -4,7 +4,7 @@ import CardHeading from "@/components/cards/cardHeader.vue";
 import Disclosure from "@/components/baseDisclosure.vue";
 import Card from "@/components/cards/card.vue";
 import { ref, computed, watch } from "vue";
-import { useVettingSteps } from "@/composables/vettingReports";
+import { useVettingSteps } from "@/composables/vettingSteps";
 
 const props = defineProps<{
   slug: string;
