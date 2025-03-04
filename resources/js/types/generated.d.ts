@@ -540,9 +540,6 @@ declare namespace App.Data.Vetting {
     curriculum: App.Data.Curriculum.ProgramCurriculumData;
     vettings: Array<App.Data.Vetting.VettingData>;
   };
-  export type VettingEventCurriculumListData = {
-    curricula: Array<App.Data.Vetting.VettingEventCurriculumData>;
-  };
   export type VettingEventGroupData = {
     id: number;
     slug: string;
