@@ -3,8 +3,6 @@ import { ref, computed } from "vue";
 import EmptyState from "@/components/emptyState.vue";
 import IconLink from "@/components/links/iconLink.vue";
 import StudentRow from "@/pages/graduands/index/partials/graduandRow.vue";
-import Drawer from "@/components/drawer.vue";
-import Disclosure from "@/components/baseDisclosure.vue";
 import Card from "@/components/cards/card.vue";
 import CardHeading from "@/components/cards/cardHeader.vue";
 import Modal from "@/components/modal.vue";
@@ -19,29 +17,21 @@ import CardFooter from "@/components/cards/cardFooter.vue";
 import Pagination from "@/components/pagination.vue";
 import BaseSection from "@/layouts/main/partials/baseSection.vue";
 import ClearanceConfirmationForm from "@/pages/graduands/index/partials/clearanceConfirmationForm.vue";
+import VettingDetailDrawer from "@/pages/vetting/show/partials/vettingDetailDrawer.vue";
 
 const props = defineProps<{
   department: App.Data.Department.DepartmentInfoData;
-  steps: App.Data.Vetting.VettingStepListData;
   paginated: PaginatedGraduandListData;
 }>();
 
 const showReport = ref(false);
 
-const registrationNumber = ref("");
+const currentStudentSlug = ref("");
 
 const hasRows = computed(() => props.paginated.data.length > 0);
 
-const form = useForm({ student: "" });
-
-const closeDrawer = () => (showReport.value = false);
 const openDrawer = (student: App.Data.Graduands.GraduandData) => {
-  registrationNumber.value = student.registrationNumber;
-
-  form.student = student.slug;
-
-  form.get(usePage().url, { only: ["steps"], preserveScroll: true, preserveState: true });
-
+  currentStudentSlug.value = student.slug;
   showReport.value = true;
 };
 
@@ -134,35 +124,8 @@ const closeModal = () => (openClearanceForm.value = false);
     </BaseSection>
   </Modal>
 
-  <Drawer
-    :show="showReport"
-    :title="registrationNumber"
-    size="medium"
-    sub="Vetting Report"
-    @close="closeDrawer">
-    <div
-      v-for="vettingStep in steps?.items"
-      :key="vettingStep.id">
-      <Disclosure
-        :badge="vettingStep.status"
-        :color="vettingStep.color"
-        :title="vettingStep.title"
-        class="mt-2">
-        <Card>
-          <CardHeading>{{ vettingStep.description }}</CardHeading>
-
-          <ul
-            class="list-inside list-decimal divide-y divide-gray-300 dark:divide-gray-700"
-            role="list">
-            <li
-              v-for="report in vettingStep.reports"
-              :key="report.id"
-              class="p-2">
-              {{ report.message }}
-            </li>
-          </ul>
-        </Card>
-      </Disclosure>
-    </div>
-  </Drawer>
+  <VettingDetailDrawer
+    :openReportDrawer="showReport"
+    :slug="currentStudentSlug"
+    @close="showReport = false" />
 </template>

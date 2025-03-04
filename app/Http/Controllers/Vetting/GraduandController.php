@@ -6,9 +6,7 @@ namespace App\Http\Controllers\Vetting;
 
 use App\Data\Department\DepartmentInfoData;
 use App\Data\Graduands\PaginatedGraduandListData;
-use App\Data\Vetting\VettingStepListData;
 use App\Models\Department;
-use App\Models\Student;
 use App\ViewModels\Graduands\GraduandIndexPage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,12 +15,9 @@ use Inertia\Response;
 
 final class GraduandController
 {
-    public function index(Request $request, ?Department $department = null): Response
+    public function index(?Department $department = null): Response
     {
-        $student = Student::query()->where('slug', $request->query('student'))->first();
-
         return Inertia::render('graduands/index/page', new GraduandIndexPage(
-            steps: fn () => $student ? VettingStepListData::from($student) : null,
             department: fn () => $department ? DepartmentInfoData::for($department) : null,
             data: fn () => $department ? PaginatedGraduandListData::for($department)->paginated : null,
         ));
