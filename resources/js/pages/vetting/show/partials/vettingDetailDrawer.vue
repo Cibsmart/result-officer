@@ -6,7 +6,6 @@ import Card from "@/components/cards/card.vue";
 import { ref, computed, watch } from "vue";
 import { useVettingSteps } from "@/composables/vettingSteps";
 import Badge from "@/components/badge.vue";
-import badge from "@/components/badge.vue";
 
 const props = defineProps<{
   slug: string;

@@ -752,7 +752,6 @@ declare namespace App.ViewModels.Exports {
 }
 declare namespace App.ViewModels.Graduands {
   export type GraduandIndexPage = {
-    steps: App.Data.Vetting.VettingStepListData;
     department: App.Data.Department.DepartmentInfoData;
     data: App.Data.Graduands.PaginatedGraduandListData;
   };

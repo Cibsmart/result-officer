@@ -6,7 +6,6 @@ import StudentRow from "@/pages/graduands/index/partials/graduandRow.vue";
 import Card from "@/components/cards/card.vue";
 import CardHeading from "@/components/cards/cardHeader.vue";
 import Modal from "@/components/modal.vue";
-import { useForm, usePage } from "@inertiajs/vue3";
 import BaseTable from "@/components/tables/baseTable.vue";
 import BaseTHead from "@/components/tables/baseTHead.vue";
 import BaseTH from "@/components/tables/baseTH.vue";

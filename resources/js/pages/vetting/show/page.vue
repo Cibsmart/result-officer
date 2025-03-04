@@ -18,7 +18,6 @@ import SecondaryLinkSmall from "@/components/links/secondaryLinkSmall.vue";
 import VettingDetailDrawer from "@/pages/vetting/show/partials/vettingDetailDrawer.vue";
 import { ref } from "vue";
 import BaseDisclosure from "@/components/baseDisclosure.vue";
-import badge from "@/components/badge.vue";
 
 const props = defineProps<{
   event: App.Data.Vetting.VettingEventGroupData;
@@ -53,8 +52,12 @@ const openDrawer = ref(false);
           {{ `Vetting Details for (${props.event.title}) - ${props.event.department}` }}
         </header>
 
-        <div>
-          <Badge :color="props.event.statusColor">{{ props.event.status }}</Badge>
+        <div class="flex items-center space-x-2">
+          <PrimaryButtonSmall>Report</PrimaryButtonSmall>
+
+          <div>
+            <Badge :color="props.event.statusColor">{{ props.event.status }}</Badge>
+          </div>
         </div>
       </div>
 
@@ -76,9 +79,15 @@ const openDrawer = ref(false);
         <template
           v-for="group in data.groups"
           :key="group.id">
-          <BaseDisclosure size="full">
+          <BaseDisclosure
+            defaultOpen
+            size="full">
             <template #header>
-              {{ group.curriculum.name }}
+              <div class="flex flex-1 justify-between text-sm font-black">
+                <span class="text-lg uppercase">Course List: {{ group.curriculum.name }}</span>
+
+                <SecondaryButtonSmall>View</SecondaryButtonSmall>
+              </div>
             </template>
 
             <BaseTable>

@@ -3,7 +3,16 @@ import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import { computed } from "vue";
 import { ChevronRightIcon } from "@heroicons/vue/20/solid";
 
-const props = withDefaults(defineProps<{ size?: "normal" | "wide" | "full" }>(), { size: "wide" });
+const props = withDefaults(
+  defineProps<{
+    size?: "normal" | "wide" | "full";
+    defaultOpen?: boolean;
+  }>(),
+  {
+    size: "wide",
+    defaultOpen: false,
+  },
+);
 
 const maxWidthClass = computed(() => {
   return {
@@ -19,7 +28,9 @@ const maxWidthClass = computed(() => {
     <div
       :class="maxWidthClass"
       class="mx-auto w-full rounded-sm bg-gray-100 p-2 dark:bg-gray-900">
-      <Disclosure v-slot="{ open }">
+      <Disclosure
+        v-slot="{ open }"
+        :default-open="defaultOpen">
         <DisclosureButton
           class="flex w-full justify-between rounded-lg px-2 py-1.5 text-left text-sm font-medium text-black hover:bg-gray-50 focus:outline-hidden focus-visible:ring-3 focus-visible:ring-indigo-500/75 dark:text-white dark:hover:bg-gray-800">
           <slot name="header" />

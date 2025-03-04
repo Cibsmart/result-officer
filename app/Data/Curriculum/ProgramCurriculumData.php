@@ -39,7 +39,7 @@ final class ProgramCurriculumData extends Data
 
     public static function getEmpty(): self
     {
-        $name = 'Course List Not Found';
+        $name = 'Not Found';
 
         return new self(id: 0, name: $name, program: '', curriculum: '', entrySession: '', entryMode: '');
     }
