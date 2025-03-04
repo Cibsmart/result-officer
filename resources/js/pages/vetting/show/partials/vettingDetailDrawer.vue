@@ -5,6 +5,8 @@ import Disclosure from "@/components/baseDisclosure.vue";
 import Card from "@/components/cards/card.vue";
 import { ref, computed, watch } from "vue";
 import { useVettingSteps } from "@/composables/vettingSteps";
+import Badge from "@/components/badge.vue";
+import badge from "@/components/badge.vue";
 
 const props = defineProps<{
   slug: string;
@@ -43,11 +45,17 @@ const handleClose = () => {
       <div
         v-for="vettingStep in steps"
         :key="vettingStep.id">
-        <Disclosure
-          :badge="vettingStep.status"
-          :color="vettingStep.color"
-          :title="vettingStep.title"
-          class="mt-2">
+        <Disclosure class="mt-2">
+          <template #header>
+            <div class="flex flex-1 justify-between text-sm font-black">
+              <span>{{ vettingStep.title }}</span>
+
+              <Badge :color="vettingStep.color">
+                {{ vettingStep.status }}
+              </Badge>
+            </div>
+          </template>
+
           <Card>
             <CardHeading>{{ vettingStep.description }}</CardHeading>
 

@@ -18,6 +18,7 @@ import SecondaryLinkSmall from "@/components/links/secondaryLinkSmall.vue";
 import VettingDetailDrawer from "@/pages/vetting/show/partials/vettingDetailDrawer.vue";
 import { ref } from "vue";
 import BaseDisclosure from "@/components/baseDisclosure.vue";
+import badge from "@/components/badge.vue";
 
 const props = defineProps<{
   event: App.Data.Vetting.VettingEventGroupData;
@@ -75,9 +76,11 @@ const openDrawer = ref(false);
         <template
           v-for="group in data.groups"
           :key="group.id">
-          <BaseDisclosure
-            :title="group.curriculum.name"
-            size="full">
+          <BaseDisclosure size="full">
+            <template #header>
+              {{ group.curriculum.name }}
+            </template>
+
             <BaseTable>
               <BaseTHead>
                 <BaseTH position="left">Student Name</BaseTH>
