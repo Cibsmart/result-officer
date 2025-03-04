@@ -58,7 +58,19 @@ const openDrawer = ref(false);
       </div>
 
       <Deferred data="data">
-        <template #fallback> Loading...</template>
+        <template #fallback>
+          <div class="animate-pulse">
+            <div class="flex-1 space-y-6 py-1">
+              <div class="h-4 rounded bg-gray-200 dark:bg-gray-700" />
+
+              <div class="h-3 rounded bg-gray-200 dark:bg-gray-700" />
+
+              <div class="h-3 rounded bg-gray-200 dark:bg-gray-700" />
+
+              <div class="h-3 rounded bg-gray-200 dark:bg-gray-700" />
+            </div>
+          </div>
+        </template>
 
         <template
           v-for="group in data.groups"
