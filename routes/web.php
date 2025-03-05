@@ -60,7 +60,6 @@ use App\Http\Controllers\Vetting\VettingController;
 use App\Http\Controllers\Vetting\VettingEventController;
 use App\Http\Middleware\ValidateMonthParameter;
 use App\Http\Middleware\ValidateYearParameter;
-use App\Models\ExcelImportEvent;
 use App\Models\Registration;
 use App\Models\Student;
 use Illuminate\Support\Facades\Route;
@@ -262,7 +261,7 @@ Route::middleware(['auth'])->group(static function (): void {
             Route::get('', [ResultImportController::class, 'index'])->name('import.results.index');
             Route::post('', [ResultImportController::class, 'store'])->name('import.results.store');
             Route::post('delete/{event}', [ResultImportController::class, 'delete'])
-                ->can('delete', ExcelImportEvent::class)
+                ->can('delete', 'event')
                 ->name('import.results.delete');
         });
 
@@ -270,7 +269,7 @@ Route::middleware(['auth'])->group(static function (): void {
             Route::get('', [FinalResultImportController::class, 'index'])->name('import.final-results.index');
             Route::post('', [FinalResultImportController::class, 'store'])->name('import.final-results.store');
             Route::post('delete/{event}', [FinalResultImportController::class, 'delete'])
-                ->can('delete', ExcelImportEvent::class)
+                ->can('delete', 'event')
                 ->name('import.final-results.delete');
         });
 
@@ -280,7 +279,7 @@ Route::middleware(['auth'])->group(static function (): void {
             Route::post('', [ProgramCurriculumImportController::class, 'store'])
                 ->name('import.curriculum.store');
             Route::post('delete/{event}', [ProgramCurriculumImportController::class, 'delete'])
-                ->can('delete', ExcelImportEvent::class)
+                ->can('delete', 'event')
                 ->name('import.curriculum.delete');
         });
     });
