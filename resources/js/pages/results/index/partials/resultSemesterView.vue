@@ -8,6 +8,7 @@ import BaseTable from "@/components/tables/baseTable.vue";
 import { computed } from "vue";
 import HamburgerMenu from "@/components/hamburger/hamburgerMenu.vue";
 import HamburgerMenuItem from "@/components/hamburger/hamburgerMenuItem.vue";
+import { usePage } from "@inertiajs/vue3";
 
 const props = withDefaults(
   defineProps<{
@@ -25,6 +26,8 @@ const emit = defineEmits<{
 }>();
 
 const title = computed(() => `${props.semester.semester} SEMESTER`);
+
+const isAdmin = usePage().props.user?.isAdmin;
 </script>
 
 <template>
@@ -53,7 +56,7 @@ const title = computed(() => `${props.semester.semester} SEMESTER`);
       <template v-if="manageable">
         <BaseTH>Date Updated</BaseTH>
 
-        <BaseTH>Actions</BaseTH>
+        <BaseTH v-if="isAdmin">Actions</BaseTH>
       </template>
     </BaseTHead>
 
@@ -96,7 +99,7 @@ const title = computed(() => `${props.semester.semester} SEMESTER`);
         <template v-if="manageable">
           <BaseTD>{{ result.dateUpdated }}</BaseTD>
 
-          <BaseTD>
+          <BaseTD v-if="isAdmin">
             <HamburgerMenu orientation="horizontal">
               <HamburgerMenuItem
                 type="button"
