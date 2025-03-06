@@ -5,6 +5,7 @@ import HamburgerMenu from "@/components/hamburger/hamburgerMenu.vue";
 import HamburgerMenuItem from "@/components/hamburger/hamburgerMenuItem.vue";
 import { computed } from "vue";
 import Image from "@/components/image.vue";
+import { usePage } from "@inertiajs/vue3";
 
 const props = defineProps<{
   student: App.Data.Students.StudentBasicData;
@@ -16,6 +17,8 @@ const emit = defineEmits<{
 }>();
 
 const hasImageUrl = computed(() => props.student.photoUrl !== "");
+
+const isAdmin = usePage().props.user?.isAdmin;
 </script>
 
 <template>
@@ -55,6 +58,7 @@ const hasImageUrl = computed(() => props.student.photoUrl !== "");
         </HamburgerMenuItem>
 
         <HamburgerMenuItem
+          v-if="isAdmin"
           type="button"
           @click="emit('openDeleteStudent', student)">
           Delete Student

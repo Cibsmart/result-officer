@@ -24,7 +24,7 @@ final class CorrectDownloadedResultScoresCommand extends Command
         $bar->start();
 
         RawResult::query()
-            ->with('result.registration.semesterEnrollment.sessionEnrollment.session', 'result.rawResult')
+            ->with('result.registration.semesterEnrollment.sessionEnrollment.session', 'result.resultDetail')
             ->select('raw_results.id', 'raw_results.in_course_2', 'raw_results.total', 'raw_results.status',
                 'raw_results.result_id', 'raw_results.registration_number')
             ->where('status', RawDataStatus::UPDATING)
