@@ -1,11 +1,9 @@
 {
-  "semi": true,
-  "bracketSameLine": true,
-  "printWidth": 120,
-  "singleAttributePerLine": true,
-  "tabWidth": 4,
-  "singleQuote": true,
-  "plugins": [
-    "prettier-plugin-tailwindcss"
-  ]
+    "semi": true,
+    "bracketSameLine": true,
+    "printWidth": 120,
+    "singleAttributePerLine": true,
+    "tabWidth": 4,
+    "singleQuote": true,
+    "plugins": ["prettier-plugin-tailwindcss"]
 }

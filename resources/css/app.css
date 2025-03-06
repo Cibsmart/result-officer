@@ -7,24 +7,24 @@
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 
 @theme {
-    --font-sans: Figtree, ui-sans-serif, system-ui, sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: Figtree, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
 @layer utilities {
     *::-webkit-scrollbar {
-        @apply w-1.5 h-1.5 bg-transparent;
+        @apply h-1.5 w-1.5 bg-transparent;
     }
 
     *::-webkit-scrollbar-track {
-        @apply bg-slate-100 rounded-sm dark:bg-slate-500/[0.16]
+        @apply rounded-sm bg-slate-100 dark:bg-slate-500/[0.16];
     }
 
     *::-webkit-scrollbar-thumb {
-        @apply rounded-sm bg-slate-300 dark:bg-slate-500/50
+        @apply rounded-sm bg-slate-300 dark:bg-slate-500/50;
     }
 
     *::-webkit-scrollbar-thumb:hover {
-        @apply bg-indigo-700 dark:bg-indigo-300
+        @apply bg-indigo-700 dark:bg-indigo-300;
     }
 }
