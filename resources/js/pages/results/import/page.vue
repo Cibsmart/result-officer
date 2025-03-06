@@ -1,30 +1,30 @@
 <script lang="ts" setup>
-import { Head, useForm } from "@inertiajs/vue3";
-import Breadcrumb from "@/components/breadcrumb.vue";
-import BaseHeader from "@/layouts/main/partials/baseHeader.vue";
-import BasePage from "@/layouts/main/partials/basePage.vue";
-import BaseSection from "@/layouts/main/partials/baseSection.vue";
-import PrimaryButton from "@/components/buttons/primaryButton.vue";
-import InputLabel from "@/components/inputs/inputLabel.vue";
-import FormGroup from "@/components/forms/formGroup.vue";
-import BaseFormSection from "@/components/forms/baseFormSection.vue";
-import InputError from "@/components/inputs/inputError.vue";
-import EmptyState from "@/components/emptyState.vue";
-import { computed, ref, watch, onMounted } from "vue";
-import { BreadcrumbItem } from "@/types";
-import { usePoll } from "@inertiajs/vue3";
-import UploadedExcelList from "@/components/uploadedExcelList.vue";
+import { Head, useForm } from '@inertiajs/vue3';
+import Breadcrumb from '@/components/breadcrumb.vue';
+import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
+import BasePage from '@/layouts/main/partials/basePage.vue';
+import BaseSection from '@/layouts/main/partials/baseSection.vue';
+import PrimaryButton from '@/components/buttons/primaryButton.vue';
+import InputLabel from '@/components/inputs/inputLabel.vue';
+import FormGroup from '@/components/forms/formGroup.vue';
+import BaseFormSection from '@/components/forms/baseFormSection.vue';
+import InputError from '@/components/inputs/inputError.vue';
+import EmptyState from '@/components/emptyState.vue';
+import { computed, ref, watch, onMounted } from 'vue';
+import { BreadcrumbItem } from '@/types';
+import { usePoll } from '@inertiajs/vue3';
+import UploadedExcelList from '@/components/uploadedExcelList.vue';
 
 const props = defineProps<{
-  data: App.Data.Imports.ExcelImportEventListData;
+    data: App.Data.Imports.ExcelImportEventListData;
 }>();
 
 const pages: BreadcrumbItem[] = [
-  {
-    name: "Result Import",
-    href: route("import.results.index"),
-    current: route().current("import.results.index"),
-  },
+    {
+        name: 'Result Import',
+        href: route('import.results.index'),
+        current: route().current('import.results.index'),
+    },
 ];
 
 const { start, stop } = usePoll(5000, {}, { autoStart: false });
@@ -34,90 +34,90 @@ const form = useForm({ file: null as File | null });
 const hasEvent = computed(() => props.data.events.length > 0);
 
 const hasUnfinishedImport = computed(() =>
-  props.data.events.some((importEvent) => importEvent.status !== "completed" && importEvent.status !== "failed"),
+    props.data.events.some((importEvent) => importEvent.status !== 'completed' && importEvent.status !== 'failed'),
 );
 
 onMounted(() => {
-  if (hasUnfinishedImport.value) {
-    start();
-  }
+    if (hasUnfinishedImport.value) {
+        start();
+    }
 });
 
 watch(hasUnfinishedImport, () => {
-  if (hasUnfinishedImport.value) {
-    start();
-  } else {
-    stop();
-  }
+    if (hasUnfinishedImport.value) {
+        start();
+    } else {
+        stop();
+    }
 });
 
 const onFileChange = () => {
-  if (fileInput.value?.files?.length) {
-    form.file = fileInput.value.files[0];
-  }
+    if (fileInput.value?.files?.length) {
+        form.file = fileInput.value.files[0];
+    }
 };
 
 const submit = () => {
-  form.post(route("import.results.store"));
+    form.post(route('import.results.store'));
 };
 
 const fileInput = ref<HTMLInputElement | null>(null);
 </script>
 
 <template>
-  <Head title="Upload Results" />
+    <Head title="Upload Results" />
 
-  <Breadcrumb :pages="pages" />
+    <Breadcrumb :pages="pages" />
 
-  <BaseHeader>Upload Excel Results</BaseHeader>
+    <BaseHeader>Upload Excel Results</BaseHeader>
 
-  <BasePage>
-    <BaseSection>
-      <BaseFormSection
-        description="Select the Excel Result (.xlsx) File and click Upload"
-        header="Upload Excel Results">
-        <form
-          class="mt-6 space-y-6"
-          @submit.prevent="submit">
-          <FormGroup>
-            <div class="flex-1">
-              <InputLabel
-                for="file"
-                value="Excel File" />
+    <BasePage>
+        <BaseSection>
+            <BaseFormSection
+                description="Select the Excel Result (.xlsx) File and click Upload"
+                header="Upload Excel Results">
+                <form
+                    class="mt-6 space-y-6"
+                    @submit.prevent="submit">
+                    <FormGroup>
+                        <div class="flex-1">
+                            <InputLabel
+                                for="file"
+                                value="Excel File" />
 
-              <input
-                ref="fileInput"
-                type="file"
-                @change="onFileChange" />
+                            <input
+                                ref="fileInput"
+                                type="file"
+                                @change="onFileChange" />
 
-              <progress
-                v-if="form.progress"
-                :value="form.progress.percentage"
-                max="100">
-                {{ form.progress.percentage }}%
-              </progress>
+                            <progress
+                                v-if="form.progress"
+                                :value="form.progress.percentage"
+                                max="100">
+                                {{ form.progress.percentage }}%
+                            </progress>
 
-              <InputError :message="form.errors.file" />
-            </div>
+                            <InputError :message="form.errors.file" />
+                        </div>
 
-            <div>
-              <PrimaryButton :disabled="form.processing">Upload</PrimaryButton>
-            </div>
-          </FormGroup>
-        </form>
-      </BaseFormSection>
-    </BaseSection>
+                        <div>
+                            <PrimaryButton :disabled="form.processing">Upload</PrimaryButton>
+                        </div>
+                    </FormGroup>
+                </form>
+            </BaseFormSection>
+        </BaseSection>
 
-    <BaseSection>
-      <template v-if="hasEvent">
-        <UploadedExcelList :data="data" />
-      </template>
+        <BaseSection>
+            <template v-if="hasEvent">
+                <UploadedExcelList :data="data" />
+            </template>
 
-      <template v-else>
-        <EmptyState
-          description="You haven't uploaded any Excel results yet."
-          title="No Excel Result Upload Found" />
-      </template>
-    </BaseSection>
-  </BasePage>
+            <template v-else>
+                <EmptyState
+                    description="You haven't uploaded any Excel results yet."
+                    title="No Excel Result Upload Found" />
+            </template>
+        </BaseSection>
+    </BasePage>
 </template>

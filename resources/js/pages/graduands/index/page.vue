@@ -1,39 +1,39 @@
 <script lang="ts" setup>
-import { Head } from "@inertiajs/vue3";
-import { BreadcrumbItem } from "@/types";
-import BaseHeader from "@/layouts/main/partials/baseHeader.vue";
-import Breadcrumb from "@/components/breadcrumb.vue";
-import BasePage from "@/layouts/main/partials/basePage.vue";
-import BaseSection from "@/layouts/main/partials/baseSection.vue";
-import VettingForm from "@/pages/graduands/index/partials/graduandForm.vue";
-import StudentList from "@/pages/graduands/index/partials/graduandList.vue";
-import { PaginatedGraduandListData } from "@/types/paginate";
+import { Head } from '@inertiajs/vue3';
+import { BreadcrumbItem } from '@/types';
+import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
+import Breadcrumb from '@/components/breadcrumb.vue';
+import BasePage from '@/layouts/main/partials/basePage.vue';
+import BaseSection from '@/layouts/main/partials/baseSection.vue';
+import VettingForm from '@/pages/graduands/index/partials/graduandForm.vue';
+import StudentList from '@/pages/graduands/index/partials/graduandList.vue';
+import { PaginatedGraduandListData } from '@/types/paginate';
 
 defineProps<{
-  department: App.Data.Department.DepartmentInfoData;
-  data: PaginatedGraduandListData | null;
+    department: App.Data.Department.DepartmentInfoData;
+    data: PaginatedGraduandListData | null;
 }>();
 
 const pages: BreadcrumbItem[] = [
-  { name: "Graduands", href: route("graduand.index"), current: route().current("graduand.index") },
+    { name: 'Graduands', href: route('graduand.index'), current: route().current('graduand.index') },
 ];
 </script>
 
 <template>
-  <Head title="Possible Graduands Page" />
+    <Head title="Possible Graduands Page" />
 
-  <Breadcrumb :pages="pages" />
+    <Breadcrumb :pages="pages" />
 
-  <BaseHeader> View List of Possible Graduands</BaseHeader>
+    <BaseHeader> View List of Possible Graduands</BaseHeader>
 
-  <BasePage>
-    <BaseSection>
-      <VettingForm />
-    </BaseSection>
+    <BasePage>
+        <BaseSection>
+            <VettingForm />
+        </BaseSection>
 
-    <StudentList
-      v-if="data !== null"
-      :department="department"
-      :paginated="data" />
-  </BasePage>
+        <StudentList
+            v-if="data !== null"
+            :department="department"
+            :paginated="data" />
+    </BasePage>
 </template>

@@ -1,155 +1,159 @@
 <script lang="ts" setup>
-import { Deferred, Head } from "@inertiajs/vue3";
-import BasePage from "@/layouts/main/partials/basePage.vue";
-import Breadcrumb from "@/components/breadcrumb.vue";
-import BaseHeader from "@/layouts/main/partials/baseHeader.vue";
-import { BreadcrumbItem } from "@/types";
-import BaseSection from "@/layouts/main/partials/baseSection.vue";
-import Badge from "@/components/badge.vue";
-import BaseTable from "@/components/tables/baseTable.vue";
-import BaseTHead from "@/components/tables/baseTHead.vue";
-import BaseTH from "@/components/tables/baseTH.vue";
-import BaseTBody from "@/components/tables/baseTBody.vue";
-import BaseTR from "@/components/tables/baseTR.vue";
-import BaseTD from "@/components/tables/baseTD.vue";
-import PrimaryButtonSmall from "@/components/buttons/primaryButtonSmall.vue";
-import SecondaryButtonSmall from "@/components/buttons/secondaryButtonSmall.vue";
-import SecondaryLinkSmall from "@/components/links/secondaryLinkSmall.vue";
-import VettingDetailDrawer from "@/pages/vetting/show/partials/vettingDetailDrawer.vue";
-import { ref } from "vue";
-import BaseDisclosure from "@/components/baseDisclosure.vue";
+import { Deferred, Head } from '@inertiajs/vue3';
+import BasePage from '@/layouts/main/partials/basePage.vue';
+import Breadcrumb from '@/components/breadcrumb.vue';
+import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
+import { BreadcrumbItem } from '@/types';
+import BaseSection from '@/layouts/main/partials/baseSection.vue';
+import Badge from '@/components/badge.vue';
+import BaseTable from '@/components/tables/baseTable.vue';
+import BaseTHead from '@/components/tables/baseTHead.vue';
+import BaseTH from '@/components/tables/baseTH.vue';
+import BaseTBody from '@/components/tables/baseTBody.vue';
+import BaseTR from '@/components/tables/baseTR.vue';
+import BaseTD from '@/components/tables/baseTD.vue';
+import PrimaryButtonSmall from '@/components/buttons/primaryButtonSmall.vue';
+import SecondaryButtonSmall from '@/components/buttons/secondaryButtonSmall.vue';
+import SecondaryLinkSmall from '@/components/links/secondaryLinkSmall.vue';
+import VettingDetailDrawer from '@/pages/vetting/show/partials/vettingDetailDrawer.vue';
+import { ref } from 'vue';
+import BaseDisclosure from '@/components/baseDisclosure.vue';
 
 const props = defineProps<{
-  event: App.Data.Vetting.VettingEventGroupData;
-  data: App.Data.Vetting.VettingEventGroupDetailData;
+    event: App.Data.Vetting.VettingEventGroupData;
+    data: App.Data.Vetting.VettingEventGroupDetailData;
 }>();
 
 const pages: BreadcrumbItem[] = [
-  { name: "Vetting Page", href: route("vettingEvent.index"), current: route().current("vettingEvent.index") },
-  { name: "Vetting Details", href: "#", current: route().current("vettingEvent.show") },
+    { name: 'Vetting Page', href: route('vettingEvent.index'), current: route().current('vettingEvent.index') },
+    { name: 'Vetting Details', href: '#', current: route().current('vettingEvent.show') },
 ];
 
 const handleClick = (student: string) => {
-  currentStudent.value = student;
-  openDrawer.value = true;
+    currentStudent.value = student;
+    openDrawer.value = true;
 };
 
-const currentStudent = ref("");
+const currentStudent = ref('');
 const openDrawer = ref(false);
 </script>
 
 <template>
-  <Head title="Vetting Details Page" />
+    <Head title="Vetting Details Page" />
 
-  <Breadcrumb :pages="pages" />
+    <Breadcrumb :pages="pages" />
 
-  <BaseHeader> View Vetting Details</BaseHeader>
+    <BaseHeader> View Vetting Details</BaseHeader>
 
-  <BasePage>
-    <BaseSection>
-      <div class="mb-4 flex justify-between align-baseline">
-        <header class="text-2xl font-bold">
-          {{ `Vetting Details for (${props.event.title}) - ${props.event.department}` }}
-        </header>
+    <BasePage>
+        <BaseSection>
+            <div class="mb-4 flex justify-between align-baseline">
+                <header class="text-2xl font-bold">
+                    {{ `Vetting Details for (${props.event.title}) - ${props.event.department}` }}
+                </header>
 
-        <div class="flex items-center space-x-2">
-          <PrimaryButtonSmall>Report</PrimaryButtonSmall>
+                <div class="flex items-center space-x-2">
+                    <PrimaryButtonSmall>Report</PrimaryButtonSmall>
 
-          <div>
-            <Badge :color="props.event.statusColor">{{ props.event.status }}</Badge>
-          </div>
-        </div>
-      </div>
-
-      <Deferred data="data">
-        <template #fallback>
-          <div class="animate-pulse">
-            <div class="flex-1 space-y-6 py-1">
-              <div class="h-4 rounded bg-gray-200 dark:bg-gray-700" />
-
-              <div class="h-3 rounded bg-gray-200 dark:bg-gray-700" />
-
-              <div class="h-3 rounded bg-gray-200 dark:bg-gray-700" />
-
-              <div class="h-3 rounded bg-gray-200 dark:bg-gray-700" />
+                    <div>
+                        <Badge :color="props.event.statusColor">{{ props.event.status }}</Badge>
+                    </div>
+                </div>
             </div>
-          </div>
-        </template>
 
-        <template
-          v-for="group in data.groups"
-          :key="group.id">
-          <BaseDisclosure
-            defaultOpen
-            size="full">
-            <template #header>
-              <div class="flex flex-1 justify-between text-sm font-black">
-                <span class="text-lg uppercase">Course List: {{ group.curriculum.name }}</span>
+            <Deferred data="data">
+                <template #fallback>
+                    <div class="animate-pulse">
+                        <div class="flex-1 space-y-6 py-1">
+                            <div class="h-4 rounded bg-gray-200 dark:bg-gray-700" />
 
-                <SecondaryButtonSmall>View</SecondaryButtonSmall>
-              </div>
-            </template>
+                            <div class="h-3 rounded bg-gray-200 dark:bg-gray-700" />
 
-            <BaseTable>
-              <BaseTHead>
-                <BaseTH position="left">Student Name</BaseTH>
+                            <div class="h-3 rounded bg-gray-200 dark:bg-gray-700" />
 
-                <BaseTH position="left">Student Status</BaseTH>
+                            <div class="h-3 rounded bg-gray-200 dark:bg-gray-700" />
+                        </div>
+                    </div>
+                </template>
 
-                <BaseTH position="left">Registration Number</BaseTH>
+                <template
+                    v-for="group in data.groups"
+                    :key="group.id">
+                    <BaseDisclosure
+                        defaultOpen
+                        size="full">
+                        <template #header>
+                            <div class="flex flex-1 justify-between text-sm font-black">
+                                <span class="text-lg uppercase">Course List: {{ group.curriculum.name }}</span>
 
-                <BaseTH position="left">Vetting Status</BaseTH>
+                                <SecondaryButtonSmall>View</SecondaryButtonSmall>
+                            </div>
+                        </template>
 
-                <BaseTH position="right">Actions</BaseTH>
-              </BaseTHead>
+                        <BaseTable>
+                            <BaseTHead>
+                                <BaseTH position="left">Student Name</BaseTH>
 
-              <BaseTBody>
-                <BaseTR
-                  v-for="vetting in group.vettings"
-                  :key="vetting.id">
-                  <BaseTD position="left">{{ vetting.student.name }}</BaseTD>
+                                <BaseTH position="left">Student Status</BaseTH>
 
-                  <BaseTD position="left">
-                    <Badge :color="vetting.student.statusColor"> {{ vetting.student.status }}</Badge>
-                  </BaseTD>
+                                <BaseTH position="left">Registration Number</BaseTH>
 
-                  <BaseTD position="left">{{ vetting.student.registrationNumber }}</BaseTD>
+                                <BaseTH position="left">Vetting Status</BaseTH>
 
-                  <BaseTD position="left">
-                    <Badge
-                      :class="event.status === 'vetting' ? 'animate-pulse' : ''"
-                      :color="vetting.statusColor">
-                      {{ vetting.status }}
-                    </Badge>
-                  </BaseTD>
+                                <BaseTH position="right">Actions</BaseTH>
+                            </BaseTHead>
 
-                  <BaseTD position="right">
-                    <PrimaryButtonSmall @click="handleClick(vetting.student.slug)">View</PrimaryButtonSmall>
+                            <BaseTBody>
+                                <BaseTR
+                                    v-for="vetting in group.vettings"
+                                    :key="vetting.id">
+                                    <BaseTD position="left">{{ vetting.student.name }}</BaseTD>
 
-                    <SecondaryButtonSmall
-                      v-if="vetting.status === 'passed'"
-                      class="ml-2">
-                      Clear
-                    </SecondaryButtonSmall>
+                                    <BaseTD position="left">
+                                        <Badge :color="vetting.student.statusColor">
+                                            {{ vetting.student.status }}</Badge
+                                        >
+                                    </BaseTD>
 
-                    <SecondaryLinkSmall
-                      v-if="vetting.status === 'failed'"
-                      :href="route('vetting.create', { student: vetting.student.slug })"
-                      class="ml-2">
-                      Re-vet
-                    </SecondaryLinkSmall>
-                  </BaseTD>
-                </BaseTR>
-              </BaseTBody>
-            </BaseTable>
-          </BaseDisclosure>
-        </template>
-      </Deferred>
-    </BaseSection>
-  </BasePage>
+                                    <BaseTD position="left">{{ vetting.student.registrationNumber }}</BaseTD>
 
-  <VettingDetailDrawer
-    :openReportDrawer="openDrawer"
-    :slug="currentStudent"
-    @close="openDrawer = false" />
+                                    <BaseTD position="left">
+                                        <Badge
+                                            :class="event.status === 'vetting' ? 'animate-pulse' : ''"
+                                            :color="vetting.statusColor">
+                                            {{ vetting.status }}
+                                        </Badge>
+                                    </BaseTD>
+
+                                    <BaseTD position="right">
+                                        <PrimaryButtonSmall @click="handleClick(vetting.student.slug)"
+                                            >View</PrimaryButtonSmall
+                                        >
+
+                                        <SecondaryButtonSmall
+                                            v-if="vetting.status === 'passed'"
+                                            class="ml-2">
+                                            Clear
+                                        </SecondaryButtonSmall>
+
+                                        <SecondaryLinkSmall
+                                            v-if="vetting.status === 'failed'"
+                                            :href="route('vetting.create', { student: vetting.student.slug })"
+                                            class="ml-2">
+                                            Re-vet
+                                        </SecondaryLinkSmall>
+                                    </BaseTD>
+                                </BaseTR>
+                            </BaseTBody>
+                        </BaseTable>
+                    </BaseDisclosure>
+                </template>
+            </Deferred>
+        </BaseSection>
+    </BasePage>
+
+    <VettingDetailDrawer
+        :openReportDrawer="openDrawer"
+        :slug="currentStudent"
+        @close="openDrawer = false" />
 </template>

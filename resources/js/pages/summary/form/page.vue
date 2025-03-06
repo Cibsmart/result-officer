@@ -1,36 +1,36 @@
 <script lang="ts" setup>
-import { Head } from "@inertiajs/vue3";
-import BasePage from "@/layouts/main/partials/basePage.vue";
-import BaseHeader from "@/layouts/main/partials/baseHeader.vue";
-import ResultSummaryForm from "@/pages/summary/form/partials/form.vue";
-import BaseSection from "@/layouts/main/partials/baseSection.vue";
-import { BreadcrumbItem } from "@/types";
-import Breadcrumb from "@/components/breadcrumb.vue";
+import { Head } from '@inertiajs/vue3';
+import BasePage from '@/layouts/main/partials/basePage.vue';
+import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
+import ResultSummaryForm from '@/pages/summary/form/partials/form.vue';
+import BaseSection from '@/layouts/main/partials/baseSection.vue';
+import { BreadcrumbItem } from '@/types';
+import Breadcrumb from '@/components/breadcrumb.vue';
 
 defineProps<{
-  department: App.Data.Department.DepartmentListData;
-  session: App.Data.Session.SessionListData;
-  level: App.Data.Level.LevelListData;
+    department: App.Data.Department.DepartmentListData;
+    session: App.Data.Session.SessionListData;
+    level: App.Data.Level.LevelListData;
 }>();
 
 const pages: BreadcrumbItem[] = [
-  { name: "Result Summary", href: route("summary.form"), current: route().current("summary.form") },
+    { name: 'Result Summary', href: route('summary.form'), current: route().current('summary.form') },
 ];
 </script>
 
 <template>
-  <Head title="Department Result Summary" />
+    <Head title="Department Result Summary" />
 
-  <Breadcrumb :pages="pages" />
+    <Breadcrumb :pages="pages" />
 
-  <BaseHeader> Department Result Summary</BaseHeader>
+    <BaseHeader> Department Result Summary</BaseHeader>
 
-  <BasePage>
-    <BaseSection>
-      <ResultSummaryForm
-        :departments="department.data"
-        :levels="level.levels"
-        :sessions="session.sessions" />
-    </BaseSection>
-  </BasePage>
+    <BasePage>
+        <BaseSection>
+            <ResultSummaryForm
+                :departments="department.data"
+                :levels="level.levels"
+                :sessions="session.sessions" />
+        </BaseSection>
+    </BasePage>
 </template>
