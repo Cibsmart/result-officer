@@ -46,6 +46,7 @@
         "@headlessui/vue": "^1.7.22",
         "@heroicons/vue": "^2.1.4",
         "@tailwindcss/vite": "^4.0.0",
+        "@vueuse/core": "^13.1.0",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "lucide-vue-next": "^0.488.0",
