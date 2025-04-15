@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Data\Models\ImportEventCountData;
 use App\Enums\ImportEventMethod;
 use App\Enums\ImportEventStatus;
 use App\Enums\ImportEventType;
@@ -99,11 +98,11 @@ final class ImportEvent extends Model
         if ($status === ImportEventStatus::COMPLETED) {
             $counts = $this->getCounts();
 
-            $this->saved = $counts->saved;
-            $this->processed = $counts->processed;
-            $this->duplicate = $counts->duplicate;
-            $this->failed = $counts->failed;
-            $this->pending = $counts->pending;
+            $this->saved = $counts->saved ?? 0;
+            $this->processed = $counts->processed ?? 0;
+            $this->duplicate = $counts->duplicate ?? 0;
+            $this->failed = $counts->failed ?? 0;
+            $this->pending = $counts->pending ?? 0;
         }
 
         $this->status = $status;
@@ -116,23 +115,16 @@ final class ImportEvent extends Model
         $this->save();
     }
 
-    public function getCounts(): ImportEventCountData
+    /** @return object{saved?: int, processed?: int, duplicate?: int, failed?: int, pending?: int} */
+    public function getCounts(): object
     {
-        $counts = $this->{$this->type->value}()->toBase()
+        return $this->{$this->type->value}()->toBase()
             ->selectRaw('count(*) as saved')
             ->selectRaw("count(case when status = 'processed' then 1 end) as processed")
             ->selectRaw("count(case when status = 'duplicate' then 1 end) as duplicate")
             ->selectRaw("count(case when status = 'failed' then 1 end) as failed")
             ->selectRaw("count(case when status = 'pending' then 1 end) as pending")
             ->firstOrFail();
-
-        return new ImportEventCountData(
-            saved: $counts->saved ?? 0,
-            processed: $counts->processed ?? 0,
-            duplicate: $counts->duplicate ?? 0,
-            failed: $counts->failed ?? 0,
-            pending: $counts->pending ?? 0,
-        );
     }
 
     public function setMessage(string $message): void

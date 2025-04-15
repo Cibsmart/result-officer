@@ -250,7 +250,7 @@ declare namespace App.Data.Graduands {
         graduands: Array<App.Data.Graduands.GraduandData>;
     };
     export type PaginatedGraduandListData = {
-        paginated: Array<App.Data.Graduands.GraduandData>;
+        paginated: { [key: number]: App.Data.Graduands.GraduandData };
     };
 }
 declare namespace App.Data.Imports {
@@ -528,7 +528,7 @@ declare namespace App.Data.Summary {
 }
 declare namespace App.Data.Vetting {
     export type PaginatedVettingEventGroupListData = {
-        paginated: Array<App.Data.Vetting.VettingEventGroupData>;
+        paginated: { [key: number]: App.Data.Vetting.VettingEventGroupData };
     };
     export type VettingData = {
         id: number;
@@ -788,7 +788,7 @@ declare namespace App.ViewModels.Results {
 }
 declare namespace App.ViewModels.Students {
     export type StudentIndexPage = {
-        paginated: Array<App.Data.Students.StudentBasicData>;
+        paginated: { [key: number]: App.Data.Students.StudentBasicData };
     };
     export type StudentShowPage = {
         data: App.Data.Students.StudentComprehensiveData;
@@ -808,7 +808,7 @@ declare namespace App.ViewModels.Summary {
 }
 declare namespace App.ViewModels.Vetting {
     export type VettingIndexPage = {
-        paginated: any;
+        paginated: { [key: number]: App.Data.Vetting.VettingEventGroupData };
     };
     export type VettingShowPage = {
         event: App.Data.Vetting.VettingEventGroupData;
