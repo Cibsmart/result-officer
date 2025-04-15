@@ -72,8 +72,8 @@ final class VettingEvent extends Model
     }
 
     /**
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\VettingEventGroup, \App\Models\VettingEvent>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\VettingEventGroup, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\VettingEventGroup, static>
      */
     public function vettingEventGroups(): BelongsToMany
     {
