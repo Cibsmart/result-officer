@@ -8,6 +8,7 @@ use App\Enums\RawDataStatus;
 use App\Models\Course;
 use App\Models\RawCourse;
 use App\Models\RawCourseAlternative;
+use Illuminate\Database\Eloquent\Builder;
 
 final class ProcessPortalCourse
 {
@@ -22,7 +23,7 @@ final class ProcessPortalCourse
         $exists = Course::query()
             ->where('code', $rawCourse->code)
             ->where('title', $rawCourse->title)
-            ->orWhere('online_id', $onlineCourseId)
+            ->orWhere(fn (Builder $query) => $query->where('online_id', $onlineCourseId))
             ->exists();
 
         if ($exists) {
