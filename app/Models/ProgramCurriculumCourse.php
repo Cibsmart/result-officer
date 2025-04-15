@@ -44,8 +44,8 @@ final class ProgramCurriculumCourse extends Model
     }
 
     /**
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\ProgramCurriculumCourse>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, static>
      */
     public function vettingReports(): MorphMany
     {
@@ -53,8 +53,8 @@ final class ProgramCurriculumCourse extends Model
     }
 
     /**
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumSemester,\App\Models\ProgramCurriculumCourse>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumSemester, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumSemester,static>
      */
     public function programCurriculumSemester(): BelongsTo
     {
@@ -62,15 +62,18 @@ final class ProgramCurriculumCourse extends Model
     }
 
     /**
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\CourseAlternative, \App\Models\ProgramCurriculumCourse>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\CourseAlternative, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\CourseAlternative, static>
      */
     public function courseAlternatives(): HasMany
     {
         return $this->hasMany(CourseAlternative::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Course,\App\Models\ProgramCurriculumCourse> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Course,$this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Course,static>
+     */
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);

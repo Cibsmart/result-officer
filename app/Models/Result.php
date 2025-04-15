@@ -83,25 +83,37 @@ final class Result extends Model
         $this->resultDetail()->update(['value' => $this->getData()]);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\Result> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, static>
+     */
     public function vettingReports(): MorphMany
     {
         return $this->MorphMany(VettingReport::class, 'vettable');
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Registration, \App\Models\Result> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Registration, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Registration, static>
+     */
     public function registration(): BelongsTo
     {
         return $this->belongsTo(Registration::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\ResultDetail, \App\Models\Result> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\ResultDetail, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\ResultDetail, static>
+     */
     public function resultDetail(): HasOne
     {
         return $this->hasOne(ResultDetail::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\RawResult, \App\Models\Result> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\RawResult, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\RawResult, static>
+     */
     public function rawResult(): HasOne
     {
         return $this->hasOne(RawResult::class, 'result_id');

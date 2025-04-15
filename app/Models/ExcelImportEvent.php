@@ -92,21 +92,27 @@ final class ExcelImportEvent extends Model
         }
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawFinalResult, \App\Models\ExcelImportEvent> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawFinalResult, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawFinalResult, static>
+     */
     public function rawFinalResults(): HasMany
     {
         return $this->hasMany(RawFinalResult::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawExcelResult, \App\Models\ExcelImportEvent> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawExcelResult, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawExcelResult, static>
+     */
     public function rawExcelResults(): HasMany
     {
         return $this->hasMany(RawExcelResult::class);
     }
 
     /**
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawCurriculumCourse, \App\Models\ExcelImportEvent>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawCurriculumCourse, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawCurriculumCourse, static>
      */
     public function rawCurriculumCourses(): HasMany
     {

@@ -38,8 +38,8 @@ final class FinalSemesterEnrollment extends Model
     }
 
     /**
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\FinalResult, \App\Models\FinalSemesterEnrollment>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\FinalResult, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\FinalResult, static>
      */
     public function finalResults(): HasMany
     {
@@ -47,8 +47,8 @@ final class FinalSemesterEnrollment extends Model
     }
 
     /**
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FinalSessionEnrollment, \App\Models\FinalSemesterEnrollment>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FinalSessionEnrollment, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FinalSessionEnrollment, static>
      */
     public function finalSessionEnrollment(): BelongsTo
     {
@@ -56,8 +56,8 @@ final class FinalSemesterEnrollment extends Model
     }
 
     /**
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Semester, \App\Models\FinalSemesterEnrollment>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Semester, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Semester, static>
      */
     public function semester(): BelongsTo
     {

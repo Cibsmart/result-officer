@@ -53,37 +53,55 @@ final class ImportEvent extends Model
         return false;
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\ImportEvent> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, static>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawCourse, \App\Models\ImportEvent> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawCourse, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawCourse, static>
+     */
     public function courses(): HasMany
     {
         return $this->hasMany(RawCourse::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawDepartment, \App\Models\ImportEvent> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawDepartment, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawDepartment, static>
+     */
     public function departments(): HasMany
     {
         return $this->hasMany(RawDepartment::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawStudent, \App\Models\ImportEvent> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawStudent, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawStudent, static>
+     */
     public function students(): HasMany
     {
         return $this->hasMany(RawStudent::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawRegistration, \App\Models\ImportEvent> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawRegistration, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawRegistration, static>
+     */
     public function registrations(): HasMany
     {
         return $this->hasMany(RawRegistration::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawResult, \App\Models\ImportEvent> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawResult, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawResult, static>
+     */
     public function results(): HasMany
     {
         return $this->hasMany(RawResult::class);
@@ -158,7 +176,10 @@ final class ImportEvent extends Model
         ];
     }
 
-    /** @return \Illuminate\Database\Eloquent\Collection<int, \App\Models\ImportEvent> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Collection<int, $this>
+     * @return \Illuminate\Database\Eloquent\Collection<int, static>
+     */
     private static function getEventsFor(
         ImportEventType $type,
         ImportEventMethod $method,

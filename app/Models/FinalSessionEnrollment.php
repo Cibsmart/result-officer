@@ -46,21 +46,27 @@ final class FinalSessionEnrollment extends Model
                 ));
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, \App\Models\SessionEnrollment> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, static>
+     */
     public function session(): BelongsTo
     {
         return $this->belongsTo(Session::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, \App\Models\SessionEnrollment> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, static>
+     */
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class);
     }
 
     /**
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\FinalSemesterEnrollment, \App\Models\FinalSessionEnrollment>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\FinalSemesterEnrollment, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\FinalSemesterEnrollment, static>
      */
     public function finalSemesterEnrollments(): HasMany
     {
@@ -69,7 +75,9 @@ final class FinalSessionEnrollment extends Model
 
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\FinalResult, \App\Models\FinalSemesterEnrollment, \App\Models\FinalSessionEnrollment>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\FinalResult, \App\Models\FinalSemesterEnrollment, $this>
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\FinalResult, \App\Models\FinalSemesterEnrollment, static>
      */
     public function finalResults(): HasManyThrough
     {

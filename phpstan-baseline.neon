@@ -46,11 +46,6 @@ parameters:
 			path: app/Models/VettingReport.php
 
 		-
-			message: "#^Method App\\\\Models\\\\VettingReport\\:\\:vettable\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\MorphTo\\<Illuminate\\\\Database\\\\Eloquent\\\\Model, App\\\\Models\\\\VettingReport\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\MorphTo\\<Illuminate\\\\Database\\\\Eloquent\\\\Model, \\$this\\(App\\\\Models\\\\VettingReport\\)\\>\\.$#"
-			count: 1
-			path: app/Models/VettingReport.php
-
-		-
 			message: "#^Property App\\\\Models\\\\VettingStep\\:\\:\\$type \\(App\\\\Enums\\\\VettingType\\) does not accept string\\.$#"
 			count: 1
 			path: app/Models/VettingStep.php

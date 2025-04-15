@@ -51,7 +51,10 @@ final class Faculty extends Model
         return $faculty;
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Department, \App\Models\Faculty> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Department, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Department, static>
+     */
     public function departments(): HasMany
     {
         return $this->hasMany(Department::class);

@@ -38,13 +38,19 @@ final class VettingStep extends Model
         return $vettingStep;
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\VettingEvent, \App\Models\VettingStep> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\VettingEvent, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\VettingEvent, static>
+     */
     public function vettingEvent(): BelongsTo
     {
         return $this->belongsTo(VettingEvent::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\VettingReport, \App\Models\VettingStep> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\VettingReport, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\VettingReport, static>
+     */
     public function vettingReports(): HasMany
     {
         return $this->hasMany(VettingReport::class, 'vetting_step_id');

@@ -161,25 +161,37 @@ final class Program extends Model
         return 'slug';
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\Program> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, static>
+     */
     public function vettingReports(): MorphMany
     {
         return $this->MorphMany(VettingReport::class, 'vettable');
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Department, \App\Models\Program> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Department, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Department, static>
+     */
     public function department(): BelongsTo
     {
         return $this->belongsTo(Department::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramType, \App\Models\Program> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramType, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramType, static>
+     */
     public function programType(): BelongsTo
     {
         return $this->belongsTo(ProgramType::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Student, \App\Models\Program> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Student, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Student, static>
+     */
     public function students(): HasMany
     {
         return $this->hasMany(Student::class);
