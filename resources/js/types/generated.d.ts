@@ -435,6 +435,7 @@ declare namespace App.Data.Shared {
     };
     export type SharedData = {
         quote: App.Data.Shared.QuoteData;
+        sidebarOpen: boolean;
         user: App.Data.Shared.UserData;
         notification: App.Data.Shared.NotificationData | null;
     };

@@ -35,6 +35,7 @@ final class HandleInertiaRequests extends Middleware
 
         $state = new SharedData(
             quote: QuoteData::new(),
+            sidebarOpen: ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             user: fn () => $user ? UserData::fromModel($user) : null,
         );
 

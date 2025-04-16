@@ -12,6 +12,7 @@ final class SharedData extends Data
 {
     public function __construct(
         public QuoteData $quote,
+        public readonly bool $sidebarOpen,
         #[TypeScriptType(UserData::class)]
         public ?Closure $user,
         public ?NotificationData $notification = null,
