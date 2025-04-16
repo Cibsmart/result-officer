@@ -1,14 +1,12 @@
 <script lang="ts" setup>
-import { Head, useForm } from '@inertiajs/vue3';
-import BasePage from '@/layouts/main/partials/basePage.vue';
-import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
-import BaseSection from '@/layouts/main/partials/baseSection.vue';
-import { BreadcrumbsItem } from '@/types';
-import Breadcrumb from '@/components/breadcrumb.vue';
-import PrimaryButton from '@/components/buttons/primaryButton.vue';
-import BaseFormSection from '@/components/forms/baseFormSection.vue';
+import { Head, Link, useForm } from '@inertiajs/vue3';
+import { BreadcrumbItem } from '@/types';
 import { computed } from 'vue';
 import ImportEvents from '@/pages/download/components/importEvents.vue';
+import AppLayout from '@/layouts/AppLayout.vue';
+import AppPage from '@/components/AppPage.vue';
+import { Button } from '@/components/ui/button';
+import { Download } from 'lucide-vue-next';
 
 const props = defineProps<{
     events: Array<App.Data.Imports.ImportEventData>;
@@ -17,47 +15,32 @@ const props = defineProps<{
 
 const hasPendingEvent = computed(() => props.pending !== null);
 
-const disableButton = computed(() => form.processing || hasPendingEvent.value);
-
-const pages: BreadcrumbsItem[] = [
-    {
-        name: 'Download Departments',
-        href: route('download.departments.page'),
-        current: route().current('download.departments.page'),
-    },
-];
-
-const form = useForm({});
-
-const submit = () => {
-    form.post(route('download.departments.store'));
-};
+const breadcrumbs: BreadcrumbItem[] = [{ title: 'Department Download', href: route('download.departments.page') }];
 </script>
 
 <template>
     <Head title="Download Department Records" />
 
-    <Breadcrumb :pages="pages" />
+    <AppLayout :breadcrumbs="breadcrumbs">
+        <AppPage
+            description="Click to Download All Departments from the Portal"
+            title="Download Departments">
+            <template #actions>
+                <Button
+                    :disabled="hasPendingEvent"
+                    asChild>
+                    <Link
+                        :href="route('download.departments.store')"
+                        method="post">
+                        <Download />
+                        Download Departments
+                    </Link>
+                </Button>
+            </template>
 
-    <BaseHeader>Download Department Records</BaseHeader>
-
-    <BasePage>
-        <BaseSection>
-            <BaseFormSection
-                description="Click to Download All Departments from the Portal"
-                header="Download Departments">
-                <form
-                    class="mt-6 space-y-6"
-                    @submit.prevent="submit">
-                    <div>
-                        <PrimaryButton :disabled="disableButton">Download</PrimaryButton>
-                    </div>
-                </form>
-            </BaseFormSection>
-        </BaseSection>
-
-        <ImportEvents
-            :events="events"
-            :pending="pending" />
-    </BasePage>
+            <ImportEvents
+                :events="events"
+                :pending="pending" />
+        </AppPage>
+    </AppLayout>
 </template>
