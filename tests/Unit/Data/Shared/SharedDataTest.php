@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Data\Shared\NotificationData;
+use App\Data\Shared\QuoteData;
 use App\Data\Shared\SharedData;
 use App\Enums\NotificationType;
 
@@ -11,7 +12,7 @@ test('shared data is correct', function (): void {
 
     session()->flash('notification', $notification);
 
-    $data = new SharedData();
+    $data = new SharedData(name: 'TestApp', quote: QuoteData::new(), sidebarOpen: true);
 
     expect($data)->toBeInstanceOf(SharedData::class)
         ->and($data->notification)->toBeInstanceOf(NotificationData::class);

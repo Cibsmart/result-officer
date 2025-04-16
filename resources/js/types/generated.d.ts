@@ -434,6 +434,7 @@ declare namespace App.Data.Shared {
         author: string;
     };
     export type SharedData = {
+        name: string;
         quote: App.Data.Shared.QuoteData;
         sidebarOpen: boolean;
         user: App.Data.Shared.UserData;

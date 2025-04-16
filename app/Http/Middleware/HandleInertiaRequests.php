@@ -10,6 +10,7 @@ use App\Data\Shared\UserData;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Inertia\Middleware;
 
 use function assert;
@@ -34,6 +35,7 @@ final class HandleInertiaRequests extends Middleware
         assert($user instanceof User || $user === null);
 
         $state = new SharedData(
+            name: Config::string('app.name'),
             quote: QuoteData::new(),
             sidebarOpen: ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             user: fn () => $user ? UserData::fromModel($user) : null,

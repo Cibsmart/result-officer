@@ -11,10 +11,11 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScriptType;
 final class SharedData extends Data
 {
     public function __construct(
-        public QuoteData $quote,
+        public readonly string $name,
+        public readonly QuoteData $quote,
         public readonly bool $sidebarOpen,
         #[TypeScriptType(UserData::class)]
-        public ?Closure $user,
+        public ?Closure $user = null,
         public ?NotificationData $notification = null,
     ) {
         $this->shareNotification();
