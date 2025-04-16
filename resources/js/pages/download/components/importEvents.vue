@@ -34,7 +34,7 @@ watch(hasPendingEvent, () => {
 
 <template>
     <template v-if="hasPendingEvent">
-        <Card>
+        <Card class="py-6">
             <CardDescription>{{ pendingDescription }}</CardDescription>
 
             <CardContent>
