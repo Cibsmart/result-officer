@@ -29,11 +29,17 @@ export interface BreadcrumbItem {
     href: string;
 }
 
+export interface NavSubItem {
+    title: string;
+    url: string;
+}
+
 export interface NavItem {
     title: string;
     href: string;
-    icon?: LucideIcon;
+    icon?: LucideIcon | null;
     isActive?: boolean;
+    items?: NavSubItem[];
 }
 
 export interface TabItem {
