@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { BreadcrumbItem } from '@/types';
+import { BreadcrumbsItem } from '@/types';
 import Breadcrumb from '@/components/breadcrumb.vue';
 import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
 import BaseSection from '@/layouts/main/partials/baseSection.vue';
@@ -16,7 +16,7 @@ const props = defineProps<{
 
 const showForm = computed(() => props.data === null);
 
-const pages: BreadcrumbItem[] = [
+const pages: BreadcrumbsItem[] = [
     { name: 'Student', href: route('students.show'), current: route().current('students.show') },
 ];
 </script>

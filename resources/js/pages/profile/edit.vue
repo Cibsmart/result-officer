@@ -6,13 +6,13 @@ import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
 import BasePage from '@/layouts/main/partials/basePage.vue';
 import BaseSection from '@/layouts/main/partials/baseSection.vue';
 import Breadcrumb from '@/components/breadcrumb.vue';
-import { BreadcrumbItem } from '@/types';
+import { BreadcrumbsItem } from '@/types';
 
 defineProps<{
     status?: string;
 }>();
 
-const pages: BreadcrumbItem[] = [
+const pages: BreadcrumbsItem[] = [
     {
         name: 'Profile',
         href: route('profile.edit'),

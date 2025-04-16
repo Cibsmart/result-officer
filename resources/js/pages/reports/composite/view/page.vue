@@ -3,7 +3,7 @@ import { Head } from '@inertiajs/vue3';
 import BasePage from '@/layouts/main/partials/basePage.vue';
 import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
 import BaseSection from '@/layouts/main/partials/baseSection.vue';
-import { BreadcrumbItem } from '@/types';
+import { BreadcrumbsItem } from '@/types';
 import Breadcrumb from '@/components/breadcrumb.vue';
 import BaseLink from '@/components/links/baseLink.vue';
 import { computed } from 'vue';
@@ -14,7 +14,7 @@ const props = defineProps<{
     data: App.Data.Composite.CompositeSheetData;
 }>();
 
-const pages: BreadcrumbItem[] = [
+const pages: BreadcrumbsItem[] = [
     { name: 'Composite Sheet Form', href: route('composite.form'), current: route().current('composite.form') },
     { name: 'Composite Sheet View', href: route('composite.view'), current: route().current('composite.view') },
 ];

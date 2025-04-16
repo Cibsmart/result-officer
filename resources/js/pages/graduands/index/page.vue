@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Head } from '@inertiajs/vue3';
-import { BreadcrumbItem } from '@/types';
+import { BreadcrumbsItem } from '@/types';
 import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
 import Breadcrumb from '@/components/breadcrumb.vue';
 import BasePage from '@/layouts/main/partials/basePage.vue';
@@ -14,7 +14,7 @@ defineProps<{
     data: PaginatedGraduandListData | null;
 }>();
 
-const pages: BreadcrumbItem[] = [
+const pages: BreadcrumbsItem[] = [
     { name: 'Graduands', href: route('graduand.index'), current: route().current('graduand.index') },
 ];
 </script>

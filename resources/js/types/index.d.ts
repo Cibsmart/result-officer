@@ -17,10 +17,15 @@ export interface UserNavigationItem {
     method: 'get' | 'post' | 'put' | 'delete';
 }
 
-export interface BreadcrumbItem {
+export interface BreadcrumbsItem {
     name: string;
     href: string;
     current: boolean;
+}
+
+export interface BreadcrumbItem {
+    title: string;
+    href: string;
 }
 
 export interface TabItem {
@@ -38,3 +43,5 @@ export interface EnumSelectItem {
 }
 
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & SharedData;
+
+export type BreadcrumbItemType = BreadcrumbItem;

@@ -4,7 +4,7 @@ import Breadcrumb from '@/components/breadcrumb.vue';
 import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
 import BaseSection from '@/layouts/main/partials/baseSection.vue';
 import BasePage from '@/layouts/main/partials/basePage.vue';
-import { BreadcrumbItem } from '@/types';
+import { BreadcrumbsItem } from '@/types';
 import ClearedForm from '@/pages/reports/cleared/index/partials/clearedForm.vue';
 import { computed } from 'vue';
 import ClearedList from '@/pages/reports/cleared/index/partials/clearedList.vue';
@@ -16,7 +16,7 @@ const props = defineProps<{
 
 const hasClearedStudents = computed(() => props.students !== null);
 
-const pages: BreadcrumbItem[] = [
+const pages: BreadcrumbsItem[] = [
     { name: 'Cleared', href: route('department.cleared.index'), current: route().current('department.cleared.index') },
 ];
 </script>

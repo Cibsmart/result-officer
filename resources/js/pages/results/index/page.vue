@@ -3,7 +3,7 @@ import { Head } from '@inertiajs/vue3';
 import BasePage from '@/layouts/main/partials/basePage.vue';
 import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
 import BaseSection from '@/layouts/main/partials/baseSection.vue';
-import { BreadcrumbItem } from '@/types';
+import { BreadcrumbsItem } from '@/types';
 import Breadcrumb from '@/components/breadcrumb.vue';
 import { computed } from 'vue';
 import BaseLink from '@/components/links/baseLink.vue';
@@ -17,7 +17,7 @@ const props = defineProps<{
     results: App.Data.Results.StudentResultData;
 }>();
 
-const pages: BreadcrumbItem[] = [
+const pages: BreadcrumbsItem[] = [
     { name: 'Result', href: route('results.index'), current: route().current('results.index') },
 ];
 

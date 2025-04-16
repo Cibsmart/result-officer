@@ -3,7 +3,7 @@ import { Head, useForm } from '@inertiajs/vue3';
 import BasePage from '@/layouts/main/partials/basePage.vue';
 import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
 import BaseSection from '@/layouts/main/partials/baseSection.vue';
-import { BreadcrumbItem } from '@/types';
+import { BreadcrumbsItem } from '@/types';
 import Breadcrumb from '@/components/breadcrumb.vue';
 import PrimaryButton from '@/components/buttons/primaryButton.vue';
 import BaseFormSection from '@/components/forms/baseFormSection.vue';
@@ -18,7 +18,7 @@ const props = defineProps<{
 const hasPendingEvent = computed(() => props.pending !== null);
 const disableButton = computed(() => form.processing || hasPendingEvent.value);
 
-const pages: BreadcrumbItem[] = [
+const pages: BreadcrumbsItem[] = [
     {
         name: 'Download Courses',
         href: route('download.courses.page'),

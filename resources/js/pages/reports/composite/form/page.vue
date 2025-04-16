@@ -4,7 +4,7 @@ import BasePage from '@/layouts/main/partials/basePage.vue';
 import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
 import CompositeForm from '@/pages/reports/composite/form/partials/form.vue';
 import BaseSection from '@/layouts/main/partials/baseSection.vue';
-import { BreadcrumbItem } from '@/types';
+import { BreadcrumbsItem } from '@/types';
 import Breadcrumb from '@/components/breadcrumb.vue';
 
 defineProps<{
@@ -14,7 +14,7 @@ defineProps<{
     level: App.Data.Level.LevelListData;
 }>();
 
-const pages: BreadcrumbItem[] = [
+const pages: BreadcrumbsItem[] = [
     { name: 'Composite Sheet', href: route('composite.form'), current: route().current('composite.form') },
 ];
 </script>

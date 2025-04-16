@@ -3,7 +3,7 @@ import { Head } from '@inertiajs/vue3';
 import BasePage from '@/layouts/main/partials/basePage.vue';
 import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
 import BaseSection from '@/layouts/main/partials/baseSection.vue';
-import { BreadcrumbItem, TabItem } from '@/types';
+import { BreadcrumbsItem, TabItem } from '@/types';
 import Breadcrumb from '@/components/breadcrumb.vue';
 import BaseTabs from '@/components/tabs/baseTabs.vue';
 import RegistrationNumber from '@/pages/download/registrations/tabs/registrationNumber.vue';
@@ -25,7 +25,7 @@ defineProps<{
     selectedIndex: number;
 }>();
 
-const pages: BreadcrumbItem[] = [
+const pages: BreadcrumbsItem[] = [
     {
         name: 'Course Registration Download',
         href: route('download.registrations.page', { selectedIndex: 0 }),

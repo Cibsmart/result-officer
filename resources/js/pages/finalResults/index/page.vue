@@ -3,7 +3,7 @@ import BasePage from '@/layouts/main/partials/basePage.vue';
 import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
 import BaseSection from '@/layouts/main/partials/baseSection.vue';
 import Breadcrumb from '@/components/breadcrumb.vue';
-import { BreadcrumbItem } from '@/types';
+import { BreadcrumbsItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
 import FinalResultForm from '@/pages/finalResults/index/partials/finalResultForm.vue';
 import BaseLink from '@/components/links/baseLink.vue';
@@ -17,7 +17,7 @@ const props = defineProps<{
     results: App.Data.FinalResults.FinalStudentResultData;
 }>();
 
-const pages: BreadcrumbItem[] = [
+const pages: BreadcrumbsItem[] = [
     { name: 'Final Results', href: route('finalResults.index'), current: route().current('finalResults.index') },
 ];
 const hasData = computed(() => props.student !== null);
@@ -51,16 +51,16 @@ const hasResults = computed(() => props.results !== null && props.results.finalS
                         v-show="hasResults"
                         class="mt-4 flex space-x-4">
                         <BaseLink :href="route('finalResults.download', { student: student })">
-                            Download (Official)</BaseLink
-                        >
+                            Download (Official)
+                        </BaseLink>
 
                         <BaseLink :href="route('finalResults.transcript', { student: student })">
-                            Transcript (Draft)</BaseLink
-                        >
+                            Transcript (Draft)
+                        </BaseLink>
 
                         <BaseLink :href="route('finalResults.print', { student: student })">
-                            Print (RDB Draft)</BaseLink
-                        >
+                            Print (RDB Draft)
+                        </BaseLink>
                     </div>
                 </div>
 

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { HomeIcon } from '@heroicons/vue/20/solid';
 import { Link } from '@inertiajs/vue3';
-import { BreadcrumbItem } from '@/types';
+import { BreadcrumbsItem } from '@/types';
 
 defineProps<{
-    pages?: BreadcrumbItem[];
+    pages?: BreadcrumbsItem[];
 }>();
 </script>
 

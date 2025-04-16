@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Head } from '@inertiajs/vue3';
-import { BreadcrumbItem, TabItem } from '@/types';
+import { BreadcrumbsItem, TabItem } from '@/types';
 import RegistrationNumber from '@/pages/export/results/tabs/registrationNumber.vue';
 import BaseTabPanel from '@/components/tabs/baseTabPanel.vue';
 import DepartmentEntrySession from '@/pages/export/results/tabs/departmentEntrySession.vue';
@@ -17,7 +17,7 @@ defineProps<{
     selectedIndex: number;
 }>();
 
-const pages: BreadcrumbItem[] = [
+const pages: BreadcrumbsItem[] = [
     {
         name: 'Results Export',
         href: route('export.results.page', { selectedIndex: 1 }),

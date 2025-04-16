@@ -4,7 +4,7 @@ import BasePage from '@/layouts/main/partials/basePage.vue';
 import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
 import RegistrationNumber from '@/pages/download/students/tabs/registrationNumber.vue';
 import BaseSection from '@/layouts/main/partials/baseSection.vue';
-import { BreadcrumbItem, TabItem } from '@/types';
+import { BreadcrumbsItem, TabItem } from '@/types';
 import Breadcrumb from '@/components/breadcrumb.vue';
 import BaseTabs from '@/components/tabs/baseTabs.vue';
 import DepartmentSession from '@/pages/download/students/tabs/departmentSession.vue';
@@ -20,7 +20,7 @@ defineProps<{
     selectedIndex: number;
 }>();
 
-const pages: BreadcrumbItem[] = [
+const pages: BreadcrumbsItem[] = [
     {
         name: 'Student Download',
         href: route('download.students.page', { selectedIndex: 0 }),

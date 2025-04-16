@@ -3,7 +3,7 @@ import { Deferred, Head } from '@inertiajs/vue3';
 import BasePage from '@/layouts/main/partials/basePage.vue';
 import Breadcrumb from '@/components/breadcrumb.vue';
 import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
-import { BreadcrumbItem } from '@/types';
+import { BreadcrumbsItem } from '@/types';
 import BaseSection from '@/layouts/main/partials/baseSection.vue';
 import Badge from '@/components/badge.vue';
 import BaseTable from '@/components/tables/baseTable.vue';
@@ -24,7 +24,7 @@ const props = defineProps<{
     data: App.Data.Vetting.VettingEventGroupDetailData;
 }>();
 
-const pages: BreadcrumbItem[] = [
+const pages: BreadcrumbsItem[] = [
     { name: 'Vetting Page', href: route('vettingEvent.index'), current: route().current('vettingEvent.index') },
     { name: 'Vetting Details', href: '#', current: route().current('vettingEvent.show') },
 ];
@@ -111,8 +111,8 @@ const openDrawer = ref(false);
 
                                     <BaseTD position="left">
                                         <Badge :color="vetting.student.statusColor">
-                                            {{ vetting.student.status }}</Badge
-                                        >
+                                            {{ vetting.student.status }}
+                                        </Badge>
                                     </BaseTD>
 
                                     <BaseTD position="left">{{ vetting.student.registrationNumber }}</BaseTD>
@@ -127,8 +127,8 @@ const openDrawer = ref(false);
 
                                     <BaseTD position="right">
                                         <PrimaryButtonSmall @click="handleClick(vetting.student.slug)"
-                                            >View</PrimaryButtonSmall
-                                        >
+                                            >View
+                                        </PrimaryButtonSmall>
 
                                         <SecondaryButtonSmall
                                             v-if="vetting.status === 'passed'"

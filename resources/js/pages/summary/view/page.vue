@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { BreadcrumbItem } from '@/types';
+import { BreadcrumbsItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
 import Breadcrumb from '@/components/breadcrumb.vue';
 import BaseLink from '@/components/links/baseLink.vue';
@@ -15,7 +15,7 @@ const props = defineProps<{
     department: App.Data.Summary.DepartmentResultSummaryData;
 }>();
 
-const pages: BreadcrumbItem[] = [
+const pages: BreadcrumbsItem[] = [
     { name: 'Summary Form', href: route('summary.form'), current: route().current('summary.form') },
     { name: 'Summary View', href: route('summary.view'), current: route().current('summary.view') },
 ];

@@ -4,7 +4,7 @@ import BasePage from '@/layouts/main/partials/basePage.vue';
 import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
 import ResultSummaryForm from '@/pages/summary/form/partials/form.vue';
 import BaseSection from '@/layouts/main/partials/baseSection.vue';
-import { BreadcrumbItem } from '@/types';
+import { BreadcrumbsItem } from '@/types';
 import Breadcrumb from '@/components/breadcrumb.vue';
 
 defineProps<{
@@ -13,7 +13,7 @@ defineProps<{
     level: App.Data.Level.LevelListData;
 }>();
 
-const pages: BreadcrumbItem[] = [
+const pages: BreadcrumbsItem[] = [
     { name: 'Result Summary', href: route('summary.form'), current: route().current('summary.form') },
 ];
 </script>

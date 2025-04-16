@@ -11,7 +11,7 @@ import BaseFormSection from '@/components/forms/baseFormSection.vue';
 import InputError from '@/components/inputs/inputError.vue';
 import EmptyState from '@/components/emptyState.vue';
 import { computed, ref, watch, onMounted } from 'vue';
-import { BreadcrumbItem } from '@/types';
+import { BreadcrumbsItem } from '@/types';
 import { usePoll } from '@inertiajs/vue3';
 import UploadedExcelList from '@/components/uploadedExcelList.vue';
 
@@ -19,7 +19,7 @@ const props = defineProps<{
     data: App.Data.Imports.ExcelImportEventListData;
 }>();
 
-const pages: BreadcrumbItem[] = [
+const pages: BreadcrumbsItem[] = [
     {
         name: 'Final Result Import',
         href: route('import.final-results.index'),

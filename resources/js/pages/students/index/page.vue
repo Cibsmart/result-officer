@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { BreadcrumbItem } from '@/types';
+import { BreadcrumbsItem } from '@/types';
 import Breadcrumb from '@/components/breadcrumb.vue';
 import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
 import BasePage from '@/layouts/main/partials/basePage.vue';
@@ -22,7 +22,7 @@ defineProps<{
     paginated: PaginatedStudentListData;
 }>();
 
-const pages: BreadcrumbItem[] = [
+const pages: BreadcrumbsItem[] = [
     { name: 'Student', href: route('students.index'), current: route().current('students.index') },
 ];
 </script>
@@ -99,8 +99,8 @@ const pages: BreadcrumbItem[] = [
                             class="px-2"
                             mobile>
                             <SecondaryLinkSmall :href="route('students.show', { student: student.slug })"
-                                >View</SecondaryLinkSmall
-                            >
+                                >View
+                            </SecondaryLinkSmall>
                         </BaseTD>
                     </BaseTR>
                 </BaseTBody>
