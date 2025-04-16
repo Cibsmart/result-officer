@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { Link } from '@inertiajs/vue3';
-import page from '@/pages/vetting/show/page.vue';
 import {
     SidebarMenuButton,
     SidebarMenuItem,
@@ -17,17 +16,21 @@ defineProps<{ item: NavItem }>();
 
 <template>
     <Collapsible
-        :defaultOpen="item.isActive"
-        asChild>
+        :key="item.title"
+        :default-open="item.items?.some((subItem) => subItem.isActive)"
+        asChild
+        class="group/collapsible">
         <SidebarMenuItem>
             <CollapsibleTrigger asChild>
                 <SidebarMenuButton :tooltip="item.title">
-                    <component :is="item.icon" />
+                    <component
+                        :is="item.icon"
+                        v-if="item.icon" />
 
                     <span>{{ item.title }}</span>
 
                     <ChevronRight
-                        className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                        class="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                 </SidebarMenuButton>
             </CollapsibleTrigger>
 
@@ -37,7 +40,7 @@ defineProps<{ item: NavItem }>();
                         v-for="subItem in item?.items"
                         :key="subItem.title">
                         <SidebarMenuSubButton
-                            :is-active="subItem.href === page.url"
+                            :is-active="subItem.isActive"
                             :tooltip="subItem.title"
                             asChild>
                             <Link :href="subItem.href">
