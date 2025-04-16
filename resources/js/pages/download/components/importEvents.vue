@@ -60,7 +60,7 @@ watch(hasPendingEvent, () => {
     </template>
 
     <template v-if="hasEvent">
-        <Card>
+        <Card class="pt-4 pb-8">
             <CardDescription>{{ historyDescription }}</CardDescription>
 
             <CardContent>
