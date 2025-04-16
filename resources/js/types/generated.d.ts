@@ -443,6 +443,7 @@ declare namespace App.Data.Shared {
         name: string;
         email: string;
         isAdmin: boolean;
+        avatar: string;
     };
 }
 declare namespace App.Data.States {
