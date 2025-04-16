@@ -16,7 +16,7 @@ interface Props {
     <svg
         :class="className"
         v-bind="$attrs"
-        viewBox="0 0 100 20"
+        viewBox="0 0 20 20"
         xmlns="http://www.w3.org/2000/svg">
         <text
             clip-rule="evenodd"
@@ -26,10 +26,10 @@ interface Props {
             font-size="16"
             text-anchor="middle"
             text-rendering="auto"
-            textLength="80%"
+            textLength="100%"
             x="50%"
             y="50%">
-            ResultPro
+            RDB
         </text>
     </svg>
 </template>
