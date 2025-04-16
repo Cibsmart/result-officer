@@ -31,7 +31,8 @@ export interface BreadcrumbItem {
 
 export interface NavSubItem {
     title: string;
-    url: string;
+    href: string;
+    isActive?: boolean;
 }
 
 export interface NavItem {

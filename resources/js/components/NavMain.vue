@@ -1,40 +1,30 @@
 <script lang="ts" setup>
-import {
-    SidebarGroup,
-    SidebarGroupLabel,
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem,
-} from '@/components/ui/sidebar';
+import { SidebarGroup, SidebarGroupLabel, SidebarMenu } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
-import { Link, usePage } from '@inertiajs/vue3';
+import { MenuItemCollapsible, MenuItemSingle } from '@/components/sidebar';
 
 defineProps<{
     items: NavItem[];
+    label: string;
 }>();
-
-const page = usePage();
 </script>
 
 <template>
     <SidebarGroup class="px-2 py-0">
-        <SidebarGroupLabel>Platform</SidebarGroupLabel>
+        <SidebarGroupLabel>{{ label }}</SidebarGroupLabel>
 
         <SidebarMenu>
-            <SidebarMenuItem
+            <template
                 v-for="item in items"
                 :key="item.title">
-                <SidebarMenuButton
-                    :is-active="item.href === page.url"
-                    :tooltip="item.title"
-                    as-child>
-                    <Link :href="item.href">
-                        <component :is="item.icon" />
+                <MenuItemCollapsible
+                    v-if="Object.hasOwn(item, 'items')"
+                    :item="item" />
 
-                        <span>{{ item.title }}</span>
-                    </Link>
-                </SidebarMenuButton>
-            </SidebarMenuItem>
+                <MenuItemSingle
+                    v-else
+                    :item="item" />
+            </template>
         </SidebarMenu>
     </SidebarGroup>
 </template>
