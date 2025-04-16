@@ -429,7 +429,12 @@ declare namespace App.Data.Shared {
         type: App.Enums.NotificationType;
         body: string;
     };
+    export type QuoteData = {
+        message: string;
+        author: string;
+    };
     export type SharedData = {
+        quote: App.Data.Shared.QuoteData;
         user: App.Data.Shared.UserData;
         notification: App.Data.Shared.NotificationData | null;
     };

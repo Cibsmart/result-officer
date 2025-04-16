@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\Data\Shared\QuoteData;
 use App\Data\Shared\SharedData;
 use App\Data\Shared\UserData;
 use App\Models\User;
@@ -33,6 +34,7 @@ final class HandleInertiaRequests extends Middleware
         assert($user instanceof User || $user === null);
 
         $state = new SharedData(
+            quote: QuoteData::new(),
             user: fn () => $user ? UserData::fromModel($user) : null,
         );
 
