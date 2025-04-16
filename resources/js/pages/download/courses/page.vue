@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import { BreadcrumbItem } from '@/types';
 import { computed } from 'vue';
 import ImportEvents from '@/pages/download/components/importEvents.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-vue-next';
+import AppPage from '@/components/AppPage.vue';
 
 const props = defineProps<{
     events: Array<App.Data.Imports.ImportEventData>;
@@ -22,31 +22,25 @@ const breadcrumbs: BreadcrumbItem[] = [{ title: 'Course Download', href: route('
     <Head title="Download Courses Record" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="space-y-4 px-6 py-6">
-            <div class="sm:flex sm:items-center">
-                <div class="sm:flex-auto">
-                    <Heading
-                        description="Download Course Records from the Portal"
-                        title="Download Courses" />
-                </div>
-
-                <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                    <Button
-                        :disabled="hasPendingEvent"
-                        asChild>
-                        <Link
-                            :href="route('download.courses.store')"
-                            method="post">
-                            <Download />
-                            Download Courses
-                        </Link>
-                    </Button>
-                </div>
-            </div>
+        <AppPage
+            description="Download Course Records form the Portal"
+            title="Download Courses">
+            <template #actions>
+                <Button
+                    :disabled="hasPendingEvent"
+                    asChild>
+                    <Link
+                        :href="route('download.courses.store')"
+                        method="post">
+                        <Download />
+                        Download Courses
+                    </Link>
+                </Button>
+            </template>
 
             <ImportEvents
                 :events="events"
                 :pending="pending" />
-        </div>
+        </AppPage>
     </AppLayout>
 </template>
