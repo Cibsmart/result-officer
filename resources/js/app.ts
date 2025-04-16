@@ -9,6 +9,7 @@ import LayoutGuest from '@/layouts/guest/layoutGuest.vue';
 import Toast from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
 import { notifications } from '@/plugins/notifications';
+import { initializeTheme } from '@/composables/useAppearance';
 
 // import Echo from "laravel-echo";
 //
@@ -56,3 +57,6 @@ createInertiaApp({
         showSpinner: true,
     },
 });
+
+// This will set light / dark mode on page load...
+initializeTheme();
