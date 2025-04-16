@@ -1,16 +1,19 @@
 <script lang="ts" setup>
 import { Head } from '@inertiajs/vue3';
-import BasePage from '@/layouts/main/partials/basePage.vue';
+import BasePage from '@/components/AppPage.vue';
 import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
 import RegistrationNumber from '@/pages/download/students/tabs/registrationNumber.vue';
 import BaseSection from '@/layouts/main/partials/baseSection.vue';
-import { BreadcrumbsItem, TabItem } from '@/types';
+import { BreadcrumbItem, BreadcrumbsItem, TabItem } from '@/types';
 import Breadcrumb from '@/components/breadcrumb.vue';
 import BaseTabs from '@/components/tabs/baseTabs.vue';
 import DepartmentSession from '@/pages/download/students/tabs/departmentSession.vue';
 import Session from '@/pages/download/students/tabs/session.vue';
 import BaseTabPanel from '@/components/tabs/baseTabPanel.vue';
 import ImportEvents from '@/pages/download/components/importEvents.vue';
+import AppPage from '@/components/AppPage.vue';
+import AppLayout from '@/layouts/AppLayout.vue';
+import { Card } from '@/components/ui/card';
 
 defineProps<{
     department: App.Data.Department.DepartmentListData;
@@ -20,51 +23,45 @@ defineProps<{
     selectedIndex: number;
 }>();
 
-const pages: BreadcrumbsItem[] = [
-    {
-        name: 'Student Download',
-        href: route('download.students.page', { selectedIndex: 0 }),
-        current: route().current('download.students.page'),
-    },
-];
-
 const tabs: TabItem[] = [
     { name: 'By Registration Number' },
     { name: 'By Department and Session' },
     { name: 'By Session' },
 ];
+
+const breadcrumbs: BreadcrumbItem[] = [{ title: 'Student Download', href: route('download.students.page') }];
 </script>
 
 <template>
     <Head title="Download Student Record" />
 
-    <Breadcrumb :pages="pages" />
+    <AppLayout :breadcrumbs="breadcrumbs">
+        <AppPage
+            description="Select tab and complete form to Download Students from the Portal"
+            title="Download Students">
+            <Card>
+                <BaseTabs
+                    :selectedIndex="selectedIndex"
+                    :tabs="tabs">
+                    <BaseTabPanel>
+                        <RegistrationNumber />
+                    </BaseTabPanel>
 
-    <BaseHeader>Download Student Record</BaseHeader>
+                    <BaseTabPanel>
+                        <DepartmentSession
+                            :departments="department.data"
+                            :sessions="session.sessions" />
+                    </BaseTabPanel>
 
-    <BasePage>
-        <BaseSection>
-            <BaseTabs
-                :selectedIndex="selectedIndex"
-                :tabs="tabs">
-                <BaseTabPanel>
-                    <RegistrationNumber />
-                </BaseTabPanel>
+                    <BaseTabPanel>
+                        <Session :sessions="session.sessions" />
+                    </BaseTabPanel>
+                </BaseTabs>
+            </Card>
 
-                <BaseTabPanel>
-                    <DepartmentSession
-                        :departments="department.data"
-                        :sessions="session.sessions" />
-                </BaseTabPanel>
-
-                <BaseTabPanel>
-                    <Session :sessions="session.sessions" />
-                </BaseTabPanel>
-            </BaseTabs>
-        </BaseSection>
-
-        <ImportEvents
-            :events="events"
-            :pending="pending" />
-    </BasePage>
+            <ImportEvents
+                :events="events"
+                :pending="pending" />
+        </AppPage>
+    </AppLayout>
 </template>

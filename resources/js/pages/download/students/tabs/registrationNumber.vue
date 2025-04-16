@@ -7,6 +7,7 @@ import { useForm } from '@inertiajs/vue3';
 import BaseFormSection from '@/components/forms/baseFormSection.vue';
 import AlignButton from '@/components/forms/alignButton.vue';
 import FormGroup from '@/components/forms/formGroup.vue';
+import { Button } from '@/components/ui/button';
 
 const form = useForm({
     registration_number: '',
@@ -43,7 +44,7 @@ const submit = () => {
                 </div>
 
                 <AlignButton>
-                    <PrimaryButton :disabled="form.processing">Download</PrimaryButton>
+                    <Button :disabled="form.processing">Download</Button>
                 </AlignButton>
             </FormGroup>
         </form>
