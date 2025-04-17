@@ -5,12 +5,11 @@ import BaseTBody from '@/components/tables/baseTBody.vue';
 import BaseTable from '@/components/tables/baseTable.vue';
 import BaseTHead from '@/components/tables/baseTHead.vue';
 import { PaginatedVettingEventGroupListData } from '@/types/paginate';
-import Card from '@/components/cards/card.vue';
 import Pagination from '@/components/pagination.vue';
-import CardFooter from '@/components/cards/cardFooter.vue';
 import { computed, onMounted, watch } from 'vue';
 import { usePoll } from '@inertiajs/vue3';
 import VettingEventRow from '@/pages/vetting/index/partials/vettingEventRow.vue';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 
 const props = defineProps<{
     paginated: PaginatedVettingEventGroupListData;
@@ -36,27 +35,29 @@ watch(hasUncompletedVetting, () => {
 
 <template>
     <Card>
-        <BaseTable>
-            <BaseTHead>
-                <BaseTH position="left">Title</BaseTH>
+        <CardContent>
+            <BaseTable>
+                <BaseTHead>
+                    <BaseTH position="left">Title</BaseTH>
 
-                <BaseTH>Number of Students</BaseTH>
+                    <BaseTH>Number of Students</BaseTH>
 
-                <BaseTH position="left">Status</BaseTH>
+                    <BaseTH position="left">Status</BaseTH>
 
-                <BaseTH position="left">Date</BaseTH>
+                    <BaseTH position="left">Date</BaseTH>
 
-                <BaseTH>Actions</BaseTH>
-            </BaseTHead>
+                    <BaseTH>Actions</BaseTH>
+                </BaseTHead>
 
-            <BaseTBody>
-                <BaseTR
-                    v-for="event in paginated.data"
-                    :key="event.id">
-                    <VettingEventRow :event="event" />
-                </BaseTR>
-            </BaseTBody>
-        </BaseTable>
+                <BaseTBody>
+                    <BaseTR
+                        v-for="event in paginated.data"
+                        :key="event.id">
+                        <VettingEventRow :event="event" />
+                    </BaseTR>
+                </BaseTBody>
+            </BaseTable>
+        </CardContent>
 
         <CardFooter>
             <Pagination :paginated="paginated" />

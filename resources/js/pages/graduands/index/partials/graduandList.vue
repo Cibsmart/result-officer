@@ -3,8 +3,6 @@ import { ref, computed } from 'vue';
 import EmptyState from '@/components/emptyState.vue';
 import IconLink from '@/components/links/iconLink.vue';
 import StudentRow from '@/pages/graduands/index/partials/graduandRow.vue';
-import Card from '@/components/cards/card.vue';
-import CardHeading from '@/components/cards/cardHeader.vue';
 import Modal from '@/components/modal.vue';
 import BaseTable from '@/components/tables/baseTable.vue';
 import BaseTHead from '@/components/tables/baseTHead.vue';
@@ -12,11 +10,11 @@ import BaseTH from '@/components/tables/baseTH.vue';
 import BaseTBody from '@/components/tables/baseTBody.vue';
 import BaseTR from '@/components/tables/baseTR.vue';
 import { PaginatedGraduandListData } from '@/types/paginate';
-import CardFooter from '@/components/cards/cardFooter.vue';
 import Pagination from '@/components/pagination.vue';
 import BaseSection from '@/layouts/main/partials/baseSection.vue';
 import ClearanceConfirmationForm from '@/pages/graduands/index/partials/clearanceConfirmationForm.vue';
 import VettingDetailDrawer from '@/pages/vetting/show/partials/vettingDetailDrawer.vue';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 
 const props = defineProps<{
     department: App.Data.Department.DepartmentInfoData;
@@ -46,8 +44,8 @@ const closeModal = () => (openClearanceForm.value = false);
 </script>
 
 <template>
-    <Card>
-        <CardHeading>
+    <Card class="py-4">
+        <CardHeader>
             <div
                 class="mt-1 divide-y divide-solid divide-gray-300 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg dark:divide-gray-600 dark:ring-gray-600">
                 <div class="grid grid-flow-col">
@@ -63,51 +61,53 @@ const closeModal = () => (openClearanceForm.value = false);
                     </div>
                 </div>
             </div>
-        </CardHeading>
+        </CardHeader>
 
-        <div>
-            <template v-if="hasRows">
-                <BaseTable>
-                    <BaseTHead>
-                        <BaseTH
-                            mobile
-                            position="left">
-                            NAME
-                        </BaseTH>
+        <CardContent>
+            <div>
+                <template v-if="hasRows">
+                    <BaseTable>
+                        <BaseTHead>
+                            <BaseTH
+                                mobile
+                                position="left">
+                                NAME
+                            </BaseTH>
 
-                        <BaseTH position="left"> REGISTRATION NUMBER</BaseTH>
+                            <BaseTH position="left"> REGISTRATION NUMBER</BaseTH>
 
-                        <BaseTH position="left"> STATUS</BaseTH>
+                            <BaseTH position="left"> STATUS</BaseTH>
 
-                        <BaseTH position="left"> REPORT</BaseTH>
+                            <BaseTH position="left"> REPORT</BaseTH>
 
-                        <BaseTH
-                            mobile
-                            position="left">
-                            ACTIONS
-                        </BaseTH>
-                    </BaseTHead>
+                            <BaseTH
+                                mobile
+                                position="left">
+                                ACTIONS
+                            </BaseTH>
+                        </BaseTHead>
 
-                    <BaseTBody>
-                        <BaseTR
-                            v-for="student in paginated.data"
-                            :key="student.id">
-                            <StudentRow
-                                :student="student"
-                                @show-report="openDrawer"
-                                @show-clearance="confirmStudentClearance" />
-                        </BaseTR>
-                    </BaseTBody>
-                </BaseTable>
-            </template>
+                        <BaseTBody>
+                            <BaseTR
+                                v-for="student in paginated.data"
+                                :key="student.id">
+                                <StudentRow
+                                    :student="student"
+                                    @show-report="openDrawer"
+                                    @show-clearance="confirmStudentClearance" />
+                            </BaseTR>
+                        </BaseTBody>
+                    </BaseTable>
+                </template>
 
-            <EmptyState
-                v-else
-                description="Get started by downloading students from the Portal"
-                title="No Final Year Student">
-                <IconLink :href="route('download.students.page')">Download Students</IconLink>
-            </EmptyState>
-        </div>
+                <EmptyState
+                    v-else
+                    description="Get started by downloading students from the Portal"
+                    title="No Final Year Student">
+                    <IconLink :href="route('download.students.page')">Download Students</IconLink>
+                </EmptyState>
+            </div>
+        </CardContent>
 
         <CardFooter class="mt-4">
             <Pagination :paginated="paginated" />
