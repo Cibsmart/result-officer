@@ -11,7 +11,6 @@ import BaseTBody from '@/components/tables/baseTBody.vue';
 import BaseTR from '@/components/tables/baseTR.vue';
 import { PaginatedGraduandListData } from '@/types/paginate';
 import Pagination from '@/components/pagination.vue';
-import BaseSection from '@/layouts/main/partials/baseSection.vue';
 import ClearanceConfirmationForm from '@/pages/graduands/index/partials/clearanceConfirmationForm.vue';
 import VettingDetailDrawer from '@/pages/vetting/show/partials/vettingDetailDrawer.vue';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
@@ -117,11 +116,11 @@ const closeModal = () => (openClearanceForm.value = false);
     <Modal
         :show="openClearanceForm"
         @close="closeModal">
-        <BaseSection v-if="clearanceStudent">
+        <Card v-if="clearanceStudent">
             <ClearanceConfirmationForm
                 :student="clearanceStudent"
                 @close="closeModal" />
-        </BaseSection>
+        </Card>
     </Modal>
 
     <VettingDetailDrawer

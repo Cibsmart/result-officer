@@ -5,7 +5,7 @@ import DataItem from '@/components/data/dataItem.vue';
 import SectionHeader from '@/components/sectionHeader.vue';
 import SecondaryButtonSmall from '@/components/buttons/secondaryButtonSmall.vue';
 import Modal from '@/components/modal.vue';
-import BaseSection from '@/layouts/main/partials/baseSection.vue';
+import { Card } from '@/components/ui/card';
 
 const props = defineProps<{
     student: App.Data.Students.StudentData;
@@ -147,8 +147,8 @@ const closeEditModal = () => {
                         <span>{{ student.others.jambRegistrationNumber }}</span>
 
                         <SecondaryButtonSmall @click="openEditModal('jamb_registration_number')"
-                            >Edit</SecondaryButtonSmall
-                        >
+                            >Edit
+                        </SecondaryButtonSmall>
                     </div>
                 </DataItem>
 
@@ -174,12 +174,12 @@ const closeEditModal = () => {
     <Modal
         :show="showEditModal"
         @close="closeEditModal">
-        <BaseSection>
+        <Card class="p-6">
             <component
                 :is="componentList[editField]"
                 v-if="editField"
                 :student="student"
                 @close="closeEditModal" />
-        </BaseSection>
+        </Card>
     </Modal>
 </template>
