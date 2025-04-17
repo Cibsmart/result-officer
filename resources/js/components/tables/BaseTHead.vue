@@ -1,9 +1,11 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { TableHeader, TableRow } from '@/components/ui/table';
+</script>
 
 <template>
-    <thead>
-        <tr>
+    <TableHeader>
+        <TableRow>
             <slot />
-        </tr>
-    </thead>
+        </TableRow>
+    </TableHeader>
 </template>

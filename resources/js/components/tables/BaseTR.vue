@@ -1,7 +1,9 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { TableRow } from '@/components/ui/table';
+</script>
 
 <template>
-    <tr>
+    <TableRow>
         <slot />
-    </tr>
+    </TableRow>
 </template>
