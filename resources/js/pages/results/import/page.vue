@@ -1,9 +1,5 @@
 <script lang="ts" setup>
 import { Head, useForm } from '@inertiajs/vue3';
-import Breadcrumb from '@/components/breadcrumb.vue';
-import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
-import BasePage from '@/components/AppPage.vue';
-import BaseSection from '@/layouts/main/partials/baseSection.vue';
 import PrimaryButton from '@/components/buttons/primaryButton.vue';
 import InputLabel from '@/components/inputs/inputLabel.vue';
 import FormGroup from '@/components/forms/formGroup.vue';
@@ -11,7 +7,7 @@ import BaseFormSection from '@/components/forms/baseFormSection.vue';
 import InputError from '@/components/inputs/inputError.vue';
 import EmptyState from '@/components/emptyState.vue';
 import { computed, ref, watch, onMounted } from 'vue';
-import { BreadcrumbItem, BreadcrumbsItem } from '@/types';
+import { BreadcrumbItem } from '@/types';
 import { usePoll } from '@inertiajs/vue3';
 import UploadedExcelList from '@/components/uploadedExcelList.vue';
 import AppLayout from '@/layouts/AppLayout.vue';

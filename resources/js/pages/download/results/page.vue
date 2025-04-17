@@ -1,10 +1,6 @@
 <script lang="ts" setup>
 import { Head } from '@inertiajs/vue3';
-import Breadcrumb from '@/components/breadcrumb.vue';
-import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
-import BasePage from '@/components/AppPage.vue';
-import BaseSection from '@/layouts/main/partials/baseSection.vue';
-import { BreadcrumbItem, BreadcrumbsItem, TabItem } from '@/types';
+import { BreadcrumbItem, TabItem } from '@/types';
 import RegistrationNumber from '@/pages/download/results/tabs/registrationNumber.vue';
 import DepartmentSessionLevel from '@/pages/download/results/tabs/departmentSessionLevel.vue';
 import DepartmentSessionSemester from '@/pages/download/results/tabs/departmentSessionSemester.vue';

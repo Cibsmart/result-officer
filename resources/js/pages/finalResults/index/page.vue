@@ -1,9 +1,5 @@
 <script lang="ts" setup>
-import BasePage from '@/components/AppPage.vue';
-import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
-import BaseSection from '@/layouts/main/partials/baseSection.vue';
-import Breadcrumb from '@/components/breadcrumb.vue';
-import { BreadcrumbItem, BreadcrumbsItem } from '@/types';
+import { BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
 import FinalResultForm from '@/pages/finalResults/index/partials/finalResultForm.vue';
 import BaseLink from '@/components/links/baseLink.vue';
@@ -28,7 +24,7 @@ const hasResults = computed(() => props.results !== null && props.results.finalS
 <template>
     <Head title="Reconciled Results Page" />
 
-    <AppLayout>
+    <AppLayout :breadcrumbs="breadcrumbs">
         <AppPage
             description="View Student's Reconciled/Final Result"
             title="Reconciled Results">

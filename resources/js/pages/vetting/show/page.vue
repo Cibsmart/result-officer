@@ -1,10 +1,6 @@
 <script lang="ts" setup>
 import { Deferred, Head } from '@inertiajs/vue3';
-import BasePage from '@/components/AppPage.vue';
-import Breadcrumb from '@/components/breadcrumb.vue';
-import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
-import { BreadcrumbItem, BreadcrumbsItem } from '@/types';
-import BaseSection from '@/layouts/main/partials/baseSection.vue';
+import { BreadcrumbItem } from '@/types';
 import Badge from '@/components/badge.vue';
 import BaseTable from '@/components/tables/baseTable.vue';
 import BaseTHead from '@/components/tables/baseTHead.vue';

@@ -1,10 +1,6 @@
 <script lang="ts" setup>
 import { Head } from '@inertiajs/vue3';
-import BaseSection from '@/layouts/main/partials/baseSection.vue';
-import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
-import Breadcrumb from '@/components/breadcrumb.vue';
-import BasePage from '@/components/AppPage.vue';
-import { BreadcrumbItem, BreadcrumbsItem } from '@/types';
+import { BreadcrumbItem } from '@/types';
 import VettingForm from '@/pages/vetting/index/partials/vettingForm.vue';
 import EmptyState from '@/components/emptyState.vue';
 import VettingEventList from '@/pages/vetting/index/partials/vettingEventList.vue';
