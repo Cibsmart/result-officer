@@ -1,19 +1,14 @@
 <script lang="ts" setup>
 import { BreadcrumbItem } from '@/types';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import { PaginatedStudentListData } from '@/types/paginate';
 import Pagination from '@/components/pagination.vue';
-import BaseTable from '@/components/tables/baseTable.vue';
-import BaseTHead from '@/components/tables/baseTHead.vue';
-import BaseTH from '@/components/tables/baseTH.vue';
-import BaseTBody from '@/components/tables/baseTBody.vue';
-import BaseTR from '@/components/tables/baseTR.vue';
-import BaseTD from '@/components/tables/baseTD.vue';
+import { BaseTable, BaseTBody, BaseTD, BaseTH, BaseTHead, BaseTR } from '@/components/tables';
 import Badge from '@/components/badge.vue';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import AppLayout from '@/layouts/AppLayout.vue';
 import AppPage from '@/components/AppPage.vue';
-import { Button } from '@/components/ui/button';
+import { SecondaryLinkSmall } from '@/components/links';
 
 defineProps<{ paginated: PaginatedStudentListData }>();
 
@@ -89,12 +84,9 @@ const breadcrumbs: BreadcrumbItem[] = [{ title: 'Students', href: route('student
                                 <BaseTD
                                     class="px-2"
                                     mobile>
-                                    <Button
-                                        variant="outline"
-                                        asChild
-                                        size="sm">
-                                        <Link :href="route('students.show', { student: student.slug })"> View</Link>
-                                    </Button>
+                                    <SecondaryLinkSmall :href="route('students.show', { student: student.slug })"
+                                        >View
+                                    </SecondaryLinkSmall>
                                 </BaseTD>
                             </BaseTR>
                         </BaseTBody>

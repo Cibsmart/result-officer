@@ -2,12 +2,7 @@
 import { Deferred, Head } from '@inertiajs/vue3';
 import { BreadcrumbItem } from '@/types';
 import Badge from '@/components/badge.vue';
-import BaseTable from '@/components/tables/baseTable.vue';
-import BaseTHead from '@/components/tables/baseTHead.vue';
-import BaseTH from '@/components/tables/baseTH.vue';
-import BaseTBody from '@/components/tables/baseTBody.vue';
-import BaseTR from '@/components/tables/baseTR.vue';
-import BaseTD from '@/components/tables/baseTD.vue';
+import { BaseTable, BaseTBody, BaseTD, BaseTH, BaseTHead, BaseTR } from '@/components/tables';
 import VettingDetailDrawer from '@/pages/vetting/show/partials/vettingDetailDrawer.vue';
 import { ref } from 'vue';
 import BaseDisclosure from '@/components/baseDisclosure.vue';
@@ -135,9 +130,9 @@ const openDrawer = ref(false);
 
                                                 <PrimaryButtonSmall
                                                     v-if="vetting.status === 'passed'"
+                                                    class="ml-2"
                                                     size="sm"
-                                                    variant="secondary"
-                                                    class="ml-2">
+                                                    variant="secondary">
                                                     Clear
                                                 </PrimaryButtonSmall>
 

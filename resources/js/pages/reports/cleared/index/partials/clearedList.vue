@@ -2,12 +2,7 @@
 import EmptyState from '@/components/emptyState.vue';
 import IconLink from '@/components/links/IconLink.vue';
 import { computed } from 'vue';
-import BaseTable from '@/components/tables/baseTable.vue';
-import BaseTHead from '@/components/tables/baseTHead.vue';
-import BaseTH from '@/components/tables/baseTH.vue';
-import BaseTBody from '@/components/tables/baseTBody.vue';
-import BaseTR from '@/components/tables/baseTR.vue';
-import BaseTD from '@/components/tables/baseTD.vue';
+import { BaseTable, BaseTBody, BaseTD, BaseTH, BaseTHead, BaseTR } from '@/components/tables';
 
 const props = defineProps<{
     students: App.Data.Cleared.ClearedStudentListData;

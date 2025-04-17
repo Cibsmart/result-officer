@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import SecondaryLinkSmall from '@/components/links/SecondaryLinkSmall.vue';
 import Badge from '@/components/badge.vue';
-import BaseTD from '@/components/tables/baseTD.vue';
+import { BaseTD } from '@/components/tables';
 import PrimaryLinkSmall from '@/components/links/PrimaryLinkSmall.vue';
 
 defineProps<{

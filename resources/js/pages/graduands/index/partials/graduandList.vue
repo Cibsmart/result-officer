@@ -1,14 +1,10 @@
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import { computed, ref } from 'vue';
 import EmptyState from '@/components/emptyState.vue';
 import IconLink from '@/components/links/IconLink.vue';
 import StudentRow from '@/pages/graduands/index/partials/graduandRow.vue';
 import Modal from '@/components/modal.vue';
-import BaseTable from '@/components/tables/baseTable.vue';
-import BaseTHead from '@/components/tables/baseTHead.vue';
-import BaseTH from '@/components/tables/baseTH.vue';
-import BaseTBody from '@/components/tables/baseTBody.vue';
-import BaseTR from '@/components/tables/baseTR.vue';
+import { BaseTable, BaseTBody, BaseTH, BaseTHead, BaseTR } from '@/components/tables';
 import { PaginatedGraduandListData } from '@/types/paginate';
 import Pagination from '@/components/pagination.vue';
 import ClearanceConfirmationForm from '@/pages/graduands/index/partials/clearanceConfirmationForm.vue';

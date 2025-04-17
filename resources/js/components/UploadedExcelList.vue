@@ -1,11 +1,6 @@
 <script lang="ts" setup>
-import BaseTR from '@/components/tables/baseTR.vue';
+import { BaseTable, BaseTBody, BaseTD, BaseTH, BaseTHead, BaseTR } from '@/components/tables';
 import { SecondaryLinkSmall } from '@/components/links';
-import BaseTH from '@/components/tables/baseTH.vue';
-import BaseTD from '@/components/tables/baseTD.vue';
-import BaseTBody from '@/components/tables/baseTBody.vue';
-import BaseTable from '@/components/tables/baseTable.vue';
-import BaseTHead from '@/components/tables/baseTHead.vue';
 import { SecondaryButtonSmall } from '@/components/buttons';
 import Badge from '@/components/badge.vue';
 import Modal from '@/components/modal.vue';

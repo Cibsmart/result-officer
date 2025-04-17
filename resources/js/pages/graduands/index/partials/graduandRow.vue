@@ -3,7 +3,7 @@ import { computed, onMounted, watch } from 'vue';
 import Badge from '@/components/badge.vue';
 import { PrimaryLinkSmall } from '@/components/links';
 import { PrimaryButtonSmall, SecondaryButtonSmall } from '@/components/buttons';
-import BaseTD from '@/components/tables/baseTD.vue';
+import { BaseTD } from '@/components/tables';
 import { usePoll } from '@inertiajs/vue3';
 
 const props = defineProps<{

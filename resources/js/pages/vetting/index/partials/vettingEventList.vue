@@ -1,9 +1,5 @@
 <script lang="ts" setup>
-import BaseTR from '@/components/tables/baseTR.vue';
-import BaseTH from '@/components/tables/baseTH.vue';
-import BaseTBody from '@/components/tables/baseTBody.vue';
-import BaseTable from '@/components/tables/baseTable.vue';
-import BaseTHead from '@/components/tables/baseTHead.vue';
+import { BaseTable, BaseTBody, BaseTH, BaseTHead, BaseTR } from '@/components/tables';
 import { PaginatedVettingEventGroupListData } from '@/types/paginate';
 import Pagination from '@/components/pagination.vue';
 import { computed, onMounted, watch } from 'vue';
