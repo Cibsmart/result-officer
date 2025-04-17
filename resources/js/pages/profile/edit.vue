@@ -2,45 +2,38 @@
 import UpdatePasswordForm from '@/pages/profile/partials/updatePasswordForm.vue';
 import UpdateProfileInformationForm from '@/pages/profile/partials/updateProfileInformationForm.vue';
 import { Head } from '@inertiajs/vue3';
-import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
-import BasePage from '@/layouts/main/partials/basePage.vue';
-import BaseSection from '@/layouts/main/partials/baseSection.vue';
-import Breadcrumb from '@/components/breadcrumb.vue';
-import { BreadcrumbsItem } from '@/types';
+import { BreadcrumbItem } from '@/types';
+import AppPage from '@/components/AppPage.vue';
+import { Card } from '@/components/ui/card';
+import AppLayout from '@/layouts/AppLayout.vue';
 
 defineProps<{
     status?: string;
 }>();
 
-const pages: BreadcrumbsItem[] = [
-    {
-        name: 'Profile',
-        href: route('profile.edit'),
-        current: route().current('profile.edit'),
-    },
-];
+const breadcrumbs: BreadcrumbItem[] = [{ title: 'Profile', href: route('profile.edit') }];
 </script>
 
 <template>
     <Head title="Profile" />
 
-    <Breadcrumb :pages="pages" />
+    <AppLayout :breadcrumbs="breadcrumbs">
+        <AppPage
+            description="Update profile information"
+            title="Profile">
+            <Card>
+                <UpdateProfileInformationForm
+                    :status="status"
+                    class="max-w-xl" />
+            </Card>
 
-    <BaseHeader>Profile</BaseHeader>
+            <Card>
+                <UpdatePasswordForm class="max-w-xl" />
+            </Card>
 
-    <BasePage>
-        <BaseSection>
-            <UpdateProfileInformationForm
-                :status="status"
-                class="max-w-xl" />
-        </BaseSection>
-
-        <BaseSection>
-            <UpdatePasswordForm class="max-w-xl" />
-        </BaseSection>
-
-        <!--    <BaseSection>-->
-        <!--      <DeleteUserForm class="max-w-xl" />-->
-        <!--    </BaseSection>-->
-    </BasePage>
+            <!--    <BaseSection>-->
+            <!--      <DeleteUserForm class="max-w-xl" />-->
+            <!--    </BaseSection>-->
+        </AppPage>
+    </AppLayout>
 </template>
