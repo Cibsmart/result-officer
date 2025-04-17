@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { Button } from '@/components/ui/button';
+
 withDefaults(
     defineProps<{
         type?: 'button' | 'submit' | 'reset';
@@ -10,9 +12,11 @@ withDefaults(
 </script>
 
 <template>
-    <button
+    <Button
         :type="type"
-        class="inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-xs font-semibold tracking-widest text-gray-700 uppercase shadow-xs transition duration-150 ease-in-out hover:bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-hidden disabled:opacity-25 dark:border-gray-500 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:focus:ring-offset-gray-800">
+        class="text-xs tracking-widest uppercase"
+        size="sm"
+        variant="secondary">
         <slot />
-    </button>
+    </Button>
 </template>
