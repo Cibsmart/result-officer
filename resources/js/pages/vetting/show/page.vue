@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Deferred, Head, Link } from '@inertiajs/vue3';
+import { Deferred, Head } from '@inertiajs/vue3';
 import { BreadcrumbItem } from '@/types';
 import Badge from '@/components/badge.vue';
 import BaseTable from '@/components/tables/baseTable.vue';
