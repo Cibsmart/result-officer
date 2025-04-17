@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 import { Head } from '@inertiajs/vue3';
-import BasePage from '@/layouts/main/partials/basePage.vue';
+import BasePage from '@/components/AppPage.vue';
 import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
 import ResultSummaryForm from '@/pages/summary/form/partials/form.vue';
 import BaseSection from '@/layouts/main/partials/baseSection.vue';
 import { BreadcrumbsItem } from '@/types';
 import Breadcrumb from '@/components/breadcrumb.vue';
+import AppPage from '@/components/AppPage.vue';
+import { Card, CardContent } from '@/components/ui/card';
 
 defineProps<{
     department: App.Data.Department.DepartmentListData;
@@ -25,12 +27,14 @@ const pages: BreadcrumbsItem[] = [
 
     <BaseHeader> Department Result Summary</BaseHeader>
 
-    <BasePage>
-        <BaseSection>
+    <AppPage
+        description="View Department's Result Summary per Session and Level"
+        title="Result Summary Page">
+        <Card class="p-6">
             <ResultSummaryForm
                 :departments="department.data"
                 :levels="level.levels"
                 :sessions="session.sessions" />
-        </BaseSection>
-    </BasePage>
+        </Card>
+    </AppPage>
 </template>
