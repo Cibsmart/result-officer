@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
 import EmptyState from '@/components/emptyState.vue';
-import IconLink from '@/components/links/iconLink.vue';
+import IconLink from '@/components/links/IconLink.vue';
 import StudentRow from '@/pages/graduands/index/partials/graduandRow.vue';
 import Modal from '@/components/modal.vue';
 import BaseTable from '@/components/tables/baseTable.vue';

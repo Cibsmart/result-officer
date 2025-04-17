@@ -3,7 +3,7 @@ import { Head } from '@inertiajs/vue3';
 import { BreadcrumbItem } from '@/types';
 import { computed } from 'vue';
 import EmptyState from '@/components/emptyState.vue';
-import IconLink from '@/components/links/iconLink.vue';
+import IconLink from '@/components/links/IconLink.vue';
 import AppPage from '@/components/AppPage.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Card } from '@/components/ui/card';

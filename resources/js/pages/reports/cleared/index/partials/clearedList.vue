@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import EmptyState from '@/components/emptyState.vue';
-import IconLink from '@/components/links/iconLink.vue';
+import IconLink from '@/components/links/IconLink.vue';
 import { computed } from 'vue';
 import BaseTable from '@/components/tables/baseTable.vue';
 import BaseTHead from '@/components/tables/baseTHead.vue';
@@ -85,8 +85,8 @@ const hasRows = computed(() => props.students.data.length > 0);
                 description="Get started by clearing students that are ready for graduation"
                 title="No Cleared Student Found in the selected year and month">
                 <IconLink :href="route('graduand.index', { department: students.department.slug })"
-                    >Vet Students</IconLink
-                >
+                    >Vet Students
+                </IconLink>
             </EmptyState>
         </div>
     </div>

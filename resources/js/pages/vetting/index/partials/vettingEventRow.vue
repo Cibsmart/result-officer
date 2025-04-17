@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import SecondaryLinkSmall from '@/components/links/secondaryLinkSmall.vue';
+import SecondaryLinkSmall from '@/components/links/SecondaryLinkSmall.vue';
 import Badge from '@/components/badge.vue';
 import BaseTD from '@/components/tables/baseTD.vue';
-import PrimaryLinkSmall from '@/components/links/primaryLinkSmall.vue';
+import PrimaryLinkSmall from '@/components/links/PrimaryLinkSmall.vue';
 
 defineProps<{
     event: App.Data.Vetting.VettingEventGroupData;
