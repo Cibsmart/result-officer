@@ -1,39 +1,36 @@
 <script lang="ts" setup>
 import { Head } from '@inertiajs/vue3';
-import { BreadcrumbsItem } from '@/types';
-import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
-import Breadcrumb from '@/components/breadcrumb.vue';
-import BasePage from '@/layouts/main/partials/basePage.vue';
-import BaseSection from '@/layouts/main/partials/baseSection.vue';
+import { BreadcrumbItem } from '@/types';
 import VettingForm from '@/pages/graduands/index/partials/graduandForm.vue';
 import StudentList from '@/pages/graduands/index/partials/graduandList.vue';
 import { PaginatedGraduandListData } from '@/types/paginate';
+import AppPage from '@/components/AppPage.vue';
+import AppLayout from '@/layouts/AppLayout.vue';
+import { Card } from '@/components/ui/card';
 
 defineProps<{
     department: App.Data.Department.DepartmentInfoData;
     data: PaginatedGraduandListData | null;
 }>();
 
-const pages: BreadcrumbsItem[] = [
-    { name: 'Graduands', href: route('graduand.index'), current: route().current('graduand.index') },
-];
+const breadcrumbs: BreadcrumbItem[] = [{ title: 'Graduands', href: route('graduand.index') }];
 </script>
 
 <template>
     <Head title="Possible Graduands Page" />
 
-    <Breadcrumb :pages="pages" />
+    <AppLayout :breadcrumbs="breadcrumbs">
+        <AppPage
+            description="View List of Possible Graduands per Department"
+            title="Possible Graduands">
+            <Card class="p-6">
+                <VettingForm />
+            </Card>
 
-    <BaseHeader> View List of Possible Graduands</BaseHeader>
-
-    <BasePage>
-        <BaseSection>
-            <VettingForm />
-        </BaseSection>
-
-        <StudentList
-            v-if="data !== null"
-            :department="department"
-            :paginated="data" />
-    </BasePage>
+            <StudentList
+                v-if="data !== null"
+                :department="department"
+                :paginated="data" />
+        </AppPage>
+    </AppLayout>
 </template>
