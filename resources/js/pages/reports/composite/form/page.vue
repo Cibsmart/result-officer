@@ -1,11 +1,10 @@
 <script lang="ts" setup>
 import { Head } from '@inertiajs/vue3';
-import BasePage from '@/layouts/main/partials/basePage.vue';
-import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
 import CompositeForm from '@/pages/reports/composite/form/partials/form.vue';
-import BaseSection from '@/layouts/main/partials/baseSection.vue';
-import { BreadcrumbsItem } from '@/types';
-import Breadcrumb from '@/components/breadcrumb.vue';
+import { BreadcrumbItem } from '@/types';
+import AppPage from '@/components/AppPage.vue';
+import AppLayout from '@/layouts/AppLayout.vue';
+import { Card } from '@/components/ui/card';
 
 defineProps<{
     semester: App.Data.Semester.SemesterListData;
@@ -14,25 +13,23 @@ defineProps<{
     level: App.Data.Level.LevelListData;
 }>();
 
-const pages: BreadcrumbsItem[] = [
-    { name: 'Composite Sheet', href: route('composite.form'), current: route().current('composite.form') },
-];
+const breadcrumbs: BreadcrumbItem[] = [{ title: 'Composite Sheet', href: route('composite.form') }];
 </script>
 
 <template>
     <Head title="View Composite Sheet" />
 
-    <Breadcrumb :pages="pages" />
-
-    <BaseHeader> Department Composite Sheet</BaseHeader>
-
-    <BasePage>
-        <BaseSection>
-            <CompositeForm
-                :levels="level.levels"
-                :programs="program.programs"
-                :semesters="semester.semesters"
-                :sessions="session.sessions" />
-        </BaseSection>
-    </BasePage>
+    <AppLayout :breadcrumbs>
+        <AppPage
+            description="View Department Composite Sheet by Session, Semester and Level"
+            title="Composite Sheet">
+            <Card class="p-6">
+                <CompositeForm
+                    :levels="level.levels"
+                    :programs="program.programs"
+                    :semesters="semester.semesters"
+                    :sessions="session.sessions" />
+            </Card>
+        </AppPage>
+    </AppLayout>
 </template>
