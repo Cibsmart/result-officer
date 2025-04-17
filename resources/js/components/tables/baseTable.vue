@@ -5,7 +5,7 @@ defineProps<{
 </script>
 
 <template>
-    <div class="-mx-4 mt-4 overflow-auto ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg dark:ring-gray-600">
+    <div class="-mx-4 overflow-auto ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg dark:ring-gray-600">
         <div
             v-if="title"
             class="min-w-full pt-2 text-center text-sm font-extrabold">
