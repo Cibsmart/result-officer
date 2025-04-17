@@ -436,6 +436,7 @@ declare namespace App.Data.Shared {
     export type SharedData = {
         name: string;
         quote: App.Data.Shared.QuoteData;
+        location: string;
         sidebarOpen: boolean;
         user: App.Data.Shared.UserData;
         notification: App.Data.Shared.NotificationData | null;
@@ -446,6 +447,7 @@ declare namespace App.Data.Shared {
         email: string;
         isAdmin: boolean;
         avatar: string;
+        emailVerified: boolean;
     };
 }
 declare namespace App.Data.States {

@@ -12,7 +12,7 @@ test('shared data is correct', function (): void {
 
     session()->flash('notification', $notification);
 
-    $data = new SharedData(name: 'TestApp', quote: QuoteData::new(), sidebarOpen: true);
+    $data = new SharedData(name: 'TestApp', quote: QuoteData::new(), location: '', sidebarOpen: true);
 
     expect($data)->toBeInstanceOf(SharedData::class)
         ->and($data->notification)->toBeInstanceOf(NotificationData::class);

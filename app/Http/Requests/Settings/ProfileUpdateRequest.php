@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Settings;
 
 use App\Models\Institution;
 use App\Models\User;
@@ -21,7 +21,6 @@ final class ProfileUpdateRequest extends FormRequest
                 'required', 'string', 'lowercase', 'email', 'max:255', "ends_with:@{$domain}",
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
-            //            'name' => ['required', 'string', 'max:255'],
         ];
     }
 }

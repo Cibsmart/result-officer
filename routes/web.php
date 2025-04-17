@@ -34,7 +34,6 @@ use App\Http\Controllers\Imports\ContinueImportEventController;
 use App\Http\Controllers\Imports\FinalResultImportController;
 use App\Http\Controllers\Imports\ProgramCurriculumImportController;
 use App\Http\Controllers\Imports\ResultImportController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Registrations\RegistrationController;
 use App\Http\Controllers\Reports\CompositeSheetController;
 use App\Http\Controllers\Reports\DepartmentClearedController;
@@ -67,12 +66,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth'])->group(static function (): void {
     Route::get('/', DashboardController::class)->name('dashboard');
 
-    Route::prefix('profile')->group(static function (): void {
-        Route::get('', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::patch('', [ProfileController::class, 'update'])->name('profile.update');
-        Route::delete('', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    });
-
     Route::prefix('results')->group(static function (): void {
         Route::get('{student?}', [ViewStudentResultController::class, 'index'])->name('results.index');
         Route::post('', [ViewStudentResultController::class, 'store'])->name('results.store');
@@ -83,8 +76,7 @@ Route::middleware(['auth'])->group(static function (): void {
     Route::prefix('final-results/student/')->group(static function (): void {
         Route::get('{student?}', [StudentFinalResultController::class, 'index'])->name('finalResults.index');
         Route::post('', [StudentFinalResultController::class, 'store'])->name('finalResults.store');
-        Route::get('{student}/print', [StudentFinalResultController::class, 'print'])
-            ->name('finalResults.print');
+        Route::get('{student}/print', [StudentFinalResultController::class, 'print'])->name('finalResults.print');
         Route::get('{student}/transcript', [StudentFinalResultController::class, 'transcript'])
             ->name('finalResults.transcript');
         Route::get('{student}/download', [StudentFinalResultController::class, 'download'])
@@ -106,8 +98,7 @@ Route::middleware(['auth'])->group(static function (): void {
     });
 
     Route::prefix('download/students')->group(static function (): void {
-        Route::get('page', DownloadStudentsPageController::class)
-            ->name('download.students.page');
+        Route::get('page', DownloadStudentsPageController::class)->name('download.students.page');
         Route::post('registration-number', DownloadStudentByRegistrationNumberController::class)
             ->name('download.student.registration-number.store');
         Route::post('department-session', DownloadStudentsByDepartmentSessionController::class)
@@ -117,10 +108,8 @@ Route::middleware(['auth'])->group(static function (): void {
     });
 
     Route::prefix('download/departments')->group(static function (): void {
-        Route::get('page', DownloadDepartmentsPageController::class)
-            ->name('download.departments.page');
-        Route::post('', DownloadDepartmentsController::class)
-            ->name('download.departments.store');
+        Route::get('page', DownloadDepartmentsPageController::class)->name('download.departments.page');
+        Route::post('', DownloadDepartmentsController::class)->name('download.departments.store');
     });
 
     Route::prefix('download/courses')->group(static function (): void {
@@ -274,15 +263,13 @@ Route::middleware(['auth'])->group(static function (): void {
         });
 
         Route::prefix('curriculum')->group(static function (): void {
-            Route::get('', [ProgramCurriculumImportController::class, 'index'])
-                ->name('import.curriculum.index');
-            Route::post('', [ProgramCurriculumImportController::class, 'store'])
-                ->name('import.curriculum.store');
+            Route::get('', [ProgramCurriculumImportController::class, 'index'])->name('import.curriculum.index');
+            Route::post('', [ProgramCurriculumImportController::class, 'store'])->name('import.curriculum.store');
             Route::post('delete/{event}', [ProgramCurriculumImportController::class, 'delete'])
-                ->can('delete', 'event')
-                ->name('import.curriculum.delete');
+                ->can('delete', 'event')->name('import.curriculum.delete');
         });
     });
 });
 
+require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';

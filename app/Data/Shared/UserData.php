@@ -15,6 +15,7 @@ final class UserData extends Data
         public readonly string $email,
         public readonly bool $isAdmin,
         public readonly string $avatar,
+        public readonly bool $emailVerified,
     ) {
     }
 
@@ -26,6 +27,7 @@ final class UserData extends Data
             email: $user->email,
             isAdmin: $user->isAdmin(),
             avatar: '',
+            emailVerified: ! is_null($user->email_verified_at),
         );
     }
 }
