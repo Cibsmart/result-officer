@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import InputError from '@/components/inputs/inputError.vue';
 import InputLabel from '@/components/inputs/inputLabel.vue';
-import PrimaryButton from '@/components/buttons/primaryButton.vue';
+import { PrimaryButton } from '@/components/buttons';
 import TextInput from '@/components/inputs/textInput.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import AuthLayout from '@/layouts/AuthLayout.vue';
+import { LoaderCircle } from 'lucide-vue-next';
 
 const form = useForm({
     password: '',
@@ -50,10 +51,10 @@ const submit = () => {
             </div>
 
             <div class="mt-4 flex justify-end">
-                <PrimaryButton
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                    class="ms-4">
+                <PrimaryButton :disabled="form.processing">
+                    <LoaderCircle
+                        v-if="form.processing"
+                        class="h-4 w-4 animate-spin" />
                     Confirm
                 </PrimaryButton>
             </div>

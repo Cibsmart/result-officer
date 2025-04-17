@@ -1,13 +1,11 @@
 <script lang="ts" setup>
 import InputLabel from '@/components/inputs/inputLabel.vue';
-import PrimaryButton from '@/components/buttons/primaryButton.vue';
+import { PrimaryButton } from '@/components/buttons';
 import InputError from '@/components/inputs/inputError.vue';
 import { useForm } from '@inertiajs/vue3';
 import SelectInput from '@/components/inputs/selectInput.vue';
 import { SelectItem } from '@/types';
-import BaseFormSection from '@/components/forms/baseFormSection.vue';
-import FormGroup from '@/components/forms/formGroup.vue';
-import AlignButton from '@/components/forms/alignButton.vue';
+import { AlignButton, FormGroup, FormSection } from '@/components/forms';
 
 defineProps<{
     departments: SelectItem[];
@@ -32,7 +30,7 @@ const download = () => {
 </script>
 
 <template>
-    <BaseFormSection
+    <FormSection
         description="Select Department and Entry Session to download results records"
         header="Download Result Information">
         <form
@@ -72,13 +70,9 @@ const download = () => {
                 </div>
 
                 <AlignButton>
-                    <PrimaryButton
-                        :disabled="form.processing"
-                        class="mt-1">
-                        Export
-                    </PrimaryButton>
+                    <PrimaryButton :disabled="form.processing">Export</PrimaryButton>
                 </AlignButton>
             </FormGroup>
         </form>
-    </BaseFormSection>
+    </FormSection>
 </template>

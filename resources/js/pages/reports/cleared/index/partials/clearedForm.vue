@@ -1,18 +1,15 @@
 <script lang="ts" setup>
-import PrimaryButton from '@/components/buttons/primaryButton.vue';
+import { PrimaryButton } from '@/components/buttons';
 import InputLabel from '@/components/inputs/inputLabel.vue';
 import InputError from '@/components/inputs/inputError.vue';
 import { useForm } from '@inertiajs/vue3';
 import SelectInput from '@/components/inputs/selectInput.vue';
 import { SelectItem } from '@/types';
-import BaseFormSection from '@/components/forms/baseFormSection.vue';
-import FormGroup from '@/components/forms/formGroup.vue';
+import { AlignButton, FormGroup, FormSection } from '@/components/forms';
 import { useMonths } from '@/composables/months';
 import { useYears } from '@/composables/year';
 
-defineProps<{
-    departments: SelectItem[];
-}>();
+defineProps<{ departments: SelectItem[] }>();
 
 const form = useForm({
     department: '',
@@ -38,7 +35,7 @@ const { months } = useMonths();
 </script>
 
 <template>
-    <BaseFormSection
+    <FormSection
         description="Select Department, Year and Month to View List of Cleared Students"
         header="View Cleared Student">
         <form
@@ -91,16 +88,10 @@ const { months } = useMonths();
                         class="mt-2" />
                 </div>
 
-                <div class="flex-col">
-                    <div>&nbsp;</div>
-
-                    <PrimaryButton
-                        :disabled="form.processing"
-                        class="mt-1">
-                        View
-                    </PrimaryButton>
-                </div>
+                <AlignButton>
+                    <PrimaryButton :disabled="form.processing"> View</PrimaryButton>
+                </AlignButton>
             </FormGroup>
         </form>
-    </BaseFormSection>
+    </FormSection>
 </template>

@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-import DataList from '@/components/data/dataList.vue';
-import { ref, defineAsyncComponent, watch } from 'vue';
-import DataItem from '@/components/data/dataItem.vue';
+import { DataItem, DataList } from '@/components/data';
+import { defineAsyncComponent, ref, watch } from 'vue';
 import SectionHeader from '@/components/sectionHeader.vue';
-import SecondaryButtonSmall from '@/components/buttons/secondaryButtonSmall.vue';
+import { SecondaryButtonSmall } from '@/components/buttons';
 import Modal from '@/components/modal.vue';
 import { Card } from '@/components/ui/card';
 
@@ -146,8 +145,8 @@ const closeEditModal = () => {
                     <div class="flex justify-between">
                         <span>{{ student.others.jambRegistrationNumber }}</span>
 
-                        <SecondaryButtonSmall @click="openEditModal('jamb_registration_number')"
-                            >Edit
+                        <SecondaryButtonSmall @click="openEditModal('jamb_registration_number')">
+                            Edit
                         </SecondaryButtonSmall>
                     </div>
                 </DataItem>

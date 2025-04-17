@@ -1,15 +1,14 @@
 <script lang="ts" setup>
 import SelectInput from '@/components/inputs/selectInput.vue';
-import PrimaryButton from '@/components/buttons/primaryButton.vue';
 import InputLabel from '@/components/inputs/inputLabel.vue';
 import InputError from '@/components/inputs/inputError.vue';
-import BaseFormSection from '@/components/forms/baseFormSection.vue';
-import SecondaryButton from '@/components/buttons/secondaryButton.vue';
-import FormGroup from '@/components/forms/formGroup.vue';
+import { FormGroup, FormSection } from '@/components/forms';
 import { useForm } from '@inertiajs/vue3';
 import { useMonths } from '@/composables/months';
 import { useYears } from '@/composables/year';
 import { useExamOfficers } from '@/composables/examOfficers';
+import { LoaderCircle } from 'lucide-vue-next';
+import { PrimaryButton, SecondaryButton } from '@/components/buttons';
 
 const props = defineProps<{
     student: App.Data.Graduands.GraduandData;
@@ -44,7 +43,7 @@ const { officers, isLoading } = useExamOfficers();
 </script>
 
 <template>
-    <BaseFormSection
+    <FormSection
         description="Select Clearance Batch and Exam Officer"
         header="Clearance Confirmation">
         <form class="mt-6 space-y-6">
@@ -119,16 +118,17 @@ const { officers, isLoading } = useExamOfficers();
             <span class="font-bold">ALL</span> academic requirement for graduation.
         </p>
 
-        <div class="mt-6 flex justify-end">
+        <div class="flex justify-end gap-2">
             <SecondaryButton @click="emit('close')"> Cancel</SecondaryButton>
 
             <PrimaryButton
-                :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"
-                class="ms-3"
                 @click="clearStudent">
+                <LoaderCircle
+                    v-if="form.processing"
+                    class="h-4 w-4 animate-spin" />
                 Clear Student
             </PrimaryButton>
         </div>
-    </BaseFormSection>
+    </FormSection>
 </template>
