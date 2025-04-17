@@ -7,7 +7,7 @@ defineProps<{
 }>();
 </script>
 <template>
-    <div class="space-y-4 px-6 py-6">
+    <div class="space-y-4 p-6">
         <div class="sm:flex sm:items-center">
             <div class="sm:flex-auto">
                 <Heading
