@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import EmptyState from '@/components/emptyState.vue';
-import IconLink from '@/components/links/iconLink.vue';
+import { IconLink } from '@/components/links';
 import Session from '@/pages/results/index/partials/resultSessionView.vue';
 import { computed, ref } from 'vue';
 import Modal from '@/components/modal.vue';
@@ -84,7 +84,7 @@ const closeDeleteModal = () => (showDeleteModal.value = false);
     <Modal
         :show="showDeleteModal"
         @close="closeDeleteModal">
-        <Card>
+        <Card class="p-6">
             <ResultDeleteForm
                 v-if="selectedResult"
                 :result="selectedResult"

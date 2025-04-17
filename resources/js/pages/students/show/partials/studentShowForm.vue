@@ -1,12 +1,10 @@
 <script lang="ts" setup>
 import TextInput from '@/components/inputs/textInput.vue';
-import PrimaryButton from '@/components/buttons/primaryButton.vue';
 import InputLabel from '@/components/inputs/inputLabel.vue';
-import BaseFormSection from '@/components/forms/baseFormSection.vue';
+import { AlignButton, FormGroup, FormSection } from '@/components/forms';
 import InputError from '@/components/inputs/inputError.vue';
-import FormGroup from '@/components/forms/formGroup.vue';
-import AlignButton from '@/components/forms/alignButton.vue';
 import { useForm } from '@inertiajs/vue3';
+import { PrimaryButton } from '@/components/buttons';
 
 const form = useForm({ registration_number: '' });
 
@@ -14,7 +12,7 @@ const submit = () => form.post(route('students.store'));
 </script>
 
 <template>
-    <BaseFormSection
+    <FormSection
         description="Input student's registration number to view page"
         header="Student Information">
         <form
@@ -43,5 +41,5 @@ const submit = () => form.post(route('students.store'));
                 </AlignButton>
             </FormGroup>
         </form>
-    </BaseFormSection>
+    </FormSection>
 </template>

@@ -1,16 +1,16 @@
 <script lang="ts" setup>
 import { Head, useForm } from '@inertiajs/vue3';
-import PrimaryButton from '@/components/buttons/primaryButton.vue';
+import { PrimaryButton } from '@/components/buttons';
 import InputLabel from '@/components/inputs/inputLabel.vue';
-import FormGroup from '@/components/forms/formGroup.vue';
-import BaseFormSection from '@/components/forms/baseFormSection.vue';
+import { FormGroup } from '@/components/forms';
+import { FormSection } from '@/components/forms';
 import InputError from '@/components/inputs/inputError.vue';
 import EmptyState from '@/components/emptyState.vue';
 import { computed, ref, watch, onMounted } from 'vue';
 import { BreadcrumbItem } from '@/types';
 import { usePoll } from '@inertiajs/vue3';
 import SelectInput from '@/components/inputs/selectInput.vue';
-import UploadedExcelList from '@/components/uploadedExcelList.vue';
+import UploadedExcelList from '@/components/UploadedExcelList.vue';
 import AppPage from '@/components/AppPage.vue';
 import { Card } from '@/components/ui/card';
 import AppLayout from '@/layouts/AppLayout.vue';
@@ -79,7 +79,7 @@ const programs = ref([{ id: 0, name: 'Select Program' }]);
             description="Import or Upload Course List from Excel to the Database"
             title="Course List Import">
             <Card class="p-6">
-                <BaseFormSection
+                <FormSection
                     description="Select the Course List Excel (.xlsx) File and click Upload"
                     header="Upload Course List">
                     <form
@@ -140,7 +140,7 @@ const programs = ref([{ id: 0, name: 'Select Program' }]);
                             </div>
                         </FormGroup>
                     </form>
-                </BaseFormSection>
+                </FormSection>
             </Card>
 
             <Card>

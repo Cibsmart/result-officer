@@ -3,10 +3,8 @@ import TextInput from '@/components/inputs/textInput.vue';
 import InputLabel from '@/components/inputs/inputLabel.vue';
 import InputError from '@/components/inputs/inputError.vue';
 import { useForm } from '@inertiajs/vue3';
-import BaseFormSection from '@/components/forms/baseFormSection.vue';
-import AlignButton from '@/components/forms/alignButton.vue';
-import FormGroup from '@/components/forms/formGroup.vue';
-import { Button } from '@/components/ui/button';
+import { AlignButton, FormGroup, FormSection } from '@/components/forms';
+import { PrimaryButton } from '@/components/buttons';
 
 const form = useForm({
     registration_number: '',
@@ -18,7 +16,7 @@ const submit = () => {
 </script>
 
 <template>
-    <BaseFormSection
+    <FormSection
         description="Input student's registration number to download records"
         header="Download Student Information">
         <form
@@ -43,9 +41,9 @@ const submit = () => {
                 </div>
 
                 <AlignButton>
-                    <Button :disabled="form.processing">Download</Button>
+                    <PrimaryButton :disabled="form.processing">Download</PrimaryButton>
                 </AlignButton>
             </FormGroup>
         </form>
-    </BaseFormSection>
+    </FormSection>
 </template>

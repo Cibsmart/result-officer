@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Deferred, Head } from '@inertiajs/vue3';
+import { Deferred, Head, Link } from '@inertiajs/vue3';
 import { BreadcrumbItem } from '@/types';
 import Badge from '@/components/badge.vue';
 import BaseTable from '@/components/tables/baseTable.vue';
@@ -8,15 +8,14 @@ import BaseTH from '@/components/tables/baseTH.vue';
 import BaseTBody from '@/components/tables/baseTBody.vue';
 import BaseTR from '@/components/tables/baseTR.vue';
 import BaseTD from '@/components/tables/baseTD.vue';
-import PrimaryButtonSmall from '@/components/buttons/primaryButtonSmall.vue';
-import SecondaryButtonSmall from '@/components/buttons/secondaryButtonSmall.vue';
-import SecondaryLinkSmall from '@/components/links/secondaryLinkSmall.vue';
 import VettingDetailDrawer from '@/pages/vetting/show/partials/vettingDetailDrawer.vue';
 import { ref } from 'vue';
 import BaseDisclosure from '@/components/baseDisclosure.vue';
 import AppPage from '@/components/AppPage.vue';
 import { Card } from '@/components/ui/card';
 import AppLayout from '@/layouts/AppLayout.vue';
+import { SecondaryLinkSmall } from '@/components/links';
+import { PrimaryButtonSmall, SecondaryButtonSmall } from '@/components/buttons';
 
 const props = defineProps<{
     event: App.Data.Vetting.VettingEventGroupData;
@@ -84,7 +83,12 @@ const openDrawer = ref(false);
                                 <div class="flex flex-1 justify-between text-sm font-black">
                                     <span class="text-lg uppercase">Course List: {{ group.curriculum.name }}</span>
 
-                                    <SecondaryButtonSmall>View</SecondaryButtonSmall>
+                                    <SecondaryButtonSmall
+                                        size="sm"
+                                        type="button"
+                                        variant="secondary">
+                                        View
+                                    </SecondaryButtonSmall>
                                 </div>
                             </template>
 
@@ -124,22 +128,25 @@ const openDrawer = ref(false);
                                         </BaseTD>
 
                                         <BaseTD position="right">
-                                            <PrimaryButtonSmall @click="handleClick(vetting.student.slug)"
-                                                >View
-                                            </PrimaryButtonSmall>
+                                            <div class="flex gap-2">
+                                                <PrimaryButtonSmall @click="handleClick(vetting.student.slug)">
+                                                    View
+                                                </PrimaryButtonSmall>
 
-                                            <SecondaryButtonSmall
-                                                v-if="vetting.status === 'passed'"
-                                                class="ml-2">
-                                                Clear
-                                            </SecondaryButtonSmall>
+                                                <PrimaryButtonSmall
+                                                    v-if="vetting.status === 'passed'"
+                                                    size="sm"
+                                                    variant="secondary"
+                                                    class="ml-2">
+                                                    Clear
+                                                </PrimaryButtonSmall>
 
-                                            <SecondaryLinkSmall
-                                                v-if="vetting.status === 'failed'"
-                                                :href="route('vetting.create', { student: vetting.student.slug })"
-                                                class="ml-2">
-                                                Re-vet
-                                            </SecondaryLinkSmall>
+                                                <SecondaryLinkSmall
+                                                    v-if="vetting.status === 'failed'"
+                                                    :href="route('vetting.create', { student: vetting.student.slug })">
+                                                    Re-vet
+                                                </SecondaryLinkSmall>
+                                            </div>
                                         </BaseTD>
                                     </BaseTR>
                                 </BaseTBody>

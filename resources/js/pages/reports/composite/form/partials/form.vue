@@ -1,12 +1,11 @@
 <script lang="ts" setup>
-import PrimaryButton from '@/components/buttons/primaryButton.vue';
+import { PrimaryButton } from '@/components/buttons';
 import InputLabel from '@/components/inputs/inputLabel.vue';
 import InputError from '@/components/inputs/inputError.vue';
 import { useForm } from '@inertiajs/vue3';
 import SelectInput from '@/components/inputs/selectInput.vue';
 import { SelectItem } from '@/types';
-import BaseFormSection from '@/components/forms/baseFormSection.vue';
-import FormGroup from '@/components/forms/formGroup.vue';
+import { FormGroup, FormSection } from '@/components/forms';
 
 defineProps<{
     programs: SelectItem[];
@@ -28,7 +27,7 @@ const submit = () => {
 </script>
 
 <template>
-    <BaseFormSection
+    <FormSection
         description="Select Department, Session Semester and Level to view the Department Composite Sheet"
         header="Department Composite Sheet">
         <form
@@ -94,5 +93,5 @@ const submit = () => {
                 <PrimaryButton :disabled="form.processing">View</PrimaryButton>
             </div>
         </form>
-    </BaseFormSection>
+    </FormSection>
 </template>

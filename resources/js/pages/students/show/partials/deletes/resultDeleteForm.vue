@@ -1,14 +1,12 @@
 <script lang="ts" setup>
-import BaseFormSection from '@/components/forms/baseFormSection.vue';
 import TextInput from '@/components/inputs/textInput.vue';
 import InputError from '@/components/inputs/inputError.vue';
 import InputLabel from '@/components/inputs/inputLabel.vue';
 import { useForm } from '@inertiajs/vue3';
-import SecondaryButton from '@/components/buttons/secondaryButton.vue';
 import { computed } from 'vue';
-import CardFooter from '@/components/cards/cardFooter.vue';
 import TextareaInput from '@/components/inputs/textareaInput.vue';
-import DangerButton from '@/components/buttons/dangerButton.vue';
+import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/card';
+import { DangerButton, SecondaryButton } from '@/components/buttons';
 
 const props = defineProps<{
     student: App.Data.Students.StudentData;
@@ -38,84 +36,82 @@ const submit = () =>
 </script>
 
 <template>
-    <BaseFormSection
-        :description="description"
-        :header="title">
-        <InputError :message="form.errors.result" />
+    <Card>
+        <CardHeader>{{ title }}</CardHeader>
 
-        <form
-            class="mt-6 space-y-6"
-            @submit.prevent="submit">
-            <div class="">
-                <InputLabel
-                    for="mail_title"
-                    value="Mail Title" />
+        <CardDescription>{{ description }}</CardDescription>
 
-                <TextareaInput
-                    id="mail_title"
-                    v-model="form.mail_title"
-                    autocomplete="mail_title"
-                    required />
+        <CardContent>
+            <InputError :message="form.errors.result" />
 
-                <InputError :message="form.errors.mail_title" />
-            </div>
+            <form
+                class="mt-6 space-y-6"
+                @submit.prevent="submit">
+                <div class="">
+                    <InputLabel
+                        for="mail_title"
+                        value="Mail Title" />
 
-            <div class="mt-2">
-                <InputLabel
-                    for="mail_date"
-                    value="Mail Date" />
+                    <TextareaInput
+                        id="mail_title"
+                        v-model="form.mail_title"
+                        autocomplete="mail_title"
+                        required />
 
-                <TextInput
-                    id="mail_date"
-                    v-model="form.mail_date"
-                    autocomplete="off"
-                    placeholder="YYYY-MM-DD"
-                    required
-                    type="text" />
-
-                <InputError :message="form.errors.mail_date" />
-            </div>
-
-            <div class="">
-                <InputLabel
-                    for="remark"
-                    value="Remark (state action performed)" />
-
-                <TextareaInput
-                    id="remark"
-                    v-model="form.remark"
-                    required />
-
-                <InputError :message="form.errors.remark" />
-            </div>
-
-            <div class="mt-2">
-                <InputLabel
-                    for="password"
-                    value="Password (for confirmation and signature)" />
-
-                <TextInput
-                    id="password"
-                    v-model="form.password"
-                    autocomplete="off"
-                    placeholder="Password"
-                    required
-                    type="password" />
-
-                <InputError :message="form.errors.password" />
-            </div>
-
-            <CardFooter class="mt-6">
-                <div class="mt-2 flex justify-end">
-                    <SecondaryButton @click="emit('close')">Cancel</SecondaryButton>
-
-                    <DangerButton
-                        :disabled="canNotUpdate"
-                        class="ms-3">
-                        Delete
-                    </DangerButton>
+                    <InputError :message="form.errors.mail_title" />
                 </div>
-            </CardFooter>
-        </form>
-    </BaseFormSection>
+
+                <div class="mt-2">
+                    <InputLabel
+                        for="mail_date"
+                        value="Mail Date" />
+
+                    <TextInput
+                        id="mail_date"
+                        v-model="form.mail_date"
+                        autocomplete="off"
+                        placeholder="YYYY-MM-DD"
+                        required
+                        type="text" />
+
+                    <InputError :message="form.errors.mail_date" />
+                </div>
+
+                <div class="">
+                    <InputLabel
+                        for="remark"
+                        value="Remark (state action performed)" />
+
+                    <TextareaInput
+                        id="remark"
+                        v-model="form.remark"
+                        required />
+
+                    <InputError :message="form.errors.remark" />
+                </div>
+
+                <div class="mt-2">
+                    <InputLabel
+                        for="password"
+                        value="Password (for confirmation and signature)" />
+
+                    <TextInput
+                        id="password"
+                        v-model="form.password"
+                        autocomplete="off"
+                        placeholder="Password"
+                        required
+                        type="password" />
+
+                    <InputError :message="form.errors.password" />
+                </div>
+
+                <div class="mt-2 flex justify-end">
+                    <SecondaryButton @click="emit('close')"> Cancel </SecondaryButton>
+
+                    <DangerButton :disabled="canNotUpdate"> Delete</DangerButton>
+                </div>
+            </form>
+        </CardContent>
+    </Card>
 </template>

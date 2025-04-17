@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import InputLabel from '@/components/inputs/inputLabel.vue';
-import PrimaryButton from '@/components/buttons/primaryButton.vue';
 import InputError from '@/components/inputs/inputError.vue';
 import { useForm } from '@inertiajs/vue3';
 import SelectInput from '@/components/inputs/selectInput.vue';
 import { SelectItem } from '@/types';
-import BaseFormSection from '@/components/forms/baseFormSection.vue';
-import FormGroup from '@/components/forms/formGroup.vue';
-import AlignButton from '@/components/forms/alignButton.vue';
+import { FormSection } from '@/components/forms';
+import { FormGroup } from '@/components/forms';
+import { AlignButton } from '@/components/forms';
+import { PrimaryButton } from '@/components/buttons';
 
 defineProps<{
     sessions: SelectItem[];
@@ -23,7 +23,7 @@ const submit = () => {
 </script>
 
 <template>
-    <BaseFormSection
+    <FormSection
         description="Select Session to download their records"
         header="Download Students Information">
         <form
@@ -50,5 +50,5 @@ const submit = () => {
                 </AlignButton>
             </FormGroup>
         </form>
-    </BaseFormSection>
+    </FormSection>
 </template>

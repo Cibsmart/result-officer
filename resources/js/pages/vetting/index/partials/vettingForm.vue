@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import PrimaryButton from '@/components/buttons/primaryButton.vue';
 import InputLabel from '@/components/inputs/inputLabel.vue';
 import InputError from '@/components/inputs/inputError.vue';
 import { useForm } from '@inertiajs/vue3';
 import SelectInput from '@/components/inputs/selectInput.vue';
-import BaseFormSection from '@/components/forms/baseFormSection.vue';
+import { FormSection } from '@/components/forms';
 import { useDepartments } from '@/composables/departments';
 import TextareaInput from '@/components/inputs/textareaInput.vue';
 import TextInput from '@/components/inputs/textInput.vue';
+import { PrimaryButton } from '@/components/buttons';
 
 const form = useForm({
     title: '',
@@ -26,7 +26,7 @@ const { departments, isLoading } = useDepartments(true);
 </script>
 
 <template>
-    <BaseFormSection
+    <FormSection
         description="Enter Vetting Title, select Department and enter/paste list of Registration Numbers to be vetted"
         header="Vet Students' Results">
         <form
@@ -86,5 +86,5 @@ const { departments, isLoading } = useDepartments(true);
 
             <PrimaryButton :disabled="form.processing"> Vet</PrimaryButton>
         </form>
-    </BaseFormSection>
+    </FormSection>
 </template>

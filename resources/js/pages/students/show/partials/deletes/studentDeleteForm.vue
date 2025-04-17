@@ -1,14 +1,12 @@
 <script lang="ts" setup>
-import BaseFormSection from '@/components/forms/baseFormSection.vue';
+import { FormSection } from '@/components/forms';
 import TextInput from '@/components/inputs/textInput.vue';
 import InputError from '@/components/inputs/inputError.vue';
 import InputLabel from '@/components/inputs/inputLabel.vue';
 import { useForm } from '@inertiajs/vue3';
-import SecondaryButton from '@/components/buttons/secondaryButton.vue';
+import { DangerButton, SecondaryButton } from '@/components/buttons';
 import { computed, watch } from 'vue';
-import CardFooter from '@/components/cards/cardFooter.vue';
 import TextareaInput from '@/components/inputs/textareaInput.vue';
-import DangerButton from '@/components/buttons/dangerButton.vue';
 import Toggle from '@/components/inputs/toggle.vue';
 
 const props = defineProps<{
@@ -48,7 +46,7 @@ const submit = () =>
 </script>
 
 <template>
-    <BaseFormSection
+    <FormSection
         :description="description"
         :header="title">
         <InputError :message="form.errors.student" />
@@ -123,17 +121,11 @@ const submit = () =>
                 <InputError :message="form.errors.password" />
             </div>
 
-            <CardFooter class="mt-6">
-                <div class="mt-2 flex justify-end">
-                    <SecondaryButton @click="emit('close')">Cancel</SecondaryButton>
+            <div class="mt-2 flex justify-end">
+                <SecondaryButton @click="emit('close')">Cancel</SecondaryButton>
 
-                    <DangerButton
-                        :disabled="canNotUpdate"
-                        class="ms-3">
-                        Delete
-                    </DangerButton>
-                </div>
-            </CardFooter>
+                <DangerButton :disabled="canNotUpdate"> Delete</DangerButton>
+            </div>
         </form>
-    </BaseFormSection>
+    </FormSection>
 </template>

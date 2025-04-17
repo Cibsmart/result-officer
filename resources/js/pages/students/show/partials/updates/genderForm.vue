@@ -1,15 +1,13 @@
 <script lang="ts" setup>
-import BaseFormSection from '@/components/forms/baseFormSection.vue';
+import { FormSection } from '@/components/forms';
 import InputError from '@/components/inputs/inputError.vue';
 import InputLabel from '@/components/inputs/inputLabel.vue';
-import PrimaryButton from '@/components/buttons/primaryButton.vue';
 import { useForm } from '@inertiajs/vue3';
-import SecondaryButton from '@/components/buttons/secondaryButton.vue';
 import { computed } from 'vue';
-import CardFooter from '@/components/cards/cardFooter.vue';
 import TextareaInput from '@/components/inputs/textareaInput.vue';
 import SelectInput from '@/components/inputs/selectInput.vue';
 import { useGenders } from '@/composables/genders';
+import { PrimaryButton, SecondaryButton } from '@/components/buttons';
 
 const props = defineProps<{
     student: App.Data.Students.StudentData;
@@ -43,7 +41,7 @@ const selected = computed(() => {
 </script>
 
 <template>
-    <BaseFormSection
+    <FormSection
         :header="title"
         description="Update student's gender and submit">
         <form
@@ -76,17 +74,11 @@ const selected = computed(() => {
                 <InputError :message="form.errors.remark" />
             </div>
 
-            <CardFooter class="mt-6">
-                <div class="mt-2 flex justify-end">
-                    <SecondaryButton @click="emit('close')">Cancel</SecondaryButton>
+            <div class="mt-2 flex justify-end gap-2">
+                <SecondaryButton @click="emit('close')"> Cancel</SecondaryButton>
 
-                    <PrimaryButton
-                        :disabled="canNotUpdate"
-                        class="ms-3">
-                        Update
-                    </PrimaryButton>
-                </div>
-            </CardFooter>
+                <PrimaryButton :disabled="canNotUpdate"> Update</PrimaryButton>
+            </div>
         </form>
-    </BaseFormSection>
+    </FormSection>
 </template>

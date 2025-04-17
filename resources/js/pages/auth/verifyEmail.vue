@@ -1,8 +1,10 @@
 <script lang="ts" setup>
-import PrimaryButton from '@/components/buttons/primaryButton.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import AuthLayout from '@/layouts/AuthLayout.vue';
+import { LoaderCircle } from 'lucide-vue-next';
+import { PrimaryButton } from '@/components/buttons';
+import { SecondaryLink } from '@/components/links';
 
 const props = defineProps<{
     status?: string;
@@ -36,19 +38,19 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
 
         <form @submit.prevent="submit">
             <div class="mt-4 flex items-center justify-between">
-                <PrimaryButton
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing">
+                <PrimaryButton :disabled="form.processing">
+                    <LoaderCircle
+                        v-if="form.processing"
+                        class="h-4 w-4 animate-spin" />
                     Resend Verification Email
                 </PrimaryButton>
 
-                <Link
+                <SecondaryLink
                     :href="route('logout')"
                     as="button"
-                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-hidden dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
                     method="post">
                     Log Out
-                </Link>
+                </SecondaryLink>
             </div>
         </form>
     </AuthLayout>

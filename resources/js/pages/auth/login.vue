@@ -3,7 +3,7 @@ import InputError from '@/components/InputError.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import AuthLayout from '@/layouts/AuthLayout.vue';
 import TextLink from '@/components/TextLink.vue';
-import { Button } from '@/components/ui/button';
+import { PrimaryButton } from '@/components/buttons';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -101,16 +101,15 @@ const submit = () => {
                     </Label>
                 </div>
 
-                <Button
-                    type="submit"
-                    class="mt-4 w-full"
+                <PrimaryButton
+                    class="w-full"
                     :tabindex="4"
                     :disabled="form.processing">
                     <LoaderCircle
                         v-if="form.processing"
                         class="h-4 w-4 animate-spin" />
                     Log in
-                </Button>
+                </PrimaryButton>
             </div>
         </form>
     </AuthLayout>

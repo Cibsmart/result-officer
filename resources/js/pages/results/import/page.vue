@@ -1,15 +1,15 @@
 <script lang="ts" setup>
 import { Head, useForm } from '@inertiajs/vue3';
-import PrimaryButton from '@/components/buttons/primaryButton.vue';
+import { PrimaryButton } from '@/components/buttons';
 import InputLabel from '@/components/inputs/inputLabel.vue';
-import FormGroup from '@/components/forms/formGroup.vue';
-import BaseFormSection from '@/components/forms/baseFormSection.vue';
+import { FormGroup } from '@/components/forms';
+import { FormSection } from '@/components/forms';
 import InputError from '@/components/inputs/inputError.vue';
 import EmptyState from '@/components/emptyState.vue';
 import { computed, ref, watch, onMounted } from 'vue';
 import { BreadcrumbItem } from '@/types';
 import { usePoll } from '@inertiajs/vue3';
-import UploadedExcelList from '@/components/uploadedExcelList.vue';
+import UploadedExcelList from '@/components/UploadedExcelList.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import AppPage from '@/components/AppPage.vue';
 import { Card } from '@/components/ui/card';
@@ -65,7 +65,7 @@ const fileInput = ref<HTMLInputElement | null>(null);
             description="Import Results from Excel into the Database"
             title="Result Import">
             <Card class="p-6">
-                <BaseFormSection
+                <FormSection
                     description="Select the Excel Result (.xlsx) File and click Upload"
                     header="Upload Excel Results">
                     <form
@@ -97,7 +97,7 @@ const fileInput = ref<HTMLInputElement | null>(null);
                             </div>
                         </FormGroup>
                     </form>
-                </BaseFormSection>
+                </FormSection>
             </Card>
 
             <Card>

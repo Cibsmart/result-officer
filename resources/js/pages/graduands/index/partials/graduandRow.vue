@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import { computed, onMounted, watch } from 'vue';
-import PrimaryLinkSmall from '@/components/links/primaryLinkSmall.vue';
 import Badge from '@/components/badge.vue';
-import SecondaryButtonSmall from '@/components/buttons/secondaryButtonSmall.vue';
-import PrimaryButtonSmall from '@/components/buttons/primaryButtonSmall.vue';
+import { PrimaryLinkSmall } from '@/components/links';
+import { PrimaryButtonSmall, SecondaryButtonSmall } from '@/components/buttons';
 import BaseTD from '@/components/tables/baseTD.vue';
 import { usePoll } from '@inertiajs/vue3';
 
@@ -57,29 +56,27 @@ const vetted = computed(() => props.student.vettingStatus !== 'pending');
     <BaseTD
         mobile
         position="left">
-        <SecondaryButtonSmall
+        <PrimaryButtonSmall
             v-if="vetted"
             @click="$emit('showReport', student)">
-            view
-        </SecondaryButtonSmall>
-
-        <span v-else>N/A</span>
+            View
+        </PrimaryButtonSmall>
     </BaseTD>
 
     <BaseTD
         mobile
         position="left">
-        <PrimaryButtonSmall
+        <SecondaryButtonSmall
             v-if="passed"
             @click="$emit('showClearance', student)">
-            clear
-        </PrimaryButtonSmall>
+            Clear
+        </SecondaryButtonSmall>
 
         <PrimaryLinkSmall
             v-else
             :href="route('vetting.create', { student: student })"
-            preserve-scroll>
-            {{ vetted ? 're-vet' : 'vet' }}
+            preserveScroll>
+            {{ vetted ? 'Re-vet' : 'Vet' }}
         </PrimaryLinkSmall>
     </BaseTD>
 </template>

@@ -1,12 +1,11 @@
 <script lang="ts" setup>
-import PrimaryButton from '@/components/buttons/primaryButton.vue';
+import { PrimaryButton } from '@/components/buttons';
 import InputLabel from '@/components/inputs/inputLabel.vue';
 import InputError from '@/components/inputs/inputError.vue';
 import { useForm } from '@inertiajs/vue3';
 import SelectInput from '@/components/inputs/selectInput.vue';
-import BaseFormSection from '@/components/forms/baseFormSection.vue';
+import { AlignButton, FormSection } from '@/components/forms';
 import { useDepartments } from '@/composables/departments';
-import AlignButton from '@/components/forms/alignButton.vue';
 
 const form = useForm({
     department: '',
@@ -21,7 +20,7 @@ const { departments, isLoading } = useDepartments();
 </script>
 
 <template>
-    <BaseFormSection
+    <FormSection
         description="Select Department and input Registration Number"
         header="Vetting List">
         <form
@@ -50,13 +49,9 @@ const { departments, isLoading } = useDepartments();
                 </div>
 
                 <AlignButton>
-                    <PrimaryButton
-                        :disabled="form.processing"
-                        class="mt-1"
-                        >View
-                    </PrimaryButton>
+                    <PrimaryButton :disabled="form.processing"> View</PrimaryButton>
                 </AlignButton>
             </div>
         </form>
-    </BaseFormSection>
+    </FormSection>
 </template>
