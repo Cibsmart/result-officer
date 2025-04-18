@@ -1,8 +1,6 @@
 <script lang="ts" setup>
-import InputError from '@/components/inputs/inputError.vue';
-import InputLabel from '@/components/inputs/inputLabel.vue';
+import { InputError, InputLabel, TextInput } from '@/components/inputs';
 import { PrimaryButton } from '@/components/buttons';
-import TextInput from '@/components/inputs/textInput.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import AuthLayout from '@/layouts/AuthLayout.vue';
 import { LoaderCircle } from 'lucide-vue-next';
@@ -31,23 +29,18 @@ const submit = () => {
         </div>
 
         <form @submit.prevent="submit">
-            <div>
-                <InputLabel
-                    for="password"
-                    value="Password" />
+            <div class="grid gap-2">
+                <InputLabel for="password">Password</InputLabel>
 
                 <TextInput
                     id="password"
                     v-model="form.password"
                     autocomplete="current-password"
                     autofocus
-                    class="mt-1 block w-full"
                     required
                     type="password" />
 
-                <InputError
-                    :message="form.errors.password"
-                    class="mt-2" />
+                <InputError :message="form.errors.password" />
             </div>
 
             <div class="mt-4 flex justify-end">

@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-import InputLabel from '@/components/inputs/inputLabel.vue';
+import { InputError, InputLabel, SelectInput } from '@/components/inputs';
 import { PrimaryButton } from '@/components/buttons';
-import InputError from '@/components/inputs/inputError.vue';
 import { useForm } from '@inertiajs/vue3';
-import SelectInput from '@/components/inputs/selectInput.vue';
 import { SelectItem } from '@/types';
 import { AlignButton, FormGroup, FormSection } from '@/components/forms';
 
@@ -30,25 +28,19 @@ const submit = () => {
             class="mt-6 space-y-6"
             @submit.prevent="submit">
             <FormGroup>
-                <div class="flex-1">
-                    <InputLabel
-                        for="department"
-                        value="Department" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="department">Department</InputLabel>
 
                     <SelectInput
                         id="department"
                         v-model="form.department"
                         :items="departments" />
 
-                    <InputError
-                        :message="form.errors.department"
-                        class="mt-2" />
+                    <InputError :message="form.errors.department" />
                 </div>
 
-                <div class="flex-1">
-                    <InputLabel
-                        for="session"
-                        value="Session" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="session">Session</InputLabel>
 
                     <SelectInput
                         id="session"

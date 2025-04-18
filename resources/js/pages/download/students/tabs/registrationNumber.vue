@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import TextInput from '@/components/inputs/textInput.vue';
-import InputLabel from '@/components/inputs/inputLabel.vue';
-import InputError from '@/components/inputs/inputError.vue';
+import { InputError, InputLabel, TextInput } from '@/components/inputs';
 import { useForm } from '@inertiajs/vue3';
 import { AlignButton, FormGroup, FormSection } from '@/components/forms';
 import { PrimaryButton } from '@/components/buttons';
@@ -23,10 +21,8 @@ const submit = () => {
             class="mt-6 space-y-6"
             @submit.prevent="submit">
             <FormGroup>
-                <div class="flex-1">
-                    <InputLabel
-                        for="registration_number"
-                        value="Registration Number" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="registration_number">Registration Number</InputLabel>
 
                     <TextInput
                         id="registration_number"

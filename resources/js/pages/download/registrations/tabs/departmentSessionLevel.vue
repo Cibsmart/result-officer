@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-import InputLabel from '@/components/inputs/inputLabel.vue';
+import { InputError, InputLabel, SelectInput } from '@/components/inputs';
 import { PrimaryButton } from '@/components/buttons';
-import InputError from '@/components/inputs/inputError.vue';
 import { useForm } from '@inertiajs/vue3';
-import SelectInput from '@/components/inputs/selectInput.vue';
 import { SelectItem } from '@/types';
 import { AlignButton, FormGroup, FormSection } from '@/components/forms';
 
@@ -31,10 +29,8 @@ const submit = () => {
         <form
             class="mt-6 space-y-6"
             @submit.prevent="submit">
-            <div class="flex-1">
-                <InputLabel
-                    for="department"
-                    value="Department" />
+            <div class="grid flex-1 gap-2">
+                <InputLabel for="department">Department </InputLabel>
 
                 <SelectInput
                     id="department"
@@ -45,10 +41,8 @@ const submit = () => {
             </div>
 
             <FormGroup>
-                <div class="flex-1">
-                    <InputLabel
-                        for="session"
-                        value="Session" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="session">Session </InputLabel>
 
                     <SelectInput
                         id="session"
@@ -58,10 +52,8 @@ const submit = () => {
                     <InputError :message="form.errors.session" />
                 </div>
 
-                <div class="flex-1">
-                    <InputLabel
-                        for="level"
-                        value="Session" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="level">Session </InputLabel>
 
                     <SelectInput
                         id="level"

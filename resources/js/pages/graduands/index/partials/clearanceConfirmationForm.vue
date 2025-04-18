@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import SelectInput from '@/components/inputs/selectInput.vue';
-import InputLabel from '@/components/inputs/inputLabel.vue';
-import InputError from '@/components/inputs/inputError.vue';
+import SelectInput from '@/components/inputs/SelectInput.vue';
+import { InputError, InputLabel } from '@/components/inputs';
 import { FormGroup, FormSection } from '@/components/forms';
 import { useForm } from '@inertiajs/vue3';
 import { useMonths } from '@/composables/months';
@@ -50,61 +49,53 @@ const { officers, isLoading } = useExamOfficers();
             <FormGroup>
                 <div class="flex w-full items-start space-x-4">
                     <div class="flex-1">
-                        <InputLabel
-                            for="year"
-                            value="Year" />
+                        <div class="grid gap-2">
+                            <InputLabel for="year">Year</InputLabel>
 
-                        <SelectInput
-                            id="year"
-                            v-model="form.year_object"
-                            :items="years"
-                            class="mt-1 block w-full" />
+                            <SelectInput
+                                id="year"
+                                v-model="form.year_object"
+                                :items="years" />
 
-                        <InputError
-                            :message="form.errors.year"
-                            class="mt-2" />
+                            <InputError :message="form.errors.year" />
+                        </div>
                     </div>
                 </div>
 
                 <div class="flex w-full items-start space-x-4">
                     <div class="flex-1">
-                        <InputLabel
-                            for="month"
-                            value="Month" />
+                        <div class="grid gap-2">
+                            <InputLabel for="month">Month</InputLabel>
 
-                        <SelectInput
-                            id="month"
-                            v-model="form.month_object"
-                            :items="months"
-                            class="mt-1 block w-full" />
+                            <SelectInput
+                                id="month"
+                                v-model="form.month_object"
+                                :items="months" />
 
-                        <InputError
-                            :message="form.errors.month"
-                            class="mt-2" />
+                            <InputError :message="form.errors.month" />
+                        </div>
                     </div>
                 </div>
             </FormGroup>
 
             <div class="flex w-full items-start space-x-4">
                 <div class="flex-1">
-                    <InputLabel
-                        for="exam_officer"
-                        value="Exam Officer" />
+                    <div class="grid gap-2">
+                        <InputLabel for="exam_officer">Exam Officer</InputLabel>
 
-                    <SelectInput
-                        v-if="!isLoading"
-                        id="exam_officer"
-                        v-model="form.exam_officer_object"
-                        :items="officers" />
+                        <SelectInput
+                            v-if="!isLoading"
+                            id="exam_officer"
+                            v-model="form.exam_officer_object"
+                            :items="officers" />
 
-                    <SelectInput
-                        v-else
-                        id="exam_officer_loading"
-                        :items="officers" />
+                        <SelectInput
+                            v-else
+                            id="exam_officer_loading"
+                            :items="officers" />
 
-                    <InputError
-                        :message="form.errors.exam_officer"
-                        class="mt-2" />
+                        <InputError :message="form.errors.exam_officer" />
+                    </div>
                 </div>
             </div>
         </form>

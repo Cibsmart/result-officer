@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { FormSection } from '@/components/forms';
-import TextInput from '@/components/inputs/textInput.vue';
-import InputError from '@/components/inputs/inputError.vue';
-import InputLabel from '@/components/inputs/inputLabel.vue';
+import TextInput from '@/components/inputs/TextInput.vue';
+import InputError from '@/components/inputs/InputError.vue';
+import InputLabel from '@/components/inputs/InputLabel.vue';
 import { useForm } from '@inertiajs/vue3';
 import { computed, watch } from 'vue';
-import TextareaInput from '@/components/inputs/textareaInput.vue';
+import TextareaInput from '@/components/inputs/TextareaInput.vue';
 import Toggle from '@/components/inputs/toggle.vue';
 import { PrimaryButton, SecondaryButton } from '@/components/buttons';
 
@@ -119,7 +119,7 @@ const submit = () =>
             </template>
 
             <div class="flex justify-end gap-2">
-                <SecondaryButton @click="emit('close')"> Cancel </SecondaryButton>
+                <SecondaryButton @click="emit('close')"> Cancel</SecondaryButton>
 
                 <PrimaryButton :disabled="canNotUpdate"> Update</PrimaryButton>
             </div>
