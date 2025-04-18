@@ -19,7 +19,7 @@ const selected = ref(props.items[selectedIndex]);
     <Listbox
         v-model="selected"
         as="div">
-        <div class="relative mt-2">
+        <div class="relative">
             <ListboxButton
                 class="relative w-full cursor-default rounded-md bg-white py-2 pr-10 pl-3 text-left text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset focus:ring-2 focus:ring-indigo-600 focus:outline-hidden sm:text-sm sm:leading-6 dark:bg-gray-900 dark:text-white dark:ring-gray-700">
                 <span class="block truncate">{{ selected.name }}</span>
