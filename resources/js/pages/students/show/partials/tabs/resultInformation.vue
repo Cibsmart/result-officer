@@ -72,7 +72,7 @@ const closeDeleteModal = () => (showDeleteModal.value = false);
     <Modal
         :show="showEditModal"
         @close="closeEditModal">
-        <Card>
+        <Card class="p-6">
             <ResultUpdateForm
                 v-if="selectedResult"
                 :result="selectedResult"
