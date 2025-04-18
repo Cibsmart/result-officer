@@ -1,12 +1,8 @@
 <script lang="ts" setup>
 import { FormSection } from '@/components/forms';
-import TextInput from '@/components/inputs/TextInput.vue';
-import InputError from '@/components/inputs/InputError.vue';
-import InputLabel from '@/components/inputs/InputLabel.vue';
+import { InputError, InputLabel, TextareaInput, TextInput, Toggle } from '@/components/inputs';
 import { useForm } from '@inertiajs/vue3';
 import { computed, watch } from 'vue';
-import TextareaInput from '@/components/inputs/TextareaInput.vue';
-import Toggle from '@/components/inputs/toggle.vue';
 import { PrimaryButton, SecondaryButton } from '@/components/buttons';
 
 const props = defineProps<{
@@ -51,10 +47,8 @@ const submit = () =>
         <form
             class="mt-6 space-y-6"
             @submit.prevent="submit">
-            <div class="">
-                <InputLabel
-                    for="registration_number"
-                    value="Registration Number" />
+            <div class="grid gap-2">
+                <InputLabel for="registration_number">Registration Number</InputLabel>
 
                 <TextInput
                     id="registration_number"
@@ -67,10 +61,8 @@ const submit = () =>
                 <InputError :message="form.errors.registration_number" />
             </div>
 
-            <div class="">
-                <InputLabel
-                    for="remark"
-                    value="Remark (state action performed)" />
+            <div class="grid gap-2">
+                <InputLabel for="remark">Remark (state action performed)</InputLabel>
 
                 <TextareaInput
                     id="remark"
@@ -87,10 +79,8 @@ const submit = () =>
             </div>
 
             <template v-if="form.has_mail">
-                <div class="">
-                    <InputLabel
-                        for="mail_title"
-                        value="Mail Title" />
+                <div class="grid gap-2">
+                    <InputLabel for="mail_title">Mail Title</InputLabel>
 
                     <TextareaInput
                         id="mail_title"
@@ -101,10 +91,8 @@ const submit = () =>
                     <InputError :message="form.errors.mail_title" />
                 </div>
 
-                <div class="mt-2">
-                    <InputLabel
-                        for="mail_date"
-                        value="Mail Date" />
+                <div class="grid gap-2">
+                    <InputLabel for="mail_date">Mail Date</InputLabel>
 
                     <TextInput
                         id="mail_date"

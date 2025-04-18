@@ -1,11 +1,8 @@
 <script lang="ts" setup>
 import { FormSection } from '@/components/forms';
-import InputError from '@/components/inputs/inputError.vue';
-import InputLabel from '@/components/inputs/inputLabel.vue';
+import { InputError, InputLabel, SelectInput, TextareaInput } from '@/components/inputs';
 import { useForm } from '@inertiajs/vue3';
 import { computed } from 'vue';
-import TextareaInput from '@/components/inputs/textareaInput.vue';
-import SelectInput from '@/components/inputs/selectInput.vue';
 import { useGenders } from '@/composables/genders';
 import { PrimaryButton, SecondaryButton } from '@/components/buttons';
 
@@ -47,10 +44,8 @@ const selected = computed(() => {
         <form
             class="mt-6 space-y-6"
             @submit.prevent="submit">
-            <div class="">
-                <InputLabel
-                    for="gender"
-                    value="Gender" />
+            <div class="grid gap-2">
+                <InputLabel for="gender">Gender</InputLabel>
 
                 <SelectInput
                     id="gender"
@@ -61,10 +56,8 @@ const selected = computed(() => {
                 <InputError :message="form.errors.gender" />
             </div>
 
-            <div class="">
-                <InputLabel
-                    for="remark"
-                    value="Remark (state action performed)" />
+            <div class="grid gap-2">
+                <InputLabel for="remark">Remark (state action performed)</InputLabel>
 
                 <TextareaInput
                     id="remark"

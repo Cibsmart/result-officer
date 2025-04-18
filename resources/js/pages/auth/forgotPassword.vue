@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import InputError from '@/components/inputs/inputError.vue';
-import InputLabel from '@/components/inputs/inputLabel.vue';
+import { InputError } from '@/components/inputs';
+import { InputLabel } from '@/components/inputs';
 import { PrimaryButton } from '@/components/buttons';
-import TextInput from '@/components/inputs/textInput.vue';
+import { TextInput } from '@/components/inputs';
 import { Head, useForm } from '@inertiajs/vue3';
 import AuthLayout from '@/layouts/AuthLayout.vue';
 import { LoaderCircle } from 'lucide-vue-next';
@@ -38,23 +38,18 @@ const submit = () => {
         </div>
 
         <form @submit.prevent="submit">
-            <div>
-                <InputLabel
-                    for="email"
-                    value="Email" />
+            <div class="grid gap-2">
+                <InputLabel for="email">Email</InputLabel>
 
                 <TextInput
                     id="email"
                     v-model="form.email"
                     autocomplete="username"
                     autofocus
-                    class="mt-1 block w-full"
                     required
                     type="email" />
 
-                <InputError
-                    :message="form.errors.email"
-                    class="mt-2" />
+                <InputError :message="form.errors.email" />
             </div>
 
             <div class="mt-4 flex items-center justify-end">

@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-import InputLabel from '@/components/inputs/inputLabel.vue';
-import InputError from '@/components/inputs/inputError.vue';
+import { InputError, InputLabel, TextareaInput } from '@/components/inputs';
 import { useForm } from '@inertiajs/vue3';
 import { AlignButton, FormGroup, FormSection } from '@/components/forms';
-import TextareaInput from '@/components/inputs/textareaInput.vue';
 import { PrimaryButton } from '@/components/buttons';
 
 const form = useForm({ registration_numbers: '' });
@@ -32,10 +30,8 @@ const download = () => {
             class="mt-6 space-y-6"
             @submit.prevent="submit">
             <FormGroup>
-                <div class="flex-1">
-                    <InputLabel
-                        for="registration_numbers"
-                        value="Registration Numbers" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="registration_numbers">Registration Numbers</InputLabel>
 
                     <TextareaInput
                         id="registration_numbers"

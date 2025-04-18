@@ -1,11 +1,8 @@
 <script lang="ts" setup>
 import { FormSection } from '@/components/forms';
-import InputError from '@/components/inputs/inputError.vue';
-import InputLabel from '@/components/inputs/inputLabel.vue';
+import { InputError, InputLabel, SelectInput, TextareaInput } from '@/components/inputs';
 import { useForm } from '@inertiajs/vue3';
 import { computed } from 'vue';
-import TextareaInput from '@/components/inputs/textareaInput.vue';
-import SelectInput from '@/components/inputs/selectInput.vue';
 import { useLevels } from '@/composables/levels';
 import { PrimaryButton, SecondaryButton } from '@/components/buttons';
 
@@ -44,25 +41,20 @@ const submit = () =>
         <form
             class="mt-6 space-y-6"
             @submit.prevent="submit">
-            <div class="">
-                <InputLabel
-                    for="entry_level"
-                    value="Entry Level" />
+            <div class="grid gap-2">
+                <InputLabel for="entry_level">Entry Level</InputLabel>
 
                 <SelectInput
                     id="month"
                     v-model="form.entry_level_object"
                     :items="levels"
-                    :selected="student.others.entryLevel"
-                    class="mt-1 block w-full" />
+                    :selected="student.others.entryLevel" />
 
                 <InputError :message="form.errors.entry_level" />
             </div>
 
-            <div class="">
-                <InputLabel
-                    for="remark"
-                    value="Remark (state action performed)" />
+            <div class="grid gap-2">
+                <InputLabel for="remark">Remark (state action performed)</InputLabel>
 
                 <TextareaInput
                     id="remark"

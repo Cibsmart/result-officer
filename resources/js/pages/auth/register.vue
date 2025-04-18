@@ -1,8 +1,6 @@
 <script lang="ts" setup>
-import InputError from '@/components/inputs/inputError.vue';
-import InputLabel from '@/components/inputs/inputLabel.vue';
+import { InputError, InputLabel, TextInput } from '@/components/inputs';
 import { PrimaryButton } from '@/components/buttons';
-import TextInput from '@/components/inputs/textInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import AuthLayout from '@/layouts/AuthLayout.vue';
 import { LoaderCircle } from 'lucide-vue-next';
@@ -29,81 +27,63 @@ const submit = () => {
         title="Create an account">
         <Head title="Register" />
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel
-                    for="name"
-                    value="Name" />
+        <form
+            class="grid gap-4"
+            @submit.prevent="submit">
+            <div class="grid gap-2">
+                <InputLabel for="name">Name </InputLabel>
 
                 <TextInput
                     id="name"
                     v-model="form.name"
                     autocomplete="name"
                     autofocus
-                    class="mt-1 block w-full"
                     required
                     type="text" />
 
-                <InputError
-                    :message="form.errors.name"
-                    class="mt-2" />
+                <InputError :message="form.errors.name" />
             </div>
 
-            <div class="mt-4">
-                <InputLabel
-                    for="email"
-                    value="Email" />
+            <div class="grid gap-2">
+                <InputLabel for="email">Email </InputLabel>
 
                 <TextInput
                     id="email"
                     v-model="form.email"
                     autocomplete="username"
-                    class="mt-1 block w-full"
                     required
                     type="email" />
 
-                <InputError
-                    :message="form.errors.email"
-                    class="mt-2" />
+                <InputError :message="form.errors.email" />
             </div>
 
-            <div class="mt-4">
-                <InputLabel
-                    for="password"
-                    value="Password" />
+            <div class="grid gap-2">
+                <InputLabel for="password">Password </InputLabel>
 
                 <TextInput
                     id="password"
                     v-model="form.password"
                     autocomplete="new-password"
-                    class="mt-1 block w-full"
                     required
                     type="password" />
 
-                <InputError
-                    :message="form.errors.password"
-                    class="mt-2" />
+                <InputError :message="form.errors.password" />
             </div>
 
-            <div class="mt-4">
-                <InputLabel
-                    for="password_confirmation"
-                    value="Confirm Password" />
+            <div class="grid gap-2">
+                <InputLabel for="password_confirmation">Confirm Password </InputLabel>
 
                 <TextInput
                     id="password_confirmation"
                     v-model="form.password_confirmation"
                     autocomplete="new-password"
-                    class="mt-1 block w-full"
                     required
                     type="password" />
 
-                <InputError
-                    :message="form.errors.password_confirmation"
-                    class="mt-2" />
+                <InputError :message="form.errors.password_confirmation" />
             </div>
 
-            <div class="mt-4 flex items-center justify-end">
+            <div class="flex items-center justify-end">
                 <Link
                     :href="route('login')"
                     class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-hidden dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800">

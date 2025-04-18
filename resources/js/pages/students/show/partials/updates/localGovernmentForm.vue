@@ -1,14 +1,10 @@
 <script lang="ts" setup>
-import { FormSection } from '@/components/forms';
-import InputError from '@/components/inputs/inputError.vue';
-import InputLabel from '@/components/inputs/inputLabel.vue';
+import { FormGroup, FormSection } from '@/components/forms';
+import { InputError, InputLabel, SelectInput, TextareaInput } from '@/components/inputs';
 import { useForm } from '@inertiajs/vue3';
 import { computed, ref, watch } from 'vue';
-import TextareaInput from '@/components/inputs/textareaInput.vue';
 import { SelectItem } from '@/types';
-import SelectInput from '@/components/inputs/selectInput.vue';
 import { useStates } from '@/composables/states';
-import { FormGroup } from '@/components/forms';
 import { PrimaryButton, SecondaryButton } from '@/components/buttons';
 
 const props = defineProps<{
@@ -82,10 +78,8 @@ const loadLocalGovernments = (state: App.Data.States.StateData) => {
             class="mt-6 space-y-6"
             @submit.prevent="submit">
             <FormGroup>
-                <div class="flex-1">
-                    <InputLabel
-                        for="state"
-                        value="State" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="state">State </InputLabel>
 
                     <SelectInput
                         v-if="!isLoading"
@@ -103,10 +97,8 @@ const loadLocalGovernments = (state: App.Data.States.StateData) => {
                     <InputError :message="form.errors.state" />
                 </div>
 
-                <div class="flex-1">
-                    <InputLabel
-                        for="local_government"
-                        value="Local Government" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="local_government">Local Government </InputLabel>
 
                     <SelectInput
                         v-if="!isLoading && localGovernments.length > 1"
@@ -124,10 +116,8 @@ const loadLocalGovernments = (state: App.Data.States.StateData) => {
                 </div>
             </FormGroup>
 
-            <div class="">
-                <InputLabel
-                    for="remark"
-                    value="Remark (state action performed)" />
+            <div class="grid gap-2">
+                <InputLabel for="remark">Remark (state action performed) </InputLabel>
 
                 <TextareaInput
                     id="remark"

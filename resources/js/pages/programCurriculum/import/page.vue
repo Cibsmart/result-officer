@@ -1,15 +1,11 @@
 <script lang="ts" setup>
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, useForm, usePoll } from '@inertiajs/vue3';
 import { PrimaryButton } from '@/components/buttons';
-import InputLabel from '@/components/inputs/inputLabel.vue';
-import { FormGroup } from '@/components/forms';
-import { FormSection } from '@/components/forms';
-import InputError from '@/components/inputs/inputError.vue';
+import { InputError, InputLabel, SelectInput } from '@/components/inputs';
+import { FormGroup, FormSection } from '@/components/forms';
 import EmptyState from '@/components/emptyState.vue';
-import { computed, ref, watch, onMounted } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { BreadcrumbItem } from '@/types';
-import { usePoll } from '@inertiajs/vue3';
-import SelectInput from '@/components/inputs/selectInput.vue';
 import UploadedExcelList from '@/components/UploadedExcelList.vue';
 import AppPage from '@/components/AppPage.vue';
 import { Card } from '@/components/ui/card';
@@ -86,10 +82,8 @@ const programs = ref([{ id: 0, name: 'Select Program' }]);
                         class="mt-6 space-y-6"
                         @submit.prevent="submit">
                         <FormGroup>
-                            <div class="flex-1 shrink-0">
-                                <InputLabel
-                                    for="department"
-                                    value="Department" />
+                            <div class="grid flex-1 shrink-0 gap-2">
+                                <InputLabel for="department">Department</InputLabel>
 
                                 <SelectInput
                                     id="department"
@@ -100,10 +94,8 @@ const programs = ref([{ id: 0, name: 'Select Program' }]);
                                 <InputError :message="form.errors.department" />
                             </div>
 
-                            <div class="flex-1 shrink-0">
-                                <InputLabel
-                                    for="program"
-                                    value="Program" />
+                            <div class="grid flex-1 shrink-0 gap-2">
+                                <InputLabel for="program">Program</InputLabel>
 
                                 <SelectInput
                                     id="program"
@@ -115,10 +107,8 @@ const programs = ref([{ id: 0, name: 'Select Program' }]);
                         </FormGroup>
 
                         <FormGroup>
-                            <div class="flex-1">
-                                <InputLabel
-                                    for="file"
-                                    value="Excel File" />
+                            <div class="grid flex-1 gap-2">
+                                <InputLabel for="file">Excel File</InputLabel>
 
                                 <input
                                     ref="fileInput"

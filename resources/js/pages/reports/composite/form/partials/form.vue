@@ -1,9 +1,7 @@
 <script lang="ts" setup>
 import { PrimaryButton } from '@/components/buttons';
-import InputLabel from '@/components/inputs/inputLabel.vue';
-import InputError from '@/components/inputs/inputError.vue';
+import { InputError, InputLabel, SelectInput } from '@/components/inputs';
 import { useForm } from '@inertiajs/vue3';
-import SelectInput from '@/components/inputs/selectInput.vue';
 import { SelectItem } from '@/types';
 import { FormGroup, FormSection } from '@/components/forms';
 
@@ -34,10 +32,8 @@ const submit = () => {
             class="mt-6 space-y-6"
             @submit.prevent="submit">
             <FormGroup>
-                <div class="flex-1">
-                    <InputLabel
-                        for="program"
-                        value="Program" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="program">Program</InputLabel>
 
                     <SelectInput
                         id="program"
@@ -47,10 +43,8 @@ const submit = () => {
                     <InputError :message="form.errors.program" />
                 </div>
 
-                <div class="flex-1">
-                    <InputLabel
-                        for="session"
-                        value="Session" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="session">Session</InputLabel>
 
                     <SelectInput
                         id="session"
@@ -62,10 +56,8 @@ const submit = () => {
             </FormGroup>
 
             <FormGroup>
-                <div class="flex-1">
-                    <InputLabel
-                        for="semester"
-                        value="Semester" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="semester">Semester</InputLabel>
 
                     <SelectInput
                         id="semester"
@@ -75,10 +67,8 @@ const submit = () => {
                     <InputError :message="form.errors.semester" />
                 </div>
 
-                <div class="flex-1">
-                    <InputLabel
-                        for="level"
-                        value="Level" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="level">Level</InputLabel>
 
                     <SelectInput
                         id="level"

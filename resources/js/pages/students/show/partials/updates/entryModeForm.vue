@@ -1,11 +1,8 @@
 <script lang="ts" setup>
-import FormSection from '@/components/forms/FormSection.vue';
-import InputError from '@/components/inputs/inputError.vue';
-import InputLabel from '@/components/inputs/inputLabel.vue';
+import { FormSection } from '@/components/forms';
+import { InputError, InputLabel, SelectInput, TextareaInput } from '@/components/inputs';
 import { useForm } from '@inertiajs/vue3';
 import { computed } from 'vue';
-import TextareaInput from '@/components/inputs/textareaInput.vue';
-import SelectInput from '@/components/inputs/selectInput.vue';
 import { useEntryModes } from '@/composables/entryModes';
 import { PrimaryButton, SecondaryButton } from '@/components/buttons';
 
@@ -42,25 +39,20 @@ const submit = () =>
         <form
             class="mt-6 space-y-6"
             @submit.prevent="submit">
-            <div class="">
-                <InputLabel
-                    for="entry_mode"
-                    value="Entry Mode" />
+            <div class="grid gap-2">
+                <InputLabel for="entry_mode">Entry Mode</InputLabel>
 
                 <SelectInput
                     id="month"
                     v-model="form.entry_mode_object"
                     :items="modes"
-                    :selected="student.others.entryMode"
-                    class="mt-1 block w-full" />
+                    :selected="student.others.entryMode" />
 
                 <InputError :message="form.errors.entry_mode" />
             </div>
 
-            <div class="">
-                <InputLabel
-                    for="remark"
-                    value="Remark (state action performed)" />
+            <div class="grid gap-2">
+                <InputLabel for="remark">Remark (state action performed)</InputLabel>
 
                 <TextareaInput
                     id="remark"

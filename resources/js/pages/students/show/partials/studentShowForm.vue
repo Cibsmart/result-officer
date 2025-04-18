@@ -1,8 +1,6 @@
 <script lang="ts" setup>
-import TextInput from '@/components/inputs/textInput.vue';
-import InputLabel from '@/components/inputs/inputLabel.vue';
+import { InputError, InputLabel, TextInput } from '@/components/inputs';
 import { AlignButton, FormGroup, FormSection } from '@/components/forms';
-import InputError from '@/components/inputs/inputError.vue';
 import { useForm } from '@inertiajs/vue3';
 import { PrimaryButton } from '@/components/buttons';
 
@@ -19,10 +17,8 @@ const submit = () => form.post(route('students.store'));
             class="mt-6 space-y-6"
             @submit.prevent="submit">
             <FormGroup>
-                <div class="flex-1">
-                    <InputLabel
-                        for="registration_number"
-                        value="Registration Number" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="registration_number">Registration Number</InputLabel>
 
                     <TextInput
                         id="registration_number"
@@ -30,8 +26,7 @@ const submit = () => form.post(route('students.store'));
                         autocomplete="registration_number"
                         autofocus
                         placeholder="EBSU/2009/51486"
-                        required
-                        type="text" />
+                        required />
 
                     <InputError :message="form.errors.registration_number" />
                 </div>

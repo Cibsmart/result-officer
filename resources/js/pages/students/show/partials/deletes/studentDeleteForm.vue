@@ -1,13 +1,9 @@
 <script lang="ts" setup>
 import { FormSection } from '@/components/forms';
-import TextInput from '@/components/inputs/textInput.vue';
-import InputError from '@/components/inputs/inputError.vue';
-import InputLabel from '@/components/inputs/inputLabel.vue';
+import { InputError, InputLabel, TextareaInput, TextInput, Toggle } from '@/components/inputs';
 import { useForm } from '@inertiajs/vue3';
 import { DangerButton, SecondaryButton } from '@/components/buttons';
 import { computed, watch } from 'vue';
-import TextareaInput from '@/components/inputs/textareaInput.vue';
-import Toggle from '@/components/inputs/toggle.vue';
 
 const props = defineProps<{
     student: App.Data.Students.StudentBasicData;
@@ -54,10 +50,8 @@ const submit = () =>
         <form
             class="mt-6 space-y-6"
             @submit.prevent="submit">
-            <div class="">
-                <InputLabel
-                    for="remark"
-                    value="Remark (state action performed)" />
+            <div class="grid gap-2">
+                <InputLabel for="remark">Remark (state action performed)</InputLabel>
 
                 <TextareaInput
                     id="remark"
@@ -74,10 +68,8 @@ const submit = () =>
             </div>
 
             <template v-if="form.has_mail">
-                <div class="">
-                    <InputLabel
-                        for="mail_title"
-                        value="Mail Title" />
+                <div class="grid gap-2">
+                    <InputLabel for="mail_title">Mail Title</InputLabel>
 
                     <TextareaInput
                         id="mail_title"
@@ -88,10 +80,8 @@ const submit = () =>
                     <InputError :message="form.errors.mail_title" />
                 </div>
 
-                <div class="mt-2">
-                    <InputLabel
-                        for="mail_date"
-                        value="Mail Date" />
+                <div class="grid gap-2">
+                    <InputLabel for="mail_date">Mail Date</InputLabel>
 
                     <TextInput
                         id="mail_date"
@@ -106,9 +96,7 @@ const submit = () =>
             </template>
 
             <div class="mt-2">
-                <InputLabel
-                    for="password"
-                    value="Password (for confirmation and signature)" />
+                <InputLabel for="password">Password (for confirmation and signature)</InputLabel>
 
                 <TextInput
                     id="password"
@@ -121,7 +109,7 @@ const submit = () =>
                 <InputError :message="form.errors.password" />
             </div>
 
-            <div class="mt-2 flex justify-end">
+            <div class="flex justify-end">
                 <SecondaryButton @click="emit('close')">Cancel</SecondaryButton>
 
                 <DangerButton :disabled="canNotUpdate"> Delete</DangerButton>

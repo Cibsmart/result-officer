@@ -1,11 +1,8 @@
 <script lang="ts" setup>
 import { FormSection } from '@/components/forms';
-import TextInput from '@/components/inputs/textInput.vue';
-import InputError from '@/components/inputs/inputError.vue';
-import InputLabel from '@/components/inputs/inputLabel.vue';
+import { InputError, InputLabel, TextareaInput, TextInput } from '@/components/inputs';
 import { useForm } from '@inertiajs/vue3';
 import { computed } from 'vue';
-import TextareaInput from '@/components/inputs/textareaInput.vue';
 import { PrimaryButton, SecondaryButton } from '@/components/buttons';
 
 const props = defineProps<{
@@ -39,9 +36,7 @@ const submit = () =>
             class="mt-6 space-y-6"
             @submit.prevent="submit">
             <div class="">
-                <InputLabel
-                    for="jamb_registration_number"
-                    value="Jamb Registration Number" />
+                <InputLabel for="jamb_registration_number">Jamb Registration Number </InputLabel>
 
                 <TextInput
                     id="jamb_registration_number"
@@ -55,9 +50,7 @@ const submit = () =>
             </div>
 
             <div class="">
-                <InputLabel
-                    for="remark"
-                    value="Remark (state action performed)" />
+                <InputLabel for="remark">Remark (state action performed) </InputLabel>
 
                 <TextareaInput
                     id="remark"

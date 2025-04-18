@@ -1,15 +1,11 @@
 <script lang="ts" setup>
 import { FormSection } from '@/components/forms';
-import TextInput from '@/components/inputs/textInput.vue';
-import InputError from '@/components/inputs/inputError.vue';
-import InputLabel from '@/components/inputs/inputLabel.vue';
+import { InputError, InputLabel, SelectInput, TextareaInput, TextInput } from '@/components/inputs';
 import { useForm } from '@inertiajs/vue3';
 import { computed, ref, watch } from 'vue';
-import TextareaInput from '@/components/inputs/textareaInput.vue';
-import Toggle from '@/components/inputs/toggle.vue';
+import Toggle from '@/components/inputs/Toggle.vue';
 import { useDepartments } from '@/composables/departments';
 import { SelectItem } from '@/types';
-import SelectInput from '@/components/inputs/selectInput.vue';
 import { PrimaryButton, SecondaryButton } from '@/components/buttons';
 
 const props = defineProps<{
@@ -88,10 +84,8 @@ const loadPrograms = (department: App.Data.Department.DepartmentData) => {
         <form
             class="mt-6 space-y-6"
             @submit.prevent="submit">
-            <div class="flex-1">
-                <InputLabel
-                    for="department"
-                    value="Program" />
+            <div class="grid flex-1 gap-2">
+                <InputLabel for="department">Program</InputLabel>
 
                 <SelectInput
                     v-if="!isLoading"
@@ -109,10 +103,8 @@ const loadPrograms = (department: App.Data.Department.DepartmentData) => {
                 <InputError :message="form.errors.department" />
             </div>
 
-            <div class="flex-1">
-                <InputLabel
-                    for="program"
-                    value="Program" />
+            <div class="grid flex-1 gap-2">
+                <InputLabel for="program">Program</InputLabel>
 
                 <SelectInput
                     v-if="!isLoading && programs.length > 1"
@@ -129,10 +121,8 @@ const loadPrograms = (department: App.Data.Department.DepartmentData) => {
                 <InputError :message="form.errors.program" />
             </div>
 
-            <div class="">
-                <InputLabel
-                    for="remark"
-                    value="Remark (state action performed)" />
+            <div class="grid gap-2">
+                <InputLabel for="remark">Remark (state action performed)</InputLabel>
 
                 <TextareaInput
                     id="remark"
@@ -149,10 +139,8 @@ const loadPrograms = (department: App.Data.Department.DepartmentData) => {
             </div>
 
             <template v-if="form.has_mail">
-                <div class="">
-                    <InputLabel
-                        for="mail_title"
-                        value="Mail Title" />
+                <div class="grid gap-2">
+                    <InputLabel for="mail_title">Mail Title</InputLabel>
 
                     <TextareaInput
                         id="mail_title"
@@ -163,10 +151,8 @@ const loadPrograms = (department: App.Data.Department.DepartmentData) => {
                     <InputError :message="form.errors.mail_title" />
                 </div>
 
-                <div class="mt-2">
-                    <InputLabel
-                        for="mail_date"
-                        value="Mail Date" />
+                <div class="grid gap-2">
+                    <InputLabel for="mail_date">Mail Date</InputLabel>
 
                     <TextInput
                         id="mail_date"

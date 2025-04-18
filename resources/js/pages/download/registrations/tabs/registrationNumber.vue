@@ -21,8 +21,8 @@ const submit = () => {
             class="mt-6 space-y-6"
             @submit.prevent="submit">
             <FormGroup>
-                <div class="flex-1">
-                    <InputLabel for="registration_number">Registration Number </InputLabel>
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="registration_number">Registration Number</InputLabel>
 
                     <TextInput
                         id="registration_number"

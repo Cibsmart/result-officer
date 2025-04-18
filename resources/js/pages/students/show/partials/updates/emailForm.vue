@@ -1,11 +1,8 @@
 <script lang="ts" setup>
 import { FormSection } from '@/components/forms';
-import TextInput from '@/components/inputs/textInput.vue';
-import InputError from '@/components/inputs/inputError.vue';
-import InputLabel from '@/components/inputs/inputLabel.vue';
+import { InputError, InputLabel, TextareaInput, TextInput } from '@/components/inputs';
 import { useForm } from '@inertiajs/vue3';
 import { computed } from 'vue';
-import TextareaInput from '@/components/inputs/textareaInput.vue';
 import { PrimaryButton, SecondaryButton } from '@/components/buttons';
 
 const props = defineProps<{
@@ -36,10 +33,8 @@ const submit = () =>
         <form
             class="mt-6 space-y-6"
             @submit.prevent="submit">
-            <div class="">
-                <InputLabel
-                    for="email"
-                    value="Email" />
+            <div class="grid gap-2">
+                <InputLabel for="email">Email </InputLabel>
 
                 <TextInput
                     id="email"
@@ -52,10 +47,8 @@ const submit = () =>
                 <InputError :message="form.errors.email" />
             </div>
 
-            <div class="">
-                <InputLabel
-                    for="remark"
-                    value="Remark (state action performed)" />
+            <div class="grid gap-2">
+                <InputLabel for="remark">Remark (state action performed) </InputLabel>
 
                 <TextareaInput
                     id="remark"
@@ -66,7 +59,7 @@ const submit = () =>
             </div>
 
             <div class="mt-2 flex justify-end gap-2">
-                <SecondaryButton @click="emit('close')"> Cancel </SecondaryButton>
+                <SecondaryButton @click="emit('close')"> Cancel</SecondaryButton>
 
                 <PrimaryButton :disabled="canNotUpdate"> Update</PrimaryButton>
             </div>

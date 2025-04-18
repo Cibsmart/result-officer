@@ -1,13 +1,9 @@
 <script lang="ts" setup>
-import InputLabel from '@/components/inputs/inputLabel.vue';
-import InputError from '@/components/inputs/inputError.vue';
+import { InputError, InputLabel, SelectInput } from '@/components/inputs';
 import { useForm } from '@inertiajs/vue3';
-import SelectInput from '@/components/inputs/selectInput.vue';
 import { SelectItem } from '@/types';
 import SelectInputSearchable from '@/components/inputs/selectInputSearchable.vue';
-import { FormSection } from '@/components/forms';
-import { FormGroup } from '@/components/forms';
-import { AlignButton } from '@/components/forms';
+import { AlignButton, FormGroup, FormSection } from '@/components/forms';
 import { PrimaryButton } from '@/components/buttons';
 
 defineProps<{
@@ -33,10 +29,8 @@ const submit = () => {
             class="mt-6 space-y-6"
             @submit.prevent="submit">
             <FormGroup>
-                <div class="flex-1">
-                    <InputLabel
-                        for="session"
-                        value="Session" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="session">Session </InputLabel>
 
                     <SelectInput
                         id="session"
@@ -46,10 +40,8 @@ const submit = () => {
                     <InputError :message="form.errors.session" />
                 </div>
 
-                <div class="flex-1">
-                    <InputLabel
-                        for="course"
-                        value="Course" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="course">Course </InputLabel>
 
                     <SelectInputSearchable
                         id="course"

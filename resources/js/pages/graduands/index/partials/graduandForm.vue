@@ -1,9 +1,7 @@
 <script lang="ts" setup>
 import { PrimaryButton } from '@/components/buttons';
-import InputLabel from '@/components/inputs/inputLabel.vue';
-import InputError from '@/components/inputs/inputError.vue';
+import { InputError, InputLabel, SelectInput } from '@/components/inputs';
 import { useForm } from '@inertiajs/vue3';
-import SelectInput from '@/components/inputs/selectInput.vue';
 import { AlignButton, FormSection } from '@/components/forms';
 import { useDepartments } from '@/composables/departments';
 
@@ -27,10 +25,8 @@ const { departments, isLoading } = useDepartments();
             class="mt-6 space-y-6"
             @submit.prevent="submit">
             <div class="flex w-full items-start space-x-4">
-                <div class="flex-1">
-                    <InputLabel
-                        for="department"
-                        value="Department" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="department">Department </InputLabel>
 
                     <SelectInput
                         v-if="!isLoading"
@@ -43,9 +39,7 @@ const { departments, isLoading } = useDepartments();
                         id="department_loading"
                         :items="departments" />
 
-                    <InputError
-                        :message="form.errors.department"
-                        class="mt-2" />
+                    <InputError :message="form.errors.department" />
                 </div>
 
                 <AlignButton>

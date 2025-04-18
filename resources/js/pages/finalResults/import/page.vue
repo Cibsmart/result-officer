@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import { Head, useForm, usePoll } from '@inertiajs/vue3';
 import { PrimaryButton } from '@/components/buttons';
-import InputLabel from '@/components/inputs/inputLabel.vue';
+import { InputError, InputLabel } from '@/components/inputs';
 import { FormGroup, FormSection } from '@/components/forms';
-import InputError from '@/components/inputs/inputError.vue';
 import EmptyState from '@/components/emptyState.vue';
 import { computed, onMounted, ref, watch } from 'vue';
 import { BreadcrumbItem } from '@/types';
@@ -72,10 +71,8 @@ const fileInput = ref<HTMLInputElement | null>(null);
                         class="mt-6 space-y-6"
                         @submit.prevent="submit">
                         <FormGroup>
-                            <div class="flex-1">
-                                <InputLabel
-                                    for="file"
-                                    value="Excel File" />
+                            <div class="grid flex-1 gap-2">
+                                <InputLabel for="file">Excel File </InputLabel>
 
                                 <input
                                     ref="fileInput"
