@@ -146,6 +146,12 @@ declare namespace App.Data.Download {
         phoneNumber: string;
     };
 }
+declare namespace App.Data.Dropdown {
+    export type DropdownData = {
+        value: string;
+        label: string;
+    };
+}
 declare namespace App.Data.Enums {
     export type CreditUnitData = {
         id: number;
