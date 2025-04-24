@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import { FormSection } from '@/components/forms';
-import { InputError, InputLabel, SelectInput, TextareaInput, TextInput } from '@/components/inputs';
+import { InputError, InputLabel, SelectInput, TextareaInput, TextInput, Toggle } from '@/components/inputs';
 import { useForm } from '@inertiajs/vue3';
 import { computed, ref, watch } from 'vue';
-import Toggle from '@/components/inputs/Toggle.vue';
 import { useDepartments } from '@/composables/departments';
 import { SelectItem } from '@/types';
 import { PrimaryButton, SecondaryButton } from '@/components/buttons';

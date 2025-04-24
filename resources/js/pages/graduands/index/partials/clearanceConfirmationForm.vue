@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import SelectInput from '@/components/inputs/SelectInput.vue';
-import { InputError, InputLabel } from '@/components/inputs';
+import { InputError, InputLabel, SelectInput } from '@/components/inputs';
 import { FormGroup, FormSection } from '@/components/forms';
 import { useForm } from '@inertiajs/vue3';
 import { useMonths } from '@/composables/months';

@@ -2,9 +2,8 @@
 import { BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
 import FinalResultForm from '@/pages/finalResults/index/partials/finalResultForm.vue';
-import BaseLink from '@/components/links/BaseLink.vue';
+import { BaseLink, IconLink } from '@/components/links';
 import EmptyState from '@/components/emptyState.vue';
-import { IconLink } from '@/components/links';
 import { computed } from 'vue';
 import FinalSessionResultsView from '@/pages/finalResults/index/partials/finalSessionResultsView.vue';
 import AppPage from '@/components/AppPage.vue';

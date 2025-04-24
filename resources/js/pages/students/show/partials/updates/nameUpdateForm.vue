@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import { FormGroup, FormSection } from '@/components/forms';
-import { InputError, InputLabel, TextareaInput, TextInput } from '@/components/inputs';
+import { InputError, InputLabel, TextareaInput, TextInput, Toggle } from '@/components/inputs';
 import { useForm } from '@inertiajs/vue3';
 import { computed, watch } from 'vue';
-import Toggle from '@/components/inputs/Toggle.vue';
 import { PrimaryButton, SecondaryButton } from '@/components/buttons';
 
 const props = defineProps<{
