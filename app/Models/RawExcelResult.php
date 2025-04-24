@@ -21,7 +21,10 @@ final class RawExcelResult extends Model
             ->pluck('registration_number');
     }
 
-    /** @return \Illuminate\Database\Eloquent\Collection<int, \App\Models\RawExcelResult> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Collection<int, $this>
+     * @return \Illuminate\Database\Eloquent\Collection<int, static>
+     */
     public static function getPendingRawResults(
         ExcelImportEvent $event,
         string $registrationNumber,

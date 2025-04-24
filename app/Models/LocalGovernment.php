@@ -25,7 +25,10 @@ final class LocalGovernment extends Model
         return self::query()->where('id', $localGovernmentId)->firstOrFail();
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\State, \App\Models\Student> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\State, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\State, static>
+     */
     public function state(): BelongsTo
     {
         return $this->belongsTo(State::class);

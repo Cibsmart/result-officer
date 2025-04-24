@@ -62,49 +62,73 @@ final class Student extends Model
         return 'slug';
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\Student> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, static>
+     */
     public function vettingReports(): MorphMany
     {
         return $this->MorphMany(VettingReport::class, 'vettable');
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\VettingEvent, \App\Models\Student> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\VettingEvent, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\VettingEvent, static>
+     */
     public function vettingEvent(): HasOne
     {
         return $this->hasOne(VettingEvent::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\LocalGovernment, \App\Models\Student> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\LocalGovernment, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\LocalGovernment, static>
+     */
     public function lga(): BelongsTo
     {
         return $this->belongsTo(LocalGovernment::class, 'local_government_id');
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\SessionEnrollment, \App\Models\Student> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\SessionEnrollment, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\SessionEnrollment, static>
+     */
     public function sessionEnrollments(): HasMany
     {
         return $this->hasMany(SessionEnrollment::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, \App\Models\Student> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, static>
+     */
     public function entryLevel(): BelongsTo
     {
         return $this->belongsTo(Level::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, \App\Models\Student> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, static>
+     */
     public function entrySession(): BelongsTo
     {
         return $this->belongsTo(Session::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Program, \App\Models\Student> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Program, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Program, static>
+     */
     public function program(): BelongsTo
     {
         return $this->belongsTo(Program::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\FinalStudent, \App\Models\Student> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\FinalStudent, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\FinalStudent, static>
+     */
     public function FinalStudent(): HasOne
     {
         return $this->hasOne(FinalStudent::class);
@@ -120,7 +144,9 @@ final class Student extends Model
 
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\SemesterEnrollment, \App\Models\SessionEnrollment, \App\Models\Student>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\SemesterEnrollment, \App\Models\SessionEnrollment, $this>
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\SemesterEnrollment, \App\Models\SessionEnrollment, static>
      */
     public function semesterEnrollments(): HasManyThrough
     {
@@ -129,14 +155,19 @@ final class Student extends Model
 
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\FinalSemesterEnrollment, \App\Models\FinalSessionEnrollment, \App\Models\Student>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\FinalSemesterEnrollment, \App\Models\FinalSessionEnrollment, $this>
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\FinalSemesterEnrollment, \App\Models\FinalSessionEnrollment, static>
      */
     public function finalSemesterEnrollments(): HasManyThrough
     {
         return $this->hasManyThrough(FinalSemesterEnrollment::class, FinalSessionEnrollment::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\StatusChangeEvent, \App\Models\Student> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\StatusChangeEvent, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\StatusChangeEvent, static>
+     */
     public function statusChangeEvents(): HasMany
     {
         return $this->hasMany(StatusChangeEvent::class);

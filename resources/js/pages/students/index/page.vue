@@ -1,112 +1,102 @@
 <script lang="ts" setup>
-import { BreadcrumbItem } from "@/types";
-import Breadcrumb from "@/components/breadcrumb.vue";
-import BaseHeader from "@/layouts/main/partials/baseHeader.vue";
-import BasePage from "@/layouts/main/partials/basePage.vue";
-import { Head } from "@inertiajs/vue3";
-import Card from "@/components/cards/card.vue";
-import CardHeader from "@/components/cards/cardHeader.vue";
-import CardFooter from "@/components/cards/cardFooter.vue";
-import { PaginatedStudentListData } from "@/types/paginate";
-import Pagination from "@/components/pagination.vue";
-import BaseTable from "@/components/tables/baseTable.vue";
-import BaseTHead from "@/components/tables/baseTHead.vue";
-import BaseTH from "@/components/tables/baseTH.vue";
-import BaseTBody from "@/components/tables/baseTBody.vue";
-import BaseTR from "@/components/tables/baseTR.vue";
-import BaseTD from "@/components/tables/baseTD.vue";
-import Badge from "@/components/badge.vue";
-import SecondaryLinkSmall from "@/components/links/secondaryLinkSmall.vue";
+import { BreadcrumbItem } from '@/types';
+import { Head } from '@inertiajs/vue3';
+import { PaginatedStudentListData } from '@/types/paginate';
+import Pagination from '@/components/pagination.vue';
+import { BaseTable, BaseTBody, BaseTD, BaseTH, BaseTHead, BaseTR } from '@/components/tables';
+import Badge from '@/components/badge.vue';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import AppLayout from '@/layouts/AppLayout.vue';
+import AppPage from '@/components/AppPage.vue';
+import { SecondaryLinkSmall } from '@/components/links';
 
-defineProps<{
-  paginated: PaginatedStudentListData;
-}>();
+defineProps<{ paginated: PaginatedStudentListData }>();
 
-const pages: BreadcrumbItem[] = [
-  { name: "Student", href: route("students.index"), current: route().current("students.index") },
-];
+const breadcrumbs: BreadcrumbItem[] = [{ title: 'Students', href: route('students.index') }];
 </script>
 
 <template>
-  <Head title="Students Page" />
+    <Head title="Students Page" />
 
-  <Breadcrumb :pages="pages" />
+    <AppLayout :breadcrumbs="breadcrumbs">
+        <AppPage
+            description="List of Students"
+            title="Students">
+            <Card>
+                <CardContent>
+                    <BaseTable>
+                        <BaseTHead>
+                            <BaseTH
+                                mobile
+                                position="left"
+                                >NAME
+                            </BaseTH>
 
-  <BaseHeader>Students Page</BaseHeader>
+                            <BaseTH position="left">REGISTRATION NUMBER</BaseTH>
 
-  <BasePage>
-    <Card>
-      <CardHeader>Head</CardHeader>
+                            <BaseTH>GENDER</BaseTH>
 
-      <BaseTable>
-        <BaseTHead>
-          <BaseTH
-            mobile
-            position="left"
-            >NAME
-          </BaseTH>
+                            <BaseTH>STATUS</BaseTH>
 
-          <BaseTH position="left">REGISTRATION NUMBER</BaseTH>
+                            <BaseTH position="left">DEPARTMENT</BaseTH>
 
-          <BaseTH>GENDER</BaseTH>
+                            <BaseTH mobile>ACTION</BaseTH>
+                        </BaseTHead>
 
-          <BaseTH>STATUS</BaseTH>
+                        <BaseTBody>
+                            <BaseTR
+                                v-for="student in paginated.data"
+                                :key="student.id">
+                                <BaseTD
+                                    mobile
+                                    position="left">
+                                    {{ student.name }}
 
-          <BaseTH position="left">DEPARTMENT</BaseTH>
+                                    <div class="mt-1 flex flex-col text-gray-700 sm:block lg:hidden dark:text-gray-300">
+                                        <span>{{ student.registrationNumber }}</span>
 
-          <BaseTH mobile>ACTION</BaseTH>
-        </BaseTHead>
+                                        <span class="hidden sm:inline"> || </span>
 
-        <BaseTBody>
-          <BaseTR
-            v-for="student in paginated.data"
-            :key="student.id">
-            <BaseTD
-              mobile
-              position="left">
-              {{ student.name }}
+                                        <span>
+                                            <Badge :color="student.statusColor">{{ student.status }}</Badge>
+                                        </span>
 
-              <div class="mt-1 flex flex-col text-gray-700 sm:block lg:hidden dark:text-gray-300">
-                <span>{{ student.registrationNumber }}</span>
+                                        <span class="hidden sm:inline"> || </span>
 
-                <span class="hidden sm:inline"> || </span>
+                                        <span>{{ student.department }}</span>
+                                    </div>
+                                </BaseTD>
 
-                <span>
-                  <Badge :color="student.statusColor">{{ student.status }}</Badge>
-                </span>
+                                <BaseTD position="left">{{ student.registrationNumber }}</BaseTD>
 
-                <span class="hidden sm:inline"> || </span>
+                                <BaseTD>{{ student.gender }}</BaseTD>
 
-                <span>{{ student.department }}</span>
-              </div>
-            </BaseTD>
+                                <BaseTD>
+                                    <Badge :color="student.statusColor">{{ student.status }}</Badge>
+                                </BaseTD>
 
-            <BaseTD position="left">{{ student.registrationNumber }}</BaseTD>
+                                <BaseTD
+                                    class="w-80"
+                                    position="left"
+                                    >{{ student.department }}
+                                </BaseTD>
 
-            <BaseTD>{{ student.gender }}</BaseTD>
+                                <BaseTD
+                                    class="px-2"
+                                    mobile>
+                                    <SecondaryLinkSmall :href="route('students.show', { student: student.slug })"
+                                        >View
+                                    </SecondaryLinkSmall>
+                                </BaseTD>
+                            </BaseTR>
+                        </BaseTBody>
+                    </BaseTable>
+                </CardContent>
 
-            <BaseTD>
-              <Badge :color="student.statusColor">{{ student.status }}</Badge>
-            </BaseTD>
-
-            <BaseTD
-              class="w-80"
-              position="left"
-              >{{ student.department }}
-            </BaseTD>
-
-            <BaseTD
-              class="px-2"
-              mobile>
-              <SecondaryLinkSmall :href="route('students.show', { student: student.slug })">View</SecondaryLinkSmall>
-            </BaseTD>
-          </BaseTR>
-        </BaseTBody>
-      </BaseTable>
-
-      <CardFooter>
-        <Pagination :paginated="paginated" />
-      </CardFooter>
-    </Card>
-  </BasePage>
+                <CardFooter>
+                    <Pagination :paginated="paginated" />
+                </CardFooter>
+            </Card>
+        </AppPage>
+    </AppLayout>
 </template>

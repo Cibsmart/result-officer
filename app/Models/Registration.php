@@ -133,36 +133,45 @@ final class Registration extends Model
         return $registration;
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, \App\Models\Registration> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, static>
+     */
     public function vettingReports(): MorphMany
     {
         return $this->MorphMany(VettingReport::class, 'vettable');
     }
 
     /**
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\SemesterEnrollment, \App\Models\Registration>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\SemesterEnrollment, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\SemesterEnrollment, static>
      */
     public function semesterEnrollment(): BelongsTo
     {
         return $this->belongsTo(SemesterEnrollment::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Course, \App\Models\Registration> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Course, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Course, static>
+     */
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\Result, \App\Models\Registration> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\Result, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\Result, static>
+     */
     public function result(): HasOne
     {
         return $this->hasOne(Result::class);
     }
 
     /**
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumCourse, \App\Models\Registration>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumCourse, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumCourse, static>
      */
     public function programCurriculumCourse(): BelongsTo
     {

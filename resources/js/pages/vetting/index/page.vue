@@ -1,49 +1,46 @@
 <script lang="ts" setup>
-import { Head } from "@inertiajs/vue3";
-import BaseSection from "@/layouts/main/partials/baseSection.vue";
-import BaseHeader from "@/layouts/main/partials/baseHeader.vue";
-import Breadcrumb from "@/components/breadcrumb.vue";
-import BasePage from "@/layouts/main/partials/basePage.vue";
-import { BreadcrumbItem } from "@/types";
-import VettingForm from "@/pages/vetting/index/partials/vettingForm.vue";
-import EmptyState from "@/components/emptyState.vue";
-import VettingEventList from "@/pages/vetting/index/partials/vettingEventList.vue";
-import { computed } from "vue";
-import { PaginatedVettingEventGroupListData } from "@/types/paginate";
+import { Head } from '@inertiajs/vue3';
+import { BreadcrumbItem } from '@/types';
+import VettingForm from '@/pages/vetting/index/partials/vettingForm.vue';
+import EmptyState from '@/components/emptyState.vue';
+import VettingEventList from '@/pages/vetting/index/partials/vettingEventList.vue';
+import { computed } from 'vue';
+import { PaginatedVettingEventGroupListData } from '@/types/paginate';
+import AppPage from '@/components/AppPage.vue';
+import AppLayout from '@/layouts/AppLayout.vue';
+import { Card } from '@/components/ui/card';
 
 const props = defineProps<{
-  paginated: PaginatedVettingEventGroupListData;
+    paginated: PaginatedVettingEventGroupListData;
 }>();
 
-const pages: BreadcrumbItem[] = [
-  { name: "Vetting", href: route("vettingEvent.index"), current: route().current("vettingEvent.index") },
-];
+const breadcrumbs: BreadcrumbItem[] = [{ title: 'Vetting', href: route('vettingEvent.index') }];
 
 const hasEvent = computed(() => props.paginated.data.length > 0);
 </script>
 
 <template>
-  <Head title="Vetting Page" />
+    <Head title="Vetting Page" />
 
-  <Breadcrumb :pages="pages" />
+    <AppLayout :breadcrumbs="breadcrumbs">
+        <AppPage
+            description="Vet Result of Possible Graduands"
+            title="Vetting">
+            <Card class="p-6">
+                <VettingForm />
+            </Card>
 
-  <BaseHeader> Vetting Page</BaseHeader>
+            <template v-if="hasEvent">
+                <VettingEventList :paginated="paginated" />
+            </template>
 
-  <BasePage>
-    <BaseSection>
-      <VettingForm />
-    </BaseSection>
-
-    <template v-if="hasEvent">
-      <VettingEventList :paginated="paginated" />
-    </template>
-
-    <template v-else>
-      <BaseSection>
-        <EmptyState
-          description="Start by vetting list of possible graduands above"
-          title="No Vetting Found" />
-      </BaseSection>
-    </template>
-  </BasePage>
+            <template v-else>
+                <Card>
+                    <EmptyState
+                        description="Start by vetting list of possible graduands above"
+                        title="No Vetting Found" />
+                </Card>
+            </template>
+        </AppPage>
+    </AppLayout>
 </template>

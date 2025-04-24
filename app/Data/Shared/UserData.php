@@ -10,10 +10,12 @@ use Spatie\LaravelData\Data;
 final class UserData extends Data
 {
     public function __construct(
-        public int $id,
-        public string $name,
-        public string $email,
-        public bool $isAdmin,
+        public readonly int $id,
+        public readonly string $name,
+        public readonly string $email,
+        public readonly bool $isAdmin,
+        public readonly string $avatar,
+        public readonly bool $emailVerified,
     ) {
     }
 
@@ -24,6 +26,8 @@ final class UserData extends Data
             name: $user->name,
             email: $user->email,
             isAdmin: $user->isAdmin(),
+            avatar: '',
+            emailVerified: ! is_null($user->email_verified_at),
         );
     }
 }

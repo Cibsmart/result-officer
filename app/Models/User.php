@@ -22,25 +22,37 @@ final class User extends Authenticatable implements FilamentUser
     /** @var list<string> */
     protected $hidden = ['password', 'remember_token'];
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ImportEvent, \App\Models\User> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ImportEvent, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ImportEvent, static>
+     */
     public function imports(): HasMany
     {
         return $this->hasMany(ImportEvent::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExcelImportEvent, \App\Models\User> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExcelImportEvent, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExcelImportEvent, static>
+     */
     public function excelImportEvents(): HasMany
     {
         return $this->hasMany(ExcelImportEvent::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\UserDepartment, \App\Models\User> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\UserDepartment, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\UserDepartment, static>
+     */
     public function departments(): HasMany
     {
         return $this->hasMany(UserDepartment::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\VettingEventGroup, \App\Models\User> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\VettingEventGroup, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\VettingEventGroup, static>
+     */
     public function vettingEventGroups(): HasMany
     {
         return $this->hasMany(VettingEventGroup::class);

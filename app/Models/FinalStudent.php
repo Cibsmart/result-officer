@@ -35,15 +35,18 @@ final class FinalStudent extends Model
         return self::fromStudent($student, $data);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, \App\Models\FinalStudent> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, static>
+     */
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class);
     }
 
     /**
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\FinalSessionEnrollment, \App\Models\FinalStudent>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\FinalSessionEnrollment, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\FinalSessionEnrollment, static>
      */
     public function finalSessionEnrollments(): HasMany
     {

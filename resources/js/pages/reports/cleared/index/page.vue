@@ -1,40 +1,37 @@
 <script lang="ts" setup>
-import { Head } from "@inertiajs/vue3";
-import Breadcrumb from "@/components/breadcrumb.vue";
-import BaseHeader from "@/layouts/main/partials/baseHeader.vue";
-import BaseSection from "@/layouts/main/partials/baseSection.vue";
-import BasePage from "@/layouts/main/partials/basePage.vue";
-import { BreadcrumbItem } from "@/types";
-import ClearedForm from "@/pages/reports/cleared/index/partials/clearedForm.vue";
-import { computed } from "vue";
-import ClearedList from "@/pages/reports/cleared/index/partials/clearedList.vue";
+import { Head } from '@inertiajs/vue3';
+import { BreadcrumbItem } from '@/types';
+import ClearedForm from '@/pages/reports/cleared/index/partials/clearedForm.vue';
+import { computed } from 'vue';
+import ClearedList from '@/pages/reports/cleared/index/partials/clearedList.vue';
+import AppPage from '@/components/AppPage.vue';
+import AppLayout from '@/layouts/AppLayout.vue';
+import { Card } from '@/components/ui/card';
 
 const props = defineProps<{
-  departments: App.Data.Department.DepartmentListData;
-  students: App.Data.Cleared.ClearedStudentListData;
+    departments: App.Data.Department.DepartmentListData;
+    students: App.Data.Cleared.ClearedStudentListData;
 }>();
 
 const hasClearedStudents = computed(() => props.students !== null);
 
-const pages: BreadcrumbItem[] = [
-  { name: "Cleared", href: route("department.cleared.index"), current: route().current("department.cleared.index") },
-];
+const breadcrumbs: BreadcrumbItem[] = [{ title: 'Cleared', href: route('department.cleared.index') }];
 </script>
 
 <template>
-  <Head title="Cleared Students" />
+    <Head title="Cleared Students" />
 
-  <Breadcrumb :pages="pages" />
+    <AppLayout :breadcrumbs="breadcrumbs">
+        <AppPage
+            description="List of Cleared Students per Department"
+            title="Cleared Students">
+            <Card class="p-6">
+                <ClearedForm :departments="departments.data" />
+            </Card>
 
-  <BaseHeader> Department Cleared Students</BaseHeader>
-
-  <BasePage>
-    <BaseSection>
-      <ClearedForm :departments="departments.data" />
-    </BaseSection>
-
-    <BaseSection v-if="hasClearedStudents">
-      <ClearedList :students="students" />
-    </BaseSection>
-  </BasePage>
+            <Card v-if="hasClearedStudents">
+                <ClearedList :students="students" />
+            </Card>
+        </AppPage>
+    </AppLayout>
 </template>

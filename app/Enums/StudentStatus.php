@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
+use App\Traits\AsDropdown;
+
 enum StudentStatus: string
 {
+    use AsDropdown;
+
     case NEW = 'new';
     case ACTIVE = 'active';
     case INACTIVE = 'inactive';

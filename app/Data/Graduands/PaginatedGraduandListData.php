@@ -12,7 +12,7 @@ use Spatie\LaravelData\Data;
 final class PaginatedGraduandListData extends Data
 {
     public function __construct(
-        /** @var \Illuminate\Pagination\AbstractPaginator<\App\Data\Graduands\GraduandData> $paginated */
+        /** @var \Illuminate\Pagination\AbstractPaginator<int, \App\Data\Graduands\GraduandData> $paginated */
         public readonly AbstractPaginator $paginated,
     ) {
     }
