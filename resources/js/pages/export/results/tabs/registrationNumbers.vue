@@ -1,12 +1,8 @@
 <script lang="ts" setup>
-import PrimaryButton from '@/components/buttons/primaryButton.vue';
-import InputLabel from '@/components/inputs/inputLabel.vue';
-import InputError from '@/components/inputs/inputError.vue';
+import { InputError, InputLabel, TextareaInput } from '@/components/inputs';
 import { useForm } from '@inertiajs/vue3';
-import BaseFormSection from '@/components/forms/baseFormSection.vue';
-import FormGroup from '@/components/forms/formGroup.vue';
-import AlignButton from '@/components/forms/alignButton.vue';
-import TextareaInput from '@/components/inputs/textareaInput.vue';
+import { AlignButton, FormGroup, FormSection } from '@/components/forms';
+import { PrimaryButton } from '@/components/buttons';
 
 const form = useForm({ registration_numbers: '' });
 
@@ -27,17 +23,15 @@ const download = () => {
 </script>
 
 <template>
-    <BaseFormSection
+    <FormSection
         description="Input students' Registration Numbers to export results records"
         header="Export Result Information">
         <form
             class="mt-6 space-y-6"
             @submit.prevent="submit">
             <FormGroup>
-                <div class="flex-1">
-                    <InputLabel
-                        for="registration_numbers"
-                        value="Registration Numbers" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="registration_numbers">Registration Numbers</InputLabel>
 
                     <TextareaInput
                         id="registration_numbers"
@@ -56,5 +50,5 @@ const download = () => {
                 </AlignButton>
             </FormGroup>
         </form>
-    </BaseFormSection>
+    </FormSection>
 </template>

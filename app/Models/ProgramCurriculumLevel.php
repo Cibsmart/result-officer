@@ -32,8 +32,8 @@ final class ProgramCurriculumLevel extends Model
     }
 
     /**
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculum, \App\Models\ProgramCurriculumLevel>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculum, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculum, static>
      */
     public function programCurriculum(): BelongsTo
     {
@@ -41,15 +41,18 @@ final class ProgramCurriculumLevel extends Model
     }
 
     /**
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumSemester, \App\Models\ProgramCurriculumLevel>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumSemester, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumSemester, static>
      */
     public function programCurriculumSemesters(): HasMany
     {
         return $this->HasMany(ProgramCurriculumSemester::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, \App\Models\ProgramCurriculumLevel> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, static>
+     */
     public function level(): BelongsTo
     {
         return $this->belongsTo(Level::class);

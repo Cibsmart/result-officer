@@ -118,7 +118,10 @@ final class FinalResult extends Model
         $result->save();
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FinalCourse, \App\Models\FinalResult> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FinalCourse, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FinalCourse, static>
+     */
     public function finalCourse(): BelongsTo
     {
         return $this->belongsTo(FinalCourse::class);

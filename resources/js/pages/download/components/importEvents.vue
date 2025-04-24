@@ -1,12 +1,10 @@
 <script lang="ts" setup>
-import BaseFormSection from '@/components/forms/baseFormSection.vue';
-import SecondaryLink from '@/components/links/secondaryLink.vue';
 import StaticFeeds from '@/components/feeds/staticFeeds.vue';
 import ActiveFeeds from '@/components/feeds/activeFeeds.vue';
-import BaseSection from '@/layouts/main/partials/baseSection.vue';
-import PrimaryLink from '@/components/links/primaryLink.vue';
 import { computed, onMounted, watch } from 'vue';
-import { usePoll } from '@inertiajs/vue3';
+import { usePoll, Link } from '@inertiajs/vue3';
+import { Card, CardContent, CardDescription, CardFooter } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 const props = defineProps<{
     events: Array<App.Data.Imports.ImportEventData>;
@@ -36,33 +34,38 @@ watch(hasPendingEvent, () => {
 
 <template>
     <template v-if="hasPendingEvent">
-        <BaseSection>
-            <BaseFormSection :description="pendingDescription">
+        <Card class="py-6">
+            <CardDescription>{{ pendingDescription }}</CardDescription>
+
+            <CardContent>
                 <ActiveFeeds :data="pending" />
+            </CardContent>
 
-                <SecondaryLink
-                    :href="route('import.event.cancel', { event: pending.id })"
-                    class="mt-6">
-                    Cancel
-                </SecondaryLink>
+            <CardFooter>
+                <div class="flex space-x-4">
+                    <Button
+                        asChild
+                        variant="secondary">
+                        <Link :href="route('import.event.cancel', { event: pending.id })"> Cancel</Link>
+                    </Button>
 
-                <PrimaryLink
-                    v-if="pending.canBeContinued"
-                    :href="route('import.event.continue', { event: pending.id })"
-                    class="mt-4 ml-4">
-                    Continue
-                </PrimaryLink>
-            </BaseFormSection>
-        </BaseSection>
+                    <Button
+                        v-if="pending.canBeContinued"
+                        asChild>
+                        <Link :href="route('import.event.continue', { event: pending.id })"> Continue</Link>
+                    </Button>
+                </div>
+            </CardFooter>
+        </Card>
     </template>
 
     <template v-if="hasEvent">
-        <BaseSection>
-            <BaseFormSection :description="historyDescription">
-                <StaticFeeds
-                    :events="events"
-                    class="my-4" />
-            </BaseFormSection>
-        </BaseSection>
+        <Card class="pt-4 pb-8">
+            <CardDescription>{{ historyDescription }}</CardDescription>
+
+            <CardContent>
+                <StaticFeeds :events="events" />
+            </CardContent>
+        </Card>
     </template>
 </template>

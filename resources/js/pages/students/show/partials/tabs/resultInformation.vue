@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import EmptyState from '@/components/emptyState.vue';
-import IconLink from '@/components/links/iconLink.vue';
+import { IconLink } from '@/components/links';
 import Session from '@/pages/results/index/partials/resultSessionView.vue';
 import { computed, ref } from 'vue';
 import Modal from '@/components/modal.vue';
-import BaseSection from '@/layouts/main/partials/baseSection.vue';
 import ResultUpdateForm from '@/pages/students/show/partials/updates/resultUpdateForm.vue';
 import ResultDeleteForm from '@/pages/students/show/partials/deletes/resultDeleteForm.vue';
+import { Card } from '@/components/ui/card';
 
 const props = defineProps<{
     student: App.Data.Students.StudentData;
@@ -72,24 +72,24 @@ const closeDeleteModal = () => (showDeleteModal.value = false);
     <Modal
         :show="showEditModal"
         @close="closeEditModal">
-        <BaseSection>
+        <Card class="p-6">
             <ResultUpdateForm
                 v-if="selectedResult"
                 :result="selectedResult"
                 :student="student"
                 @close="closeEditModal" />
-        </BaseSection>
+        </Card>
     </Modal>
 
     <Modal
         :show="showDeleteModal"
         @close="closeDeleteModal">
-        <BaseSection>
+        <Card class="p-6">
             <ResultDeleteForm
                 v-if="selectedResult"
                 :result="selectedResult"
                 :student="student"
                 @close="closeDeleteModal" />
-        </BaseSection>
+        </Card>
     </Modal>
 </template>

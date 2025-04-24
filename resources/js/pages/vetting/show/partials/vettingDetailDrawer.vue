@@ -1,11 +1,10 @@
 <script lang="ts" setup>
 import Drawer from '@/components/drawer.vue';
-import CardHeading from '@/components/cards/cardHeader.vue';
 import Disclosure from '@/components/baseDisclosure.vue';
-import Card from '@/components/cards/card.vue';
 import { ref, computed, watch } from 'vue';
 import { useVettingSteps } from '@/composables/vettingSteps';
 import Badge from '@/components/badge.vue';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 const props = defineProps<{
     slug: string;
@@ -56,18 +55,20 @@ const handleClose = () => {
                     </template>
 
                     <Card>
-                        <CardHeading>{{ vettingStep.description }}</CardHeading>
+                        <CardHeader>{{ vettingStep.description }}</CardHeader>
 
-                        <ul
-                            class="list-inside list-decimal divide-y divide-gray-300 dark:divide-gray-700"
-                            role="list">
-                            <li
-                                v-for="report in vettingStep.reports"
-                                :key="report.id"
-                                class="p-2">
-                                {{ report.message }}
-                            </li>
-                        </ul>
+                        <CardContent>
+                            <ul
+                                class="list-inside list-decimal divide-y divide-gray-300 dark:divide-gray-700"
+                                role="list">
+                                <li
+                                    v-for="report in vettingStep.reports"
+                                    :key="report.id"
+                                    class="p-2">
+                                    {{ report.message }}
+                                </li>
+                            </ul>
+                        </CardContent>
                     </Card>
                 </Disclosure>
             </div>

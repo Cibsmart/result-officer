@@ -146,6 +146,12 @@ declare namespace App.Data.Download {
         phoneNumber: string;
     };
 }
+declare namespace App.Data.Dropdown {
+    export type DropdownData = {
+        value: string;
+        label: string;
+    };
+}
 declare namespace App.Data.Enums {
     export type CreditUnitData = {
         id: number;
@@ -250,7 +256,7 @@ declare namespace App.Data.Graduands {
         graduands: Array<App.Data.Graduands.GraduandData>;
     };
     export type PaginatedGraduandListData = {
-        paginated: Array<App.Data.Graduands.GraduandData>;
+        paginated: { [key: number]: App.Data.Graduands.GraduandData };
     };
 }
 declare namespace App.Data.Imports {
@@ -429,7 +435,15 @@ declare namespace App.Data.Shared {
         type: App.Enums.NotificationType;
         body: string;
     };
+    export type QuoteData = {
+        message: string;
+        author: string;
+    };
     export type SharedData = {
+        name: string;
+        quote: App.Data.Shared.QuoteData;
+        location: string;
+        sidebarOpen: boolean;
         user: App.Data.Shared.UserData;
         notification: App.Data.Shared.NotificationData | null;
     };
@@ -438,6 +452,8 @@ declare namespace App.Data.Shared {
         name: string;
         email: string;
         isAdmin: boolean;
+        avatar: string;
+        emailVerified: boolean;
     };
 }
 declare namespace App.Data.States {
@@ -528,7 +544,7 @@ declare namespace App.Data.Summary {
 }
 declare namespace App.Data.Vetting {
     export type PaginatedVettingEventGroupListData = {
-        paginated: Array<App.Data.Vetting.VettingEventGroupData>;
+        paginated: { [key: number]: App.Data.Vetting.VettingEventGroupData };
     };
     export type VettingData = {
         id: number;
@@ -788,7 +804,7 @@ declare namespace App.ViewModels.Results {
 }
 declare namespace App.ViewModels.Students {
     export type StudentIndexPage = {
-        paginated: Array<App.Data.Students.StudentBasicData>;
+        paginated: { [key: number]: App.Data.Students.StudentBasicData };
     };
     export type StudentShowPage = {
         data: App.Data.Students.StudentComprehensiveData;
@@ -808,7 +824,7 @@ declare namespace App.ViewModels.Summary {
 }
 declare namespace App.ViewModels.Vetting {
     export type VettingIndexPage = {
-        paginated: any;
+        paginated: { [key: number]: App.Data.Vetting.VettingEventGroupData };
     };
     export type VettingShowPage = {
         event: App.Data.Vetting.VettingEventGroupData;

@@ -1,19 +1,10 @@
 <script lang="ts" setup>
-import BaseFormSection from '@/components/forms/baseFormSection.vue';
-import TextInput from '@/components/inputs/textInput.vue';
-import InputError from '@/components/inputs/inputError.vue';
-import InputLabel from '@/components/inputs/inputLabel.vue';
-import PrimaryButton from '@/components/buttons/primaryButton.vue';
+import { FormGroup, FormSection } from '@/components/forms';
+import { InputError, InputLabel, LabelInput, SelectInput, TextareaInput, TextInput, Toggle } from '@/components/inputs';
 import { useForm } from '@inertiajs/vue3';
-import SecondaryButton from '@/components/buttons/secondaryButton.vue';
 import { computed, watch } from 'vue';
-import CardFooter from '@/components/cards/cardFooter.vue';
-import TextareaInput from '@/components/inputs/textareaInput.vue';
-import Toggle from '@/components/inputs/toggle.vue';
-import FormGroup from '@/components/forms/formGroup.vue';
-import LabelInput from '@/components/inputs/labelInput.vue';
 import { useCreditUnits } from '@/composables/creditUnits';
-import SelectInput from '@/components/inputs/selectInput.vue';
+import { PrimaryButton, SecondaryButton } from '@/components/buttons';
 
 const props = defineProps<{
     student: App.Data.Students.StudentData;
@@ -67,7 +58,7 @@ const submit = () =>
 </script>
 
 <template>
-    <BaseFormSection
+    <FormSection
         :header="title"
         description="Update student's result and submit">
         <InputError :message="form.errors.result" />
@@ -76,10 +67,8 @@ const submit = () =>
             class="mt-6 space-y-6"
             @submit.prevent="submit">
             <FormGroup>
-                <div class="flex-1">
-                    <InputLabel
-                        for="in_course"
-                        value="In Course 1 Score" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="in_course">In Course 1 Score</InputLabel>
 
                     <TextInput
                         id="in_course"
@@ -93,10 +82,8 @@ const submit = () =>
                     <InputError :message="form.errors.in_course" />
                 </div>
 
-                <div class="flex-1">
-                    <InputLabel
-                        for="in_course_2"
-                        value="In Course 2 Score" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="in_course_2">In Course 2 Score</InputLabel>
 
                     <TextInput
                         id="in_course_2"
@@ -110,10 +97,8 @@ const submit = () =>
                     <InputError :message="form.errors.in_course_2" />
                 </div>
 
-                <div class="flex-1">
-                    <InputLabel
-                        for="other_names"
-                        value="Exam Score" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="other_names">Exam Score</InputLabel>
 
                     <TextInput
                         id="exam"
@@ -128,10 +113,8 @@ const submit = () =>
             </FormGroup>
 
             <FormGroup>
-                <div class="flex-1">
-                    <InputLabel
-                        for="credit_unit"
-                        value="Credit Unit" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="credit_unit">Credit Unit</InputLabel>
 
                     <SelectInput
                         id="month"
@@ -142,17 +125,18 @@ const submit = () =>
                     <InputError :message="form.errors.credit_unit" />
                 </div>
 
-                <div class="flex-1">
-                    <InputLabel value="Total Score" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="total">Total Score</InputLabel>
 
-                    <LabelInput>{{ total }}</LabelInput>
+                    <LabelInput
+                        id="total"
+                        v-model="total"
+                        autocomplete="off" />
                 </div>
             </FormGroup>
 
-            <div class="">
-                <InputLabel
-                    for="remark"
-                    value="Remark (state action performed)" />
+            <div class="grid gap-2">
+                <InputLabel for="remark">Remark (state action performed)</InputLabel>
 
                 <TextareaInput
                     id="remark"
@@ -169,10 +153,8 @@ const submit = () =>
             </div>
 
             <template v-if="form.has_mail">
-                <div class="">
-                    <InputLabel
-                        for="mail_title"
-                        value="Mail Title" />
+                <div class="grid gap-2">
+                    <InputLabel for="mail_title">Mail Title</InputLabel>
 
                     <TextareaInput
                         id="mail_title"
@@ -183,10 +165,8 @@ const submit = () =>
                     <InputError :message="form.errors.mail_title" />
                 </div>
 
-                <div class="mt-2">
-                    <InputLabel
-                        for="mail_date"
-                        value="Mail Date" />
+                <div class="grid gap-2">
+                    <InputLabel for="mail_date">Mail Date</InputLabel>
 
                     <TextInput
                         id="mail_date"
@@ -200,10 +180,8 @@ const submit = () =>
                 </div>
             </template>
 
-            <div class="mt-2">
-                <InputLabel
-                    for="password"
-                    value="Password (for confirmation and signature)" />
+            <div class="grid gap-2">
+                <InputLabel for="password">Password (for confirmation and signature)</InputLabel>
 
                 <TextInput
                     id="password"
@@ -216,17 +194,11 @@ const submit = () =>
                 <InputError :message="form.errors.password" />
             </div>
 
-            <CardFooter class="mt-6">
-                <div class="mt-2 flex justify-end">
-                    <SecondaryButton @click="emit('close')">Cancel</SecondaryButton>
+            <div class="flex justify-end gap-2">
+                <SecondaryButton @click="emit('close')"> Cancel</SecondaryButton>
 
-                    <PrimaryButton
-                        :disabled="canNotUpdate"
-                        class="ms-3">
-                        Update
-                    </PrimaryButton>
-                </div>
-            </CardFooter>
+                <PrimaryButton :disabled="canNotUpdate"> Update</PrimaryButton>
+            </div>
         </form>
-    </BaseFormSection>
+    </FormSection>
 </template>

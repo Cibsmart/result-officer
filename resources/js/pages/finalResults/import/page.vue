@@ -1,30 +1,22 @@
 <script lang="ts" setup>
-import { Head, useForm } from '@inertiajs/vue3';
-import Breadcrumb from '@/components/breadcrumb.vue';
-import BaseHeader from '@/layouts/main/partials/baseHeader.vue';
-import BasePage from '@/layouts/main/partials/basePage.vue';
-import BaseSection from '@/layouts/main/partials/baseSection.vue';
-import PrimaryButton from '@/components/buttons/primaryButton.vue';
-import InputLabel from '@/components/inputs/inputLabel.vue';
-import FormGroup from '@/components/forms/formGroup.vue';
-import BaseFormSection from '@/components/forms/baseFormSection.vue';
-import InputError from '@/components/inputs/inputError.vue';
+import { Head, useForm, usePoll } from '@inertiajs/vue3';
+import { PrimaryButton } from '@/components/buttons';
+import { InputError, InputLabel } from '@/components/inputs';
+import { FormGroup, FormSection } from '@/components/forms';
 import EmptyState from '@/components/emptyState.vue';
-import { computed, ref, watch, onMounted } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { BreadcrumbItem } from '@/types';
-import { usePoll } from '@inertiajs/vue3';
-import UploadedExcelList from '@/components/uploadedExcelList.vue';
+import UploadedExcelList from '@/components/UploadedExcelList.vue';
+import AppPage from '@/components/AppPage.vue';
+import AppLayout from '@/layouts/AppLayout.vue';
+import { Card } from '@/components/ui/card';
 
 const props = defineProps<{
     data: App.Data.Imports.ExcelImportEventListData;
 }>();
 
-const pages: BreadcrumbItem[] = [
-    {
-        name: 'Final Result Import',
-        href: route('import.final-results.index'),
-        current: route().current('import.final-results.index'),
-    },
+const breadcrumbs: BreadcrumbItem[] = [
+    { title: 'Import Reconciled Result', href: route('import.final-results.index') },
 ];
 
 const { start, stop } = usePoll(5000, {}, { autoStart: false });
@@ -67,57 +59,55 @@ const fileInput = ref<HTMLInputElement | null>(null);
 <template>
     <Head title="Import Final Results" />
 
-    <Breadcrumb :pages="pages" />
+    <AppLayout :breadcrumbs="breadcrumbs">
+        <AppPage
+            description="Upload Reconciled Results from Excel into the Database"
+            title="Import Reconciled Results">
+            <Card class="p-6">
+                <FormSection
+                    description="Select the Reconciled Results Excel (.xlsx) File and click Upload"
+                    header="Upload Reconciled Results">
+                    <form
+                        class="mt-6 space-y-6"
+                        @submit.prevent="submit">
+                        <FormGroup>
+                            <div class="grid flex-1 gap-2">
+                                <InputLabel for="file">Excel File </InputLabel>
 
-    <BaseHeader>Import Final (Reconciled) Results</BaseHeader>
+                                <input
+                                    ref="fileInput"
+                                    type="file"
+                                    @change="onFileChange" />
 
-    <BasePage>
-        <BaseSection>
-            <BaseFormSection
-                description="Select the Reconciled Results Excel (.xlsx) File and click Upload"
-                header="Upload Reconciled Results">
-                <form
-                    class="mt-6 space-y-6"
-                    @submit.prevent="submit">
-                    <FormGroup>
-                        <div class="flex-1">
-                            <InputLabel
-                                for="file"
-                                value="Excel File" />
+                                <progress
+                                    v-if="form.progress"
+                                    :value="form.progress.percentage"
+                                    max="100">
+                                    {{ form.progress.percentage }}%
+                                </progress>
 
-                            <input
-                                ref="fileInput"
-                                type="file"
-                                @change="onFileChange" />
+                                <InputError :message="form.errors.file" />
+                            </div>
 
-                            <progress
-                                v-if="form.progress"
-                                :value="form.progress.percentage"
-                                max="100">
-                                {{ form.progress.percentage }}%
-                            </progress>
+                            <div>
+                                <PrimaryButton :disabled="form.processing">Upload</PrimaryButton>
+                            </div>
+                        </FormGroup>
+                    </form>
+                </FormSection>
+            </Card>
 
-                            <InputError :message="form.errors.file" />
-                        </div>
+            <Card class="p-6">
+                <template v-if="hasEvent">
+                    <UploadedExcelList :data="data" />
+                </template>
 
-                        <div>
-                            <PrimaryButton :disabled="form.processing">Upload</PrimaryButton>
-                        </div>
-                    </FormGroup>
-                </form>
-            </BaseFormSection>
-        </BaseSection>
-
-        <BaseSection>
-            <template v-if="hasEvent">
-                <UploadedExcelList :data="data" />
-            </template>
-
-            <template v-else>
-                <EmptyState
-                    description="Start by selecting a file to upload and click Upload"
-                    title="No Final Result Upload Found" />
-            </template>
-        </BaseSection>
-    </BasePage>
+                <template v-else>
+                    <EmptyState
+                        description="Start by selecting a file to upload and click Upload"
+                        title="No Final Result Upload Found" />
+                </template>
+            </Card>
+        </AppPage>
+    </AppLayout>
 </template>

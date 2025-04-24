@@ -34,7 +34,7 @@ watch(
         v-model="selected"
         as="div"
         by="id">
-        <div class="relative mt-2">
+        <div class="relative">
             <div
                 class="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
                 <ComboboxInput

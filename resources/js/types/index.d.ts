@@ -1,4 +1,5 @@
 import type { FunctionalComponent, HTMLAttributes, VNodeProps } from 'vue';
+import type { LucideIcon } from 'lucide-vue-next';
 import SharedData = App.Data.Shared.SharedData;
 
 type IconType = FunctionalComponent<HTMLAttributes, VNodeProps>;
@@ -17,10 +18,29 @@ export interface UserNavigationItem {
     method: 'get' | 'post' | 'put' | 'delete';
 }
 
-export interface BreadcrumbItem {
+export interface BreadcrumbsItem {
     name: string;
     href: string;
     current: boolean;
+}
+
+export interface BreadcrumbItem {
+    title: string;
+    href: string;
+}
+
+export interface NavSubItem {
+    title: string;
+    href: string;
+    isActive?: boolean;
+}
+
+export interface NavItem {
+    title: string;
+    href: string;
+    icon?: LucideIcon | null;
+    isActive?: boolean;
+    items?: NavSubItem[];
 }
 
 export interface TabItem {
@@ -38,3 +58,5 @@ export interface EnumSelectItem {
 }
 
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & SharedData;
+
+export type BreadcrumbItemType = BreadcrumbItem;

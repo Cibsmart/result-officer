@@ -1,15 +1,13 @@
 <script lang="ts" setup>
-import SelectInput from '@/components/inputs/selectInput.vue';
-import PrimaryButton from '@/components/buttons/primaryButton.vue';
-import InputLabel from '@/components/inputs/inputLabel.vue';
-import InputError from '@/components/inputs/inputError.vue';
-import BaseFormSection from '@/components/forms/baseFormSection.vue';
-import SecondaryButton from '@/components/buttons/secondaryButton.vue';
-import FormGroup from '@/components/forms/formGroup.vue';
+import SelectInput from '@/components/inputs/SelectInput.vue';
+import { InputError, InputLabel } from '@/components/inputs';
+import { FormGroup, FormSection } from '@/components/forms';
 import { useForm } from '@inertiajs/vue3';
 import { useMonths } from '@/composables/months';
 import { useYears } from '@/composables/year';
 import { useExamOfficers } from '@/composables/examOfficers';
+import { LoaderCircle } from 'lucide-vue-next';
+import { PrimaryButton, SecondaryButton } from '@/components/buttons';
 
 const props = defineProps<{
     student: App.Data.Graduands.GraduandData;
@@ -44,68 +42,60 @@ const { officers, isLoading } = useExamOfficers();
 </script>
 
 <template>
-    <BaseFormSection
+    <FormSection
         description="Select Clearance Batch and Exam Officer"
         header="Clearance Confirmation">
         <form class="mt-6 space-y-6">
             <FormGroup>
                 <div class="flex w-full items-start space-x-4">
                     <div class="flex-1">
-                        <InputLabel
-                            for="year"
-                            value="Year" />
+                        <div class="grid gap-2">
+                            <InputLabel for="year">Year</InputLabel>
 
-                        <SelectInput
-                            id="year"
-                            v-model="form.year_object"
-                            :items="years"
-                            class="mt-1 block w-full" />
+                            <SelectInput
+                                id="year"
+                                v-model="form.year_object"
+                                :items="years" />
 
-                        <InputError
-                            :message="form.errors.year"
-                            class="mt-2" />
+                            <InputError :message="form.errors.year" />
+                        </div>
                     </div>
                 </div>
 
                 <div class="flex w-full items-start space-x-4">
                     <div class="flex-1">
-                        <InputLabel
-                            for="month"
-                            value="Month" />
+                        <div class="grid gap-2">
+                            <InputLabel for="month">Month</InputLabel>
 
-                        <SelectInput
-                            id="month"
-                            v-model="form.month_object"
-                            :items="months"
-                            class="mt-1 block w-full" />
+                            <SelectInput
+                                id="month"
+                                v-model="form.month_object"
+                                :items="months" />
 
-                        <InputError
-                            :message="form.errors.month"
-                            class="mt-2" />
+                            <InputError :message="form.errors.month" />
+                        </div>
                     </div>
                 </div>
             </FormGroup>
 
             <div class="flex w-full items-start space-x-4">
                 <div class="flex-1">
-                    <InputLabel
-                        for="exam_officer"
-                        value="Exam Officer" />
+                    <div class="grid gap-2">
+                        <InputLabel for="exam_officer">Exam Officer</InputLabel>
 
-                    <SelectInput
-                        v-if="!isLoading"
-                        id="exam_officer"
-                        v-model="form.exam_officer_object"
-                        :items="officers" />
+                        <SelectInput
+                            v-if="!isLoading"
+                            id="exam_officer"
+                            v-model="form.exam_officer_object"
+                            :items="officers" />
 
-                    <SelectInput
-                        v-else
-                        id="exam_officer_loading"
-                        :items="officers" />
+                        <SelectInput
+                            v-else
+                            id="exam_officer_loading"
+                            :items="officers" />
 
-                    <InputError
-                        :message="form.errors.exam_officer"
-                        class="mt-2" />
+                        <InputError :message="form.errors.exam_officer" />
+                    </div>
                 </div>
             </div>
         </form>
@@ -119,16 +109,17 @@ const { officers, isLoading } = useExamOfficers();
             <span class="font-bold">ALL</span> academic requirement for graduation.
         </p>
 
-        <div class="mt-6 flex justify-end">
+        <div class="flex justify-end gap-2">
             <SecondaryButton @click="emit('close')"> Cancel</SecondaryButton>
 
             <PrimaryButton
-                :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"
-                class="ms-3"
                 @click="clearStudent">
+                <LoaderCircle
+                    v-if="form.processing"
+                    class="h-4 w-4 animate-spin" />
                 Clear Student
             </PrimaryButton>
         </div>
-    </BaseFormSection>
+    </FormSection>
 </template>

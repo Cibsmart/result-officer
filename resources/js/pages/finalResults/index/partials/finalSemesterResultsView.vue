@@ -1,10 +1,5 @@
 <script lang="ts" setup>
-import BaseTD from '@/components/tables/baseTD.vue';
-import BaseTBody from '@/components/tables/baseTBody.vue';
-import BaseTR from '@/components/tables/baseTR.vue';
-import BaseTH from '@/components/tables/baseTH.vue';
-import BaseTHead from '@/components/tables/baseTHead.vue';
-import BaseTable from '@/components/tables/baseTable.vue';
+import { BaseTable, BaseTBody, BaseTD, BaseTH, BaseTHead, BaseTR } from '@/components/tables';
 import { computed } from 'vue';
 import HamburgerMenu from '@/components/hamburger/hamburgerMenu.vue';
 import HamburgerMenuItem from '@/components/hamburger/hamburgerMenuItem.vue';

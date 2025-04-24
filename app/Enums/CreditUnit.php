@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
+use App\Traits\AsDropdown;
+
 enum CreditUnit: int
 {
+    use AsDropdown;
+
     case ZERO = 0;
     case ONE = 1;
     case TWO = 2;

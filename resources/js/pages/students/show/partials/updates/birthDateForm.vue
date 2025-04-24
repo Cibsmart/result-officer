@@ -1,14 +1,9 @@
 <script lang="ts" setup>
-import BaseFormSection from '@/components/forms/baseFormSection.vue';
-import TextInput from '@/components/inputs/textInput.vue';
-import InputError from '@/components/inputs/inputError.vue';
-import InputLabel from '@/components/inputs/inputLabel.vue';
-import PrimaryButton from '@/components/buttons/primaryButton.vue';
+import { FormSection } from '@/components/forms';
+import { InputError, InputLabel, TextareaInput, TextInput } from '@/components/inputs';
+import { PrimaryButton, SecondaryButton } from '@/components/buttons';
 import { useForm } from '@inertiajs/vue3';
-import SecondaryButton from '@/components/buttons/secondaryButton.vue';
 import { computed } from 'vue';
-import CardFooter from '@/components/cards/cardFooter.vue';
-import TextareaInput from '@/components/inputs/textareaInput.vue';
 
 const props = defineProps<{
     student: App.Data.Students.StudentData;
@@ -32,16 +27,14 @@ const submit = () =>
 </script>
 
 <template>
-    <BaseFormSection
+    <FormSection
         :header="title"
         description="Update student's date of birth and submit">
         <form
             class="mt-6 space-y-6"
             @submit.prevent="submit">
-            <div class="">
-                <InputLabel
-                    for="date_of_birth"
-                    value="Date of Birth" />
+            <div class="grid gap-2">
+                <InputLabel for="date_of_birth">Date of Birth</InputLabel>
 
                 <TextInput
                     id="date_of_birth"
@@ -55,10 +48,8 @@ const submit = () =>
                 <InputError :message="form.errors.date_of_birth" />
             </div>
 
-            <div class="">
-                <InputLabel
-                    for="remark"
-                    value="Remark (state action performed)" />
+            <div class="grid gap-2">
+                <InputLabel for="remark">Remark (state action performed)</InputLabel>
 
                 <TextareaInput
                     id="remark"
@@ -68,17 +59,11 @@ const submit = () =>
                 <InputError :message="form.errors.remark" />
             </div>
 
-            <CardFooter class="mt-6">
-                <div class="mt-2 flex justify-end">
-                    <SecondaryButton @click="emit('close')">Cancel</SecondaryButton>
+            <div class="flex justify-end gap-2">
+                <SecondaryButton @click="emit('close')">Cancel</SecondaryButton>
 
-                    <PrimaryButton
-                        :disabled="canNotUpdate"
-                        class="ms-3">
-                        Update
-                    </PrimaryButton>
-                </div>
-            </CardFooter>
+                <PrimaryButton :disabled="canNotUpdate"> Update</PrimaryButton>
+            </div>
         </form>
-    </BaseFormSection>
+    </FormSection>
 </template>

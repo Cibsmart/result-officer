@@ -1,18 +1,11 @@
 <script lang="ts" setup>
-import BaseTR from '@/components/tables/baseTR.vue';
-import SecondaryLinkSmall from '@/components/links/secondaryLinkSmall.vue';
-import BaseTH from '@/components/tables/baseTH.vue';
-import BaseTD from '@/components/tables/baseTD.vue';
-import BaseTBody from '@/components/tables/baseTBody.vue';
-import BaseTable from '@/components/tables/baseTable.vue';
-import BaseTHead from '@/components/tables/baseTHead.vue';
-import SecondaryButtonSmall from '@/components/buttons/secondaryButtonSmall.vue';
+import { BaseTable, BaseTBody, BaseTD, BaseTH, BaseTHead, BaseTR } from '@/components/tables';
+import { SecondaryLinkSmall } from '@/components/links';
+import { SecondaryButtonSmall } from '@/components/buttons';
 import Badge from '@/components/badge.vue';
-import CardFooter from '@/components/cards/cardFooter.vue';
-import Card from '@/components/cards/card.vue';
 import Modal from '@/components/modal.vue';
-import CardHeader from '@/components/cards/cardHeader.vue';
 import { ref } from 'vue';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 
 defineProps<{
     data: App.Data.Imports.ExcelImportEventListData;
@@ -58,23 +51,22 @@ const currentEvent = ref<App.Data.Imports.ExcelImportEventData | null>(null);
                 </BaseTD>
 
                 <BaseTD>
-                    <SecondaryButtonSmall
-                        v-if="event.status === 'failed'"
-                        as="button"
-                        class="mr-2"
-                        preserveScroll="true"
-                        @click="showFailedMessage(event)">
-                        View
-                    </SecondaryButtonSmall>
+                    <div class="flex gap-2">
+                        <SecondaryButtonSmall
+                            v-if="event.status === 'failed'"
+                            @click="showFailedMessage(event)">
+                            View
+                        </SecondaryButtonSmall>
 
-                    <SecondaryLinkSmall
-                        v-if="event.status === 'queued' || event.status === 'failed'"
-                        :href="route('import.curriculum.delete', { event: event.id })"
-                        as="button"
-                        method="post"
-                        preserveScroll="true">
-                        Delete
-                    </SecondaryLinkSmall>
+                        <SecondaryLinkSmall
+                            v-if="event.status === 'queued' || event.status === 'failed'"
+                            :href="route('import.curriculum.delete', { event: event.id })"
+                            as="button"
+                            method="post"
+                            preserveScroll>
+                            Delete
+                        </SecondaryLinkSmall>
+                    </div>
                 </BaseTD>
             </BaseTR>
         </BaseTBody>
@@ -83,20 +75,20 @@ const currentEvent = ref<App.Data.Imports.ExcelImportEventData | null>(null);
     <Modal
         :show="showModal"
         @close="closeModal">
-        <div class="p-6">
+        <Card class="p-6">
             <CardHeader>Failed Message For: {{ currentEvent?.fileName }}</CardHeader>
 
-            <Card>
+            <CardContent>
                 <pre class="text-base whitespace-pre-wrap text-gray-700 dark:text-gray-300">{{
                     currentEvent?.message
                 }}</pre>
-            </Card>
+            </CardContent>
 
             <CardFooter>
                 <span class="text-sm font-semibold text-gray-400">
                     Correct the issues in the Excel file, delete the import and re-upload
                 </span>
             </CardFooter>
-        </div>
+        </Card>
     </Modal>
 </template>

@@ -1,12 +1,10 @@
 <script lang="ts" setup>
-import PrimaryButton from '@/components/buttons/primaryButton.vue';
-import TextInput from '@/components/inputs/textInput.vue';
-import InputLabel from '@/components/inputs/inputLabel.vue';
-import InputError from '@/components/inputs/inputError.vue';
+import { PrimaryButton } from '@/components/buttons';
+import TextInput from '@/components/inputs/TextInput.vue';
+import InputLabel from '@/components/inputs/InputLabel.vue';
+import InputError from '@/components/inputs/InputError.vue';
 import { useForm } from '@inertiajs/vue3';
-import BaseFormSection from '@/components/forms/baseFormSection.vue';
-import FormGroup from '@/components/forms/formGroup.vue';
-import AlignButton from '@/components/forms/alignButton.vue';
+import { AlignButton, FormGroup, FormSection } from '@/components/forms';
 
 const form = useForm({
     registration_number: '',
@@ -18,17 +16,15 @@ const submit = () => {
 </script>
 
 <template>
-    <BaseFormSection
+    <FormSection
         description="Input student's registration number to download results records"
         header="Download Result Information">
         <form
             class="mt-6 space-y-6"
             @submit.prevent="submit">
             <FormGroup>
-                <div class="flex-1">
-                    <InputLabel
-                        for="registration_number"
-                        value="Registration Number" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="registration_number">Registration Number </InputLabel>
 
                     <TextInput
                         id="registration_number"
@@ -47,5 +43,5 @@ const submit = () => {
                 </AlignButton>
             </FormGroup>
         </form>
-    </BaseFormSection>
+    </FormSection>
 </template>

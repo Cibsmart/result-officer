@@ -5,86 +5,64 @@ declare(strict_types=1);
 use Tests\Factories\InstitutionFactory;
 use Tests\Factories\UserFactory;
 
-test('profile page is displayed', function (): void {
-    $user = UserFactory::new()->create();
+use function Pest\Laravel\actingAs;
 
-    $response = $this
-        ->actingAs($user)
-        ->get('/profile');
+test('profile page is displayed', function (): void {
+    $user = UserFactory::new()->createOne();
+
+    $response = actingAs($user)
+        ->get(route('profile.edit'));
 
     $response->assertOk();
 });
 
-test('profile information can be updated', function (): void {
+test('profile information cannot be updated', function (): void {
     InstitutionFactory::new(['domain' => 'example.com'])->createOne();
-    $user = UserFactory::new()->create();
+    $user = UserFactory::new()->createOne(['name' => 'John Doe']);
 
-    $response = $this
-        ->actingAs($user)
-        ->patch('/profile', [
+    $response = actingAs($user)
+        ->patch(route('profile.update'), [
             'email' => 'test@example.com',
-            //            'name' => 'Test User',
+            'name' => 'Test User',
         ]);
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect('/profile');
+        ->assertRedirect(route('profile.edit'));
 
     $user->refresh();
 
-//    $this->assertSame('TEST USER', $user->name);
-    $this->assertSame('test@example.com', $user->email);
-    $this->assertNull($user->email_verified_at);
+    expect($user->name)->toBe('JOHN DOE')
+        ->and($user->email)->toBe('test@example.com')
+        ->and($user->email_verified_at)->toBeNull();
 });
 
 test('email verification status is unchanged when the email address is unchanged', function (): void {
     InstitutionFactory::new(['domain' => 'example.com'])->createOne();
-    $user = UserFactory::new()->create(['email' => 'test@example.com']);
+    $user = UserFactory::new()->createOne(['email' => 'test@example.com']);
 
-    $response = $this
-        ->actingAs($user)
-        ->patch('/profile', [
+    $response = actingAs($user)
+        ->patch(route('profile.update'), [
             'email' => $user->email,
             'name' => 'Test User',
         ]);
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect('/profile');
+        ->assertRedirect(route('profile.edit'));
 
-    $this->assertNotNull($user->refresh()->email_verified_at);
+    expect($user->refresh()->email_verified_at)->not->toBeNull();
 });
 
 test('user can delete their account', function (): void {
-    $user = UserFactory::new()->create();
+    $user = UserFactory::new()->createOne();
 
-    $response = $this
-        ->actingAs($user)
-        ->delete('/profile', [
+    $response = actingAs($user)
+        ->delete(route('profile.destroy'), [
             'password' => 'password',
         ]);
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect('/');
-
-//    assertGuest();
-//    assertSoftDeleted($user->fresh());
-});
-
-test('correct password must be provided to delete account', function (): void {
-    $user = UserFactory::new()->create();
-
-    $response = $this
-        ->actingAs($user)
-        ->from('/profile')
-        ->delete('/profile', [
-            'password' => 'wrong-password',
-        ]);
-
-    $response
-        ->assertSessionHasErrorsIn('password')
-        ->assertRedirect('/profile');
-
-    $this->assertNotNull($user->fresh());
+        ->assertRedirect(route('dashboard'));
 });

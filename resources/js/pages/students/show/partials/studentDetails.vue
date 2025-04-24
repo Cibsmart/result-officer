@@ -6,8 +6,8 @@ import StudentPageHeader from '@/pages/students/show/partials/studentPageHeader.
 import ResultInformation from '@/pages/students/show/partials/tabs/resultInformation.vue';
 import { ref } from 'vue';
 import Modal from '@/components/modal.vue';
-import BaseSection from '@/layouts/main/partials/baseSection.vue';
 import StudentDeleteForm from '@/pages/students/show/partials/deletes/studentDeleteForm.vue';
+import { Card } from '@/components/ui/card';
 
 defineProps<{
     student: App.Data.Students.StudentData;
@@ -66,11 +66,11 @@ const closeDeleteModal = () => (openDeleteStudentForm.value = false);
     <Modal
         :show="openDeleteStudentForm"
         @close="closeDeleteModal">
-        <BaseSection>
+        <Card class="p-6">
             <StudentDeleteForm
                 v-if="selectedStudent"
                 :student="student.basic"
                 @close="closeDeleteModal" />
-        </BaseSection>
+        </Card>
     </Modal>
 </template>

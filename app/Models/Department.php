@@ -49,13 +49,19 @@ final class Department extends Model
         return 'slug';
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Faculty, \App\Models\Department> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Faculty, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Faculty, static>
+     */
     public function faculty(): BelongsTo
     {
         return $this->belongsTo(Faculty::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Program, \App\Models\Department> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Program, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Program, static>
+     */
     public function programs(): HasMany
     {
         return $this->hasMany(Program::class);
@@ -63,7 +69,8 @@ final class Department extends Model
 
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Student, \App\Models\Program, \App\Models\Department>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Student, \App\Models\Program, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Student, \App\Models\Program, static>
      */
     public function students(): HasManyThrough
     {

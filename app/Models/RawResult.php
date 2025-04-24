@@ -49,13 +49,19 @@ final class RawResult extends Model
         $this->save();
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Result, \App\Models\RawResult> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Result, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Result, static>
+     */
     public function result(): BelongsTo
     {
         return $this->belongsTo(Result::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ImportEvent, \App\Models\RawResult> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ImportEvent, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ImportEvent, static>
+     */
     public function event(): BelongsTo
     {
         return $this->belongsTo(ImportEvent::class);

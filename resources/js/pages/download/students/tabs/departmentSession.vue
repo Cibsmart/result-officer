@@ -1,13 +1,9 @@
 <script lang="ts" setup>
-import InputLabel from '@/components/inputs/inputLabel.vue';
-import PrimaryButton from '@/components/buttons/primaryButton.vue';
-import InputError from '@/components/inputs/inputError.vue';
+import { InputError, InputLabel, SelectInput } from '@/components/inputs';
+import { PrimaryButton } from '@/components/buttons';
 import { useForm } from '@inertiajs/vue3';
-import SelectInput from '@/components/inputs/selectInput.vue';
 import { SelectItem } from '@/types';
-import BaseFormSection from '@/components/forms/baseFormSection.vue';
-import AlignButton from '@/components/forms/alignButton.vue';
-import FormGroup from '@/components/forms/formGroup.vue';
+import { AlignButton, FormGroup, FormSection } from '@/components/forms';
 
 defineProps<{
     departments: SelectItem[];
@@ -25,32 +21,26 @@ const submit = () => {
 </script>
 
 <template>
-    <BaseFormSection
+    <FormSection
         description="Select Department and Session to download students' records"
         header="Download Students Information">
         <form
             class="mt-6 space-y-6"
             @submit.prevent="submit">
             <FormGroup>
-                <div class="flex-1">
-                    <InputLabel
-                        for="department"
-                        value="Department" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="department">Department</InputLabel>
 
                     <SelectInput
                         id="department"
                         v-model="form.department"
                         :items="departments" />
 
-                    <InputError
-                        :message="form.errors.department"
-                        class="mt-2" />
+                    <InputError :message="form.errors.department" />
                 </div>
 
-                <div class="flex-1">
-                    <InputLabel
-                        for="session"
-                        value="Session" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="session">Session</InputLabel>
 
                     <SelectInput
                         id="session"
@@ -61,9 +51,9 @@ const submit = () => {
                 </div>
 
                 <AlignButton>
-                    <PrimaryButton :disabled="form.processing">Download</PrimaryButton>
+                    <PrimaryButton :disabled="form.processing"> Download</PrimaryButton>
                 </AlignButton>
             </FormGroup>
         </form>
-    </BaseFormSection>
+    </FormSection>
 </template>

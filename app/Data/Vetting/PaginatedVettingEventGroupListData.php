@@ -11,7 +11,7 @@ use Spatie\LaravelData\Data;
 final class PaginatedVettingEventGroupListData extends Data
 {
     public function __construct(
-        /** @var \Illuminate\Pagination\AbstractPaginator<\App\Data\Vetting\VettingEventGroupData> $paginated */
+        /** @var \Illuminate\Pagination\AbstractPaginator<int, \App\Data\Vetting\VettingEventGroupData> $paginated */
         public readonly AbstractPaginator $paginated,
     ) {
     }

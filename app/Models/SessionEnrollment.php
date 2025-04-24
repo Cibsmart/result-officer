@@ -34,7 +34,10 @@ final class SessionEnrollment extends Model
         $this->save();
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, \App\Models\SessionEnrollment> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, static>
+     */
     public function level(): BelongsTo
     {
         return $this->belongsTo(Level::class);
@@ -42,7 +45,9 @@ final class SessionEnrollment extends Model
 
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Registration, \App\Models\SemesterEnrollment, \App\Models\SessionEnrollment>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Registration, \App\Models\SemesterEnrollment, $this>
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Registration, \App\Models\SemesterEnrollment, static>
      */
     public function registrations(): HasManyThrough
     {
@@ -50,21 +55,27 @@ final class SessionEnrollment extends Model
     }
 
     /**
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\SemesterEnrollment, \App\Models\SessionEnrollment>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\SemesterEnrollment, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\SemesterEnrollment, static>
      */
     public function semesterEnrollments(): HasMany
     {
         return $this->hasMany(SemesterEnrollment::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, \App\Models\SessionEnrollment> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, static>
+     */
     public function session(): BelongsTo
     {
         return $this->belongsTo(Session::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, \App\Models\SessionEnrollment> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, static>
+     */
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class);

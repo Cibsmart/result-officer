@@ -33,13 +33,19 @@ final class VettingEvent extends Model
         );
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, \App\Models\VettingEvent> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, static>
+     */
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\VettingStep, \App\Models\VettingEvent> */
+    /**
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\VettingStep, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\VettingStep, static>
+     */
     public function vettingSteps(): HasMany
     {
         return $this->hasMany(VettingStep::class);
@@ -72,8 +78,8 @@ final class VettingEvent extends Model
     }
 
     /**
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\VettingEventGroup, \App\Models\VettingEvent>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\VettingEventGroup, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\VettingEventGroup, static>
      */
     public function vettingEventGroups(): BelongsToMany
     {

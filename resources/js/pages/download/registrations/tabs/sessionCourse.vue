@@ -1,14 +1,10 @@
 <script lang="ts" setup>
-import InputLabel from '@/components/inputs/inputLabel.vue';
-import PrimaryButton from '@/components/buttons/primaryButton.vue';
-import InputError from '@/components/inputs/inputError.vue';
+import { InputError, InputLabel, SelectInput } from '@/components/inputs';
 import { useForm } from '@inertiajs/vue3';
-import SelectInput from '@/components/inputs/selectInput.vue';
 import { SelectItem } from '@/types';
 import SelectInputSearchable from '@/components/inputs/selectInputSearchable.vue';
-import BaseFormSection from '@/components/forms/baseFormSection.vue';
-import FormGroup from '@/components/forms/formGroup.vue';
-import AlignButton from '@/components/forms/alignButton.vue';
+import { AlignButton, FormGroup, FormSection } from '@/components/forms';
+import { PrimaryButton } from '@/components/buttons';
 
 defineProps<{
     sessions: SelectItem[];
@@ -26,17 +22,15 @@ const submit = () => {
 </script>
 
 <template>
-    <BaseFormSection
+    <FormSection
         description="Select Session and Course to download course registration records"
         header="Download Course Registration Information">
         <form
             class="mt-6 space-y-6"
             @submit.prevent="submit">
             <FormGroup>
-                <div class="flex-1">
-                    <InputLabel
-                        for="session"
-                        value="Session" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="session">Session </InputLabel>
 
                     <SelectInput
                         id="session"
@@ -46,10 +40,8 @@ const submit = () => {
                     <InputError :message="form.errors.session" />
                 </div>
 
-                <div class="flex-1">
-                    <InputLabel
-                        for="course"
-                        value="Course" />
+                <div class="grid flex-1 gap-2">
+                    <InputLabel for="course">Course </InputLabel>
 
                     <SelectInputSearchable
                         id="course"
@@ -65,5 +57,5 @@ const submit = () => {
                 </AlignButton>
             </FormGroup>
         </form>
-    </BaseFormSection>
+    </FormSection>
 </template>
