@@ -4,12 +4,12 @@ import { Head } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import Students from '@/pages/summary/view/partials/students.vue';
 import EmptyState from '@/components/emptyState.vue';
-import IconLink from '@/components/links/IconLink.vue';
 import AppPage from '@/components/AppPage.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Printer } from 'lucide-vue-next';
+import { IconLink } from '@/components/links';
 
 const props = defineProps<{
     department: App.Data.Summary.DepartmentResultSummaryData;
