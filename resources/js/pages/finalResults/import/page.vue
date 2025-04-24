@@ -72,7 +72,7 @@ const fileInput = ref<HTMLInputElement | null>(null);
                         @submit.prevent="submit">
                         <FormGroup>
                             <div class="grid flex-1 gap-2">
-                                <InputLabel for="file">Excel File </InputLabel>
+                                <InputLabel for="file">Excel File</InputLabel>
 
                                 <input
                                     ref="fileInput"
