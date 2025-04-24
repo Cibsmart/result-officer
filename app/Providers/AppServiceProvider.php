@@ -86,7 +86,7 @@ final class AppServiceProvider extends ServiceProvider
 
         Model::shouldBeStrict(App::isLocal());
 
-        Model::preventLazyLoading();
+        Model::automaticallyEagerLoadRelationships();
 
         DB::prohibitDestructiveCommands(App::isProduction());
 
