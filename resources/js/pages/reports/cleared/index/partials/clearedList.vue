@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import EmptyState from '@/components/emptyState.vue';
-import IconLink from '@/components/links/IconLink.vue';
+import { IconLink } from '@/components/links';
 import { computed } from 'vue';
 import { BaseTable, BaseTBody, BaseTD, BaseTH, BaseTHead, BaseTR } from '@/components/tables';
 

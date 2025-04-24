@@ -4,7 +4,7 @@ import { BreadcrumbItem } from '@/types';
 import { computed } from 'vue';
 import BaseLink from '@/components/links/BaseLink.vue';
 import EmptyState from '@/components/emptyState.vue';
-import IconLink from '@/components/links/IconLink.vue';
+import { IconLink } from '@/components/links';
 import ResultForm from '@/pages/results/index/partials/resultForm.vue';
 import ResultSessionView from '@/pages/results/index/partials/resultSessionView.vue';
 import AppPage from '@/components/AppPage.vue';
