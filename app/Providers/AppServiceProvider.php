@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Console\Commands\DeleteStudent;
 use App\Contracts\RegistrationClient;
 use App\Contracts\ResultClient;
 use App\Contracts\StudentClient;
@@ -87,6 +88,8 @@ final class AppServiceProvider extends ServiceProvider
         Model::shouldBeStrict(App::isLocal());
 
         Model::automaticallyEagerLoadRelationships();
+
+        DeleteStudent::prohibit(App::isProduction());
 
         DB::prohibitDestructiveCommands(App::isProduction());
 

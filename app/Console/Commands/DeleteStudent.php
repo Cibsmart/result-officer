@@ -7,10 +7,13 @@ namespace App\Console\Commands;
 use App\Models\SemesterEnrollment;
 use App\Models\Student;
 use Illuminate\Console\Command;
+use Illuminate\Console\Prohibitable;
 use Illuminate\Support\Facades\Log;
 
 final class DeleteStudent extends Command
 {
+    use Prohibitable;
+
     protected $signature = 'rp:delete-student {registrationNumber}';
 
     protected $description = 'Force Deletes a Student Record with all its Enrollments, Registrations, and Results';
@@ -19,14 +22,7 @@ final class DeleteStudent extends Command
     {
         $student = Student::getUsingRegistrationNumber($this->argument('registrationNumber'));
 
-        $sessionEnrollments = $student->sessionEnrollments()
-            ->with([
-                'semesterEnrollments.registrations.result.resultDetail',
-                'semesterEnrollments.registrations.course',
-                'semesterEnrollments.semester',
-                'session',
-            ])
-            ->get();
+        $sessionEnrollments = $student->sessionEnrollments;
 
         Log::info('Deleting Student ...: ' . $student->registration_number);
 
