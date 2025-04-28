@@ -65,6 +65,11 @@ final class Result extends Model
         return ResultModelData::fromRawExcelResult($registration, $rawResult)->save();
     }
 
+    public static function getUsingId(int $resultId): self
+    {
+        return self::query()->findOrFail($resultId);
+    }
+
     public function recompute(Student $student): void
     {
         $total = ScoresData::fromArray($this->getScores())->total;
