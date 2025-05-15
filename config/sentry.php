@@ -9,8 +9,7 @@ declare(strict_types=1);
 return [
 
     // @see https://docs.sentry.io/product/sentry-basics/dsn-explainer/
-    'dsn' => env('SENTRY_LARAVEL_DSN', env('SENTRY_DSN',
-        'https://4ce4d1458c84d8f54f3aab43a64d271c@o4509213051125760.ingest.de.sentry.io/4509213131407440')),
+    'dsn' => env('SENTRY_LARAVEL_DSN', env('SENTRY_DSN')),
 
     // @see https://spotlightjs.com/
     // 'spotlight' => env('SENTRY_SPOTLIGHT', false),
