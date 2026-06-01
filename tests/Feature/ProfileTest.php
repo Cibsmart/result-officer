@@ -66,3 +66,9 @@ test('user can delete their account', function (): void {
         ->assertSessionHasNoErrors()
         ->assertRedirect(route('dashboard'));
 });
+
+it('visits login', function (): void {
+    $page = visit(route('login'));
+
+    $page->assertSee('Login');
+});
