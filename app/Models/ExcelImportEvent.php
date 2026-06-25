@@ -93,8 +93,8 @@ final class ExcelImportEvent extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawFinalResult, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawFinalResult, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawFinalResult, $this>
      */
     public function rawFinalResults(): HasMany
     {
@@ -102,8 +102,8 @@ final class ExcelImportEvent extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawExcelResult, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawExcelResult, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawExcelResult, $this>
      */
     public function rawExcelResults(): HasMany
     {
@@ -111,12 +111,21 @@ final class ExcelImportEvent extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawCurriculumCourse, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawCurriculumCourse, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawCurriculumCourse, $this>
      */
     public function rawCurriculumCourses(): HasMany
     {
         return $this->hasMany(RawCurriculumCourse::class);
+    }
+
+    public function rawRecordCount(): int
+    {
+        return match ($this->type) {
+            ExcelImportType::RESULT => $this->rawExcelResults()->count(),
+            ExcelImportType::FINAL_RESULT => $this->rawFinalResults()->count(),
+            ExcelImportType::CURRICULUM => $this->rawCurriculumCourses()->count(),
+        };
     }
 
     public function updateStatus(ImportEventStatus $status): void

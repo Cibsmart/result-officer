@@ -21,15 +21,26 @@ final class ValidateHeadings
         $headings = array_filter($headings, fn (string|int $header) => is_string($header));
 
         $validatedHeadings = [];
+        $validatedScores = [];
 
         foreach ($headings as $heading) {
-            $validatedHeadingKey = $this->getBestMatchingValidHeadingKey($heading, $expectedHeadings);
+            [$validatedHeadingKey, $matchScore] = $this->getBestMatchingValidHeadingKey($heading, $expectedHeadings);
 
             if ($validatedHeadingKey === null) {
                 continue;
             }
 
+            // Keep the heading that matches a field best. A weaker later match
+            // (e.g. "old_registration_number" at 90%) must never overwrite a
+            // stronger earlier one (e.g. "registration_number" at 100%).
+            if (array_key_exists($validatedHeadingKey, $validatedScores)
+                && $matchScore <= $validatedScores[$validatedHeadingKey]
+            ) {
+                continue;
+            }
+
             $validatedHeadings[$validatedHeadingKey] = $heading;
+            $validatedScores[$validatedHeadingKey] = $matchScore;
         }
 
         $missingHeadings = array_keys(array_diff_key($expectedHeadings, $validatedHeadings));
@@ -43,8 +54,11 @@ final class ValidateHeadings
         ];
     }
 
-    /** @param array<string, array<int, string>> $expectedHeadings */
-    private function getBestMatchingValidHeadingKey(string $heading, array $expectedHeadings): ?string
+    /**
+     * @param array<string, array<int, string>> $expectedHeadings
+     * @return array{0: string|null, 1: float}
+     */
+    private function getBestMatchingValidHeadingKey(string $heading, array $expectedHeadings): array
     {
         $bestMatch = null;
         $bestMatchPercentage = 0.0;
@@ -60,12 +74,12 @@ final class ValidateHeadings
             $bestMatchPercentage = $highestMatchScore;
         }
 
-        return $bestMatch;
+        return [$bestMatch, $bestMatchPercentage];
     }
 
     /**
      * @param array<int, string> $possibleNames
-     * @return array<int, bool|float>
+     * @return array{bool, float}
      */
     private function getMatches(string $heading, array $possibleNames): array
     {
