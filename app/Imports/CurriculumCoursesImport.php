@@ -4,33 +4,19 @@ declare(strict_types=1);
 
 namespace App\Imports;
 
-use App\Models\ExcelImportEvent;
+use App\Imports\Excel\SpreadsheetImport;
 use App\Models\RawCurriculumCourse;
-use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-final class CurriculumCoursesImport implements ToModel, WithCalculatedFormulas, WithHeadingRow
+final class CurriculumCoursesImport extends SpreadsheetImport
 {
-    use Importable;
-
-    /** @param array<string, string> $headings */
-    public function __construct(private readonly ExcelImportEvent $event, private readonly array $headings)
+    /** {@inheritDoc} */
+    protected function model(): string
     {
+        return RawCurriculumCourse::class;
     }
 
-    /** @param array<string, string> $headings */
-    public static function new(ExcelImportEvent $event, array $headings): self
-    {
-        return new self($event, $headings);
-    }
-
-    /**
-     * @param array<string, string> $row
-     * {@inheritDoc}
-     */
-    public function model(array $row): ?RawCurriculumCourse
+    /** {@inheritDoc} */
+    protected function mapRow(array $row): ?array
     {
         if (
             ! isset($row[$this->headings['course_code']])
@@ -39,6 +25,6 @@ final class CurriculumCoursesImport implements ToModel, WithCalculatedFormulas, 
             return null;
         }
 
-        return RawCurriculumCourse::fromExcelRow($row, $this->event, $this->headings);
+        return RawCurriculumCourse::attributesFromExcelRow($row, $this->event, $this->headings);
     }
 }

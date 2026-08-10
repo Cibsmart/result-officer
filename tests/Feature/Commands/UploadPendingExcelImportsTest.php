@@ -5,49 +5,63 @@ declare(strict_types=1);
 use App\Enums\ExcelImportType;
 use App\Enums\ImportEventStatus;
 use App\Models\ExcelImportEvent;
+use App\Models\RawCurriculumCourse;
 use App\Models\RawExcelResult;
 use Illuminate\Support\Facades\Storage;
-use Maatwebsite\Excel\Concerns\FromArray;
-use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Facades\Excel;
+use OpenSpout\Common\Entity\Row;
+use OpenSpout\Writer\XLSX\Writer;
 use Tests\Factories\UserFactory;
 
 use function Pest\Laravel\artisan;
 
+/**
+ * @param array<int, string> $headings
+ * @param array<int, array<int, int|string>> $rows
+ */
+function storeWorkbook(string $directory, array $headings, array $rows): string
+{
+    $path = $directory . '/' . uniqid('test_', true) . '.xlsx';
+
+    Storage::disk('local')->makeDirectory($directory);
+
+    $writer = new Writer();
+    $writer->openToFile(Storage::disk('local')->path($path));
+    $writer->addRow(Row::fromValues($headings));
+
+    foreach ($rows as $row) {
+        $writer->addRow(Row::fromValues($row));
+    }
+
+    $writer->close();
+
+    return $path;
+}
+
 /** @param array<int, array<int, int|string>> $rows */
 function storeResultsWorkbook(array $rows): string
 {
-    $export = new class($rows) implements FromArray, WithHeadings
-    {
-        /** @param array<int, array<int, int|string>> $rows */
-        public function __construct(private readonly array $rows)
-        {
-        }
+    // Note: both registration_number and old_registration_number are present,
+    // reproducing the RES4.xlsx collision that silently dropped every row.
+    $headings = [
+        'sn', 'students_name', 'registration_number', 'old_registration_number',
+        'in_course_1', 'in_course_2', 'exam', 'total', 'grade', 'credit_unit',
+        'semester', 'session', 'course_code', 'course_title', 'students_department',
+        'examiners_name', 'examiners_department', 'exam_date',
+    ];
 
-        /** @return array<int, string> */
-        public function headings(): array
-        {
-            // Note: both registration_number and old_registration_number are present,
-            // reproducing the RES4.xlsx collision that silently dropped every row.
-            return [
-                'sn', 'students_name', 'registration_number', 'old_registration_number',
-                'in_course_1', 'in_course_2', 'exam', 'total', 'grade', 'credit_unit',
-                'semester', 'session', 'course_code', 'course_title', 'students_department',
-                'examiners_name', 'examiners_department', 'exam_date',
-            ];
-        }
+    return storeWorkbook('result', $headings, $rows);
+}
 
-        /** @return array<int, array<int, int|string>> */
-        public function array(): array
-        {
-            return $this->rows;
-        }
-    };
+/** @param array<int, array<int, int|string>> $rows */
+function storeCurriculumWorkbook(array $rows): string
+{
+    $headings = [
+        'sn', 'program', 'curriculum', 'entry_mode', 'session', 'level', 'semester',
+        'course_type', 'course_code', 'course_title', 'credit_unit',
+        'minimum_elective_unit', 'minimum_elective_count', 'elective_group',
+    ];
 
-    $path = 'result/' . uniqid('test_', true) . '.xlsx';
-    Excel::store($export, $path, 'local');
-
-    return $path;
+    return storeWorkbook('curriculum', $headings, $rows);
 }
 
 /** @return array<int, int|string> A single results row matching storeResultsWorkbook()'s headings. */
@@ -102,6 +116,38 @@ test('it fails loudly and does not complete when no rows are imported', function
     expect($event->status)->toBe(ImportEventStatus::FAILED)
         ->and($event->rawExcelResults()->count())->toBe(0)
         ->and($event->message)->toContain('No rows were imported');
+
+    Storage::disk('local')->delete($path);
+});
+
+test('it imports curriculum courses and skips rows without a course code', function (): void {
+    $path = storeCurriculumWorkbook([
+        [1, 'MEDICAL LABORATORY SCIENCE', 'REGULAR', 'UTME', '2020/2021', '400', 'FIRST',
+            'CORE', 'AMB 422', 'MEDICAL VIROLOGY', 3, 0, 0, ''],
+        [2, 'MEDICAL LABORATORY SCIENCE', 'REGULAR', 'UTME', '2020/2021', '400', 'FIRST',
+            'ELECTIVE', '', 'NO CODE', 2, 4, 2, 'GROUP A'],
+    ]);
+
+    $event = ExcelImportEvent::new(
+        UserFactory::new()->createOne(),
+        ExcelImportType::CURRICULUM,
+        $path,
+        'CUR1.xlsx',
+    );
+
+    artisan('rp:upload-pending-excel-imports')->assertExitCode(0);
+
+    $event->refresh();
+
+    $course = RawCurriculumCourse::query()->firstOrFail();
+
+    expect($event->status)->toBe(ImportEventStatus::UPLOADED)
+        ->and($event->rawCurriculumCourses()->count())->toBe(1)
+        ->and($course->course_code)->toBe('AMB 422')
+        ->and($course->credit_unit)->toBe(3)
+        ->and($course->entry_session)->toBe('2020/2021')
+        ->and($course->excel_import_event_id)->toBe($event->id)
+        ->and($course->created_at)->not->toBeNull();
 
     Storage::disk('local')->delete($path);
 });

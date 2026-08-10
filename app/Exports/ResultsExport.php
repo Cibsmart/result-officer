@@ -6,19 +6,55 @@ namespace App\Exports;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
-use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\FromQuery;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Events\AfterSheet;
-use PhpOffice\PhpSpreadsheet\Style\Color;
-use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use OpenSpout\Common\Entity\Cell;
+use OpenSpout\Common\Entity\Comment\Comment;
+use OpenSpout\Common\Entity\Comment\TextRun;
+use OpenSpout\Common\Entity\Row;
+use OpenSpout\Common\Entity\Style\Color;
+use OpenSpout\Common\Entity\Style\Style;
+use OpenSpout\Writer\XLSX\Options;
+use OpenSpout\Writer\XLSX\Writer;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-final class ResultsExport implements FromQuery, ShouldAutoSize, WithEvents, WithHeadings, WithMapping
+final class ResultsExport
 {
-    use Exportable;
+    private const string ID_COLUMN_NOTE
+        = 'Do NOT edit values in this column. For any inserted record set the ID to 0';
+
+    private const array HEADINGS = [
+        'SN',
+        'ID',
+        'Students Name',
+        'Registration Number',
+        'In Course 1',
+        'In Course 2',
+        'Exam',
+        'Total',
+        'Grade',
+        'Credit Unit',
+        'Semester',
+        'Session',
+        'Course Code',
+        'Course Title',
+        'Students Department',
+        'Examiners Name',
+        'Examiners Department',
+        'Exam Date',
+        'Year',
+        'Month',
+        'Originating Session',
+        'Database Officer',
+        'Exam Officer',
+        'Old Registration Number',
+    ];
+
+    /**
+     * Openspout cannot auto size columns, so each one is given a width that fits
+     * the values it holds. Indexed the same way as HEADINGS.
+     */
+    private const array COLUMN_WIDTHS = [
+        6, 10, 34, 22, 12, 12, 8, 8, 8, 12, 12, 14, 14, 40, 30, 30, 30, 14, 8, 12, 20, 22, 22, 24,
+    ];
 
     private int $rowNumber = 0;
 
@@ -31,6 +67,11 @@ final class ResultsExport implements FromQuery, ShouldAutoSize, WithEvents, With
     public static function forStudents(array $studentIds): self
     {
         return new self($studentIds);
+    }
+
+    public function download(string $fileName): BinaryFileResponse
+    {
+        return response()->download($this->write(), $fileName)->deleteFileAfterSend();
     }
 
     public function query(): Builder
@@ -65,99 +106,105 @@ final class ResultsExport implements FromQuery, ShouldAutoSize, WithEvents, With
             ->orderBy('courses.code');
     }
 
-    /** @return array<int, string> */
-    public function headings(): array
+    /**
+     * The styles keyed by the column index they apply to.
+     * @return array<int, \OpenSpout\Common\Entity\Style\Style>
+     */
+    private static function columnStyles(): array
     {
+        $scoreStyle = (new Style())->setFormat('00');
+
         return [
-            'SN',
-            'ID',
-            'Students Name',
-            'Registration Number',
-            'In Course 1',
-            'In Course 2',
-            'Exam',
-            'Total',
-            'Grade',
-            'Credit Unit',
-            'Semester',
-            'Session',
-            'Course Code',
-            'Course Title',
-            'Students Department',
-            'Examiners Name',
-            'Examiners Department',
-            'Exam Date',
-            'Year',
-            'Month',
-            'Originating Session',
-            'Database Officer',
-            'Exam Officer',
-            'Old Registration Number',
+            1 => (new Style())->setFontColor(Color::DARK_RED),
+            4 => $scoreStyle,
+            5 => $scoreStyle,
+            6 => $scoreStyle,
+            7 => $scoreStyle,
+            17 => (new Style())->setFormat('@'),
         ];
     }
 
-    /** @return array<int, string> */
-    public function map(mixed $row): array
+    private static function headingRow(): Row
+    {
+        $row = Row::fromValues(self::HEADINGS, (new Style())->setFontBold());
+
+        $idHeading = $row->getCellAtIndex(1);
+        assert($idHeading instanceof Cell);
+
+        $idHeading->setStyle((new Style())->setFontColor(Color::DARK_RED));
+
+        $comment = new Comment();
+        $comment->addTextRun(new TextRun(self::ID_COLUMN_NOTE));
+
+        $idHeading->comment = $comment;
+
+        return $row;
+    }
+
+    /** Writes the workbook to a temporary file and returns its path. */
+    private function write(): string
+    {
+        $path = tempnam(sys_get_temp_dir(), 'results-export-');
+        assert(is_string($path));
+
+        $options = new Options();
+
+        foreach (self::COLUMN_WIDTHS as $index => $width) {
+            $options->setColumnWidth($width, $index + 1);
+        }
+
+        $writer = new Writer($options);
+        $writer->openToFile($path);
+        $writer->addRow(self::headingRow());
+
+        $columnStyles = self::columnStyles();
+
+        foreach ($this->query()->cursor() as $record) {
+            $writer->addRow(Row::fromValuesWithStyles($this->map($record), null, $columnStyles));
+        }
+
+        $writer->close();
+
+        return $path;
+    }
+
+    /** @return array<int, int|string|null> */
+    private function map(mixed $record): array
     {
         $this->rowNumber ++;
 
-        $department = $row->department === $row->program
-            ? $row->department
-            : "{$row->department} ({$row->program})";
+        $department = $record->department === $record->program
+            ? $record->department
+            : "{$record->department} ({$record->program})";
 
-        $scores = json_decode($row->scores);
+        $scores = json_decode((string) $record->scores);
         $inCourse2 = $scores->in_course_2 ?? '0';
 
         return [
             (string) $this->rowNumber,
-            $row->registration_id,
-            "{$row->last_name} {$row->first_name} {$row->other_names}",
-            $row->registration_number,
+            $record->registration_id,
+            "{$record->last_name} {$record->first_name} {$record->other_names}",
+            $record->registration_number,
             $scores->in_course,
             $inCourse2,
             $scores->exam,
-            $row->total_score,
-            $row->grade,
-            $row->credit_unit,
-            $row->semester,
-            $row->session,
-            $row->course_code,
-            $row->course_title,
+            $record->total_score,
+            $record->grade,
+            $record->credit_unit,
+            $record->semester,
+            $record->session,
+            $record->course_code,
+            $record->course_title,
             $department,
-            $row->examiner,
-            $row->examiner_department,
-            $row->exam_date,
+            $record->examiner,
+            $record->examiner_department,
+            $record->exam_date,
             '',
             '',
-            $row->session,
+            $record->session,
             '',
             '',
-            $row->old_registration_number,
-        ];
-    }
-
-    /** @return array<string, \Closure> */
-    public function registerEvents(): array
-    {
-        return [
-            AfterSheet::class => function (AfterSheet $event): void {
-                $sheet = $event->getSheet();
-
-                $sheet->getStyle('A1:X1')->getFont()->setBold(true);
-                $sheet->getStyle('B:B')->getFont()->getColor()->setRGB(Color::COLOR_DARKRED);
-
-                $sheet->formatColumn('E', '00');
-                $sheet->formatColumn('F', '00');
-                $sheet->formatColumn('G', '00');
-                $sheet->formatColumn('H', '00');
-                $sheet->formatColumn('R', NumberFormat::FORMAT_TEXT);
-
-                $message = 'Do NOT edit values in this column. For any inserted record set the ID to 0';
-
-                $comment = $sheet->getComment('B1');
-                $comment->getText()->createTextRun($message);
-                $comment->setAuthor('System');
-            },
+            $record->old_registration_number,
         ];
     }
 }

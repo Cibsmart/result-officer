@@ -7,11 +7,11 @@ namespace App\Models;
 use App\Actions\Imports\Excel\ValidateHeadings;
 use App\Enums\ExcelImportType;
 use App\Enums\ImportEventStatus;
+use App\Imports\Excel\Spreadsheet;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
-use Maatwebsite\Excel\HeadingRowImport;
 
 final class ExcelImportEvent extends Model
 {
@@ -59,9 +59,10 @@ final class ExcelImportEvent extends Model
     ): array {
         $result = ['passed' => true, 'message' => ''];
 
-        $headings = (new HeadingRowImport())->toArray($file)[0][0];
+        $filePath = $file->getRealPath();
+        assert(is_string($filePath));
 
-        $validation = (new ValidateHeadings())->execute($headings, $type);
+        $validation = (new ValidateHeadings())->execute(Spreadsheet::headings($filePath), $type);
 
         if (! $validation['passed']) {
             $message = "Invalid File: The following headings are missing: {$validation['missing']}.";
