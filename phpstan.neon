@@ -17,6 +17,9 @@ parameters:
         -   '#^Parameter (\#1 )?\$user of static method App\\[A-Za-z\\]+:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
         -   '#^Property App\\Models\\\w+\:\:\$\w+ \(string\|null\) does not accept Carbon\\Carbon\|null\.$#'
         -   '#^Property App\\Models\\\w+\:\:\$\w+ \(string\) does not accept App\\Enums\\\w+\.$#'
+        # Larastan types unsigned columns as int<0, max> when writing, but reads a
+        # model's own key back as a plain int, so every foreign-key assignment trips.
+        -   '#^Property App\\Models\\\w+\:\:\$\w+ \(int<0, max>(\|null)?\) does not accept int(\|null)?\.$#'
 
     treatPhpDocTypesAsCertain: false
     checkExplicitMixed: false

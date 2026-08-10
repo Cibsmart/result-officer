@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
 
 final class Program extends Model
 {
-    use softDeletes;
+    use SoftDeletes;
 
     private const CODES = [
         'Accounting Education' => 'ACC',

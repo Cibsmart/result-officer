@@ -23,7 +23,7 @@ final class RawExcelResult extends Model
 
     /**
      * @return \Illuminate\Database\Eloquent\Collection<int, static>
-     * @phpstan-return \Illuminate\Database\Eloquent\Collection<int, $this>
+     * @phpstan-return \Illuminate\Database\Eloquent\Collection<int, self>
      */
     public static function getPendingRawResults(
         ExcelImportEvent $event,

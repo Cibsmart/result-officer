@@ -14,8 +14,11 @@
     </testsuites>
     <source>
         <include>
-            <directory>app</directory>
+            <directory suffix=".php">app</directory>
         </include>
+        <exclude>
+            <directory suffix=".php">app/Filament</directory>
+        </exclude>
     </source>
     <php>
         <env name="APP_ENV" value="testing"/>
@@ -35,12 +38,4 @@
         <!--        <env name="RP_HTTP_ENDPOINT_RESULT" value="results"/>-->
         <!--        <env name="RP_HTTP_ENDPOINT_STUDENT" value="students"/>-->
     </php>
-    <coverage>
-        <include>
-            <directory suffix=".php">app/</directory>
-        </include>
-        <exclude>
-            <directory suffix=".php">app/Filament/</directory>
-        </exclude>
-    </coverage>
 </phpunit>

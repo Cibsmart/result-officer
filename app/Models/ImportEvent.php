@@ -181,7 +181,7 @@ final class ImportEvent extends Model
 
     /**
      * @return \Illuminate\Database\Eloquent\Collection<int, static>
-     * @phpstan-return \Illuminate\Database\Eloquent\Collection<int, $this>
+     * @phpstan-return \Illuminate\Database\Eloquent\Collection<int, self>
      */
     private static function getEventsFor(
         ImportEventType $type,

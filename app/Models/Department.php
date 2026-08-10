@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
 
 final class Department extends Model
 {
-    use softDeletes;
+    use SoftDeletes;
 
     public static function createFromRawDepartment(RawDepartment $rawDepartment): self
     {

@@ -11,7 +11,7 @@ final class CourseAlternative extends Model
 {
     /**
      * @return \Illuminate\Database\Eloquent\Collection<int, static>
-     * @phpstan-return \Illuminate\Database\Eloquent\Collection<int, $this>
+     * @phpstan-return \Illuminate\Database\Eloquent\Collection<int, self>
      */
     public static function getUsingOriginalCourseId(int $courseId): Collection
     {

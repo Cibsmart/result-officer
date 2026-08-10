@@ -137,16 +137,18 @@ final class CompositeSheetData extends Data
             ->orderBy('courses.code')
             ->with('course')
             ->get()
-            ->map(
-                function (ProgramCurriculumCourse $course) {
-                    $creditUnit = $course->credit_unit;
-                    assert($creditUnit instanceof CreditUnit);
+            ->map(self::toCourseRow(...));
+    }
 
-                    return [
-                        'code' => $course->course->code, 'unit' => $creditUnit->value,
-                    ];
-                },
-            );
+    /** @return array{code: string, unit: int} */
+    private static function toCourseRow(ProgramCurriculumCourse $course): array
+    {
+        $creditUnit = $course->credit_unit;
+        assert($creditUnit instanceof CreditUnit);
+
+        return [
+            'code' => $course->course->code, 'unit' => $creditUnit->value,
+        ];
     }
 
     /** @return \Illuminate\Support\LazyCollection<int, \App\Models\Student> */
