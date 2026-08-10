@@ -1,225 +1,315 @@
 <html lang="en">
 <head>
   <title>{{ "$student->registrationNumber - OFFICIAL TRANSCRIPT"}}</title>
-  <link rel="stylesheet" href="{{ asset("css/prints.css") }}">
+  {{--
+    Deliberately self-contained CSS rather than the Tailwind build in prints.css:
+    mPDF supports neither CSS custom properties (which every --tw-* utility relies
+    on) nor flexbox/grid, so this page is laid out with tables and plain CSS 2.1
+    that mPDF and the browser both render the same way.
+  --}}
+  <style>
+    body {
+      color: #111827;
+      font-family: sans-serif;
+      font-size: 8pt;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    table.bordered th, table.bordered td {
+      border: 0.2mm solid #9ca3af;
+      padding: 1mm;
+    }
+
+    th {
+      font-weight: bold;
+      text-align: center;
+    }
+
+    td {
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .heading {
+      text-align: center;
+    }
+
+    .heading .institution {
+      font-size: 11pt;
+      font-weight: bold;
+    }
+
+    .heading .office {
+      font-size: 9pt;
+      font-weight: bold;
+    }
+
+    .strong {
+      font-weight: bold;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .uppercase {
+      text-transform: uppercase;
+    }
+
+    .spaced {
+      margin-top: 3mm;
+    }
+
+    .page-break {
+      page-break-after: always;
+    }
+
+    .summary td {
+      border: none;
+      padding: 0;
+      vertical-align: top;
+    }
+
+    .summary .grading {
+      padding-right: 4mm;
+      width: 34%;
+    }
+
+    .summary .fcgpa {
+      font-size: 9pt;
+      font-weight: bold;
+      padding-right: 4mm;
+      text-align: center;
+      vertical-align: middle;
+      width: 16%;
+    }
+
+    .summary .award {
+      width: 50%;
+    }
+
+    .certified {
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
 
-<div class="mt-4 max-w-3xl mx-auto mb-4">
-  <div class="w-full mx-auto">
-    <div class="flex flex-col text-center">
-      <span class="text-black text-lg leading-5 font-bold">EBONYI STATE UNIVERSITY, ABAKALIKI</span>
-      <span class="text-black text-md leading-5  font-bold">OFFICE OF THE REGISTRAR</span>
-      <span class="text-black  text-md leading-5 font-bold">RECORDS UNIT</span>
-      <span class="text-black  text-md leading-5 font-bold">TRANSCRIPT OF ACADEMIC RECORDS</span>
-    </div>
-  </div>
+<div class="heading">
+  <div class="institution">EBONYI STATE UNIVERSITY, ABAKALIKI</div>
+  <div class="office">OFFICE OF THE REGISTRAR</div>
+  <div class="office">RECORDS UNIT</div>
+  <div class="office">TRANSCRIPT OF ACADEMIC RECORDS</div>
+</div>
 
-  <div class="mt-2 w-full mx-auto">
-    <table class="min-w-full mx-auto divide-y divide-gray-400 ring-1 ring-gray-400">
-      <tbody class="divide-y divide-gray-400 bg-white">
-      <tr class="divide-x divide-gray-400">
-        <td colspan="2" class="p-1.5 text-left text-xs text-gray-900 uppercase">
-          <div class="flex flex-col space-y-1">
-            <div>SURNAME: <span class="font-semibold">{{ $student->lastName }}</span></div>
-            <div>OTHER NAMES: <span class="font-semibold">{{ "$student->firstName $student->otherNames" }}</span></div>
-          </div>
-        </td>
+<table class="bordered spaced">
+  <tbody>
+  <tr>
+    <td colspan="2" class="uppercase">
+      <div>SURNAME: <span class="strong">{{ $student->lastName }}</span></div>
+      <div>OTHER NAMES: <span class="strong">{{ "$student->firstName $student->otherNames" }}</span></div>
+    </td>
 
-        <td colspan="2" class="p-1.5 text-left text-xs text-gray-900 uppercase">
-          Registration Number: <span class="font-semibold">{{ $student->registrationNumber }}</span>
-        </td>
-      </tr>
+    <td colspan="2" class="uppercase">
+      Registration Number: <span class="strong">{{ $student->registrationNumber }}</span>
+    </td>
+  </tr>
 
-      <tr class="divide-x divide-gray-400">
-        <td class="p-1.5 text-left text-xs text-gray-900 uppercase w-32">
-          Sex: <span class="font-semibold">{{ $student->gender }}</span>
-        </td>
+  <tr>
+    <td class="uppercase" style="width: 15%">
+      Sex: <span class="strong">{{ $student->gender }}</span>
+    </td>
 
-        <td class="p-1.5 text-left text-xs text-gray-900 uppercase w-80">
-          DATE OF BIRTH: <span class="font-semibold">{{ $student->birthDate }}</span>
-        </td>
+    <td class="uppercase" style="width: 30%">
+      DATE OF BIRTH: <span class="strong">{{ $student->birthDate }}</span>
+    </td>
 
-        <td class="p-1.5 text-left text-xs text-gray-900 uppercase w-80">
-          DATE OF ADMISSION: <span class="font-semibold">{{ $student->admissionYear }}</span>
-        </td>
+    <td class="uppercase" style="width: 30%">
+      DATE OF ADMISSION: <span class="strong">{{ $student->admissionYear }}</span>
+    </td>
 
-        <td class="whitespace-nowrap p-1.5 text-xs text-left text-gray-900 uppercase w-48">
-          NATIONALITY: <span class="font-semibold">{{ $student->nationality }}</span>
-        </td>
-      </tr>
+    <td class="uppercase" style="width: 25%">
+      NATIONALITY: <span class="strong">{{ $student->nationality }}</span>
+    </td>
+  </tr>
 
-      <tr class="divide-x divide-gray-400">
-        <td colspan="2" class="whitespace-nowrap p-1.5 text-xs text-left text-gray-900 uppercase">
-          FACULTY: <span class="font-semibold">{{ $student->faculty }}</span>
-        </td>
-        <td colspan="2" class="whitespace-nowrap p-1.5 text-xs text-left text-gray-900 uppercase">
-          DEPARTMENT: <span class="font-semibold">{{ $student->department }}</span>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+  <tr>
+    <td colspan="2" class="uppercase">
+      FACULTY: <span class="strong">{{ $student->faculty }}</span>
+    </td>
+    <td colspan="2" class="uppercase">
+      DEPARTMENT: <span class="strong">{{ $student->department }}</span>
+    </td>
+  </tr>
+  </tbody>
+</table>
 
-  @foreach($results->finalSessionEnrollments as $session)
+@foreach($results->finalSessionEnrollments as $session)
+  <div @class(['page-break' => ! $loop->last])>
     @foreach($session->finalSemesterResults as $semester)
-      <table class="w-full mt-4 mx-auto divide-y divide-gray-400 ring-1 ring-gray-400">
+      <table class="bordered spaced">
         <thead>
-        <tr class="divide-x divide-gray-400">
-          <th scope="col" class="p-1 text-center text-xs font-semibold text-gray-900 w-18">YEAR</th>
-          <th scope="col" class="p-1 text-center text-xs font-medium text-gray-900 w-18">SEMESTER</th>
-          <th scope="col" class="p-1 text-center text-xs font-medium text-gray-900 w-16">COURSE CODE</th>
-          <th scope="col" class="p-1 text-center text-xs font-medium text-gray-900 w-96">COURSE TITLE</th>
-          <th scope="col" class="p-1 text-center text-xs font-medium text-gray-900 w-12">CREDIT HOUR</th>
-          <th scope="col" class="p-1 text-center text-xs font-medium text-gray-900 w-12">LETTER GRADE</th>
-          <th scope="col" class="p-1 text-center text-xs font-medium text-gray-900 w-12">GRADE POINT</th>
-          <th scope="col" class="p-1 text-center text-xs font-medium text-gray-900 w-12">GPA</th>
-          <th scope="col" class="p-1 text-center text-xs font-medium text-gray-900 w-12">CGPA</th>
-          <th scope="col" class="px-2 py-1 text-center text-xs font-medium text-gray-900 w-12">FCGPA</th>
+        <tr>
+          <th style="width: 8%">YEAR</th>
+          <th style="width: 9%">SEMESTER</th>
+          <th style="width: 10%">COURSE CODE</th>
+          <th style="width: 31%">COURSE TITLE</th>
+          <th style="width: 7%">CREDIT HOUR</th>
+          <th style="width: 7%">LETTER GRADE</th>
+          <th style="width: 7%">GRADE POINT</th>
+          <th style="width: 7%">GPA</th>
+          <th style="width: 7%">CGPA</th>
+          <th style="width: 7%">FCGPA</th>
         </tr>
         </thead>
 
+        <tbody>
         @foreach($semester->results as $result)
-          <tbody class="divide-y divide-gray-400 bg-white">
-
-          <tr class="divide-x divide-gray-400">
-            <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900">
+          <tr>
+            <td class="center">
               @if($loop->first)
                 {{ $session->year }}
               @endif
             </td>
-            <td class="whitespace-nowrap p-1 text-xs text-gray-900">
+            <td>
               @if($loop->first)
                 {{ $semester->semester }}
               @endif
             </td>
-            <td class="whitespace-nowrap p-1 text-xs text-gray-900">{{ $result->courseCode }}</td>
-            <td class="p-1 text-xs text-gray-900">{{ $result->courseTitle }}</td>
-            <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900">{{ $result->creditUnit }}</td>
-            <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900">{{ $result->grade }}</td>
-            <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900">{{ $result->gradePoint }}</td>
-            <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900"></td>
-            <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900"></td>
-            <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900"></td>
+            <td>{{ $result->courseCode }}</td>
+            <td>{{ $result->courseTitle }}</td>
+            <td class="center">{{ $result->creditUnit }}</td>
+            <td class="center">{{ $result->grade }}</td>
+            <td class="center">{{ $result->gradePoint }}</td>
+            <td class="center"></td>
+            <td class="center"></td>
+            <td class="center"></td>
           </tr>
+        @endforeach
 
-          @endforeach
-          <tr class="divide-x divide-gray-400">
-            <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900" colspan="4"></td>
-            <td
-              class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">{{ $semester->formattedCreditUnitTotal }}</td>
-            <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900"></td>
-            <td
-              class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">{{ $semester->formattedGradePointTotal }}</td>
-            <td
-              class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">{{ $semester->formattedGPA }}</td>
-            <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">
-              @if($loop->last)
-                {{ $session->formattedCGPA }}
-              @endif
-            </td>
-            <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900 font-bold">
-              @if($loop->parent->last && $loop->last)
-                {{ $results->formattedFCGPA }}
-              @endif
-            </td>
-          </tr>
-          </tbody>
+        <tr>
+          <td colspan="4"></td>
+          <td class="center strong">{{ $semester->formattedCreditUnitTotal }}</td>
+          <td class="center"></td>
+          <td class="center strong">{{ $semester->formattedGradePointTotal }}</td>
+          <td class="center strong">{{ $semester->formattedGPA }}</td>
+          <td class="center strong">
+            @if($loop->last)
+              {{ $session->formattedCGPA }}
+            @endif
+          </td>
+          <td class="center strong">
+            @if($loop->parent->last && $loop->last)
+              {{ $results->formattedFCGPA }}
+            @endif
+          </td>
+        </tr>
+        </tbody>
       </table>
     @endforeach
 
-    <div class="flex w-full justify-between mx-auto space-x-4">
-      <div class="basis-4/12">
-        <table class="w-full mt-4 mx-auto divide-y divide-gray-400 ring-1 ring-gray-400 text-gray-700">
-          <thead>
-          <tr class="divide-x divide-gray-400">
-            <th scope="col" class="p-1 text-center text-xs font-semibold text-gray-900">%</th>
-            <th scope="col" class="p-1 text-center text-xs font-medium text-gray-900">INTERPRETATION</th>
-            <th scope="col" class="p-1 text-center text-xs font-medium text-gray-900">LETTER</th>
-            <th scope="col" class="px-2 py-1 text-center text-xs font-medium text-gray-900">POINT</th>
-          </tr>
-          </thead>
-
-          <tbody class="divide-y divide-gray-400 bg-white">
-          @foreach($transcript->gradingSchemes as $item)
-            <tr class="divide-x divide-gray-400">
-              <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900">{{ $item->range }}</td>
-              <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900">{{ $item->interpretation }}</td>
-              <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900">{{ $item->grade }}</td>
-              <td class="whitespace-nowrap p-1 text-xs text-center text-gray-900">{{ $item->gradePoint }}</td>
+    <table class="summary spaced">
+      <tr>
+        <td class="grading">
+          <table class="bordered">
+            <thead>
+            <tr>
+              <th>%</th>
+              <th>INTERPRETATION</th>
+              <th>LETTER</th>
+              <th>POINT</th>
             </tr>
-          @endforeach
-          </tbody>
-        </table>
-      </div>
-      <div class="basis-2/12 mt-4">
-        <div class="h-full grid place-content-center font-extrabold">
+            </thead>
+
+            <tbody>
+            @foreach($transcript->gradingSchemes as $item)
+              <tr>
+                <td class="center">{{ $item->range }}</td>
+                <td class="center">{{ $item->interpretation }}</td>
+                <td class="center">{{ $item->grade }}</td>
+                <td class="center">{{ $item->gradePoint }}</td>
+              </tr>
+            @endforeach
+            </tbody>
+          </table>
+        </td>
+
+        <td class="fcgpa">
           @if($loop->last)
             FCGPA: {{ $results->formattedFCGPA }}
           @endif
-        </div>
-      </div>
-      <div class="basis-6/12">
-        <table class="w-full mt-4 mx-auto ring-1 ring-gray-400 text-gray-700">
-          <tbody class="divide-y divide-gray-400 bg-white">
-          <tr>
-            <td class="p-1 text-left text-xs text-gray-900">
-              DEGREE AWARDED:
-              <span class="font-semibold">
-                @if($loop->last)
-                  {{ $results->degreeAwarded }}
-                @else
-                  XXXXXXXXXXXXXXXXXXXXXXXXX
-                @endif
-              </span>
-            </td>
-          </tr>
+        </td>
 
-          <tr>
-            <td class="p-1 text-left text-xs text-gray-900">
-              CLASS:
-              <span class="font-semibold">
-                @if($loop->last)
-                  {{ $results->degreeClass }}
-                @else
-                  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-                @endif
-              </span>
-            </td>
-          </tr>
+        <td class="award">
+          <table class="bordered">
+            <tbody>
+            <tr>
+              <td>
+                DEGREE AWARDED:
+                <span class="strong">
+                  @if($loop->last)
+                    {{ $results->degreeAwarded }}
+                  @else
+                    XXXXXXXXXXXXXXXXXXXXXXXXX
+                  @endif
+                </span>
+              </td>
+            </tr>
 
-          <tr>
-            <td class="p-1 text-left text-xs text-gray-900">
-              DATE OF GRADUATION:
-              <span class="font-semibold">
-                @if($loop->last)
-                  {{ $results->graduationYear }}
-                @else
-                  XXXXXXXXXXXXXXXXXXXXXXX
-                @endif
-              </span>
-            </td>
-          </tr>
+            <tr>
+              <td>
+                CLASS:
+                <span class="strong">
+                  @if($loop->last)
+                    {{ $results->degreeClass }}
+                  @else
+                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                  @endif
+                </span>
+              </td>
+            </tr>
 
-          <tr>
-            <td class="p-1 text-left text-xs text-gray-900">
-              <div class="flex flex-col space-y-11">
+            <tr>
+              <td>
+                DATE OF GRADUATION:
+                <span class="strong">
+                  @if($loop->last)
+                    {{ $results->graduationYear }}
+                  @else
+                    XXXXXXXXXXXXXXXXXXXXXXX
+                  @endif
+                </span>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
                 <div>CERTIFIED BY:</div>
 
-                <div class="flex flex-col items-center">
-                  <span class="font-extrabold">{{ $transcript->recordsUnitHead }}</span>
-                  <span>FOR: REGISTRAR</span>
+                {{--
+                  Blank room for a physical signature. mPDF collapses block margin
+                  and padding inside a table cell and clamps line-height there, so
+                  the gap has to be real blank lines to survive both renderers.
+                --}}
+                <div>&nbsp;<br/>&nbsp;<br/>&nbsp;</div>
+
+                <div class="certified">
+                  <div class="strong">{{ $transcript->recordsUnitHead }}</div>
+                  <div>FOR: REGISTRAR</div>
                 </div>
-              </div>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    @pageBreak
-  @endforeach
-</div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+@endforeach
 
 </body>
 </html>

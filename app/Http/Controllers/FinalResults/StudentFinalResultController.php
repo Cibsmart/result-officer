@@ -10,16 +10,13 @@ use App\Data\Students\StudentBasicData;
 use App\Enums\StudentStatus;
 use App\Http\Requests\ExistingRegistrationNumberRequest;
 use App\Models\Student;
+use App\Services\Pdf\PdfDocument;
 use App\ViewModels\finalResults\FinalResultsIndexPage;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Config;
 use Inertia\Inertia;
 use Inertia\Response;
-use Spatie\Browsershot\Browsershot;
-use Spatie\LaravelPdf\Enums\Format;
-use Spatie\LaravelPdf\Facades\Pdf;
-use Spatie\LaravelPdf\PdfBuilder;
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 final class StudentFinalResultController
 {
@@ -61,36 +58,14 @@ final class StudentFinalResultController
         ]);
     }
 
-    public function download(Student $student): PdfBuilder|View
+    public function download(Student $student): HttpResponse
     {
         $studentData = StudentBasicData::from($student);
 
-        return Pdf::view('pdfs.finalResults.transcript', [
+        return PdfDocument::view('pdfs.finalResults.transcript', [
             'results' => FinalStudentResultData::from($student),
             'student' => $studentData,
             'transcript' => TranscriptData::from($student->allowEGrade()),
-        ])
-            ->withBrowsershot(static function (Browsershot $browsershot): void {
-                $tempPath = Config::string('rp.chromium.temp');
-                $browsershot->setChromePath(Config::string('rp.chromium.path'))
-                    ->setOption('args', ['--disable-web-security'])
-                    ->ignoreHttpsErrors()
-                    ->noSandbox()
-                    ->setCustomTempPath("{$tempPath}/browsershot-html")
-                    ->addChromiumArguments([
-                        'disk-cache-dir' => "{$tempPath}/user-data/Default/Cache",
-                        'enable-font-antialiasing' => true,
-                        'font-render-hinting' => 'none',
-                        'force-device-scale-factor' => 1,
-                        'hide-scrollbars' => true,
-                        'lang' => 'en-US,en;q=0.9',
-                        'user-data-dir' => "{$tempPath}/user-data",
-                    ])
-                    ->newHeadless()
-                    ->scale(0.90);
-            })
-            ->format(Format::A4)
-            ->margins(5, 5, 5, 5)
-            ->name("$studentData->registrationNumber-results.pdf");
+        ])->download("{$studentData->registrationNumber}-results.pdf");
     }
 }
