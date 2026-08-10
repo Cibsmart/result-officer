@@ -50,8 +50,8 @@ final class Department extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Faculty, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Faculty, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Faculty, $this>
      */
     public function faculty(): BelongsTo
     {
@@ -59,8 +59,8 @@ final class Department extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Program, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Program, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Program, $this>
      */
     public function programs(): HasMany
     {
@@ -69,8 +69,9 @@ final class Department extends Model
 
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Student, \App\Models\Program, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Student, \App\Models\Program, static>
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Student, \App\Models\Program, $this>
      */
     public function students(): HasManyThrough
     {

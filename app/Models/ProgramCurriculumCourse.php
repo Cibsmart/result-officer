@@ -44,8 +44,8 @@ final class ProgramCurriculumCourse extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, $this>
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, $this>
      */
     public function vettingReports(): MorphMany
     {
@@ -53,8 +53,8 @@ final class ProgramCurriculumCourse extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumSemester, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumSemester,static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumSemester, $this>
      */
     public function programCurriculumSemester(): BelongsTo
     {
@@ -62,8 +62,8 @@ final class ProgramCurriculumCourse extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\CourseAlternative, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\CourseAlternative, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\CourseAlternative, $this>
      */
     public function courseAlternatives(): HasMany
     {
@@ -71,8 +71,8 @@ final class ProgramCurriculumCourse extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Course,$this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Course,static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Course,$this>
      */
     public function course(): BelongsTo
     {

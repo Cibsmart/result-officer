@@ -119,8 +119,8 @@ final class FinalResult extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FinalCourse, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FinalCourse, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FinalCourse, $this>
      */
     public function finalCourse(): BelongsTo
     {

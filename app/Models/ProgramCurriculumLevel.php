@@ -32,8 +32,8 @@ final class ProgramCurriculumLevel extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculum, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculum, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculum, $this>
      */
     public function programCurriculum(): BelongsTo
     {
@@ -41,8 +41,8 @@ final class ProgramCurriculumLevel extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumSemester, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumSemester, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumSemester, $this>
      */
     public function programCurriculumSemesters(): HasMany
     {
@@ -50,8 +50,8 @@ final class ProgramCurriculumLevel extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, $this>
      */
     public function level(): BelongsTo
     {

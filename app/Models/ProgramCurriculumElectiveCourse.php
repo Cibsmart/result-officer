@@ -20,8 +20,8 @@ final class ProgramCurriculumElectiveCourse extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumElectiveGroup, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumElectiveGroup, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumElectiveGroup, $this>
      */
     public function programCurriculumElectiveGroup(): BelongsTo
     {
@@ -29,8 +29,8 @@ final class ProgramCurriculumElectiveCourse extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumCourse, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumCourse, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumCourse, $this>
      */
     public function programCurriculumCourse(): BelongsTo
     {

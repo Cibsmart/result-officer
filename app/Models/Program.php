@@ -162,8 +162,8 @@ final class Program extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, $this>
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, $this>
      */
     public function vettingReports(): MorphMany
     {
@@ -171,8 +171,8 @@ final class Program extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Department, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Department, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Department, $this>
      */
     public function department(): BelongsTo
     {
@@ -180,8 +180,8 @@ final class Program extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramType, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramType, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramType, $this>
      */
     public function programType(): BelongsTo
     {
@@ -189,8 +189,8 @@ final class Program extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Student, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Student, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Student, $this>
      */
     public function students(): HasMany
     {

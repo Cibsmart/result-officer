@@ -44,8 +44,8 @@ final class ProgramCurriculum extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Program, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Program, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Program, $this>
      */
     public function program(): BelongsTo
     {
@@ -53,8 +53,8 @@ final class ProgramCurriculum extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Curriculum,$this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Curriculum,static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Curriculum,$this>
      */
     public function curriculum(): BelongsTo
     {
@@ -62,8 +62,8 @@ final class ProgramCurriculum extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session,$this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session,static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session,$this>
      */
     public function session(): BelongsTo
     {
@@ -71,8 +71,8 @@ final class ProgramCurriculum extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumLevel, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumLevel, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumLevel, $this>
      */
     public function programCurriculumLevels(): HasMany
     {
@@ -81,9 +81,9 @@ final class ProgramCurriculum extends Model
 
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\ProgramCurriculumSemester, \App\Models\ProgramCurriculumLevel, $this>
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\ProgramCurriculumSemester, \App\Models\ProgramCurriculumLevel, static>
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\ProgramCurriculumSemester, \App\Models\ProgramCurriculumLevel, $this>
      */
     public function programCurriculumSemesters(): HasManyThrough
     {
@@ -92,9 +92,9 @@ final class ProgramCurriculum extends Model
 
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\Illuminate\Database\Eloquent\Model, \Illuminate\Database\Eloquent\Model, $this>
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\Illuminate\Database\Eloquent\Model, \Illuminate\Database\Eloquent\Model, static>
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\Illuminate\Database\Eloquent\Model, \Illuminate\Database\Eloquent\Model, $this>
      */
     public function programCurriculumCourses(): HasManyThrough
     {

@@ -47,8 +47,8 @@ final class FinalSessionEnrollment extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, $this>
      */
     public function session(): BelongsTo
     {
@@ -56,8 +56,8 @@ final class FinalSessionEnrollment extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, $this>
      */
     public function student(): BelongsTo
     {
@@ -65,8 +65,8 @@ final class FinalSessionEnrollment extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\FinalSemesterEnrollment, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\FinalSemesterEnrollment, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\FinalSemesterEnrollment, $this>
      */
     public function finalSemesterEnrollments(): HasMany
     {
@@ -75,9 +75,9 @@ final class FinalSessionEnrollment extends Model
 
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\FinalResult, \App\Models\FinalSemesterEnrollment, $this>
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\FinalResult, \App\Models\FinalSemesterEnrollment, static>
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\FinalResult, \App\Models\FinalSemesterEnrollment, $this>
      */
     public function finalResults(): HasManyThrough
     {

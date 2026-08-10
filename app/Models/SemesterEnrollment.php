@@ -23,8 +23,8 @@ final class SemesterEnrollment extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, $this>
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, $this>
      */
     public function vettingReports(): MorphMany
     {
@@ -32,8 +32,8 @@ final class SemesterEnrollment extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\SessionEnrollment, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\SessionEnrollment, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\SessionEnrollment, $this>
      */
     public function sessionEnrollment(): BelongsTo
     {
@@ -41,8 +41,8 @@ final class SemesterEnrollment extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Semester, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Semester, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Semester, $this>
      */
     public function semester(): BelongsTo
     {
@@ -50,8 +50,8 @@ final class SemesterEnrollment extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Registration, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Registration, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Registration, $this>
      */
     public function registrations(): HasMany
     {
@@ -59,8 +59,8 @@ final class SemesterEnrollment extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumSemester, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumSemester, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumSemester, $this>
      */
     public function programCurriculumSemester(): BelongsTo
     {

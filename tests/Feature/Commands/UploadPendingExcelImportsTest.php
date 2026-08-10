@@ -59,26 +59,29 @@ function resultRow(string $registrationNumber): array
     ];
 }
 
-test('it imports rows and maps registration number correctly despite an old_registration_number column', function (): void {
-    $path = storeResultsWorkbook([resultRow('EBSU/2020/0001')]);
+test(
+    'it imports rows and maps registration number correctly despite an old_registration_number column',
+    function (): void {
+        $path = storeResultsWorkbook([resultRow('EBSU/2020/0001')]);
 
-    $event = ExcelImportEvent::new(
-        UserFactory::new()->createOne(),
-        ExcelImportType::RESULT,
-        $path,
-        'RES4.xlsx',
-    );
+        $event = ExcelImportEvent::new(
+            UserFactory::new()->createOne(),
+            ExcelImportType::RESULT,
+            $path,
+            'RES4.xlsx',
+        );
 
-    artisan('rp:upload-pending-excel-imports')->assertExitCode(0);
+        artisan('rp:upload-pending-excel-imports')->assertExitCode(0);
 
-    $event->refresh();
+        $event->refresh();
 
-    expect($event->status)->toBe(ImportEventStatus::UPLOADED)
-        ->and($event->rawExcelResults()->count())->toBe(1)
-        ->and(RawExcelResult::query()->value('registration_number'))->toBe('EBSU/2020/0001');
+        expect($event->status)->toBe(ImportEventStatus::UPLOADED)
+            ->and($event->rawExcelResults()->count())->toBe(1)
+            ->and(RawExcelResult::query()->value('registration_number'))->toBe('EBSU/2020/0001');
 
-    Storage::disk('local')->delete($path);
-});
+        Storage::disk('local')->delete($path);
+    },
+);
 
 test('it fails loudly and does not complete when no rows are imported', function (): void {
     // A data row with an empty registration_number is skipped by the importer,

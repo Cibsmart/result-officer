@@ -38,8 +38,8 @@ final class FinalSemesterEnrollment extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\FinalResult, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\FinalResult, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\FinalResult, $this>
      */
     public function finalResults(): HasMany
     {
@@ -47,8 +47,8 @@ final class FinalSemesterEnrollment extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FinalSessionEnrollment, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FinalSessionEnrollment, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FinalSessionEnrollment, $this>
      */
     public function finalSessionEnrollment(): BelongsTo
     {
@@ -56,8 +56,8 @@ final class FinalSemesterEnrollment extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Semester, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Semester, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Semester, $this>
      */
     public function semester(): BelongsTo
     {

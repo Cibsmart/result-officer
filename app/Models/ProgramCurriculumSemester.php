@@ -40,8 +40,8 @@ final class ProgramCurriculumSemester extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, $this>
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, $this>
      */
     public function vettingReports(): MorphMany
     {
@@ -49,8 +49,8 @@ final class ProgramCurriculumSemester extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumCourse, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumCourse, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumCourse, $this>
      */
     public function programCurriculumCourses(): HasMany
     {
@@ -58,8 +58,8 @@ final class ProgramCurriculumSemester extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumLevel, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumLevel, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumLevel, $this>
      */
     public function programCurriculumLevel(): BelongsTo
     {
@@ -67,8 +67,8 @@ final class ProgramCurriculumSemester extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Semester, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Semester, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Semester, $this>
      */
     public function semester(): BelongsTo
     {
@@ -76,8 +76,8 @@ final class ProgramCurriculumSemester extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumElectiveGroup, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumElectiveGroup, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ProgramCurriculumElectiveGroup, $this>
      */
     public function programCurriculumElectiveGroups(): HasMany
     {

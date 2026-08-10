@@ -26,8 +26,8 @@ final class LocalGovernment extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\State, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\State, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\State, $this>
      */
     public function state(): BelongsTo
     {

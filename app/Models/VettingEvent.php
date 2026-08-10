@@ -34,8 +34,8 @@ final class VettingEvent extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, $this>
      */
     public function student(): BelongsTo
     {
@@ -43,8 +43,8 @@ final class VettingEvent extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\VettingStep, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\VettingStep, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\VettingStep, $this>
      */
     public function vettingSteps(): HasMany
     {
@@ -78,8 +78,8 @@ final class VettingEvent extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\VettingEventGroup, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\VettingEventGroup, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\VettingEventGroup, $this>
      */
     public function vettingEventGroups(): BelongsToMany
     {

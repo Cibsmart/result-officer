@@ -13,8 +13,8 @@ final class ResultDetail extends Model
     protected $hidden = ['data'];
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Result, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Result, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Result, $this>
      */
     public function result(): BelongsTo
     {
