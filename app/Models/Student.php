@@ -25,9 +25,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
+use Laravel\Scout\Searchable;
 
 final class Student extends Model
 {
+    use Searchable;
     use SoftDeletes;
 
     public static function createFromRawStudent(RawStudent $rawStudent): self
@@ -259,6 +261,17 @@ final class Student extends Model
     {
         $this->date_of_birth = $birthDate->value;
         $this->save();
+    }
+
+    /** @return array<string, string|null> */
+    public function toSearchableArray(): array
+    {
+        return [
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'other_names' => $this->other_names,
+            'registration_number' => $this->registration_number,
+        ];
     }
 
     /**

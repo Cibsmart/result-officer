@@ -38,6 +38,8 @@ use App\Http\Controllers\Registrations\RegistrationController;
 use App\Http\Controllers\Reports\CompositeSheetController;
 use App\Http\Controllers\Reports\DepartmentClearedController;
 use App\Http\Controllers\Results\ViewStudentResultController;
+use App\Http\Controllers\Search\SearchController;
+use App\Http\Controllers\Search\SearchSuggestionController;
 use App\Http\Controllers\Students\StudentController;
 use App\Http\Controllers\Students\Updates\BirthDateUpdateController;
 use App\Http\Controllers\Students\Updates\EntryLevelUpdateController;
@@ -65,6 +67,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(static function (): void {
     Route::get('/', DashboardController::class)->name('dashboard');
+
+    Route::prefix('search')->group(static function (): void {
+        Route::get('', SearchController::class)->name('search');
+        Route::get('suggestions', SearchSuggestionController::class)->name('search.suggestions');
+    });
 
     Route::prefix('results')->group(static function (): void {
         Route::get('{student?}', [ViewStudentResultController::class, 'index'])->name('results.index');

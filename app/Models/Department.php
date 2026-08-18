@@ -12,9 +12,11 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 
 final class Department extends Model
 {
+    use Searchable;
     use SoftDeletes;
 
     public static function createFromRawDepartment(RawDepartment $rawDepartment): self
@@ -76,6 +78,15 @@ final class Department extends Model
     public function students(): HasManyThrough
     {
         return $this->hasManyThrough(Student::class, Program::class);
+    }
+
+    /** @return array<string, string|null> */
+    public function toSearchableArray(): array
+    {
+        return [
+            'code' => $this->code,
+            'name' => $this->name,
+        ];
     }
 
     /** @return array<string, string> */

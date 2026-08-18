@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
+import SearchTrigger from '@/components/search/SearchTrigger.vue';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import type { BreadcrumbItemType } from '@/types';
 
@@ -17,6 +18,10 @@ defineProps<{
             <template v-if="breadcrumbs.length > 0">
                 <Breadcrumbs :breadcrumbs="breadcrumbs" />
             </template>
+        </div>
+
+        <div class="ml-auto flex items-center">
+            <SearchTrigger />
         </div>
     </header>
 </template>

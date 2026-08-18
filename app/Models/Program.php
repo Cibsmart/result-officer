@@ -13,9 +13,11 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 
 final class Program extends Model
 {
+    use Searchable;
     use SoftDeletes;
 
     private const CODES = [
@@ -203,6 +205,15 @@ final class Program extends Model
         return Attribute::make(
             set: fn (string $value): string => mb_strtoupper(mb_trim($value)),
         );
+    }
+
+    /** @return array<string, string|null> */
+    public function toSearchableArray(): array
+    {
+        return [
+            'code' => $this->code,
+            'name' => $this->name,
+        ];
     }
 
     /** @return array{duration: 'App\Enums\ProgramDuration', is_active: 'bool'} */
