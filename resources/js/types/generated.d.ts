@@ -410,6 +410,21 @@ declare namespace App.Data.Results {
         gradingSchemes: Array<App.Data.Grading.GradingSchemeData>;
     };
 }
+declare namespace App.Data.Search {
+    export type SearchGroupData = {
+        key: string;
+        label: string;
+        results: Array<App.Data.Search.SearchResultData>;
+    };
+    export type SearchResultData = {
+        id: number;
+        title: string;
+        subtitle: string | null;
+        url: string;
+        badge: string | null;
+        external: boolean;
+    };
+}
 declare namespace App.Data.Semester {
     export type SemesterData = {
         id: number;
@@ -513,6 +528,21 @@ declare namespace App.Data.Students {
         id: number;
         basic: App.Data.Students.StudentBasicData;
         others: App.Data.Students.StudentOtherData;
+    };
+    export type StudentFilterOptionsData = {
+        genders: Array<App.Data.Dropdown.DropdownData>;
+        statuses: Array<App.Data.Dropdown.DropdownData>;
+        departments: Array<App.Data.Dropdown.DropdownData>;
+        years: Array<App.Data.Dropdown.DropdownData>;
+    };
+    export type StudentIndexFilterData = {
+        search: string;
+        gender: App.Enums.Gender | null;
+        status: App.Enums.StudentStatus | null;
+        department: number | null;
+        entrySession: number | null;
+        sort: App.Enums.StudentSortField;
+        direction: App.Enums.SortDirection;
     };
     export type StudentOtherData = {
         id: number;
@@ -677,9 +707,12 @@ declare namespace App.Enums {
     export type ResultRemark = 'PAS' | 'FAL' | 'ABS' | 'MAL';
     export type Role = 'super-admin' | 'admin' | 'desk-officer' | 'exam-officer' | 'database-officer' | 'user';
     export type ScoreType = 'in_course_1' | 'inc_course_2' | 'quiz' | 'mid_semester' | 'exam';
+    export type SearchGroup = 'students' | 'courses' | 'curricula' | 'programs' | 'departments' | 'faculties';
+    export type SortDirection = 'asc' | 'desc';
     export type StatusColor = 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'purple' | 'indigo' | 'pink';
     export type StudentField = 'phone_number' | 'email' | 'jamb_registration_number';
     export type StudentRelatedField = 'program_id' | 'entry_level_id' | 'entry_session_id' | 'local_government_id';
+    export type StudentSortField = 'name' | 'registration_number' | 'department';
     export type StudentStatus =
         | 'new'
         | 'active'
@@ -802,9 +835,17 @@ declare namespace App.ViewModels.Results {
         results: App.Data.Results.StudentResultData;
     };
 }
+declare namespace App.ViewModels.Search {
+    export type SearchPage = {
+        query: string;
+        groups: Array<App.Data.Search.SearchGroupData>;
+    };
+}
 declare namespace App.ViewModels.Students {
     export type StudentIndexPage = {
         paginated: { [key: number]: App.Data.Students.StudentBasicData };
+        filters: App.Data.Students.StudentIndexFilterData;
+        options: App.Data.Students.StudentFilterOptionsData;
     };
     export type StudentShowPage = {
         data: App.Data.Students.StudentComprehensiveData;
