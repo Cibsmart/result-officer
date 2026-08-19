@@ -75,4 +75,4 @@ it('visits login', function (): void {
     $page = visit(route('login'));
 
     $page->assertSee('Log in');
-});
+})->group('browser');
