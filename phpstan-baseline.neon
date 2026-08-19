@@ -1,56 +1,1087 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Department\\>\\:\\:tap\\(\\) expects callable\\(Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Department\\>\\)\\: mixed, App\\\\Scopes\\\\ActiveScope given\\.$#"
+			message: '#^Cannot access property \$code on App\\Models\\Course\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Actions/Imports/Excel/ProcessRawFinalResults.php
+
+		-
+			message: '#^Cannot access property \$registrations on App\\Models\\SemesterEnrollment\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Actions/Imports/Excel/ProcessRawFinalResults.php
+
+		-
+			message: '#^Cannot access property \$session_id on App\\Models\\FinalSessionEnrollment\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Actions/Imports/Excel/ProcessRawFinalResults.php
+
+		-
+			message: '#^Cannot call method getData\(\) on App\\Models\\Result\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Actions/Results/ValidatePendingResults.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Level\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Actions/Students/Updates/EntryLevelUpdateAction.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Session\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Actions/Students/Updates/EntrySessionUpdateAction.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\LocalGovernment\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Actions/Students/Updates/LocalGovernmentUpdateAction.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Program\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Actions/Students/Updates/ProgramUpdateAction.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Student\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Actions/Students/Updates/StudentNameUpdate.php
+
+		-
+			message: '#^Cannot access property \$code on App\\Models\\Course\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Actions/Vetting/MatchCurriculumCourses.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Program\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Actions/Vetting/MatchCurriculumCourses.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Session\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Actions/Vetting/MatchCurriculumCourses.php
+
+		-
+			message: '#^Parameter \#1 \$model of method App\\Actions\\Vetting\\ReportVettingStep\:\:report\(\) expects Illuminate\\Database\\Eloquent\\Model, App\\Models\\Program\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Actions/Vetting/MatchCurriculumCourses.php
+
+		-
+			message: '#^Parameter \#1 \$model of method App\\Actions\\Vetting\\ReportVettingStep\:\:report\(\) expects Illuminate\\Database\\Eloquent\\Model, App\\Models\\Registration\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Actions/Vetting/MatchCurriculumCourses.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Program\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Actions/Vetting/MatchCurriculumSemesters.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Semester\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Actions/Vetting/MatchCurriculumSemesters.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Session\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Actions/Vetting/MatchCurriculumSemesters.php
+
+		-
+			message: '#^Cannot access property \$session on App\\Models\\SessionEnrollment\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Actions/Vetting/MatchCurriculumSemesters.php
+
+		-
+			message: '#^Parameter \#1 \$model of method App\\Actions\\Vetting\\ReportVettingStep\:\:report\(\) expects Illuminate\\Database\\Eloquent\\Model, App\\Models\\Program\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Actions/Vetting/MatchCurriculumSemesters.php
+
+		-
+			message: '#^Cannot access property \$code on App\\Models\\Course\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Actions/Vetting/ValidateResults.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Semester\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Actions/Vetting/ValidateResults.php
+
+		-
+			message: '#^Cannot access property \$value on App\\Models\\ResultDetail\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Actions/Vetting/ValidateResults.php
+
+		-
+			message: '#^Parameter \#1 \$model of method App\\Actions\\Vetting\\ReportVettingStep\:\:report\(\) expects Illuminate\\Database\\Eloquent\\Model, App\\Models\\Result\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Actions/Vetting/ValidateResults.php
+
+		-
+			message: '#^Parameter \#1 \$result of method App\\Actions\\Vetting\\ValidateResults\:\:passCheck\(\) expects App\\Models\\Result, App\\Models\\Result\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Actions/Vetting/ValidateResults.php
+
+		-
+			message: '#^Parameter \#2 \$session of method App\\Actions\\Vetting\\ValidateResults\:\:validate\(\) expects App\\Models\\Session, App\\Models\\Session\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Actions/Vetting/ValidateResults.php
+
+		-
+			message: '#^Parameter \#1 \$model of method App\\Actions\\Vetting\\ReportVettingStep\:\:report\(\) expects Illuminate\\Database\\Eloquent\\Model, App\\Models\\ProgramCurriculumCourse\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Actions/Vetting/VerifyCoreCourses.php
+
+		-
+			message: '#^Parameter \#1 \$programCurriculum of method App\\Actions\\Vetting\\VerifyCoreCourses\:\:checkNonElectiveCourses\(\) expects App\\Models\\ProgramCurriculum, App\\Models\\ProgramCurriculum\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Actions/Vetting/VerifyCoreCourses.php
+
+		-
+			message: '#^Cannot access property \$credit_unit on App\\Models\\ProgramCurriculumCourse\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Actions/Vetting/VerifyCoursesCreditUnit.php
+
+		-
+			message: '#^Cannot access property \$credit_unit on App\\Models\\Registration\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Actions/Vetting/VerifyCoursesCreditUnit.php
+
+		-
+			message: '#^Cannot access property \$programCurriculumCourse on App\\Models\\Registration\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Actions/Vetting/VerifyCoursesCreditUnit.php
+
+		-
+			message: '#^Parameter \#1 \$model of method App\\Actions\\Vetting\\ReportVettingStep\:\:report\(\) expects Illuminate\\Database\\Eloquent\\Model, App\\Models\\Registration\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Actions/Vetting/VerifyCoursesCreditUnit.php
+
+		-
+			message: '#^Cannot access property \$level on App\\Models\\ProgramCurriculumLevel\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Actions/Vetting/VerifyElectiveCourses.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Level\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Actions/Vetting/VerifyElectiveCourses.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Semester\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Actions/Vetting/VerifyElectiveCourses.php
+
+		-
+			message: '#^Parameter \#1 \$model of method App\\Actions\\Vetting\\ReportVettingStep\:\:report\(\) expects Illuminate\\Database\\Eloquent\\Model, App\\Models\\Registration\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Actions/Vetting/VerifyFailedCourses.php
+
+		-
+			message: '#^Cannot access property \$code on App\\Models\\Course\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Actions/Vetting/VerifyFirstYearCourses.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Semester\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Actions/Vetting/VerifyFirstYearCourses.php
+
+		-
+			message: '#^Cannot access property \$semester on App\\Models\\ProgramCurriculumSemester\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Actions/Vetting/VerifyFirstYearCourses.php
+
+		-
+			message: '#^Parameter \#1 \$firstYearProgramCurriculum of method App\\Actions\\Vetting\\VerifyFirstYearCourses\:\:checkFirstYearCourses\(\) expects App\\Models\\ProgramCurriculumLevel, App\\Models\\ProgramCurriculumLevel\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Actions/Vetting/VerifyFirstYearCourses.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Semester\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Actions/Vetting/VerifySemesterCreditLimits.php
+
+		-
+			message: '#^Parameter \#2 \$session of method App\\Actions\\Vetting\\VerifySemesterCreditLimits\:\:performSemesterCreditUnitCheck\(\) expects App\\Models\\Session, App\\Models\\Session\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Actions/Vetting/VerifySemesterCreditLimits.php
+
+		-
+			message: '#^Cannot call method delete\(\) on App\\Models\\ResultDetail\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Console/Commands/DeleteStudent.php
+
+		-
+			message: '#^Cannot access property \$credit_unit on App\\Models\\Registration\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Console/Commands/OneTime/CorrectDownloadedResultScoresCommand.php
+
+		-
+			message: '#^Cannot access property \$id on App\\Models\\Registration\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Console/Commands/OneTime/CorrectDownloadedResultScoresCommand.php
+
+		-
+			message: '#^Cannot access property \$registration on App\\Models\\Result\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Console/Commands/OneTime/CorrectDownloadedResultScoresCommand.php
+
+		-
+			message: '#^Cannot access property \$resultDetail on App\\Models\\Result\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Console/Commands/OneTime/CorrectDownloadedResultScoresCommand.php
+
+		-
+			message: '#^Cannot call method getScores\(\) on App\\Models\\Result\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Console/Commands/OneTime/CorrectDownloadedResultScoresCommand.php
+
+		-
+			message: '#^Cannot call method session\(\) on App\\Models\\Registration\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Console/Commands/OneTime/CorrectDownloadedResultScoresCommand.php
+
+		-
+			message: '#^Cannot call method update\(\) on App\\Models\\ResultDetail\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Console/Commands/OneTime/CorrectDownloadedResultScoresCommand.php
+
+		-
+			message: '#^Cannot call method update\(\) on App\\Models\\Result\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Console/Commands/OneTime/CorrectDownloadedResultScoresCommand.php
+
+		-
+			message: '#^Cannot access property \$id on App\\Models\\Student\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Console/Commands/OneTime/ProcessLegacyStudents.php
+
+		-
+			message: '#^Cannot access property \$credit_unit on App\\Models\\Registration\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Console/Commands/OneTime/UpdateGradeCommand.php
+
+		-
+			message: '#^Cannot access property \$final_cumulative_grade_point_average on App\\Models\\FinalStudent\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Cleared/ClearedStudentData.php
+
+		-
+			message: '#^Cannot access property \$month on App\\Models\\FinalStudent\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Cleared/ClearedStudentData.php
+
+		-
+			message: '#^Cannot access property \$result_count on App\\Models\\FinalStudent\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Cleared/ClearedStudentData.php
+
+		-
+			message: '#^Cannot access property \$year on App\\Models\\FinalStudent\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Cleared/ClearedStudentData.php
+
+		-
+			message: '#^Cannot access property \$code on App\\Models\\Course\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Composite/CompositeSheetData.php
+
+		-
+			message: '#^Cannot call method programCurriculumCourses\(\) on App\\Models\\ProgramCurriculumSemester\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Data/Composite/CompositeSheetData.php
+
+		-
+			message: '#^Cannot call method programCurriculumSemesters\(\) on App\\Models\\ProgramCurriculumLevel\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Data/Composite/CompositeSheetData.php
+
+		-
+			message: '#^Cannot access property \$code on App\\Models\\Curriculum\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Data/Curriculum/ProgramCurriculumData.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Program\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Data/Curriculum/ProgramCurriculumData.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Session\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Data/Curriculum/ProgramCurriculumData.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Builder\<App\\Models\\Department\>\:\:tap\(\) expects callable\(Illuminate\\Database\\Eloquent\\Builder\<App\\Models\\Department\>\)\: mixed, App\\Scopes\\ActiveScope given\.$#'
+			identifier: argument.type
 			count: 2
 			path: app/Data/Department/DepartmentListData.php
 
 		-
-			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Program\\>\\:\\:tap\\(\\) expects callable\\(Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Program\\>\\)\\: mixed, App\\\\Scopes\\\\ActiveScope given\\.$#"
+			message: '#^Cannot access property \$faculty on App\\Models\\Department\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Faculty/FacultyData.php
+
+		-
+			message: '#^Cannot access property \$code on App\\Models\\FinalCourse\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/FinalResults/FinalResultData.php
+
+		-
+			message: '#^Cannot access property \$title on App\\Models\\FinalCourse\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/FinalResults/FinalResultData.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Semester\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/FinalResults/FinalSemesterResultData.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Session\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/FinalResults/FinalSessionResultData.php
+
+		-
+			message: '#^Cannot access property \$code on App\\Models\\ProgramType\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/FinalResults/FinalStudentResultData.php
+
+		-
+			message: '#^Cannot access property \$final_cumulative_grade_point_average on App\\Models\\FinalStudent\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/FinalResults/FinalStudentResultData.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\ProgramType\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/FinalResults/FinalStudentResultData.php
+
+		-
+			message: '#^Cannot access property \$programType on App\\Models\\Program\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/FinalResults/FinalStudentResultData.php
+
+		-
+			message: '#^Cannot access property \$result_count on App\\Models\\FinalStudent\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/FinalResults/FinalStudentResultData.php
+
+		-
+			message: '#^Cannot call method finalSessionEnrollments\(\) on App\\Models\\FinalStudent\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Data/FinalResults/FinalStudentResultData.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Imports/ImportEventData.php
+
+		-
+			message: '#^Property App\\Models\\Result\:\:\$exam_date \(string\|null\) does not accept Carbon\\Carbon\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: app/Data/Models/ResultModelData.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Builder\<App\\Models\\Program\>\:\:tap\(\) expects callable\(Illuminate\\Database\\Eloquent\\Builder\<App\\Models\\Program\>\)\: mixed, App\\Scopes\\ActiveScope given\.$#'
+			identifier: argument.type
 			count: 2
 			path: app/Data/Program/ProgramListData.php
 
 		-
-			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(array\\<string, array\\<string, string\\>\\|string\\>\\|string\\)\\: mixed\\)\\|null, 'array_change_key…' given\\.$#"
+			message: '#^Cannot access property \$code on App\\Models\\Course\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Results/ResultData.php
+
+		-
+			message: '#^Cannot access property \$title on App\\Models\\Course\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Results/ResultData.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Semester\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Results/SemesterResultData.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Session\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Results/SessionResultData.php
+
+		-
+			message: '#^Cannot access property \$code on App\\Models\\ProgramType\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Results/StudentResultData.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\ProgramType\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Results/StudentResultData.php
+
+		-
+			message: '#^Cannot access property \$programType on App\\Models\\Program\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Results/StudentResultData.php
+
+		-
+			message: '#^Cannot access property \$country on App\\Models\\State\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Students/StudentBasicData.php
+
+		-
+			message: '#^Cannot access property \$demonym on App\\Models\\Country\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Students/StudentBasicData.php
+
+		-
+			message: '#^Cannot access property \$department on App\\Models\\Program\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Students/StudentBasicData.php
+
+		-
+			message: '#^Cannot access property \$faculty on App\\Models\\Department\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Students/StudentBasicData.php
+
+		-
+			message: '#^Cannot access property \$id on App\\Models\\Department\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Students/StudentBasicData.php
+
+		-
+			message: '#^Cannot access property \$id on App\\Models\\Program\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Students/StudentBasicData.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Department\|null\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: app/Data/Students/StudentBasicData.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Faculty\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Students/StudentBasicData.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Program\|null\.$#'
+			identifier: property.nonObject
+			count: 4
+			path: app/Data/Students/StudentBasicData.php
+
+		-
+			message: '#^Cannot access property \$state on App\\Models\\LocalGovernment\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Students/StudentBasicData.php
+
+		-
+			message: '#^Cannot call method firstYear\(\) on App\\Models\\Session\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Data/Students/StudentBasicData.php
+
+		-
+			message: '#^Cannot access property \$department on App\\Models\\Program\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Students/StudentBasicInfoData.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Department\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Data/Students/StudentBasicInfoData.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Program\|null\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: app/Data/Students/StudentBasicInfoData.php
+
+		-
+			message: '#^Cannot access property \$id on App\\Models\\LocalGovernment\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Students/StudentOtherData.php
+
+		-
+			message: '#^Cannot access property \$id on App\\Models\\State\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Students/StudentOtherData.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Level\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Students/StudentOtherData.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\LocalGovernment\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Students/StudentOtherData.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Session\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Students/StudentOtherData.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\State\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Students/StudentOtherData.php
+
+		-
+			message: '#^Cannot access property \$state on App\\Models\\LocalGovernment\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Students/StudentOtherData.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Department\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Data/Vetting/VettingEventGroupData.php
+
+		-
+			message: '#^Cannot call method vettingSteps\(\) on App\\Models\\VettingEvent\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Data/Vetting/VettingStepListData.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(array\<string, array\<string, string\>\|string\>\|string\)\: mixed\)\|null, ''array_change_key…'' given\.$#'
+			identifier: argument.type
 			count: 1
 			path: app/Http/Clients/ApiClient.php
 
 		-
-			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			message: '#^Cannot access property \$email on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Controllers/Auth/ConfirmablePasswordController.php
+
+		-
+			message: '#^Cannot call method update\(\) on App\\Models\\User\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Http/Controllers/Auth/PasswordController.php
+
+		-
+			message: '#^Parameter \$user of static method App\\Models\\ImportEvent\:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Download/Courses/DownloadCoursesController.php
+
+		-
+			message: '#^Parameter \#1 \$user of static method App\\Data\\Imports\\ImportEventData\:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Download/Courses/DownloadCoursesPageController.php
+
+		-
+			message: '#^Parameter \#1 \$user of static method App\\Data\\Imports\\PendingImportEventData\:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Download/Courses/DownloadCoursesPageController.php
+
+		-
+			message: '#^Parameter \$user of static method App\\Models\\ImportEvent\:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Download/Departments/DownloadDepartmentsController.php
+
+		-
+			message: '#^Parameter \#1 \$user of static method App\\Data\\Imports\\ImportEventData\:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Download/Departments/DownloadDepartmentsPageController.php
+
+		-
+			message: '#^Parameter \#1 \$user of static method App\\Data\\Imports\\PendingImportEventData\:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Download/Departments/DownloadDepartmentsPageController.php
+
+		-
+			message: '#^Parameter \$user of static method App\\Models\\ImportEvent\:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Download/Registrations/DownloadRegistrationsByDepartmentSessionController.php
+
+		-
+			message: '#^Parameter \$user of static method App\\Models\\ImportEvent\:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Download/Registrations/DownloadRegistrationsByDepartmentSessionLevelController.php
+
+		-
+			message: '#^Parameter \$user of static method App\\Models\\ImportEvent\:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Download/Registrations/DownloadRegistrationsByDepartmentSessionSemesterController.php
+
+		-
+			message: '#^Parameter \$user of static method App\\Models\\ImportEvent\:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Download/Registrations/DownloadRegistrationsByRegistrationNumberController.php
+
+		-
+			message: '#^Parameter \$user of static method App\\Models\\ImportEvent\:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Download/Registrations/DownloadRegistrationsBySessionCourseController.php
+
+		-
+			message: '#^Parameter \$user of static method App\\Models\\ImportEvent\:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Download/Results/DownloadResultByDepartmentSessionLevelController.php
+
+		-
+			message: '#^Parameter \$user of static method App\\Models\\ImportEvent\:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Download/Results/DownloadResultByDepartmentSessionSemesterController.php
+
+		-
+			message: '#^Parameter \$user of static method App\\Models\\ImportEvent\:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Download/Results/DownloadResultByRegistrationNumberController.php
+
+		-
+			message: '#^Parameter \$user of static method App\\Models\\ImportEvent\:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Download/Results/DownloadResultBySessionCourseController.php
+
+		-
+			message: '#^Parameter \$user of static method App\\Models\\ImportEvent\:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Download/Results/DownloadResultsByDepartmentSessionController.php
+
+		-
+			message: '#^Parameter \$user of static method App\\Models\\ImportEvent\:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Download/Students/DownloadStudentByRegistrationNumberController.php
+
+		-
+			message: '#^Parameter \$user of static method App\\Models\\ImportEvent\:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Download/Students/DownloadStudentsByDepartmentSessionController.php
+
+		-
+			message: '#^Parameter \$user of static method App\\Models\\ImportEvent\:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Download/Students/DownloadStudentsBySessionController.php
+
+		-
+			message: '#^Parameter \#1 \$user of static method App\\Models\\ExcelImportEvent\:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Imports/FinalResultImportController.php
+
+		-
+			message: '#^Parameter \$user of static method App\\Models\\ExcelImportEvent\:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Imports/ProgramCurriculumImportController.php
+
+		-
+			message: '#^Parameter \#1 \$user of static method App\\Models\\ExcelImportEvent\:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Imports/ResultImportController.php
+
+		-
+			message: '#^Cannot access property \$code on App\\Models\\Course\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Controllers/Registrations/RegistrationController.php
+
+		-
+			message: '#^Cannot access property \$title on App\\Models\\Course\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Controllers/Registrations/RegistrationController.php
+
+		-
+			message: '#^Cannot call method update\(\) on App\\Models\\User\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Http/Controllers/Settings/PasswordController.php
+
+		-
+			message: '#^Cannot access property \$id on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Requests/Settings/ProfileUpdateRequest.php
+
+		-
+			message: '#^Cannot access property \$grade on App\\Models\\Result\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Models/FinalResult.php
+
+		-
+			message: '#^Cannot access property \$grade_point on App\\Models\\Result\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Models/FinalResult.php
+
+		-
+			message: '#^Cannot access property \$lecturer_id on App\\Models\\Result\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Models/FinalResult.php
+
+		-
+			message: '#^Cannot access property \$remarks on App\\Models\\Result\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Models/FinalResult.php
+
+		-
+			message: '#^Cannot access property \$scores on App\\Models\\Result\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Models/FinalResult.php
+
+		-
+			message: '#^Cannot access property \$total_score on App\\Models\\Result\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Models/FinalResult.php
+
+		-
+			message: '#^Property App\\Models\\FinalResult\:\:\$exam_date \(string\|null\) does not accept Carbon\\Carbon\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: app/Models/FinalResult.php
+
+		-
+			message: '#^Property App\\Models\\FinalResult\:\:\$grade \(string\) does not accept App\\Enums\\Grade\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: app/Models/FinalResult.php
+
+		-
+			message: '#^Cannot access property \$session on App\\Models\\FinalSessionEnrollment\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Models/FinalSemesterEnrollment.php
+
+		-
+			message: '#^Cannot access property \$strategy on App\\Models\\Institution\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Models/FinalSessionEnrollment.php
+
+		-
+			message: '#^Cannot access property \$strategy on App\\Models\\Institution\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Models/FinalStudent.php
+
+		-
+			message: '#^Property App\\Models\\ProgramCurriculum\:\:\$entry_mode \(string\) does not accept App\\Enums\\EntryMode\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: app/Models/ProgramCurriculum.php
+
+		-
+			message: '#^Property App\\Models\\RawCurriculumCourse\:\:\$status \(string\) does not accept App\\Enums\\RawDataStatus\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: app/Models/RawCurriculumCourse.php
+
+		-
+			message: '#^Property App\\Models\\RawExcelResult\:\:\$status \(string\) does not accept App\\Enums\\RawDataStatus\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: app/Models/RawExcelResult.php
+
+		-
+			message: '#^Property App\\Models\\RawFinalResult\:\:\$status \(string\) does not accept App\\Enums\\RawDataStatus\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: app/Models/RawFinalResult.php
+
+		-
+			message: '#^Cannot access property \$semester on App\\Models\\SemesterEnrollment\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Models/Registration.php
+
+		-
+			message: '#^Cannot access property \$session on App\\Models\\SessionEnrollment\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Models/Registration.php
+
+		-
+			message: '#^Cannot access property \$sessionEnrollment on App\\Models\\SemesterEnrollment\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Models/Registration.php
+
+		-
+			message: '#^Cannot access property \$student on App\\Models\\SessionEnrollment\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Models/Registration.php
+
+		-
+			message: '#^Cannot access property \$credit_unit on App\\Models\\Registration\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Models/Result.php
+
+		-
+			message: '#^Cannot call method session\(\) on App\\Models\\Registration\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Models/Result.php
+
+		-
+			message: '#^Cannot access property \$department on App\\Models\\Program\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Models/Student.php
+
+		-
+			message: '#^Cannot access property \$duration on App\\Models\\Program\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Models/Student.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
 			count: 1
 			path: app/Models/StudentHistory.php
 
 		-
-			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
 			count: 2
 			path: app/Models/VettingReport.php
 
 		-
-			message: "#^Property App\\\\Models\\\\VettingStep\\:\\:\\$type \\(App\\\\Enums\\\\VettingType\\) does not accept string\\.$#"
+			message: '#^Property App\\Models\\VettingReport\:\:\$status \(string\) does not accept App\\Enums\\VettingStatus\.$#'
+			identifier: assign.propertyType
+			count: 2
+			path: app/Models/VettingReport.php
+
+		-
+			message: '#^Property App\\Models\\VettingStep\:\:\$type \(App\\Enums\\VettingType\) does not accept string\.$#'
+			identifier: assign.propertyType
 			count: 1
 			path: app/Models/VettingStep.php
 
 		-
-			message: "#^Call to an undefined method Illuminate\\\\Contracts\\\\Pagination\\\\Paginator\\:\\:toArray\\(\\)\\.$#"
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Pagination\\Paginator\:\:toArray\(\)\.$#'
+			identifier: method.notFound
 			count: 1
 			path: app/Providers/TestingServiceProvider.php
 
 		-
-			message: "#^Call to an undefined method Inertia\\\\Testing\\\\AssertableInertia\\:\\:hasData\\(\\)\\.$#"
+			message: '#^Call to an undefined method Inertia\\Testing\\AssertableInertia\:\:hasData\(\)\.$#'
+			identifier: method.notFound
 			count: 2
 			path: app/Providers/TestingServiceProvider.php
 
 		-
-			message: "#^Call to an undefined method Inertia\\\\Testing\\\\AssertableInertia\\:\\:hasDataList\\(\\)\\.$#"
+			message: '#^Call to an undefined method Inertia\\Testing\\AssertableInertia\:\:hasDataList\(\)\.$#'
+			identifier: method.notFound
 			count: 1
 			path: app/Providers/TestingServiceProvider.php
 
 		-
-			message: "#^Call to an undefined method Inertia\\\\Testing\\\\AssertableInertia\\:\\:hasPaginatedData\\(\\)\\.$#"
+			message: '#^Call to an undefined method Inertia\\Testing\\AssertableInertia\:\:hasPaginatedData\(\)\.$#'
+			identifier: method.notFound
 			count: 1
 			path: app/Providers/TestingServiceProvider.php
 
 		-
-			message: "#^Method App\\\\Services\\\\Api\\\\PortalServiceFactory\\:\\:resolve\\(\\) return type with generic interface App\\\\Contracts\\\\PortalService does not specify its types\\: T$#"
+			message: '#^Method App\\Services\\Api\\PortalServiceFactory\:\:resolve\(\) return type with generic interface App\\Contracts\\PortalService does not specify its types\: T$#'
+			identifier: missingType.generics
 			count: 1
 			path: app/Services/Api/PortalServiceFactory.php
+
+		-
+			message: '#^Cannot access property \$department on App\\Models\\Program\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Services/Search/GlobalSearch.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Department\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Services/Search/GlobalSearch.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\Faculty\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Services/Search/GlobalSearch.php
+
+		-
+			message: '#^Parameter \#1 \$student of method App\\Actions\\Vetting\\VerifyCoreCourses\:\:execute\(\) expects App\\Models\\Student, App\\Models\\Student\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/Vetting/Steps/CheckCoreCoursesStep.php
+
+		-
+			message: '#^Parameter \#1 \$student of method App\\Actions\\Vetting\\VerifyCoursesCreditUnit\:\:execute\(\) expects App\\Models\\Student, App\\Models\\Student\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/Vetting/Steps/CheckCreditUnitsStep.php
+
+		-
+			message: '#^Parameter \#1 \$student of method App\\Actions\\Vetting\\VerifyElectiveCourses\:\:execute\(\) expects App\\Models\\Student, App\\Models\\Student\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/Vetting/Steps/CheckElectiveCoursesStep.php
+
+		-
+			message: '#^Parameter \#1 \$student of method App\\Actions\\Vetting\\VerifyFailedCourses\:\:execute\(\) expects App\\Models\\Student, App\\Models\\Student\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/Vetting/Steps/CheckFailedCoursesStep.php
+
+		-
+			message: '#^Parameter \#1 \$student of method App\\Actions\\Vetting\\VerifyFirstYearCourses\:\:execute\(\) expects App\\Models\\Student, App\\Models\\Student\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/Vetting/Steps/CheckFirstYearCoursesStep.php
+
+		-
+			message: '#^Parameter \#1 \$student of method App\\Actions\\Vetting\\ValidateResults\:\:execute\(\) expects App\\Models\\Student, App\\Models\\Student\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/Vetting/Steps/CheckResultsValidityStep.php
+
+		-
+			message: '#^Parameter \#1 \$student of method App\\Actions\\Vetting\\VerifySemesterCreditLimits\:\:execute\(\) expects App\\Models\\Student, App\\Models\\Student\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/Vetting/Steps/CheckSemesterCreditLimitsStep.php
+
+		-
+			message: '#^Parameter \#1 \$student of method App\\Actions\\Vetting\\OrganizeStudyYear\:\:execute\(\) expects App\\Models\\Student, App\\Models\\Student\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/Vetting/Steps/CheckStudyYearStep.php
+
+		-
+			message: '#^Parameter \#1 \$student of method App\\Actions\\Vetting\\MatchCurriculumCourses\:\:execute\(\) expects App\\Models\\Student, App\\Models\\Student\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/Vetting/Steps/MatchCurriculumCoursesStep.php
+
+		-
+			message: '#^Parameter \#1 \$student of method App\\Actions\\Vetting\\MatchCurriculumSemesters\:\:execute\(\) expects App\\Models\\Student, App\\Models\\Student\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/Vetting/Steps/MatchCurriculumSemestersStep.php

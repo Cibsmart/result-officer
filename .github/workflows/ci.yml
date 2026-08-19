@@ -6,6 +6,11 @@ on:
     pull_request:
         branches: ['main']
 
+env:
+    # The baseline PHP version. composer.json requires ^8.4, and the test job
+    # additionally runs 8.5 so the declared range is actually exercised.
+    PHP_VERSION: '8.4'
+
 jobs:
     frontend:
         name: Check and Build Frontend Code
@@ -17,21 +22,37 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: '8.4'
+                  php-version: ${{ env.PHP_VERSION }}
 
-            - name: Install Ziggy
-              run: composer require tightenco/ziggy
+            # tsconfig.json maps ziggy-js to ./vendor/tightenco/ziggy, so the
+            # type check needs the vendor tree. Ziggy is already a dependency in
+            # composer.lock — installing it again would re-resolve it.
+            - name: Cache Composer Dependencies
+              uses: actions/cache@v4
+              with:
+                  path: vendor
+                  key: ${{ runner.os }}-composer-${{ env.PHP_VERSION }}-${{ hashFiles('**/composer.lock') }}
+                  restore-keys: ${{ runner.os }}-composer-${{ env.PHP_VERSION }}-
+
+            - name: Install Composer Dependencies
+              run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
             - name: Setup Node
               uses: actions/setup-node@v4
               with:
                   node-version: '20'
+                  cache: 'yarn'
 
+            # yarn.lock is the only committed lockfile and package.json declares
+            # packageManager: yarn. --frozen-lockfile fails rather than silently
+            # resolving a tree no developer has.
             - name: Install Node Dependencies
-              run: npm install --force
+              run: |
+                  corepack enable
+                  yarn install --frozen-lockfile
 
             - name: Run Prettier, ESLint, Type Check and Build
-              run: npm run check-build
+              run: yarn check-build
 
     pint:
         name: Fix Backend Code Style
@@ -43,13 +64,24 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: '8.4'
+                  php-version: ${{ env.PHP_VERSION }}
+                  coverage: none
 
-            - name: Install Pint
-              run: composer global require laravel/pint
+            - name: Cache Composer Dependencies
+              uses: actions/cache@v4
+              with:
+                  path: vendor
+                  key: ${{ runner.os }}-composer-${{ env.PHP_VERSION }}-${{ hashFiles('**/composer.lock') }}
+                  restore-keys: ${{ runner.os }}-composer-${{ env.PHP_VERSION }}-
 
+            - name: Install Composer Dependencies
+              run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+            # Pint is a dev dependency pinned in composer.lock. Installing it
+            # globally picked up whichever release was newest that morning, so a
+            # rule change could break CI on an untouched codebase.
             - name: Run Pint
-              run: pint --test
+              run: vendor/bin/pint --test
 
     phpcs:
         name: Fix Code Standards
@@ -61,16 +93,26 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: '8.4'
+                  php-version: ${{ env.PHP_VERSION }}
+                  coverage: none
 
-            - name: Install PHPCS
-              run: composer require slevomat/coding-standard --dev
+            - name: Cache Composer Dependencies
+              uses: actions/cache@v4
+              with:
+                  path: vendor
+                  key: ${{ runner.os }}-composer-${{ env.PHP_VERSION }}-${{ hashFiles('**/composer.lock') }}
+                  restore-keys: ${{ runner.os }}-composer-${{ env.PHP_VERSION }}-
+
+            # slevomat/coding-standard is already a dev dependency. The previous
+            # `composer require --dev` mutated composer.json during the run.
+            - name: Install Composer Dependencies
+              run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
             - name: Run PHPCS
               run: vendor/bin/phpcs
 
-    build:
-        name: Build Backend Code
+    phpstan:
+        name: Analysis Code
         runs-on: ubuntu-latest
         needs: [pint, phpcs]
         steps:
@@ -80,54 +122,32 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: '8.4'
+                  php-version: ${{ env.PHP_VERSION }}
                   coverage: none
 
             - name: Cache Composer Dependencies
-              id: cache-composer
               uses: actions/cache@v4
               with:
                   path: vendor
-                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-                  restore-keys: ${{ runner.os }}-composer-
+                  key: ${{ runner.os }}-composer-${{ env.PHP_VERSION }}-${{ hashFiles('**/composer.lock') }}
+                  restore-keys: ${{ runner.os }}-composer-${{ env.PHP_VERSION }}-
 
             - name: Install Composer Dependencies
-              if: steps.cache-composer.outputs.cache-hit != 'true' # Skip if cache hit
-              run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-
-    phpstan:
-        name: Analysis Code
-        runs-on: ubuntu-latest
-        needs: [build]
-        steps:
-            - name: Checkout Code
-              uses: actions/checkout@v4
-
-            - name: Setup PHP
-              uses: shivammathur/setup-php@v2
-              with:
-                  php-version: '8.4'
-                  coverage: none
-
-            - name: Cache Composer Dependencies
-              id: cache-composer
-              uses: actions/cache@v4
-              with:
-                  path: vendor
-                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-                  restore-keys: ${{ runner.os }}-composer-
-
-            - name: Install Composer Dependencies
-              if: steps.cache-composer.outputs.cache-hit != 'true' # Skip if cache hit
               run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
             - name: Run Static Analysis
-              run: ./vendor/bin/phpstan --error-format=github --memory-limit=1G
+              run: vendor/bin/phpstan --error-format=github --memory-limit=1G
 
     tests:
-        name: Run Tests
+        name: Run Tests (PHP ${{ matrix.php }})
         runs-on: ubuntu-latest
-        needs: [build]
+        needs: [pint, phpcs]
+        strategy:
+            fail-fast: false
+            matrix:
+                # composer.json allows ^8.4 and developers are on 8.5. Both are
+                # tested so the supported range is not a guess.
+                php: ['8.4', '8.5']
         steps:
             - name: Checkout Code
               uses: actions/checkout@v4
@@ -135,21 +155,19 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: '8.4'
+                  php-version: ${{ matrix.php }}
 
             - name: Copy .env
               run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
             - name: Cache Composer Dependencies
-              id: cache-composer
               uses: actions/cache@v4
               with:
                   path: vendor
-                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-                  restore-keys: ${{ runner.os }}-composer-
+                  key: ${{ runner.os }}-composer-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
+                  restore-keys: ${{ runner.os }}-composer-${{ matrix.php }}-
 
             - name: Install Composer Dependencies
-              if: steps.cache-composer.outputs.cache-hit != 'true' # Skip if cache hit
               run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
             - name: Generate key
@@ -163,6 +181,8 @@ jobs:
                   mkdir -p database
                   touch database/database.sqlite
 
+            # phpunit.xml excludes the browser and external groups by default,
+            # so no CLI flag is needed here.
             - name: Execute Tests
               env:
                   DB_CONNECTION: sqlite
