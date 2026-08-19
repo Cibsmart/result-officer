@@ -11,15 +11,17 @@ parameters:
     level: 9
 
     ignoreErrors:
-        -   '#^Cannot access property \$\w+ on App\\Models\\\w+\|null\.$#'
-        -   '#^Cannot call method \w+\(\) on App\\Models\\\w+\|null\.$#'
-        -   '#^Parameter \#\d+ \$\w+ of method App\\Actions\\Vetting\\\w+::\w+\(\) expects (App\\Models\\\w+|Illuminate\\Database\\Eloquent\\Model), (App\\Models\\\w+\|null) given\.$#'
-        -   '#^Parameter (\#1 )?\$user of static method App\\[A-Za-z\\]+:\:new\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
-        -   '#^Property App\\Models\\\w+\:\:\$\w+ \(string\|null\) does not accept Carbon\\Carbon\|null\.$#'
-        -   '#^Property App\\Models\\\w+\:\:\$\w+ \(string\) does not accept App\\Enums\\\w+\.$#'
         # Larastan types unsigned columns as int<0, max> when writing, but reads a
         # model's own key back as a plain int, so every foreign-key assignment trips.
+        # This one stays: it is a tooling artefact, not a suppressed defect.
         -   '#^Property App\\Models\\\w+\:\:\$\w+ \(int<0, max>(\|null)?\) does not accept int(\|null)?\.$#'
+
+    # The null-safety patterns that used to live here — "Cannot access property on
+    # Model|null", "Cannot call method on Model|null", and null passed where a User
+    # or Model is required — are exactly the diagnostics level 9 exists to produce.
+    # Suppressed by regex they applied to every model in the application, so new
+    # violations landed silently. They now sit in phpstan-baseline.neon instead:
+    # the existing count is frozen and anything new fails the build.
 
     treatPhpDocTypesAsCertain: false
     checkExplicitMixed: false
