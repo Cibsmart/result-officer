@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Factories;
 
+use App\Models\Department;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
@@ -26,6 +27,17 @@ final class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'role' => 'user',
         ];
+    }
+
+    /** Assign the user to a department, as UserDepartment does in production. */
+    public function forDepartment(Department $department): self
+    {
+        return $this->afterCreating(static function (User $user) use ($department): void {
+            UserDepartmentFactory::new()->createOne([
+                'department_id' => $department->id,
+                'user_id' => $user->id,
+            ]);
+        });
     }
 
     public function unverified(): self

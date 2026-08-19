@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\Rules\AccessibleDepartment;
 use Illuminate\Foundation\Http\FormRequest;
 
 final class DepartmentSessionRequest extends FormRequest
@@ -16,12 +17,12 @@ final class DepartmentSessionRequest extends FormRequest
         return true;
     }
 
-    /** @return array<string, array<int, string>> */
+    /** @return array<string, list<\Illuminate\Contracts\Validation\ValidationRule|string>> */
     public function rules(): array
     {
         return [
             'department' => ['required', 'array'],
-            'department.id' => ['required', 'integer', 'exists:departments,id'],
+            'department.id' => ['required', 'integer', 'exists:departments,id', new AccessibleDepartment()],
             'session' => ['required', 'array'],
             'session.id' => ['required', 'integer', 'exists:academic_sessions,id'],
         ];

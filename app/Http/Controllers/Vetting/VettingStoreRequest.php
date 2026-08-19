@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Vetting;
 use App\Models\Department;
 use App\Models\Student;
 use App\Models\VettingEventGroup;
+use App\Rules\AccessibleDepartment;
 use App\Values\RegistrationNumber;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Collection;
@@ -15,11 +16,11 @@ use Illuminate\Validation\Validator;
 
 final class VettingStoreRequest extends FormRequest
 {
-    /** @return array<string, array<string>> */
+    /** @return array<string, list<\Illuminate\Contracts\Validation\ValidationRule|string>> */
     public function rules(): array
     {
         return [
-            'department' => ['required', 'integer', 'exists:departments,id'],
+            'department' => ['required', 'integer', 'exists:departments,id', new AccessibleDepartment()],
             'registration_numbers' => ['required'],
             'title' => ['required', 'string', 'min:10', 'max:255'],
         ];

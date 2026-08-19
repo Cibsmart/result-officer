@@ -58,8 +58,8 @@ it('can start download of student by registration number', function (): void {
 });
 
 it('can start download of students by department and session', function (): void {
-    $user = UserFactory::new()->createOne();
     $department = DepartmentFactory::new()->createOne(['online_id' => 1]);
+    $user = UserFactory::new()->forDepartment($department)->createOne();
     $session = SessionFactory::new()->createOne();
 
     $response = actingAs($user)

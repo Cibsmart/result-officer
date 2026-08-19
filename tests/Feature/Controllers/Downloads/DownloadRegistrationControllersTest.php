@@ -64,8 +64,8 @@ it('can start download of registrations by registration number', function (): vo
 });
 
 it('can start download of registrations by department, session and level', function (): void {
-    $user = UserFactory::new()->createOne();
-    $department = DepartmentFactory::new()->createOne(['online_id' => 1]);
+        $department = DepartmentFactory::new()->createOne(['online_id' => 1]);
+    $user = UserFactory::new()->forDepartment($department)->createOne();
     $session = SessionFactory::new()->createOne();
     $level = LevelFactory::new()->createOne();
 
@@ -95,8 +95,8 @@ it('can start download of registrations by department, session and level', funct
 });
 
 it('can start download of registrations by department, session and semester', function (): void {
-    $user = UserFactory::new()->createOne();
-    $department = DepartmentFactory::new()->createOne(['online_id' => 1]);
+        $department = DepartmentFactory::new()->createOne(['online_id' => 1]);
+    $user = UserFactory::new()->forDepartment($department)->createOne();
     $session = SessionFactory::new()->createOne();
     $semester = SemesterFactory::new()->createOne();
 

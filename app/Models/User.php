@@ -63,6 +63,25 @@ final class User extends Authenticatable implements FilamentUser
         return str_ends_with($this->email, Config::string('rp.domain'));
     }
 
+    /**
+     * Department ids this user may act on. Empty for an unassigned user, which
+     * denies everything scoped — administrators bypass the check entirely.
+     *
+     * @return list<int>
+     */
+    public function accessibleDepartmentIds(): array
+    {
+        return array_values(array_map(
+            static fn (mixed $id): int => (int) $id,
+            $this->departments()->pluck('department_id')->all(),
+        ));
+    }
+
+    public function canAccessDepartment(int $departmentId): bool
+    {
+        return $this->isAdmin() || in_array($departmentId, $this->accessibleDepartmentIds(), true);
+    }
+
     public function isAdmin(): bool
     {
         return $this->inDomain() && in_array($this->role, [Role::SUPER_ADMIN, Role::ADMIN], true);

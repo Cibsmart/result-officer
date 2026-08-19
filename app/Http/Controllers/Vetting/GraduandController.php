@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Vetting;
 use App\Data\Department\DepartmentInfoData;
 use App\Data\Graduands\PaginatedGraduandListData;
 use App\Models\Department;
+use App\Rules\AccessibleDepartment;
 use App\ViewModels\Graduands\GraduandIndexPage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ final class GraduandController
 
     public function store(Request $request): RedirectResponse
     {
-        $validated = $request->validate(['department' => ['required', 'integer', 'exists:departments,id']]);
+        $validated = $request->validate(['department' => ['required', 'integer', 'exists:departments,id', new AccessibleDepartment()]]);
 
         $department = Department::query()->where('id', $validated['department'])->first();
 
