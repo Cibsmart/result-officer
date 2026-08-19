@@ -7,10 +7,10 @@ namespace App\Console\Commands;
 use App\Enums\ExcelImportType;
 use App\Enums\ImportEventStatus;
 use App\Models\ExcelImportEvent;
-use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
+use Throwable;
 
 final class ProcessRawExcelUploads extends Command
 {
@@ -36,6 +36,7 @@ final class ProcessRawExcelUploads extends Command
         $messages = collect($this->preprocess($importEvent))->filter();
 
         if ($messages->isNotEmpty()) {
+            $importEvent->updateStatus(ImportEventStatus::FAILED);
             $importEvent->setMessage($this->joinMessages($messages));
 
             return Command::FAILURE;
@@ -46,7 +47,7 @@ final class ProcessRawExcelUploads extends Command
 
         try {
             $type->getProcessAction()::new()->execute($importEvent);
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $importEvent->updateStatus(ImportEventStatus::FAILED);
             $importEvent->setMessage($e->getMessage());
 

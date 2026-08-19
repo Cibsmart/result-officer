@@ -223,3 +223,32 @@ it('updates result details table after update', function (): void {
 
     expect($detail->value)->toBe($text);
 });
+
+it('records the post-update values in history, not the pre-update ones', function (): void {
+    SessionFactory::new()->createOne(['name' => '2018/2019']);
+    $session = SessionFactory::new()->createOne(['name' => '2019/2020']);
+
+    $firstSemester = SemesterFactory::new(['name' => 'FIRST'])->createOne();
+
+    $student = StudentFactory::new()->has(
+        SessionEnrollmentFactory::new()->state(['session_id' => $session->id])
+            ->has(SemesterEnrollmentFactory::new()
+                ->has(RegistrationFactory::new()
+                    ->has(ResultFactory::new()), 'registrations')
+                ->state(['semester_id' => $firstSemester->id]), 'semesterEnrollments'),
+    )->createOne(['entry_session_id' => $session->id]);
+
+    $registration = Registration::first();
+    $scores = $registration->result->getScores();
+
+    (new ResultUpdateAction())->execute($student, $registration, ['exam' => $scores['exam'] + 11]);
+
+    $history = StudentHistory::query()->where('field', StudentModifiableField::RESULT)->sole();
+
+    // The recorded 'new' must match what was actually persisted, not the
+    // pre-update state the action was holding when it built the record.
+    $persisted = Registration::query()->findOrFail($registration->id)->getUpdateData();
+
+    expect($history->data['new'])->toBe($persisted)
+        ->and($history->data['new'])->not->toBe($history->data['old']);
+});

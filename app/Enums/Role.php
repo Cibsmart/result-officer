@@ -15,16 +15,26 @@ enum Role: string implements HasLabel
     case DATABASE_OFFICER = 'database-officer';
     case USER = 'user';
 
-    /** @return array<string, string> */
+    /**
+     * Derived from getLabel() rather than restated. The two were maintained
+     * separately and drifted: this array mapped desk-officer to 'EXAM OFFICER'
+     * and exam-officer to 'DESK OFFICER', so every account created through the
+     * role dropdown was persisted one step from what the operator picked.
+     * @return array<string, string>
+     */
     public static function creatable(): array
     {
-        return [
-            self::ADMIN->value => 'ADMIN',
-            self::DATABASE_OFFICER->value => 'DATABASE OFFICER',
-            self::DESK_OFFICER->value => 'EXAM OFFICER',
-            self::EXAM_OFFICER->value => 'DESK OFFICER',
-            self::USER->value => 'USER',
-        ];
+        $creatable = [];
+
+        foreach (self::cases() as $role) {
+            if ($role === self::SUPER_ADMIN) {
+                continue;
+            }
+
+            $creatable[$role->value] = $role->getLabel();
+        }
+
+        return $creatable;
     }
 
     public function getLabel(): string

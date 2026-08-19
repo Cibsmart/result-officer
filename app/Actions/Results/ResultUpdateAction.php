@@ -29,8 +29,10 @@ final class ResultUpdateAction
 
         Registration::updateRegistrationAndResult($student, $registration, $newResult);
 
-        $registration->fresh();
-
+        // No reload before reading the new value: the update path writes through
+        // $registration and its already-loaded result relation, so this instance
+        // is current. A discarded $registration->fresh() call sat here, which
+        // read as a stale-audit bug but was only ever dead code.
         StudentHistory::createNewUpdate(
             student: $student,
             model: $registration,

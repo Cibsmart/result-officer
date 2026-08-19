@@ -39,13 +39,14 @@ These are defects with a demonstrable wrong outcome. All are small, isolated fix
 ### 1.1 Four migrations drop the wrong table on rollback **[verified]**
 
 A scripted comparison of `Schema::create(...)` against `dropIfExists(...)` in each migration found
-four mismatches, including a mutually-swapped pair:
+**three** mismatches, including a mutually-swapped pair. (An earlier count of four included
+`create_pulse_tables`, which is correct — it creates three tables and its `down()` drops all three
+in reverse. The comparison only looked at the first `create`/`drop` pair in each file.)
 
 | Migration | Creates | Drops on rollback |
 |---|---|---|
 | `2024_07_03_184451_create_registrations_table.php` | `registrations` | **`results`** |
 | `2024_07_09_091519_create_results_table.php` | `results` | **`registrations`** |
-| `2024_08_19_095656_create_pulse_tables.php` | `pulse_aggregates` | `pulse_values` |
 | `2024_09_13_091811_create_import_events_table.php` | `import_events` | `result_import_events` |
 
 The first two are the dangerous pair: `migrate:rollback` over that range drops `results` while
@@ -133,21 +134,32 @@ an operator runs the command by hand. Single-student vetting still works because
 **Fix:** add the schedule entry with `->withoutOverlapping()` (see §3.1 — a queued job is the better
 target). Add a feature test asserting the command is registered in the schedule.
 
-### 1.6 `ResultUpdateAction` audits stale values **[verified]**
+### 1.6 `ResultUpdateAction` audits stale values — **[FALSE POSITIVE, retracted]**
 
-`app/Actions/Results/ResultUpdateAction.php:32` calls `$registration->fresh();` and **discards the
-return value**. `fresh()` returns a new instance; it does not mutate the receiver — `refresh()` does.
+This entry was wrong. It is kept rather than deleted because the reasoning is a plausible trap.
 
-The next statement builds the audit record's `new` value from `$registration->getUpdateData()`, which
-reads `$this->result` (`app/Models/Registration.php:210`) — still the relation instance cached before
-the write. So `StudentHistory` records `['new' => <pre-update>, 'old' => <pre-update>]`: a result
-change is logged as a no-op.
+The claim: `app/Actions/Results/ResultUpdateAction.php` called `$registration->fresh()` and discarded
+the return, so the audit record's `new` value was built from a pre-update instance and every grade
+change was logged as a no-op.
 
-This is the audit trail for grade changes, the single most integrity-sensitive mutation in the
-system. It is currently unreliable in exactly the case it exists to record.
+The first half is true — `fresh()` returns a new instance and the return was discarded, so the line
+was dead code. The conclusion does not follow. `Registration::updateRegistrationAndResult()` mutates
+the **same** `$registration` instance (`$registration->credit_unit = ...`), and `Result::updateResult()`
+opens with `$result = $registration->result;` — the already-loaded relation — then mutates and saves
+*that* instance. `Registration::getUpdateData()` reads `$this->credit_unit` and `$this->result`, both
+of which are therefore current. No reload was ever required.
 
-**Fix:** `$registration->refresh();`. Add a test asserting the history row's `new` differs from `old`
-after a score change — the current bug would pass any test that only checks a history row exists.
+Verified three ways: with `refresh()`, with the original `fresh()`, and with the line deleted
+entirely, a test asserting the recorded `new` equals the value freshly re-read from the database
+passes in all three cases.
+
+**Resolution:** the dead line is removed and a comment left in its place so it is not reintroduced as
+a "fix". A regression test (`tests/Feature/Actions/Results/ResultUpdateActionTest.php`) now asserts
+the recorded `new` matches the persisted state, which is the property that actually matters.
+
+**Lesson for the rest of this document:** a `[verified]` tag on a data-flow claim means the code was
+read, not that the behaviour was executed. The entries that assert a *runtime* outcome deserve a test
+before they are treated as fact.
 
 ---
 
@@ -465,7 +477,7 @@ Ordered by risk-reduction per unit of effort, not by severity alone.
 | 1 | Close public registration (§2.4) | Single highest exposure; a routes-file change buys time for the rest | Trivial |
 | 2 | Fix the four migration `down()` methods (§1.1) | Data-destructive, isolated, no design decisions | Trivial |
 | 3 | Fix `Role::creatable()` (§1.2) + audit existing roles | Wrong data accumulating daily | Trivial |
-| 4 | Fix the three stranding/staleness bugs (§1.3, §1.4, §1.6) | Each is a few lines; each currently corrupts or hides state | Small |
+| 4 | Fix the stranding bugs (§1.3, §1.4) | Each is a few lines; each currently corrupts or hides state | Small |
 | 5 | Schedule or queue `rp:process-queued-vetting` (§1.5) | A whole feature is inert in production | Small |
 | 6 | Department scoping on download/export requests (§2.3) | Closes horizontal escalation; one shared trait covers ~20 endpoints | Medium |
 | 7 | Deny-by-default authorization + negative feature tests (§2.1, §5.5) | Makes every future route fail closed | Medium |

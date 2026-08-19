@@ -9,7 +9,6 @@ use App\Enums\Months;
 use App\Models\FinalStudent;
 use App\Models\Student;
 use App\Models\User;
-use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -39,14 +38,16 @@ final class ClearanceController
         ];
 
         try {
-            DB::beginTransaction();
-            $finalStudent = FinalStudent::fromStudent($student, $data);
-            $action->execute($student, $finalStudent);
-            DB::commit();
-        } catch (Exception $e) {
-            return redirect()->back()->error($e->getMessage());
+            DB::transaction(static function () use ($student, $data, $action): void {
+                $finalStudent = FinalStudent::fromStudent($student, $data);
+                $action->execute($student, $finalStudent);
+            });
         } catch (Throwable $e) {
-            return redirect()->back()->error($e->getMessage());
+            report($e);
+
+            return redirect()->back()->error(
+                "Could not clear {$student->registration_number}. The record was left unchanged.",
+            );
         }
 
         activity()

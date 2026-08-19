@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Console\Commands\ProcessQueuedImportEvent;
+use App\Console\Commands\ProcessQueuedVettingCommand;
 use App\Console\Commands\ProcessRawExcelUploads;
 use App\Console\Commands\UploadPendingExcelImports;
 use Illuminate\Foundation\Inspiring;
@@ -18,6 +19,10 @@ Schedule::command(UploadPendingExcelImports::class)
     ->withoutOverlapping()
     ->runInBackground();
 Schedule::command(ProcessRawExcelUploads::class)
+    ->everyMinute()
+    ->withoutOverlapping()
+    ->runInBackground();
+Schedule::command(ProcessQueuedVettingCommand::class)
     ->everyMinute()
     ->withoutOverlapping()
     ->runInBackground();

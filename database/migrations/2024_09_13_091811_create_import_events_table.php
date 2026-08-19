@@ -38,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('result_import_events');
+        Schema::dropIfExists('import_events');
     }
 };
