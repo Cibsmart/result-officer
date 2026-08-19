@@ -24,7 +24,7 @@ it('refuses a download for a department the user is not assigned to', function (
     $other = DepartmentFactory::new()->createOne(['online_id' => 2]);
     $session = SessionFactory::new()->createOne();
 
-    $user = UserFactory::new()->forDepartment($assigned)->createOne();
+    $user = UserFactory::new()->examOfficer()->forDepartment($assigned)->createOne();
 
     actingAs($user)
         ->from(route('download.students.page'))
@@ -41,7 +41,7 @@ it('refuses a download for a user assigned to no department at all', function ()
     $department = DepartmentFactory::new()->createOne(['online_id' => 1]);
     $session = SessionFactory::new()->createOne();
 
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->examOfficer()->createOne();
 
     actingAs($user)
         ->from(route('download.students.page'))
@@ -58,7 +58,7 @@ it('allows a download for the department the user is assigned to', function (): 
     $department = DepartmentFactory::new()->createOne(['online_id' => 1]);
     $session = SessionFactory::new()->createOne();
 
-    $user = UserFactory::new()->forDepartment($department)->createOne();
+    $user = UserFactory::new()->examOfficer()->forDepartment($department)->createOne();
 
     actingAs($user)
         ->from(route('download.students.page'))
@@ -75,10 +75,7 @@ it('lets an in-domain administrator reach any department', function (): void {
     $department = DepartmentFactory::new()->createOne(['online_id' => 1]);
     $session = SessionFactory::new()->createOne();
 
-    $admin = UserFactory::new()->createOne([
-        'email' => 'registrar@' . config('rp.domain'),
-        'role' => 'admin',
-    ]);
+    $admin = UserFactory::new()->admin()->createOne();
 
     actingAs($admin)
         ->from(route('download.students.page'))

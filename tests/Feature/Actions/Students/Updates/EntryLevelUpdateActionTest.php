@@ -31,7 +31,7 @@ it('updates student entry level', function (): void {
 it('records the update in the student history table', function (): void {
     $entryLevel = LevelFactory::new()->createOne(['name' => '100']);
     $student = StudentFactory::new()->createOne(['entry_level_id' => $entryLevel->id]);
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     $oldValue = $student->entryLevel;
     $newValue = LevelFactory::new()->createOne(['name' => '200']);

@@ -12,7 +12,7 @@ use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseHas;
 
 it('validates registration number update request', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
     $student = StudentFactory::new()->createOne();
 
     $response = actingAs($user)
@@ -22,7 +22,7 @@ it('validates registration number update request', function (): void {
 });
 
 it('validates unchanged registration number', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
     $student = StudentFactory::new()->createOne();
     $newRegistrationNumber = $student->registration_number . 'A';
 
@@ -37,7 +37,7 @@ it('validates unchanged registration number', function (): void {
 });
 
 it('can update students registration number without mail information', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
     $student = StudentFactory::new()->createOne();
     $oldRegistrationNumber = $student->registration_number;
     $newRegistrationNumber = $student->registration_number . 'A';
@@ -59,7 +59,7 @@ it('can update students registration number without mail information', function 
 });
 
 it('must provide mail details when the update has mail', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
     $student = StudentFactory::new()->createOne();
 
     $response = actingAs($user)
@@ -71,7 +71,7 @@ it('must provide mail details when the update has mail', function (): void {
 });
 
 it('can update students registration number with mail information', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
     $student = StudentFactory::new()->createOne();
     $oldRegistrationNumber = $student->registration_number;
     $newRegistrationNumber = $student->registration_number . 'A';

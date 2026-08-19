@@ -26,7 +26,9 @@ final class GraduandController
 
     public function store(Request $request): RedirectResponse
     {
-        $validated = $request->validate(['department' => ['required', 'integer', 'exists:departments,id', new AccessibleDepartment()]]);
+        $validated = $request->validate(
+            ['department' => ['required', 'integer', 'exists:departments,id', new AccessibleDepartment()]],
+        );
 
         $department = Department::query()->where('id', $validated['department'])->first();
 

@@ -28,7 +28,7 @@ it('updates student program', function (): void {
 
 it('records the update in the student history table', function (): void {
     $student = StudentFactory::new()->createOne();
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     $oldValue = $student->program;
     $newValue = ProgramFactory::new()->createOne(['name' => 'NEW PROGRAM']);

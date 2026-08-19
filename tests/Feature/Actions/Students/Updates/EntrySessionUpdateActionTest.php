@@ -30,7 +30,7 @@ it('updates student entry session', function (): void {
 it('records the update in the student history table', function (): void {
     $entrySession = SessionFactory::new()->createOne(['name' => '2009/2010']);
     $student = StudentFactory::new()->createOne(['entry_session_id' => $entrySession->id]);
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     $oldValue = $student->entrySession;
     $newValue = SessionFactory::new()->createOne(['name' => '2010/2011']);

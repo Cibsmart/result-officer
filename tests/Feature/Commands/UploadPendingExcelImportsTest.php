@@ -79,7 +79,7 @@ test(
         $path = storeResultsWorkbook([resultRow('EBSU/2020/0001')]);
 
         $event = ExcelImportEvent::new(
-            UserFactory::new()->createOne(),
+            UserFactory::new()->admin()->createOne(),
             ExcelImportType::RESULT,
             $path,
             'RES4.xlsx',
@@ -103,7 +103,7 @@ test('it fails loudly and does not complete when no rows are imported', function
     $path = storeResultsWorkbook([resultRow('')]);
 
     $event = ExcelImportEvent::new(
-        UserFactory::new()->createOne(),
+        UserFactory::new()->admin()->createOne(),
         ExcelImportType::RESULT,
         $path,
         'EMPTY.xlsx',
@@ -129,7 +129,7 @@ test('it imports curriculum courses and skips rows without a course code', funct
     ]);
 
     $event = ExcelImportEvent::new(
-        UserFactory::new()->createOne(),
+        UserFactory::new()->admin()->createOne(),
         ExcelImportType::CURRICULUM,
         $path,
         'CUR1.xlsx',

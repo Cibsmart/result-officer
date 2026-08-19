@@ -700,6 +700,28 @@ declare namespace App.Enums {
         | 'November'
         | 'December';
     export type NotificationType = 'success' | 'error' | 'warning' | 'info';
+    export type Permission =
+        | 'student.view'
+        | 'result.view'
+        | 'result.export'
+        | 'vetting.view'
+        | 'graduand.view'
+        | 'transcript.view'
+        | 'student.amend-demographics'
+        | 'student.amend-placement'
+        | 'student.transfer'
+        | 'student.delete'
+        | 'result.amend'
+        | 'registration.delete'
+        | 'import.portal-download'
+        | 'import.upload-spreadsheet'
+        | 'import.manage-event'
+        | 'vetting.run'
+        | 'student.clear'
+        | 'admin.reference-data'
+        | 'admin.curriculum'
+        | 'admin.users';
+    export type PermissionScope = 'institution' | 'department';
     export type ProgramDuration = 3 | 4 | 5 | 6;
     export type RawDataStatus = 'pending' | 'updating' | 'duplicate' | 'failed' | 'processed';
     export type RecordActionType = 'create' | 'update' | 'delete';

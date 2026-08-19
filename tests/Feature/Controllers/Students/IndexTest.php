@@ -32,7 +32,7 @@ function listedRegistrationNumbers(TestResponse $response): array
 
 function adminUser(): User
 {
-    return UserFactory::new()->createOne([
+    return UserFactory::new()->admin()->createOne([
         'email' => fake()->unique()->userName() . '@ebsu.edu.ng',
         'role' => Role::ADMIN,
     ]);
@@ -43,14 +43,14 @@ it('redirects guest to login', function (): void {
 });
 
 it('loads the correct component', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     actingAs($user)->get(route('students.index'))
         ->assertHasComponent('students/index/page');
 });
 
 it('passes paginated student data to the view', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
     StudentFactory::new()->count(3)->create();
 
     $students = StudentIndex::new(StudentIndexFilterData::from([
@@ -69,7 +69,7 @@ it('passes paginated student data to the view', function (): void {
 });
 
 it('lists students by name ascending by default', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     StudentFactory::new()->createOne(['last_name' => 'Okonkwo', 'registration_number' => 'EBSU/2019/00003']);
     StudentFactory::new()->createOne(['last_name' => 'Adeyemi', 'registration_number' => 'EBSU/2019/00001']);
@@ -82,7 +82,7 @@ it('lists students by name ascending by default', function (): void {
 });
 
 it('searches by registration number', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     StudentFactory::new()->createOne(['registration_number' => 'EBSU/2019/12345']);
     StudentFactory::new()->createOne(['registration_number' => 'EBSU/2020/98765']);
@@ -93,7 +93,7 @@ it('searches by registration number', function (): void {
 });
 
 it('searches across every part of a name', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     StudentFactory::new()->createOne([
         'first_name' => 'Chidinma',
@@ -117,7 +117,7 @@ it('searches across every part of a name', function (): void {
 });
 
 it('matches every token of a multi word search', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     StudentFactory::new()->createOne([
         'first_name' => 'Chidinma',
@@ -137,7 +137,7 @@ it('matches every token of a multi word search', function (): void {
 });
 
 it('filters by gender', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     StudentFactory::new()->createOne(['gender' => Gender::FEMALE, 'registration_number' => 'EBSU/2019/00001']);
     StudentFactory::new()->createOne(['gender' => Gender::MALE, 'registration_number' => 'EBSU/2019/00002']);
@@ -148,7 +148,7 @@ it('filters by gender', function (): void {
 });
 
 it('filters by status', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     StudentFactory::new()->graduated()->createOne(['registration_number' => 'EBSU/2019/00001']);
     StudentFactory::new()->createOne(['registration_number' => 'EBSU/2019/00002']);
@@ -159,7 +159,7 @@ it('filters by status', function (): void {
 });
 
 it('filters by department', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     $department = DepartmentFactory::new()->active()->createOne();
     $program = ProgramFactory::new()->createOne(['department_id' => $department->id]);
@@ -173,7 +173,7 @@ it('filters by department', function (): void {
 });
 
 it('filters by entry year', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     $session = SessionFactory::new()->createOne(['name' => '2019/2020', 'slug' => '2019-2020']);
 
@@ -186,7 +186,7 @@ it('filters by entry year', function (): void {
 });
 
 it('sorts by registration number in either direction', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     StudentFactory::new()->createOne(['registration_number' => 'EBSU/2019/00002']);
     StudentFactory::new()->createOne(['registration_number' => 'EBSU/2019/00001']);
@@ -203,7 +203,7 @@ it('sorts by registration number in either direction', function (): void {
 });
 
 it('sorts by department name', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     $zoology = ProgramFactory::new()->createOne([
         'department_id' => DepartmentFactory::new()->active()->createOne(['name' => 'Zoology'])->id,
@@ -222,7 +222,7 @@ it('sorts by department name', function (): void {
 });
 
 it('falls back to the default sort when given an unknown field', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     StudentFactory::new()->createOne(['last_name' => 'Okonkwo', 'registration_number' => 'EBSU/2019/00002']);
     StudentFactory::new()->createOne(['last_name' => 'Adeyemi', 'registration_number' => 'EBSU/2019/00001']);
@@ -233,7 +233,7 @@ it('falls back to the default sort when given an unknown field', function (): vo
 });
 
 it('keeps the active filters on the pagination links', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     // Two pages' worth of students, all sharing one level/program/session/lga so the
     // factories' unique() pools are not exhausted.
@@ -253,7 +253,7 @@ it('keeps the active filters on the pagination links', function (): void {
 });
 
 it('passes the filter state back to the page', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     $response = actingAs($user)->get(route('students.index', [
         'direction' => 'desc',

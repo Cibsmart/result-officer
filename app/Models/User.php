@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\Permission;
+use App\Enums\PermissionScope;
 use App\Enums\Role;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
@@ -66,7 +68,6 @@ final class User extends Authenticatable implements FilamentUser
     /**
      * Department ids this user may act on. Empty for an unassigned user, which
      * denies everything scoped — administrators bypass the check entirely.
-     *
      * @return list<int>
      */
     public function accessibleDepartmentIds(): array
@@ -77,9 +78,40 @@ final class User extends Authenticatable implements FilamentUser
         ));
     }
 
-    public function canAccessDepartment(int $departmentId): bool
+    /**
+     * Institution-wide grants reach any department; department-scoped grants
+     * reach only the assigned ones. Passing no permission falls back to the
+     * pre-permission behaviour, where only administrators bypassed scoping.
+     */
+    public function canAccessDepartment(int $departmentId, ?Permission $permission = null): bool
     {
-        return $this->isAdmin() || in_array($departmentId, $this->accessibleDepartmentIds(), true);
+        if ($this->reachesEveryDepartment($permission)) {
+            return true;
+        }
+
+        return in_array($departmentId, $this->accessibleDepartmentIds(), true);
+    }
+
+    public function hasPermission(Permission $permission): bool
+    {
+        return $this->permissionScope($permission) instanceof PermissionScope;
+    }
+
+    /**
+     * Permissions follow from the role, and — like isAdmin() — only for accounts
+     * inside the institution's mail domain. Public registration is closed, so
+     * every account is provisioned by a super admin and should qualify.
+     */
+    public function permissionScope(Permission $permission): ?PermissionScope
+    {
+        if (! $this->inDomain()) {
+            return null;
+        }
+
+        $role = $this->role;
+        assert($role instanceof Role);
+
+        return $role->scopeFor($permission);
     }
 
     public function isAdmin(): bool
@@ -122,5 +154,15 @@ final class User extends Authenticatable implements FilamentUser
         return Attribute::make(
             set: static fn (string $value): string => mb_strtoupper($value),
         );
+    }
+
+    /** Institution-wide for the capability, or — with none given — an administrator. */
+    private function reachesEveryDepartment(?Permission $permission): bool
+    {
+        if ($permission === null) {
+            return $this->isAdmin();
+        }
+
+        return $this->permissionScope($permission) === PermissionScope::INSTITUTION;
     }
 }

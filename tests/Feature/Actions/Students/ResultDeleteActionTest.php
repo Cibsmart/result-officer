@@ -40,7 +40,7 @@ it('records the delete in the student history table', function (): void {
     $student = createStudentWithResults(1, 1, 1);
     $registration = Registration::first();
 
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     $oldValue = $registration->getUpdateData();
 

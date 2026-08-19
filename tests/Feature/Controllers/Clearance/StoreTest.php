@@ -15,7 +15,7 @@ use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Laravel\post;
 
 it('can clear a student', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     $student = StudentFactory::new()->createOne(['status' => StudentStatus::FINAL_YEAR]);
     VettingEventFactory::new()->for($student)->createOne(['status' => VettingEventStatus::PASSED]);
@@ -34,7 +34,7 @@ it('can clear a student', function (): void {
 });
 
 it('redirects back to the vetting page', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     $student = StudentFactory::new()->createOne(['status' => StudentStatus::FINAL_YEAR]);
     VettingEventFactory::new()->for($student)->createOne(['status' => VettingEventStatus::PASSED]);

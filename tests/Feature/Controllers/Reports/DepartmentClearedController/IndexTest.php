@@ -16,7 +16,7 @@ use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
 
 it('loads the correct component', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     actingAs($user)->get(route('department.cleared.index'))
         ->assertHasComponent('reports/cleared/index/page');
@@ -29,14 +29,14 @@ it('redirects guest to login', function (): void {
 });
 
 it('passes departments data to the view', function (): void {
-    $user = UserFactory::new()->has(UserDepartmentFactory::new()->count(2), 'departments')->createOne();
+    $user = UserFactory::new()->examOfficer()->has(UserDepartmentFactory::new()->count(2), 'departments')->createOne();
 
     actingAs($user)->get(route('department.cleared.index'))
         ->assertHasDataList('departments', DepartmentListData::forUser($user));
 });
 
 it('passes cleared students data to the view when department and year parameter are present', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
     $program = ProgramFactory::new()->createOne();
     $department = $program->department;
     $year = now()->year;
@@ -59,7 +59,7 @@ it('passes cleared students data to the view when department and year parameter 
 });
 
 it('fails when supplied invalid department parameter', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
     $year = now()->year;
 
     actingAs($user)->get(route('department.cleared.index', [
@@ -69,7 +69,7 @@ it('fails when supplied invalid department parameter', function (): void {
 });
 
 it('fails when supplied invalid year parameter', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
     $program = ProgramFactory::new()->createOne();
     $department = $program->department;
 

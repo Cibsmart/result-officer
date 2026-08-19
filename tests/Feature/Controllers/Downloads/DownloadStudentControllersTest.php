@@ -31,14 +31,14 @@ beforeEach(function (): void {
 
 it('renders the download student page', function (): void {
     withoutExceptionHandling();
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     $response = actingAs($user)->get(route('download.students.page'));
     $response->assertStatus(200);
 });
 
 it('can start download of student by registration number', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
     $registrationNumber = 'EBSU/2009/51486';
 
     $response = actingAs($user)
@@ -59,7 +59,7 @@ it('can start download of student by registration number', function (): void {
 
 it('can start download of students by department and session', function (): void {
     $department = DepartmentFactory::new()->createOne(['online_id' => 1]);
-    $user = UserFactory::new()->forDepartment($department)->createOne();
+    $user = UserFactory::new()->databaseOfficer()->forDepartment($department)->createOne();
     $session = SessionFactory::new()->createOne();
 
     $response = actingAs($user)
@@ -86,7 +86,7 @@ it('can start download of students by department and session', function (): void
 });
 
 it('queues download of students by session for processing', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
     $session = SessionFactory::new()->createOne();
 
     $response = actingAs($user)
