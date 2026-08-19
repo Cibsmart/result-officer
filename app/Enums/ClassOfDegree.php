@@ -13,18 +13,36 @@ enum ClassOfDegree: string
     case PASS = 'PASS';
     case FAIL = 'FAIL';
 
+    /** The highest attainable FCGPA. Anything above it is corrupt data, not a first class. */
+    private const float MAXIMUM_FCGPA = 5.00;
+
+    /**
+     * Classification is keyed on lower bounds alone, so the bands are contiguous.
+     *
+     * The previous implementation matched closed ranges — 4.50-5.00, 3.50-4.49,
+     * 2.50-3.49 and so on — leaving a 0.01-wide gap above each band's top. A
+     * value inside a gap matched no case and fell through to FAIL. The live path
+     * rounds to two decimals and could never land in one, but the final path
+     * rounds to three, so an FCGPA of 4.495 read as SECOND CLASS UPPER before
+     * clearance and FAIL after it. The same held at 3.495, 2.495 and 1.495.
+     */
     public static function for(float $fcgpa): self
     {
+        if ($fcgpa < self::FAIL->min() || $fcgpa > self::MAXIMUM_FCGPA) {
+            return self::FAIL;
+        }
+
         return match (true) {
-            self::fcgpaWithinRangeOf(self::FIRST_CLASS, $fcgpa) => self::FIRST_CLASS,
-            self::fcgpaWithinRangeOf(self::SECOND_CLASS_UPPER, $fcgpa) => self::SECOND_CLASS_UPPER,
-            self::fcgpaWithinRangeOf(self::SECOND_CLASS_LOWER, $fcgpa) => self::SECOND_CLASS_LOWER,
-            self::fcgpaWithinRangeOf(self::THIRD_CLASS, $fcgpa) => self::THIRD_CLASS,
-            self::fcgpaWithinRangeOf(self::PASS, $fcgpa) => self::PASS,
+            $fcgpa >= self::FIRST_CLASS->min() => self::FIRST_CLASS,
+            $fcgpa >= self::SECOND_CLASS_UPPER->min() => self::SECOND_CLASS_UPPER,
+            $fcgpa >= self::SECOND_CLASS_LOWER->min() => self::SECOND_CLASS_LOWER,
+            $fcgpa >= self::THIRD_CLASS->min() => self::THIRD_CLASS,
+            $fcgpa >= self::PASS->min() => self::PASS,
             default => self::FAIL,
         };
     }
 
+    /** Inclusive lower bound of the band. The upper bound is the next band's minimum. */
     public function min(): float
     {
         return match ($this) {
@@ -35,23 +53,5 @@ enum ClassOfDegree: string
             self::PASS => 1.00,
             self::FAIL => 0.00,
         };
-    }
-
-    public function max(): float
-    {
-        return match ($this) {
-            self::FIRST_CLASS => 5.00,
-            self::SECOND_CLASS_UPPER => 4.49,
-            self::SECOND_CLASS_LOWER => 3.49,
-            self::THIRD_CLASS => 2.49,
-            self::PASS => 1.49,
-            self::FAIL => 0.99,
-        };
-    }
-
-    private static function fcgpaWithinRangeOf(self $class, float $value): bool
-    {
-        return $value >= $class->min()
-            && $value <= $class->max();
     }
 }

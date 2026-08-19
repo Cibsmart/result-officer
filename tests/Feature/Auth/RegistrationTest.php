@@ -2,23 +2,29 @@
 
 declare(strict_types=1);
 
-use App\Enums\Role;
-
-test('registration screen can be rendered', function (): void {
-    $response = $this->get('/register');
-
-    $response->assertStatus(200);
+/**
+ * Public registration is closed. Accounts are provisioned by an administrator.
+ *
+ * Self-registration created a live, logged-in account with no email-domain
+ * restriction, no verification and no approval step — on a system holding the
+ * student records of the whole institution.
+ */
+test('the registration screen is gone', function (): void {
+    $this->get('/register')->assertNotFound();
 });
 
-test('new users can register', function (): void {
-    $response = $this->post('/register', [
-        'email' => 'test@example.com',
-        'name' => 'Test User',
+test('an account cannot be created by posting to the registration endpoint', function (): void {
+    $this->post('/register', [
+        'email' => 'intruder@example.com',
+        'name' => 'Intruder',
         'password' => 'password',
         'password_confirmation' => 'password',
-        'role' => Role::USER->value,
-    ]);
+    ])->assertNotFound();
 
-    $this->assertAuthenticated();
-    $response->assertRedirect(route('dashboard', absolute: false));
+    $this->assertGuest();
+    $this->assertDatabaseMissing('users', ['email' => 'intruder@example.com']);
+});
+
+test('no route is named register', function (): void {
+    expect(app('router')->getRoutes()->getByName('register'))->toBeNull();
 });

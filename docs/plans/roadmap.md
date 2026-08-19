@@ -39,13 +39,15 @@ Nothing else in this document should start first.
 | B3 | Fix `Role::creatable()` label swap, then audit existing `users.role` values | §1.2 |
 | B4 | `ClearanceController` never rolls back its transaction | §1.3 |
 | B5 | Excel import events strand in `PROCESSING` on validation failure | §1.4 |
-| B6 | `ResultUpdateAction` discards `fresh()` — every grade change audits `old == new` | §1.6 = `audit-trail.md` Phase 0 |
+| B6 | ~~`ResultUpdateAction` audits stale values~~ — **false positive**; dead line removed, regression test added | §1.6 (retracted) |
 | B7 | Schedule `rp:process-queued-vetting` | §1.5 |
 | B8 | `ClassOfDegree` range gaps + rounding at classification; audit affected `final_students` | `final-records-review.md` Step 0 |
 | B9 | Rotate the Sentry DSN committed to `.env.example` | §2.5 |
 
-B3 is a blocker for `filament-migration.md` Phase 3. B6 is a blocker for the audit trail being worth
-building — until it lands, the trail records nothing useful about grade changes.
+B3 is a blocker for `filament-migration.md` Phase 3.
+
+B6 turned out not to be a bug at all. The audit trail already records grade changes correctly, so
+Wave F loses the prerequisite it was thought to have — and `audit-trail.md` loses its Phase 0.
 
 B7 fixes a subsystem that Wave I deletes. Do it anyway: it is one line, it makes group vetting usable
 in the meantime, and Wave I's parity phase needs the old system actually running to diff against.
@@ -94,7 +96,7 @@ second person is available.
 
 ## Wave F — Audit trail (~1.5 weeks)
 
-`audit-trail.md` Phases 1–8, plus one item pulled forward from `improvements.md`:
+`audit-trail.md` Phases 1–8 (there is no Phase 0; see B6), plus one item pulled forward from `improvements.md`:
 
 - **F0** — Wrap Action write paths in transactions (§3.3, item 9). Pulled here because an audit row
   written outside the transaction of the mutation it describes can outlive a rollback. B4 fixed the

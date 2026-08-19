@@ -61,24 +61,25 @@ waiver grant — one case, added when that subsystem lands.
 
 ---
 
-## 3. Prerequisite: the stale-audit bug
+## 3. Retracted prerequisite: the "stale-audit bug"
 
-`app/Actions/Results/ResultUpdateAction.php:32` calls `$registration->fresh();` and discards the
-return. `fresh()` returns a new instance; it does not mutate the receiver. The next statement builds
-the audit record's `new` value from `$registration->getUpdateData()` on the *unrefreshed* model, so
-every grade change is recorded as `['new' => <pre-update>, 'old' => <pre-update>]`.
+Earlier revisions of this document opened with a Phase 0 fixing `ResultUpdateAction`, which was
+believed to record `['new' => <pre-update>, 'old' => <pre-update>]` for every grade change. **That was
+a false positive.** See `improvements.md` §1.6 for the full retraction.
 
-Grade amendment is the most integrity-sensitive mutation in the system, and its audit trail records
-nothing. Fix is `$registration->refresh();`. Ship this **before** anything else in this document —
-it is independent of the merge and every historical row it produced is already worthless.
+Briefly: the discarded `$registration->fresh()` call was dead code, but the update path mutates the
+`$registration` instance and its already-loaded `result` relation in place, so the value read
+afterwards was always current. Verified by test with `refresh()`, with `fresh()`, and with the line
+removed — the recorded `new` matches the persisted state in all three.
 
-The test must assert `new !== old` after a score change. The current bug passes any test that only
-asserts a history row exists, which is exactly what
-`tests/Feature/Actions/Students/ResultDeleteActionTest.php` and its siblings do.
+Two consequences for this plan:
 
-Backfill implication: rows with `field = result`, `action = update` and `new == old` cannot be
-repaired. Backfill (§8) copies them with a `context` marker `{"integrity": "stale-old-value"}` so
-they are visibly untrustworthy rather than silently wrong.
+- **There is no Phase 0.** The cutover in §9 begins at Phase 1.
+- **The backfill does not tag anything.** Earlier drafts had it marking result rows
+  `{"integrity": "stale-old-value"}`. Those rows are sound; migrate them unchanged.
+
+The dead line is gone and a comment sits in its place. `ResultUpdateActionTest` now asserts the
+recorded `new` equals the value re-read from the database, which is the property worth guarding.
 
 ---
 
@@ -286,7 +287,6 @@ way: idempotent, reversible, and skippable.
 - Writes `legacy_student_history_id`, which is uniquely indexed. Re-running skips what it already
   moved. `--dry-run` reports the mapping histogram and any row whose `field`/`action` pair has no
   `AuditAction` — that count must be zero before the real run.
-- Tags stale result rows per §3.
 - Timestamps are inserted directly, bypassing model events; the immutability guard makes the
   ordinary path refuse writes with a set `created_at`, so the backfill uses the query builder.
 
@@ -303,7 +303,6 @@ Ordered. Each phase is independently shippable and leaves CI green.
 
 | Phase | Work | Gate |
 |---|---|---|
-| **0** | §3 — `refresh()` fix plus the `new !== old` test. Ship alone. | Independent, urgent. Do not wait for the rest. |
 | **1** | Migration, `AuditLog`, `AuditAction`, `RecordSource` reuse, `RecordAudit`, `AuditLogFactory` in `tests/factories/`. Immutability tests. | Nothing calls it yet. |
 | **2** | Migrate the 16 `StudentHistory` sites. Move test assertions. `student_histories` still exists, now written by nothing. | Full existing test suite green. |
 | **3** | Backfill command + `--dry-run` on a production snapshot. | Zero unmapped rows. |
