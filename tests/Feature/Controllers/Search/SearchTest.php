@@ -11,12 +11,14 @@ use Tests\Factories\UserFactory;
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
 
-function searchUser(Role $role = Role::USER): User
+/**
+ * Defaults to a desk officer: the read-only role, institution-wide but not an
+ * administrator. `user` no longer works here — it holds no permissions at all,
+ * so it cannot reach search.
+ */
+function searchUser(Role $role = Role::DESK_OFFICER): User
 {
-    return UserFactory::new()->createOne([
-        'email' => fake()->unique()->userName() . '@ebsu.edu.ng',
-        'role' => $role,
-    ]);
+    return UserFactory::new()->role($role)->createOne();
 }
 
 it('requires authentication', function (): void {

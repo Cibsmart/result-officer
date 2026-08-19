@@ -29,7 +29,7 @@ it('updates student entry mode', function (): void {
 
 it('records the update in the student history table', function (): void {
     $student = StudentFactory::new()->createOne();
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     $oldValue = $student->entry_mode;
     $newValue = EntryMode::DENT;

@@ -11,8 +11,8 @@ use function Pest\Laravel\withoutExceptionHandling;
 test('student result view page loads', function (): void {
     withoutExceptionHandling();
     $numberOfStudents = 5;
-    $user = UserFactory::new()->createOne();
     $student = createMultipleStudentsWithResults(numberOfStudents: $numberOfStudents)[0];
+    $user = UserFactory::new()->databaseOfficer()->forDepartment($student->program->department)->createOne();
 
     $department = ['id' => $student->program->department->id];
     $session = ['id' => $student->entry_session_id];

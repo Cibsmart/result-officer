@@ -53,7 +53,7 @@ it('updates student number along with the registration number', function (): voi
 
 it('records the update in the student history table', function (): void {
     $student = StudentFactory::new()->createOne();
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     $oldRegistrationNumber = $student->registration_number;
     $newRegistrationNumber = RegistrationNumber::new('EBSU/2009/51486');

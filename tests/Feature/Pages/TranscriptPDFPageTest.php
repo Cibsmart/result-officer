@@ -9,7 +9,7 @@ use Tests\Factories\UserFactory;
 use function Pest\Laravel\actingAs;
 
 test('transcript pdf page loads', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
     RecordsUnitHeadFactory::new()->active()->createOne();
 
     $student = createStudentWithResults();
@@ -21,7 +21,7 @@ test('transcript pdf page loads', function (): void {
 });
 
 test('transcript downloads as a pdf', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
     RecordsUnitHeadFactory::new()->active()->createOne();
 
     $student = createStudentWithResults();

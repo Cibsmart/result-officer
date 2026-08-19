@@ -20,7 +20,7 @@ beforeEach(function (): void {
 });
 
 it('renders the download student page', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     $response = actingAs($user)->get(route('download.departments.page'));
 
@@ -28,7 +28,7 @@ it('renders the download student page', function (): void {
 });
 
 it('can start download of all departments', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     $response = actingAs($user)
         ->from(route('download.departments.page'))

@@ -8,7 +8,7 @@ use Tests\Factories\UserFactory;
 use function Pest\Laravel\actingAs;
 
 test('profile page is displayed', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     $response = actingAs($user)
         ->get(route('profile.edit'));
@@ -18,7 +18,7 @@ test('profile page is displayed', function (): void {
 
 test('profile information cannot be updated', function (): void {
     InstitutionFactory::new(['domain' => 'example.com'])->createOne();
-    $user = UserFactory::new()->createOne(['name' => 'John Doe']);
+    $user = UserFactory::new()->admin()->createOne(['name' => 'John Doe']);
 
     $response = actingAs($user)
         ->patch(route('profile.update'), [
@@ -39,7 +39,7 @@ test('profile information cannot be updated', function (): void {
 
 test('email verification status is unchanged when the email address is unchanged', function (): void {
     InstitutionFactory::new(['domain' => 'example.com'])->createOne();
-    $user = UserFactory::new()->createOne(['email' => 'test@example.com']);
+    $user = UserFactory::new()->admin()->createOne(['email' => 'test@example.com']);
 
     $response = actingAs($user)
         ->patch(route('profile.update'), [
@@ -55,7 +55,7 @@ test('email verification status is unchanged when the email address is unchanged
 });
 
 test('user can delete their account', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     $response = actingAs($user)
         ->delete(route('profile.destroy'), [

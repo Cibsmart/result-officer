@@ -8,7 +8,7 @@ use Tests\Factories\UserFactory;
 use function Pest\Laravel\actingAs;
 
 it('loads the result index page', function (): void {
-    $user = UserFactory::new()->create();
+    $user = UserFactory::new()->admin()->createOne();
 
     actingAs($user)
         ->get(route('results.index'))
@@ -18,7 +18,7 @@ it('loads the result index page', function (): void {
 });
 
 it('redirects from student result form to the index page', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
     $student = createStudentWithResults();
 
     actingAs($user)
@@ -31,7 +31,7 @@ it('redirects from student result form to the index page', function (): void {
 });
 
 it('sends student and result data to the view', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
     $student = createStudentWithResults();
 
     actingAs($user)
@@ -44,7 +44,7 @@ it('sends student and result data to the view', function (): void {
 });
 
 it('validates registration number required', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     actingAs($user)
         ->from(route('results.index'))
@@ -53,7 +53,7 @@ it('validates registration number required', function (): void {
 });
 
 it('validates registration number length', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     actingAs($user)
         ->from(route('results.index'))
@@ -66,7 +66,7 @@ it('validates registration number length', function (): void {
 });
 
 it('validates registration number valid', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     actingAs($user)
         ->from(route('results.index'))

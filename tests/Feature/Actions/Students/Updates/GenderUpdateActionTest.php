@@ -29,7 +29,7 @@ it('updates student gender', function (): void {
 
 it('records the update in the student history table', function (): void {
     $student = StudentFactory::new()->createOne();
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     $oldValue = $student->gender;
     $newValue = Gender::MALE;

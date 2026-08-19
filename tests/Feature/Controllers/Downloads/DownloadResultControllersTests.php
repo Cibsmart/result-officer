@@ -35,7 +35,7 @@ beforeEach(function (): void {
 });
 
 it('renders the download results page', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     $response = actingAs($user)->get(route('download.results.page'));
 
@@ -43,7 +43,7 @@ it('renders the download results page', function (): void {
 });
 
 it('can start download of results by registration number', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
     $student = StudentFactory::new()->createOne(['registration_number' => 'EBSU/2009/51486']);
 
     $response = actingAs($user)
@@ -64,7 +64,7 @@ it('can start download of results by registration number', function (): void {
 });
 
 it('can start download of results by department, session and level', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
     $department = DepartmentFactory::new()->createOne(['online_id' => 1]);
     $session = SessionFactory::new()->createOne();
     $level = LevelFactory::new()->createOne();
@@ -95,7 +95,7 @@ it('can start download of results by department, session and level', function ()
 });
 
 it('can start download of results by department, session and semester', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
     $department = DepartmentFactory::new()->createOne(['online_id' => 1]);
     $session = SessionFactory::new()->createOne();
     $semester = SemesterFactory::new()->createOne();
@@ -126,7 +126,7 @@ it('can start download of results by department, session and semester', function
 });
 
 it('can start download of results by session and course', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
     $session = SessionFactory::new()->createOne();
     $course = CourseFactory::new()->createOne(['online_id' => 1]);
 

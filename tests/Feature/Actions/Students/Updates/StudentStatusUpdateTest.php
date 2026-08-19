@@ -36,7 +36,7 @@ it('cannot update status of graduated student', function (): void {
 
 it('records the update in the student history table', function (): void {
     $student = StudentFactory::new()->createOne();
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     $oldStatus = $student->status;
     $newStatus = StudentStatus::FINAL_YEAR;

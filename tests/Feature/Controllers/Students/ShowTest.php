@@ -10,7 +10,7 @@ use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
 
 it('loads the correct component', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
 
     actingAs($user)->get(route('students.show'))
         ->assertHasComponent('students/show/page');
@@ -21,7 +21,7 @@ it('redirects guest to login', function (): void {
 });
 
 it('passes student data to the view when student param is present', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
     $student = StudentFactory::new()->createOne();
 
     actingAs($user)->get(route('students.show', $student))

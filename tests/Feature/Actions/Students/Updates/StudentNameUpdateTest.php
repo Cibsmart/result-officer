@@ -77,7 +77,7 @@ it('can update all the name fields', function (): void {
 
 it('set remark, user and dbmail field in student history', function (): void {
     $student = StudentFactory::new()->createOne();
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
     $dbMail = DBMailFactory::new()->createOne();
     $remark = 'Remark';
 

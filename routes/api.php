@@ -10,10 +10,16 @@ use App\Http\Controllers\Api\UsersDepartmentController;
 use App\Http\Controllers\Api\VettingStepController;
 
 Route::middleware(['auth:sanctum'])->group(static function (): void {
-    Route::get('departments', DepartmentController::class);
-    Route::get('user-departments', UsersDepartmentController::class);
-    Route::get('sessions', SessionController::class);
-    Route::get('states', StateController::class);
-    Route::get('exam-officers', ExamOfficerController::class);
-    Route::get('student/{student}/vetting-steps', VettingStepController::class);
+    Route::get('departments', DepartmentController::class)
+        ->middleware('permission:student.view');
+    Route::get('user-departments', UsersDepartmentController::class)
+        ->middleware('permission:student.view');
+    Route::get('sessions', SessionController::class)
+        ->middleware('permission:student.view');
+    Route::get('states', StateController::class)
+        ->middleware('permission:student.view');
+    Route::get('exam-officers', ExamOfficerController::class)
+        ->middleware('permission:student.clear');
+    Route::get('student/{student}/vetting-steps', VettingStepController::class)
+        ->middleware('permission:vetting.view');
 });

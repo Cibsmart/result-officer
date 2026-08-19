@@ -8,7 +8,7 @@ use Tests\Factories\UserFactory;
 use function Pest\Laravel\actingAs;
 
 test('view result form loads', function (): void {
-    $user = UserFactory::new()->createOne();
+    $user = UserFactory::new()->admin()->createOne();
     $student = createStudentWithResults();
 
     $fcpga = computeFCGPA($student);
