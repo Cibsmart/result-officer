@@ -35,8 +35,8 @@ final class SessionEnrollment extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, $this>
      */
     public function level(): BelongsTo
     {
@@ -45,9 +45,9 @@ final class SessionEnrollment extends Model
 
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Registration, \App\Models\SemesterEnrollment, $this>
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Registration, \App\Models\SemesterEnrollment, static>
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Registration, \App\Models\SemesterEnrollment, $this>
      */
     public function registrations(): HasManyThrough
     {
@@ -55,8 +55,8 @@ final class SessionEnrollment extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\SemesterEnrollment, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\SemesterEnrollment, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\SemesterEnrollment, $this>
      */
     public function semesterEnrollments(): HasMany
     {
@@ -64,8 +64,8 @@ final class SessionEnrollment extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, $this>
      */
     public function session(): BelongsTo
     {
@@ -73,8 +73,8 @@ final class SessionEnrollment extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Student, $this>
      */
     public function student(): BelongsTo
     {

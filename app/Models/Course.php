@@ -11,9 +11,12 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 
 final class Course extends Model
 {
+    use Searchable;
+
     public static function createFromRawCourse(RawCourse $rawCourse): self
     {
         $code = CourseCode::new($rawCourse->code);
@@ -80,6 +83,15 @@ final class Course extends Model
             ->get();
 
         return $courses->contains('id', $this->id) || $courses->contains('code', $this->code);
+    }
+
+    /** @return array<string, string|null> */
+    public function toSearchableArray(): array
+    {
+        return [
+            'code' => $this->code,
+            'title' => $this->title,
+        ];
     }
 
     /** @return \Illuminate\Database\Eloquent\Casts\Attribute<string, string> */

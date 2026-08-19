@@ -21,8 +21,8 @@ final class State extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Country, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Country, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Country, $this>
      */
     public function country(): BelongsTo
     {

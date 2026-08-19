@@ -8,11 +8,14 @@ use App\Actions\Students\StudentDeleteAction;
 use App\Data\Enums\StudentStatusListData;
 use App\Data\Students\StudentBasicData;
 use App\Data\Students\StudentComprehensiveData;
+use App\Data\Students\StudentFilterOptionsData;
+use App\Data\Students\StudentIndexFilterData;
 use App\Enums\NotificationType;
 use App\Http\Requests\ExistingRegistrationNumberRequest;
 use App\Models\DBMail;
 use App\Models\Student;
 use App\Models\User;
+use App\Queries\StudentIndex;
 use App\Values\DateValue;
 use App\ViewModels\Students\StudentIndexPage;
 use App\ViewModels\Students\StudentShowPage;
@@ -25,16 +28,21 @@ use Inertia\Response;
 
 final class StudentController
 {
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $students = Student::query()
-            ->with('program.department.faculty', 'entrySession', 'lga.state.country')
-            ->paginate();
+        $user = $request->user();
+        assert($user instanceof User);
 
-        $paginated = StudentBasicData::collect($students);
+        $filters = StudentIndexFilterData::fromRequest($request);
+
+        $paginated = StudentBasicData::collect(StudentIndex::new($filters)->paginate());
         assert($paginated instanceof AbstractPaginator);
 
-        return Inertia::render('students/index/page', new StudentIndexPage(paginated: $paginated));
+        return Inertia::render('students/index/page', new StudentIndexPage(
+            paginated: $paginated,
+            filters: $filters,
+            options: StudentFilterOptionsData::forUser($user),
+        ));
     }
 
     public function show(Request $request, ?Student $student = null): Response

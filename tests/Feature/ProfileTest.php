@@ -68,7 +68,11 @@ test('user can delete their account', function (): void {
 });
 
 it('visits login', function (): void {
+    // Tests\TestCase disables Vite for every test; a browser test needs the real
+    // asset tags, otherwise Vue never mounts and the page renders empty.
+    $this->withVite();
+
     $page = visit(route('login'));
 
-    $page->assertSee('Login');
-});
+    $page->assertSee('Log in');
+})->group('browser');

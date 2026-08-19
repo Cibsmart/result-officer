@@ -13,10 +13,12 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 
 final class Program extends Model
 {
-    use softDeletes;
+    use Searchable;
+    use SoftDeletes;
 
     private const CODES = [
         'Accounting Education' => 'ACC',
@@ -162,8 +164,8 @@ final class Program extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, $this>
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, $this>
      */
     public function vettingReports(): MorphMany
     {
@@ -171,8 +173,8 @@ final class Program extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Department, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Department, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Department, $this>
      */
     public function department(): BelongsTo
     {
@@ -180,8 +182,8 @@ final class Program extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramType, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramType, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramType, $this>
      */
     public function programType(): BelongsTo
     {
@@ -189,8 +191,8 @@ final class Program extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Student, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Student, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Student, $this>
      */
     public function students(): HasMany
     {
@@ -203,6 +205,15 @@ final class Program extends Model
         return Attribute::make(
             set: fn (string $value): string => mb_strtoupper(mb_trim($value)),
         );
+    }
+
+    /** @return array<string, string|null> */
+    public function toSearchableArray(): array
+    {
+        return [
+            'code' => $this->code,
+            'name' => $this->name,
+        ];
     }
 
     /** @return array{duration: 'App\Enums\ProgramDuration', is_active: 'bool'} */

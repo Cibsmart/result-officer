@@ -23,8 +23,8 @@ final class User extends Authenticatable implements FilamentUser
     protected $hidden = ['password', 'remember_token'];
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ImportEvent, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ImportEvent, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ImportEvent, $this>
      */
     public function imports(): HasMany
     {
@@ -32,8 +32,8 @@ final class User extends Authenticatable implements FilamentUser
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExcelImportEvent, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExcelImportEvent, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExcelImportEvent, $this>
      */
     public function excelImportEvents(): HasMany
     {
@@ -41,8 +41,8 @@ final class User extends Authenticatable implements FilamentUser
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\UserDepartment, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\UserDepartment, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\UserDepartment, $this>
      */
     public function departments(): HasMany
     {
@@ -50,8 +50,8 @@ final class User extends Authenticatable implements FilamentUser
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\VettingEventGroup, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\VettingEventGroup, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\VettingEventGroup, $this>
      */
     public function vettingEventGroups(): HasMany
     {

@@ -89,8 +89,8 @@ final class Result extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, $this>
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, $this>
      */
     public function vettingReports(): MorphMany
     {
@@ -98,8 +98,8 @@ final class Result extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Registration, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Registration, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Registration, $this>
      */
     public function registration(): BelongsTo
     {
@@ -107,8 +107,8 @@ final class Result extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\ResultDetail, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\ResultDetail, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\ResultDetail, $this>
      */
     public function resultDetail(): HasOne
     {
@@ -116,8 +116,8 @@ final class Result extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\RawResult, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\RawResult, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\RawResult, $this>
      */
     public function rawResult(): HasOne
     {

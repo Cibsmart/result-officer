@@ -37,7 +37,7 @@ final class ProgramCurriculumResource extends Resource
                 Tables\Columns\TextColumn::make('program.name')
                     ->numeric()->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('curriculum.code')
-                    ->numeric()->sortable(),
+                    ->numeric()->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('session.name')
                     ->numeric()->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('entry_mode')

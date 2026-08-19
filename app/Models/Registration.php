@@ -134,8 +134,8 @@ final class Registration extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, $this>
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, $this>
      */
     public function vettingReports(): MorphMany
     {
@@ -143,8 +143,8 @@ final class Registration extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\SemesterEnrollment, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\SemesterEnrollment, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\SemesterEnrollment, $this>
      */
     public function semesterEnrollment(): BelongsTo
     {
@@ -152,8 +152,8 @@ final class Registration extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Course, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Course, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Course, $this>
      */
     public function course(): BelongsTo
     {
@@ -161,8 +161,8 @@ final class Registration extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\Result, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\Result, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\Result, $this>
      */
     public function result(): HasOne
     {
@@ -170,8 +170,8 @@ final class Registration extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumCourse, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumCourse, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ProgramCurriculumCourse, $this>
      */
     public function programCurriculumCourse(): BelongsTo
     {

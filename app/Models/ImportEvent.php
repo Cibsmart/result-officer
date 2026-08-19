@@ -54,8 +54,8 @@ final class ImportEvent extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, $this>
      */
     public function user(): BelongsTo
     {
@@ -63,8 +63,8 @@ final class ImportEvent extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawCourse, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawCourse, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawCourse, $this>
      */
     public function courses(): HasMany
     {
@@ -72,8 +72,8 @@ final class ImportEvent extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawDepartment, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawDepartment, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawDepartment, $this>
      */
     public function departments(): HasMany
     {
@@ -81,8 +81,8 @@ final class ImportEvent extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawStudent, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawStudent, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawStudent, $this>
      */
     public function students(): HasMany
     {
@@ -90,8 +90,8 @@ final class ImportEvent extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawRegistration, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawRegistration, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawRegistration, $this>
      */
     public function registrations(): HasMany
     {
@@ -99,8 +99,8 @@ final class ImportEvent extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawResult, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawResult, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RawResult, $this>
      */
     public function results(): HasMany
     {
@@ -136,13 +136,16 @@ final class ImportEvent extends Model
     /** @return object{saved?: int, processed?: int, duplicate?: int, failed?: int, pending?: int} */
     public function getCounts(): object
     {
-        return $this->{$this->type->value}()->toBase()
+        /** @var object{saved?: int, processed?: int, duplicate?: int, failed?: int, pending?: int} $counts */
+        $counts = $this->{$this->type->value}()->toBase()
             ->selectRaw('count(*) as saved')
             ->selectRaw("count(case when status = 'processed' then 1 end) as processed")
             ->selectRaw("count(case when status = 'duplicate' then 1 end) as duplicate")
             ->selectRaw("count(case when status = 'failed' then 1 end) as failed")
             ->selectRaw("count(case when status = 'pending' then 1 end) as pending")
             ->firstOrFail();
+
+        return $counts;
     }
 
     public function setMessage(string $message): void
@@ -177,8 +180,8 @@ final class ImportEvent extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Collection<int, $this>
      * @return \Illuminate\Database\Eloquent\Collection<int, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Collection<int, self>
      */
     private static function getEventsFor(
         ImportEventType $type,

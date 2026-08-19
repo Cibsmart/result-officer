@@ -26,15 +26,11 @@ final class ValidateHeadings
         foreach ($headings as $heading) {
             [$validatedHeadingKey, $matchScore] = $this->getBestMatchingValidHeadingKey($heading, $expectedHeadings);
 
-            if ($validatedHeadingKey === null) {
-                continue;
-            }
-
             // Keep the heading that matches a field best. A weaker later match
             // (e.g. "old_registration_number" at 90%) must never overwrite a
             // stronger earlier one (e.g. "registration_number" at 100%).
-            if (array_key_exists($validatedHeadingKey, $validatedScores)
-                && $matchScore <= $validatedScores[$validatedHeadingKey]
+            if ($validatedHeadingKey === null
+                || $matchScore <= ($validatedScores[$validatedHeadingKey] ?? 0.0)
             ) {
                 continue;
             }

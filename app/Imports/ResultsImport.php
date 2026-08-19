@@ -4,38 +4,20 @@ declare(strict_types=1);
 
 namespace App\Imports;
 
-use App\Models\ExcelImportEvent;
+use App\Imports\Excel\SpreadsheetImport;
 use App\Models\RawExcelResult;
 use Illuminate\Support\Str;
-use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithBatchInserts;
-use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
-use Maatwebsite\Excel\Concerns\WithChunkReading;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-final class ResultsImport implements ToModel, WithBatchInserts, WithCalculatedFormulas, WithChunkReading, WithHeadingRow
+final class ResultsImport extends SpreadsheetImport
 {
-    use Importable;
-
-    private const int CHUNK_SIZE = 1_000;
-
-    /** @param array<string, string> $headings */
-    public function __construct(private readonly ExcelImportEvent $event, private readonly array $headings)
+    /** {@inheritDoc} */
+    protected function model(): string
     {
+        return RawExcelResult::class;
     }
 
-    /** @param array<string, string> $headings */
-    public static function new(ExcelImportEvent $event, array $headings): self
-    {
-        return new self($event, $headings);
-    }
-
-    /**
-     * @param array<string, string> $row
-     * {@inheritDoc}
-     */
-    public function model(array $row): ?RawExcelResult
+    /** {@inheritDoc} */
+    protected function mapRow(array $row): ?array
     {
         if (
             ! isset($row[$this->headings['registration_number']])
@@ -44,24 +26,13 @@ final class ResultsImport implements ToModel, WithBatchInserts, WithCalculatedFo
             return null;
         }
 
-        return new RawExcelResult($this->mapRowToModel($row));
+        return $this->mapRowToModel($row);
     }
 
-    /** {@inheritDoc} */
-    public function chunkSize(): int
+    private static function cleanDate(string $date): ?string
     {
-        return self::CHUNK_SIZE;
-    }
-
-    /** {@inheritDoc} */
-    public function batchSize(): int
-    {
-        return self::CHUNK_SIZE;
-    }
-
-    private static function cleanDate(string|int|null $date): ?string
-    {
-        if (! is_string($date)) {
+        // A bare number is an Excel date serial rather than a date we can trust.
+        if (is_numeric($date)) {
             return null;
         }
 

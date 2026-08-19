@@ -50,8 +50,8 @@ final class RawResult extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Result, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Result, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Result, $this>
      */
     public function result(): BelongsTo
     {
@@ -59,8 +59,8 @@ final class RawResult extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ImportEvent, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ImportEvent, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ImportEvent, $this>
      */
     public function event(): BelongsTo
     {

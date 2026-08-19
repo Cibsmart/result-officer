@@ -11,24 +11,9 @@ parameters:
 			path: app/Data/Program/ProgramListData.php
 
 		-
-			message: "#^Class App\\\\Exports\\\\ResultsExport implements generic interface Maatwebsite\\\\Excel\\\\Concerns\\\\WithMapping but does not specify its types\\: RowType$#"
-			count: 1
-			path: app/Exports/ResultsExport.php
-
-		-
 			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(array\\<string, array\\<string, string\\>\\|string\\>\\|string\\)\\: mixed\\)\\|null, 'array_change_key…' given\\.$#"
 			count: 1
 			path: app/Http/Clients/ApiClient.php
-
-		-
-			message: "#^Parameter \\#1 \\$courses of static method App\\\\Models\\\\Course\\:\\:checkExactMatchingCourse\\(\\) expects Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, App\\\\Models\\\\Course\\>, Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, \\$this\\(App\\\\Models\\\\Course\\)\\> given\\.$#"
-			count: 1
-			path: app/Models/Course.php
-
-		-
-			message: "#^Parameter \\#1 \\$courses of static method App\\\\Models\\\\Course\\:\\:getBestMatchingCourse\\(\\) expects Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, App\\\\Models\\\\Course\\>, Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, \\$this\\(App\\\\Models\\\\Course\\)\\> given\\.$#"
-			count: 1
-			path: app/Models/Course.php
 
 		-
 			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
@@ -63,11 +48,6 @@ parameters:
 		-
 			message: "#^Call to an undefined method Inertia\\\\Testing\\\\AssertableInertia\\:\\:hasPaginatedData\\(\\)\\.$#"
 			count: 1
-			path: app/Providers/TestingServiceProvider.php
-
-		-
-			message: "#^Call to protected method prop\\(\\) of class Illuminate\\\\Testing\\\\Fluent\\\\AssertableJson\\.$#"
-			count: 4
 			path: app/Providers/TestingServiceProvider.php
 
 		-

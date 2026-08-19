@@ -17,8 +17,8 @@ final class QuoteData extends Data
 
     public static function new(): self
     {
-        [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
+        $parts = str(Inspiring::quotes()->random())->explode('-');
 
-        return new self(message: $message, author: $author);
+        return new self(message: (string) $parts->get(0), author: (string) $parts->get(1));
     }
 }

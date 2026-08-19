@@ -65,8 +65,8 @@ final class VettingReport extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\MorphTo<\Illuminate\Database\Eloquent\Model, $this>
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo<\Illuminate\Database\Eloquent\Model, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\MorphTo<\Illuminate\Database\Eloquent\Model, $this>
      */
     public function vettable(): MorphTo
     {
@@ -74,8 +74,8 @@ final class VettingReport extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\VettingEvent, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\VettingEvent, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\VettingEvent, $this>
      */
     public function vettingEvent(): BelongsTo
     {

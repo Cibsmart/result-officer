@@ -7,10 +7,11 @@ namespace App\Console\Commands;
 use App\Actions\Imports\Excel\ValidateHeadings;
 use App\Enums\ExcelImportType;
 use App\Enums\ImportEventStatus;
+use App\Imports\Excel\Spreadsheet;
 use App\Models\ExcelImportEvent;
 use Exception;
 use Illuminate\Console\Command;
-use Maatwebsite\Excel\HeadingRowImport;
+use Illuminate\Support\Facades\Storage;
 
 final class UploadPendingExcelImports extends Command
 {
@@ -34,14 +35,14 @@ final class UploadPendingExcelImports extends Command
         $type = $importEvent->type;
         assert($type instanceof ExcelImportType);
 
-        $headings = (new HeadingRowImport())->toArray($importEvent->file_path)[0][0];
+        $filePath = Storage::path($importEvent->file_path);
 
-        $validation = (new ValidateHeadings())->execute($headings, $type);
+        $validation = (new ValidateHeadings())->execute(Spreadsheet::headings($filePath), $type);
 
         $importEvent->updateStatus(ImportEventStatus::UPLOADING);
 
         try {
-            $type->getImportClass()::new($importEvent, $validation['validated'])->import($importEvent->file_path);
+            $type->getImportClass()::new($importEvent, $validation['validated'])->import($filePath);
         } catch (Exception $e) {
             $importEvent->setMessage($e->getMessage());
 

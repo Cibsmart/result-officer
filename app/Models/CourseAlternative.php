@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 final class CourseAlternative extends Model
 {
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Collection<int, $this>
      * @return \Illuminate\Database\Eloquent\Collection<int, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Collection<int, self>
      */
     public static function getUsingOriginalCourseId(int $courseId): Collection
     {

@@ -119,8 +119,8 @@ final class FinalResult extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FinalCourse, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FinalCourse, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FinalCourse, $this>
      */
     public function finalCourse(): BelongsTo
     {
@@ -157,10 +157,8 @@ final class FinalResult extends Model
         return $session;
     }
 
-    private static function getLecturer(RawFinalResult $result): ?int
+    private static function getLecturer(RawFinalResult $result): int
     {
-        return $result->examiner !== null
-            ? Lecturer::getOrCreateUsingName($result->examiner, $result->examiner_department)->id
-            : null;
+        return Lecturer::getOrCreateUsingName($result->examiner, $result->examiner_department)->id;
     }
 }

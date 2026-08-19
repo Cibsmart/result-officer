@@ -9,9 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 
 final class Faculty extends Model
 {
+    use Searchable;
     use SoftDeletes;
 
     private const CODES = [
@@ -52,12 +54,21 @@ final class Faculty extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Department, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Department, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Department, $this>
      */
     public function departments(): HasMany
     {
         return $this->hasMany(Department::class);
+    }
+
+    /** @return array<string, string|null> */
+    public function toSearchableArray(): array
+    {
+        return [
+            'code' => $this->code,
+            'name' => $this->name,
+        ];
     }
 
     /** @return array<string, string> */

@@ -25,9 +25,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
+use Laravel\Scout\Searchable;
 
 final class Student extends Model
 {
+    use Searchable;
     use SoftDeletes;
 
     public static function createFromRawStudent(RawStudent $rawStudent): self
@@ -63,8 +65,8 @@ final class Student extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, $this>
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\VettingReport, $this>
      */
     public function vettingReports(): MorphMany
     {
@@ -72,8 +74,8 @@ final class Student extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\VettingEvent, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\VettingEvent, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\VettingEvent, $this>
      */
     public function vettingEvent(): HasOne
     {
@@ -81,8 +83,8 @@ final class Student extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\LocalGovernment, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\LocalGovernment, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\LocalGovernment, $this>
      */
     public function lga(): BelongsTo
     {
@@ -90,8 +92,8 @@ final class Student extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\SessionEnrollment, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\SessionEnrollment, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\SessionEnrollment, $this>
      */
     public function sessionEnrollments(): HasMany
     {
@@ -99,8 +101,8 @@ final class Student extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Level, $this>
      */
     public function entryLevel(): BelongsTo
     {
@@ -108,8 +110,8 @@ final class Student extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Session, $this>
      */
     public function entrySession(): BelongsTo
     {
@@ -117,8 +119,8 @@ final class Student extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Program, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Program, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Program, $this>
      */
     public function program(): BelongsTo
     {
@@ -126,8 +128,8 @@ final class Student extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\FinalStudent, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\FinalStudent, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\FinalStudent, $this>
      */
     public function FinalStudent(): HasOne
     {
@@ -144,9 +146,9 @@ final class Student extends Model
 
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\SemesterEnrollment, \App\Models\SessionEnrollment, $this>
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\SemesterEnrollment, \App\Models\SessionEnrollment, static>
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\SemesterEnrollment, \App\Models\SessionEnrollment, $this>
      */
     public function semesterEnrollments(): HasManyThrough
     {
@@ -155,9 +157,9 @@ final class Student extends Model
 
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\FinalSemesterEnrollment, \App\Models\FinalSessionEnrollment, $this>
-     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\FinalSemesterEnrollment, \App\Models\FinalSessionEnrollment, static>
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\FinalSemesterEnrollment, \App\Models\FinalSessionEnrollment, $this>
      */
     public function finalSemesterEnrollments(): HasManyThrough
     {
@@ -165,8 +167,8 @@ final class Student extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\StatusChangeEvent, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\StatusChangeEvent, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\StatusChangeEvent, $this>
      */
     public function statusChangeEvents(): HasMany
     {
@@ -259,6 +261,17 @@ final class Student extends Model
     {
         $this->date_of_birth = $birthDate->value;
         $this->save();
+    }
+
+    /** @return array<string, string|null> */
+    public function toSearchableArray(): array
+    {
+        return [
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'other_names' => $this->other_names,
+            'registration_number' => $this->registration_number,
+        ];
     }
 
     /**

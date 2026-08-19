@@ -13,8 +13,8 @@ final class UserDepartment extends Model
     use SoftDeletes;
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Department, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Department, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Department, $this>
      */
     public function department(): BelongsTo
     {

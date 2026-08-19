@@ -4,38 +4,20 @@ declare(strict_types=1);
 
 namespace App\Imports;
 
-use App\Models\ExcelImportEvent;
+use App\Imports\Excel\SpreadsheetImport;
 use App\Models\RawFinalResult;
 use Illuminate\Support\Str;
-use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithBatchInserts;
-use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
-use Maatwebsite\Excel\Concerns\WithChunkReading;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-final class FinalResultsImport implements ToModel, WithBatchInserts, WithCalculatedFormulas, WithChunkReading, WithHeadingRow
+final class FinalResultsImport extends SpreadsheetImport
 {
-    use Importable;
-
-    private const int CHUNK_SIZE = 1_000;
-
-    /** @param array<string, string> $headings */
-    public function __construct(private readonly ExcelImportEvent $event, private readonly array $headings)
+    /** {@inheritDoc} */
+    protected function model(): string
     {
+        return RawFinalResult::class;
     }
 
-    /** @param array<string, string> $headings */
-    public static function new(ExcelImportEvent $event, array $headings): self
-    {
-        return new self($event, $headings);
-    }
-
-    /**
-     * @param array<string, string> $row
-     * {@inheritDoc}
-     */
-    public function model(array $row): ?RawFinalResult
+    /** {@inheritDoc} */
+    protected function mapRow(array $row): ?array
     {
         if (
             ! isset($row[$this->headings['registration_number']])
@@ -44,33 +26,13 @@ final class FinalResultsImport implements ToModel, WithBatchInserts, WithCalcula
             return null;
         }
 
-        return new RawFinalResult($this->mapRowToModel($row));
+        return $this->mapRowToModel($row);
     }
 
-    /** {@inheritDoc} */
-    public function chunkSize(): int
+    private static function cleanDate(string $date): ?string
     {
-        return self::CHUNK_SIZE;
-    }
-
-    /** {@inheritDoc} */
-    public function batchSize(): int
-    {
-        return self::CHUNK_SIZE;
-    }
-
-    private static function cleanRegistrationId(string|int|null $registrationId): int
-    {
-        if (is_null($registrationId) || $registrationId === '') {
-            return 0;
-        }
-
-        return (int) $registrationId;
-    }
-
-    private static function cleanDate(string|int|null $date): ?string
-    {
-        if (! is_string($date)) {
+        // A bare number is an Excel date serial rather than a date we can trust.
+        if (is_numeric($date)) {
             return null;
         }
 
@@ -122,7 +84,7 @@ final class FinalResultsImport implements ToModel, WithBatchInserts, WithCalcula
             'name' => Str::trim($row[$this->headings['name']]),
             'old_registration_number' => $oldRegNumber,
             'originating_session' => Str::trim($row[$this->headings['originating_session']]),
-            'registration_id' => self::cleanRegistrationId(Str::trim($row[$this->headings['id']])),
+            'registration_id' => (int) Str::trim($row[$this->headings['id']]),
             'registration_number' => Str::trim($row[$this->headings['registration_number']]),
             'semester' => Str::trim($row[$this->headings['semester']]),
             'session' => Str::trim($row[$this->headings['session']]),

@@ -12,10 +12,26 @@
             <directory>tests/Feature</directory>
         </testsuite>
     </testsuites>
+    <groups>
+        <!--
+            Excluded by default: browser tests need a running Playwright server, and
+            external tests hit live HTTP endpoints. Opt in with the group=browser or
+            group=external flag. Note a CLI exclude-group flag REPLACES this list, and
+            paratest (test parallel) honours only the first such flag, so both groups
+            are configured here instead of on the command line.
+        -->
+        <exclude>
+            <group>browser</group>
+            <group>external</group>
+        </exclude>
+    </groups>
     <source>
         <include>
-            <directory>app</directory>
+            <directory suffix=".php">app</directory>
         </include>
+        <exclude>
+            <directory suffix=".php">app/Filament</directory>
+        </exclude>
     </source>
     <php>
         <env name="APP_ENV" value="testing"/>
@@ -35,12 +51,4 @@
         <!--        <env name="RP_HTTP_ENDPOINT_RESULT" value="results"/>-->
         <!--        <env name="RP_HTTP_ENDPOINT_STUDENT" value="students"/>-->
     </php>
-    <coverage>
-        <include>
-            <directory suffix=".php">app/</directory>
-        </include>
-        <exclude>
-            <directory suffix=".php">app/Filament/</directory>
-        </exclude>
-    </coverage>
 </phpunit>

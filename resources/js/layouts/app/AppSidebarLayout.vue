@@ -3,6 +3,7 @@ import AppContent from '@/components/AppContent.vue';
 import AppShell from '@/components/AppShell.vue';
 import AppSidebar from '@/components/AppSidebar.vue';
 import AppSidebarHeader from '@/components/AppSidebarHeader.vue';
+import CommandPalette from '@/components/search/CommandPalette.vue';
 import type { BreadcrumbItemType } from '@/types';
 
 interface Props {
@@ -23,5 +24,7 @@ withDefaults(defineProps<Props>(), {
 
             <slot />
         </AppContent>
+
+        <CommandPalette />
     </AppShell>
 </template>

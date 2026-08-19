@@ -12,10 +12,12 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 
 final class Department extends Model
 {
-    use softDeletes;
+    use Searchable;
+    use SoftDeletes;
 
     public static function createFromRawDepartment(RawDepartment $rawDepartment): self
     {
@@ -50,8 +52,8 @@ final class Department extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Faculty, $this>
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Faculty, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Faculty, $this>
      */
     public function faculty(): BelongsTo
     {
@@ -59,8 +61,8 @@ final class Department extends Model
     }
 
     /**
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Program, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Program, static>
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Program, $this>
      */
     public function programs(): HasMany
     {
@@ -69,12 +71,22 @@ final class Department extends Model
 
     /**
      * phpcs:ignore SlevomatCodingStandard.Files.LineLength
-     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Student, \App\Models\Program, $this>
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Student, \App\Models\Program, static>
+     * phpcs:ignore SlevomatCodingStandard.Files.LineLength
+     * @phpstan-return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\Student, \App\Models\Program, $this>
      */
     public function students(): HasManyThrough
     {
         return $this->hasManyThrough(Student::class, Program::class);
+    }
+
+    /** @return array<string, string|null> */
+    public function toSearchableArray(): array
+    {
+        return [
+            'code' => $this->code,
+            'name' => $this->name,
+        ];
     }
 
     /** @return array<string, string> */

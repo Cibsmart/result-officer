@@ -7,7 +7,6 @@ namespace App\Http\Controllers\Exports\Results;
 use App\Exports\ResultsExport;
 use App\Http\Requests\ExistingRegistrationNumberRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 final class ExportResultsByRegistrationNumberController
@@ -19,7 +18,7 @@ final class ExportResultsByRegistrationNumberController
         return redirect()->back()->success("Result export for {$registrationNumber} started...");
     }
 
-    public function download(ExistingRegistrationNumberRequest $request): Response|BinaryFileResponse
+    public function download(ExistingRegistrationNumberRequest $request): BinaryFileResponse
     {
         $student = $request->input('student');
 

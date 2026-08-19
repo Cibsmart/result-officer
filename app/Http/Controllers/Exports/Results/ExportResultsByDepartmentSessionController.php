@@ -9,7 +9,6 @@ use App\Http\Requests\DepartmentSessionRequest;
 use App\Models\Department;
 use App\Models\Session;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 final class ExportResultsByDepartmentSessionController
@@ -22,7 +21,7 @@ final class ExportResultsByDepartmentSessionController
         return redirect()->back()->success("Result export for {$department} {$session} session started...");
     }
 
-    public function download(Department $department, Session $session): Response|BinaryFileResponse
+    public function download(Department $department, Session $session): BinaryFileResponse
     {
         $studentIds = $department->students()
             ->where('entry_session_id', $session->id)

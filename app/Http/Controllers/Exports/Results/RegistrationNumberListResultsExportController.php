@@ -8,7 +8,6 @@ use App\Exports\ResultsExport;
 use App\Models\Student;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -21,7 +20,7 @@ final class RegistrationNumberListResultsExportController
         return redirect()->back()->success("Result export for {$count} Registration Numbers started...");
     }
 
-    public function download(Request $request): Response|BinaryFileResponse
+    public function download(Request $request): BinaryFileResponse
     {
         $validated = $request->validate(['registration_numbers' => ['required', 'string']]);
 
